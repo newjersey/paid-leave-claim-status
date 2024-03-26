@@ -44,8 +44,10 @@ function logView(allClaims) {
     });
 
   logEvent("[DOL_DABI] Viewed Claim List page", {
-    object_status: allClaims.map((claim) => claim.claimStatus).join(";"),
-    object_type: allClaims.map((claim) => claim.claimType).join(";"),
+    object_status: allClaims
+      .map((claim) => claim.claimStatus?.charAt(0))
+      .join(";"),
+    object_type: allClaims.map((claim) => claim.claimType?.charAt(0)).join(";"),
     object_details: recentClaims.length,
     event_label: allClaims.length,
   });

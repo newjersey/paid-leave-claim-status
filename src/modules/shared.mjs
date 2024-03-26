@@ -115,21 +115,10 @@ export function updateLogo() {
   logo.parentElement.parentElement.removeAttribute("height");
 }
 
-// Used for tagged template strings
-const html = (strings, ...values) => String.raw({ raw: strings }, ...values);
-
-export const HEADER_HTML = html`
-  <header
-    style="padding:12px 18px;background-color:black;color:white;font-size:13px;line-height:150%;margin-bottom:52px"
-  >
-    <div style="margin-bottom:4px">
-      <b>New Jersey Department of Labor and Workforce Development</b>
-    </div>
-    <a
-      href="https://www.nj.gov/labor/myleavebenefits/"
-      style="text-decoration:underline;color:white"
-      >myLeaveBenefits.nj.gov</a
-    >
+export const HEADER_HTML = `
+  <header style="padding:12px 18px;background-color:black;color:white;font-size:13px;line-height:150%;margin-bottom:52px">
+    <div style="margin-bottom:4px"><b>New Jersey Department of Labor and Workforce Development</b></div>
+    <a href="https://www.nj.gov/labor/myleavebenefits/" style="text-decoration:underline;color:white">myLeaveBenefits.nj.gov</a>
   </header>
 `;
 
@@ -147,47 +136,27 @@ export function getRedesignHtml(
     day: "numeric",
   });
 
-  return html`
-    <main
-      style="margin:0 ${isDesktop()
-        ? "107px"
-        : "18px"};text-align:left;line-height:150%;margin-top:1.5rem"
-    >
-      <h1
-        style="margin:0;font-size:40px;font-weight:700;margin-top:34px;margin-bottom:36px"
-      >
-        Welcome
-      </h1>
-      <div
-        style="display:grid;grid-template-columns:${isDesktop()
-          ? "1fr 1fr"
-          : "1fr"};column-gap: 2rem"
-      >
+  return `
+    <main style="margin:0 ${
+      isDesktop() ? "107px" : "18px"
+    };text-align:left;line-height:150%;margin-top:1.5rem">
+      <h1 style="margin:0;font-size:40px;font-weight:700;margin-top:34px;margin-bottom:36px">Welcome</h1>
+      <div style="display:grid;grid-template-columns:${
+        isDesktop() ? "1fr 1fr" : "1fr"
+      };column-gap: 2rem">
         <div>
-          <h2
-            style="margin:0;font-size:22px;font-weight:400;margin-bottom:16px"
-          >
-            Claim status
-          </h2>
-          <h3
-            style="margin:0;font-size:22px;font-weight:700;margin-bottom:36px"
-          >
-            ${status}
-          </h3>
+          <h2 style="margin:0;font-size:22px;font-weight:400;margin-bottom:16px">Claim status</h2>
+          <h3 style="margin:0;font-size:22px;font-weight:700;margin-bottom:36px">${status}</h3>
           <p>${statusExtra}</p>
-          <p style="font-size:14px;margin-bottom:64px">
-            <i>[Current as of ${currentDate}]</i>
-          </p>
+          <p style="font-size:14px;margin-bottom:64px"><i>[Current as of ${currentDate}]</i></p>
         </div>
         <div>
-          <h2
-            style="margin:0;font-size:22px;font-weight:400;margin-bottom:16px"
-          >
-            What to do next
-          </h2>
-          ${whatsNext
-            ? `<h3 style="margin:0;font-size:22px;font-weight:700;margin-bottom:36px">${whatsNext}</h3>`
-            : ""}
+          <h2 style="margin:0;font-size:22px;font-weight:400;margin-bottom:16px">What to do next</h2>
+          ${
+            whatsNext
+              ? `<h3 style="margin:0;font-size:22px;font-weight:700;margin-bottom:36px">${whatsNext}</h3>`
+              : ""
+          }
           ${whatsNextExtra ? `<div>${whatsNextExtra}</div>` : ""}
         </div>
       </div>
