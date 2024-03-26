@@ -4,7 +4,6 @@ import {
   updateIcon,
   addFeedbackLink,
   styleBody,
-  HEADER_HTML,
 } from "./modules/shared.mjs";
 
 if (document.readyState === "loading") {
