@@ -1,0 +1,295 @@
+<html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    .events {
+      padding-inline-start: 12px;
+    }
+
+    .events li {
+      display: flex;
+    }
+
+    .events div {
+      position: relative;
+    }
+
+    .events div::after {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      right: 0;
+      top: 0;
+      transform: translateX(57%);
+      border-radius: 50%;
+      background-color: #a9aeb1;
+      width: 24px;
+      height: 24px;
+    }
+
+    .events div.active::after {
+      background-color: #0076d6;
+    }
+
+    .events span {
+      padding: 0.2em 1.5em 1.5em 1.5em;
+      position: relative;
+    }
+
+    .events span.active {
+      font-weight: bold;
+    }
+
+    .events span::before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      left: 0;
+      height: 100%;
+      border-left: 4px #a9aeb1 solid;
+    }
+
+    .events span.done::before {
+      border-color: #cfe8ff;
+    }
+
+    .events span.final::before {
+      border: none;
+    }
+
+    .events strong {
+      display: block;
+      font-weight: bolder;
+    }
+
+    .events,
+    .events *::before,
+    .events *::after {
+      box-sizing: border-box;
+      font-family: arial;
+    }
+  </style>
+  <body
+    style="
+      background-color: #f5f6f7;
+      font-family: 'Public Sans', sans-serif;
+      font-size: 16px;
+      color: #1c1d1f;
+      padding: 0px;
+      margin: 0px;
+    "
+  >
+    <header
+      style="
+        padding: 12px 18px;
+        background-color: black;
+        color: white;
+        font-size: 13px;
+        line-height: 150%;
+      "
+    >
+      <div style="margin-bottom: 4px">
+        <b>New Jersey Department of Labor and Workforce Development</b>
+      </div>
+      <a
+        href="https://www.nj.gov/labor/myleavebenefits/"
+        style="
+          text-decoration: underline;
+          color: white;
+          text-underline-offset: 2px;
+        "
+        >myLeaveBenefits.nj.gov</a
+      >
+    </header>
+    <div style="margin: 12px 18px">
+      <div>
+        <button
+          onClick="claimList()"
+          style="
+            background: none;
+            border: none;
+            padding: 0;
+            font: inherit;
+            outline: inherit;
+            cursor: pointer;
+            font-size: 16px;
+            color: #0076d6;
+            text-decoration: underline;
+            display: inline-block;
+            text-underline-offset: 2px;
+          "
+        >
+          All claims
+        </button>
+        <div style="display: inline-block">/ <b>Status</b></div>
+      </div>
+      <div style="display: flex; justify-content: flex-end">
+        <button
+          onClick="insert()"
+          style="
+            background: none;
+            font: inherit;
+            cursor: pointer;
+            outline: inherit;
+            border: 2px solid #0076d6;
+            border-radius: 4px;
+            padding: 12px 14px;
+            font-size: 16px;
+            font-weight: bold;
+            color: #0076d6;
+            background-color: #f5f6f7;
+            margin-top: 12px;
+          "
+        >
+          Log out
+        </button>
+      </div>
+      <h1 style="margin: 0">Status</h1>
+      <div style="font-size: 22px; line-height: 32px">
+        Claim for Temporary Disability Insurance (TDI), starting November 30,
+        2023
+      </div>
+      <hr style="margin: 0; border: none; border-top: 1px solid #dfe1e2" />
+      <div>
+        <ul class="events">
+          <li>
+            <div class="active"></div>
+            <span class="done"
+              >Received<br />
+              11/12/2023</span
+            >
+          </li>
+
+          <li>
+            <div class="active"></div>
+            <span class="active">Review</span>
+          </li>
+
+          <li>
+            <div></div>
+            <span>Decision</span>
+          </li>
+
+          <li>
+            <div></div>
+            <span class="final">Payment</span>
+          </li>
+        </ul>
+      </div>
+      <div>
+        <!-- <div style="display: flex; align-items: center; margin-bottom: 12px">
+          <div
+            style="
+              border-radius: 50%;
+              height: 24px;
+              width: 24px;
+              background-color: #0076d6;
+              margin-right: 8px;
+            "
+          ></div>
+          <div>Received 11/15/2023</div>
+        </div>
+        <div style="display: flex; align-items: center; margin-bottom: 12px">
+          <div
+            style="
+              border-radius: 50%;
+              height: 24px;
+              width: 24px;
+              background-color: #a9aeb1;
+              margin-right: 8px;
+            "
+          ></div>
+          <div><b>Review</b></div>
+        </div>
+        <div style="display: flex; align-items: center; margin-bottom: 12px">
+          <div
+            style="
+              border-radius: 50%;
+              height: 24px;
+              width: 24px;
+              background-color: #a9aeb1;
+              margin-right: 8px;
+            "
+          ></div>
+          <div>Decision</div>
+        </div>
+        <div style="display: flex; align-items: center">
+          <div
+            style="
+              border-radius: 50%;
+              height: 24px;
+              width: 24px;
+              background-color: #a9aeb1;
+              margin-right: 8px;
+            "
+          ></div>
+          <div>Payment</div>
+        </div> -->
+        <h2 style="font-size: 22px; margin: 0">Current status</h2>
+        <hr style="margin: 0; border: none; border-top: 1px solid #dfe1e2" />
+        <b>In progress</b>
+        <h2 style="font-size: 22px; margin: 0">Steps to complete</h2>
+        <hr style="margin: 0; border: none; border-top: 1px solid #dfe1e2" />
+        <div
+          style="
+            border: 1px solid #dcdee0;
+            padding: 24px 16px;
+            background-color: white;
+            margin-top: 12px;
+          "
+        >
+          There's no action needed from you at this time.
+        </div>
+        <h2 style="font-size: 22px; margin: 0">What's next</h2>
+        <hr style="margin: 0; border: none; border-top: 1px solid #dfe1e2" />
+        <ul>
+          <li>
+            Once we receive the requested information, a claim examiner will
+            review your application and make a decision to approve or deny
+            benefits. This process can take several weeks.
+          </li>
+          <li>
+            We'll update your claim status when you're approved or denied, or if
+            there is any other action you need to take. Keep an eye out for
+            future updates here and by mail.
+          </li>
+        </ul>
+      </div>
+      <div>
+        <button
+          onClick="window.scrollTo(0, 0)"
+          style="
+            background: none;
+            border: none;
+            padding: 0;
+            font: inherit;
+            outline: inherit;
+            cursor: pointer;
+            font-size: 16px;
+            color: #0076d6;
+            text-decoration: underline;
+          "
+        >
+          Return to top
+        </button>
+      </div>
+    </div>
+    <footer
+      style="
+        background-color: #eff6fb;
+        padding: 12px 18px;
+        border-top: 1px solid #0b4778;
+      "
+    >
+      <h3 style="margin: 0">Need help?</h3>
+      <p>609-292-7060 | (8:00am - 4:30pm, Monday - Friday)</p>
+      <p>Wait times are shortest Wednesday- Friday</p>
+      <p>DOLi Chatbot | Available 24/7</p>
+      <p>Email</p>
+      <p>Helpful resources</p>
+      <p>
+        Due to technical constraints, you can access this claim status checker
+        8:00am - 4:30pm, Monday - Friday
+      </p>
+    </footer>
+  </body>
+</html>

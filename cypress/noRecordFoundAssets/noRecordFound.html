@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+
+<html>
+  <head>
+    <!-- <script src="./noRecordFound.js" async></script> -->
+    <title>ssn not found</title>
+
+    <link rel="stylesheet" type="text/css" href="./dabi.css" />
+    <script defer="true" src="./noRecordFound.min.js" defer></script>
+  </head>
+  <script type="text/javascript">
+    //alert("starting at the top of ssnnotfound.jsp");
+
+    function userLogout() {
+      //document.forms[0].action="/DOL_DABI/claiminuse";
+      //document.forms[0].submit();
+      document.forms[0].action = "/DOL_DABI/jsp/logout.jsp";
+      document.forms[0].submit();
+    }
+  </script>
+
+  <body bgcolor="#003366">
+    <form name="notfound" method="post">
+      <table width="100%" border="1" bgcolor="white" height="325">
+        <tr width="100%" height="94">
+          <td width="80%" align="left" class="backgroundColor">
+            <img src="./lwd_banner.jpg" height="60" />
+          </td>
+          <td width="20%" align="center" class="backgroundColor">
+            <img src="./lwd_logo.jpg" height="60" />
+          </td>
+        </tr>
+
+        <tr></tr>
+
+        <tr>
+          <td colspan="2" height="300" align="center">
+            <p>
+              <strong
+                ><font
+                  face="Arial, Helvetica, sans-serif"
+                  color="#FF0000"
+                  size="3"
+                  ><br />
+                  No record of a New Jersey State Plan Temporary Disability or
+                  State Plan Family Leave Insurance<br />
+                  claim has been found under the social security number
+                  (666-00-0000).<br /><br />If you mailed your claim recently,
+                  it may not have been registered into our computer system
+                  yet.<br />
+                  Please allow more time for processing before inquiring
+                  again.</font
+                ></strong
+              >
+            </p>
+          </td>
+        </tr>
+
+        <tr>
+          <td width="100%" align="center" colspan="2" height="100">
+            <br />
+            <input
+              type="button"
+              name="logout"
+              value="Logout"
+              onClick="userLogout();"
+              width="100"
+              style="width: 140px"
+            /><br />
+          </td>
+          <br />
+        </tr>
+      </table>
+    </form>
+  </body>
+</html>
