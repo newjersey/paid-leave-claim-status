@@ -9,7 +9,7 @@ rollup -c rollup.config.mjs -i src/claimDetail.js -o dist/claimDetail.min.js
 rollup -c rollup.config.mjs -i src/paymentDetail.js -o dist/paymentDetail.min.js
 
 echo "Copying bundled scripts to Cypress test assets..."
-cp dist/noRecordFound.min.js cypress/fixtures/noRecordFoundAssets/noRecordFound.min.js
-cp dist/claimDetail.min.js cypress/fixtures/claimDetailAssets/claimDetail.min.js
+cp dist/noRecordFound.min.js cypress/fixtures/noRecordFound/noRecordFound.min.js
+cp dist/claimDetail.min.js cypress/fixtures/claimDetail/claimDetail.min.js
 
 echo "Complete!"
