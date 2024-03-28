@@ -4,7 +4,7 @@ on:
   push:
     branches: ["dev", "prod"]
   pull_request:
-    branches: ["main", "prod"]
+    branches: ["dev", "prod"]
 
 jobs:
   cypress-run:
