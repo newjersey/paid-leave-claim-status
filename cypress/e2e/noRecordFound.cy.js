@@ -2,12 +2,12 @@ describe("No Record Found page", () => {
   it("when script is disabled, opens site with original content", () => {
     // Arrange
     cy.intercept(
-      "/cypress/noRecordFoundAssets/noRecordFound.min.js",
+      "/cypress/fixtures/noRecordFound/noRecordFound.min.js",
       `console.log("Script has been intercepted and replaced with this line");`
     );
 
     // Act
-    cy.visit("./cypress/noRecordFoundAssets/noRecordFound.html");
+    cy.visit("./cypress/fixtures/noRecordFound/noRecordFound.html");
 
     // Assert
     cy.contains(
@@ -22,7 +22,7 @@ describe("No Record Found page", () => {
     cy.clock(now);
 
     // Act
-    cy.visit("./cypress/noRecordFoundAssets/noRecordFound.html");
+    cy.visit("./cypress/fixtures/noRecordFound/noRecordFound.html");
 
     // Assert
     cy.contains(
@@ -37,7 +37,7 @@ describe("No Record Found page", () => {
 
   it("when script is enabled, new design is accessible", () => {
     // Act
-    cy.visit("./cypress/noRecordFoundAssets/noRecordFound.html");
+    cy.visit("./cypress/fixtures/noRecordFound/noRecordFound.html");
     cy.injectAxe();
 
     // Assert

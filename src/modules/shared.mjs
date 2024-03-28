@@ -1,4 +1,4 @@
-function isDesktop() {
+export function isDesktop() {
   return screen.width > 768;
 }
 
@@ -58,37 +58,6 @@ export function makeMobileFriendly() {
   }
 }
 
-export function styleLogoutButton() {
-  const logoutButton = document.getElementsByName("logout")[0];
-  logoutButton.style.backgroundColor = "white";
-  logoutButton.style.border = "2px solid #1C1D1F";
-  logoutButton.style.borderRadius = "4px";
-  logoutButton.style.color = "#1C1D1F";
-  logoutButton.style.fontWeight = "bold";
-  logoutButton.style.padding = "12px 20px";
-  logoutButton.style.width = "100%";
-  logoutButton.style.cursor = "pointer";
-  logoutButton.style.marginBottom = "2rem";
-  logoutButton.innerText = "Log out";
-  if (isDesktop()) {
-    logoutButton.style.maxWidth = "288px";
-  } else {
-    logoutButton.parentElement.style.padding = "1rem";
-  }
-  logoutButton.parentElement.removeAttribute("height");
-}
-
-export function styleBody() {
-  document.documentElement.lang = "en";
-  const bodyStyle = document.body.style;
-  bodyStyle.backgroundColor = "#F5F6F7";
-  bodyStyle.fontFamily = "'Public Sans', sans-serif";
-  bodyStyle.fontSize = "22px";
-  bodyStyle.color = "#1C1D1F";
-  bodyStyle.padding = "0px";
-  bodyStyle.marginBottom = "2rem";
-}
-
 export function addFeedbackLink() {
   const feedbackUrl = "https://forms.office.com/g/mKz7hjnZ6N";
   const aside = document.createElement("aside");
@@ -105,18 +74,10 @@ export function addFeedbackLink() {
   document.body.appendChild(aside);
 }
 
-export function updateLogo() {
-  const logo = document.getElementsByTagName("img")[0];
-  logo.src = "https://beta.nj.gov/files/dol_logo.png";
-  logo.style.removeProperty("width");
-  logo.style.removeProperty("height");
-  logo.style.marginLeft = isDesktop() ? "107px" : "18px";
-  logo.alt = "Official logo for the New Jersey Department of Labor";
-  logo.parentElement.parentElement.removeAttribute("height");
-}
-
 // Used for tagged template strings
-const html = (strings, ...values) => String.raw({ raw: strings }, ...values);
+export function html(strings, ...values) {
+  return String.raw({ raw: strings }, ...values);
+}
 
 export const HEADER_HTML = html`
   <header
@@ -132,65 +93,3 @@ export const HEADER_HTML = html`
     >
   </header>
 `;
-
-export function getRedesignHtml(
-  status,
-  statusExtra,
-  whatsNext,
-  whatsNextExtra
-) {
-  if (!status || !statusExtra) return "";
-
-  const currentDate = new Date().toLocaleDateString("en-us", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
-  return html`
-    <main
-      style="margin:0 ${isDesktop()
-        ? "107px"
-        : "18px"};text-align:left;line-height:150%;margin-top:1.5rem"
-    >
-      <h1
-        style="margin:0;font-size:40px;font-weight:700;margin-top:34px;margin-bottom:36px"
-      >
-        Welcome
-      </h1>
-      <div
-        style="display:grid;grid-template-columns:${isDesktop()
-          ? "1fr 1fr"
-          : "1fr"};column-gap: 2rem"
-      >
-        <div>
-          <h2
-            style="margin:0;font-size:22px;font-weight:400;margin-bottom:16px"
-          >
-            Claim status
-          </h2>
-          <h3
-            style="margin:0;font-size:22px;font-weight:700;margin-bottom:36px"
-          >
-            ${status}
-          </h3>
-          <p>${statusExtra}</p>
-          <p style="font-size:14px;margin-bottom:64px">
-            <i>[Current as of ${currentDate}]</i>
-          </p>
-        </div>
-        <div>
-          <h2
-            style="margin:0;font-size:22px;font-weight:400;margin-bottom:16px"
-          >
-            What to do next
-          </h2>
-          ${whatsNext
-            ? `<h3 style="margin:0;font-size:22px;font-weight:700;margin-bottom:36px">${whatsNext}</h3>`
-            : ""}
-          ${whatsNextExtra ? `<div>${whatsNextExtra}</div>` : ""}
-        </div>
-      </div>
-    </main>
-  `;
-}
