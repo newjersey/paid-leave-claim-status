@@ -82,9 +82,14 @@ export function html(strings, ...values) {
   return String.raw({ raw: strings }, ...values);
 }
 
+export function js(strings, ...values) {
+  return String.raw({ raw: strings }, ...values);
+}
+
 export const HEADER_HTML = html`
   <header
     style="padding:10px 20px; background-color: black; color:white; font-size: 13px; line-height: 150%"
+    id="header"
   >
     <div style="margin-bottom:4px">
       <b>New Jersey Department of Labor and Workforce Development</b>
@@ -240,10 +245,11 @@ export function getUnstyledButton(label, onClick) {
   </button>`;
 }
 
-export const RETURN_TO_TOP_LINK = getUnstyledButton(
-  "Return to top",
-  "window.scrollTo(0, 0)"
-);
+export const RETURN_TO_TOP_LINK = html`<a
+  href="#header"
+  style="font-size: 16px; color: #0b4778; text-underline-offset: 2.5px"
+  >Return to top</a
+>`;
 
 export function getStatusAlert(status) {
   let color = "";
