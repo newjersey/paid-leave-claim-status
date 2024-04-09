@@ -7,6 +7,7 @@ import {
   HEADER_HTML,
   isDesktop,
   html,
+  styleBody,
 } from "./modules/shared.mjs";
 
 if (document.readyState === "loading") {
@@ -27,17 +28,6 @@ function executeOverride() {
   styleLogoutButton();
   updateLogo();
   logEvent("[DOL_DABI] Viewed SSN Not Found page");
-}
-
-function styleBody() {
-  document.documentElement.lang = "en";
-  const bodyStyle = document.body.style;
-  bodyStyle.backgroundColor = "#F5F6F7";
-  bodyStyle.fontFamily = "'Public Sans', sans-serif";
-  bodyStyle.fontSize = "22px";
-  bodyStyle.color = "#1C1D1F";
-  bodyStyle.padding = "0px";
-  bodyStyle.marginBottom = "2rem";
 }
 
 function updateLogo() {
@@ -136,6 +126,7 @@ function styleRoot() {
   const headerRow = document.createElement("tr");
   root.children[0].children[0].prepend(headerRow);
   headerRow.innerHTML = HEADER_HTML;
+  headerRow.children[0].style.marginBottom = "52px";
 
   const status = "No claim on file";
   const statusExtra =

@@ -11,5 +11,6 @@ rollup -c rollup.config.mjs -i src/paymentDetail.js -o dist/paymentDetail.min.js
 echo "Copying bundled scripts to Cypress test assets..."
 cp dist/noRecordFound.min.js cypress/fixtures/noRecordFound/noRecordFound.min.js
 cp dist/claimDetail.min.js cypress/fixtures/claimDetail/claimDetail.min.js
+cp dist/claimList.min.js cypress/fixtures/claimList/claimList.min.js
 
 echo "Complete!"
