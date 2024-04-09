@@ -198,7 +198,8 @@ function addNewHtml(name, claims) {
                       gap: 8px;
                       text-align: left;
                       margin-bottom: 8px;
-                      width: 100%"
+                      width: 100%;
+                      justify-content: space-between"
                     >
                       <div>
                         <b>Claim for ${getClaimTypeContent(claim.type)}</b>
