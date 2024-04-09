@@ -197,7 +197,8 @@ function addNewHtml(name, claims) {
                       border-radius: 4px;
                       gap: 8px;
                       text-align: left;
-                      margin-bottom: 8px"
+                      margin-bottom: 8px;
+                      width: 100%"
                     >
                       <div>
                         <b>Claim for ${getClaimTypeContent(claim.type)}</b>
