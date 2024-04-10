@@ -298,7 +298,7 @@ function addNewHtml(
             border-left: 3.2px #8d9297 dotted;
           }
           .progress-bar span.complete,
-          .progress-bar span.complete {
+          .progress-bar span.current {
             font-weight: bold;
           }
           .progress-bar span.received {
