@@ -217,44 +217,45 @@ function addNewHtml(
   const newContainer = document.createElement("div");
 
   newContainer.innerHTML = html`${HEADER_HTML}
-    <div style="display: flex; align-items: center; margin: 12px 18px">
+    <div
+      style="display: flex; align-items: center; margin: 4px 20px 16px; line-height: 26px"
+    >
       ${getUnstyledButton("All claims", "claimList()")}
       <img src="./assets/arrow.svg" alt="Right arrow" />
       <div style="display: inline-block"><b>Status</b></div>
     </div>
-    <div style="margin: 12px 18px">
-      <div style="display: flex; justify-content: flex-end">
-        <button
-          onClick="userLogout()"
-          style="
-            background: none;
-            font: inherit;
-            cursor: pointer;
-            outline: inherit;
-            border: 2px solid #0b4778;
-            border-radius: 4px;
-            padding: 12px 14px;
-            font-size: 16px;
-            font-weight: bold;
-            color: #0b4778;
-            background-color: #f5f6f7;
-            margin-top: 12px;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-          "
-        >
-          <img src="./assets/logout.svg" alt="" />
-          <span>Log out</span>
-        </button>
-      </div>
-      <h1 style="margin: 0; margin-bottom: 8px">Status</h1>
-      <div style="font-size: 22px; line-height: 32px; margin-bottom: 28px">
+    <div style="display: flex; justify-content: flex-end; margin: 0 20px">
+      <button
+        onClick="userLogout()"
+        style="
+          background: none;
+          font: inherit;
+          cursor: pointer;
+          outline: inherit;
+          border: 2px solid #0b4778;
+          border-radius: 4px;
+          padding: 12px 10.5px;
+          font-size: 16px;
+          font-weight: bold;
+          color: #0b4778;
+          background-color: #f5f6f7;
+          display: flex;
+          align-items: center;
+          gap: 6px;
+        "
+      >
+        <img src="./assets/logout.svg" alt="" />
+        <span>Log out</span>
+      </button>
+    </div>
+    <div style="margin: 16px 20px">
+      <h1 style="margin: 0 0 8px; font-size: 32px; line-height: 40px">
+        Status
+      </h1>
+      <div style="font-size: 22px; line-height: 32px; margin-bottom: 44px">
         Claim for ${getClaimTypeContent(claimType)}, started
         ${getFormattedDate(claimDate)}
       </div>
-      <hr style="margin: 0; border: none; border-top: 1px solid #dfe1e2" />
       <div style="margin-bottom: 56px">
         <style>
           .progress-bar li {
@@ -269,17 +270,20 @@ function addNewHtml(
             z-index: 2;
             right: 0;
             top: 0;
-            transform: translateX(57%);
+            transform: translateX(59%);
             border-radius: 50%;
-            background-color: #a9aeb1;
-            width: 24px;
-            height: 24px;
+            background-color: #dfe1e2;
+            width: 22px;
+            height: 22px;
+            border: 2px solid #8d9297;
           }
           .progress-bar .circle.complete::after {
             background-color: #0076d6;
+            border-color: #0076d6;
           }
           .progress-bar .circle.current::after {
-            background-color: green;
+            background-color: white;
+            border-color: #0076d6;
           }
           .progress-bar span {
             padding: 0.2em 1.5em 1.5em 1.5em;
@@ -291,13 +295,19 @@ function addNewHtml(
             z-index: 1;
             left: 0;
             height: 100%;
-            border-left: 4px #a9aeb1 solid;
+            border-left: 3.2px #8d9297 dotted;
           }
-          .progress-bar span.current {
+          .progress-bar span.complete,
+          .progress-bar span.complete {
             font-weight: bold;
           }
+          .progress-bar span.received {
+            font-weight: normal;
+          }
           .progress-bar span.complete::before {
-            border-color: #cfe8ff;
+            border-left-width: 2.5px;
+            border-left-color: #0076d6;
+            border-left-style: solid;
           }
           .progress-bar span.end::before {
             border: none;
@@ -306,9 +316,8 @@ function addNewHtml(
         <ul style="padding-inline-start: 12px" class="progress-bar">
           <li>
             <div class="circle complete"></div>
-            <span class="complete"
-              >Received<br />
-              ${receivedDate}</span
+            <span class="complete received"
+              ><b>Received</b> ${receivedDate}</span
             >
           </li>
           <li>
@@ -317,18 +326,19 @@ function addNewHtml(
                 ? "current"
                 : "complete"}"
             ></div>
-            <span class="${claimStatus === "Undetermined" ? "current" : ""}"
+            <span
+              class="${claimStatus === "Undetermined" ? "current" : "complete"}"
               >Review</span
             >
           </li>
           <li>
             <div
-              class="circle ${claimStatus !== "Undetermined" ? "complete" : ""}"
+              class="circle ${claimStatus === "Undetermined" ? "" : "complete"}"
             ></div>
             <span
-              class="${claimStatus === "Ineligible"
-                ? "current"
-                : ""} ${claimStatus === "Ineligible" ? "end" : ""}"
+              class="${claimStatus === "Undetermined"
+                ? ""
+                : "complete"} ${claimStatus === "Ineligible" ? "end" : ""}"
               >Decision</span
             >
           </li>
