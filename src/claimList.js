@@ -155,7 +155,7 @@ function addNewHtml(name, claims) {
               )
               .join("")
           : html` <div
-              style="background-color: #EDEFF0; padding: 23px 26px; font-size: 16px; line-height: 24px"
+              style="background-color: #fff; border: 1px solid #DFE1E2; border-radius: 4px; padding: 32px; font-size: 16px; line-height: 24px"
             >
               <b>No recent claims on file.</b> We haven't received a claim from
               you in the past 12 months. If you recently applied, expect an
@@ -179,12 +179,11 @@ function addNewHtml(name, claims) {
             >
               started more than a year ago
             </div>
-            <div>
-              ${oldClaims
-                .map(
-                  (claim) => html`
-                    <button
-                      style="	background: none;
+            ${oldClaims
+              .map(
+                (claim) => html`
+                  <button
+                    style="	background: none;
                       color: inherit;
                       font: inherit;
                       cursor: pointer;
@@ -200,17 +199,16 @@ function addNewHtml(name, claims) {
                       margin-bottom: 8px;
                       width: 100%;
                       justify-content: space-between"
-                    >
-                      <div>
-                        <b>Claim for ${getClaimTypeContent(claim.type)}</b>
-                        started ${getFormattedDate(claim.date)}
-                      </div>
-                      <img src="${ICON_BASE_URL}/navigate_next.svg" alt="" />
-                    </button>
-                  `
-                )
-                .join("")}
-            </div>`
+                  >
+                    <div>
+                      <b>Claim for ${getClaimTypeContent(claim.type)}</b>,
+                      started ${getFormattedDate(claim.date)}
+                    </div>
+                    <img src="${ICON_BASE_URL}/navigate_next.svg" alt="" />
+                  </button>
+                `
+              )
+              .join("")}`
         : ""}
       <div style="margin-bottom: 20px; margin-top: 76px">
         ${RETURN_TO_TOP_LINK}

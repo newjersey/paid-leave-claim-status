@@ -28,7 +28,6 @@ describe("No Record Found page", () => {
     cy.contains(
       "No record of a New Jersey State Plan Temporary Disability or State Plan Family Leave Insurance claim has been found under the social security number (666-00-0000)."
     ).should("not.exist");
-
     cy.contains("No claim on file");
     cy.contains("If you recently applied, don't worry!");
     cy.contains("Give feedback");
@@ -36,15 +35,7 @@ describe("No Record Found page", () => {
   });
 
   it("when script is enabled, new design is accessible", () => {
-    // Act
     cy.visit("./cypress/fixtures/noRecordFound/noRecordFound.html");
-    cy.injectAxe();
-
-    // Assert
-    cy.checkA11y("body", {
-      rules: {
-        region: { enabled: false }, // Disable rule because can't control top-level elements easily
-      },
-    });
+    cy.checkBodyA11y();
   });
 });

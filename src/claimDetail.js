@@ -11,6 +11,8 @@ import {
   RETURN_TO_TOP_LINK,
   getClaimTypeContent,
   getUnstyledButton,
+  ICON_BASE_URL,
+  getFormattedDate,
 } from "./modules/shared.mjs";
 
 if (document.readyState === "loading") {
@@ -249,7 +251,8 @@ function addNewHtml(
       </div>
       <h1 style="margin: 0; margin-bottom: 8px">Status</h1>
       <div style="font-size: 22px; line-height: 32px; margin-bottom: 28px">
-        Claim for ${getClaimTypeContent(claimType)}, starting ${claimDate}
+        Claim for ${getClaimTypeContent(claimType)}, started
+        ${getFormattedDate(claimDate)}
       </div>
       <hr style="margin: 0; border: none; border-top: 1px solid #dfe1e2" />
       <div style="margin-bottom: 56px">
@@ -382,7 +385,7 @@ function addNewHtml(
             <div
               style="border-left: 8px solid #FFBE2E; background-color: #FAF3D1; padding: 8px 16px 8px 14px; display: flex; align-items: center; gap: 14px"
             >
-              <img src="./assets/warning.svg" alt="" />
+              <img src="${ICON_BASE_URL}/warning.svg" alt="" />
               <div style="line-height: 24px">Missing medical information</div>
             </div>
             <div

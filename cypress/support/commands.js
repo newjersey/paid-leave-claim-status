@@ -23,3 +23,14 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add("checkBodyA11y", (token) => {
+  cy.injectAxe();
+
+  // Assert
+  cy.checkA11y("body", {
+    rules: {
+      region: { enabled: false }, // Disable rule because can't control top-level elements easily
+    },
+  });
+});
