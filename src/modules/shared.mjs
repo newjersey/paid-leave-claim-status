@@ -274,7 +274,7 @@ export function getStatusAlert(status) {
       break;
     case "In progress":
     default:
-      color = "#DFE1E2";
+      color = "#E7F6F8";
       borderColor = "#00BDE3";
       icon = "info";
       break;

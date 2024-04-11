@@ -13,6 +13,7 @@ import {
   getUnstyledButton,
   ICON_BASE_URL,
   getFormattedDate,
+  getStatusAlert,
 } from "./modules/shared.mjs";
 
 if (document.readyState === "loading") {
@@ -154,19 +155,22 @@ function extractNoteData(claimNotes) {
 }
 
 function getWhatsNextContent(claimStatus, claimNoteDetails, eligibleDetails) {
+  let listEls = undefined;
+
   if (claimStatus === "Undetermined") {
     if (
       claimNoteDetails.length === 0 ||
-      claimNoteDetails.some((note) => note.type === "14_DAY")
+      (claimNoteDetails.length === 1 && claimNoteDetails === "SENT_REQ") ||
+      (claimNoteDetails.length === 1 && claimNoteDetails === "14_DAY")
     ) {
-      return html`<li>We'll review your claim.</li>
+      listEls = html`<li>We'll review your claim.</li>
         <li>
           We'll notify you of important status updates here and by mail. It can
-          take anywhere from 2-6 weeks for a decision or status change depending
-          on the volume of claims.
+          take a number of weeks for a decision or status change depending on
+          the volume of claims.
         </li>`;
     } else {
-      return html`<li>
+      listEls = html`<li>
           After we receive the information, we'll continue reviewing your claim.
         </li>
         <li>
@@ -179,7 +183,7 @@ function getWhatsNextContent(claimStatus, claimNoteDetails, eligibleDetails) {
     }
   } else if (claimStatus === "Eligible") {
     if (eligibleDetails.nextPaymentDate == null) {
-      return html`<li>
+      listEls = html`<li>
           Payment is usually sent to your benefits debit card a few days after
           you're approved.
           <a
@@ -197,13 +201,19 @@ function getWhatsNextContent(claimStatus, claimNoteDetails, eligibleDetails) {
           >, which is sent as back pay after your 22nd day of TDI benefits paid.
         </li> `;
     } else {
-      return html`<li>
+      listEls = html`<li>
         You'll keep getting paid. We'll post here if anything changes.
       </li>`;
     }
   }
 
-  return null;
+  return listEls != null
+    ? html` <ul
+        style="line-height: 24px; padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
+      >
+        ${listEls}
+      </ul>`
+    : "";
 }
 
 function addNewHtml(
@@ -248,7 +258,7 @@ function addNewHtml(
         <span>Log out</span>
       </button>
     </div>
-    <div style="margin: 16px 20px">
+    <div style="margin: 16px 20px 44px">
       <h1 style="margin: 0 0 8px; font-size: 32px; line-height: 40px">
         Status
       </h1>
@@ -256,180 +266,132 @@ function addNewHtml(
         Claim for ${getClaimTypeContent(claimType)}, started
         ${getFormattedDate(claimDate)}
       </div>
-      <div style="margin-bottom: 56px">
-        <style>
-          .progress-bar li {
-            display: flex;
-          }
-          .progress-bar .circle {
-            position: relative;
-          }
-          .progress-bar .circle::after {
-            content: "";
-            position: absolute;
-            z-index: 2;
-            right: 0;
-            top: 0;
-            transform: translateX(59%);
-            border-radius: 50%;
-            background-color: #dfe1e2;
-            width: 22px;
-            height: 22px;
-            border: 2px solid #8d9297;
-          }
-          .progress-bar .circle.complete::after {
-            background-color: #0076d6;
-            border-color: #0076d6;
-          }
-          .progress-bar .circle.current::after {
-            background-color: white;
-            border-color: #0076d6;
-          }
-          .progress-bar span {
-            padding: 0.2em 1.5em 1.5em 1.5em;
-            position: relative;
-          }
-          .progress-bar span::before {
-            content: "";
-            position: absolute;
-            z-index: 1;
-            left: 0;
-            height: 100%;
-            border-left: 3.2px #8d9297 dotted;
-          }
-          .progress-bar span.complete,
-          .progress-bar span.current {
-            font-weight: bold;
-          }
-          .progress-bar span.received {
-            font-weight: normal;
-          }
-          .progress-bar span.complete::before {
-            border-left-width: 2.5px;
-            border-left-color: #0076d6;
-            border-left-style: solid;
-          }
-          .progress-bar span.end::before {
-            border: none;
-          }
-        </style>
-        <ul style="padding-inline-start: 12px" class="progress-bar">
-          <li>
-            <div class="circle complete"></div>
-            <span class="complete received"
-              ><b>Received</b> ${receivedDate}</span
-            >
-          </li>
-          <li>
-            <div
-              class="circle ${claimStatus === "Undetermined"
-                ? "current"
-                : "complete"}"
-            ></div>
-            <span
-              class="${claimStatus === "Undetermined" ? "current" : "complete"}"
-              >Review</span
-            >
-          </li>
-          <li>
-            <div
-              class="circle ${claimStatus === "Undetermined" ? "" : "complete"}"
-            ></div>
-            <span
-              class="${claimStatus === "Undetermined"
-                ? ""
-                : "complete"} ${claimStatus === "Ineligible" ? "end" : ""}"
-              >Decision</span
-            >
-          </li>
-          ${claimStatus === "Ineligible"
-            ? ""
-            : html`<li>
-                <div
-                  class="circle ${claimStatus === "Eligible" ? "current" : ""}"
-                ></div>
-                <span class="end ${claimStatus === "Eligible" ? "current" : ""}"
-                  >Payment</span
-                >
-              </li>`}
+    </div>
+    <div style="margin: 0 20px 28px">
+      <style>
+        .progress-bar li {
+          display: flex;
+        }
+        .progress-bar .circle {
+          position: relative;
+        }
+        .progress-bar .circle::after {
+          content: "";
+          position: absolute;
+          z-index: 2;
+          right: 0;
+          top: 0;
+          transform: translateX(56%);
+          border-radius: 50%;
+          background-color: #dfe1e2;
+          width: 22px;
+          height: 22px;
+          border: 2px solid #8d9297;
+        }
+        .progress-bar .circle.complete::after {
+          background-color: #0076d6;
+          border-color: #0076d6;
+        }
+        .progress-bar .circle.current::after {
+          background-color: white;
+          border-color: #0076d6;
+        }
+        .progress-bar span {
+          padding: 0.2em 1.5em 1.5em 1.5em;
+          position: relative;
+        }
+        .progress-bar span::before {
+          content: "";
+          position: absolute;
+          z-index: 1;
+          left: 0;
+          height: 100%;
+          border-left: 3.2px #8d9297 dotted;
+        }
+        .progress-bar span.complete,
+        .progress-bar span.current {
+          font-weight: bold;
+        }
+        .progress-bar span.received {
+          font-weight: normal;
+        }
+        .progress-bar span.complete::before {
+          border-left-width: 2.5px;
+          border-left-color: #0076d6;
+          border-left-style: solid;
+        }
+        .progress-bar span.end::before {
+          border: none;
+        }
+      </style>
+      <ul style="padding-inline-start: 12px" class="progress-bar">
+        <li>
+          <div class="circle complete"></div>
+          <span class="complete received"
+            ><b>Received</b> ${getFormattedDate(receivedDate)}</span
+          >
+        </li>
+        <li>
+          <div
+            class="circle ${claimStatus === "Undetermined"
+              ? "current"
+              : "complete"}"
+          ></div>
+          <span
+            class="${claimStatus === "Undetermined" ? "current" : "complete"}"
+            >Review</span
+          >
+        </li>
+        <li>
+          <div
+            class="circle ${claimStatus === "Undetermined" ? "" : "complete"}"
+          ></div>
+          <span
+            class="${claimStatus === "Undetermined"
+              ? ""
+              : "complete"} ${claimStatus === "Ineligible" ? "end" : ""}"
+            >Decision</span
+          >
+        </li>
+        ${claimStatus === "Ineligible"
+          ? ""
+          : html`<li>
+              <div
+                class="circle ${claimStatus === "Eligible" ? "current" : ""}"
+              ></div>
+              <span class="end ${claimStatus === "Eligible" ? "current" : ""}"
+                >Payment</span
+              >
+            </li>`}
+      </ul>
+    </div>
+    <h2 style="font-size: 22px; margin: 0 20px 8px; line-height: 32px">
+      Current status
+    </h2>
+    <div
+      style="background-color: #fff; padding: 16px 32px; margin-bottom: 36px"
+    >
+      ${getStatusAlert("In progress")}
+      <div style="font-size: 16px; line-height: 24px; margin-top: 12px">
+        <h3 style="font-size: 16px; line-height: 24px; margin: 0">
+          Steps to complete
+        </h3>
+        <ul
+          style="padding-inline-start: 25px; margin-block-start: 0.5em; margin-block-end: 0.5em"
+        >
+          <li>There's no action for you to take.</li>
         </ul>
       </div>
-      <div>
-        <div style="margin-bottom: 56px">
-          <h2 style="font-size: 22px; margin: 0; line-height: 32px">
-            Current status
-          </h2>
-          <hr
-            style="
-          margin: 0;
-          border: none;
-          border-top: 1px solid #dfe1e2;
-          margin-bottom: 16px;
-        "
-          />
-          <b>In progress</b>
-        </div>
-        <div style="margin-bottom: 56px">
-          <h2 style="font-size: 22px; margin: 0; line-height: 32px">
-            Steps to complete
-          </h2>
-          <hr
-            style="
-          margin: 0;
-          border: none;
-          border-top: 1px solid #dfe1e2;
-          margin-bottom: 16px;
-        "
-          />
-          <div
-            style="
-          border: 1px solid #dcdee0;
-          padding: 24px 16px;
-          background-color: white;
-          margin-top: 12px;
-        "
-          >
-            There's no action needed from you at this time.
-          </div>
-          <div style="margin-top: 8px">
-            <div
-              style="border-left: 8px solid #FFBE2E; background-color: #FAF3D1; padding: 8px 16px 8px 14px; display: flex; align-items: center; gap: 14px"
-            >
-              <img src="${ICON_BASE_URL}/warning.svg" alt="" />
-              <div style="line-height: 24px">Missing medical information</div>
-            </div>
-            <div
-              style="
-          border: 1px solid #dcdee0;
-          padding: 24px 16px;
-          background-color: white;
-        "
-            >
-              We still need a medical certificate to process your claim. Make
-              sure your medical provider completes it by DATE so your claim
-              isn't delayed or denied.
-            </div>
-          </div>
-        </div>
-        <div style="margin-bottom: 344px">
-          <h2 style="font-size: 22px; margin: 0; line-height: 32px">
-            What's next
-          </h2>
-          <hr
-            style="
-          margin: 0;
-          border: none;
-          border-top: 1px solid #dfe1e2;
-          margin-bottom: 16px;
-        "
-          />
-          <ul style="line-height: 24px; padding-inline-start: 20px"></ul>
-        </div>
-      </div>
-      <div style="margin-bottom: 20px; margin-top: 76px">
-        ${RETURN_TO_TOP_LINK}
+    </div>
+    <div style="margin-bottom: 40px">
+      <h2 style="font-size: 22px; margin: 0 20px 8px; line-height: 32px">
+        What's next
+      </h2>
+      <div style="background-color: #fff; padding: 24px 32px">
+        ${getWhatsNextContent(claimStatus, claimNotes)}
       </div>
     </div>
+    <div style="margin: 0 20px 8px">${RETURN_TO_TOP_LINK}</div>
     ${FOOTER_HTML}`;
 
   root.append(newContainer);
