@@ -341,11 +341,11 @@ function getStatusContent(newStatus, claimNotes, claimType, receivedDate) {
       .map((note, idx) => {
         let title = "";
         let body = "";
+        let expectedDate = new Date(receivedDate);
+        expectedDate.setDate(expectedDate.getDate() + 14);
 
         switch (note.type) {
           case "GEN_C01":
-            const expectedDate = new Date(receivedDate);
-            expectedDate.setDate(expectedDate.getDate() + 14);
             title = "Missing claimant information";
             body = html`<div>
               We need claimant information to review your claim.<br /><br />
@@ -366,6 +366,39 @@ function getStatusContent(newStatus, claimNotes, claimType, receivedDate) {
                   Make sure you complete the form, and fax or mail it to us by
                   <b>${getFormattedDate(expectedDate)}</b> so your claim isn't
                   delayed or denied.
+                </li>
+              </ul>
+            </div>`;
+            break;
+          case "GEN_M01":
+            title = "Missing medical certificate";
+            body = html`<div>
+              We need a medical certificate from your doctor (or other approved
+              medical provider) to review your claim.<br /><br />
+              <b>Steps to complete</b>
+              <ul
+                style="line-height: 24px; padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
+              >
+                <li>
+                  Share the medical certificate instructions with your doctor.
+                  The document is listed under "Medical Certificate
+                  Instructions" in
+                  <a
+                    href="https://secure.dol.state.nj.us/tdi/caller.aspx?Source=${claimType}"
+                    target="_blank"
+                    >claim documents</a
+                  >.
+                </li>
+                <li>
+                  Make sure your doctor completes this step by
+                  <b>${getFormattedDate(expectedDate)}</b> so your claim isn't
+                  delayed or denied. To confirm we received it, check under
+                  "Medical Summary" in your
+                  <a
+                    href="https://secure.dol.state.nj.us/tdi/caller.aspx?Source=${claimType}"
+                    target="_blank"
+                    >claim documents</a
+                  >.
                 </li>
               </ul>
             </div>`;
