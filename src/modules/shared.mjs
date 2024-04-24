@@ -86,6 +86,10 @@ export function js(strings, ...values) {
   return String.raw({ raw: strings }, ...values);
 }
 
+export function css(strings, ...values) {
+  return String.raw({ raw: strings }, ...values);
+}
+
 export const HEADER_HTML = html`
   <header
     style="padding:10px 20px; background-color: black; color:white; font-size: 13px; line-height: 150%"

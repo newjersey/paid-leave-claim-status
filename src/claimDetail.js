@@ -14,7 +14,9 @@ import {
   ICON_BASE_URL,
   getFormattedDate,
   getStatusAlert,
+  css,
 } from "./modules/shared.mjs";
+import { Accordion } from "./modules/Accordion.mjs";
 
 if (document.readyState === "loading") {
   window.addEventListener("DOMContentLoaded", () => {
@@ -30,13 +32,15 @@ function executeOverride() {
 
   const { claimType, claimStatus, claimNotes, receivedDate, claimDate } =
     getMetadata();
+  const parsedClaimNotes = extractNoteData(claimNotes);
   removeOldHtml();
-  addNewHtml(claimType, claimStatus, claimNotes, receivedDate, claimDate);
+  addHeadStyles();
+  addNewHtml(claimType, claimStatus, parsedClaimNotes, receivedDate, claimDate);
 
   styleBody();
   addFeedbackLink();
   updateIcon();
-  logView(claimType, claimStatus, claimNotes);
+  logView(claimType, claimStatus, parsedClaimNotes);
 }
 
 function getMetadata() {
@@ -57,10 +61,7 @@ function getMetadata() {
       .filter(
         (line) =>
           line.length > 0 &&
-          !line.startsWith(
-            "As soon as this information is received your claim"
-          ) &&
-          !line.startsWith("A request for information has been mailed")
+          !line.startsWith("As soon as this information is received your claim")
       );
   const claimDate = baseChildren[8]?.children[0]?.innerText.trim();
   const receivedDate = baseChildren[8]?.children[2]?.innerText;
@@ -77,6 +78,99 @@ function getMetadata() {
     receivedDate,
     claimDate,
   };
+}
+
+function addHeadStyles() {
+  const style = document.createElement("style");
+  style.textContent = css`
+    .progress-bar li {
+      display: flex;
+    }
+    .progress-bar .circle {
+      position: relative;
+    }
+    .progress-bar .circle::after {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      right: 0;
+      top: 0;
+      transform: translateX(56%);
+      border-radius: 50%;
+      background-color: #dfe1e2;
+      width: 22px;
+      height: 22px;
+      border: 2px solid #8d9297;
+    }
+    .progress-bar .circle.complete::after {
+      background-color: #0076d6;
+      border-color: #0076d6;
+    }
+    .progress-bar .circle.current::after {
+      background-color: white;
+      border-color: #0076d6;
+    }
+    .progress-bar span {
+      padding: 0.2em 1.5em 1.5em 1.5em;
+      position: relative;
+    }
+    .progress-bar span::before {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      left: 0;
+      height: 100%;
+      border-left: 3.2px #8d9297 dotted;
+    }
+    .progress-bar span.complete,
+    .progress-bar span.current {
+      font-weight: bold;
+    }
+    .progress-bar span.received {
+      font-weight: normal;
+    }
+    .progress-bar span.complete::before {
+      border-left-width: 2.5px;
+      border-left-color: #0076d6;
+      border-left-style: solid;
+    }
+    .progress-bar span.end::before {
+      border: none;
+    }
+    .accordion-header {
+      margin: 0;
+    }
+    .accordion-trigger {
+      background: none;
+      display: flex;
+      align-items: center;
+      margin: 0;
+      gap: 16px;
+      padding: 16px 20px;
+      justify-content: space-between;
+      position: relative;
+      text-align: left;
+      width: 100%;
+      cursor: pointer;
+      border: 0.5px solid #a9aeb1;
+      border-radius: 5px;
+    }
+    .accordion-title {
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 18px;
+    }
+    .accordion-panel {
+      padding: 19px 32px 16px;
+      border: 0.5px solid #a9aeb1;
+      border-radius: 5px;
+      border-top: none;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      transform: translateY(-3px);
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 function removeOldHtml() {
@@ -154,15 +248,31 @@ function extractNoteData(claimNotes) {
   });
 }
 
-function getWhatsNextContent(claimStatus, claimNoteDetails, eligibleDetails) {
+function isClaimNotesEmpty(claimNotes) {
+  return (
+    claimNotes.length === 0 ||
+    (claimNotes.length === 1 && claimNotes === "SENT_REQ") ||
+    (claimNotes.length === 1 && claimNotes === "14_DAY")
+  );
+}
+
+function getStatus(claimStatus, claimNotes) {
+  let status = "In progress";
+  if (claimStatus === "Eligible") {
+    status = "Approved";
+  } else if (claimStatus === "Ineligible") {
+    status = "Denied";
+  } else if (claimStatus === "Undetermined" && !isClaimNotesEmpty(claimNotes)) {
+    status = "Information needed";
+  }
+  return status;
+}
+
+function getWhatsNextContent(claimStatus, claimNotes, eligibleDetails) {
   let listEls = undefined;
 
   if (claimStatus === "Undetermined") {
-    if (
-      claimNoteDetails.length === 0 ||
-      (claimNoteDetails.length === 1 && claimNoteDetails === "SENT_REQ") ||
-      (claimNoteDetails.length === 1 && claimNoteDetails === "14_DAY")
-    ) {
+    if (isClaimNotesEmpty(claimNotes)) {
       listEls = html`<li>We'll review your claim.</li>
         <li>
           We'll notify you of important status updates here and by mail. It can
@@ -174,7 +284,7 @@ function getWhatsNextContent(claimStatus, claimNoteDetails, eligibleDetails) {
           After we receive the information, we'll continue reviewing your claim.
         </li>
         <li>
-          Your status may show “information needed” for a few weeks after we
+          Your status may show "information needed" for a few weeks after we
           receive your document, while review is in progress.
         </li>
         <li>
@@ -182,7 +292,8 @@ function getWhatsNextContent(claimStatus, claimNoteDetails, eligibleDetails) {
         </li>`;
     }
   } else if (claimStatus === "Eligible") {
-    if (eligibleDetails.nextPaymentDate == null) {
+    if (eligibleDetails == null) {
+      // .nextPaymentDate
       listEls = html`<li>
           Payment is usually sent to your benefits debit card a few days after
           you're approved.
@@ -207,13 +318,100 @@ function getWhatsNextContent(claimStatus, claimNoteDetails, eligibleDetails) {
     }
   }
 
-  return listEls != null
-    ? html` <ul
-        style="line-height: 24px; padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
+  return listEls;
+}
+
+function getStatusContent(newStatus, claimNotes, claimType, receivedDate) {
+  if (newStatus === "In progress") {
+    return html`<div
+      style="font-size: 16px; line-height: 24px; margin-top: 12px"
+    >
+      <h3 style="font-size: 16px; line-height: 24px; margin: 0">
+        Steps to complete
+      </h3>
+      <ul
+        style="padding-inline-start: 25px; margin-block-start: 0.5em; margin-block-end: 0.5em"
       >
-        ${listEls}
-      </ul>`
-    : "";
+        <li>There's no action for you to take.</li>
+      </ul>
+    </div>`;
+  } else if (newStatus === "Information needed") {
+    console.log(claimNotes);
+    return claimNotes
+      .map((note, idx) => {
+        let title = "";
+        let body = "";
+
+        switch (note.type) {
+          case "GEN_C01":
+            const expectedDate = new Date(receivedDate);
+            expectedDate.setDate(expectedDate.getDate() + 14);
+            title = "Missing claimant information";
+            body = html`<div>
+              We need claimant information to review your claim.<br /><br />
+              <b>Steps to complete</b>
+              <ul
+                style="line-height: 24px; padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
+              >
+                <li>
+                  Download and print the document under "Claimant Information
+                  Forms" in your
+                  <a
+                    href="https://secure.dol.state.nj.us/tdi/caller.aspx?Source=${claimType}"
+                    target="_blank"
+                    >claim documents</a
+                  >. This document lists all the information we need.
+                </li>
+                <li>
+                  Make sure you complete the form, and fax or mail it to us by
+                  <b>${getFormattedDate(expectedDate)}</b> so your claim isn't
+                  delayed or denied.
+                </li>
+              </ul>
+            </div>`;
+            break;
+          case "SENT_REQ":
+          default:
+            return "";
+        }
+        return html`<div style="margin: 8px 0">
+          <h3 class="accordion-header">
+            <button
+              type="button"
+              aria-expanded="false"
+              class="accordion-trigger"
+              aria-controls="sect${idx}"
+              id="accordion${idx}id"
+            >
+              <div class="accordion-title">${title}</div>
+              <div>
+                <img
+                  class="accordion-icon"
+                  src="${ICON_BASE_URL}/add.svg"
+                  alt="See more"
+                />
+              </div>
+            </button>
+          </h3>
+          <div
+            id="sect${idx}"
+            role="region"
+            aria-labelledby="accordion${idx}id"
+            class="accordion-panel"
+            hidden=""
+          >
+            ${body}
+          </div>
+        </div>`;
+      })
+      .join("");
+  } else if (newStatus === "Approved") {
+    return "";
+  } else if (newStatus === "Denied") {
+    return "";
+  } else {
+    return "";
+  }
 }
 
 function addNewHtml(
@@ -225,6 +423,12 @@ function addNewHtml(
 ) {
   const root = document.getElementsByName("dabiDetail")[0];
   const newContainer = document.createElement("div");
+  const whatsNextContent = getWhatsNextContent(
+    claimStatus,
+    claimNotes,
+    undefined
+  );
+  const newStatus = getStatus(claimStatus, claimNotes);
 
   newContainer.innerHTML = html`${HEADER_HTML}
     <div
@@ -268,62 +472,6 @@ function addNewHtml(
       </div>
     </div>
     <div style="margin: 0 20px 28px">
-      <style>
-        .progress-bar li {
-          display: flex;
-        }
-        .progress-bar .circle {
-          position: relative;
-        }
-        .progress-bar .circle::after {
-          content: "";
-          position: absolute;
-          z-index: 2;
-          right: 0;
-          top: 0;
-          transform: translateX(56%);
-          border-radius: 50%;
-          background-color: #dfe1e2;
-          width: 22px;
-          height: 22px;
-          border: 2px solid #8d9297;
-        }
-        .progress-bar .circle.complete::after {
-          background-color: #0076d6;
-          border-color: #0076d6;
-        }
-        .progress-bar .circle.current::after {
-          background-color: white;
-          border-color: #0076d6;
-        }
-        .progress-bar span {
-          padding: 0.2em 1.5em 1.5em 1.5em;
-          position: relative;
-        }
-        .progress-bar span::before {
-          content: "";
-          position: absolute;
-          z-index: 1;
-          left: 0;
-          height: 100%;
-          border-left: 3.2px #8d9297 dotted;
-        }
-        .progress-bar span.complete,
-        .progress-bar span.current {
-          font-weight: bold;
-        }
-        .progress-bar span.received {
-          font-weight: normal;
-        }
-        .progress-bar span.complete::before {
-          border-left-width: 2.5px;
-          border-left-color: #0076d6;
-          border-left-style: solid;
-        }
-        .progress-bar span.end::before {
-          border: none;
-        }
-      </style>
       <ul style="padding-inline-start: 12px" class="progress-bar">
         <li>
           <div class="circle complete"></div>
@@ -365,42 +513,41 @@ function addNewHtml(
             </li>`}
       </ul>
     </div>
-    <h2 style="font-size: 22px; margin: 0 20px 8px; line-height: 32px">
+    <h2 style="font-size: 22px; margin: 0 32px 8px; line-height: 32px">
       Current status
     </h2>
     <div
       style="background-color: #fff; padding: 16px 32px; margin-bottom: 36px"
     >
-      ${getStatusAlert("In progress")}
-      <div style="font-size: 16px; line-height: 24px; margin-top: 12px">
-        <h3 style="font-size: 16px; line-height: 24px; margin: 0">
-          Steps to complete
-        </h3>
-        <ul
-          style="padding-inline-start: 25px; margin-block-start: 0.5em; margin-block-end: 0.5em"
-        >
-          <li>There's no action for you to take.</li>
-        </ul>
-      </div>
+      ${getStatusAlert(newStatus)}
+      ${getStatusContent(newStatus, claimNotes, claimType, receivedDate)}
     </div>
-    <div style="margin-bottom: 40px">
-      <h2 style="font-size: 22px; margin: 0 20px 8px; line-height: 32px">
-        What's next
-      </h2>
-      <div style="background-color: #fff; padding: 24px 32px">
-        ${getWhatsNextContent(claimStatus, claimNotes)}
-      </div>
-    </div>
+    ${whatsNextContent != null
+      ? html`<div style="margin-bottom: 40px">
+          <h2 style="font-size: 22px; margin: 0 32px 8px; line-height: 32px">
+            What's next
+          </h2>
+          <div style="background-color: #fff; padding: 24px 32px">
+            <ul
+              style="line-height: 24px; padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
+            >
+              ${whatsNextContent}
+            </ul>
+          </div>
+        </div>`
+      : ""}
     <div style="margin: 0 20px 8px">${RETURN_TO_TOP_LINK}</div>
     ${FOOTER_HTML}`;
 
   root.append(newContainer);
+  const accordions = document.querySelectorAll(".accordion-header");
+  accordions.forEach((accordionEl) => {
+    new Accordion(accordionEl);
+  });
 }
 
 function logView(claimType, claimStatus, claimNotes) {
-  const parsedNotes = claimNotes
-    .map((note) => extractNoteData(note).type)
-    .join(";");
+  const parsedNotes = claimNotes.map((note) => note.type).join(";");
 
   logEvent("[DOL_DABI] Viewed Claim Detail page", {
     object_type: claimType || "N/A",
