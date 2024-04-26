@@ -341,8 +341,20 @@ function getStatusContent(newStatus, claimNotes, claimType, receivedDate) {
       .map((note, idx) => {
         let title = "";
         let body = "";
-        let expectedDate = new Date(receivedDate);
-        expectedDate.setDate(expectedDate.getDate() + 14);
+
+        const onlineResponseDate = new Date(receivedDate);
+        onlineResponseDate.setDate(onlineResponseDate.getDate() + 14);
+        const onlineResponseDateFormatted =
+          getFormattedDate(onlineResponseDate);
+
+        const mailDate = new Date(note.sentOn);
+        const mailDateFormatted = getFormattedDate(mailDate);
+
+        const mailBackDate = new Date(mailDate.getTime());
+        mailBackDate.setDate(mailBackDate.getDate() + 14);
+        const mailBackDateFormatted = getFormattedDate(mailBackDate);
+
+        const claimDocsUrl = `https://secure.dol.state.nj.us/tdi/caller.aspx?Source=${claimType}`;
 
         switch (note.type) {
           case "GEN_C01":
@@ -356,15 +368,12 @@ function getStatusContent(newStatus, claimNotes, claimType, receivedDate) {
                 <li>
                   Download and print the document under "Claimant Information
                   Forms" in your
-                  <a
-                    href="https://secure.dol.state.nj.us/tdi/caller.aspx?Source=${claimType}"
-                    target="_blank"
-                    >claim documents</a
-                  >. This document lists all the information we need.
+                  <a href="${claimDocsUrl}" target="_blank">claim documents</a>.
+                  This document lists all the information we need.
                 </li>
                 <li>
                   Make sure you complete the form, and fax or mail it to us by
-                  <b>${getFormattedDate(expectedDate)}</b> so your claim isn't
+                  <b>${onlineResponseDateFormatted}</b> so your claim isn't
                   delayed or denied.
                 </li>
               </ul>
@@ -373,8 +382,12 @@ function getStatusContent(newStatus, claimNotes, claimType, receivedDate) {
           case "GEN_M01":
             title = "Missing medical certificate";
             body = html`<div>
-              We need a medical certificate from your doctor (or other approved
-              medical provider) to review your claim.<br /><br />
+              We need a medical certificate from your doctor (or
+              <a
+                href="https://www.nj.gov/labor/myleavebenefits/worker/resources/approvedmedicalpractitioners.shtml"
+                target="_blank"
+                >other approved medical provider</a
+              >) to review your claim.<br /><br />
               <b>Steps to complete</b>
               <ul
                 style="line-height: 24px; padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
@@ -383,27 +396,151 @@ function getStatusContent(newStatus, claimNotes, claimType, receivedDate) {
                   Share the medical certificate instructions with your doctor.
                   The document is listed under "Medical Certificate
                   Instructions" in
-                  <a
-                    href="https://secure.dol.state.nj.us/tdi/caller.aspx?Source=${claimType}"
-                    target="_blank"
-                    >claim documents</a
-                  >.
+                  <a href="${claimDocsUrl}" target="_blank">claim documents</a>.
                 </li>
                 <li>
                   Make sure your doctor completes this step by
-                  <b>${getFormattedDate(expectedDate)}</b> so your claim isn't
+                  <b>${onlineResponseDateFormatted}</b> so your claim isn't
                   delayed or denied. To confirm we received it, check under
                   "Medical Summary" in your
-                  <a
-                    href="https://secure.dol.state.nj.us/tdi/caller.aspx?Source=${claimType}"
-                    target="_blank"
-                    >claim documents</a
-                  >.
+                  <a href="${claimDocsUrl}" target="_blank">claim documents</a>.
+                </li>
+              </ul>
+            </div>`;
+            break;
+          case "GEN_W01":
+            title = "Missing workers' compensation information";
+            body = html`<div>
+              We need a medical certificate from your doctor (or
+              <a
+                href="https://www.nj.gov/labor/myleavebenefits/worker/resources/approvedmedicalpractitioners.shtml"
+                target="_blank"
+                >other approved medical provider</a
+              >) to review your claim.<br /><br />
+              <b>Steps to complete</b>
+              <ul
+                style="line-height: 24px; padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
+              >
+                <li>
+                  Download and print the document under "Claimant Information
+                  Forms" in your
+                  <a href="${claimDocsUrl}" target="_blank">claim documents</a>.
+                  This document lists all the information we need.
+                </li>
+                <li>
+                  Make sure you complete the form, and fax or mail it to us by
+                  <b>${onlineResponseDateFormatted}</b> so your claim isn't
+                  delayed or denied.
+                </li>
+              </ul>
+            </div>`;
+            break;
+          case "SENT_C10":
+            title = "Missing claimant information";
+            body = html`<div>
+              We need claimant information from you to review your claim. On
+              ${mailDateFormatted}, we mailed a Request to Claimant for
+              Information (C10) to your address on file: ${note.sentTo}.<br /><br />
+              <b>Steps to complete</b>
+              <ul
+                style="line-height: 24px; padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
+              >
+                <li>
+                  Check your mail for a letter from us, mailed on
+                  ${mailDateFormatted}.
+                </li>
+                <li>
+                  Follow the instructions on the form and respond by
+                  ${mailBackDateFormatted}, so your claim isn't delayed or
+                  denied.
+                </li>
+                <li>
+                  If you haven't received anything by ${mailBackDateFormatted},
+                  reach out to our customer help team.
+                </li>
+              </ul>
+            </div>`;
+            break;
+          case "SENT_Mxx":
+            title = "Missing medical information";
+            body = html`<div>
+              We need a medical certificate from your doctor (or
+              <a
+                href="https://www.nj.gov/labor/myleavebenefits/worker/resources/approvedmedicalpractitioners.shtml"
+                target="_blank"
+                >other approved medical provider</a
+              >). On ${mailDateFormatted}, we mailed a Request for Medical
+              Information (M10 or M20) to your address on file:
+              ${note.sentTo}.<br /><br />
+              <b>Steps to complete</b>
+              <ul
+                style="line-height: 24px; padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
+              >
+                <li>
+                  Share the medical form (M10 or M20) with your doctor. Once
+                  it's complete, make sure you or your provider send it to us by
+                  ${mailBackDateFormatted} so your claim isn't delayed or
+                  denied.
+                </li>
+              </ul>
+            </div>`;
+            break;
+          case "SENT_W10":
+            title = "Missing workers' compensation information";
+            body = html`<div>
+              We need workers' compensation information from you. On
+              ${mailDateFormatted}, we mailed a Notice of Required Pursuit of
+              Workers' Compensation Claim (W10) to your address on file:
+              ${note.sentTo}.
+              <br /><br />
+              Make sure you respond by ${mailBackDateFormatted} so your claim
+              isn't delayed or denied. <br /><br />
+              <b>Steps to complete</b>
+              <ul
+                style="line-height: 24px; padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
+              >
+                <li>
+                  Check your mail for a letter from us, mailed on
+                  ${mailDateFormatted}.
+                </li>
+                <li>
+                  Follow the instructions on the form and respond by
+                  ${mailBackDateFormatted}.
+                </li>
+                <li>
+                  If you haven't received anything by ${mailBackDateFormatted},
+                  reach out to our customer help team.
+                </li>
+              </ul>
+            </div>`;
+            break;
+          case "SENT_Exx":
+            title = "Missing wage information";
+            body = html`<div>
+              We need wage information from your employer. On
+              ${mailDateFormatted}, we mailed a Request for Wage Information
+              (E10) to ${note.sentTo}.
+              <br /><br />
+              In some cases, we need employment information from you, too. If
+              so, we mailed it to you on the same date, ${mailDateFormatted}.
+              <br /><br />
+              <b>Steps to complete</b>
+              <ul
+                style="line-height: 24px; padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
+              >
+                <li>
+                  Check your mail for a letter called Claimant's Affidavit of
+                  Employment and Wages (C10) that we may have sent on
+                  ${mailDateFormatted}. If so, follow the instructions on the
+                  form and respond by ${mailBackDateFormatted}, so your claim
+                  isn't delayed or denied.
                 </li>
               </ul>
             </div>`;
             break;
           case "SENT_REQ":
+          case "":
+          case undefined:
           default:
             return "";
         }
