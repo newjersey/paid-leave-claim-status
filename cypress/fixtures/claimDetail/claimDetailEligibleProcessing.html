@@ -45,7 +45,7 @@
   <body>
     <form name="dabiDetail" method="post">
       <!-- <input type="hidden" name= "myaction" value=""> -->
-      <input type="hidden" name="ssn" value="143372203" />
+      <input type="hidden" name="ssn" value="143372204" />
       <input type="hidden" name="seqNum" value="001" />
       <div align="left">
         <table
@@ -93,7 +93,7 @@
 
           <tr>
             <td colspan="3" align="left">
-              <font size="4"><b>JENNI MAHLSTEDT </b></font><br />XXX-XX-2203
+              <font size="4"><b>JENNI MAHLSTEDT </b></font><br />XXX-XX-2204
             </td>
           </tr>
 
@@ -120,7 +120,7 @@
           <!-- space row   -->
           <tr>
             <td width="100%" align="left" colspan="3">
-              Employer(s): &nbsp; &nbsp;&nbsp;
+              Employer(s): &nbsp; PRICEWATERHOUSECOOPERS LLP
             </td>
           </tr>
 
@@ -140,10 +140,10 @@
 
           <!-- space row   -->
           <tr>
-            <td width="34%" align="center">08/01/2023</td>
+            <td width="34%" align="center">08/05/2023</td>
 
-            <td width="33%" align="center">&nbsp;&nbsp;</td>
-            <td width="33%" align="center">08/07/2023</td>
+            <td width="33%" align="center">08/04/2023</td>
+            <td width="33%" align="center">08/10/2023</td>
           </tr>
 
           <!-- space row   -->
@@ -155,7 +155,7 @@
 
           <!-- space row   -->
           <tr>
-            <td width="34%">Claim Status:&nbsp;&nbsp; Ineligible</td>
+            <td width="34%">Claim Status:&nbsp;&nbsp; Eligible</td>
             <td width="33%">&nbsp;&nbsp;</td>
             <td width="33%">&nbsp;&nbsp;</td>
           </tr>
@@ -167,9 +167,7 @@
                 <tr>
                   <td width="9%" align="left" valign="top">Claim Notes:</td>
                   <td></td>
-                  <td width="91%" align="left" colspan="2">
-                    <!-- Replaced text1    Please contact our Customer Service Section at (609)292-7060 for additional information pertaining to your claim status. -->
-                  </td>
+                  <td width="91%" align="left" colspan="2">&nbsp;&nbsp;</td>
                   <td></td>
                 </tr>
               </table>
@@ -187,6 +185,36 @@
       <div bgcolor="#FFFFFF">
         <table
           width="100%"
+          border="1"
+          align="center"
+          cellpadding="0"
+          cellspacing="0"
+        >
+          <tr>
+            <th width="10%" align="center">Average Weekly Wage</th>
+            <th width="10%" align="center">Weekly Benefit Rate</th>
+            <th width="10%" align="center">Maximum Benefit Amount</th>
+            <th width="10%" align="center">Paid Year to Date</th>
+            <th width="10%" align="center">Balance Remaining</th>
+            <th width="10%" align="center">Last Day Paid</th>
+            <th width="10%" align="center">End of Claim Date</th>
+            <th width="10%" align="center">Next Payment Date</th>
+          </tr>
+          <tr>
+            <td width="10%" align="center" class="tableBA">$6,711.51</td>
+            <td width="10%" align="center" class="tableBA">$1,025.00</td>
+            <td width="10%" align="center" class="tableBA">$26,650.00</td>
+            <td width="10%" align="center" class="tableBA">$6,001.00</td>
+            <td width="10%" align="center" class="tableBA">$20,649.00</td>
+            <td width="10%" align="center" class="tableBA">09/14/2023</td>
+            <td width="10%" align="center" class="tableBA">&nbsp;&nbsp;</td>
+            <td width="10%" align="center" class="tableBA">&nbsp;&nbsp;</td>
+          </tr>
+          <!-- <hr> -->
+        </table>
+
+        <table
+          width="100%"
           border="0"
           align="center"
           cellpadding="0"
@@ -194,27 +222,36 @@
           bgcolor="#FFFFFF"
         >
           <tr>
-            <!-- <hr /> -->
-            <td align="center" width="34%">
+            <td align="center" width="23%">
               <br />
               <input
                 type="button"
-                name="btnclaimlist2"
-                id="btnclaimlist2"
+                name="btnclaimlist"
+                id="btnclaimlist"
                 value="Claim List"
-                onClick="claimList()"
+                onClick="claimList();"
                 width="100"
                 style="width: 140"
-              />
-              <br />
-              <br />
+              /><br /><br />
             </td>
-
-            <td align="center" width="33%">
+            <td align="center" width="23%">
               <br />
               <input
                 type="button"
-                name="print2"
+                name="btnpayment"
+                id="btnpayment"
+                value="Payment Detail"
+                onClick="paymentDetail();"
+                width="100"
+                style="width: 140"
+              /><br /><br />
+            </td>
+
+            <td align="center" width="27%">
+              <br />
+              <input
+                type="button"
+                name="print"
                 value="Print this Page"
                 onClick="window.print();"
                 width="100"
@@ -223,9 +260,9 @@
               <br />
               <br />
             </td>
-
-            <td align="center">
+            <td width="27%" align="center">
               <br />
+
               <input
                 type="button"
                 name="logout"

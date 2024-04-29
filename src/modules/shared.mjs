@@ -66,6 +66,7 @@ export function addFeedbackLink() {
   const aside = document.createElement("aside");
   aside.innerHTML = `<a href="${feedbackUrl}" target="_blank" style="font-family: sans-serif; text-decoration: none; color: white">Give feedback</a>`;
   aside.style.fontSize = "16px";
+  aside.style.lineHeight = "normal";
   aside.style.backgroundColor = "#003366";
   aside.style.padding = "8px 16px";
   aside.style.borderRadius = "4px";
@@ -203,6 +204,8 @@ export function styleBody() {
   const bodyStyle = document.body.style;
   bodyStyle.backgroundColor = "#F5F6F7";
   bodyStyle.fontFamily = "'Public Sans', sans-serif";
+  bodyStyle.lineHeight = "16px";
+  bodyStyle.lineHeight = "24px";
   bodyStyle.color = "#1C1D1F";
   bodyStyle.padding = "0px";
 }
@@ -288,7 +291,7 @@ export function getStatusAlert(status) {
     style="border-left: 8px solid ${borderColor}; background-color: ${color}; padding: 8px 16px 8px 14px; display: flex; align-items: center; gap: 14px"
   >
     <img src="${ICON_BASE_URL}/${icon}.svg" alt="" />
-    <div style="line-height: 24px">${status}</div>
+    <div>${status}</div>
   </div>`;
 }
 

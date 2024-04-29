@@ -36,6 +36,7 @@ function executeOverride() {
   addFeedbackLink();
   updateIcon();
   logView(claims);
+  document.title = "Check claim status";
 }
 
 function getMetadata() {
@@ -110,9 +111,7 @@ function addNewHtml(name, claims) {
                   <div style="font-size: 22px; line-height: 32px">
                     Claim for ${getClaimTypeContent(claim.type)}
                   </div>
-                  <div
-                    style="font-size: 16px; line-height: 24px; margin-bottom: 16px"
-                  >
+                  <div style="margin-bottom: 16px">
                     Started ${getFormattedDate(claim.date)}
                   </div>
                   ${claim.status === "Undetermined"
