@@ -26,17 +26,26 @@ if (document.readyState === "loading") {
 
 function executeOverride() {
   setupAnalytics();
-  makeMobileFriendly();
 
-  const { claims, name } = getMetadata();
-  removeOldHtml();
-  addNewHtml(name, claims);
+  try {
+    makeMobileFriendly();
 
-  styleBody();
-  addFeedbackLink();
-  updateIcon();
-  logView(claims);
-  document.title = "Check claim status";
+    const { claims, name } = getMetadata();
+    removeOldHtml();
+    document.getElementById("stupid")[0].hey;
+    addNewHtml(name, claims);
+
+    styleBody();
+    addFeedbackLink();
+    updateIcon();
+    logView(claims);
+    document.title = "Check claim status";
+  } catch (e) {
+    logEvent(
+      "[DOL_DABI] Claim List redesign error",
+      e instanceof Error ? e.message : "Unknown"
+    );
+  }
 }
 
 function getMetadata() {
