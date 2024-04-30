@@ -330,8 +330,9 @@ function getStatusContent(
                   denied.
                 </li>
                 <li>
-                  If you haven't received anything by ${mailBackDateFormatted},
-                  reach out to our customer help team.
+                  If you haven't received anything by
+                  ${mailExpectedDateFormatted}, reach out to our customer help
+                  team.
                 </li>
               </ul>
             </div>`;
@@ -383,8 +384,9 @@ function getStatusContent(
                   ${mailBackDateFormatted}.
                 </li>
                 <li>
-                  If you haven't received anything by ${mailBackDateFormatted},
-                  reach out to our customer help team.
+                  If you haven't received anything by
+                  ${mailExpectedDateFormatted}, reach out to our customer help
+                  team.
                 </li>
               </ul>
             </div>`;

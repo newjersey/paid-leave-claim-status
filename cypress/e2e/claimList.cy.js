@@ -1,5 +1,5 @@
 describe("Claim List page - with recent and older claims", () => {
-  it("when script is enabled, opens site with updated content", () => {
+  it("renders with updated content", () => {
     const now = new Date(2024, 3, 14); // month is 0-indexed
     cy.clock(now);
     cy.visit("./cypress/fixtures/claimList/claimList.html");
@@ -23,13 +23,13 @@ describe("Claim List page - with recent and older claims", () => {
     cy.contains("started May 26, 2020").should("be.visible");
   });
 
-  it("when script is enabled, new design is accessible", () => {
+  it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimList/claimList.html");
   });
 });
 
 describe("Claim List page - with no older claims", () => {
-  it("when script is enabled, opens site with updated content", () => {
+  it("renders with updated content", () => {
     const now = new Date(2024, 3, 14); // month is 0-indexed
     cy.clock(now);
     cy.visit("./cypress/fixtures/claimList/claimListNoOlder.html");
@@ -48,14 +48,14 @@ describe("Claim List page - with no older claims", () => {
     cy.contains("started more than a year ago").should("not.exist");
   });
 
-  it("when script is enabled, new design is accessible", () => {
+  it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimList/claimListNoOlder.html");
     cy.checkBodyA11y();
   });
 });
 
 describe("Claim List page - with no recent claims", () => {
-  it("when script is enabled, opens site with updated content", () => {
+  it("renders with updated content", () => {
     const now = new Date(2024, 3, 14); // month is 0-indexed
     cy.clock(now);
     cy.visit("./cypress/fixtures/claimList/claimListNoRecent.html");
@@ -75,7 +75,7 @@ describe("Claim List page - with no recent claims", () => {
     cy.contains("started March 5, 2020").should("be.visible");
   });
 
-  it("when script is enabled, new design is accessible", () => {
+  it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimList/claimListNoRecent.html");
     cy.checkBodyA11y();
   });

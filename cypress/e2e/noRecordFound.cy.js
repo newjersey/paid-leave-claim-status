@@ -1,5 +1,5 @@
 describe("No Record Found page", () => {
-  it("when script is enabled, opens site with updated content", () => {
+  it("renders with updated content", () => {
     const now = new Date(2021, 3, 14); // month is 0-indexed
     cy.clock(now);
 
@@ -14,7 +14,7 @@ describe("No Record Found page", () => {
     cy.contains("Current as of April 14, 2021");
   });
 
-  it("when script is enabled, new design is accessible", () => {
+  it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/noRecordFound/noRecordFound.html");
     cy.checkBodyA11y();
   });
