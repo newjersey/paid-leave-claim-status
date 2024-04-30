@@ -32,32 +32,36 @@ function executeOverride() {
 
 function updateLogo() {
   const logo = document.getElementsByTagName("img")[0];
-  logo.src = "https://beta.nj.gov/files/dol_logo.png";
-  logo.style.removeProperty("width");
-  logo.style.removeProperty("height");
-  logo.style.marginLeft = isDesktop() ? "107px" : "18px";
-  logo.alt = "Official logo for the New Jersey Department of Labor";
-  logo.parentElement.parentElement.removeAttribute("height");
+  if (logo != null) {
+    logo.src = "https://beta.nj.gov/files/dol_logo.png";
+    logo.style.removeProperty("width");
+    logo.style.removeProperty("height");
+    logo.style.marginLeft = isDesktop() ? "107px" : "18px";
+    logo.alt = "Official logo for the New Jersey Department of Labor";
+    logo.parentElement.parentElement.removeAttribute("height");
+  }
 }
 
 function styleLogoutButton() {
   const logoutButton = document.getElementsByName("logout")[0];
-  logoutButton.style.backgroundColor = "white";
-  logoutButton.style.border = "2px solid #1C1D1F";
-  logoutButton.style.borderRadius = "4px";
-  logoutButton.style.color = "#1C1D1F";
-  logoutButton.style.fontWeight = "bold";
-  logoutButton.style.padding = "12px 20px";
-  logoutButton.style.width = "100%";
-  logoutButton.style.cursor = "pointer";
-  logoutButton.style.marginBottom = "2rem";
-  logoutButton.innerText = "Log out";
-  if (isDesktop()) {
-    logoutButton.style.maxWidth = "288px";
-  } else {
-    logoutButton.parentElement.style.padding = "1rem";
+  if (logoutButton != null) {
+    logoutButton.style.backgroundColor = "white";
+    logoutButton.style.border = "2px solid #1C1D1F";
+    logoutButton.style.borderRadius = "4px";
+    logoutButton.style.color = "#1C1D1F";
+    logoutButton.style.fontWeight = "bold";
+    logoutButton.style.padding = "12px 20px";
+    logoutButton.style.width = "100%";
+    logoutButton.style.cursor = "pointer";
+    logoutButton.style.marginBottom = "2rem";
+    logoutButton.innerText = "Log out";
+    if (isDesktop()) {
+      logoutButton.style.maxWidth = "288px";
+    } else {
+      logoutButton.parentElement.style.padding = "1rem";
+    }
+    logoutButton.parentElement.removeAttribute("height");
   }
-  logoutButton.parentElement.removeAttribute("height");
 }
 
 function getRedesignHtml(status, statusExtra, whatsNext, whatsNextExtra) {

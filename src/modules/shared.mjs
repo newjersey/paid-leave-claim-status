@@ -2,11 +2,12 @@ export function isDesktop() {
   return screen.width > 768;
 }
 
+function isProduction() {
+  return window.location.hostname === "secure.dol.state.nj.us";
+}
+
 export function logEvent(name, parameters) {
-  if (
-    window.gtag != null &&
-    window.location.hostname === "secure.dol.state.nj.us"
-  ) {
+  if (window.gtag != null && isProduction()) {
     gtag("event", name, parameters);
   } else {
     console.log(
@@ -20,7 +21,7 @@ export function logEvent(name, parameters) {
 }
 
 export function setupAnalytics() {
-  if (window.location.hostname === "secure.dol.state.nj.us") {
+  if (isProduction()) {
     const GA4_ID = "G-2F7W0D0NDJ";
     const analyticsScript = document.createElement("script");
     analyticsScript.src = `https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`;
@@ -93,7 +94,7 @@ export function css(strings, ...values) {
 
 export const HEADER_HTML = html`
   <header
-    style="padding:10px 20px; background-color: black; color:white; font-size: 13px; line-height: 150%"
+    style="padding: 10px 20px; background-color: black; color: white; font-size: 13px; line-height: 150%"
     id="header"
   >
     <div style="margin-bottom:4px">

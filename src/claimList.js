@@ -49,24 +49,32 @@ function executeOverride() {
 
 function getMetadata() {
   const tableElements = document.getElementsByTagName("table");
-  const claims = Array.from(tableElements[2]?.children[0]?.children)
+  const claimsTable = tableElements[2];
+  const claims = Array.from(claimsTable?.rows)
     .slice(1)
-    .map((row, i) => ({
+    .map((row) => ({
       seqNum: row.children[0].innerText.trim(),
       type: row.children[1].innerText.trim(),
       date: row.children[2].innerText.trim(),
       status: row.children[3].innerText.trim(),
     }));
-  const name =
-    tableElements[1]?.children[0]?.children[0]?.children[0]?.innerText;
+
+  const name = tableElements[1]?.rows[0]?.children[0]?.innerText;
   return { claims, name };
 }
 
 function removeOldHtml() {
-  const root = document.getElementsByName("claimlist")[0]?.children;
-  root[3]?.remove();
-  root[3]?.remove();
-  root[3]?.remove();
+  const rootChildren = document.getElementsByName("claimlist")[0]?.children;
+  const numChildren = Array.from(rootChildren).length;
+  if (rootChildren != null && numChildren === 6) {
+    rootChildren[3]?.remove();
+    rootChildren[3]?.remove();
+    rootChildren[3]?.remove();
+  } else {
+    throw new Error(
+      `Cannot safely remove old HTML, expected 6 root children, got ${numChildren}`
+    );
+  }
 }
 
 function addNewHtml(name, claims) {

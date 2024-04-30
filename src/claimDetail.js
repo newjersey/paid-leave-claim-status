@@ -731,10 +731,17 @@ function addHeadStyles() {
 }
 
 function removeOldHtml() {
-  const root = document.getElementsByName("dabiDetail")[0]?.children;
-  root[2]?.remove();
-  root[2]?.remove();
-  root[2]?.remove();
+  const rootChildren = document.getElementsByName("dabiDetail")[0]?.children;
+  const numChildren = Array.from(rootChildren).length;
+  if (rootChildren != null && numChildren === 5) {
+    rootChildren[2]?.remove();
+    rootChildren[2]?.remove();
+    rootChildren[2]?.remove();
+  } else {
+    throw new Error(
+      `Cannot safely remove old HTML, expected 5 root children, got ${numChildren}`
+    );
+  }
 }
 
 function addNewHtml(metadata) {
