@@ -36,8 +36,8 @@ function executeOverride() {
     styleBody();
     addFeedbackLink();
     updateIcon();
-    logView(claims);
     document.title = "Check claim status";
+    logView(claims);
   } catch (e) {
     logEvent(
       "[DOL_DABI] Claim List redesign error",
@@ -218,7 +218,11 @@ function addNewHtml(name, claims) {
                       <b>Claim for ${getClaimTypeContent(claim.type)}</b>,
                       started ${getFormattedDate(claim.date)}
                     </div>
-                    <img src="./assets/navigate_next.svg" alt="" />
+                    <img
+                      src="./assets
+                    /navigate_next.svg"
+                      alt=""
+                    />
                   </button>
                 `
               )

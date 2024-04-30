@@ -39,8 +39,8 @@ function executeOverride() {
     styleBody();
     addFeedbackLink();
     updateIcon();
-    logView(metadata);
     document.title = "Claim status details";
+    logView(metadata);
   } catch (e) {
     logEvent(
       "[DOL_DABI] Claim List redesign error",

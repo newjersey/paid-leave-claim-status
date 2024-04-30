@@ -19,15 +19,24 @@ if (document.readyState === "loading") {
 }
 
 function executeOverride() {
-  updateIcon();
   setupAnalytics();
-  makeMobileFriendly();
-  addFeedbackLink();
-  styleBody();
-  styleRoot();
-  styleLogoutButton();
-  updateLogo();
-  logEvent("[DOL_DABI] Viewed SSN Not Found page");
+
+  try {
+    makeMobileFriendly();
+    addFeedbackLink();
+    styleBody();
+    styleRoot();
+    styleLogoutButton();
+    updateLogo();
+    updateIcon();
+    document.title = "No claim on file";
+    logEvent("[DOL_DABI] Viewed SSN Not Found page");
+  } catch (e) {
+    logEvent(
+      "[DOL_DABI] Claim List redesign error",
+      e instanceof Error ? e.message : "Unknown"
+    );
+  }
 }
 
 function updateLogo() {
@@ -155,8 +164,6 @@ function styleRoot() {
   `;
   root.children[0].children[0].children[3].children[0].innerHTML =
     getRedesignHtml(status, statusExtra, whatsNext, whatsNextExtra);
-
-  document.title = status;
 
   document.getElementById("linkClaimDocs").addEventListener("click", () => {
     logEvent("[DOL_DABI] Clicked link on SSN Not Found page", {
