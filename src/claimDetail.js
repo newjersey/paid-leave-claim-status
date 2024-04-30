@@ -226,6 +226,10 @@ function getStatusContent(
         mailBackDate.setDate(mailBackDate.getDate() + 14);
         const mailBackDateFormatted = getFormattedDate(mailBackDate);
 
+        const mailExpectedDate = new Date(mailDate.getTime());
+        mailExpectedDate.setDate(mailExpectedDate.getDate() + 10);
+        const mailExpectedDateFormatted = getFormattedDate(mailExpectedDate);
+
         const claimDocsUrl = `https://secure.dol.state.nj.us/tdi/caller.aspx?Source=${claimType}`;
 
         switch (note.type) {
@@ -252,7 +256,7 @@ function getStatusContent(
             </div>`;
             break;
           case "GEN_M01":
-            title = "Missing medical certificate";
+            title = "Missing medical information";
             body = html`<div>
               We need a medical certificate from your doctor (or
               <a
@@ -495,7 +499,7 @@ function getStatusContent(
       </div>
     </div>`;
   } else if (newStatus === "Denied") {
-    const noteType = claimNotes[0].type;
+    const noteType = claimNotes[0]?.type;
     let content = undefined;
 
     switch (noteType) {
@@ -567,7 +571,10 @@ function getStatusContent(
         break;
       case undefined:
       case "":
-        return "";
+        content = html`Your claim for benefits is currently denied. Check your
+        mail for a denial letter, which includes more details about why you were
+        denied, and how to appeal.`;
+        break;
     }
 
     return content != null
