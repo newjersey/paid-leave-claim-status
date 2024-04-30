@@ -33,9 +33,6 @@ export function setupAnalytics() {
   }
 }
 
-export const ICON_BASE_URL =
-  "https://cdn.jsdelivr.net/npm/@newjersey/njwds@1.0.0/dist/img/usa-icons";
-
 export function updateIcon() {
   let iconLink = document.querySelector("link[rel~='icon']");
   if (iconLink == null) {
@@ -130,7 +127,7 @@ export const FOOTER_HTML = html`
     <div
       style="display: flex; align-items: start; gap: 16px; margin-bottom: 8px"
     >
-      <img src="${ICON_BASE_URL}/phone.svg" alt="" />
+      <img src="./assets/phone.svg" alt="" />
       <div style="line-height: 21px">
         <strong>Call</strong> 609-292-7060 | (8:00am - 4:30pm, Monday - Friday)
         Wait times are shortest Wednesday- Friday
@@ -144,7 +141,7 @@ export const FOOTER_HTML = html`
         margin-bottom: 8px;
       "
     >
-      <img src="${ICON_BASE_URL}/fax.svg" alt="" />
+      <img src="./assets/fax.svg" alt="" />
       <div style="line-height: 21px"><strong>Fax</strong> 609-984-4138</div>
     </div>
     <div
@@ -165,7 +162,7 @@ export const FOOTER_HTML = html`
         margin-bottom: 8px;
       "
     >
-      <img src="${ICON_BASE_URL}/mail.svg" alt="" />
+      <img src="./assets/email.svg" alt="" />
       <div style="line-height: 21px">
         <a
           href="https://www.nj.gov/labor/myleavebenefits/help/contact/contact-form.shtml"
@@ -183,7 +180,7 @@ export const FOOTER_HTML = html`
         margin-bottom: 24px;
       "
     >
-      <img src="${ICON_BASE_URL}/info.svg" alt="" />
+      <img src="./assets/info.svg" alt="" />
       <div style="line-height: 21px">
         <a
           href="https://www.nj.gov/labor/myleavebenefits/worker/resources/"
@@ -273,7 +270,7 @@ export function getStatusAlert(status) {
     case "Denied":
       color = "#F4E3DB";
       borderColor = "#D54309";
-      icon = "info";
+      icon = "cancel";
       break;
     case "Approved":
       color = "#ECF3EC";
@@ -291,7 +288,7 @@ export function getStatusAlert(status) {
   return html` <div
     style="border-left: 8px solid ${borderColor}; background-color: ${color}; padding: 8px 16px 8px 14px; display: flex; align-items: center; gap: 14px"
   >
-    <img src="${ICON_BASE_URL}/${icon}.svg" alt="" />
+    <img src="./assets/${icon}.svg" alt="" />
     <div>${status}</div>
   </div>`;
 }

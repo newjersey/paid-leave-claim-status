@@ -11,7 +11,6 @@ import {
   RETURN_TO_TOP_LINK,
   getClaimTypeContent,
   getUnstyledButton,
-  ICON_BASE_URL,
   getFormattedDate,
   getStatusAlert,
   css,
@@ -433,7 +432,7 @@ function getStatusContent(
               <div>
                 <img
                   class="accordion-icon"
-                  src="${ICON_BASE_URL}/add.svg"
+                  src="./assets/add.svg"
                   alt="See more"
                 />
               </div>

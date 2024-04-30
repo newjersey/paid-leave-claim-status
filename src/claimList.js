@@ -13,7 +13,6 @@ import {
   getClaimStatusContent,
   getFormattedDate,
   getUnstyledButton,
-  ICON_BASE_URL,
 } from "./modules/shared.mjs";
 
 if (document.readyState === "loading") {
@@ -146,7 +145,7 @@ function addNewHtml(name, claims) {
                           style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px"
                         >
                           <img
-                            src="${ICON_BASE_URL}/${claim.status === "Eligible"
+                            src="./assets/${claim.status === "Eligible"
                               ? "check_circle"
                               : "cancel"}.svg"
                             alt=""
@@ -219,7 +218,7 @@ function addNewHtml(name, claims) {
                       <b>Claim for ${getClaimTypeContent(claim.type)}</b>,
                       started ${getFormattedDate(claim.date)}
                     </div>
-                    <img src="${ICON_BASE_URL}/navigate_next.svg" alt="" />
+                    <img src="./assets/navigate_next.svg" alt="" />
                   </button>
                 `
               )

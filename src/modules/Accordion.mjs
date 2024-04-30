@@ -7,10 +7,10 @@
 
 "use strict";
 
-import { ICON_BASE_URL, logEvent } from "./shared.mjs";
+import { logEvent } from "./shared.mjs";
 
 export class Accordion {
-  constructor(domNode, logKey) {
+  constructor(domNode) {
     this.rootEl = domNode;
     this.buttonEl = this.rootEl.querySelector("button[aria-expanded]");
     this.iconEl = this.rootEl.querySelector("img");
@@ -41,7 +41,7 @@ export class Accordion {
     this.buttonEl.setAttribute("aria-expanded", `${open}`);
     if (open) {
       this.contentEl.removeAttribute("hidden");
-      this.iconEl.src = `${ICON_BASE_URL}/remove.svg`;
+      this.iconEl.src = "./assets/remove.svg";
       this.iconEl.alt = "See less";
       logEvent(
         "[DOL_DABI] Opened Claim Detail form accordion",
@@ -49,7 +49,7 @@ export class Accordion {
       );
     } else {
       this.contentEl.setAttribute("hidden", "");
-      this.iconEl.src = `${ICON_BASE_URL}/add.svg`;
+      this.iconEl.src = "./assets/add.svg";
       this.iconEl.alt = "See more";
     }
   }
