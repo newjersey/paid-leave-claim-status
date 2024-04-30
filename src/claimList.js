@@ -32,7 +32,6 @@ function executeOverride() {
 
     const { claims, name } = getMetadata();
     removeOldHtml();
-    document.getElementById("stupid")[0].hey;
     addNewHtml(name, claims);
 
     styleBody();
