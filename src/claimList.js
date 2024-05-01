@@ -10,7 +10,7 @@ import {
   FOOTER_HTML,
   RETURN_TO_TOP_LINK,
   getClaimTypeContent,
-  getClaimStatusContent,
+  getClaimStatus,
   getFormattedDate,
   getUnstyledButton,
 } from "./modules/shared.mjs";
@@ -153,7 +153,7 @@ function addNewHtml(name, claims) {
                           <div
                             style="font-size: 16px; line-height: 24px; font-weight: 700"
                           >
-                            ${getClaimStatusContent(claim.status)}
+                            ${getClaimStatus(claim.status)}
                           </div>
                         </div>
                         ${getUnstyledButton(

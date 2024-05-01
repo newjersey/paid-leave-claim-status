@@ -216,14 +216,29 @@ export function getClaimTypeContent(type) {
     : type;
 }
 
-export function getClaimStatusContent(status) {
+export function isClaimNotesEmpty(claimNotes) {
+  return (
+    claimNotes.length === 0 ||
+    (claimNotes.length === 1 && claimNotes === "SENT_REQ") ||
+    (claimNotes.length === 1 && claimNotes === "14_DAY")
+  );
+}
+
+export function getClaimStatus(status, claimNotes, claimType) {
   switch (status) {
     case "Eligible":
       return "Approved";
     case "Ineligible":
+      if (claimNotes != null && claimNotes[0]?.type === "DDU") {
+        return `Transferred to ${
+          claimType === "FLI" ? "Family Leave" : "Disability"
+        } During Unemployment team`;
+      }
       return "Denied";
     case "Undetermined":
-      return "Information needed";
+      return !isClaimNotesEmpty(claimNotes)
+        ? "Information needed"
+        : "In progress";
     default:
       return status;
   }
@@ -263,6 +278,8 @@ export function getStatusAlert(status) {
 
   switch (status) {
     case "Information needed":
+    case "Transferred to Disability During Unemployment team":
+    case "Transferred to Family Leave During Unemployment team":
       color = "#FAF3D1";
       borderColor = "#FFBE2E";
       icon = "warning";

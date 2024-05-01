@@ -6,6 +6,7 @@ describe("Claim Detail page - Ineligible scenario with Blank claim notes", () =>
     cy.contains(
       "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
     ).should("be.visible");
+    cy.contains("Denied").should("be.visible");
     cy.contains(
       "Your claim for benefits is currently denied. Check your mail for a denial letter, which includes more details about why you were denied, and how to appeal."
     ).should("be.visible");
@@ -25,6 +26,7 @@ describe("Claim Detail page - Ineligible scenario with C10 missing", () => {
     cy.contains(
       "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
     ).should("be.visible");
+    cy.contains("Denied").should("be.visible");
     cy.contains(
       "We didn't receive your claimant information (Form C10) requested during our review."
     ).should("be.visible");
@@ -49,6 +51,7 @@ describe("Claim Detail page - Ineligible scenario with M10 missing", () => {
     cy.contains(
       "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
     ).should("be.visible");
+    cy.contains("Denied").should("be.visible");
     cy.contains(
       "We didn't receive your medical information (Form M10 or M20) requested during our review."
     ).should("be.visible");
@@ -73,6 +76,7 @@ describe("Claim Detail page - Ineligible scenario with C10 and M10 missing", () 
     cy.contains(
       "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
     ).should("be.visible");
+    cy.contains("Denied").should("be.visible");
     cy.contains(
       "We didn't receive claimant information (Form C10) and medical information (Form M10 or M20) requested during our review."
     ).should("be.visible");
@@ -97,6 +101,9 @@ describe("Claim Detail page - Ineligible scenario for DDU", () => {
     cy.contains(
       "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
     ).should("be.visible");
+    cy.contains("Transferred to Disability During Unemployment team").should(
+      "be.visible"
+    );
     cy.contains(
       "Your claim was sent to our Disability During Unemployment team for review."
     ).should("be.visible");
@@ -117,6 +124,9 @@ describe("Claim Detail page - Ineligible scenario for FLDU", () => {
     cy.contains(
       "Claim for Family Leave Insurance (FLI), started August 1, 2023"
     ).should("be.visible");
+    cy.contains("Transferred to Family Leave During Unemployment team").should(
+      "be.visible"
+    );
     cy.contains(
       "Your claim was sent to our Family Leave During Unemployment team for review."
     ).should("be.visible");
@@ -141,6 +151,7 @@ describe("Claim Detail page -  Ineligible scenario due to invalid wage (2010)", 
     cy.contains(
       "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
     ).should("be.visible");
+    cy.contains("Denied").should("be.visible");
     cy.contains(
       "It looks like you didn't meet the wage requirement to qualify for benefits."
     ).should("be.visible");
@@ -164,6 +175,7 @@ describe("Claim Detail page - Ineligible scenario due to invalid wage (2010)", (
     cy.contains(
       "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
     ).should("be.visible");
+    cy.contains("Denied").should("be.visible");
     cy.contains(
       "It looks like you didn't meet the wage requirement to qualify for benefits."
     ).should("be.visible");
@@ -187,6 +199,7 @@ describe("Claim Detail page - Ineligible scenario due to private plan", () => {
     cy.contains(
       "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
     ).should("be.visible");
+    cy.contains("Denied").should("be.visible");
     cy.contains(
       "Your employer has a private plan, so you don't qualify for State benefits, but you may be eligible through your employer."
     ).should("be.visible");

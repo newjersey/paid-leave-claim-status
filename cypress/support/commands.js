@@ -43,6 +43,4 @@ Cypress.Commands.add("checkIneligibleCore", () => {
   cy.get(".complete.received").contains("August 7, 2023").should("be.visible");
   cy.get(".complete").contains("Review").should("be.visible");
   cy.get(".complete.end").contains("Decision").should("be.visible");
-
-  cy.contains("Denied").should("be.visible");
 });

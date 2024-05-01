@@ -14,6 +14,8 @@ import {
   getFormattedDate,
   getStatusAlert,
   css,
+  getClaimStatus,
+  isClaimNotesEmpty,
 } from "./modules/shared.mjs";
 import { Accordion } from "./modules/Accordion.mjs";
 
@@ -160,26 +162,6 @@ function getParsedClaimNotes(rawClaimNotes) {
 
     return data;
   });
-}
-
-function isClaimNotesEmpty(claimNotes) {
-  return (
-    claimNotes.length === 0 ||
-    (claimNotes.length === 1 && claimNotes === "SENT_REQ") ||
-    (claimNotes.length === 1 && claimNotes === "14_DAY")
-  );
-}
-
-function getStatus(claimStatus, claimNotes) {
-  let status = "In progress";
-  if (claimStatus === "Eligible") {
-    status = "Approved";
-  } else if (claimStatus === "Ineligible") {
-    status = "Denied";
-  } else if (claimStatus === "Undetermined" && !isClaimNotesEmpty(claimNotes)) {
-    status = "Information needed";
-  }
-  return status;
 }
 
 function getStepsList(contentList) {
@@ -526,22 +508,6 @@ function getStatusContent(
           for next steps and help applying through your employer.
         `;
         break;
-      case "DDU":
-        const leaveType = claimType === "FLI" ? "Family Leave" : "Disability";
-        const linkUrl =
-          claimType === "FLI"
-            ? "https://www.nj.gov/labor/myleavebenefits/worker/resources/FLDU_2020.shtml"
-            : "https://nj.gov/labor/myleavebenefits/worker/resources/DDU_2020.shtml";
-        content = html`Your claim was sent to our ${leaveType} During
-          Unemployment team for review. Please contact that office at (609)
-          292-3842 for more information, or visit:
-          <a
-            href="${linkUrl}"
-            target="_blank"
-            >${leaveType} During Unemployment</a>. You likely won't see any further
-            updates about your claim here.
-          </a> `;
-        break;
       case "INVAL_WAGE":
         content = html`It looks like you didn't meet the wage requirement to
           qualify for benefits. You can find this year's earnings requirement on
@@ -591,6 +557,21 @@ function getStatusContent(
     return content != null
       ? html`<div style="margin-top: 8px">${content}</div>`
       : "";
+  } else if (newStatus.startsWith("Transferred")) {
+    const leaveType = claimType === "FLI" ? "Family Leave" : "Disability";
+    const linkUrl =
+      claimType === "FLI"
+        ? "https://www.nj.gov/labor/myleavebenefits/worker/resources/FLDU_2020.shtml"
+        : "https://nj.gov/labor/myleavebenefits/worker/resources/DDU_2020.shtml";
+    return html`<div style="margin-top: 8px">Your claim was sent to our ${leaveType} During
+        Unemployment team for review. Please contact that office at (609)
+        292-3842 for more information, or visit:
+        <a
+          href="${linkUrl}"
+          target="_blank"
+          >${leaveType} During Unemployment</a>. You likely won't see any further
+          updates about your claim here.
+        </a></div>`;
   } else {
     return "";
   }
@@ -777,7 +758,7 @@ function addNewHtml(metadata) {
     claimNotes,
     nextPayDate
   );
-  const newStatus = getStatus(claimStatus, claimNotes);
+  const newStatus = getClaimStatus(claimStatus, claimNotes, claimType);
 
   newContainer.innerHTML = html`${HEADER_HTML}
     <div
