@@ -24,7 +24,7 @@
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
 
-Cypress.Commands.add("checkBodyA11y", (token) => {
+Cypress.Commands.add("checkBodyA11y", () => {
   cy.injectAxe();
 
   // Assert
@@ -33,4 +33,16 @@ Cypress.Commands.add("checkBodyA11y", (token) => {
       region: { enabled: false }, // Disable rule because can't control top-level elements easily
     },
   });
+});
+
+Cypress.Commands.add("checkIneligibleCore", () => {
+  cy.contains("Ineligible").should("not.exist"); // Rendered on original HTML, without script change
+
+  cy.get("h1").contains("Status").should("be.visible");
+
+  cy.get(".complete.received").contains("August 7, 2023").should("be.visible");
+  cy.get(".complete").contains("Review").should("be.visible");
+  cy.get(".complete.end").contains("Decision").should("be.visible");
+
+  cy.contains("Denied").should("be.visible");
 });

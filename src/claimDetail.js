@@ -203,7 +203,8 @@ function getStatusContent(
   nextPayDate,
   weeklyBenefitRate,
   balanceRemaining,
-  claimEndDate
+  claimEndDate,
+  lastDayPaid
 ) {
   if (newStatus === "In progress") {
     return getStepsList(["There's no action for you to take."]);
@@ -458,7 +459,7 @@ function getStatusContent(
       description = html`Your next payment is scheduled for
         <b>${getFormattedDate(nextPayDate)}</b>, and arrives on your benefits
         debit card about 2 business days later.<br /><br />
-        For a detailed breakdown,
+        For a detailed breakdown,<br />
         <button
           style="background-color: #0076D6; border: none; color: #fff; padding: 12px 20px; cursor: pointer; border-radius: 4px; font-weight: 700; font-size: 16px; line-height: 24px; margin-top: 16px"
           onclick="paymentDetail()"
@@ -481,8 +482,17 @@ function getStatusContent(
             >${weeklyBenefitRate}</span
           >
         </div>
+        ${lastDayPaid
+          ? html`<div style="margin-bottom: 12px">
+              Paid through date
+              <span
+                style="font-weight: 700; font-size: 22px; line-height: 32px; display: block"
+                >${getFormattedDate(lastDayPaid)}</span
+              >
+            </div>`
+          : ""}
         <div style="margin-bottom: 12px">
-          Benefits remaining
+          Balance remaining
           <span
             style="color: #0076D6; font-weight: 700; font-size: 22px; line-height: 32px; display: block"
             >${balanceRemaining}</span
@@ -492,7 +502,7 @@ function getStatusContent(
           ? html`<div>
               Claim end date
               <span
-                style="color: #0076D6; font-weight: 700; font-size: 22px; line-height: 32px; display: block"
+                style="font-weight: 700; font-size: 22px; line-height: 32px; display: block"
                 >${getFormattedDate(claimEndDate)}</span
               >
             </div>`
@@ -756,9 +766,9 @@ function addNewHtml(metadata) {
     weeklyBenefitRate,
     balanceRemaining,
     claimEndDate,
+    lastDayPaid,
   } = metadata;
   const claimNotes = getParsedClaimNotes(rawClaimNotes);
-  console.log(metadata);
 
   const root = document.getElementsByName("dabiDetail")[0];
   const newContainer = document.createElement("div");
@@ -867,7 +877,8 @@ function addNewHtml(metadata) {
         nextPayDate,
         weeklyBenefitRate,
         balanceRemaining,
-        claimEndDate
+        claimEndDate,
+        lastDayPaid
       )}
     </div>
     ${whatsNextContent != null

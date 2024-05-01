@@ -25,6 +25,7 @@ describe("Claim List page - with recent and older claims", () => {
 
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimList/claimList.html");
+    cy.checkBodyA11y();
   });
 });
 

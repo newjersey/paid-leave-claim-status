@@ -25,6 +25,7 @@ describe("Claim Detail page - In Progress scenario", () => {
     cy.visit(
       "./cypress/fixtures/claimDetail/claimDetailUndeterminedInProgress.html"
     );
+    cy.checkBodyA11y();
   });
 });
 
@@ -127,5 +128,6 @@ describe("Claim Detail page - Information Needed scenario", () => {
     cy.visit(
       "./cypress/fixtures/claimDetail/claimDetailUndeterminedInfoNeeded.html"
     );
+    cy.checkBodyA11y();
   });
 });
