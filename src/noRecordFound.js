@@ -8,6 +8,7 @@ import {
   isDesktop,
   html,
   styleBody,
+  updateDocument,
 } from "./modules/shared.mjs";
 
 if (document.readyState === "loading") {
@@ -29,7 +30,7 @@ function executeOverride() {
     styleLogoutButton();
     updateLogo();
     updateIcon();
-    document.title = "No claim on file";
+    updateDocument("No claim on file");
     logEvent("[DOL_DABI] Viewed SSN Not Found page");
   } catch (e) {
     logEvent(
