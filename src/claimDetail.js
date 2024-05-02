@@ -16,6 +16,8 @@ import {
   css,
   getClaimStatus,
   isClaimNotesEmpty,
+  getParsedClaimNotes,
+  isDesktop,
 } from "./modules/shared.mjs";
 import { Accordion } from "./modules/Accordion.mjs";
 
@@ -96,74 +98,6 @@ function getMetadata() {
   };
 }
 
-function getParsedClaimNotes(rawClaimNotes) {
-  return rawClaimNotes.map((note) => {
-    const parsedNote = note.split("was sent to ")[1]?.split(" on ") ?? [];
-    const data = {
-      type: undefined,
-      sentOn: parsedNote[1]?.slice(0, -1), // remove `.` character
-      sentTo: parsedNote[0],
-    };
-
-    if (note.includes("Error while processing")) {
-      data.type = "ERR";
-    } else if (note.includes("Private Plan Operations")) {
-      data.type = "PRIV";
-    } else if (note.includes("Disability During Unemployment")) {
-      data.type = "DDU";
-    } else if (note.includes("invalid because you did not meet the wage")) {
-      data.type = "INVAL_WAGE";
-    } else if (
-      note.includes("ineligible because you failed") &&
-      note.includes("Form C10")
-    ) {
-      data.type = "INEL_C10";
-    } else if (
-      note.includes("ineligible because you failed") &&
-      note.includes("Form M10")
-    ) {
-      data.type = "INEL_M10";
-    } else if (
-      note.includes("ineligible because you failed") &&
-      note.includes("additional information and medical certification")
-    ) {
-      data.type = "INEL_5107";
-    } else if (note.includes("A request for information has been mailed")) {
-      data.type = "SENT_REQ";
-    } else if (note.includes("No decision has been made")) {
-      data.type = "14_DAY";
-    } else if (
-      note.includes("Request to Claimant for Information was sent to")
-    ) {
-      data.type = "SENT_C10";
-    } else if (note.includes("Request for Medical Information was sent to")) {
-      data.type = "SENT_Mxx";
-    } else if (note.includes("Request for Wage information was sent to")) {
-      data.type = "SENT_Exx";
-    } else if (
-      note.includes(
-        "Notice of Required Pursuit of Workers' Compensation Claim was sent to"
-      )
-    ) {
-      data.type = "SENT_W10";
-    } else if (
-      note.includes("Request to Claimant for Information was generated")
-    ) {
-      data.type = "GEN_C01";
-    } else if (note.includes("Form W01")) {
-      data.type = "GEN_W01";
-    } else if (note.includes("Form M-01")) {
-      data.type = "GEN_M01";
-    } else if (note.includes("An Employer Statement")) {
-      data.type = "GEN_E01";
-    } else {
-      data.type = note;
-    }
-
-    return data;
-  });
-}
-
 function getStepsList(contentList) {
   return html`<div style="margin-top: 12px">
     <h3 style="font-size: 16px; line-height: 24px; margin: 0">
@@ -213,12 +147,13 @@ function getStatusContent(
         const mailExpectedDateFormatted = getFormattedDate(mailExpectedDate);
 
         const claimDocsUrl = `https://secure.dol.state.nj.us/tdi/caller.aspx?Source=${claimType}`;
+        const claimNumberContent = `${idx} of ${claimNotes.length - 1}`;
 
         switch (note.type) {
           case "GEN_C01":
             title = "Missing claimant information";
             body = html`<div>
-              We need claimant information to review your claim.<br /><br />
+              To process your claim, we need claimant information from you.<br /><br />
               <b>Steps to complete</b>
               <ul
                 style="padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
@@ -240,7 +175,8 @@ function getStatusContent(
           case "GEN_M01":
             title = "Missing medical information";
             body = html`<div>
-              We need a medical certificate from your doctor (or
+              To process your claim, we need a medical certificate from your
+              doctor (or
               <a
                 href="https://www.nj.gov/labor/myleavebenefits/worker/resources/approvedmedicalpractitioners.shtml"
                 target="_blank"
@@ -269,12 +205,8 @@ function getStatusContent(
           case "GEN_W01":
             title = "Missing workers' compensation information";
             body = html`<div>
-              We need a medical certificate from your doctor (or
-              <a
-                href="https://www.nj.gov/labor/myleavebenefits/worker/resources/approvedmedicalpractitioners.shtml"
-                target="_blank"
-                >other approved medical provider</a
-              >) to review your claim.<br /><br />
+              To process your claim, we need workers' compensation information
+              from you.<br /><br />
               <b>Steps to complete</b>
               <ul
                 style="padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
@@ -296,7 +228,7 @@ function getStatusContent(
           case "SENT_C10":
             title = "Missing claimant information";
             body = html`<div>
-              We need claimant information from you to review your claim. On
+              To process your claim, we need claimant information from you. On
               ${mailDateFormatted}, we mailed a Request to Claimant for
               Information (C10) to your address on file: ${note.sentTo}.<br /><br />
               <b>Steps to complete</b>
@@ -309,13 +241,15 @@ function getStatusContent(
                 </li>
                 <li>
                   Follow the instructions on the form and respond by
-                  ${mailBackDateFormatted}, so your claim isn't delayed or
+                  <b>${mailBackDateFormatted}</b> so your claim isn't delayed or
                   denied.
                 </li>
                 <li>
                   If you haven't received anything by
-                  ${mailExpectedDateFormatted}, reach out to our customer help
-                  team.
+                  <b>${mailExpectedDateFormatted}</b>, reach out to our
+                  <a href="#helpSection" style="text-underline-offset: 2.5px"
+                    >customer help team</a
+                  >.
                 </li>
               </ul>
             </div>`;
@@ -323,7 +257,8 @@ function getStatusContent(
           case "SENT_Mxx":
             title = "Missing medical information";
             body = html`<div>
-              We need a medical certificate from your doctor (or
+              To process your claim, we need a medical certificate from your
+              doctor (or
               <a
                 href="https://www.nj.gov/labor/myleavebenefits/worker/resources/approvedmedicalpractitioners.shtml"
                 target="_blank"
@@ -337,8 +272,8 @@ function getStatusContent(
               >
                 <li>
                   Share the medical form (M10 or M20) with your doctor. Once
-                  it's complete, make sure you or your provider send it to us by
-                  ${mailBackDateFormatted} so your claim isn't delayed or
+                  it's complete, make sure you or your doctor send it to us by
+                  <b>${mailBackDateFormatted}</b> so your claim isn't delayed or
                   denied.
                 </li>
               </ul>
@@ -347,13 +282,11 @@ function getStatusContent(
           case "SENT_W10":
             title = "Missing workers' compensation information";
             body = html`<div>
-              We need workers' compensation information from you. On
-              ${mailDateFormatted}, we mailed a Notice of Required Pursuit of
-              Workers' Compensation Claim (W10) to your address on file:
-              ${note.sentTo}.
+              To process your claim, we need workers' compensation information
+              from you. On ${mailDateFormatted}, we mailed a Notice of Required
+              Pursuit of Workers' Compensation Claim (W10) to your address on
+              file: ${note.sentTo}.
               <br /><br />
-              Make sure you respond by ${mailBackDateFormatted} so your claim
-              isn't delayed or denied. <br /><br />
               <b>Steps to complete</b>
               <ul
                 style="padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
@@ -364,12 +297,14 @@ function getStatusContent(
                 </li>
                 <li>
                   Follow the instructions on the form and respond by
-                  ${mailBackDateFormatted}.
+                  <b>${mailBackDateFormatted}</b>.
                 </li>
                 <li>
                   If you haven't received anything by
-                  ${mailExpectedDateFormatted}, reach out to our customer help
-                  team.
+                  <b>${mailExpectedDateFormatted}</b>, reach out to our
+                  <a href="#helpSection" style="text-underline-offset: 2.5px"
+                    >customer help team</a
+                  >.
                 </li>
               </ul>
             </div>`;
@@ -377,9 +312,9 @@ function getStatusContent(
           case "SENT_Exx":
             title = "Missing wage information";
             body = html`<div>
-              We need wage information from your employer. On
-              ${mailDateFormatted}, we mailed a Request for Wage Information
-              (E10) to ${note.sentTo}.
+              To process your claim, we need wage information from your
+              employer. On ${mailDateFormatted}, we mailed a Request for Wage
+              Information (E10) to ${note.sentTo}.
               <br /><br />
               In some cases, we need employment information from you, too. If
               so, we mailed it to you on the same date, ${mailDateFormatted}.
@@ -392,8 +327,8 @@ function getStatusContent(
                   Check your mail for a letter called Claimant's Affidavit of
                   Employment and Wages (C10) that we may have sent on
                   ${mailDateFormatted}. If so, follow the instructions on the
-                  form and respond by ${mailBackDateFormatted}, so your claim
-                  isn't delayed or denied.
+                  form and respond by <b>${mailBackDateFormatted}</b> so your
+                  claim isn't delayed or denied.
                 </li>
               </ul>
             </div>`;
@@ -413,7 +348,9 @@ function getStatusContent(
               aria-controls="sect${idx}"
               id="accordion${idx}id"
             >
-              <div class="accordion-title">${title}</div>
+              <div class="accordion-title">
+                ${title} (${claimNumberContent})
+              </div>
               <div>
                 <img
                   class="accordion-icon"
@@ -759,16 +696,19 @@ function addNewHtml(metadata) {
     nextPayDate
   );
   const newStatus = getClaimStatus(claimStatus, claimNotes, claimType);
+  const rootMarginX = isDesktop() ? "107px" : "20px";
 
   newContainer.innerHTML = html`${HEADER_HTML}
     <div
-      style="display: flex; align-items: center; margin: 4px 20px 16px; line-height: 26px"
+      style="display: flex; align-items: center; margin-top: 4px; margin-left: ${rootMarginX}; margin-right: ${rootMarginX}; margin-bottom: 16px; line-height: 26px"
     >
       ${getUnstyledButton("All claims", "claimList()")}
       <img src="./assets/arrow.svg" alt="Right arrow" />
       <div style="display: inline-block"><b>Status</b></div>
     </div>
-    <div style="display: flex; justify-content: flex-end; margin: 0 20px">
+    <div
+      style="display: flex; justify-content: flex-end; margin-top: 0; margin-left: ${rootMarginX}; margin-right: ${rootMarginX}; margin-bottom: 0"
+    >
       <button
         onClick="userLogout()"
         style="
@@ -792,91 +732,113 @@ function addNewHtml(metadata) {
         <span>Log out</span>
       </button>
     </div>
-    <div style="margin: 16px 20px 44px">
+    <div
+      style="margin-top: 16px; margin-left: ${rootMarginX}; margin-right: ${rootMarginX}; margin-bottom: 44px"
+    >
       <h1 style="margin: 0 0 8px; font-size: 32px; line-height: 40px">
         Status
       </h1>
       <div style="font-size: 22px; line-height: 32px; margin-bottom: 44px">
-        Claim for ${getClaimTypeContent(claimType)}, started
+        Claim for ${getClaimTypeContent(claimType)}, starting
         ${getFormattedDate(claimDate)}
       </div>
     </div>
-    <div style="margin: 0 20px 28px">
-      <ul style="padding-inline-start: 12px" class="progress-bar">
-        <li>
-          <div class="circle complete"></div>
-          <span class="complete received"
-            ><b>Received</b> ${getFormattedDate(receivedDate)}</span
-          >
-        </li>
-        <li>
-          <div
-            class="circle ${claimStatus === "Undetermined"
-              ? "current"
-              : "complete"}"
-          ></div>
-          <span
-            class="${claimStatus === "Undetermined" ? "current" : "complete"}"
-            >Review</span
-          >
-        </li>
-        <li>
-          <div
-            class="circle ${claimStatus === "Undetermined" ? "" : "complete"}"
-          ></div>
-          <span
-            class="${claimStatus === "Undetermined"
-              ? ""
-              : "complete"} ${claimStatus === "Ineligible" ? "end" : ""}"
-            >Decision</span
-          >
-        </li>
-        ${claimStatus === "Ineligible"
-          ? ""
-          : html`<li>
-              <div
-                class="circle ${claimStatus === "Eligible" ? "current" : ""}"
-              ></div>
-              <span class="end ${claimStatus === "Eligible" ? "current" : ""}"
-                >Payment</span
-              >
-            </li>`}
-      </ul>
-    </div>
-    <h2 style="font-size: 22px; margin: 0 32px 8px; line-height: 32px">
-      Current status
-    </h2>
     <div
-      style="background-color: #fff; padding: 16px 32px; margin-bottom: 36px"
+      style="${isDesktop()
+        ? "display: grid; grid-template-columns: 1fr 2fr; gap: 20px"
+        : ""}"
     >
-      ${getStatusAlert(newStatus)}
-      ${getStatusContent(
-        newStatus,
-        claimNotes,
-        claimType,
-        receivedDate,
-        nextPayDate,
-        weeklyBenefitRate,
-        balanceRemaining,
-        claimEndDate,
-        lastDayPaid
-      )}
-    </div>
-    ${whatsNextContent != null
-      ? html`<div style="margin-bottom: 40px">
-          <h2 style="font-size: 22px; margin: 0 32px 8px; line-height: 32px">
-            What's next
-          </h2>
-          <div style="background-color: #fff; padding: 24px 32px">
-            <ul
-              style="padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
+      <div
+        style="margin-top: 0px; margin-left: ${rootMarginX}; margin-right: ${rootMarginX}; margin-bottom: 28px"
+      >
+        <ul style="padding-inline-start: 12px" class="progress-bar">
+          <li>
+            <div class="circle complete"></div>
+            <span class="complete received"
+              ><b>Received</b> ${getFormattedDate(receivedDate)}</span
             >
-              ${whatsNextContent}
-            </ul>
-          </div>
-        </div>`
-      : ""}
-    <div style="margin: 0 20px 8px">${RETURN_TO_TOP_LINK}</div>
+          </li>
+          <li>
+            <div
+              class="circle ${claimStatus === "Undetermined"
+                ? "current"
+                : "complete"}"
+            ></div>
+            <span
+              class="${claimStatus === "Undetermined" ? "current" : "complete"}"
+              >Review</span
+            >
+          </li>
+          <li>
+            <div
+              class="circle ${claimStatus === "Undetermined" ? "" : "complete"}"
+            ></div>
+            <span
+              class="${claimStatus === "Undetermined"
+                ? ""
+                : "complete"} ${claimStatus === "Ineligible" ? "end" : ""}"
+              >Decision</span
+            >
+          </li>
+          ${claimStatus === "Ineligible"
+            ? ""
+            : html`<li>
+                <div
+                  class="circle ${claimStatus === "Eligible" ? "current" : ""}"
+                ></div>
+                <span class="end ${claimStatus === "Eligible" ? "current" : ""}"
+                  >Payment</span
+                >
+              </li>`}
+        </ul>
+      </div>
+      <div>
+        <h2
+          style="font-size: 22px; margin-top: 0px; margin-left: ${rootMarginX}; margin-right: ${rootMarginX}; margin-bottom: 8px; line-height: 32px"
+        >
+          Current status
+        </h2>
+        <div
+          style="background-color: #fff; padding-top: 16px; padding-left: ${rootMarginX}; padding-right: ${rootMarginX}; padding-bottom: 16px; margin-bottom: 36px"
+        >
+          ${getStatusAlert(newStatus)}
+          ${getStatusContent(
+            newStatus,
+            claimNotes,
+            claimType,
+            receivedDate,
+            nextPayDate,
+            weeklyBenefitRate,
+            balanceRemaining,
+            claimEndDate,
+            lastDayPaid
+          )}
+        </div>
+        ${whatsNextContent != null
+          ? html`<div style="margin-bottom: 40px">
+              <h2
+                style="font-size: 22px; margin-top: 0px; margin-left: ${rootMarginX}; margin-right: ${rootMarginX}; margin-bottom: 8px; line-height: 32px"
+              >
+                What's next
+              </h2>
+              <div
+                style="background-color: #fff; padding-top: 16px; padding-left: ${rootMarginX}; padding-right: ${rootMarginX}; padding-bottom: 16px"
+              >
+                <ul
+                  style="padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
+                >
+                  ${whatsNextContent}
+                </ul>
+              </div>
+            </div>`
+          : ""}
+      </div>
+    </div>
+    <div
+      style="margin-top: 0px; margin-left: ${rootMarginX}; margin-right: ${rootMarginX}; margin-bottom: 8px"
+    >
+      ${RETURN_TO_TOP_LINK}
+    </div>
     ${FOOTER_HTML}`;
 
   root.append(newContainer);

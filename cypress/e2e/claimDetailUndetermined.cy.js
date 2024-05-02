@@ -8,7 +8,7 @@ describe("Claim Detail page - In Progress scenario", () => {
 
     cy.get("h1").contains("Status").should("be.visible");
     cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
+      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
     ).should("be.visible");
     cy.get(".complete.received")
       .contains("August 7, 2023")
@@ -39,7 +39,7 @@ describe("Claim Detail page - Information Needed scenario", () => {
 
     cy.get("h1").contains("Status").should("be.visible");
     cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
+      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
     ).should("be.visible");
     cy.get(".complete.received")
       .contains("August 7, 2023")
@@ -53,25 +53,25 @@ describe("Claim Detail page - Information Needed scenario", () => {
       .should("be.visible");
 
     cy.get("#accordion1id")
-      .contains("Missing claimant information")
+      .contains("Missing claimant information (1 of 7)")
       .should("be.visible");
     cy.get("#accordion2id")
-      .contains("Missing medical information")
+      .contains("Missing medical information (2 of 7)")
       .should("be.visible");
     cy.get("#accordion3id")
-      .contains("Missing wage information")
+      .contains("Missing wage information (3 of 7)")
       .should("be.visible");
     cy.get("#accordion4id")
-      .contains("Missing workers' compensation information")
+      .contains("Missing workers' compensation information (4 of 7)")
       .should("be.visible");
     cy.get("#accordion5id")
-      .contains("Missing claimant information")
+      .contains("Missing claimant information (5 of 7)")
       .should("be.visible");
     cy.get("#accordion6id")
-      .contains("Missing workers' compensation information")
+      .contains("Missing workers' compensation information (6 of 7)")
       .should("be.visible");
     cy.get("#accordion7id")
-      .contains("Missing medical information")
+      .contains("Missing medical information (7 of 7)")
       .should("be.visible");
   });
 
@@ -85,13 +85,13 @@ describe("Claim Detail page - Information Needed scenario", () => {
     accordionButton.click();
     cy.get("#sect1")
       .contains(
-        "We need claimant information from you to review your claim. On August 25, 2023, we mailed a Request to Claimant for Information (C10) to your address on file: Jenni Mahlstedt."
+        "To process your claim, we need claimant information from you. On August 25, 2023, we mailed a Request to Claimant for Information (C10) to your address on file: Jenni Mahlstedt."
       )
       .should("be.visible");
     cy.get("#sect1")
-      .contains(
-        "Follow the instructions on the form and respond by September 8, 2023, so your claim isn't delayed or denied."
-      )
+      .contains("Follow the instructions on the form and respond by")
+      .get("b")
+      .contains("September 8, 2023")
       .should("be.visible");
     cy.get("#sect1")
       .contains(
@@ -111,7 +111,9 @@ describe("Claim Detail page - Information Needed scenario", () => {
     cy.get("#sect7").should("not.be.visible");
     accordionButton.click();
     cy.get("#sect7")
-      .contains("We need a medical certificate from your doctor (or ")
+      .contains(
+        "To process your claim, we need a medical certificate from your doctor (or "
+      )
       .should("be.visible");
     cy.get("#sect7").contains("August 21, 2023").should("be.visible");
     cy.get("#sect7 li > a")

@@ -81,10 +81,6 @@ export function html(strings, ...values) {
   return String.raw({ raw: strings }, ...values);
 }
 
-export function js(strings, ...values) {
-  return String.raw({ raw: strings }, ...values);
-}
-
 export function css(strings, ...values) {
   return String.raw({ raw: strings }, ...values);
 }
@@ -107,9 +103,10 @@ export const HEADER_HTML = html`
 
 export const FOOTER_HTML = html`
   <footer
+    id="helpSection"
     style="
       background-color: #eff6fb;
-      padding: 20px 13px;
+      padding: 20px ${isDesktop() ? "54px" : "13px"};
       border-top: 1px solid #0b4778;
       color: black;
     "
@@ -125,44 +122,22 @@ export const FOOTER_HTML = html`
       Need help?
     </h3>
     <div
-      style="display: flex; align-items: start; gap: 16px; margin-bottom: 8px"
+      style="display: grid; grid-template-columns: min-content auto; gap: 16px; margin-bottom: 8px"
     >
-      <img src="./assets/phone.svg" alt="" />
+      <div><img src="./assets/phone.svg" alt="" /></div>
       <div style="line-height: 21px">
         <strong>Call</strong> 609-292-7060 | (8:00am - 4:30pm, Monday - Friday)
-        Wait times are shortest Wednesday- Friday
+        Wait times are shortest Wednesday - Friday
       </div>
-    </div>
-    <div
-      style="
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 8px;
-      "
-    >
-      <img src="./assets/fax.svg" alt="" />
+      <div><img src="./assets/fax.svg" alt="" /></div>
       <div style="line-height: 21px"><strong>Fax</strong> 609-984-4138</div>
-    </div>
-    <div
-      style="display: flex; align-items: start; gap: 16px; margin-bottom: 8px"
-    >
-      <img src="./assets/mail.svg" alt="" />
+      <div><img src="./assets/mail.svg" alt="" /></div>
       <div style="line-height: 21px">
         <strong>Mail</strong><br />Division of Temporary Disability and Family
         Leave Insurance<br />
         PO Box 387 Trenton, New Jersey 08625-0387
       </div>
-    </div>
-    <div
-      style="
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 8px;
-      "
-    >
-      <img src="./assets/email.svg" alt="" />
+      <div><img src="./assets/email.svg" alt="" /></div>
       <div style="line-height: 21px">
         <a
           href="https://www.nj.gov/labor/myleavebenefits/help/contact/contact-form.shtml"
@@ -171,16 +146,7 @@ export const FOOTER_HTML = html`
           ><strong>Email</strong></a
         >
       </div>
-    </div>
-    <div
-      style="
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        margin-bottom: 24px;
-      "
-    >
-      <img src="./assets/info.svg" alt="" />
+      <div><img src="./assets/info.svg" alt="" /></div>
       <div style="line-height: 21px">
         <a
           href="https://www.nj.gov/labor/myleavebenefits/worker/resources/"
@@ -192,10 +158,16 @@ export const FOOTER_HTML = html`
     </div>
     <div>
       Due to technical constraints, you can access this claim status checker
-      8:00am - 4:30pm, Monday - Friday
+      8:00am - 4:30pm, Monday - Friday.
     </div>
   </footer>
 `;
+
+export const RETURN_TO_TOP_LINK = html`<a
+  href="#header"
+  style="font-size: 16px; color: #0b4778; text-underline-offset: 2.5px"
+  >Return to top</a
+>`;
 
 export function styleBody() {
   document.documentElement.lang = "en";
@@ -265,12 +237,6 @@ export function getUnstyledButton(label, onClick) {
   </button>`;
 }
 
-export const RETURN_TO_TOP_LINK = html`<a
-  href="#header"
-  style="font-size: 16px; color: #0b4778; text-underline-offset: 2.5px"
-  >Return to top</a
->`;
-
 export function getStatusAlert(status) {
   let color = "";
   let borderColor = "";
@@ -315,5 +281,84 @@ export function getFormattedDate(dateString) {
     year: "numeric",
     month: "long",
     day: "numeric",
+  });
+}
+
+export function partition(array, filter) {
+  const pass = [];
+  const fail = [];
+  array.forEach((e, idx, arr) => (filter(e, idx, arr) ? pass : fail).push(e));
+  return [pass, fail];
+}
+
+export function getClaimHandler(seqNum, type, status) {
+  return `populateMoreDetail('${seqNum}', '${type}', '${status.charAt(0)}')`;
+}
+
+export function getParsedClaimNotes(rawClaimNotes) {
+  return rawClaimNotes.map((note) => {
+    const parsedNote = note.split("was sent to ")[1]?.split(" on ") ?? [];
+    const data = {
+      type: undefined,
+      sentOn: parsedNote[1]?.slice(0, -1), // remove `.` character
+      sentTo: parsedNote[0],
+    };
+
+    if (note.includes("Error while processing")) {
+      data.type = "ERR";
+    } else if (note.includes("Private Plan Operations")) {
+      data.type = "PRIV";
+    } else if (note.includes("Disability During Unemployment")) {
+      data.type = "DDU";
+    } else if (note.includes("invalid because you did not meet the wage")) {
+      data.type = "INVAL_WAGE";
+    } else if (
+      note.includes("ineligible because you failed") &&
+      note.includes("Form C10")
+    ) {
+      data.type = "INEL_C10";
+    } else if (
+      note.includes("ineligible because you failed") &&
+      note.includes("Form M10")
+    ) {
+      data.type = "INEL_M10";
+    } else if (
+      note.includes("ineligible because you failed") &&
+      note.includes("additional information and medical certification")
+    ) {
+      data.type = "INEL_5107";
+    } else if (note.includes("A request for information has been mailed")) {
+      data.type = "SENT_REQ";
+    } else if (note.includes("No decision has been made")) {
+      data.type = "14_DAY";
+    } else if (
+      note.includes("Request to Claimant for Information was sent to")
+    ) {
+      data.type = "SENT_C10";
+    } else if (note.includes("Request for Medical Information was sent to")) {
+      data.type = "SENT_Mxx";
+    } else if (note.includes("Request for Wage information was sent to")) {
+      data.type = "SENT_Exx";
+    } else if (
+      note.includes(
+        "Notice of Required Pursuit of Workers' Compensation Claim was sent to"
+      )
+    ) {
+      data.type = "SENT_W10";
+    } else if (
+      note.includes("Request to Claimant for Information was generated")
+    ) {
+      data.type = "GEN_C01";
+    } else if (note.includes("Form W01")) {
+      data.type = "GEN_W01";
+    } else if (note.includes("Form M-01")) {
+      data.type = "GEN_M01";
+    } else if (note.includes("An Employer Statement")) {
+      data.type = "GEN_E01";
+    } else {
+      data.type = note;
+    }
+
+    return data;
   });
 }

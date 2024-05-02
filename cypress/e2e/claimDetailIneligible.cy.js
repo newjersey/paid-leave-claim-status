@@ -4,7 +4,7 @@ describe("Claim Detail page - Ineligible scenario with Blank claim notes", () =>
 
     cy.checkIneligibleCore();
     cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
+      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
     ).should("be.visible");
     cy.contains("Denied").should("be.visible");
     cy.contains(
@@ -24,7 +24,7 @@ describe("Claim Detail page - Ineligible scenario with C10 missing", () => {
 
     cy.checkIneligibleCore();
     cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
+      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
     ).should("be.visible");
     cy.contains("Denied").should("be.visible");
     cy.contains(
@@ -49,7 +49,7 @@ describe("Claim Detail page - Ineligible scenario with M10 missing", () => {
 
     cy.checkIneligibleCore();
     cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
+      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
     ).should("be.visible");
     cy.contains("Denied").should("be.visible");
     cy.contains(
@@ -74,7 +74,7 @@ describe("Claim Detail page - Ineligible scenario with C10 and M10 missing", () 
 
     cy.checkIneligibleCore();
     cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
+      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
     ).should("be.visible");
     cy.contains("Denied").should("be.visible");
     cy.contains(
@@ -99,7 +99,7 @@ describe("Claim Detail page - Ineligible scenario for DDU", () => {
 
     cy.checkIneligibleCore();
     cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
+      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
     ).should("be.visible");
     cy.contains("Transferred to Disability During Unemployment team").should(
       "be.visible"
@@ -122,7 +122,7 @@ describe("Claim Detail page - Ineligible scenario for FLDU", () => {
 
     cy.checkIneligibleCore();
     cy.contains(
-      "Claim for Family Leave Insurance (FLI), started August 1, 2023"
+      "Claim for Family Leave Insurance (FLI), starting August 1, 2023"
     ).should("be.visible");
     cy.contains("Transferred to Family Leave During Unemployment team").should(
       "be.visible"
@@ -149,7 +149,7 @@ describe("Claim Detail page -  Ineligible scenario due to invalid wage (2010)", 
 
     cy.checkIneligibleCore();
     cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
+      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
     ).should("be.visible");
     cy.contains("Denied").should("be.visible");
     cy.contains(
@@ -173,7 +173,7 @@ describe("Claim Detail page - Ineligible scenario due to invalid wage (2010)", (
 
     cy.checkIneligibleCore();
     cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
+      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
     ).should("be.visible");
     cy.contains("Denied").should("be.visible");
     cy.contains(
@@ -197,7 +197,7 @@ describe("Claim Detail page - Ineligible scenario due to private plan", () => {
 
     cy.checkIneligibleCore();
     cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), started August 1, 2023"
+      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
     ).should("be.visible");
     cy.contains("Denied").should("be.visible");
     cy.contains(

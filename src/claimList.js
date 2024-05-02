@@ -13,6 +13,9 @@ import {
   getClaimStatus,
   getFormattedDate,
   getUnstyledButton,
+  isDesktop,
+  partition,
+  getClaimHandler,
 } from "./modules/shared.mjs";
 
 if (document.readyState === "loading") {
@@ -85,15 +88,16 @@ function addNewHtml(name, claims) {
     const oneYearAgo = new Date().setFullYear(now.getFullYear() - 1);
     return dateObj > oneYearAgo;
   });
+  const rootMarginX = isDesktop() ? "107px" : "18px";
 
   newContainer.innerHTML = html`${HEADER_HTML}
     <img
       src="https://beta.nj.gov/files/dol_logo.png"
       height="60"
       alt="Official logo for the New Jersey Department of Labor"
-      style="margin: 36px 20px 8px"
+      style="margin-top: 36px; margin-bottom: 8px; margin-left: ${rootMarginX}; margin-right: ${rootMarginX}"
     />
-    <div style="margin: 0 18px">
+    <div style="margin: 0 ${rootMarginX}">
       <h1
         style="font-weight: 400; line-height: 45px; font-size: 40px; margin: 0 0 36px"
       >
@@ -118,56 +122,62 @@ function addNewHtml(name, claims) {
           started in the last 12 months
         </div>
         ${recentClaims.length > 0
-          ? recentClaims
-              .map(
-                (claim) => html` <div
-                  style="background-color: #fff; border: 1px solid #DFE1E2; border-radius: 4px; padding: 16px 32px 32px; margin-bottom: 8px"
-                >
-                  <div style="font-size: 22px; line-height: 32px">
-                    Claim for ${getClaimTypeContent(claim.type)}
-                  </div>
-                  <div style="margin-bottom: 16px">
-                    Started ${getFormattedDate(claim.date)}
-                  </div>
-                  ${claim.status === "Undetermined"
-                    ? html` <button
-                        style="background-color: #0076D6; border: none; color: #fff; padding: 12px 20px; cursor: pointer; border-radius: 4px; font-weight: 700; font-size: 16px; line-height: 24px"
-                        onclick="${getClaimHandler(
-                          claim.seqNum,
-                          claim.type,
-                          claim.status
-                        )}"
-                      >
-                        Check claim status
-                      </button>`
-                    : html`
-                        <div
-                          style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px"
-                        >
-                          <img
-                            src="./assets/${claim.status === "Eligible"
-                              ? "check_circle"
-                              : "cancel"}.svg"
-                            alt=""
-                          />
-                          <div
-                            style="font-size: 16px; line-height: 24px; font-weight: 700"
-                          >
-                            ${getClaimStatus(claim.status)}
-                          </div>
-                        </div>
-                        ${getUnstyledButton(
-                          "View details",
-                          getClaimHandler(
+          ? html`<div
+              style="${isDesktop()
+                ? "display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px"
+                : ""}"
+            >
+              ${recentClaims
+                .map(
+                  (claim) => html` <div
+                    style="background-color: #fff; border: 1px solid #DFE1E2; border-radius: 4px; padding: 16px 32px 32px; margin-bottom: 8px"
+                  >
+                    <div style="font-size: 22px; line-height: 32px">
+                      Claim for ${getClaimTypeContent(claim.type)}
+                    </div>
+                    <div style="margin-bottom: 16px">
+                      Started ${getFormattedDate(claim.date)}
+                    </div>
+                    ${claim.status === "Undetermined"
+                      ? html` <button
+                          style="background-color: #0076D6; border: none; color: #fff; padding: 12px 20px; cursor: pointer; border-radius: 4px; font-weight: 700; font-size: 16px; line-height: 24px"
+                          onclick="${getClaimHandler(
                             claim.seqNum,
                             claim.type,
                             claim.status
-                          )
-                        )}
-                      `}
-                </div>`
-              )
-              .join("")
+                          )}"
+                        >
+                          Check claim status
+                        </button>`
+                      : html`
+                          <div
+                            style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px"
+                          >
+                            <img
+                              src="./assets/${claim.status === "Eligible"
+                                ? "check_circle"
+                                : "cancel"}.svg"
+                              alt=""
+                            />
+                            <div
+                              style="font-size: 16px; line-height: 24px; font-weight: 700"
+                            >
+                              ${getClaimStatus(claim.status)}
+                            </div>
+                          </div>
+                          ${getUnstyledButton(
+                            "View details",
+                            getClaimHandler(
+                              claim.seqNum,
+                              claim.type,
+                              claim.status
+                            )
+                          )}
+                        `}
+                  </div>`
+                )
+                .join("")}
+            </div>`
           : html` <div
               style="background-color: #fff; border: 1px solid #DFE1E2; border-radius: 4px; padding: 32px; font-size: 16px; line-height: 24px"
             >
@@ -218,33 +228,18 @@ function addNewHtml(name, claims) {
                       <b>Claim for ${getClaimTypeContent(claim.type)}</b>,
                       started ${getFormattedDate(claim.date)}
                     </div>
-                    <img
-                      src="./assets
-                    /navigate_next.svg"
-                      alt=""
-                    />
+                    <img src="./assets/navigate_next.svg" alt="" />
                   </button>
                 `
               )
               .join("")}`
         : ""}
-      <div style="margin-bottom: 20px; margin-top: 76px">
+      <div style="margin-bottom: 8px; margin-top: 44px">
         ${RETURN_TO_TOP_LINK}
       </div>
     </div>
     ${FOOTER_HTML}`;
   root?.append(newContainer);
-}
-
-function partition(array, filter) {
-  const pass = [],
-    fail = [];
-  array.forEach((e, idx, arr) => (filter(e, idx, arr) ? pass : fail).push(e));
-  return [pass, fail];
-}
-
-function getClaimHandler(seqNum, type, status) {
-  return `populateMoreDetail('${seqNum}', '${type}', '${status.charAt(0)}')`;
 }
 
 function logView(allClaims) {
