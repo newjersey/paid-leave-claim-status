@@ -10,24 +10,19 @@ import {
   FOOTER_HTML,
   RETURN_TO_TOP_LINK,
   getClaimTypeContent,
-  getUnstyledButton,
+  getUnstyledButtonHtml,
   getFormattedDate,
-  getStatusAlert,
   css,
   getClaimStatus,
   isClaimNotesEmpty,
   getParsedClaimNotes,
   isDesktop,
+  runWhenReady,
+  updateDocument,
 } from "./modules/shared.mjs";
 import { Accordion } from "./modules/Accordion.mjs";
 
-if (document.readyState === "loading") {
-  window.addEventListener("DOMContentLoaded", () => {
-    executeOverride();
-  });
-} else {
-  executeOverride();
-}
+runWhenReady(executeOverride);
 
 function executeOverride() {
   setupAnalytics();
@@ -36,15 +31,16 @@ function executeOverride() {
     makeMobileFriendly();
 
     const metadata = getMetadata();
+    logView(metadata);
+
     removeOldHtml();
-    addHeadStyles();
+    addHeadStyling();
     addNewHtml(metadata);
 
     styleBody();
     addFeedbackLink();
     updateIcon();
-    document.title = "Claim status details";
-    logView(metadata);
+    updateDocument("Claim status details");
   } catch (e) {
     logEvent(
       "[DOL_DABI] Claim List redesign error",
@@ -54,8 +50,7 @@ function executeOverride() {
 }
 
 function getMetadata() {
-  const baseChildren =
-    document.getElementById("AutoNumber2")?.children[0]?.children ?? [];
+  const baseChildren = document.getElementById("AutoNumber2")?.rows ?? [];
   const fullName =
     baseChildren[1]?.children[0]?.children[0]?.innerText.toLowerCase();
   const claimType = baseChildren[4]?.children[0]?.innerText
@@ -98,7 +93,7 @@ function getMetadata() {
   };
 }
 
-function getStepsList(contentList) {
+function getStepsHtml(contentList) {
   return html`<div style="margin-top: 12px">
     <h3 style="font-size: 16px; line-height: 24px; margin: 0">
       Steps to complete
@@ -111,7 +106,46 @@ function getStepsList(contentList) {
   </div>`;
 }
 
-function getStatusContent(
+function getStatusAlertHtml(status) {
+  let color = "";
+  let borderColor = "";
+  let icon = "";
+
+  switch (status) {
+    case "Information needed":
+    case "Transferred to Disability During Unemployment team":
+    case "Transferred to Family Leave During Unemployment team":
+      color = "#FAF3D1";
+      borderColor = "#FFBE2E";
+      icon = "warning";
+      break;
+    case "Denied":
+      color = "#F4E3DB";
+      borderColor = "#D54309";
+      icon = "cancel";
+      break;
+    case "Approved":
+      color = "#ECF3EC";
+      borderColor = "#00A91C";
+      icon = "check_circle";
+      break;
+    case "In progress":
+    default:
+      color = "#E7F6F8";
+      borderColor = "#00BDE3";
+      icon = "info";
+      break;
+  }
+
+  return html` <div
+    style="border-left: 8px solid ${borderColor}; background-color: ${color}; padding: 8px 16px 8px 14px; display: flex; align-items: center; gap: 14px"
+  >
+    <img src="./assets/${icon}.svg" alt="" />
+    <div>${status}</div>
+  </div>`;
+}
+
+function getStatusBodyHtml(
   newStatus,
   claimNotes,
   claimType,
@@ -123,7 +157,7 @@ function getStatusContent(
   lastDayPaid
 ) {
   if (newStatus === "In progress") {
-    return getStepsList(["There's no action for you to take."]);
+    return getStepsHtml(["There's no action for you to take."]);
   } else if (newStatus === "Information needed") {
     return claimNotes
       .map((note, idx) => {
@@ -230,7 +264,7 @@ function getStatusContent(
             body = html`<div>
               To process your claim, we need claimant information from you. On
               ${mailDateFormatted}, we mailed a Request to Claimant for
-              Information (C10) to your address on file: ${note.sentTo}.<br /><br />
+              Information (C10) to ${note.sentTo}.<br /><br />
               <b>Steps to complete</b>
               <ul
                 style="padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
@@ -264,8 +298,7 @@ function getStatusContent(
                 target="_blank"
                 >other approved medical provider</a
               >). On ${mailDateFormatted}, we mailed a Request for Medical
-              Information (M10 or M20) to your address on file:
-              ${note.sentTo}.<br /><br />
+              Information (M10 or M20) to ${note.sentTo}.<br /><br />
               <b>Steps to complete</b>
               <ul
                 style="padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
@@ -284,8 +317,7 @@ function getStatusContent(
             body = html`<div>
               To process your claim, we need workers' compensation information
               from you. On ${mailDateFormatted}, we mailed a Notice of Required
-              Pursuit of Workers' Compensation Claim (W10) to your address on
-              file: ${note.sentTo}.
+              Pursuit of Workers' Compensation Claim (W10) to ${note.sentTo}.
               <br /><br />
               <b>Steps to complete</b>
               <ul
@@ -458,7 +490,7 @@ function getStatusContent(
           Your claim for benefits is currently <b>denied</b>. We didn't receive
           your medical information (Form M10 or M20) requested during our
           review.
-          ${getStepsList([
+          ${getStepsHtml([
             "Check your denial letter for more information about what was missing. You can also look for the Request for Medical Information (M10 or M20), sent earlier.",
             "You or your doctor need to <b>mail or fax</b> the missing information to us to continue your claim. It can take 6 weeks or longer for us to review your claim again.",
           ])}
@@ -468,7 +500,7 @@ function getStatusContent(
         content = html`
           Your claim for benefits is currently <b>denied</b>. We didn't receive
           your claimant information (Form C10) requested during our review.
-          ${getStepsList([
+          ${getStepsHtml([
             "Check your denial letter for more information about what was missing. You can also look for the Request for Claimant Information (C10) sent earlier.",
             "<b>Mail or fax</b> the missing information to us to continue your claim. It can take several weeks for us to review your claim again.",
           ])}
@@ -478,7 +510,7 @@ function getStatusContent(
         content = html`Your claim for benefits is currently <b>denied</b>. We
           didn't receive claimant information (Form C10) and medical information
           (Form M10 or M20) requested during our review.
-          ${getStepsList([
+          ${getStepsHtml([
             "Check your denial letter for more information about what was missing. You can also look for the Request for Medical Information (M10 or M20) and Request for Claimant Information (C10) sent earlier.",
             "<b>Mail or fax</b> the missing information to us to continue your claim. It can take 6 weeks or longer for us to review your claim again.",
           ])}`;
@@ -514,7 +546,7 @@ function getStatusContent(
   }
 }
 
-function getWhatsNextContent(claimStatus, claimNotes, nextPayDate) {
+function getWhatsNextHtml(claimStatus, claimNotes, nextPayDate) {
   let listEls = undefined;
 
   if (claimStatus === "Undetermined") {
@@ -566,7 +598,7 @@ function getWhatsNextContent(claimStatus, claimNotes, nextPayDate) {
   return listEls;
 }
 
-function addHeadStyles() {
+function addHeadStyling() {
   const style = document.createElement("style");
   style.textContent = css`
     .progress-bar li {
@@ -593,7 +625,7 @@ function addHeadStyles() {
       border-color: #0076d6;
     }
     .progress-bar .circle.current::after {
-      background-color: white;
+      background-color: #ffffff;
       border-color: #0076d6;
     }
     .progress-bar span {
@@ -690,7 +722,7 @@ function addNewHtml(metadata) {
 
   const root = document.getElementsByName("dabiDetail")[0];
   const newContainer = document.createElement("div");
-  const whatsNextContent = getWhatsNextContent(
+  const whatsNextContent = getWhatsNextHtml(
     claimStatus,
     claimNotes,
     nextPayDate
@@ -702,7 +734,7 @@ function addNewHtml(metadata) {
     <div
       style="display: flex; align-items: center; margin-top: 4px; margin-left: ${rootMarginX}; margin-right: ${rootMarginX}; margin-bottom: 16px; line-height: 26px"
     >
-      ${getUnstyledButton("All claims", "claimList()")}
+      ${getUnstyledButtonHtml("All claims", "claimList()")}
       <img src="./assets/arrow.svg" alt="Right arrow" />
       <div style="display: inline-block"><b>Status</b></div>
     </div>
@@ -722,7 +754,7 @@ function addNewHtml(metadata) {
           font-size: 16px;
           font-weight: bold;
           color: #0b4778;
-          background-color: #f5f6f7;
+          background-color: #ffffff;
           display: flex;
           align-items: center;
           gap: 6px;
@@ -745,13 +777,20 @@ function addNewHtml(metadata) {
     </div>
     <div
       style="${isDesktop()
-        ? "display: grid; grid-template-columns: 1fr 2fr; gap: 20px"
+        ? "display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-left: 107px; margin-right: 107px"
         : ""}"
     >
       <div
-        style="margin-top: 0px; margin-left: ${rootMarginX}; margin-right: ${rootMarginX}; margin-bottom: 28px"
+        style="margin-top: 0px;  ${isDesktop()
+          ? ""
+          : "margin-left: 20px; margin-right: 20px;"} margin-bottom: 28px"
       >
-        <ul style="padding-inline-start: 12px" class="progress-bar">
+        <ul
+          style="padding-inline-start: 12px; ${isDesktop()
+            ? "margin-block-start: 0px"
+            : ""}"
+          class="progress-bar"
+        >
           <li>
             <div class="circle complete"></div>
             <span class="complete received"
@@ -793,16 +832,26 @@ function addNewHtml(metadata) {
         </ul>
       </div>
       <div>
-        <h2
-          style="font-size: 22px; margin-top: 0px; margin-left: ${rootMarginX}; margin-right: ${rootMarginX}; margin-bottom: 8px; line-height: 32px"
-        >
-          Current status
-        </h2>
         <div
-          style="background-color: #fff; padding-top: 16px; padding-left: ${rootMarginX}; padding-right: ${rootMarginX}; padding-bottom: 16px; margin-bottom: 36px"
+          style="${isDesktop()
+            ? ""
+            : "margin-left: 20px; margin-right: 20px;"} margin-bottom: 16px; margin-bottom: 36px"
         >
-          ${getStatusAlert(newStatus)}
-          ${getStatusContent(
+          <h2
+            style="font-size: 22px; margin-top: 0px; margin-bottom: 0px; line-height: 32px"
+          >
+            Current status
+          </h2>
+          <hr
+            style="
+        margin: 0;
+        border: none;
+        border-top: 1px solid #dfe1e2;
+        margin-bottom: 16px;
+      "
+          />
+          ${getStatusAlertHtml(newStatus)}
+          ${getStatusBodyHtml(
             newStatus,
             claimNotes,
             claimType,
@@ -816,14 +865,24 @@ function addNewHtml(metadata) {
         </div>
         ${whatsNextContent != null
           ? html`<div style="margin-bottom: 40px">
-              <h2
-                style="font-size: 22px; margin-top: 0px; margin-left: ${rootMarginX}; margin-right: ${rootMarginX}; margin-bottom: 8px; line-height: 32px"
-              >
-                What's next
-              </h2>
               <div
-                style="background-color: #fff; padding-top: 16px; padding-left: ${rootMarginX}; padding-right: ${rootMarginX}; padding-bottom: 16px"
+                style="${isDesktop()
+                  ? ""
+                  : "margin-left: 20px; margin-right: 20px;"} margin-bottom: 16px; margin-bottom: 36px"
               >
+                <h2
+                  style="font-size: 22px; margin-top: 0px; margin-bottom: 0px; line-height: 32px"
+                >
+                  What's next
+                </h2>
+                <hr
+                  style="
+                    margin: 0;
+                    border: none;
+                    border-top: 1px solid #dfe1e2;
+                    margin-bottom: 16px;
+                  "
+                />
                 <ul
                   style="padding-inline-start: 20px; margin-block-start: 0; margin-block-end: 0"
                 >

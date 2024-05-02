@@ -12,19 +12,15 @@ import {
   getClaimTypeContent,
   getClaimStatus,
   getFormattedDate,
-  getUnstyledButton,
+  getUnstyledButtonHtml,
   isDesktop,
   partition,
   getClaimHandler,
+  runWhenReady,
+  updateDocument,
 } from "./modules/shared.mjs";
 
-if (document.readyState === "loading") {
-  window.addEventListener("DOMContentLoaded", () => {
-    executeOverride();
-  });
-} else {
-  executeOverride();
-}
+runWhenReady(executeOverride);
 
 function executeOverride() {
   setupAnalytics();
@@ -32,15 +28,16 @@ function executeOverride() {
   try {
     makeMobileFriendly();
 
-    const { claims, name } = getMetadata();
+    const metadata = getMetadata();
+    logView(metadata.claims);
+
     removeOldHtml();
-    addNewHtml(name, claims);
+    addNewHtml(metadata);
 
     styleBody();
     addFeedbackLink();
     updateIcon();
-    document.title = "Check claim status";
-    logView(claims);
+    updateDocument("Check claim status");
   } catch (e) {
     logEvent(
       "[DOL_DABI] Claim List redesign error",
@@ -79,7 +76,8 @@ function removeOldHtml() {
   }
 }
 
-function addNewHtml(name, claims) {
+function addNewHtml(metadata) {
+  const { name, claims } = metadata;
   const root = document.getElementsByName("claimlist")[0];
   const newContainer = document.createElement("div");
   const [recentClaims, oldClaims] = partition(claims, (e) => {
@@ -165,7 +163,7 @@ function addNewHtml(name, claims) {
                               ${getClaimStatus(claim.status)}
                             </div>
                           </div>
-                          ${getUnstyledButton(
+                          ${getUnstyledButtonHtml(
                             "View details",
                             getClaimHandler(
                               claim.seqNum,

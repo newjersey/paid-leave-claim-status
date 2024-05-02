@@ -85,7 +85,7 @@ describe("Claim Detail page - Information Needed scenario", () => {
     accordionButton.click();
     cy.get("#sect1")
       .contains(
-        "To process your claim, we need claimant information from you. On August 25, 2023, we mailed a Request to Claimant for Information (C10) to your address on file: Jenni Mahlstedt."
+        "To process your claim, we need claimant information from you. On August 25, 2023, we mailed a Request to Claimant for Information (C10) to Jenni Mahlstedt."
       )
       .should("be.visible");
     cy.get("#sect1")
