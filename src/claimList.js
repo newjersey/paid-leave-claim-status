@@ -138,7 +138,7 @@ function addNewHtml(metadata) {
                     </div>
                     ${claim.status === "Undetermined"
                       ? html` <button
-                          style="background-color: #0076D6; border: none; color: #fff; padding: 12px 20px; cursor: pointer; border-radius: 4px; font-weight: 700; font-size: 16px; line-height: 24px"
+                          style="background-color: #0076D6; border: none; color: #fff; padding: 12px 20px; cursor: pointer; border-radius: 4px; font-weight: 700; font-size: 16px; line-height: 24px; outline-offset: 0.25rem"
                           onclick="${getClaimHandler(
                             claim.seqNum,
                             claim.type,
@@ -209,7 +209,6 @@ function addNewHtml(metadata) {
                       color: inherit;
                       font: inherit;
                       cursor: pointer;
-                      outline: inherit; 
                       display: flex;
                       align-items: center;
                       border: 0.5px solid #A9AEB1;
@@ -220,7 +219,8 @@ function addNewHtml(metadata) {
                       text-align: left;
                       margin-bottom: 8px;
                       width: 100%;
-                      justify-content: space-between"
+                      justify-content: space-between;
+                      outline-offset: 0.25rem"
                   >
                     <div>
                       <b>Claim for ${getClaimTypeContent(claim.type)}</b>,
@@ -241,12 +241,12 @@ function addNewHtml(metadata) {
 }
 
 function logView(allClaims) {
+  const now = new Date();
+  const sixMonthsAgo = new Date().setMonth(now.getMonth() - 6);
   const recentClaims = allClaims
     .map((claim) => claim.date)
     .filter((date) => {
       const dateObj = new Date(date);
-      const now = new Date();
-      const sixMonthsAgo = new Date().setMonth(now.getMonth() - 6);
       return dateObj > sixMonthsAgo;
     });
 

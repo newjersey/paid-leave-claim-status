@@ -412,7 +412,7 @@ function getStatusBodyHtml(
         debit card about 2 business days later.<br /><br />
         For a detailed breakdown,<br />
         <button
-          style="background-color: #0076D6; border: none; color: #fff; padding: 12px 20px; cursor: pointer; border-radius: 4px; font-weight: 700; font-size: 16px; line-height: 24px; margin-top: 16px"
+          style="background-color: #0076D6; border: none; color: #fff; padding: 12px 20px; cursor: pointer; border-radius: 4px; font-weight: 700; font-size: 16px; line-height: 24px; margin-top: 16px; outline-offset: 0.25rem"
           onclick="paymentDetail()"
         >
           Go to payment information
@@ -672,6 +672,7 @@ function addHeadStyling() {
       cursor: pointer;
       border: 0.5px solid #a9aeb1;
       border-radius: 5px;
+      outline-offset: 0.25rem;
     }
     .accordion-title {
       font-weight: 700;
@@ -747,7 +748,6 @@ function addNewHtml(metadata) {
           background: none;
           font: inherit;
           cursor: pointer;
-          outline: inherit;
           border: 2px solid #0b4778;
           border-radius: 4px;
           padding: 12px 10.5px;
@@ -758,6 +758,7 @@ function addNewHtml(metadata) {
           display: flex;
           align-items: center;
           gap: 6px;
+          outline-offset: 0.25rem;
         "
       >
         <img src="./assets/logout.svg" alt="" />

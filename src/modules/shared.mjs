@@ -329,13 +329,13 @@ export function getUnstyledButtonHtml(label, onClick) {
       border: none;
       padding: 0;
       font: inherit;
-      outline: inherit;
       cursor: pointer;
       font-size: 16px;
       color: #0b4778;
       text-decoration: underline;
       display: inline-block;
       text-underline-offset: 2.5px;
+      outline-offset: 0.25rem;
     "
   >
     ${label}
