@@ -744,7 +744,7 @@ function addNewHtml(metadata) {
       style="display: flex; justify-content: flex-end; margin-top: 0; margin-left: ${rootMarginX}; margin-right: ${rootMarginX}; margin-bottom: 0"
     >
       <button
-        onClick="userLogout()"
+        onclick="userLogout()"
         style="
           background: none;
           font: inherit;

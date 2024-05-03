@@ -235,10 +235,6 @@ export function getParsedClaimNotes(rawClaimNotes) {
   });
 }
 
-export function getClaimHandler(seqNum, type, status) {
-  return `populateMoreDetail('${seqNum}', '${type}', '${status.charAt(0)}')`;
-}
-
 /* HTML COMPONENTS */
 export const HEADER_HTML = html`
   <header
@@ -326,7 +322,7 @@ export const RETURN_TO_TOP_LINK = html`<a
 
 export function getUnstyledButtonHtml(label, onClick) {
   return html` <button
-    onClick="${onClick}"
+    onclick="${onClick}"
     style="
       background: none;
       border: none;

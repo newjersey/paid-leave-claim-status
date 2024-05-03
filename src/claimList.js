@@ -15,7 +15,6 @@ import {
   getUnstyledButtonHtml,
   isDesktop,
   partition,
-  getClaimHandler,
   runWhenReady,
   updateDocument,
   ICON_BASE_URL,
@@ -75,6 +74,10 @@ function removeOldHtml() {
       `Cannot safely remove old HTML, expected 6 root children, got ${numChildren}`
     );
   }
+}
+
+function getClaimHandler(seqNum, type, status) {
+  return `populateMoreDetail('${seqNum}', '${type}', '${status.charAt(0)}')`;
 }
 
 function addNewHtml(metadata) {
@@ -223,6 +226,11 @@ function addNewHtml(metadata) {
                       width: 100%;
                       justify-content: space-between;
                       outline-offset: 0.25rem"
+                    onclick="${getClaimHandler(
+                      claim.seqNum,
+                      claim.type,
+                      claim.status
+                    )}"
                   >
                     <div>
                       <b>Claim for ${getClaimTypeContent(claim.type)}</b>,
