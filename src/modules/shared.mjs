@@ -89,6 +89,9 @@ export function styleBody() {
   bodyStyle.padding = "0px";
 }
 
+export const ICON_BASE_URL =
+  "https://beta.nj.gov/files/tdi-fli-claim-status/assets";
+
 /* GENERAL HELPER FUNCTIONS */
 export function getFormattedDate(dateString) {
   return new Date(dateString).toLocaleDateString("en-us", {
@@ -276,20 +279,20 @@ export const FOOTER_HTML = html`
     <div
       style="display: grid; grid-template-columns: min-content auto; gap: 16px; margin-bottom: 8px"
     >
-      <div><img src="./assets/phone.svg" alt="" /></div>
+      <div><img src="${ICON_BASE_URL}/phone.svg" alt="" /></div>
       <div style="line-height: 21px">
         <strong>Call</strong> 609-292-7060 | (8:00am - 4:30pm, Monday - Friday)
         Wait times are shortest Wednesday - Friday
       </div>
-      <div><img src="./assets/fax.svg" alt="" /></div>
+      <div><img src="${ICON_BASE_URL}/fax.svg" alt="" /></div>
       <div style="line-height: 21px"><strong>Fax</strong> 609-984-4138</div>
-      <div><img src="./assets/mail.svg" alt="" /></div>
+      <div><img src="${ICON_BASE_URL}/mail.svg" alt="" /></div>
       <div style="line-height: 21px">
         <strong>Mail</strong><br />Division of Temporary Disability and Family
         Leave Insurance<br />
         PO Box 387 Trenton, New Jersey 08625-0387
       </div>
-      <div><img src="./assets/email.svg" alt="" /></div>
+      <div><img src="${ICON_BASE_URL}/email.svg" alt="" /></div>
       <div style="line-height: 21px">
         <a
           href="https://www.nj.gov/labor/myleavebenefits/help/contact/contact-form.shtml"
@@ -298,7 +301,7 @@ export const FOOTER_HTML = html`
           ><strong>Email</strong></a
         >
       </div>
-      <div><img src="./assets/info.svg" alt="" /></div>
+      <div><img src="${ICON_BASE_URL}/info.svg" alt="" /></div>
       <div style="line-height: 21px">
         <a
           href="https://www.nj.gov/labor/myleavebenefits/worker/resources/"

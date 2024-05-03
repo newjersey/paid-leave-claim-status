@@ -18,6 +18,7 @@ import {
   getClaimHandler,
   runWhenReady,
   updateDocument,
+  ICON_BASE_URL,
 } from "./modules/shared.mjs";
 
 runWhenReady(executeOverride);
@@ -152,7 +153,8 @@ function addNewHtml(metadata) {
                             style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px"
                           >
                             <img
-                              src="./assets/${claim.status === "Eligible"
+                              src="${ICON_BASE_URL}/${claim.status ===
+                              "Eligible"
                                 ? "check_circle"
                                 : "cancel"}.svg"
                               alt=""
@@ -226,15 +228,19 @@ function addNewHtml(metadata) {
                       <b>Claim for ${getClaimTypeContent(claim.type)}</b>,
                       started ${getFormattedDate(claim.date)}
                     </div>
-                    <img src="./assets/navigate_next.svg" alt="" />
+                    <img src="${ICON_BASE_URL}/navigate_next.svg" alt="" />
                   </button>
                 `
               )
               .join("")}`
         : ""}
-      <div style="margin-bottom: 8px; margin-top: 44px">
-        ${RETURN_TO_TOP_LINK}
-      </div>
+    </div>
+    <div
+      style="margin-bottom: 8px; margin-top: 44px; margin-left: ${isDesktop()
+        ? "54px"
+        : "13px"}; margin-right: ${isDesktop() ? "54px" : "13px"};"
+    >
+      ${RETURN_TO_TOP_LINK}
     </div>
     ${FOOTER_HTML}`;
   root?.append(newContainer);

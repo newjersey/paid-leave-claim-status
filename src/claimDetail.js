@@ -19,6 +19,7 @@ import {
   isDesktop,
   runWhenReady,
   updateDocument,
+  ICON_BASE_URL,
 } from "./modules/shared.mjs";
 import { Accordion } from "./modules/Accordion.mjs";
 
@@ -140,7 +141,7 @@ function getStatusAlertHtml(status) {
   return html` <div
     style="border-left: 8px solid ${borderColor}; background-color: ${color}; padding: 8px 16px 8px 14px; display: flex; align-items: center; gap: 14px"
   >
-    <img src="./assets/${icon}.svg" alt="" />
+    <img src="${ICON_BASE_URL}/${icon}.svg" alt="" />
     <div>${status}</div>
   </div>`;
 }
@@ -386,7 +387,7 @@ function getStatusBodyHtml(
               <div>
                 <img
                   class="accordion-icon"
-                  src="./assets/add.svg"
+                  src="${ICON_BASE_URL}/add.svg"
                   alt="See more"
                 />
               </div>
@@ -736,7 +737,7 @@ function addNewHtml(metadata) {
       style="display: flex; align-items: center; margin-top: 4px; margin-left: ${rootMarginX}; margin-right: ${rootMarginX}; margin-bottom: 16px; line-height: 26px"
     >
       ${getUnstyledButtonHtml("All claims", "claimList()")}
-      <img src="./assets/arrow.svg" alt="Right arrow" />
+      <img src="${ICON_BASE_URL}/arrow.svg" alt="Right arrow" />
       <div style="display: inline-block"><b>Status</b></div>
     </div>
     <div
@@ -761,7 +762,7 @@ function addNewHtml(metadata) {
           outline-offset: 0.25rem;
         "
       >
-        <img src="./assets/logout.svg" alt="" />
+        <img src="${ICON_BASE_URL}/logout.svg" alt="" />
         <span>Log out</span>
       </button>
     </div>
@@ -895,7 +896,11 @@ function addNewHtml(metadata) {
       </div>
     </div>
     <div
-      style="margin-top: 0px; margin-left: ${rootMarginX}; margin-right: ${rootMarginX}; margin-bottom: 8px"
+      style="margin-top: 0px; margin-left: ${isDesktop()
+        ? "54px"
+        : "13px"}; margin-right: ${isDesktop()
+        ? "54px"
+        : "13px"}; margin-bottom: 8px"
     >
       ${RETURN_TO_TOP_LINK}
     </div>
