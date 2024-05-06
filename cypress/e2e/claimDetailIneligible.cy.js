@@ -32,7 +32,7 @@ describe("Claim Detail page - Ineligible scenario with C10 missing", () => {
     ).should("be.visible");
     cy.get("li")
       .contains(
-        "Check your denial letter for more information about what was missing. You can also look for the Request for Claimant Information (C10) sent earlier."
+        "You can also look for the Request for Claimant Information (C10) sent earlier."
       )
       .should("be.visible");
   });
@@ -57,7 +57,7 @@ describe("Claim Detail page - Ineligible scenario with M10 missing", () => {
     ).should("be.visible");
     cy.get("li")
       .contains(
-        "Check your denial letter for more information about what was missing. You can also look for the Request for Medical Information (M10 or M20), sent earlier."
+        "You can also look for the Request for Medical Information (M10 or M20), sent earlier."
       )
       .should("be.visible");
   });
@@ -82,7 +82,7 @@ describe("Claim Detail page - Ineligible scenario with C10 and M10 missing", () 
     ).should("be.visible");
     cy.get("li")
       .contains(
-        "Check your denial letter for more information about what was missing. You can also look for the Request for Medical Information (M10 or M20) and Request for Claimant Information (C10) sent earlier."
+        "You can also look for the Request for Medical Information (M10 or M20) and Request for Claimant Information (C10) sent earlier."
       )
       .should("be.visible");
   });
@@ -201,7 +201,7 @@ describe("Claim Detail page - Ineligible scenario due to private plan", () => {
     ).should("be.visible");
     cy.contains("Denied").should("be.visible");
     cy.contains(
-      "Your employer has a private plan, so you don't qualify for State benefits, but you may be eligible through your employer."
+      "Your employer has a private plan, so you don't qualify for State benefits. You may be eligible through your employer."
     ).should("be.visible");
   });
 

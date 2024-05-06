@@ -469,7 +469,7 @@ function getStatusBodyHtml(
       case "PRIV":
         content = html`
           Your employer has a private plan, so you don't qualify for State
-          benefits, but you may be eligible through your employer.
+          benefits. You may be eligible through your employer.
           <a
             href="https://njdol.prod.simpligov.com/prod/portal/ShowWorkFlow/AnonymousEmbed/70aee173-1831-4223-baa5-891c20e10b39"
             target="_blank"
@@ -492,8 +492,9 @@ function getStatusBodyHtml(
           your medical information (Form M10 or M20) requested during our
           review.
           ${getStepsHtml([
-            "Check your denial letter for more information about what was missing. You can also look for the Request for Medical Information (M10 or M20), sent earlier.",
-            "You or your doctor need to <b>mail or fax</b> the missing information to us to continue your claim. It can take 6 weeks or longer for us to review your claim again.",
+            "Check your denial letter for more information about what was missing.",
+            "You can also look for the Request for Medical Information (M10 or M20), sent earlier.",
+            "You or your doctor need to <b>mail or fax</b> the missing information to us to continue your claim. It can take several weeks for us to review your claim again.",
           ])}
         `;
         break;
@@ -502,7 +503,8 @@ function getStatusBodyHtml(
           Your claim for benefits is currently <b>denied</b>. We didn't receive
           your claimant information (Form C10) requested during our review.
           ${getStepsHtml([
-            "Check your denial letter for more information about what was missing. You can also look for the Request for Claimant Information (C10) sent earlier.",
+            "Check your denial letter for more information about what was missing.",
+            "You can also look for the Request for Claimant Information (C10) sent earlier.",
             "<b>Mail or fax</b> the missing information to us to continue your claim. It can take several weeks for us to review your claim again.",
           ])}
         `;
@@ -512,8 +514,9 @@ function getStatusBodyHtml(
           didn't receive claimant information (Form C10) and medical information
           (Form M10 or M20) requested during our review.
           ${getStepsHtml([
-            "Check your denial letter for more information about what was missing. You can also look for the Request for Medical Information (M10 or M20) and Request for Claimant Information (C10) sent earlier.",
-            "<b>Mail or fax</b> the missing information to us to continue your claim. It can take 6 weeks or longer for us to review your claim again.",
+            "Check your denial letter for more information about what was missing.",
+            "You can also look for the Request for Medical Information (M10 or M20) and Request for Claimant Information (C10) sent earlier.",
+            "<b>Mail or fax</b> the missing information to us to continue your claim. It can take several weeks for us to review your claim again.",
           ])}`;
         break;
       case undefined:
@@ -553,10 +556,10 @@ function getWhatsNextHtml(claimStatus, claimNotes, nextPayDate) {
   if (claimStatus === "Undetermined") {
     if (isClaimNotesEmpty(claimNotes)) {
       listEls = html`<li>We'll review your claim.</li>
+        <li>We'll notify you of important status updates here and by mail.</li>
         <li>
-          We'll notify you of important status updates here and by mail. It can
-          take a number of weeks for a decision or status change depending on
-          the volume of claims.
+          It can take a number of weeks for a decision or status change
+          depending on the volume of claims.
         </li>`;
     } else {
       listEls = html`<li>
@@ -582,13 +585,17 @@ function getWhatsNextHtml(claimStatus, claimNotes, nextPayDate) {
           >
         </li>
         <li>
-          Payments are sent biweekly. There's an initial
+          Payments are sent biweekly.
+          ${claimType === "TDI"
+            ? html`There's an initial
           <a
             href="https://www.nj.gov/labor/myleavebenefits/worker/resources/waiting-week.shtml"
             target="_blank"
             >waiting week</a
           >, which is sent as back pay after your 22nd day of TDI benefits paid.
-        </li> `;
+        </li>`
+            : ""}
+        </li>`;
     } else {
       listEls = html`<li>
         You'll keep getting paid. We'll post here if anything changes.

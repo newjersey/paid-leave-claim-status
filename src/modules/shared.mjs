@@ -142,8 +142,8 @@ export function getClaimTypeContent(type) {
 export function isClaimNotesEmpty(claimNotes) {
   return (
     claimNotes.length === 0 ||
-    (claimNotes.length === 1 && claimNotes === "SENT_REQ") ||
-    (claimNotes.length === 1 && claimNotes === "14_DAY")
+    (claimNotes.length === 1 && claimNotes[0].type === "SENT_REQ") ||
+    (claimNotes.length === 1 && claimNotes[0].type === "14_DAY")
   );
 }
 

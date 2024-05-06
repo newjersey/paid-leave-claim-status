@@ -29,6 +29,68 @@ describe("Claim Detail page - In Progress scenario", () => {
   });
 });
 
+describe("Claim Detail page - 14 Day scenario", () => {
+  it("renders with updated content", () => {
+    cy.visit(
+      "./cypress/fixtures/claimDetail/claimDetailUndetermined14Day.html"
+    );
+
+    cy.contains("Undetermined").should("not.exist"); // Rendered on original HTML, without script change
+
+    cy.get("h1").contains("Status").should("be.visible");
+    cy.contains(
+      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
+    ).should("be.visible");
+    cy.get(".complete.received")
+      .contains("August 7, 2023")
+      .should("be.visible");
+    cy.get(".current").contains("Review").should("be.visible");
+    cy.contains("In progress").should("be.visible");
+    cy.get("li")
+      .contains("There's no action for you to take.")
+      .should("be.visible");
+    cy.get("li").contains("We'll review your claim.").should("be.visible");
+  });
+
+  it("passes accessibility checks", () => {
+    cy.visit(
+      "./cypress/fixtures/claimDetail/claimDetailUndetermined14Day.html"
+    );
+    cy.checkBodyA11y();
+  });
+});
+
+describe("Claim Detail page - Blank request scenario", () => {
+  it("renders with updated content", () => {
+    cy.visit(
+      "./cypress/fixtures/claimDetail/claimDetailUndeterminedBlankRequest.html"
+    );
+
+    cy.contains("Undetermined").should("not.exist"); // Rendered on original HTML, without script change
+
+    cy.get("h1").contains("Status").should("be.visible");
+    cy.contains(
+      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
+    ).should("be.visible");
+    cy.get(".complete.received")
+      .contains("August 7, 2023")
+      .should("be.visible");
+    cy.get(".current").contains("Review").should("be.visible");
+    cy.contains("In progress").should("be.visible");
+    cy.get("li")
+      .contains("There's no action for you to take.")
+      .should("be.visible");
+    cy.get("li").contains("We'll review your claim.").should("be.visible");
+  });
+
+  it("passes accessibility checks", () => {
+    cy.visit(
+      "./cypress/fixtures/claimDetail/claimDetailUndeterminedBlankRequest.html"
+    );
+    cy.checkBodyA11y();
+  });
+});
+
 describe("Claim Detail page - Information Needed scenario", () => {
   it("renders with updated content", () => {
     cy.visit(

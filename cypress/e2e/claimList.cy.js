@@ -21,6 +21,11 @@ describe("Claim List page - with recent and older claims", () => {
     cy.contains("started more than a year ago").should("be.visible");
     cy.contains("started February 14, 2021").should("be.visible");
     cy.contains("started May 26, 2020").should("be.visible");
+
+    cy.get("button")
+      .contains("Check claim status")
+      .should("have.attr", "onclick")
+      .and("include", "populateMoreDetail('001', 'FLI', 'U')");
   });
 
   it("passes accessibility checks", () => {
