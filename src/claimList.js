@@ -85,6 +85,9 @@ function addNewHtml(metadata) {
   const root = document.getElementsByName("claimlist")[0];
   const newContainer = document.createElement("div");
   const [recentClaims, oldClaims] = partition(claims, (e) => {
+    if (!e.date) {
+      return true;
+    }
     const dateObj = new Date(e.date);
     const now = new Date();
     const oneYearAgo = new Date().setFullYear(now.getFullYear() - 1);
@@ -121,7 +124,7 @@ function addNewHtml(metadata) {
         <div
           style="text-transform: uppercase; font-size: 13px; line-height: 16px; margin-bottom: 16px"
         >
-          started in the last 12 months
+          from last 12 months
         </div>
         ${recentClaims.length > 0
           ? html`<div
@@ -135,10 +138,12 @@ function addNewHtml(metadata) {
                     style="background-color: #fff; border: 1px solid #DFE1E2; border-radius: 4px; padding: 16px 32px 32px; margin-bottom: 8px"
                   >
                     <div style="font-size: 22px; line-height: 32px">
-                      Claim for ${getClaimTypeContent(claim.type)}
+                      ${getClaimTypeContent(claim.type)} Claim
                     </div>
-                    <div style="margin-bottom: 16px">
-                      Started ${getFormattedDate(claim.date)}
+                    <div style="margin-top: 4px; margin-bottom: 16px">
+                      ${claim.date && claim.status === "Eligible"
+                        ? `Benefits starting ${getFormattedDate(claim.date)}`
+                        : ""}
                     </div>
                     ${claim.status === "Undetermined"
                       ? html` <button
@@ -204,7 +209,7 @@ function addNewHtml(metadata) {
             <div
               style="text-transform: uppercase; font-size: 13px; line-height: 16px; margin-bottom: 16px"
             >
-              started more than a year ago
+              from more than a year ago
             </div>
             ${oldClaims
               .map(
@@ -233,8 +238,9 @@ function addNewHtml(metadata) {
                     )}"
                   >
                     <div>
-                      <b>Claim for ${getClaimTypeContent(claim.type)}</b>,
-                      started ${getFormattedDate(claim.date)}
+                      <b>${getClaimTypeContent(claim.type)}</b>${claim.date
+                        ? ` - ${getFormattedDate(claim.date)}`
+                        : ""}
                     </div>
                     <img src="${ICON_BASE_URL}/navigate_next.svg" alt="" />
                   </button>

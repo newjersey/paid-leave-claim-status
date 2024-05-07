@@ -3,9 +3,9 @@ describe("Claim Detail page - Ineligible scenario with Blank claim notes", () =>
     cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleBlank.html");
 
     cy.checkIneligibleCore();
-    cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
-    ).should("be.visible");
+    cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
+      "be.visible"
+    );
     cy.contains("Denied").should("be.visible");
     cy.contains(
       "Your claim for benefits is currently denied. Check your mail for a denial letter, which includes more details about why you were denied, and how to appeal."
@@ -23,9 +23,9 @@ describe("Claim Detail page - Ineligible scenario with C10 missing", () => {
     cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleC10.html");
 
     cy.checkIneligibleCore();
-    cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
-    ).should("be.visible");
+    cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
+      "be.visible"
+    );
     cy.contains("Denied").should("be.visible");
     cy.contains(
       "We didn't receive your claimant information (Form C10) requested during our review."
@@ -48,9 +48,9 @@ describe("Claim Detail page - Ineligible scenario with M10 missing", () => {
     cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleM10.html");
 
     cy.checkIneligibleCore();
-    cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
-    ).should("be.visible");
+    cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
+      "be.visible"
+    );
     cy.contains("Denied").should("be.visible");
     cy.contains(
       "We didn't receive your medical information (Form M10 or M20) requested during our review."
@@ -73,9 +73,9 @@ describe("Claim Detail page - Ineligible scenario with C10 and M10 missing", () 
     cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleC10M10.html");
 
     cy.checkIneligibleCore();
-    cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
-    ).should("be.visible");
+    cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
+      "be.visible"
+    );
     cy.contains("Denied").should("be.visible");
     cy.contains(
       "We didn't receive claimant information (Form C10) and medical information (Form M10 or M20) requested during our review."
@@ -98,9 +98,9 @@ describe("Claim Detail page - Ineligible scenario for DDU", () => {
     cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleDDU.html");
 
     cy.checkIneligibleCore();
-    cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
-    ).should("be.visible");
+    cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
+      "be.visible"
+    );
     cy.contains("Transferred to Disability During Unemployment team").should(
       "be.visible"
     );
@@ -121,9 +121,7 @@ describe("Claim Detail page - Ineligible scenario for FLDU", () => {
     cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleFLDU.html");
 
     cy.checkIneligibleCore();
-    cy.contains(
-      "Claim for Family Leave Insurance (FLI), starting August 1, 2023"
-    ).should("be.visible");
+    cy.contains("Claim for Family Leave Insurance (FLI)").should("be.visible");
     cy.contains("Transferred to Family Leave During Unemployment team").should(
       "be.visible"
     );
@@ -148,9 +146,9 @@ describe("Claim Detail page -  Ineligible scenario due to invalid wage (2010)", 
     );
 
     cy.checkIneligibleCore();
-    cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
-    ).should("be.visible");
+    cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
+      "be.visible"
+    );
     cy.contains("Denied").should("be.visible");
     cy.contains(
       "It looks like you didn't meet the wage requirement to qualify for benefits."
@@ -172,9 +170,9 @@ describe("Claim Detail page - Ineligible scenario due to invalid wage (2010)", (
     );
 
     cy.checkIneligibleCore();
-    cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
-    ).should("be.visible");
+    cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
+      "be.visible"
+    );
     cy.contains("Denied").should("be.visible");
     cy.contains(
       "It looks like you didn't meet the wage requirement to qualify for benefits."
@@ -196,9 +194,9 @@ describe("Claim Detail page - Ineligible scenario due to private plan", () => {
     );
 
     cy.checkIneligibleCore();
-    cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
-    ).should("be.visible");
+    cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
+      "be.visible"
+    );
     cy.contains("Denied").should("be.visible");
     cy.contains(
       "Your employer has a private plan, so you don't qualify for State benefits. You may be eligible through your employer."

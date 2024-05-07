@@ -155,7 +155,8 @@ function getStatusBodyHtml(
   weeklyBenefitRate,
   balanceRemaining,
   claimEndDate,
-  lastDayPaid
+  lastDayPaid,
+  claimDate
 ) {
   if (newStatus === "In progress") {
     return getStepsHtml(["There's no action for you to take."]);
@@ -347,7 +348,7 @@ function getStatusBodyHtml(
             body = html`<div>
               To process your claim, we need wage information from your
               employer. On ${mailDateFormatted}, we mailed a Request for Wage
-              Information (E10) to ${note.sentTo}.
+              Information (E10 or E20) to ${note.sentTo}.
               <br /><br />
               In some cases, we need employment information from you, too. If
               so, we mailed it to you on the same date, ${mailDateFormatted}.
@@ -450,9 +451,18 @@ function getStatusBodyHtml(
             >${balanceRemaining}</span
           >
         </div>
+        ${claimDate
+          ? html`<div style="margin-bottom: 12px">
+              Benefits start date
+              <span
+                style="font-weight: 700; font-size: 22px; line-height: 32px; display: block"
+                >${getFormattedDate(claimDate)}</span
+              >
+            </div>`
+          : ""}
         ${claimEndDate
           ? html`<div>
-              Claim end date
+              Benefits end date
               <span
                 style="font-weight: 700; font-size: 22px; line-height: 32px; display: block"
                 >${getFormattedDate(claimEndDate)}</span
@@ -550,7 +560,7 @@ function getStatusBodyHtml(
   }
 }
 
-function getWhatsNextHtml(claimStatus, claimNotes, nextPayDate) {
+function getWhatsNextHtml(claimStatus, claimNotes, nextPayDate, claimType) {
   let listEls = undefined;
 
   if (claimStatus === "Undetermined") {
@@ -734,7 +744,8 @@ function addNewHtml(metadata) {
   const whatsNextContent = getWhatsNextHtml(
     claimStatus,
     claimNotes,
-    nextPayDate
+    nextPayDate,
+    claimType
   );
   const newStatus = getClaimStatus(claimStatus, claimNotes, claimType);
   const rootMarginX = isDesktop() ? "107px" : "20px";
@@ -780,8 +791,7 @@ function addNewHtml(metadata) {
         Status
       </h1>
       <div style="font-size: 22px; line-height: 32px; margin-bottom: 44px">
-        Claim for ${getClaimTypeContent(claimType)}, starting
-        ${getFormattedDate(claimDate)}
+        Claim for ${getClaimTypeContent(claimType)}
       </div>
     </div>
     <div
@@ -869,7 +879,8 @@ function addNewHtml(metadata) {
             weeklyBenefitRate,
             balanceRemaining,
             claimEndDate,
-            lastDayPaid
+            lastDayPaid,
+            claimDate
           )}
         </div>
         ${whatsNextContent != null

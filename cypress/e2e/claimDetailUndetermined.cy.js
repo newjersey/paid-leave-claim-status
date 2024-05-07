@@ -7,9 +7,9 @@ describe("Claim Detail page - In Progress scenario", () => {
     cy.contains("Undetermined").should("not.exist"); // Rendered on original HTML, without script change
 
     cy.get("h1").contains("Status").should("be.visible");
-    cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
-    ).should("be.visible");
+    cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
+      "be.visible"
+    );
     cy.get(".complete.received")
       .contains("August 7, 2023")
       .should("be.visible");
@@ -38,9 +38,9 @@ describe("Claim Detail page - 14 Day scenario", () => {
     cy.contains("Undetermined").should("not.exist"); // Rendered on original HTML, without script change
 
     cy.get("h1").contains("Status").should("be.visible");
-    cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
-    ).should("be.visible");
+    cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
+      "be.visible"
+    );
     cy.get(".complete.received")
       .contains("August 7, 2023")
       .should("be.visible");
@@ -69,9 +69,9 @@ describe("Claim Detail page - Blank request scenario", () => {
     cy.contains("Undetermined").should("not.exist"); // Rendered on original HTML, without script change
 
     cy.get("h1").contains("Status").should("be.visible");
-    cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
-    ).should("be.visible");
+    cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
+      "be.visible"
+    );
     cy.get(".complete.received")
       .contains("August 7, 2023")
       .should("be.visible");
@@ -100,9 +100,9 @@ describe("Claim Detail page - Information Needed scenario", () => {
     cy.contains("Undetermined").should("not.exist"); // Rendered on original HTML, without script change
 
     cy.get("h1").contains("Status").should("be.visible");
-    cy.contains(
-      "Claim for Temporary Disability Insurance (TDI), starting August 1, 2023"
-    ).should("be.visible");
+    cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
+      "be.visible"
+    );
     cy.get(".complete.received")
       .contains("August 7, 2023")
       .should("be.visible");
