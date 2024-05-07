@@ -189,9 +189,16 @@ function addNewHtml(metadata) {
           : html` <div
               style="background-color: #fff; border: 1px solid #DFE1E2; border-radius: 4px; padding: 32px; font-size: 16px; line-height: 24px"
             >
-              <b>No recent claims on file.</b> We haven't received a claim from
-              you in the past 12 months. If you recently applied, expect an
-              update within the next couple weeks.
+              <b>No claim on file.</b> We don't have a recent claim for this
+              account. If you recently applied, expect an update within the next
+              couple weeks.<br /><br />
+              Learn what to do if
+              <a
+                href="https://www.nj.gov/labor/myleavebenefits/worker/resources/claims-status.shtml#flush-headingFour"
+                target="_blank"
+              >
+                your claim is not on file</a
+              >.
             </div>`}
       </div>
       ${oldClaims.length > 0

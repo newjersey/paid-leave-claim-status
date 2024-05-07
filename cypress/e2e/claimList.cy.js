@@ -66,7 +66,7 @@ describe("Claim List page - with no recent claims", () => {
 
     cy.get("h1").contains("jenni mahlstedt").should("be.visible");
     cy.contains("from last 12 months").should("be.visible");
-    cy.contains("No recent claims on file").should("be.visible");
+    cy.contains("No claim on file.").should("be.visible");
 
     cy.contains("more than a year ago").should("be.visible");
     cy.contains("Family Leave Insurance (FLI)").should("be.visible");

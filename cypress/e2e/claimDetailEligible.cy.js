@@ -72,7 +72,10 @@ describe("Claim Detail page - Eligible scenario without next pay date", () => {
       "be.visible"
     );
     cy.contains("Approved").should("be.visible");
-    cy.get("button").contains("Go to payment information").should("not.exist");
+    cy.get("button")
+      .contains("Go to payment information")
+      .should("have.attr", "onclick")
+      .and("equal", "paymentDetail()");
     cy.contains("Your payment is still processing.").should("be.visible");
     cy.get("li")
       .contains(
