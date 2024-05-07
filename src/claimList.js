@@ -216,7 +216,7 @@ function addNewHtml(metadata) {
             <div
               style="text-transform: uppercase; font-size: 13px; line-height: 16px; margin-bottom: 16px"
             >
-              from more than a year ago
+              from more than 12 months ago
             </div>
             ${oldClaims
               .map(

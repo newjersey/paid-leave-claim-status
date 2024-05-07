@@ -16,7 +16,7 @@ describe("Claim List page - with recent and older claims", () => {
     cy.contains("Benefits starting July 10, 2023").should("not.exist");
 
     // Older claims (earlier than 1 year)
-    cy.contains("more than a year ago").should("be.visible");
+    cy.contains("more than 12 months ago").should("be.visible");
     cy.contains("- February 14, 2021").should("be.visible");
     cy.contains("- May 26, 2020").should("be.visible");
 
@@ -47,7 +47,7 @@ describe("Claim List page - with no older claims", () => {
 
     // Check that old claim section is hidden
     cy.contains("Temporary Disability Insurance (TDI)").should("not.exist");
-    cy.contains("more than a year ago").should("not.exist");
+    cy.contains("more than 12 months ago").should("not.exist");
   });
 
   it("passes accessibility checks", () => {
@@ -68,7 +68,7 @@ describe("Claim List page - with no recent claims", () => {
     cy.contains("from last 12 months").should("be.visible");
     cy.contains("No claim on file.").should("be.visible");
 
-    cy.contains("more than a year ago").should("be.visible");
+    cy.contains("more than 12 months ago").should("be.visible");
     cy.contains("Family Leave Insurance (FLI)").should("be.visible");
     cy.contains("Temporary Disability Insurance (TDI)").should("be.visible");
     cy.contains("- August 5, 2021").should("be.visible");
