@@ -112,7 +112,7 @@ function getRedesignHtml(status, statusExtra, whatsNext, whatsNextExtra) {
           </h3>
           <p>${statusExtra}</p>
           <p style="font-size:14px;margin-bottom:64px">
-            <i>[Current as of ${currentDate}]</i>
+            <i>Current as of ${currentDate}</i>
           </p>
         </div>
         <div>

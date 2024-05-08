@@ -786,14 +786,20 @@ function addNewHtml(metadata) {
       <h1 style="margin: 0 0 8px; font-size: 32px; line-height: 40px">
         Status
       </h1>
-      <div style="font-size: 22px; line-height: 32px; margin-bottom: 8px">
+      <div
+        style="font-size: 22px; line-height: 32px; margin-bottom: ${claimDate
+          ? "8px"
+          : "44px"}"
+      >
         Claim for ${getClaimTypeContent(claimType)}
       </div>
-      <div
-        style="font-size: 13px; line-height: 16px; margin-bottom: 44px; text-transform: uppercase"
-      >
-        leave starting ${getFormattedDate(claimDate)}
-      </div>
+      ${claimDate
+        ? html`<div
+            style="font-size: 13px; line-height: 16px; margin-bottom: 44px; text-transform: uppercase"
+          >
+            leave starting ${getFormattedDate(claimDate)}
+          </div>`
+        : ""}
     </div>
     <div
       style="${isDesktop()
