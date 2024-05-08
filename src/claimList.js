@@ -141,8 +141,8 @@ function addNewHtml(metadata) {
                       ${getClaimTypeContent(claim.type)} Claim
                     </div>
                     <div style="margin-top: 4px; margin-bottom: 16px">
-                      ${claim.date && claim.status === "Eligible"
-                        ? `Benefits starting ${getFormattedDate(claim.date)}`
+                      ${claim.date
+                        ? `Leave starting ${getFormattedDate(claim.date)}`
                         : ""}
                     </div>
                     ${claim.status === "Undetermined"

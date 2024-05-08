@@ -39,6 +39,7 @@ Cypress.Commands.add("checkIneligibleCore", () => {
   cy.contains("Ineligible").should("not.exist"); // Rendered on original HTML, without script change
 
   cy.get("h1").contains("Status").should("be.visible");
+  cy.contains("leave starting August 1, 2023").should("be.visible");
 
   cy.get(".complete.received").contains("August 7, 2023").should("be.visible");
   cy.get(".complete").contains("Review").should("be.visible");

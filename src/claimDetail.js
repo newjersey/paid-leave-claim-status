@@ -449,7 +449,7 @@ function getStatusBodyHtml(
         </div>
         ${claimDate
           ? html`<div style="margin-bottom: 12px">
-              Benefits start date
+              Leave start date
               <span
                 style="font-weight: 700; font-size: 22px; line-height: 32px; display: block"
                 >${getFormattedDate(claimDate)}</span
@@ -458,7 +458,7 @@ function getStatusBodyHtml(
           : ""}
         ${claimEndDate
           ? html`<div>
-              Benefits end date
+              Leave end date
               <span
                 style="font-weight: 700; font-size: 22px; line-height: 32px; display: block"
                 >${getFormattedDate(claimEndDate)}</span
@@ -786,8 +786,13 @@ function addNewHtml(metadata) {
       <h1 style="margin: 0 0 8px; font-size: 32px; line-height: 40px">
         Status
       </h1>
-      <div style="font-size: 22px; line-height: 32px; margin-bottom: 44px">
+      <div style="font-size: 22px; line-height: 32px; margin-bottom: 8px">
         Claim for ${getClaimTypeContent(claimType)}
+      </div>
+      <div
+        style="font-size: 13px; line-height: 16px; margin-bottom: 44px; text-transform: uppercase"
+      >
+        leave starting ${getFormattedDate(claimDate)}
       </div>
     </div>
     <div

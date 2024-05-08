@@ -16,6 +16,7 @@ describe("Claim Detail page - Eligible scenario with next pay date", () => {
     cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
       "be.visible"
     );
+    cy.contains("leave starting August 5, 2023").should("be.visible");
     cy.contains("Approved").should("be.visible");
     cy.get("button")
       .contains("Go to payment information")
@@ -37,10 +38,10 @@ describe("Claim Detail page - Eligible scenario with next pay date", () => {
     cy.contains("Balance remaining")
       .contains("$20,649.00")
       .should("be.visible");
-    cy.contains("Benefits start date")
+    cy.contains("Leave start date")
       .contains("August 5, 2023")
       .should("be.visible");
-    cy.contains("Benefits end date")
+    cy.contains("Leave end date")
       .contains("December 1, 2023")
       .should("be.visible");
   });
@@ -71,6 +72,7 @@ describe("Claim Detail page - Eligible scenario without next pay date", () => {
     cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
       "be.visible"
     );
+    cy.contains("leave starting August 5, 2023").should("be.visible");
     cy.contains("Approved").should("be.visible");
     cy.get("button")
       .contains("Go to payment information")
@@ -97,10 +99,10 @@ describe("Claim Detail page - Eligible scenario without next pay date", () => {
     cy.contains("Balance remaining")
       .contains("$20,649.00")
       .should("be.visible");
-    cy.contains("Benefits start date")
+    cy.contains("Leave start date")
       .contains("August 5, 2023")
       .should("be.visible");
-    cy.contains("Benefits end date").should("not.exist");
+    cy.contains("Leave end date").should("not.exist");
   });
 
   it("passes accessibility checks", () => {

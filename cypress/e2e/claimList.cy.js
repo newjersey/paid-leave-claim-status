@@ -11,9 +11,9 @@ describe("Claim List page - with recent and older claims", () => {
     cy.contains("Family Leave Insurance (FLI)").should("be.visible");
 
     // Recent claims (within 1 year of `now`)
-    cy.contains("Benefits starting March 5, 2024").should("not.exist");
-    cy.contains("Benefits starting December 25, 2023").should("be.visible");
-    cy.contains("Benefits starting July 10, 2023").should("not.exist");
+    cy.contains("Leave starting March 5, 2024").should("not.exist");
+    cy.contains("Leave starting December 25, 2023").should("be.visible");
+    cy.contains("Leave starting July 10, 2023").should("exist");
 
     // Older claims (earlier than 1 year)
     cy.contains("more than 12 months ago").should("be.visible");
@@ -43,7 +43,7 @@ describe("Claim List page - with no older claims", () => {
     cy.get("h1").contains("jenni mahlstedt").should("be.visible");
     cy.contains("Family Leave Insurance (FLI)").should("be.visible");
     cy.contains("from last 12 months").should("be.visible");
-    cy.contains("Benefits starting March 5, 2024").should("not.exist");
+    cy.contains("Leave starting March 5, 2024").should("exist");
 
     // Check that old claim section is hidden
     cy.contains("Temporary Disability Insurance (TDI)").should("not.exist");
