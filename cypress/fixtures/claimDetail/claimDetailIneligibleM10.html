@@ -1,0 +1,249 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html>
+  <head>
+    <!-- <script
+      src="/x-Son-call-your-ble-hastlement-ins-hold-noised-h"
+      async
+    ></script> -->
+
+    <title>claim detail</title>
+    <link rel="stylesheet" type="text/css" href="../sharedAssets/dabi.css" />
+
+    <script type="text/javascript">
+      const overrideScript = document.createElement("script");
+      overrideScript.defer = true;
+      overrideScript.src = "./claimDetail.min.js";
+      document.head.appendChild(overrideScript);
+    </script>
+  </head>
+
+  <script type="text/javascript">
+    //alert("starting at the top of dabiDetail.jsp");
+
+    function paymentDetail() {
+      document.dabiDetail.action = "/DOL_DABI/DOL_DABI_PAYMENTDETAIL";
+      document.dabiDetail.submit();
+    }
+    function claimList() {
+      document.forms[0].action = "/DOL_DABI/index.jsp";
+      document.forms[0].submit();
+    }
+
+    function userLogout() {
+      //document.forms[0].action="/DOL_DABI/claiminuse";
+      //document.forms[0].submit();
+      document.forms[0].action = "/DOL_DABI/jsp/logout.jsp";
+      document.forms[0].submit();
+    }
+
+    //function closewin(){
+    //    window.open('','_parent','');
+    //    window.close();
+    //}
+  </script>
+  <body>
+    <form name="dabiDetail" method="post">
+      <!-- <input type="hidden" name= "myaction" value=""> -->
+      <input type="hidden" name="ssn" value="143372203" />
+      <input type="hidden" name="seqNum" value="001" />
+      <div align="left">
+        <table
+          border="1"
+          bgcolor="#FFFFFF"
+          cellpadding="0"
+          cellspacing="0"
+          style="border-collapse: collapse"
+          bordercolor="#111111"
+          width="100%"
+          height="94"
+          id="AutoNumber1"
+        >
+          <tr width="100%" height="94">
+            <td width="80%" align="left" class="backgroundColor">
+              <img src="../sharedAssets/lwd_banner.jpg" height="60" />
+            </td>
+            <td width="20%" align="center" class="backgroundColor">
+              <img src="../sharedAssets/lwd_logo.jpg" height="60" />
+            </td>
+          </tr>
+
+          <tr></tr>
+        </table>
+      </div>
+      <div bgcolor="#FFFFFF" width="100%" align="center">
+        <table
+          border="0"
+          cellpadding="0"
+          cellspacing="0"
+          style="border-collapse: collapse"
+          bordercolor="#111111"
+          width="100%"
+          id="AutoNumber2"
+          bgcolor="#FFFFFF"
+        >
+          <!-- A1 row   -->
+          <tr>
+            <td width="34%">&nbsp;&nbsp;</td>
+            <td width="33%" align="center">
+              <font size="4"><b>CLAIM DETAIL</b></font>
+            </td>
+            <td width="33%">&nbsp;&nbsp;</td>
+          </tr>
+
+          <tr>
+            <td colspan="3" align="left">
+              <font size="4"><b>JENNI MAHLSTEDT </b></font><br />XXX-XX-2203
+            </td>
+          </tr>
+
+          <!-- space row   -->
+          <tr>
+            <td width="34%">&nbsp;&nbsp;</td>
+            <td width="33%">&nbsp;&nbsp;</td>
+            <td width="33%">&nbsp;&nbsp;</td>
+          </tr>
+          <!-- A2 row   -->
+          <tr>
+            <td width="34%" align="left">Sequence No:&nbsp;&nbsp;001</td>
+            <td width="33%">&nbsp;&nbsp;</td>
+            <td width="33%">&nbsp;&nbsp;</td>
+          </tr>
+
+          <!-- space row   -->
+          <tr>
+            <td width="34%" align="left">Claim Type: &nbsp;&nbsp;TDI</td>
+            <td width="33%">&nbsp;&nbsp;</td>
+            <td width="33%">&nbsp;&nbsp;</td>
+          </tr>
+
+          <!-- space row   -->
+          <tr>
+            <td width="100%" align="left" colspan="3">
+              Employer(s): &nbsp; &nbsp;&nbsp;
+            </td>
+          </tr>
+
+          <!-- space row   -->
+          <tr>
+            <td width="34%">&nbsp;&nbsp;</td>
+            <td width="33%">&nbsp;&nbsp;</td>
+            <td width="33%">&nbsp;&nbsp;</td>
+          </tr>
+
+          <!-- space row   -->
+          <tr>
+            <td width="34%" align="center"><b> Claim Date</b></td>
+            <td width="33%" align="center"><b> Last Day Worked</b></td>
+            <td width="33%" align="center"><b> Date Claim Received</b></td>
+          </tr>
+
+          <!-- space row   -->
+          <tr>
+            <td width="34%" align="center">08/01/2023</td>
+
+            <td width="33%" align="center">&nbsp;&nbsp;</td>
+            <td width="33%" align="center">08/07/2023</td>
+          </tr>
+
+          <!-- space row   -->
+          <tr>
+            <td width="34%">&nbsp;&nbsp;</td>
+            <td width="33%">&nbsp;&nbsp;</td>
+            <td width="33%">&nbsp;&nbsp;</td>
+          </tr>
+
+          <!-- space row   -->
+          <tr>
+            <td width="34%">Claim Status:&nbsp;&nbsp; Ineligible</td>
+            <td width="33%">&nbsp;&nbsp;</td>
+            <td width="33%">&nbsp;&nbsp;</td>
+          </tr>
+
+          <!-- B11 row   -->
+          <tr>
+            <td colspan="3">
+              <table border="0" bgcolor="#FFFFFF">
+                <tr>
+                  <td width="9%" align="left" valign="top">Claim Notes:</td>
+                  <td></td>
+                  <td width="91%" align="left" colspan="2">
+                    <!-- Replaced text1    Please contact our Customer Service Section at (609)292-7060 for additional information pertaining to your claim status. -->
+                    Your claim is ineligible because you failed to supply the
+                    medical information requested by this agency on the Request
+                    for Medical Information, Form M10. Upon receipt of the
+                    requested information, your claim will be reviewed.
+                  </td>
+                  <td></td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- space row   -->
+          <tr>
+            <td width="30%">&nbsp;&nbsp;</td>
+            <td width="30%">&nbsp;&nbsp;</td>
+            <td width="40%">&nbsp;&nbsp;</td>
+          </tr>
+        </table>
+      </div>
+      <div bgcolor="#FFFFFF">
+        <table
+          width="100%"
+          border="0"
+          align="center"
+          cellpadding="0"
+          cellspacing="0"
+          bgcolor="#FFFFFF"
+        >
+          <tr>
+            <!-- <hr /> -->
+            <td align="center" width="34%">
+              <br />
+              <input
+                type="button"
+                name="btnclaimlist2"
+                id="btnclaimlist2"
+                value="Claim List"
+                onClick="claimList()"
+                width="100"
+                style="width: 140"
+              />
+              <br />
+              <br />
+            </td>
+
+            <td align="center" width="33%">
+              <br />
+              <input
+                type="button"
+                name="print2"
+                value="Print this Page"
+                onClick="window.print();"
+                width="100"
+                style="width: 140px"
+              />
+              <br />
+              <br />
+            </td>
+
+            <td align="center">
+              <br />
+              <input
+                type="button"
+                name="logout"
+                value="Logout"
+                onClick="userLogout();"
+                width="100"
+                style="width: 140px"
+              />
+              <br />
+              <br />
+            </td>
+          </tr>
+        </table>
+      </div>
+    </form>
+  </body>
+</html>
