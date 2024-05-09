@@ -33,10 +33,9 @@ function executeOverride() {
     updateDocument("No claim on file");
     logEvent("[DOL_DABI] Viewed SSN Not Found page");
   } catch (e) {
-    logEvent(
-      "[DOL_DABI] Claim List redesign error",
-      e instanceof Error ? e.message : "Unknown"
-    );
+    logEvent("[DOL_DABI] Claim List redesign error", {
+      object_details: e instanceof Error ? e.message : "Unknown",
+    });
   }
 }
 
