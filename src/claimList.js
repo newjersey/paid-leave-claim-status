@@ -39,10 +39,9 @@ function executeOverride() {
     updateIcon();
     updateDocument("Check claim status");
   } catch (e) {
-    logEvent(
-      "[DOL_DABI] Claim List redesign error",
-      e instanceof Error ? e.message : "Unknown"
-    );
+    logEvent("[DOL_DABI] Claim List redesign error", {
+      object_details: e instanceof Error ? e.message : "Unknown",
+    });
   }
 }
 
