@@ -43,10 +43,9 @@ export class Accordion {
       this.contentEl.removeAttribute("hidden");
       this.iconEl.src = `${ICON_BASE_URL}/remove.svg`;
       this.iconEl.alt = "See less";
-      logEvent(
-        "[DOL_DABI] Opened Claim Detail form accordion",
-        this.rootEl.dataset.logKey
-      );
+      logEvent("[DOL_DABI] Opened Claim Detail form accordion", {
+        object_details: this.rootEl.dataset.logKey,
+      });
     } else {
       this.contentEl.setAttribute("hidden", "");
       this.iconEl.src = `${ICON_BASE_URL}/add.svg`;
