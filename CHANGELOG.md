@@ -6,6 +6,14 @@ title: Changelog
 
 All notable changes to the [production Claim Status application](https://secure.dol.state.nj.us/DOL_DABI/) will be documented in this file.
 
+## 2024-05-10
+
+- Fixed analytics on Claim Detail page when user opens accordion
+
+## 2024-05-09
+
+- Added redesigned content and layout for Claim List and Claim Detail pages
+
 ## 2024-03-01
 
 - Added Google Analytics to "Claim List" page
