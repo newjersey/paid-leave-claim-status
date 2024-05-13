@@ -47,8 +47,8 @@ function executeOverride() {
 
 function getMetadata() {
   const tableElements = document.getElementsByTagName("table");
-  const claimsTable = tableElements[2];
-  const claims = Array.from(claimsTable?.rows)
+  const claimsRows = tableElements[2]?.rows ?? [];
+  const claims = Array.from(claimsRows)
     .slice(1)
     .map((row) => ({
       seqNum: row.children[0].innerText.trim(),
@@ -266,7 +266,7 @@ function addNewHtml(metadata) {
   root?.append(newContainer);
 }
 
-function logView(allClaims) {
+function logView(allClaims = []) {
   const now = new Date();
   const sixMonthsAgo = new Date().setMonth(now.getMonth() - 6);
   const recentClaims = allClaims
