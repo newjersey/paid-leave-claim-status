@@ -9,7 +9,7 @@ JavaScript scripts are injected onto the existing application and manually updat
 ## Setup
 
 1. Clone this `paid-leave-claim-status` repository
-2. Use Node 18
+2. Use Node 20
 3. Run `npm install` to install dependencies
 4. Run `npm run build` to build bundled files
 5. Run `npm test` to run Cypress tests
