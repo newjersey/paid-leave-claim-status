@@ -83,12 +83,12 @@ function addNewHtml(metadata) {
   const { name, claims } = metadata;
   const root = document.getElementsByName("claimlist")[0];
   const newContainer = document.createElement("div");
+  const now = new Date();
   const [recentClaims, oldClaims] = partition(claims, (e) => {
     if (!e.date) {
       return true;
     }
     const dateObj = new Date(e.date);
-    const now = new Date();
     const oneYearAgo = new Date().setFullYear(now.getFullYear() - 1);
     return dateObj > oneYearAgo;
   });
@@ -270,15 +270,18 @@ function logView(allClaims = []) {
   const now = new Date();
   const sixMonthsAgo = new Date().setMonth(now.getMonth() - 6);
   const recentClaims = allClaims
-    .map((claim) => claim.date)
+    .map((claim) => claim?.date)
     .filter((date) => {
+      if (!date) {
+        return true;
+      }
       const dateObj = new Date(date);
       return dateObj > sixMonthsAgo;
     });
 
   logEvent("[DOL_DABI] Viewed Claim List page", {
-    object_status: allClaims.map((claim) => claim.status).join(";"),
-    object_type: allClaims.map((claim) => claim.type).join(";"),
+    object_status: allClaims.map((claim) => claim?.status ?? "N/A").join(";"),
+    object_type: allClaims.map((claim) => claim?.type ?? "N/A").join(";"),
     object_details: recentClaims.length,
     event_label: allClaims.length,
   });
