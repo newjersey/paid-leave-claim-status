@@ -407,12 +407,13 @@ function getStatusBodyHtml(
       .join("");
   } else if (newStatus === "Approved") {
     return html`<div style="margin-top: 8px">
-      ${nextPayDate
-        ? html`Your next payment is scheduled for
-            <b>${getFormattedDate(nextPayDate)}</b>, and arrives on your
-            benefits debit card about 2 business days later.`
-        : "Your payment is still processing."}<br /><br />
-      For a detailed breakdown,<br />
+      <div>
+        ${nextPayDate
+          ? html`Your next payment is scheduled for
+              <b>${getFormattedDate(nextPayDate)}</b>, and arrives on your
+              benefits debit card about 2 business days later.`
+          : "Your payment is still processing."}
+      </div>
       <button
         style="background-color: #0076D6; border: none; color: #fff; padding: 12px 20px; cursor: pointer; border-radius: 4px; font-weight: 700; font-size: 16px; line-height: 24px; margin-top: 16px; outline-offset: 0.25rem"
         onclick="paymentDetail()"
