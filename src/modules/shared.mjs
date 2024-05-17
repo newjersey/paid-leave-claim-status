@@ -277,8 +277,9 @@ export const FOOTER_HTML = html`
     >
       <div><img src="${ICON_BASE_URL}/phone.svg" alt="" /></div>
       <div style="line-height: 21px">
-        <strong>Call</strong> 609-292-7060 | (8:00am - 4:30pm, Monday - Friday)
-        Wait times are shortest Wednesday - Friday
+        <strong>Call</strong> <a href="tel:609-292-7060">609-292-7060</a> |
+        (8:00am - 4:30pm, Monday - Friday) Wait times are shortest Wednesday -
+        Friday
       </div>
       <div><img src="${ICON_BASE_URL}/fax.svg" alt="" /></div>
       <div style="line-height: 21px"><strong>Fax</strong> 609-984-4138</div>
