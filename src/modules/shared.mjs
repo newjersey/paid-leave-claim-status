@@ -147,6 +147,8 @@ export function isClaimNotesEmpty(claimNotes) {
   );
 }
 
+export const PRIVATE_PLAN_STATUS = "Your employer has a private plan";
+
 export function getClaimStatus(status, claimNotes, claimType) {
   switch (status) {
     case "Eligible":
@@ -156,6 +158,9 @@ export function getClaimStatus(status, claimNotes, claimType) {
         return `Transferred to ${
           claimType === "FLI" ? "Family Leave" : "Disability"
         } During Unemployment team`;
+      }
+      if (claimNotes?.[0]?.type === "PRIV") {
+        return PRIVATE_PLAN_STATUS;
       }
       return "Denied";
     case "Undetermined":

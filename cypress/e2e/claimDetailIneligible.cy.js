@@ -193,14 +193,28 @@ describe("Claim Detail page - Ineligible scenario due to private plan", () => {
       "./cypress/fixtures/claimDetail/claimDetailIneligiblePrivatePlan.html"
     );
 
-    cy.checkIneligibleCore();
+    cy.contains("Ineligible").should("not.exist"); // Rendered on original HTML, without script change
+
+    cy.get("h1").contains("Status").should("be.visible");
+    cy.contains("leave starting August 1, 2023").should("be.visible");
+
+    cy.get(".complete.received")
+      .contains("August 7, 2023")
+      .should("be.visible");
+    cy.get(".complete").contains("Review").should("be.visible");
+    cy.get(".complete.end").contains("Decision").should("be.visible");
     cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
       "be.visible"
     );
-    cy.contains("Denied").should("be.visible");
+    cy.contains("Your employer has a private plan").should("be.visible");
     cy.contains(
       "Your employer has a private plan, so you don't qualify for State benefits. You may be eligible through your employer."
     ).should("be.visible");
+    cy.get("li")
+      .contains(
+        "Contact your Human Resources department about your employer's private insurer."
+      )
+      .should("be.visible");
   });
 
   it("passes accessibility checks", () => {
