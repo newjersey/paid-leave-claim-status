@@ -20,6 +20,7 @@ import {
   runWhenReady,
   updateDocument,
   ICON_BASE_URL,
+  PRIVATE_PLAN_STATUS,
 } from "./modules/shared.mjs";
 import { Accordion } from "./modules/Accordion.mjs";
 
@@ -115,6 +116,7 @@ function getStatusAlertHtml(status) {
     case "Information needed":
     case "Transferred to Disability During Unemployment team":
     case "Transferred to Family Leave During Unemployment team":
+    case PRIVATE_PLAN_STATUS:
       color = "#FAF3D1";
       borderColor = "#FFBE2E";
       icon = "warning";
@@ -472,18 +474,6 @@ function getStatusBodyHtml(
     let content = undefined;
 
     switch (noteType) {
-      case "PRIV":
-        content = html`
-          Your employer has a private plan, so you don't qualify for State
-          benefits. You may be eligible through your employer.
-          <a
-            href="https://njdol.prod.simpligov.com/prod/portal/ShowWorkFlow/AnonymousEmbed/70aee173-1831-4223-baa5-891c20e10b39"
-            target="_blank"
-            >Reach out to our private plan team</a
-          >
-          for next steps and help applying through your employer.
-        `;
-        break;
       case "INVAL_WAGE":
         content = html`It looks like you didn't meet the wage requirement to
           qualify for benefits. You can find this year's earnings requirement on
@@ -551,6 +541,27 @@ function getStatusBodyHtml(
           >${leaveType} During Unemployment</a>. You likely won't see any further
           updates about your claim here.
         </a></div>`;
+  } else if (newStatus === PRIVATE_PLAN_STATUS) {
+    return html`<div style="margin-top: 8px">
+      Your employer has a private plan, so you don't qualify for State benefits.
+      You may be eligible through your employer. <br /><br />
+      <strong>Steps to complete</strong><br />
+      <ul>
+        <li>
+          Contact your Human Resources department about your employer's private
+          insurer.
+        </li>
+        <li>
+          Visit the
+          <a
+            href="https://nj.gov/labor/myleavebenefits/worker/tdi/#privateplan"
+            target="_blank"
+            >"Private Plan Insurance" tab</a
+          >
+          for more information.
+        </li>
+      </ul>
+    </div>`;
   } else {
     return "";
   }
