@@ -144,7 +144,7 @@ function addNewHtml(metadata) {
                         ? `Leave starting ${getFormattedDate(claim.date)}`
                         : ""}
                     </div>
-                    ${claim.status === "Undetermined"
+                    ${claim.status !== "Eligible"
                       ? html` <button
                           style="background-color: #0076D6; border: none; color: #fff; padding: 12px 20px; cursor: pointer; border-radius: 4px; font-weight: 700; font-size: 16px; line-height: 24px; outline-offset: 0.25rem"
                           onclick="${getClaimHandler(
@@ -160,10 +160,7 @@ function addNewHtml(metadata) {
                             style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px"
                           >
                             <img
-                              src="${ICON_BASE_URL}/${claim.status ===
-                              "Eligible"
-                                ? "check_circle"
-                                : "cancel"}.svg"
+                              src="${ICON_BASE_URL}/check_circle.svg"
                               alt=""
                             />
                             <div
