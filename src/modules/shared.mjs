@@ -101,6 +101,10 @@ export function getFormattedDate(dateString) {
   });
 }
 
+export function isFutureDate(dateString) {
+  return new Date(dateString) > new Date();
+}
+
 export function partition(array, filter) {
   const pass = [];
   const fail = [];
