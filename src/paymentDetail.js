@@ -18,6 +18,7 @@ import {
   FOOTER_HTML,
   getFormattedDate,
   isFutureDate,
+  extractDateFromString,
 } from "./modules/shared.mjs";
 import { Accordion } from "./modules/Accordion.mjs";
 
@@ -158,7 +159,7 @@ function addHeadStyling() {
 }
 
 function addNewHtml(metadata) {
-  const { status, paymentType, p30DateSent, claimType, payments } = metadata;
+  const { status, p30DateSent, claimType, payments } = metadata;
   const parsedStatus = getParsedStatus(status);
 
   const root = document.getElementsByName("claimlist")[0];
@@ -235,7 +236,7 @@ function addNewHtml(metadata) {
         margin-bottom: 16px;
       "
           />
-          ${getPaymentInfoHtml(parsedStatus)}
+          ${getPaymentInfoHtml(parsedStatus, status, claimType)}
         </div>
       </div>
       <div>
@@ -310,7 +311,7 @@ function getParsedStatus(status) {
   return parsedStatus;
 }
 
-function getPaymentInfoHtml(parsedStatus, status) {
+function getPaymentInfoHtml(parsedStatus, status, claimType) {
   let body = "";
   switch (parsedStatus) {
     case "Max entitlement":
@@ -324,10 +325,41 @@ function getPaymentInfoHtml(parsedStatus, status) {
     case "Pay code 99/6":
       break;
     case "Next pay scheduled":
+      const scheduledDate = extractDateFromString(status);
+      body = html`<div>
+        We're sending payment to your benefits debit card on
+        ${getFormattedDate(scheduledDate)}. You can access the funds about 2
+        business days later.<br /><br />Questions? Learn more about
+        <a
+          href="https://www.nj.gov/labor/myleavebenefits/worker/resources/debitcard.shtml"
+          target="_blank"
+          >how payments are sent</a
+        >.
+      </div>`;
       break;
     case "No additional benefits":
       break;
     case "Leave ended":
+      const endDate = extractDateFromString(status);
+      body = html`<div>
+        Your ${claimType === "FLI" ? "Family Leave" : "Temporary Disability"}
+        claim ended on ${getFormattedDate(endDate)}.
+        ${claimType === "TDI"
+          ? html` <br /><br />
+              <strong>Tips for pregnancy claims</strong>
+              <ul>
+                <li>
+                  If you're taking bonding leave (Family Leave Insurance)
+                  immediately after, look out for an FL2 form in the mail. We'll
+                  send it to you after your P30 is processed.
+                </li>
+                <li>
+                  The FL2 is how you'll start your bonding leave, without a
+                  break in payments.
+                </li>
+              </ul>`
+          : ""}
+      </div>`;
       break;
     default:
       body = status;
@@ -383,8 +415,12 @@ function getPaymentHistoryAccordions(paymentRecords) {
             >
               <strong
                 >${isFuturePayment
-                  ? `Next ${gross} to issue on ${getFormattedDate(date)}`
-                  : `${gross} issued on ${getFormattedDate(date)}`}</strong
+                  ? `Next ${gross || "payment"} to issue on ${getFormattedDate(
+                      date
+                    )}`
+                  : `${gross || "Payment"} issued on ${getFormattedDate(
+                      date
+                    )}`}</strong
               ><br /><span style="font-weight: normal"
                 >Covers ${getFormattedDate(fromDate)} to
                 ${getFormattedDate(toDate)}</span
@@ -408,35 +444,35 @@ function getPaymentHistoryAccordions(paymentRecords) {
         >
           <div style="display: flex; justify-content: space-between">
             <div><strong>Payment ID</strong></div>
-            <div>${payId}</div>
+            <div>${payId || "N/A"}</div>
           </div>
           <div style="display: flex; justify-content: space-between">
             <div><strong>Gross</strong></div>
-            <div>${gross}</div>
+            <div>${gross || "N/A"}</div>
           </div>
           <div style="display: flex; justify-content: space-between">
             <div><strong>Net</strong></div>
-            <div>${net}</div>
+            <div>${net || "N/A"}</div>
           </div>
           <div style="display: flex; justify-content: space-between">
             <div><strong>FICA</strong></div>
-            <div>${fica}</div>
+            <div>${fica || "N/A"}</div>
           </div>
           <div style="display: flex; justify-content: space-between">
             <div><strong>Medicare</strong></div>
-            <div>${medicare}</div>
+            <div>${medicare || "N/A"}</div>
           </div>
           <div style="display: flex; justify-content: space-between">
-            <div><strong>DI Offset</strong></div>
-            <div>${diOffset}</div>
+            <div><strong>Overpayment</strong></div>
+            <div>${diOffset || "N/A"}</div>
           </div>
           <div style="display: flex; justify-content: space-between">
             <div><strong>Garnishment</strong></div>
-            <div>${garnishment}</div>
+            <div>${garnishment || "N/A"}</div>
           </div>
           <div style="display: flex; justify-content: space-between">
             <div><strong>FIT</strong></div>
-            <div>${fit}</div>
+            <div>${fit || "N/A"}</div>
           </div>
         </div>
       </div>`;
