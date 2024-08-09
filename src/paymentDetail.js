@@ -214,7 +214,7 @@ function addNewHtml(metadata) {
     </div>
     <div
       style="${isDesktop()
-        ? "display: grid; grid-template-columns: 1fr 2fr; gap: 20px; margin-left: 107px; margin-right: 107px"
+        ? "display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-left: 107px; margin-right: 107px"
         : ""}"
     >
       <div>
@@ -400,7 +400,7 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
         The P30 letter looks like this:<br />
         <img
           src="https://beta.nj.gov/files/tdi-fli-claim-status/assets/p30.png"
-          alt="Picture of P30 letter"
+          alt="Sample P30 letter titled 'Request for Continued Claim Information' from the New Jersey Department of Labor, showing nine sections of claimant information. The form ID is found in the middle of the page."
           style="
             margin-top: 4px;
             margin-bottom: 8px;
@@ -447,8 +447,11 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
           : ""}
       </div>`;
       break;
-    case "No additional benefits":
     case "Recovered/returned":
+      body =
+        "No further benefits have been issued since you recovered / returned to work.";
+      break;
+    case "No additional benefits":
     case "Pay code 99/6":
     default:
       body = status;
