@@ -378,7 +378,7 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
         <ul style="margin-block-start: 0.25em">
           <li>
             Look for a letter in the mail: "Form P30: Request to Claimant for
-            Continued Information.""
+            Continued Information."
           </li>
           <li>Find the "Form ID" (11 digits) in the middle of the page.</li>
           <li>
