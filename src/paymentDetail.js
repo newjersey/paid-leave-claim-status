@@ -315,14 +315,102 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
   let body = "";
   switch (parsedStatus) {
     case "Max entitlement":
-      break;
-    case "Recovered/returned":
+      body = html`<div>
+        You've reached the maximum benefits allowed
+        <a
+          href="https://www.nj.gov/labor/myleavebenefits/labor/myleavebenefits/worker/tdi/index.shtml#maximum"
+          target="_blank"
+        >
+          under state law</a
+        >. <br /><br />
+        You can't extend your state benefits for this condition/disability,
+        regardless of whether your doctor approves it. If your medical condition
+        continues to prevent you from working, apply for
+        <a
+          href="https://www.nj.gov/labor/claims/dds/claimants.shtml"
+          target="_blank"
+          >Social Security Disability Insurance</a
+        >.
+      </div>`;
       break;
     case "P30 received":
+      const receivedDate = extractDateFromString(status);
+      if (claimType === "FLI") {
+        body = html`Your FL3 form (Family Leave Insurance Continued Claim
+          Certification) was received on ${getFormattedDate(receivedDate)}.<br /><br />
+          <strong>Steps to complete</strong><br />
+          <ul style="margin-block-start: 0.25em">
+            <li>There's no action for you to take.</li>
+          </ul> `;
+      } else if (claimType === "TDI") {
+        body = html`Your P30 form (Request to Claimant for Continued Claim
+          Information) was received on ${getFormattedDate(receivedDate)}.<br /><br />
+          <strong>Steps to complete</strong><br />
+          <ul style="margin-block-start: 0.25em">
+            <li>There's no action for you to take.</li>
+          </ul>
+          <strong>Tips for pregnancy claims</strong>
+          <ul style="margin-block-start: 0.25em">
+            <li>
+              If you're taking bonding leave (Family Leave Insurance)
+              immediately after, look out for an FL2 form in the mail. We'll
+              send it to you after your P30 is processed.
+            </li>
+            <li>
+              The FL2 is how you'll start your bonding leave, without a break in
+              payments.
+            </li>
+          </ul>`;
+      }
       break;
     case "P30 sent":
-      break;
-    case "Pay code 99/6":
+      const mailedDate = extractDateFromString(status);
+      body = html`<div>
+        <strong>Heads up!</strong><br />Your last scheduled payment is coming
+        up. To keep paying you benefits, we need you to end or extend your claim
+        online. To complete this step, you'll need the P30 letter, or Request
+        for Continued Claim Information. We mailed this to you on
+        ${getFormattedDate(mailedDate)}. <br /><br />
+        It's important to complete this step so we know whether you recovered
+        (end claim), or if you need to file a medical extension (extend claim).
+        <br /><br />
+        <strong>Steps to complete</strong><br />
+        <ul style="margin-block-start: 0.25em">
+          <li>
+            Look for a letter in the mail: "Form P30: Request to Claimant for
+            Continued Information.""
+          </li>
+          <li>Find the "Form ID" (11 digits) in the middle of the page.</li>
+          <li>
+            <a
+              href="https://www.nj.gov/labor/myleavebenefits/worker/tdi/P30notice.shtml"
+              target="_blank"
+              >Log in to your benefits account</a
+            >
+            and follow the instructions. Share the Form ID with your doctor.
+          </li>
+          <li>Share the Form ID with your doctor.</li>
+          <li>
+            If this is a pregnancy claim and you're starting bonding leave
+            immediately after, keep an eye on the mail for your FL2 (new
+            mother/bonding claim).
+          </li>
+        </ul>
+        <strong>Need help?</strong><br />
+        The P30 letter looks like this:<br />
+        <img
+          src="https://beta.nj.gov/files/tdi-fli-claim-status/assets/p30.png"
+          alt="Picture of P30 letter"
+          style="
+            margin-top: 4px;
+            margin-bottom: 8px;
+            max-width: 100%;
+            height: auto;
+          "
+        />
+        If you can't find the letter, give us a call: 609-292-7060. The form is
+        unique to your claim, so you can't print it online.
+      </div>`;
       break;
     case "Next pay scheduled":
       const scheduledDate = extractDateFromString(status);
@@ -337,8 +425,6 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
         >.
       </div>`;
       break;
-    case "No additional benefits":
-      break;
     case "Leave ended":
       const endDate = extractDateFromString(status);
       body = html`<div>
@@ -347,7 +433,7 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
         ${claimType === "TDI"
           ? html` <br /><br />
               <strong>Tips for pregnancy claims</strong>
-              <ul>
+              <ul style="margin-block-start: 0.25em">
                 <li>
                   If you're taking bonding leave (Family Leave Insurance)
                   immediately after, look out for an FL2 form in the mail. We'll
@@ -361,8 +447,12 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
           : ""}
       </div>`;
       break;
+    case "No additional benefits":
+    case "Recovered/returned":
+    case "Pay code 99/6":
     default:
       body = status;
+      break;
   }
 
   return body;
