@@ -456,6 +456,7 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
           >contact our office</a
         >
         for additional information.`;
+      break;
     case "No additional benefits":
     default:
       body = status;
