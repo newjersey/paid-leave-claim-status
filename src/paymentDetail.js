@@ -367,10 +367,10 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
       const mailedDate = extractDateFromString(status);
       body = html`<div>
         <strong>Heads up!</strong><br />Your last scheduled payment is coming
-        up. To keep paying you benefits, we need you to end or extend your claim
-        online. To complete this step, you'll need the P30 letter, or Request
-        for Continued Claim Information. We mailed this to you on
-        ${getFormattedDate(mailedDate)}. <br /><br />
+        up. We need you to end or extend your claim online. To complete this
+        step, you'll need the P30 letter, or Request for Continued Claim
+        Information. We mailed this to you on ${getFormattedDate(mailedDate)}.
+        <br /><br />
         It's important to complete this step so we know whether you recovered
         (end claim), or if you need to file a medical extension (extend claim).
         <br /><br />
@@ -387,7 +387,7 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
               target="_blank"
               >Log in to your benefits account</a
             >
-            and follow the instructions. Share the Form ID with your doctor.
+            and follow the instructions.
           </li>
           <li>Share the Form ID with your doctor.</li>
           <li>
@@ -397,7 +397,9 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
           </li>
         </ul>
         <strong>Need help?</strong><br />
-        The P30 letter looks like this:<br />
+        If you can't find the letter, give us a call: 609-292-7060. The form is
+        unique to your claim, so you can't print it online. The P30 letter looks
+        like this:<br />
         <img
           src="https://beta.nj.gov/files/tdi-fli-claim-status/assets/p30.png"
           alt="Sample P30 letter titled 'Request for Continued Claim Information' from the New Jersey Department of Labor, showing nine sections of claimant information. The form ID is found in the middle of the page."
@@ -408,8 +410,6 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
             height: auto;
           "
         />
-        If you can't find the letter, give us a call: 609-292-7060. The form is
-        unique to your claim, so you can't print it online.
       </div>`;
       break;
     case "Next pay scheduled":
@@ -451,8 +451,13 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
       body =
         "No further benefits have been issued since you recovered / returned to work.";
       break;
-    case "No additional benefits":
     case "Pay code 99/6":
+      body = html`Please
+        <a href="#helpSection" style="text-underline-offset: 2.5px"
+          >contact our office</a
+        >
+        for additional information.`;
+    case "No additional benefits":
     default:
       body = status;
       break;
