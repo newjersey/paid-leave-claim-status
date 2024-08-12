@@ -404,8 +404,7 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
           src="https://beta.nj.gov/files/tdi-fli-claim-status/assets/p30.png"
           alt="Sample P30 letter titled 'Request for Continued Claim Information' from the New Jersey Department of Labor, showing nine sections of claimant information. The form ID is found in the middle of the page."
           style="
-            margin-top: 4px;
-            margin-bottom: 8px;
+            margin-top: 8px;
             max-width: 100%;
             height: auto;
           "
