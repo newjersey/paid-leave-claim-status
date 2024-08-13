@@ -13,7 +13,7 @@ describe("Payment Detail page - Leave Ended FLI", () => {
     );
 
     cy.get("#accordion0id")
-      .contains("Next $770.00 to issue on August 13, 2024")
+      .contains("Next $770.00 to issue on August 13, 2025")
       .should("be.visible");
     cy.get("#accordion0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
@@ -83,7 +83,7 @@ describe("Payment Detail page - Leave Ended TDI", () => {
       .should("be.visible");
 
     cy.get("#accordion0id")
-      .contains("Next $770.00 to issue on August 13, 2024")
+      .contains("Next $770.00 to issue on August 13, 2025")
       .should("be.visible");
     cy.get("#accordion0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
@@ -332,7 +332,7 @@ describe("Payment Detail page - Scheduled", () => {
       "be.visible"
     );
     cy.contains(
-      "We're sending payment to your benefits debit card on October 13, 2024. You can access the funds about 2 business days later."
+      "We're sending payment to your benefits debit card on the evening of October 13, 2024. You can access the funds about 2 business days later."
     ).should("be.visible");
 
     cy.get("#accordion0id")

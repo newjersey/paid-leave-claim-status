@@ -414,7 +414,7 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
     case "Next pay scheduled":
       const scheduledDate = extractDateFromString(status);
       body = html`<div>
-        We're sending payment to your benefits debit card on
+        We're sending payment to your benefits debit card on the evening of
         ${getFormattedDate(scheduledDate)}. You can access the funds about 2
         business days later.<br /><br />Questions? Learn more about
         <a
