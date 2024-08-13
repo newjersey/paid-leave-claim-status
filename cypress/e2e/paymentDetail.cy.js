@@ -12,6 +12,11 @@ describe("Payment Detail page - Leave Ended FLI", () => {
       "be.visible"
     );
 
+    cy.get("button")
+      .contains("Status")
+      .should("have.attr", "onclick")
+      .and("equal", "claimdetail()");
+
     cy.get("#accordion0id")
       .contains("Next $770.00 to issue on August 13, 2025")
       .should("be.visible");

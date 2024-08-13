@@ -172,7 +172,7 @@ function addNewHtml(metadata) {
     >
       <div style="display: inline-block">All claims</div>
       <img src="${ICON_BASE_URL}/arrow.svg" alt="Right arrow" />
-      ${getUnstyledButtonHtml("Status", "claimDetail()")}
+      ${getUnstyledButtonHtml("Status", "claimdetail()")}
       <img src="${ICON_BASE_URL}/arrow.svg" alt="Right arrow" />
       <div style="display: inline-block"><b>Payments</b></div>
     </div>
