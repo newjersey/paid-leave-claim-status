@@ -337,7 +337,7 @@ describe("Payment Detail page - Scheduled", () => {
       "be.visible"
     );
     cy.contains(
-      "We're sending payment to your benefits debit card on the evening of October 13, 2024. You can access the funds about 2 business days later."
+      "We're sending payment to your benefits debit card on October 13, 2024. You can access the funds about 2 business days later."
     ).should("be.visible");
 
     cy.get("#accordion0id")
