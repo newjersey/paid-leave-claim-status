@@ -131,7 +131,7 @@ function addNewHtml(metadata) {
                 ? "display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px"
                 : ""}"
             >
-              ${recentClaims
+              ${(recentClaims ?? [])
                 .map(
                   (claim) => html` <div
                     style="background-color: #fff; border: 1px solid #DFE1E2; border-radius: 4px; padding: 16px 32px 32px; margin-bottom: 8px"
@@ -214,7 +214,7 @@ function addNewHtml(metadata) {
             >
               from more than 12 months ago
             </div>
-            ${oldClaims
+            ${(oldClaims ?? [])
               .map(
                 (claim) => html`
                   <button
@@ -266,7 +266,7 @@ function addNewHtml(metadata) {
 function logView(allClaims = []) {
   const now = new Date();
   const sixMonthsAgo = new Date().setMonth(now.getMonth() - 6);
-  const recentClaims = allClaims
+  const recentClaims = (allClaims ?? [])
     .map((claim) => claim?.date)
     .filter((date) => {
       if (!date) {
@@ -277,8 +277,12 @@ function logView(allClaims = []) {
     });
 
   logEvent("[DOL_DABI] Viewed Claim List page", {
-    object_status: allClaims.map((claim) => claim?.status ?? "N/A").join(";"),
-    object_type: allClaims.map((claim) => claim?.type ?? "N/A").join(";"),
+    object_status: (allClaims ?? [])
+      .map((claim) => claim?.status ?? "N/A")
+      .join(";"),
+    object_type: (allClaims ?? [])
+      .map((claim) => claim?.type ?? "N/A")
+      .join(";"),
     object_details: recentClaims.length,
     event_label: allClaims.length,
   });
