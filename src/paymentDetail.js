@@ -62,7 +62,7 @@ function getMetadata() {
       ?.children[1]?.innerText ?? "";
   const payTypeAbbr = payType.includes("debit")
     ? "Debit"
-    : paymentType.includes("issued by check")
+    : payType.includes("issued by check")
     ? "Check"
     : "";
   const status =
