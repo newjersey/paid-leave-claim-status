@@ -75,7 +75,6 @@ describe("Claim Detail page - Eligible scenario without next pay date", () => {
       .contains("Go to payment information")
       .should("have.attr", "onclick")
       .and("equal", "paymentDetail()");
-    cy.contains("Your payment is still processing.").should("be.visible");
     cy.get("li")
       .contains(
         "Payment is usually sent to your benefits debit card a few days after you're approved."

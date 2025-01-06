@@ -105,6 +105,9 @@ describe("Payment Detail page - Leave Ended TDI", () => {
 
 describe("Payment Detail page - Max Entitlement", () => {
   it("renders with updated content", () => {
+    const fixedDate = new Date(2024, 9, 1); // October 1, 2024
+    cy.clock(fixedDate.getTime());
+
     cy.visit(
       "./cypress/fixtures/paymentDetail/paymentDetailMaxEntitlement.html"
     );
@@ -140,6 +143,9 @@ describe("Payment Detail page - Max Entitlement", () => {
 
 describe("Payment Detail page - No Additional Benefits", () => {
   it("renders with updated content", () => {
+    const fixedDate = new Date(2024, 9, 1); // October 1, 2024
+    cy.clock(fixedDate.getTime());
+
     cy.visit("./cypress/fixtures/paymentDetail/paymentDetailNoAdditional.html");
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
@@ -168,6 +174,9 @@ describe("Payment Detail page - No Additional Benefits", () => {
 
 describe("Payment Detail page - P30 received FLI", () => {
   it("renders with updated content", () => {
+    const fixedDate = new Date(2024, 9, 1); // October 1, 2024
+    cy.clock(fixedDate.getTime());
+
     cy.visit(
       "./cypress/fixtures/paymentDetail/paymentDetailP30ReceivedFLI.html"
     );
@@ -201,6 +210,9 @@ describe("Payment Detail page - P30 received FLI", () => {
 
 describe("Payment Detail page - P30 received TDI", () => {
   it("renders with updated content", () => {
+    const fixedDate = new Date(2024, 9, 1); // October 1, 2024
+    cy.clock(fixedDate.getTime());
+
     cy.visit(
       "./cypress/fixtures/paymentDetail/paymentDetailP30ReceivedTDI.html"
     );
@@ -241,6 +253,9 @@ describe("Payment Detail page - P30 received TDI", () => {
 
 describe("Payment Detail page - P30 sent", () => {
   it("renders with updated content", () => {
+    const fixedDate = new Date(2024, 9, 1); // October 1, 2024
+    cy.clock(fixedDate.getTime());
+
     cy.visit("./cypress/fixtures/paymentDetail/paymentDetailP30Sent.html");
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
@@ -272,6 +287,9 @@ describe("Payment Detail page - P30 sent", () => {
 
 describe("Payment Detail page - Pay code 99/6", () => {
   it("renders with updated content", () => {
+    const fixedDate = new Date(2024, 9, 1); // October 1, 2024
+    cy.clock(fixedDate.getTime());
+
     cy.visit("./cypress/fixtures/paymentDetail/paymentDetailPayCode996.html");
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
@@ -300,6 +318,9 @@ describe("Payment Detail page - Pay code 99/6", () => {
 
 describe("Payment Detail page - Recovered", () => {
   it("renders with updated content", () => {
+    const fixedDate = new Date(2024, 9, 1); // October 1, 2024
+    cy.clock(fixedDate.getTime());
+
     cy.visit("./cypress/fixtures/paymentDetail/paymentDetailRecovered.html");
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
@@ -328,6 +349,9 @@ describe("Payment Detail page - Recovered", () => {
 
 describe("Payment Detail page - Scheduled", () => {
   it("renders with updated content", () => {
+    const fixedDate = new Date(2024, 9, 1); // October 1, 2024
+    cy.clock(fixedDate.getTime());
+
     cy.visit("./cypress/fixtures/paymentDetail/paymentDetailScheduled.html");
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change

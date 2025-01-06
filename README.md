@@ -14,6 +14,15 @@ JavaScript scripts are injected onto the existing application and manually updat
 4. Run `npm run build` to build bundled files
 5. Run `npm test` to run Cypress tests
 
+## Testing a change
+
+When you make a change and want to see if everything is working, do the following:
+
+1. Edit `.js` file in `src/` directory (edit corresponding Cypress test if relevant)
+2. Run `npm run build` to compile files
+3. Run `npm test` to ensure tests still pass
+4. Open relevant test file in `cypress/fixtures` in browser to ensure change looks okay (edit or add new test file if your scenario is not covered)
+
 ## Deployment
 
 1. Clone the `beta` repository in the same local folder that the `paid-leave-claim-status` folder is in
