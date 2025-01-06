@@ -21,6 +21,7 @@ import {
   updateDocument,
   ICON_BASE_URL,
   PRIVATE_PLAN_STATUS,
+  isFutureDate,
 } from "./modules/shared.mjs";
 import { Accordion } from "./modules/Accordion.mjs";
 
@@ -156,7 +157,6 @@ function getStatusBodyHtml(
   weeklyBenefitRate,
   balanceRemaining,
   claimEndDate,
-  lastDayPaid,
   claimDate
 ) {
   if (newStatus === "In progress") {
@@ -408,13 +408,16 @@ function getStatusBodyHtml(
       })
       .join("");
   } else if (newStatus === "Approved") {
+    const hasClaimEnded = claimEndDate && !isFutureDate(claimEndDate);
     return html`<div style="margin-top: 8px">
       <div>
         ${nextPayDate
           ? html`Your next payment is scheduled for
               <b>${getFormattedDate(nextPayDate)}</b>, and arrives on your
               benefits debit card about 2 business days later.`
-          : "Your payment is still processing."}
+          : hasClaimEnded
+          ? "Your claim has ended."
+          : ""}
       </div>
       <button
         style="background-color: #0076D6; border: none; color: #fff; padding: 12px 20px; cursor: pointer; border-radius: 4px; font-weight: 700; font-size: 16px; line-height: 24px; margin-top: 16px; outline-offset: 0.25rem"
@@ -433,15 +436,6 @@ function getStatusBodyHtml(
             >${weeklyBenefitRate}</span
           >
         </div>
-        ${lastDayPaid
-          ? html`<div style="margin-bottom: 12px">
-              Paid through date
-              <span
-                style="font-weight: 700; font-size: 22px; line-height: 32px; display: block"
-                >${getFormattedDate(lastDayPaid)}</span
-              >
-            </div>`
-          : ""}
         <div style="margin-bottom: 12px">
           Balance remaining
           <span
@@ -567,7 +561,13 @@ function getStatusBodyHtml(
   }
 }
 
-function getWhatsNextHtml(claimStatus, claimNotes, nextPayDate, claimType) {
+function getWhatsNextHtml(
+  claimStatus,
+  claimNotes,
+  nextPayDate,
+  claimType,
+  claimEndDate
+) {
   let listEls = undefined;
 
   if (claimStatus === "Undetermined") {
@@ -591,32 +591,34 @@ function getWhatsNextHtml(claimStatus, claimNotes, nextPayDate, claimType) {
         </li>`;
     }
   } else if (claimStatus === "Eligible") {
-    if (!nextPayDate) {
-      listEls = html`<li>
-          Payment is usually sent to your benefits debit card a few days after
-          you're approved.
-          <a
-            href="https://www.nj.gov/labor/myleavebenefits/labor/myleavebenefits/worker/resources/debitcard.shtml"
-            target="_blank"
-            >Learn more about how you'll get paid.</a
-          >
-        </li>
-        <li>
-          Payments are sent biweekly.
-          ${claimType === "TDI"
-            ? html`There's an initial
+    if (!claimEndDate || isFutureDate(claimEndDate)) {
+      if (!nextPayDate) {
+        listEls = html`<li>
+            Payment is usually sent to your benefits debit card a few days after
+            you're approved.
+            <a
+              href="https://www.nj.gov/labor/myleavebenefits/labor/myleavebenefits/worker/resources/debitcard.shtml"
+              target="_blank"
+              >Learn more about how you'll get paid.</a
+            >
+          </li>
+          <li>
+            Payments are sent biweekly.
+            ${claimType === "TDI"
+              ? html`There's an initial
           <a
             href="https://www.nj.gov/labor/myleavebenefits/worker/resources/waiting-week.shtml"
             target="_blank"
             >waiting week</a
           >, which is sent as back pay after your 22nd day of TDI benefits paid.
         </li>`
-            : ""}
+              : ""}
+          </li>`;
+      } else {
+        listEls = html`<li>
+          You'll keep getting paid. We'll post here if anything changes.
         </li>`;
-    } else {
-      listEls = html`<li>
-        You'll keep getting paid. We'll post here if anything changes.
-      </li>`;
+      }
     }
   }
 
@@ -742,7 +744,6 @@ function addNewHtml(metadata) {
     weeklyBenefitRate,
     balanceRemaining,
     claimEndDate,
-    lastDayPaid,
   } = metadata;
   const claimNotes = getParsedClaimNotes(rawClaimNotes);
 
@@ -752,7 +753,8 @@ function addNewHtml(metadata) {
     claimStatus,
     claimNotes,
     nextPayDate,
-    claimType
+    claimType,
+    claimEndDate
   );
   const newStatus = getClaimStatus(claimStatus, claimNotes, claimType);
   const rootMarginX = isDesktop() ? "107px" : "20px";
@@ -897,7 +899,6 @@ function addNewHtml(metadata) {
             weeklyBenefitRate,
             balanceRemaining,
             claimEndDate,
-            lastDayPaid,
             claimDate
           )}
         </div>
@@ -945,7 +946,7 @@ function addNewHtml(metadata) {
   root.append(newContainer);
   const accordions = document.querySelectorAll(".accordion-header");
   accordions.forEach((accordionEl) => {
-    new Accordion(accordionEl);
+    new Accordion(accordionEl, true);
   });
 }
 

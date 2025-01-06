@@ -10,10 +10,11 @@
 import { logEvent, ICON_BASE_URL } from "./shared.mjs";
 
 export class Accordion {
-  constructor(domNode) {
+  constructor(domNode, isLoggingEnabled = false) {
     this.rootEl = domNode;
     this.buttonEl = this.rootEl.querySelector("button[aria-expanded]");
     this.iconEl = this.rootEl.querySelector("img");
+    this.isLoggingEnabled = isLoggingEnabled;
 
     const controlsId = this.buttonEl.getAttribute("aria-controls");
     this.contentEl = document.getElementById(controlsId);
@@ -43,9 +44,11 @@ export class Accordion {
       this.contentEl.removeAttribute("hidden");
       this.iconEl.src = `${ICON_BASE_URL}/remove.svg`;
       this.iconEl.alt = "See less";
-      logEvent("[DOL_DABI] Opened Claim Detail form accordion", {
-        object_details: this.rootEl.dataset.logKey,
-      });
+      if (this.isLoggingEnabled) {
+        logEvent("[DOL_DABI] Opened Claim Detail form accordion", {
+          object_details: this.rootEl.dataset.logKey || "N/A",
+        });
+      }
     } else {
       this.contentEl.setAttribute("hidden", "");
       this.iconEl.src = `${ICON_BASE_URL}/add.svg`;

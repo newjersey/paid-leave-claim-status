@@ -101,6 +101,16 @@ export function getFormattedDate(dateString) {
   });
 }
 
+export function extractDateFromString(inputString) {
+  const datePattern = /\b\d{1,2}\/\d{1,2}\/\d{4}\b/;
+  const match = inputString.match(datePattern);
+  return match[0] || "N/A";
+}
+
+export function isFutureDate(dateString) {
+  return new Date(dateString) > new Date();
+}
+
 export function partition(array, filter) {
   const pass = [];
   const fail = [];
