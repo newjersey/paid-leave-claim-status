@@ -11,6 +11,7 @@ describe("Claim Detail page - In Progress scenario", () => {
       "be.visible"
     );
     cy.contains("leave starting August 1, 2023").should("be.visible");
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
 
     cy.get(".complete.received")
       .contains("August 7, 2023")
@@ -44,6 +45,7 @@ describe("Claim Detail page - 14 Day scenario", () => {
       "be.visible"
     );
     cy.contains("leave starting August 1, 2023").should("be.visible");
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
 
     cy.get(".complete.received")
       .contains("August 7, 2023")
@@ -77,6 +79,7 @@ describe("Claim Detail page - Blank request scenario", () => {
       "be.visible"
     );
     cy.contains("leave starting August 1, 2023").should("be.visible");
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
 
     cy.get(".complete.received")
       .contains("August 7, 2023")
@@ -110,6 +113,7 @@ describe("Claim Detail page - Information Needed scenario", () => {
       "be.visible"
     );
     cy.contains("leave starting August 1, 2023").should("be.visible");
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
 
     cy.get(".complete.received")
       .contains("August 7, 2023")

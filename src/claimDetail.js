@@ -72,6 +72,7 @@ function getMetadata() {
       );
   const claimDate = baseChildren[8]?.children[0]?.innerText.trim();
   const receivedDate = baseChildren[8]?.children[2]?.innerText;
+  const name = baseChildren[1]?.children[0]?.children[0]?.children[0]?.innerText ?? ""
 
   const eligibleColumns = Array.from(
     document.getElementsByClassName("tableBA")
@@ -84,6 +85,7 @@ function getMetadata() {
     claimNotes,
     receivedDate,
     claimDate,
+    name,
     avgWeeklyWage: eligibleColumns[0],
     weeklyBenefitRate: eligibleColumns[1],
     maxBenefitAmount: eligibleColumns[2],
@@ -740,6 +742,7 @@ function addNewHtml(metadata) {
     claimNotes: rawClaimNotes,
     receivedDate,
     claimDate,
+    name,
     nextPayDate,
     weeklyBenefitRate,
     balanceRemaining,
@@ -806,13 +809,38 @@ function addNewHtml(metadata) {
       >
         Claim for ${getClaimTypeContent(claimType)}
       </div>
-      ${claimDate
-        ? html`<div
-            style="font-size: 13px; line-height: 16px; margin-bottom: 44px; text-transform: uppercase"
-          >
-            leave starting ${getFormattedDate(claimDate)}
-          </div>`
-        : ""}
+      ${isDesktop()
+        ? html`
+            ${claimDate || name
+              ? html`<div
+                  style="font-size: 13px; line-height: 16px; margin-bottom: 8px; text-transform: uppercase; display: flex;"
+                >
+                  ${claimDate
+                    ? html`<div style="margin-right:4px;">leave starting ${getFormattedDate(claimDate)}</div>`
+                    : ""}
+                  ${name
+                    ? html`<div style="font-weight: 700;">  \u00B7 ${name}</div>`
+                    : ""}
+                </div>`
+              : ""}
+          `
+        : html`
+            ${claimDate
+              ? html`<div
+                  style="font-size: 13px; line-height: 16px; margin-bottom: 8px; text-transform: uppercase"
+                >
+                  leave starting ${getFormattedDate(claimDate)}
+                </div>`
+              : ""}
+            ${name
+              ? html`<div
+                  style="font-size: 13px; line-height: 16px; margin-bottom: 44px; text-transform: uppercase; font-weight: 700"
+                >
+                  ${name}
+                </div>`
+              : ""}
+          `
+      }
     </div>
     <div
       style="${isDesktop()

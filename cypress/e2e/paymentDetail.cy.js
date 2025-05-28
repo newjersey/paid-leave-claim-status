@@ -8,15 +8,17 @@ describe("Payment Detail page - Leave Ended FLI", () => {
 
     cy.get("h1").contains("Payments").should("be.visible");
     cy.contains("Claim for Family Leave Insurance (FLI)").should("be.visible");
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
     cy.contains("Your Family Leave claim ended on May 6, 2024.").should(
       "be.visible"
     );
-
+    
     cy.get("button")
-      .contains("Status")
-      .should("have.attr", "onclick")
-      .and("equal", "claimdetail()");
-
+    .contains("Status")
+    .should("have.attr", "onclick")
+    .and("equal", "claimdetail()");
+    
+    cy.contains("Total payments: $4,366.00").should("be.visible");
     cy.get("#accordion0id")
       .contains("Next $770.00 to issue on August 13, 2025")
       .should("be.visible");
@@ -78,15 +80,17 @@ describe("Payment Detail page - Leave Ended TDI", () => {
     cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
       "be.visible"
     );
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
     cy.contains("Your Temporary Disability claim ended on May 6, 2024.").should(
       "be.visible"
     );
     cy.get("li")
-      .contains(
-        "If you're taking bonding leave (Family Leave Insurance) immediately after, look out for an FL2 form in the mail. We'll send it to you after your P30 is processed."
-      )
-      .should("be.visible");
-
+    .contains(
+      "If you're taking bonding leave (Family Leave Insurance) immediately after, look out for an FL2 form in the mail. We'll send it to you after your P30 is processed."
+    )
+    .should("be.visible");
+    
+    cy.contains("Total payments: $4,366.00").should("be.visible");
     cy.get("#accordion0id")
       .contains("Next $770.00 to issue on August 13, 2025")
       .should("be.visible");
@@ -118,6 +122,7 @@ describe("Payment Detail page - Max Entitlement", () => {
     cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
       "be.visible"
     );
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
     cy.contains("You've reached the maximum benefits allowed").should(
       "be.visible"
     );
@@ -125,6 +130,7 @@ describe("Payment Detail page - Max Entitlement", () => {
       "You can't extend your state benefits for this condition/disability, regardless of whether your doctor approves it."
     ).should("be.visible");
 
+    cy.contains("Total payments: $4,366.00").should("be.visible");
     cy.get("#accordion0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
@@ -154,10 +160,12 @@ describe("Payment Detail page - No Additional Benefits", () => {
     cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
       "be.visible"
     );
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
     cy.contains("No additional benefits have been authorized.").should(
       "be.visible"
     );
 
+    cy.contains("Total payments: $4,366.00").should("be.visible");
     cy.get("#accordion0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
@@ -185,6 +193,7 @@ describe("Payment Detail page - P30 received FLI", () => {
 
     cy.get("h1").contains("Payments").should("be.visible");
     cy.contains("Claim for Family Leave Insurance (FLI)").should("be.visible");
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
     cy.contains(
       "Your FL3 form (Family Leave Insurance Continued Claim Certification) was received on August 2, 2024."
     ).should("be.visible");
@@ -192,7 +201,8 @@ describe("Payment Detail page - P30 received FLI", () => {
       .contains("There's no action for you to take.")
       .should("be.visible");
 
-    cy.get("#accordion0id")
+      cy.contains("Total payments: $4,366.00").should("be.visible");
+      cy.get("#accordion0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
     cy.get("#accordion0id")
@@ -223,6 +233,7 @@ describe("Payment Detail page - P30 received TDI", () => {
     cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
       "be.visible"
     );
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
     cy.contains(
       "Your P30 form (Request to Claimant for Continued Claim Information) was received on August 2, 2024."
     ).should("be.visible");
@@ -235,6 +246,8 @@ describe("Payment Detail page - P30 received TDI", () => {
       )
       .should("be.visible");
 
+
+    cy.contains("Total payments: $4,366.00").should("be.visible");
     cy.get("#accordion0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
@@ -264,6 +277,7 @@ describe("Payment Detail page - P30 sent", () => {
     cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
       "be.visible"
     );
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
     cy.contains(
       "To complete this step, you'll need the P30 letter, or Request for Continued Claim Information. We mailed this to you on August 1, 2024."
     ).should("be.visible");
@@ -271,7 +285,8 @@ describe("Payment Detail page - P30 sent", () => {
       .contains("Share the Form ID with your doctor.")
       .should("be.visible");
 
-    cy.get("#accordion0id")
+      cy.contains("Total payments: $4,366.00").should("be.visible");
+      cy.get("#accordion0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
     cy.get("#accordion0id")
@@ -298,10 +313,12 @@ describe("Payment Detail page - Pay code 99/6", () => {
     cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
       "be.visible"
     );
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
     cy.contains("Please contact our office for additional information.").should(
       "be.visible"
     );
 
+    cy.contains("Total payments: $4,366.00").should("be.visible");
     cy.get("#accordion0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
@@ -329,10 +346,12 @@ describe("Payment Detail page - Recovered", () => {
     cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
       "be.visible"
     );
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
     cy.contains(
       "No further benefits have been issued since you recovered / returned to work."
     ).should("be.visible");
 
+    cy.contains("Total payments: $4,366.00").should("be.visible");
     cy.get("#accordion0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
@@ -360,10 +379,12 @@ describe("Payment Detail page - Scheduled", () => {
     cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
       "be.visible"
     );
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
     cy.contains(
       "We're sending payment to your benefits debit card on October 13, 2024. You can access the funds about 2 business days later."
     ).should("be.visible");
 
+    cy.contains("Total payments: $4,366.00").should("be.visible");
     cy.get("#accordion0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");

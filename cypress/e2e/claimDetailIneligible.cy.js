@@ -197,6 +197,7 @@ describe("Claim Detail page - Ineligible scenario due to private plan", () => {
 
     cy.get("h1").contains("Status").should("be.visible");
     cy.contains("leave starting August 1, 2023").should("be.visible");
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
 
     cy.get(".complete.received")
       .contains("August 7, 2023")

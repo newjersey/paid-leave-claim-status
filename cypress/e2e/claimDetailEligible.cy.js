@@ -17,6 +17,7 @@ describe("Claim Detail page - Eligible scenario with next pay date", () => {
       "be.visible"
     );
     cy.contains("leave starting August 5, 2023").should("be.visible");
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
     cy.contains("Approved").should("be.visible");
     cy.get("button")
       .contains("Go to payment information")
@@ -70,6 +71,7 @@ describe("Claim Detail page - Eligible scenario without next pay date", () => {
       "be.visible"
     );
     cy.contains("leave starting August 5, 2023").should("be.visible");
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
     cy.contains("Approved").should("be.visible");
     cy.get("button")
       .contains("Go to payment information")
@@ -125,6 +127,7 @@ describe("Claim Detail page - Eligible scenario with next pay date", () => {
       "be.visible"
     );
     cy.contains("leave starting August 5, 2023").should("be.visible");
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
     cy.contains("Approved").should("be.visible");
     cy.get("button")
       .contains("Go to payment information")
@@ -176,6 +179,7 @@ describe("Claim Detail page - Eligible scenario after claim ended", () => {
       "be.visible"
     );
     cy.contains("leave starting August 5, 2023").should("be.visible");
+    cy.contains("JENNI MAHLSTEDT").should("be.visible");
     cy.contains("Approved").should("be.visible");
     cy.get("button")
       .contains("Go to payment information")

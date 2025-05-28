@@ -69,6 +69,7 @@ function getMetadata() {
     baseChildren[10]?.children[0]?.children[0]?.children[0]?.children[0]
       ?.children[1]?.innerText ?? "";
 
+  const name = baseChildren[1]?.children[0]?.children[0]?.children[0]?.innerText ?? ""
   const payments = Array.from(document.getElementsByTagName("table")[5].rows)
     .slice(1)
     .map((row) => {
@@ -94,6 +95,7 @@ function getMetadata() {
     p30DateSent: p30Sent,
     claimType,
     payments,
+    name
   };
 }
 
@@ -159,7 +161,7 @@ function addHeadStyling() {
 }
 
 function addNewHtml(metadata) {
-  const { status, p30DateSent, claimType, payments } = metadata;
+  const { status, p30DateSent, claimType, payments, name } = metadata;
   const parsedStatus = getParsedStatus(status);
 
   const root = document.getElementsByName("claimlist")[0];
@@ -208,8 +210,11 @@ function addNewHtml(metadata) {
       <h1 style="margin: 0 0 8px; font-size: 32px; line-height: 40px">
         Payments
       </h1>
-      <div style="font-size: 22px; line-height: 32px; margin-bottom: 44px">
+      <div style="font-size: 22px; line-height: 32px; margin-bottom: 8px;">
         Claim for ${getClaimTypeContent(claimType)}
+      </div>
+      <div style="font-size: 13px; line-height: 26px; margin-bottom: 44px; text-transform: capitalize;">
+      ${name}
       </div>
     </div>
     <div
@@ -258,6 +263,7 @@ function addNewHtml(metadata) {
               margin-bottom: 16px;
             "
           />
+          <div style="margin-bottom: 16px;">Total payments: <strong>${getTotalPayments(payments)}</strong></div>
           ${getPaymentHistoryAccordions(payments)}
         </div>
       </div>
@@ -477,6 +483,25 @@ function logView(metadata) {
       p30: p30DateSent || "N/A",
       payType: paymentType || "N/A",
     }),
+  });
+}
+
+function getTotalPayments(paymentRecords) {
+  let totalPayments = 0;
+
+  paymentRecords.forEach((record) => {
+    const {date, gross} = record;
+    if (isFutureDate(date) === false && gross) {
+      const numericGross = parseFloat(gross.replace(/[$,]/g, ''));
+      if (!isNaN(numericGross)) {
+        totalPayments += numericGross;
+      }
+    }
+  });
+
+  return totalPayments.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD'
   });
 }
 
