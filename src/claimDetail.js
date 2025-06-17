@@ -812,9 +812,7 @@ function addNewHtml(metadata) {
       ${isDesktop()
         ? html`
             ${claimDate || name
-              ? html`<div
-                  style="font-size: 13px; line-height: 16px; margin-bottom: 8px; text-transform: uppercase; display: flex;"
-                >
+              ? html`<div style="font-size: 13px; line-height: 16px; text-transform: uppercase; margin-bottom: 8px; display: flex;">
                   ${claimDate
                     ? html`<div style="margin-right:4px;">leave starting ${getFormattedDate(claimDate)}</div>`
                     : ""}
@@ -825,21 +823,14 @@ function addNewHtml(metadata) {
               : ""}
           `
         : html`
-            ${claimDate
-              ? html`<div
-                  style="font-size: 13px; line-height: 16px; margin-bottom: 8px; text-transform: uppercase"
-                >
-                  leave starting ${getFormattedDate(claimDate)}
-                </div>`
-              : ""}
-            ${name
-              ? html`<div
-                  style="font-size: 13px; line-height: 16px; margin-bottom: 44px; text-transform: uppercase; font-weight: 700"
-                >
-                  ${name}
-                </div>`
-              : ""}
-          `
+            <div style="font-size: 13px; line-height: 16px; text-transform: uppercase; margin-bottom: 44px;">
+              ${claimDate
+                ? html`<div style="margin-bottom:8px;">leave starting ${getFormattedDate(claimDate)}</div>`
+                : ""}
+              ${name
+                ? html`<div style="font-weight: 700;">${name}</div>`
+                : ""}
+            </div>`
       }
     </div>
     <div
