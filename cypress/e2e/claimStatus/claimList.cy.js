@@ -2,7 +2,7 @@ describe("Claim List page - with recent and older claims", () => {
   it("renders with updated content", () => {
     const now = new Date(2024, 3, 14); // month is 0-indexed
     cy.clock(now);
-    cy.visit("./cypress/fixtures/claimList/claimList.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimList/claimList.html");
 
     cy.contains("XXX-XX-2204").should("not.exist"); // Rendered on original HTML, without script change
 
@@ -27,7 +27,7 @@ describe("Claim List page - with recent and older claims", () => {
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/claimList/claimList.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimList/claimList.html");
     cy.checkBodyA11y();
   });
 });
@@ -36,7 +36,7 @@ describe("Claim List page - with no older claims", () => {
   it("renders with updated content", () => {
     const now = new Date(2024, 3, 14); // month is 0-indexed
     cy.clock(now);
-    cy.visit("./cypress/fixtures/claimList/claimListNoOlder.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimList/claimListNoOlder.html");
 
     cy.get("XXX-XX-2204").should("not.exist"); // Rendered on original HTML, without script change
 
@@ -51,7 +51,7 @@ describe("Claim List page - with no older claims", () => {
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/claimList/claimListNoOlder.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimList/claimListNoOlder.html");
     cy.checkBodyA11y();
   });
 });
@@ -60,7 +60,7 @@ describe("Claim List page - with no recent claims", () => {
   it("renders with updated content", () => {
     const now = new Date(2024, 3, 14); // month is 0-indexed
     cy.clock(now);
-    cy.visit("./cypress/fixtures/claimList/claimListNoRecent.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimList/claimListNoRecent.html");
 
     cy.get("XXX-XX-2204").should("not.exist"); // Rendered on original HTML, without script change
 
@@ -76,7 +76,7 @@ describe("Claim List page - with no recent claims", () => {
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/claimList/claimListNoRecent.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimList/claimListNoRecent.html");
     cy.checkBodyA11y();
   });
 });

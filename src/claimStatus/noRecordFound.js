@@ -9,7 +9,7 @@ import {
   html,
   styleBody,
   updateDocument,
-} from "./modules/shared.mjs";
+} from "../modules/shared.mjs";
 
 if (document.readyState === "loading") {
   window.addEventListener("DOMContentLoaded", () => {

@@ -18,7 +18,7 @@ import {
   runWhenReady,
   updateDocument,
   ICON_BASE_URL,
-} from "./modules/shared.mjs";
+} from "../modules/shared.mjs";
 
 runWhenReady(executeOverride);
 
