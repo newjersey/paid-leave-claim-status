@@ -8,10 +8,14 @@ rollup -c rollup.config.mjs -i src/claimStatus/claimList.js -o dist/claimStatus/
 rollup -c rollup.config.mjs -i src/claimStatus/claimDetail.js -o dist/claimStatus/claimDetail.min.js
 rollup -c rollup.config.mjs -i src/claimStatus/paymentDetail.js -o dist/claimStatus/paymentDetail.min.js
 
+rollup -c rollup.config.mjs -i src/claimApplication/tdiIntroduction.js -o dist/claimApplication/tdiIntroduction.min.js
+
 echo "Copying bundled scripts to Cypress test assets..."
 cp dist/claimStatus/noRecordFound.min.js cypress/fixtures/claimStatus/noRecordFound/noRecordFound.min.js
 cp dist/claimStatus/claimDetail.min.js cypress/fixtures/claimStatus/claimDetail/claimDetail.min.js
 cp dist/claimStatus/claimList.min.js cypress/fixtures/claimStatus/claimList/claimList.min.js
 cp dist/claimStatus/paymentDetail.min.js cypress/fixtures/claimStatus/paymentDetail/paymentDetail.min.js
+
+cp dist/claimApplication/tdiIntroduction.min.js cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.min.js
 
 echo "Complete!"
