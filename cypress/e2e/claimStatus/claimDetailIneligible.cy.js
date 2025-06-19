@@ -1,6 +1,6 @@
 describe("Claim Detail page - Ineligible scenario with Blank claim notes", () => {
   it("renders with updated content", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleBlank.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleBlank.html");
 
     cy.checkIneligibleCore();
     cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
@@ -13,14 +13,14 @@ describe("Claim Detail page - Ineligible scenario with Blank claim notes", () =>
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleBlank.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleBlank.html");
     cy.checkBodyA11y();
   });
 });
 
 describe("Claim Detail page - Ineligible scenario with C10 missing", () => {
   it("renders with updated content", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleC10.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleC10.html");
 
     cy.checkIneligibleCore();
     cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
@@ -38,14 +38,14 @@ describe("Claim Detail page - Ineligible scenario with C10 missing", () => {
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleC10.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleC10.html");
     cy.checkBodyA11y();
   });
 });
 
 describe("Claim Detail page - Ineligible scenario with M10 missing", () => {
   it("renders with updated content", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleM10.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleM10.html");
 
     cy.checkIneligibleCore();
     cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
@@ -63,14 +63,14 @@ describe("Claim Detail page - Ineligible scenario with M10 missing", () => {
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleM10.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleM10.html");
     cy.checkBodyA11y();
   });
 });
 
 describe("Claim Detail page - Ineligible scenario with C10 and M10 missing", () => {
   it("renders with updated content", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleC10M10.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleC10M10.html");
 
     cy.checkIneligibleCore();
     cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
@@ -88,14 +88,14 @@ describe("Claim Detail page - Ineligible scenario with C10 and M10 missing", () 
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleC10M10.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleC10M10.html");
     cy.checkBodyA11y();
   });
 });
 
 describe("Claim Detail page - Ineligible scenario for DDU", () => {
   it("renders with updated content", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleDDU.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleDDU.html");
 
     cy.checkIneligibleCore();
     cy.contains("Claim for Temporary Disability Insurance (TDI)").should(
@@ -111,14 +111,14 @@ describe("Claim Detail page - Ineligible scenario for DDU", () => {
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleDDU.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleDDU.html");
     cy.checkBodyA11y();
   });
 });
 
 describe("Claim Detail page - Ineligible scenario for FLDU", () => {
   it("renders with updated content", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleFLDU.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleFLDU.html");
 
     cy.checkIneligibleCore();
     cy.contains("Claim for Family Leave Insurance (FLI)").should("be.visible");
@@ -134,7 +134,7 @@ describe("Claim Detail page - Ineligible scenario for FLDU", () => {
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailIneligibleFLDU.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleFLDU.html");
     cy.checkBodyA11y();
   });
 });
@@ -142,7 +142,7 @@ describe("Claim Detail page - Ineligible scenario for FLDU", () => {
 describe("Claim Detail page -  Ineligible scenario due to invalid wage (2010)", () => {
   it("renders with updated content", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailIneligibleInvalidWage2007.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleInvalidWage2007.html"
     );
 
     cy.checkIneligibleCore();
@@ -157,7 +157,7 @@ describe("Claim Detail page -  Ineligible scenario due to invalid wage (2010)", 
 
   it("passes accessibility checks", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailIneligibleInvalidWage2007.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleInvalidWage2007.html"
     );
     cy.checkBodyA11y();
   });
@@ -166,7 +166,7 @@ describe("Claim Detail page -  Ineligible scenario due to invalid wage (2010)", 
 describe("Claim Detail page - Ineligible scenario due to invalid wage (2010)", () => {
   it("renders with updated content", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailIneligibleInvalidWage2010.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleInvalidWage2010.html"
     );
 
     cy.checkIneligibleCore();
@@ -181,7 +181,7 @@ describe("Claim Detail page - Ineligible scenario due to invalid wage (2010)", (
 
   it("passes accessibility checks", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailIneligibleInvalidWage2010.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleInvalidWage2010.html"
     );
     cy.checkBodyA11y();
   });
@@ -190,7 +190,7 @@ describe("Claim Detail page - Ineligible scenario due to invalid wage (2010)", (
 describe("Claim Detail page - Ineligible scenario due to private plan", () => {
   it("renders with updated content", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailIneligiblePrivatePlan.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligiblePrivatePlan.html"
     );
 
     cy.contains("Ineligible").should("not.exist"); // Rendered on original HTML, without script change
@@ -220,7 +220,7 @@ describe("Claim Detail page - Ineligible scenario due to private plan", () => {
 
   it("passes accessibility checks", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailIneligiblePrivatePlan.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligiblePrivatePlan.html"
     );
     cy.checkBodyA11y();
   });

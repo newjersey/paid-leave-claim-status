@@ -1,7 +1,7 @@
 describe("Claim Detail page - In Progress scenario", () => {
   it("renders with updated content", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailUndeterminedInProgress.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailUndeterminedInProgress.html"
     );
 
     cy.contains("Undetermined").should("not.exist"); // Rendered on original HTML, without script change
@@ -26,7 +26,7 @@ describe("Claim Detail page - In Progress scenario", () => {
 
   it("passes accessibility checks", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailUndeterminedInProgress.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailUndeterminedInProgress.html"
     );
     cy.checkBodyA11y();
   });
@@ -35,7 +35,7 @@ describe("Claim Detail page - In Progress scenario", () => {
 describe("Claim Detail page - 14 Day scenario", () => {
   it("renders with updated content", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailUndetermined14Day.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailUndetermined14Day.html"
     );
 
     cy.contains("Undetermined").should("not.exist"); // Rendered on original HTML, without script change
@@ -60,7 +60,7 @@ describe("Claim Detail page - 14 Day scenario", () => {
 
   it("passes accessibility checks", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailUndetermined14Day.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailUndetermined14Day.html"
     );
     cy.checkBodyA11y();
   });
@@ -69,7 +69,7 @@ describe("Claim Detail page - 14 Day scenario", () => {
 describe("Claim Detail page - Blank request scenario", () => {
   it("renders with updated content", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailUndeterminedBlankRequest.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailUndeterminedBlankRequest.html"
     );
 
     cy.contains("Undetermined").should("not.exist"); // Rendered on original HTML, without script change
@@ -94,7 +94,7 @@ describe("Claim Detail page - Blank request scenario", () => {
 
   it("passes accessibility checks", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailUndeterminedBlankRequest.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailUndeterminedBlankRequest.html"
     );
     cy.checkBodyA11y();
   });
@@ -103,7 +103,7 @@ describe("Claim Detail page - Blank request scenario", () => {
 describe("Claim Detail page - Information Needed scenario", () => {
   it("renders with updated content", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailUndeterminedInfoNeeded.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailUndeterminedInfoNeeded.html"
     );
 
     cy.contains("Undetermined").should("not.exist"); // Rendered on original HTML, without script change
@@ -151,7 +151,7 @@ describe("Claim Detail page - Information Needed scenario", () => {
 
   it("renders C10 accordion that opens and closes on click", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailUndeterminedInfoNeeded.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailUndeterminedInfoNeeded.html"
     );
 
     const accordionButton = cy.get("#accordion1id");
@@ -178,7 +178,7 @@ describe("Claim Detail page - Information Needed scenario", () => {
 
   it("renders M01 accordion that opens and closes on click", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailUndeterminedInfoNeeded.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailUndeterminedInfoNeeded.html"
     );
 
     const accordionButton = cy.get("#accordion7id");
@@ -202,7 +202,7 @@ describe("Claim Detail page - Information Needed scenario", () => {
 
   it("passes accessibility checks", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailUndeterminedInfoNeeded.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailUndeterminedInfoNeeded.html"
     );
     cy.checkBodyA11y();
   });

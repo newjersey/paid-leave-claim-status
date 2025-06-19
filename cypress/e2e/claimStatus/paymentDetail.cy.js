@@ -1,7 +1,7 @@
 describe("Payment Detail page - Leave Ended FLI", () => {
   it("renders with updated content", () => {
     cy.visit(
-      "./cypress/fixtures/paymentDetail/paymentDetailLeaveEndedFLI.html"
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html"
     );
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
@@ -50,14 +50,14 @@ describe("Payment Detail page - Leave Ended FLI", () => {
 
   it("passes accessibility checks", () => {
     cy.visit(
-      "./cypress/fixtures/paymentDetail/paymentDetailLeaveEndedFLI.html"
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html"
     );
     cy.checkBodyA11y();
   });
 });
 
 it("renders payment record accordion that opens and closes on click", () => {
-  cy.visit("./cypress/fixtures/paymentDetail/paymentDetailLeaveEndedFLI.html");
+  cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html");
 
   const accordionButton = cy.get("#accordion2id");
   cy.get("#sect2").should("not.be.visible");
@@ -71,7 +71,7 @@ it("renders payment record accordion that opens and closes on click", () => {
 describe("Payment Detail page - Leave Ended TDI", () => {
   it("renders with updated content", () => {
     cy.visit(
-      "./cypress/fixtures/paymentDetail/paymentDetailLeaveEndedTDI.html"
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedTDI.html"
     );
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
@@ -101,7 +101,7 @@ describe("Payment Detail page - Leave Ended TDI", () => {
 
   it("passes accessibility checks", () => {
     cy.visit(
-      "./cypress/fixtures/paymentDetail/paymentDetailLeaveEndedTDI.html"
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedTDI.html"
     );
     cy.checkBodyA11y();
   });
@@ -113,7 +113,7 @@ describe("Payment Detail page - Max Entitlement", () => {
     cy.clock(fixedDate.getTime());
 
     cy.visit(
-      "./cypress/fixtures/paymentDetail/paymentDetailMaxEntitlement.html"
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlement.html"
     );
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
@@ -141,7 +141,7 @@ describe("Payment Detail page - Max Entitlement", () => {
 
   it("passes accessibility checks", () => {
     cy.visit(
-      "./cypress/fixtures/paymentDetail/paymentDetailMaxEntitlement.html"
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlement.html"
     );
     cy.checkBodyA11y();
   });
@@ -152,7 +152,7 @@ describe("Payment Detail page - No Additional Benefits", () => {
     const fixedDate = new Date(2024, 9, 1); // October 1, 2024
     cy.clock(fixedDate.getTime());
 
-    cy.visit("./cypress/fixtures/paymentDetail/paymentDetailNoAdditional.html");
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailNoAdditional.html");
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
 
@@ -175,7 +175,7 @@ describe("Payment Detail page - No Additional Benefits", () => {
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/paymentDetail/paymentDetailNoAdditional.html");
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailNoAdditional.html");
     cy.checkBodyA11y();
   });
 });
@@ -186,7 +186,7 @@ describe("Payment Detail page - P30 received FLI", () => {
     cy.clock(fixedDate.getTime());
 
     cy.visit(
-      "./cypress/fixtures/paymentDetail/paymentDetailP30ReceivedFLI.html"
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailP30ReceivedFLI.html"
     );
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
@@ -212,7 +212,7 @@ describe("Payment Detail page - P30 received FLI", () => {
 
   it("passes accessibility checks", () => {
     cy.visit(
-      "./cypress/fixtures/paymentDetail/paymentDetailP30ReceivedFLI.html"
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailP30ReceivedFLI.html"
     );
     cy.checkBodyA11y();
   });
@@ -224,7 +224,7 @@ describe("Payment Detail page - P30 received TDI", () => {
     cy.clock(fixedDate.getTime());
 
     cy.visit(
-      "./cypress/fixtures/paymentDetail/paymentDetailP30ReceivedTDI.html"
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailP30ReceivedTDI.html"
     );
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
@@ -258,7 +258,7 @@ describe("Payment Detail page - P30 received TDI", () => {
 
   it("passes accessibility checks", () => {
     cy.visit(
-      "./cypress/fixtures/paymentDetail/paymentDetailP30ReceivedTDI.html"
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailP30ReceivedTDI.html"
     );
     cy.checkBodyA11y();
   });
@@ -269,7 +269,7 @@ describe("Payment Detail page - P30 sent", () => {
     const fixedDate = new Date(2024, 9, 1); // October 1, 2024
     cy.clock(fixedDate.getTime());
 
-    cy.visit("./cypress/fixtures/paymentDetail/paymentDetailP30Sent.html");
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailP30Sent.html");
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
 
@@ -295,7 +295,7 @@ describe("Payment Detail page - P30 sent", () => {
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/paymentDetail/paymentDetailP30Sent.html");
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailP30Sent.html");
     cy.checkBodyA11y();
   });
 });
@@ -305,7 +305,7 @@ describe("Payment Detail page - Pay code 99/6", () => {
     const fixedDate = new Date(2024, 9, 1); // October 1, 2024
     cy.clock(fixedDate.getTime());
 
-    cy.visit("./cypress/fixtures/paymentDetail/paymentDetailPayCode996.html");
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailPayCode996.html");
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
 
@@ -328,7 +328,7 @@ describe("Payment Detail page - Pay code 99/6", () => {
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/paymentDetail/paymentDetailPayCode996.html");
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailPayCode996.html");
     cy.checkBodyA11y();
   });
 });
@@ -338,7 +338,7 @@ describe("Payment Detail page - Recovered", () => {
     const fixedDate = new Date(2024, 9, 1); // October 1, 2024
     cy.clock(fixedDate.getTime());
 
-    cy.visit("./cypress/fixtures/paymentDetail/paymentDetailRecovered.html");
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailRecovered.html");
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
 
@@ -361,7 +361,7 @@ describe("Payment Detail page - Recovered", () => {
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/paymentDetail/paymentDetailRecovered.html");
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailRecovered.html");
     cy.checkBodyA11y();
   });
 });
@@ -371,7 +371,7 @@ describe("Payment Detail page - Scheduled", () => {
     const fixedDate = new Date(2024, 9, 1); // October 1, 2024
     cy.clock(fixedDate.getTime());
 
-    cy.visit("./cypress/fixtures/paymentDetail/paymentDetailScheduled.html");
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailScheduled.html");
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
 
@@ -394,7 +394,7 @@ describe("Payment Detail page - Scheduled", () => {
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/paymentDetail/paymentDetailScheduled.html");
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailScheduled.html");
     cy.checkBodyA11y();
   });
 });

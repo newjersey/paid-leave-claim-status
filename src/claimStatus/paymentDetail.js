@@ -19,8 +19,8 @@ import {
   getFormattedDate,
   isFutureDate,
   extractDateFromString,
-} from "./modules/shared.mjs";
-import { Accordion } from "./modules/Accordion.mjs";
+} from "../modules/shared.mjs";
+import { Accordion } from "../modules/Accordion.mjs";
 
 runWhenReady(executeOverride);
 

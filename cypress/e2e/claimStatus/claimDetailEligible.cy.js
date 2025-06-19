@@ -1,6 +1,6 @@
 describe("Claim Detail page - Eligible scenario with next pay date", () => {
   it("renders with updated content", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailEligible.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html");
 
     cy.contains("Eligible").should("not.exist"); // Rendered on original HTML, without script change
 
@@ -45,7 +45,7 @@ describe("Claim Detail page - Eligible scenario with next pay date", () => {
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailEligible.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html");
     cy.checkBodyA11y();
   });
 });
@@ -53,7 +53,7 @@ describe("Claim Detail page - Eligible scenario with next pay date", () => {
 describe("Claim Detail page - Eligible scenario without next pay date", () => {
   it("renders with updated content", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailEligibleProcessing.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailEligibleProcessing.html"
     );
 
     cy.contains("Eligible").should("not.exist"); // Rendered on original HTML, without script change
@@ -102,7 +102,7 @@ describe("Claim Detail page - Eligible scenario without next pay date", () => {
 
   it("passes accessibility checks", () => {
     cy.visit(
-      "./cypress/fixtures/claimDetail/claimDetailEligibleProcessing.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailEligibleProcessing.html"
     );
     cy.checkBodyA11y();
   });
@@ -110,7 +110,7 @@ describe("Claim Detail page - Eligible scenario without next pay date", () => {
 
 describe("Claim Detail page - Eligible scenario with next pay date", () => {
   it("renders with updated content", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailEligible.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html");
 
     cy.contains("Eligible").should("not.exist"); // Rendered on original HTML, without script change
 
@@ -155,14 +155,14 @@ describe("Claim Detail page - Eligible scenario with next pay date", () => {
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailEligible.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html");
     cy.checkBodyA11y();
   });
 });
 
 describe("Claim Detail page - Eligible scenario after claim ended", () => {
   it("renders with updated content", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailEligibleEnded.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailEligibleEnded.html");
 
     cy.contains("Eligible").should("not.exist"); // Rendered on original HTML, without script change
 
@@ -205,7 +205,7 @@ describe("Claim Detail page - Eligible scenario after claim ended", () => {
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/claimDetail/claimDetailEligibleEnded.html");
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailEligibleEnded.html");
     cy.checkBodyA11y();
   });
 });

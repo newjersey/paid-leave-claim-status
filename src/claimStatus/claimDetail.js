@@ -22,8 +22,8 @@ import {
   ICON_BASE_URL,
   PRIVATE_PLAN_STATUS,
   isFutureDate,
-} from "./modules/shared.mjs";
-import { Accordion } from "./modules/Accordion.mjs";
+} from "../modules/shared.mjs";
+import { Accordion } from "../modules/Accordion.mjs";
 
 runWhenReady(executeOverride);
 
