@@ -4,6 +4,10 @@ describe("Introduction page", () => {
 
     cy.contains("APPLICATION FOR STATE TEMPORARY DISABILITY BENEFITS");
     cy.contains("I have read the above information");
-    cy.contains("Give feedback");
+  });
+
+  it("passes accessibility checks", () => {
+    cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html");
+    cy.checkBodyA11y();
   });
 });

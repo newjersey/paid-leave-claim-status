@@ -2,7 +2,6 @@ import {
   setupAnalytics,
   updateIcon,
   makeMobileFriendly,
-  addFeedbackLink,
 } from "../modules/shared.mjs";
 
 if (document.readyState === "loading") {
@@ -17,5 +16,13 @@ function executeOverride() {
   updateIcon();
   setupAnalytics();
   makeMobileFriendly();
-  addFeedbackLink();
+  makeLinkAccessible();
+}
+
+function makeLinkAccessible() {
+  const link = document.getElementById('lnkFake');
+  if (link) {
+    link.setAttribute('aria-hidden', 'true');
+    link.setAttribute('tabindex', '-1');
+  }
 }
