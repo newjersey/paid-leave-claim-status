@@ -15,5 +15,8 @@ describe("Introduction page", () => {
     cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html");
     cy.get('meta[name="viewport"]')
       .should('have.attr', 'content', 'width=device-width, initial-scale=1');
+    cy.get('img').each(($img) => {
+      cy.wrap($img).should('have.attr', 'style', 'width: 100%; height: auto;');
+    });
   });
 });
