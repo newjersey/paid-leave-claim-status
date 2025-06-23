@@ -137,7 +137,7 @@ export function runWhenReady(func) {
 }
 
 export function isDesktop() {
-  return screen.width > 768;
+  return window.innerWidth > 768;
 }
 
 /* CLAIM STATUS DATA PARSERS */
