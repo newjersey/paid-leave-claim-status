@@ -18,10 +18,24 @@ function executeOverride() {
   updateIcon();
   setupAnalytics();
   makeMobileFriendly();
-  replaceTableWithDiv();
+  replaceHeaderTable();
+  replaceContentTable();
+  appendFooter();
 }
 
-function replaceTableWithDiv() {
+function replaceHeaderTable() {
+  const headerTable = document.querySelector('table[style*="border-color: #800080"]');
+
+  if (headerTable) {
+    const newHeaderDiv = document.createElement('div');
+    newHeaderDiv.innerHTML = HEADER_HTML;
+    headerTable.replaceWith(newHeaderDiv);
+  } else {
+    console.error("Cannot find the header table to replace.");
+  }
+}
+
+function replaceContentTable() {
   const contentTable = document.querySelector('table#ContentPlaceHolder1_tblContent');
 
   if (contentTable) {
@@ -71,5 +85,16 @@ function replaceTableWithDiv() {
     contentTable.replaceWith(newDiv);
   } else {
     throw new Error("Cannot find HTML.");
+  }
+}
+
+function appendFooter() {
+  const bodyContent = document.body;
+  if (bodyContent) {
+    const footerDiv = document.createElement('div');
+    footerDiv.innerHTML = FOOTER_HTML;
+    bodyContent.appendChild(footerDiv);
+  } else {
+    console.error("Cannot find the body element to append the footer.");
   }
 }
