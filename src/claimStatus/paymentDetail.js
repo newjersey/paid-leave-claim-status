@@ -263,8 +263,9 @@ function addNewHtml(metadata) {
               margin-bottom: 16px;
             "
           />
-          <div style="margin-bottom: 16px;">Total payments: <strong>${getTotalPayments(payments)}</strong></div>
-          ${getPaymentHistoryAccordions(payments)}
+          ${getPaymentHistoryAccordions(payments.filter(record => isFutureDate(record.date)))}
+          <div style="margin-y: 16px;">Total payments issued: <strong>${getTotalPayments(payments)}</strong></div>
+          ${getPaymentHistoryAccordions(payments.filter(record => !isFutureDate(record.date)))}
         </div>
       </div>
     </div>
@@ -530,8 +531,8 @@ function getPaymentHistoryAccordions(paymentRecords) {
             type="button"
             aria-expanded="false"
             class="accordion-trigger"
-            aria-controls="sect${idx}"
-            id="accordion${idx}id"
+            aria-controls="sect${isFuturePayment ? "Future" : "Past"}${idx}"
+            id="accordion${isFuturePayment ? "Future" : "Past"}${idx}id"
           >
             <div
               class="accordion-title ${isFuturePayment ? "highlighted" : ""}"
@@ -559,9 +560,9 @@ function getPaymentHistoryAccordions(paymentRecords) {
           </button>
         </h3>
         <div
-          id="sect${idx}"
+          id="sect${isFuturePayment ? "Future" : "Past"}${idx}"
           role="region"
-          aria-labelledby="accordion${idx}id"
+          aria-labelledby="accordion${isFuturePayment ? "Future" : "Past"}${idx}id"
           class="accordion-panel"
           hidden=""
         >
