@@ -263,8 +263,9 @@ function addNewHtml(metadata) {
               margin-bottom: 16px;
             "
           />
-          <div style="margin-bottom: 16px;">Total payments: <strong>${getTotalPayments(payments)}</strong></div>
-          ${getPaymentHistoryAccordions(payments)}
+          ${getPaymentHistoryAccordions(payments.filter(record => isFutureDate(record.date)))}
+          <div style="margin-y: 16px;">Total payments issued: <strong>${getTotalPayments(payments)}</strong></div>
+          ${getPaymentHistoryAccordions(payments.filter(record => !isFutureDate(record.date)))}
         </div>
       </div>
     </div>
@@ -523,6 +524,7 @@ function getPaymentHistoryAccordions(paymentRecords) {
       } = record;
 
       const isFuturePayment = isFutureDate(date);
+      const addFutureorPastText = isFuturePayment ? "Future" : "Past";
 
       return html`<div style="margin: 8px 0">
         <h3 class="accordion-header">
@@ -530,8 +532,8 @@ function getPaymentHistoryAccordions(paymentRecords) {
             type="button"
             aria-expanded="false"
             class="accordion-trigger"
-            aria-controls="sect${idx}"
-            id="accordion${idx}id"
+            aria-controls="sect${addFutureorPastText}${idx}"
+            id="accordion${addFutureorPastText}${idx}id"
           >
             <div
               class="accordion-title ${isFuturePayment ? "highlighted" : ""}"
@@ -559,9 +561,9 @@ function getPaymentHistoryAccordions(paymentRecords) {
           </button>
         </h3>
         <div
-          id="sect${idx}"
+          id="sect${addFutureorPastText}${idx}"
           role="region"
-          aria-labelledby="accordion${idx}id"
+          aria-labelledby="accordion${addFutureorPastText}${idx}id"
           class="accordion-panel"
           hidden=""
         >
@@ -573,29 +575,32 @@ function getPaymentHistoryAccordions(paymentRecords) {
             <div><strong>Gross</strong></div>
             <div>${gross || "N/A"}</div>
           </div>
-          <div style="display: flex; justify-content: space-between">
-            <div><strong>Net</strong></div>
-            <div>${net || "N/A"}</div>
+          <div style="display: flex; justify-content: space-between; margin-top:15px;">
+            <div><strong>Deductions</strong></div>
           </div>
           <div style="display: flex; justify-content: space-between">
-            <div><strong>FICA</strong></div>
+            <div>FICA</div>
             <div>${fica || "N/A"}</div>
           </div>
           <div style="display: flex; justify-content: space-between">
-            <div><strong>Medicare</strong></div>
+            <div>Medicare</div>
             <div>${medicare || "N/A"}</div>
           </div>
           <div style="display: flex; justify-content: space-between">
-            <div><strong>Overpayment</strong></div>
+            <div>Overpayment</div>
             <div>${diOffset || "N/A"}</div>
           </div>
           <div style="display: flex; justify-content: space-between">
-            <div><strong>Garnishment</strong></div>
+            <div>Garnishment</div>
             <div>${garnishment || "N/A"}</div>
           </div>
           <div style="display: flex; justify-content: space-between">
-            <div><strong>FIT</strong></div>
+            <div>FIT</div>
             <div>${fit || "N/A"}</div>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top:15px">
+            <div><strong>Net</strong></div>
+            <div>${net || "N/A"}</div>
           </div>
         </div>
       </div>`;
