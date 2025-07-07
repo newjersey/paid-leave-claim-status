@@ -524,6 +524,7 @@ function getPaymentHistoryAccordions(paymentRecords) {
       } = record;
 
       const isFuturePayment = isFutureDate(date);
+      const addFutureorPastText = isFuturePayment ? "Future" : "Past";
 
       return html`<div style="margin: 8px 0">
         <h3 class="accordion-header">
@@ -531,8 +532,8 @@ function getPaymentHistoryAccordions(paymentRecords) {
             type="button"
             aria-expanded="false"
             class="accordion-trigger"
-            aria-controls="sect${isFuturePayment ? "Future" : "Past"}${idx}"
-            id="accordion${isFuturePayment ? "Future" : "Past"}${idx}id"
+            aria-controls="sect${addFutureorPastText}${idx}"
+            id="accordion${addFutureorPastText}${idx}id"
           >
             <div
               class="accordion-title ${isFuturePayment ? "highlighted" : ""}"
@@ -560,9 +561,9 @@ function getPaymentHistoryAccordions(paymentRecords) {
           </button>
         </h3>
         <div
-          id="sect${isFuturePayment ? "Future" : "Past"}${idx}"
+          id="sect${addFutureorPastText}${idx}"
           role="region"
-          aria-labelledby="accordion${isFuturePayment ? "Future" : "Past"}${idx}id"
+          aria-labelledby="accordion${addFutureorPastText}${idx}id"
           class="accordion-panel"
           hidden=""
         >
