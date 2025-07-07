@@ -574,29 +574,32 @@ function getPaymentHistoryAccordions(paymentRecords) {
             <div><strong>Gross</strong></div>
             <div>${gross || "N/A"}</div>
           </div>
-          <div style="display: flex; justify-content: space-between">
-            <div><strong>Net</strong></div>
-            <div>${net || "N/A"}</div>
+          <div style="display: flex; justify-content: space-between; margin-top:15px;">
+            <div><strong>Deductions</strong></div>
           </div>
           <div style="display: flex; justify-content: space-between">
-            <div><strong>FICA</strong></div>
+            <div>FICA</div>
             <div>${fica || "N/A"}</div>
           </div>
           <div style="display: flex; justify-content: space-between">
-            <div><strong>Medicare</strong></div>
+            <div>Medicare</div>
             <div>${medicare || "N/A"}</div>
           </div>
           <div style="display: flex; justify-content: space-between">
-            <div><strong>Overpayment</strong></div>
+            <div>Overpayment</div>
             <div>${diOffset || "N/A"}</div>
           </div>
           <div style="display: flex; justify-content: space-between">
-            <div><strong>Garnishment</strong></div>
+            <div>Garnishment</div>
             <div>${garnishment || "N/A"}</div>
           </div>
           <div style="display: flex; justify-content: space-between">
-            <div><strong>FIT</strong></div>
+            <div>FIT</div>
             <div>${fit || "N/A"}</div>
+          </div>
+          <div style="display: flex; justify-content: space-between; margin-top:15px">
+            <div><strong>Net</strong></div>
+            <div>${net || "N/A"}</div>
           </div>
         </div>
       </div>`;
