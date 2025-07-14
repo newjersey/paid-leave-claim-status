@@ -1,9 +1,15 @@
 import {
+<<<<<<< HEAD
   FOOTER_HTML,
   HEADER_HTML,
   makeMobileFriendly,
   setupAnalytics,
   updateIcon,
+=======
+  setupAnalytics,
+  updateIcon,
+  makeMobileFriendly,
+>>>>>>> dev
 } from "../modules/shared.mjs";
 
 if (document.readyState === "loading") {

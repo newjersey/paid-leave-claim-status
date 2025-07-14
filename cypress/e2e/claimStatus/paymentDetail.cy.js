@@ -18,32 +18,32 @@ describe("Payment Detail page - Leave Ended FLI", () => {
     .should("have.attr", "onclick")
     .and("equal", "claimdetail()");
     
-    cy.contains("Total payments: $4,366.00").should("be.visible");
-    cy.get("#accordion0id")
+    cy.contains("Total payments issued: $4,366.00").should("be.visible");
+    cy.get("#accordionFuture0id")
       .contains("Next $770.00 to issue on August 13, 2025")
       .should("be.visible");
-    cy.get("#accordion0id")
+    cy.get("#accordionFuture0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
 
-    cy.get("#accordion1id")
+    cy.get("#accordionPast0id")
       .contains("$1,669.00 issued on May 6, 2024")
       .should("be.visible");
-    cy.get("#accordion1id")
+    cy.get("#accordionPast0id")
       .contains("Covers April 17, 2024 to April 29, 2024")
       .should("be.visible");
 
-    cy.get("#accordion2id")
+    cy.get("#accordionPast1id")
       .contains("$1,798.00 issued on May 6, 2024")
       .should("be.visible");
-    cy.get("#accordion2id")
+    cy.get("#accordionPast1id")
       .contains("Covers April 3, 2024 to April 16, 2024")
       .should("be.visible");
 
-    cy.get("#accordion3id")
+    cy.get("#accordionPast2id")
       .contains("$899.00 issued on May 6, 2024")
       .should("be.visible");
-    cy.get("#accordion3id")
+    cy.get("#accordionPast2id")
       .contains("Covers March 27, 2024 to April 2, 2024")
       .should("be.visible");
   });
@@ -59,13 +59,13 @@ describe("Payment Detail page - Leave Ended FLI", () => {
 it("renders payment record accordion that opens and closes on click", () => {
   cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html");
 
-  const accordionButton = cy.get("#accordion2id");
-  cy.get("#sect2").should("not.be.visible");
+  const accordionButton = cy.get("#accordionPast1id");
+  cy.get("#sectPast1").should("not.be.visible");
   accordionButton.click();
-  cy.get("#sect2").contains("0D015764").should("be.visible");
-  cy.get("#sect2").contains("$1,660.45").should("be.visible");
+  cy.get("#sectPast1").contains("0D015764").should("be.visible");
+  cy.get("#sectPast1").contains("$1,660.45").should("be.visible");
   accordionButton.click();
-  cy.get("#sect2").should("not.be.visible");
+  cy.get("#sectPast1").should("not.be.visible");
 });
 
 describe("Payment Detail page - Leave Ended TDI", () => {
@@ -90,11 +90,11 @@ describe("Payment Detail page - Leave Ended TDI", () => {
     )
     .should("be.visible");
     
-    cy.contains("Total payments: $4,366.00").should("be.visible");
-    cy.get("#accordion0id")
+    cy.contains("Total payments issued: $4,366.00").should("be.visible");
+    cy.get("#accordionFuture0id")
       .contains("Next $770.00 to issue on August 13, 2025")
       .should("be.visible");
-    cy.get("#accordion0id")
+    cy.get("#accordionFuture0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
   });
@@ -130,11 +130,11 @@ describe("Payment Detail page - Max Entitlement", () => {
       "You can't extend your state benefits for this condition/disability, regardless of whether your doctor approves it."
     ).should("be.visible");
 
-    cy.contains("Total payments: $4,366.00").should("be.visible");
-    cy.get("#accordion0id")
+    cy.contains("Total payments issued: $4,366.00").should("be.visible");
+    cy.get("#accordionFuture0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
-    cy.get("#accordion0id")
+    cy.get("#accordionFuture0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
   });
@@ -165,11 +165,11 @@ describe("Payment Detail page - No Additional Benefits", () => {
       "be.visible"
     );
 
-    cy.contains("Total payments: $4,366.00").should("be.visible");
-    cy.get("#accordion0id")
+    cy.contains("Total payments issued: $4,366.00").should("be.visible");
+    cy.get("#accordionFuture0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
-    cy.get("#accordion0id")
+    cy.get("#accordionFuture0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
   });
@@ -201,11 +201,11 @@ describe("Payment Detail page - P30 received FLI", () => {
       .contains("There's no action for you to take.")
       .should("be.visible");
 
-      cy.contains("Total payments: $4,366.00").should("be.visible");
-      cy.get("#accordion0id")
+      cy.contains("Total payments issued: $4,366.00").should("be.visible");
+      cy.get("#accordionFuture0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
-    cy.get("#accordion0id")
+    cy.get("#accordionFuture0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
   });
@@ -247,11 +247,11 @@ describe("Payment Detail page - P30 received TDI", () => {
       .should("be.visible");
 
 
-    cy.contains("Total payments: $4,366.00").should("be.visible");
-    cy.get("#accordion0id")
+    cy.contains("Total payments issued: $4,366.00").should("be.visible");
+    cy.get("#accordionFuture0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
-    cy.get("#accordion0id")
+    cy.get("#accordionFuture0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
   });
@@ -285,11 +285,11 @@ describe("Payment Detail page - P30 sent", () => {
       .contains("Share the Form ID with your doctor.")
       .should("be.visible");
 
-      cy.contains("Total payments: $4,366.00").should("be.visible");
-      cy.get("#accordion0id")
+      cy.contains("Total payments issued: $4,366.00").should("be.visible");
+      cy.get("#accordionFuture0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
-    cy.get("#accordion0id")
+    cy.get("#accordionFuture0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
   });
@@ -318,11 +318,11 @@ describe("Payment Detail page - Pay code 99/6", () => {
       "be.visible"
     );
 
-    cy.contains("Total payments: $4,366.00").should("be.visible");
-    cy.get("#accordion0id")
+    cy.contains("Total payments issued: $4,366.00").should("be.visible");
+    cy.get("#accordionFuture0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
-    cy.get("#accordion0id")
+    cy.get("#accordionFuture0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
   });
@@ -351,11 +351,11 @@ describe("Payment Detail page - Recovered", () => {
       "No further benefits have been issued since you recovered / returned to work."
     ).should("be.visible");
 
-    cy.contains("Total payments: $4,366.00").should("be.visible");
-    cy.get("#accordion0id")
+    cy.contains("Total payments issued: $4,366.00").should("be.visible");
+    cy.get("#accordionFuture0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
-    cy.get("#accordion0id")
+    cy.get("#accordionFuture0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
   });
@@ -384,11 +384,11 @@ describe("Payment Detail page - Scheduled", () => {
       "We're sending payment to your benefits debit card on October 13, 2024. You can access the funds about 2 business days later."
     ).should("be.visible");
 
-    cy.contains("Total payments: $4,366.00").should("be.visible");
-    cy.get("#accordion0id")
+    cy.contains("Total payments issued: $4,366.00").should("be.visible");
+    cy.get("#accordionFuture0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
-    cy.get("#accordion0id")
+    cy.get("#accordionFuture0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
   });
