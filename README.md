@@ -25,7 +25,7 @@ When you make a change and want to see if everything is working, do the followin
 3. Run `npm test` to ensure tests still pass
 4. Open relevant test file in `cypress/fixtures` in browser to ensure change looks okay (edit or add new test file if your scenario is not covered)
 5. After code review, push changes to `dev` branch. This will automatically deploy test files on Github pages under the URL https://newjersey.github.io/paid-leave-claim-status/... These test links can be used to share the view under specific claim scenarios with your team.
-6. After the test links have been reviewed, deploy the changes to the dev site. See instructions below for deployment. Reach out to your OOI team or the Department of Labor to get the Claim Status dev URL.
+6. After the test links have been reviewed, deploy the changes to the dev site. See instructions below for deployment.
 
 ## Deployment
 
@@ -34,3 +34,5 @@ When you make a change and want to see if everything is working, do the followin
 3. Use Node 20 and `npm run build` to build latest files into bundle.
 4. Run `npm run prep-deploy-dev` (or `prep-deploy-prod` based on intended stage), which should copy the files into the correct `beta` directory
 5. Push files to `main` branch of `beta` repo, and they will be automatically deployed to `beta.nj.gov` to be referenced by the Claim Status application
+
+_Note_: The following [internal Google Doc](https://docs.google.com/document/d/1XD06eJ9Q6e5z8_fKcQrDs7K6r0lbsqMab_xlikYdqAA/edit?usp=sharing) has URLs and account credentials to test claim status scenarios live in both development and production.
