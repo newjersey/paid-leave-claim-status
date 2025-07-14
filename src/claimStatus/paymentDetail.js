@@ -213,7 +213,7 @@ function addNewHtml(metadata) {
       <div style="font-size: 22px; line-height: 32px; margin-bottom: 8px;">
         Claim for ${getClaimTypeContent(claimType)}
       </div>
-      <div style="font-size: 13px; line-height: 26px; margin-bottom: 44px; text-transform: capitalize;">
+      <div style="font-size: 13px; line-height: 26px; margin-bottom: 44px; text-transform: capitalize; font-weight: 700;">
       ${name}
       </div>
     </div>
