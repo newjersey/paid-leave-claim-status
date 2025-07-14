@@ -803,9 +803,7 @@ function addNewHtml(metadata) {
         Status
       </h1>
       <div
-        style="font-size: 22px; line-height: 32px; margin-bottom: ${claimDate
-          ? "8px"
-          : "44px"}"
+        style="font-size: 22px; line-height: 32px; margin-bottom: 8px}"
       >
         Claim for ${getClaimTypeContent(claimType)}
       </div>
@@ -814,10 +812,10 @@ function addNewHtml(metadata) {
             ${claimDate || name
               ? html`<div style="font-size: 13px; line-height: 16px; text-transform: uppercase; margin-bottom: 8px; display: flex;">
                   ${claimDate
-                    ? html`<div style="margin-right:4px;">leave starting ${getFormattedDate(claimDate)}</div>`
+                    ? html`<div>leave starting ${getFormattedDate(claimDate)}</div><div style="margin-left:6px; margin-right:6px;">\u00B7 </div>`
                     : ""}
                   ${name
-                    ? html`<div style="font-weight: 700;">  \u00B7 ${name}</div>`
+                    ? html`<div style="font-weight: 700;">${name}</div>`
                     : ""}
                 </div>`
               : ""}
