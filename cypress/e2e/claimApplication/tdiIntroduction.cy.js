@@ -1,34 +1,24 @@
 describe("Introduction page", () => {
-
   describe("Form Submission Tests with Mocked Endpoint", () => {
-    it("submits the form and loads a mocked page", () => {
+    it("submits the form, loads a mocked page, and checks POST data", () => {
       cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html");
 
-      // Intercept the form submission POST request and provide a mock HTML response
-      cy.intercept('POST', '**/TDIIntroduction.aspx', {
-        statusCode: 200,
-        headers: { 'content-type': 'text/html' },
-        body: `
-          <html>
-            <head><title>Submission Successful</title></head>
-            <body>
-              <h1>Form Submission Successful</h1>
-              <p>The form has been submitted successfully.</p>
-              <!-- Add any necessary mock HTML content here -->
-            </body>
-          </html>
-        `,
-      }).as('checkboxSubmission');
+      cy.intercept('POST', '**/TDIIntroduction.aspx',
+        { statusCode: 200, headers: { 'content-type': 'text/html' } }
+      ).as('checkboxSubmission');
 
-      // Check the checkbox to trigger the form submission
       cy.get('#ContentPlaceHolder1_chkAgree').check();
 
-      // Wait for the mock submission to complete
-      cy.wait('@checkboxSubmission');
+      cy.wait('@checkboxSubmission').then((interception) => {
+        const formData = interception.request.body;
 
-      // Verify the mocked page content
-      cy.contains('Form Submission Successful').should('be.visible');
-      cy.contains('The form has been submitted successfully.').should('be.visible');
+        expect(formData).to.include('__EVENTTARGET=ctl00%24ContentPlaceHolder1%24chkAgree');
+        expect(formData).to.include('__EVENTARGUMENT=');
+        expect(formData).to.include('ctl00%24ContentPlaceHolder1%24chkAgree=on');
+
+        expect(formData).to.match(/__VIEWSTATE=[^&]+/);
+        expect(formData).to.match(/__EVENTVALIDATION=[^&]+/);
+      });
     });
   });
 
