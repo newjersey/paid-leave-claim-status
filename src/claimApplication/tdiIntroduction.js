@@ -21,6 +21,7 @@ function executeOverride() {
   replaceHeaderTable();
   replaceContentTable();
   appendFooter();
+  makeLinkAccessible();
 }
 
 function replaceHeaderTable() {
@@ -39,6 +40,8 @@ function replaceContentTable() {
   const contentTable = document.querySelector('table#ContentPlaceHolder1_tblContent');
 
   if (contentTable) {
+    contentTable.style.display = 'none';
+
     const newDiv = document.createElement('div');
     newDiv.innerHTML = `
       <img
@@ -77,12 +80,12 @@ function replaceContentTable() {
       <p>I have read the above information and wish to file an Application For State Temporary Disability Benefits.</p>
       <button
         style="background-color: #0076D6; border: none; color: #fff; padding: 12px 20px; cursor: pointer; border-radius: 4px; font-weight: 700; font-size: 16px; line-height: 24px; outline-offset: 0.25rem; margin: 0 0 20px 20px;"
-        onclick="__doPostBack('ctl00$ContentPlaceHolder1$chkAgree', '')"
+        onclick="document.getElementById('ContentPlaceHolder1_chkAgree').checked = true; document.getElementById('__EVENTTARGET').value = 'ctl00$ContentPlaceHolder1$chkAgree'; __doPostBack('ctl00$ContentPlaceHolder1$chkAgree', '')"
       >
         Agree & Continue
       </button>
     `;
-    contentTable.replaceWith(newDiv);
+    contentTable.after(newDiv);
   } else {
     throw new Error("Cannot find HTML.");
   }
@@ -96,5 +99,13 @@ function appendFooter() {
     bodyContent.appendChild(footerDiv);
   } else {
     console.error("Cannot find the body element to append the footer.");
+  }
+}
+
+function makeLinkAccessible() {
+  const link = document.getElementById('lnkFake');
+  if (link) {
+    link.setAttribute('aria-hidden', 'true');
+    link.setAttribute('tabindex', '-1');
   }
 }
