@@ -9,6 +9,7 @@ rollup -c rollup.config.mjs -i src/claimStatus/claimDetail.js -o dist/claimStatu
 rollup -c rollup.config.mjs -i src/claimStatus/paymentDetail.js -o dist/claimStatus/paymentDetail.min.js
 
 rollup -c rollup.config.mjs -i src/claimApplication/tdiIntroduction.js -o dist/claimApplication/tdiIntroduction.min.js
+rollup -c rollup.config.mjs -i src/claimApplication/tdiOverride.js -o dist/claimApplication/tdiOverride.min.js
 
 echo "Copying bundled scripts to Cypress test assets..."
 cp dist/claimStatus/noRecordFound.min.js cypress/fixtures/claimStatus/noRecordFound/noRecordFound.min.js
@@ -17,5 +18,6 @@ cp dist/claimStatus/claimList.min.js cypress/fixtures/claimStatus/claimList/clai
 cp dist/claimStatus/paymentDetail.min.js cypress/fixtures/claimStatus/paymentDetail/paymentDetail.min.js
 
 cp dist/claimApplication/tdiIntroduction.min.js cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.min.js
+cp dist/claimApplication/tdiOverride.min.js cypress/fixtures/claimApplication/tdiIntroduction/tdiOverride.min.js
 
 echo "Complete!"
