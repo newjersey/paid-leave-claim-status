@@ -5,7 +5,7 @@ describe("Profile Info page", () => {
         expect([200, 304]).to.include(res.statusCode);
       });
     }).as('script');
-    cy.visit("./cypress/fixtures/claimApplication/profileInfo/profileInfo.html");
+    cy.visit("./cypress/fixtures/claimApplication/profileInfo/TDI.html");
     cy.wait('@script');
   });
 

@@ -5,7 +5,7 @@ describe("Introduction page", () => {
         expect([200, 304]).to.include(res.statusCode);
       });
     }).as('script');
-    cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html");
+    cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/TDI.html");
     cy.wait('@script');
   });
 
