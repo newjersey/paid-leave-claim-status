@@ -16,6 +16,6 @@ cp dist/claimStatus/claimDetail.min.js cypress/fixtures/claimStatus/claimDetail/
 cp dist/claimStatus/claimList.min.js cypress/fixtures/claimStatus/claimList/claimList.min.js
 cp dist/claimStatus/paymentDetail.min.js cypress/fixtures/claimStatus/paymentDetail/paymentDetail.min.js
 
-cp dist/claimApplication/tdiOverride.min.js cypress/fixtures/claimApplication/tdiIntroduction/tdiOverride.min.js
+cp dist/claimApplication/tdiOverride.min.js cypress/fixtures/claimApplication/tdiOverride.min.js
 
 echo "Complete!"

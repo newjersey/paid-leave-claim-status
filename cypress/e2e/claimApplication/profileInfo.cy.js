@@ -1,8 +1,8 @@
 describe("Profile Info page", () => {
   describe("page without new JS", () => {
     beforeEach(() => {
-      cy.intercept('**/tdiIntroduction.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/TDI.html");
+      cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
+      cy.visit("./cypress/fixtures/claimApplication/profileInfo/TDI.html");
     });
 
     it("displays existing page with no visible changes", () => {
