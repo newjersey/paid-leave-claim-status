@@ -1,19 +1,53 @@
 describe("Introduction page", () => {
-  beforeEach(() => {
-    cy.intercept('GET', '**/tdiOverride.min.js', (req) => {
-      req.continue((res) => {
-        expect([200, 304]).to.include(res.statusCode);
-      });
-    }).as('script');
-    cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/TDI.html");
-    cy.wait('@script');
+  function checkPostData(interception) {
+    const formData = interception.request.body;
+
+    expect(formData).to.include('__EVENTTARGET=ctl00%24ContentPlaceHolder1%24chkAgree');
+    expect(formData).to.include('__EVENTARGUMENT=');
+    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24chkAgree=on');
+
+    expect(formData).to.match(/__VIEWSTATE=[^&]+/);
+    expect(formData).to.match(/__EVENTVALIDATION=[^&]+/);
+  }
+
+  function mockASPX() {
+    cy.intercept('POST', '**/TDIIntroduction.aspx',
+      { statusCode: 200, headers: { 'content-type': 'text/html' } }
+    ).as('aspxSubmission');
+  };
+
+  describe("page without new JS", () => {
+    beforeEach(() => {
+      cy.intercept('**/tdiIntroduction.min.js', { body: '', disableCache: true }).as('scriptIntercept');
+      cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/TDI.html");
+    });
+
+    it("agrees to terms and checks POST data", () => {
+      mockASPX();
+      cy.get('#ContentPlaceHolder1_chkAgree').check();
+      cy.wait('@aspxSubmission').then(checkPostData);
+    });
   });
 
-  it("displays existing page with no visible changes", () => {
-    cy.contains("APPLICATION FOR STATE TEMPORARY DISABILITY BENEFITS").should("be.visible");
-  });
+  describe("page with new JS", () => {
+    beforeEach(() => {
+      cy.intercept('GET', '**/tdiOverride.min.js', (req) => {
+        req.continue((res) => {
+          expect([200, 304]).to.include(res.statusCode);
+        });
+      }).as('script');
+      cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/TDI.html");
+      cy.wait('@script');
+    });
 
-  it("passes accessibility checks", () => {
-    cy.checkBodyA11y();
+    it("agrees to terms and checks POST data", () => {
+      mockASPX();
+      cy.get('#ContentPlaceHolder1_chkAgree').check();
+      cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it("passes accessibility checks", () => {
+      cy.checkBodyA11y();
+    });
   });
 });
