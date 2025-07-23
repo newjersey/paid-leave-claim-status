@@ -5,8 +5,13 @@ describe("Profile Info page", () => {
       cy.visit("./cypress/fixtures/claimApplication/profileInfo/TDI.html");
     });
 
+    // TODO: replace with test of important behavior
     it("displays existing page with no visible changes", () => {
       cy.contains("Profile Information").should("be.visible");
+    });
+
+    it("invisible link is not hidden from screen readers", () => {
+      cy.get('#lnkFake').should('exist').should('not.have.attr', 'aria-hidden');
     });
   });
 
@@ -21,8 +26,13 @@ describe("Profile Info page", () => {
       cy.wait('@script');
     });
 
+    // TODO: replace with test of important behavior
     it("displays existing page with no visible changes", () => {
       cy.contains("Profile Information").should("be.visible");
+    });
+
+    it("invisible link is hidden from screen readers", () => {
+      cy.get('#lnkFake').should('exist').should('have.attr', 'aria-hidden', 'true');
     });
   });
 });
