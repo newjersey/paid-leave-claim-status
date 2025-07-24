@@ -1,22 +1,53 @@
 describe("Introduction page", () => {
-  it("renders with updated content", () => {
-    cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html");
-    cy.contains("APPLICATION FOR STATE TEMPORARY DISABILITY BENEFITS");
-    cy.contains("I have read the above information");
+  function checkPostData(interception) {
+    const formData = interception.request.body;
+
+    expect(formData).to.include('__EVENTTARGET=ctl00%24ContentPlaceHolder1%24chkAgree');
+    expect(formData).to.include('__EVENTARGUMENT=');
+    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24chkAgree=on');
+
+    expect(formData).to.match(/__VIEWSTATE=[^&]+/);
+    expect(formData).to.match(/__EVENTVALIDATION=[^&]+/);
+  }
+
+  function mockASPX() {
+    cy.intercept('POST', '**/TDIIntroduction.aspx',
+      { statusCode: 200, headers: { 'content-type': 'text/html' } }
+    ).as('aspxSubmission');
+  };
+
+  describe("page without new JS", () => {
+    beforeEach(() => {
+      cy.intercept('**/tdiIntroduction.min.js', { body: '', disableCache: true }).as('scriptIntercept');
+      cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/TDI.html");
+    });
+
+    it("agrees to terms and checks POST data", () => {
+      mockASPX();
+      cy.get('#ContentPlaceHolder1_chkAgree').check();
+      cy.wait('@aspxSubmission').then(checkPostData);
+    });
   });
 
-  it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html");
-    cy.checkBodyA11y();
-  });
+  describe("page with new JS", () => {
+    beforeEach(() => {
+      cy.intercept('GET', '**/tdiOverride.min.js', (req) => {
+        req.continue((res) => {
+          expect([200, 304]).to.include(res.statusCode);
+        });
+      }).as('script');
+      cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/TDI.html");
+      cy.wait('@script');
+    });
 
-  it("applies mobile-friendly adjustments", () => {
-    cy.viewport(390, 844);
-    cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html");
-    cy.get('meta[name="viewport"]')
-      .should('have.attr', 'content', 'width=device-width, initial-scale=1');
-    cy.get('img').each(($img) => {
-      cy.wrap($img).should('have.attr', 'style', 'width: 100%; height: auto;');
+    it("agrees to terms and checks POST data", () => {
+      mockASPX();
+      cy.get('#ContentPlaceHolder1_chkAgree').check();
+      cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it("passes accessibility checks", () => {
+      cy.checkBodyA11y();
     });
   });
 });

@@ -1,7 +1,5 @@
 import {
   setupAnalytics,
-  updateIcon,
-  makeMobileFriendly,
 } from "../modules/shared.mjs";
 
 if (document.readyState === "loading") {
@@ -13,9 +11,7 @@ if (document.readyState === "loading") {
 }
 
 function executeOverride() {
-  updateIcon();
   setupAnalytics();
-  makeMobileFriendly();
   makeLinkAccessible();
 }
 
