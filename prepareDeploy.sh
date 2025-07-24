@@ -6,7 +6,7 @@ stage=$1
 stage_name="$(tr '[:lower:]' '[:upper:]' <<< ${stage:0:1})${stage:1}"
 
 echo "Moving scripts to beta repo... (assumes repo folder in root)"
-cp dist/claimApplication/tdiOverride.min.js "../beta/files/tdi-fli-claim-application/tdiOverride.min.js"
+cp dist/claimApplication/tdiOverride.min.js "../beta/files/tdi-fli-claim-application/tdiOverride${stage_name}.min.js"
 
 cp dist/claimStatus/noRecordFound.min.js "../beta/files/tdi-fli-claim-status/ssnNotFoundOverride${stage_name}.min.js"
 cp dist/claimStatus/appReceived.min.js "../beta/files/tdi-fli-claim-status/statusMailLogOverride${stage_name}.min.js"
