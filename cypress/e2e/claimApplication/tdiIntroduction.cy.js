@@ -1,11 +1,9 @@
 describe("Introduction page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
-
     expect(formData).to.include('__EVENTTARGET=ctl00%24ContentPlaceHolder1%24chkAgree');
     expect(formData).to.include('__EVENTARGUMENT=');
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24chkAgree=on');
-
     expect(formData).to.match(/__VIEWSTATE=[^&]+/);
     expect(formData).to.match(/__EVENTVALIDATION=[^&]+/);
   }
