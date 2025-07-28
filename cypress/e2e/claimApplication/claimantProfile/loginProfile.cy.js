@@ -1,13 +1,8 @@
 describe("Login Profile page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
-    expect(formData).to.include('__EVENTTARGET=');
-    expect(formData).to.include('__EVENTARGUMENT=');
-    expect(formData).to.match(/__VIEWSTATE=[^&]+/);
-    expect(formData).to.match(/__VIEWSTATEGENERATOR=[^&]+/);
-    expect(formData).to.match(/__EVENTVALIDATION=[^&]+/);
-    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24VerConf=rbtnPersYes');
-    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24btncontinueVer=Continue');
+    cy.checkCommonPostData(formData);
+    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24hClmtName=0&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtConfSSN1=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtConfSSN2=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtConfSSN3=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24VerConf=rbtnPersYes&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24btncontinueVer=Continue');
   }
 
   function mockASPX() {
