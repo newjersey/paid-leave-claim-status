@@ -18,7 +18,7 @@ describe("Certification page", () => {
       cy.visit("./cypress/fixtures/claimApplication/otherBenefits/certification.html");
     });
 
-    it("user can input info and proceed to next page", () => {
+    it("user can agree and proceed to next page", () => {
       mockASPX();
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_rbtnAgYes').click();
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_btnConfirm').click();
@@ -41,7 +41,7 @@ describe("Certification page", () => {
       cy.wait('@script');
     });
 
-    it("user can input info and proceed to next page", () => {
+    it("user can agree and proceed to next page", () => {
       mockASPX();
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_rbtnAgYes').click();
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_btnConfirm').click();

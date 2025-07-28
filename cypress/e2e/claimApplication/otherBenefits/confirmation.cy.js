@@ -18,7 +18,7 @@ describe("Confirmation page", () => {
       cy.visit("./cypress/fixtures/claimApplication/otherBenefits/confirmation.html");
     });
 
-    it("user can input info and proceed to next page", () => {
+    it("user can print claim summary", () => {
       mockASPX();
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue').click();
       cy.wait('@aspxSubmission').then(checkPostData);
@@ -40,7 +40,7 @@ describe("Confirmation page", () => {
       cy.wait('@script');
     });
 
-    it("user can input info and proceed to next page", () => {
+    it("user can print claim summary", () => {
       mockASPX();
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue').click();
       cy.wait('@aspxSubmission').then(checkPostData);
