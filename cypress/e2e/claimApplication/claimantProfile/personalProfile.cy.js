@@ -1,4 +1,4 @@
-describe("Claimant Profile page", () => {
+describe("Claimant Personal Profile page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
     expect(formData).to.include('__EVENTTARGET=');
@@ -31,7 +31,7 @@ describe("Claimant Profile page", () => {
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/claimantProfile/TDI.html");
+      cy.visit("./cypress/fixtures/claimApplication/claimantProfile/personal.html");
     });
 
     it("user can fill in info and proceed to next page", () => {
@@ -62,7 +62,7 @@ describe("Claimant Profile page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/claimantProfile/TDI.html");
+      cy.visit("./cypress/fixtures/claimApplication/claimantProfile/personal.html");
       cy.wait('@script');
     });
 
