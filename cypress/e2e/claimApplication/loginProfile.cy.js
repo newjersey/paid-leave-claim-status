@@ -1,4 +1,4 @@
-describe("Profile Info page", () => {
+describe("Login Profile page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
     expect(formData).to.include('__EVENTTARGET=');
@@ -19,7 +19,7 @@ describe("Profile Info page", () => {
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/profileInfo/TDI.html");
+      cy.visit("./cypress/fixtures/claimApplication/loginProfile/TDI.html");
     });
 
     it("user can confirm info is correct and proceed to next page", () => {
@@ -41,7 +41,7 @@ describe("Profile Info page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/profileInfo/TDI.html");
+      cy.visit("./cypress/fixtures/claimApplication/loginProfile/TDI.html");
       cy.wait('@script');
     });
 
