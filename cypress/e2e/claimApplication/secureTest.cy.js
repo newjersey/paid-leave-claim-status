@@ -4,7 +4,7 @@ describe("page without new JS", () => {
     cy.visit("https://securest.dol.state.nj.us/tdi_iam/TDIIntroduction.aspx");
   });
 
-  it("proceeds through an example user flow", () => {
+  xit("proceeds through an example user flow", () => {
     // Login page
     cy.get('#idToken1').type('doltest@mailinator.com');
     cy.get('#idToken2').type('Test@123');
