@@ -4,7 +4,7 @@ describe("page without new JS", () => {
     cy.visit("https://securest.dol.state.nj.us/tdi_iam/TDIIntroduction.aspx");
   });
 
-  xit("proceeds through an example user flow", () => {
+  it("proceeds through an example user flow", () => {
     // Login page
     cy.get('#idToken1').type('doltest@mailinator.com');
     cy.get('#idToken2').type('Test@123');
@@ -72,44 +72,43 @@ describe("page without new JS", () => {
     cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').type(formattedTwentyDaysFromNow);
     cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_btnSubmitConflictCheck').click();
 
-    // cy.on('window:confirm', () => {return true;});
+    // TODO: unable to fully test on ST unless we have an account where we can repeatedly apply
 
     // Medical Treatment Info
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury').type('Injury');
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm').type('Dr. Spaceman');
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddYes').click();
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocAdd1').type('30 Livingston Avenue');
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocCity').type('New Brunswick');
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocZip1').type('08901');
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERNO').click();
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospNo').click();
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo').click();
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc').click();
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury').type('Injury');
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm').type('Dr. Spaceman');
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddYes').click();
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocAdd1').type('30 Livingston Avenue');
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocCity').type('New Brunswick');
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocZip1').type('08901');
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERNO').click();
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospNo').click();
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo').click();
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc').click();
 
-    // Other Benefits
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo').click();
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo').click();
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo').click();
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click();
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
+    // // Other Benefits
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo').click();
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo').click();
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo').click();
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click();
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
 
-    // Payment Information
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisNo').click();
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_btnNextVer').click();
+    // // Payment Information
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisNo').click();
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_btnNextVer').click();
 
-    // Disability Verification
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes').click();
-    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer').click();
+    // // Disability Verification
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes').click();
+    // cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer').click();
 
-    // Employment Information
-    cy.get('#ContentPlaceHolder1_TabEmployment_tbpnlEMP_btnEmpCertify').click();
-    // cy.on('window:confirm', () => {return true;});
+    // // Employment Information
+    // cy.get('#ContentPlaceHolder1_TabEmployment_tbpnlEMP_btnEmpCertify').click();
 
-    // Claimant Certification
-    cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_rbtnAgYes').click();
-    cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_btnConfirm').click();
+    // // Claimant Certification
+    // cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_rbtnAgYes').click();
+    // cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_btnConfirm').click();
 
-    // Claimant Confirmation
-    cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue').click();
+    // // Claimant Confirmation
+    // cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue').click();
   });
 });
