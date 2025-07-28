@@ -1,17 +1,17 @@
-describe("Citizenship page", () => {
+describe("Disability Information page", () => {
   function checkPostData(interception) {
-  const formData = interception.request.body;
-  expect(formData).to.include('__EVENTTARGET=');
-  expect(formData).to.include('__EVENTARGUMENT=');
-  expect(formData).to.match(/__VIEWSTATE=[^&]+/);
-  expect(formData).to.match(/__VIEWSTATEGENERATOR=[^&]+/);
-  expect(formData).to.match(/__EVENTVALIDATION=[^&]+/);
-  expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24txtDisStartDt=07%2F18%2F2025');
-  expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24txtDtLastWorkd=07%2F17%2F2025');
-  expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24rbRec=rbtnRecNo');
-  expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24txtExpectedReturnedDtToWrk=08%2F17%2F2025');
-  expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24btnSubmitConflictCheck=Continue');
-}
+    const formData = interception.request.body;
+    expect(formData).to.include('__EVENTTARGET=');
+    expect(formData).to.include('__EVENTARGUMENT=');
+    expect(formData).to.match(/__VIEWSTATE=[^&]+/);
+    expect(formData).to.match(/__VIEWSTATEGENERATOR=[^&]+/);
+    expect(formData).to.match(/__EVENTVALIDATION=[^&]+/);
+    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24txtDisStartDt=07%2F18%2F2025');
+    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24txtDtLastWorkd=07%2F17%2F2025');
+    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24rbRec=rbtnRecNo');
+    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24txtExpectedReturnedDtToWrk=08%2F17%2F2025');
+    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24btnSubmitConflictCheck=Continue');
+  }
 
   function mockASPX() {
     cy.intercept('POST', '**/ClaimantDisabililty.aspx',
