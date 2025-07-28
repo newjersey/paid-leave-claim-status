@@ -42,7 +42,7 @@ describe("Employment Info page", () => {
 
     it("user can input info and proceed to next page", () => {
       mockASPX();
-          cy.get('#ContentPlaceHolder1_TabEmployment_tbpnlEMP_btnEmpCertify').click();
+      cy.get('#ContentPlaceHolder1_TabEmployment_tbpnlEMP_btnEmpCertify').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
