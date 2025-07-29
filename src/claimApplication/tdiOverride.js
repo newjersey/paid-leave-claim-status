@@ -5,6 +5,8 @@ import {
 } from "../modules/shared.mjs";
 import { citizenshipLabels } from './claimantProfile/citizenship.js';
 import { loginProfileLabels } from './claimantProfile/loginProfile.js';
+import { personalProfileLabels } from './claimantProfile/personalProfile.js';
+
 
 if (document.readyState === "loading") {
   window.addEventListener("DOMContentLoaded", () => {
@@ -45,6 +47,7 @@ function accessibilityLabels () {
   const labels = [
     ...citizenshipLabels,
     ...loginProfileLabels,
+    ...personalProfileLabels,
   ];
 
   labels.forEach(({ id, label }) => {
