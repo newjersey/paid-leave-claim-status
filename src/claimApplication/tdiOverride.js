@@ -6,6 +6,7 @@ import {
 import { citizenshipLabels } from './claimantProfile/citizenship.js';
 import { disabilityInformationLabels } from './disability/information.js';
 import { loginProfileLabels } from './claimantProfile/loginProfile.js';
+import { medicalTreatmentLabels } from './medical/treatment.js';
 import { personalProfileLabels } from './claimantProfile/personalProfile.js';
 import { verificationLabels } from './claimantProfile/verification.js';
 
@@ -50,6 +51,7 @@ function accessibilityLabels () {
     ...citizenshipLabels,
     ...disabilityInformationLabels,
     ...loginProfileLabels,
+    ...medicalTreatmentLabels,
     ...personalProfileLabels,
     ...verificationLabels,
   ];

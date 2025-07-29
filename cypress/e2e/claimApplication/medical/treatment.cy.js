@@ -66,5 +66,9 @@ describe("Medical Treatment page", () => {
     it("invisible link is hidden from screen readers", () => {
       cy.get('#lnkFake').should('exist').should('have.attr', 'aria-hidden', 'true');
     });
+
+    it("passes accessibility checks", () => {
+      cy.checkBodyA11y();
+    });
   });
 });
