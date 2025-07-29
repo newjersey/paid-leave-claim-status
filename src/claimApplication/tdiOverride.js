@@ -3,7 +3,8 @@ import 'uswds/css/uswds.css';
 import {
   setupAnalytics,
 } from "../modules/shared.mjs";
-import { loginProfileLabels } from './loginProfile.js';
+import { citizenshipLabels } from './claimantProfile/citizenship.js';
+import { loginProfileLabels } from './claimantProfile/loginProfile.js';
 
 if (document.readyState === "loading") {
   window.addEventListener("DOMContentLoaded", () => {
@@ -42,6 +43,7 @@ function accessibilityContrast() {
 
 function accessibilityLabels () {
   const labels = [
+    ...citizenshipLabels,
     ...loginProfileLabels,
   ];
 
