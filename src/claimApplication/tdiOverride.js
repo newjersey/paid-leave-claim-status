@@ -3,6 +3,7 @@ import 'uswds/css/uswds.css';
 import {
   setupAnalytics,
 } from "../modules/shared.mjs";
+import { loginProfile } from './loginProfile.js';
 
 if (document.readyState === "loading") {
   window.addEventListener("DOMContentLoaded", () => {
@@ -15,7 +16,9 @@ if (document.readyState === "loading") {
 function executeOverride() {
   setupAnalytics();
   makeLinkAccessible();
+  accessibilityContrast();
   applyFont();
+  loginProfile();
 }
 
 function makeLinkAccessible() {
@@ -24,6 +27,17 @@ function makeLinkAccessible() {
     link.setAttribute('aria-hidden', 'true');
     link.setAttribute('tabindex', '-1');
   }
+}
+
+function accessibilityContrast() {
+  document.querySelectorAll('*').forEach(element => {
+    const computedStyle = window.getComputedStyle(element);
+    const color = computedStyle.color;
+
+    if (color === 'rgb(128, 128, 128)' || color.toLowerCase() === 'gray') {
+      element.style.color = 'black';
+    }
+  });
 }
 
 function applyFont() {
