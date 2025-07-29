@@ -6,6 +6,7 @@ import {
 import { citizenshipLabels } from './claimantProfile/citizenship.js';
 import { loginProfileLabels } from './claimantProfile/loginProfile.js';
 import { personalProfileLabels } from './claimantProfile/personalProfile.js';
+import { verificationLabels } from './claimantProfile/verification.js';
 
 
 if (document.readyState === "loading") {
@@ -48,6 +49,7 @@ function accessibilityLabels () {
     ...citizenshipLabels,
     ...loginProfileLabels,
     ...personalProfileLabels,
+    ...verificationLabels,
   ];
 
   labels.forEach(({ id, label }) => {
