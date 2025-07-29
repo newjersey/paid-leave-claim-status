@@ -28,4 +28,7 @@ function makeLinkAccessible() {
 
 function applyFont() {
   document.body.style.fontFamily = '"Public Sans", sans-serif';
+  document.querySelectorAll('*').forEach(element => {
+    element.style.fontFamily = '"Public Sans", sans-serif';
+  });
 }
