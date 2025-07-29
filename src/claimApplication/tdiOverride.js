@@ -3,7 +3,7 @@ import 'uswds/css/uswds.css';
 import {
   setupAnalytics,
 } from "../modules/shared.mjs";
-import { loginProfile } from './loginProfile.js';
+import { loginProfileLabels } from './loginProfile.js';
 
 if (document.readyState === "loading") {
   window.addEventListener("DOMContentLoaded", () => {
@@ -17,8 +17,8 @@ function executeOverride() {
   setupAnalytics();
   makeLinkAccessible();
   accessibilityContrast();
+  accessibilityLabels();
   applyFont();
-  loginProfile();
 }
 
 function makeLinkAccessible() {
@@ -36,6 +36,19 @@ function accessibilityContrast() {
 
     if (color === 'rgb(128, 128, 128)' || color.toLowerCase() === 'gray') {
       element.style.color = 'black';
+    }
+  });
+}
+
+function accessibilityLabels () {
+  const labels = [
+    ...loginProfileLabels,
+  ];
+
+  labels.forEach(({ id, label }) => {
+    const element = document.getElementById(id);
+    if (element && !element.hasAttribute('aria-label')) {
+      element.setAttribute('aria-label', label);
     }
   });
 }
