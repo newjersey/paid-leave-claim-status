@@ -4,6 +4,7 @@ import {
   setupAnalytics,
 } from "../modules/shared.mjs";
 import { citizenshipLabels } from './claimantProfile/citizenship.js';
+import { disabilityInformationLabels } from './disability/information.js';
 import { loginProfileLabels } from './claimantProfile/loginProfile.js';
 import { personalProfileLabels } from './claimantProfile/personalProfile.js';
 import { verificationLabels } from './claimantProfile/verification.js';
@@ -47,6 +48,7 @@ function accessibilityContrast() {
 function accessibilityLabels () {
   const labels = [
     ...citizenshipLabels,
+    ...disabilityInformationLabels,
     ...loginProfileLabels,
     ...personalProfileLabels,
     ...verificationLabels,
