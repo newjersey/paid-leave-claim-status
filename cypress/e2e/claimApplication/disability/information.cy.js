@@ -19,34 +19,10 @@ describe("Disability Information page", () => {
 
     it("user can input info and proceed to next page", () => {
       mockASPX();
-      const currentDate = new Date();
-      const tenDaysAgo = new Date(currentDate);
-      tenDaysAgo.setDate(currentDate.getDate() - 10);
-      const formattedTenDaysAgo = (
-        (tenDaysAgo.getMonth() + 1).toString().padStart(2, '0') + '/' +
-        tenDaysAgo.getDate().toString().padStart(2, '0') + '/' +
-        tenDaysAgo.getFullYear()
-      );
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').type(formattedTenDaysAgo);
-
-      const elevenDaysAgo = new Date(currentDate);
-      elevenDaysAgo.setDate(currentDate.getDate() - 11);
-      const formattedElevenDaysAgo = (
-        (elevenDaysAgo.getMonth() + 1).toString().padStart(2, '0') + '/' +
-        elevenDaysAgo.getDate().toString().padStart(2, '0') + '/' +
-        elevenDaysAgo.getFullYear()
-      );
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').type(formattedElevenDaysAgo);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').type("07/18/2025");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').type("07/17/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo').click();
-
-      const twentyDaysFromNow = new Date(currentDate);
-      twentyDaysFromNow.setDate(currentDate.getDate() + 20);
-      const formattedTwentyDaysFromNow = (
-        (twentyDaysFromNow.getMonth() + 1).toString().padStart(2, '0') + '/' +
-        twentyDaysFromNow.getDate().toString().padStart(2, '0') + '/' +
-        twentyDaysFromNow.getFullYear()
-      );
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').type(formattedTwentyDaysFromNow);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').type("08/17/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_btnSubmitConflictCheck').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
@@ -69,34 +45,10 @@ describe("Disability Information page", () => {
 
     it("user can input info and proceed to next page", () => {
       mockASPX();
-      const currentDate = new Date();
-      const tenDaysAgo = new Date(currentDate);
-      tenDaysAgo.setDate(currentDate.getDate() - 10);
-      const formattedTenDaysAgo = (
-        (tenDaysAgo.getMonth() + 1).toString().padStart(2, '0') + '/' +
-        tenDaysAgo.getDate().toString().padStart(2, '0') + '/' +
-        tenDaysAgo.getFullYear()
-      );
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').type(formattedTenDaysAgo);
-
-      const elevenDaysAgo = new Date(currentDate);
-      elevenDaysAgo.setDate(currentDate.getDate() - 11);
-      const formattedElevenDaysAgo = (
-        (elevenDaysAgo.getMonth() + 1).toString().padStart(2, '0') + '/' +
-        elevenDaysAgo.getDate().toString().padStart(2, '0') + '/' +
-        elevenDaysAgo.getFullYear()
-      );
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').type(formattedElevenDaysAgo);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').type("07/18/2025");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').type("07/17/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo').click();
-
-      const twentyDaysFromNow = new Date(currentDate);
-      twentyDaysFromNow.setDate(currentDate.getDate() + 20);
-      const formattedTwentyDaysFromNow = (
-        (twentyDaysFromNow.getMonth() + 1).toString().padStart(2, '0') + '/' +
-        twentyDaysFromNow.getDate().toString().padStart(2, '0') + '/' +
-        twentyDaysFromNow.getFullYear()
-      );
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').type(formattedTwentyDaysFromNow);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').type("08/17/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_btnSubmitConflictCheck').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
