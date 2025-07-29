@@ -1,3 +1,5 @@
+import 'uswds/css/uswds.css';
+
 import {
   setupAnalytics,
 } from "../modules/shared.mjs";
@@ -13,6 +15,7 @@ if (document.readyState === "loading") {
 function executeOverride() {
   setupAnalytics();
   makeLinkAccessible();
+  applyFont();
 }
 
 function makeLinkAccessible() {
@@ -21,4 +24,8 @@ function makeLinkAccessible() {
     link.setAttribute('aria-hidden', 'true');
     link.setAttribute('tabindex', '-1');
   }
+}
+
+function applyFont() {
+  document.body.style.fontFamily = '"Public Sans", sans-serif';
 }
