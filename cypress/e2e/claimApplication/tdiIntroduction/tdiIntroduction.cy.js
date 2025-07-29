@@ -1,13 +1,9 @@
 describe("Introduction page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
-
+    cy.checkCommonPostData(formData);
     expect(formData).to.include('__EVENTTARGET=ctl00%24ContentPlaceHolder1%24chkAgree');
-    expect(formData).to.include('__EVENTARGUMENT=');
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24chkAgree=on');
-
-    expect(formData).to.match(/__VIEWSTATE=[^&]+/);
-    expect(formData).to.match(/__EVENTVALIDATION=[^&]+/);
   }
 
   function mockASPX() {
@@ -18,7 +14,7 @@ describe("Introduction page", () => {
 
   describe("page without new JS", () => {
     beforeEach(() => {
-      cy.intercept('**/tdiIntroduction.min.js', { body: '', disableCache: true }).as('scriptIntercept');
+      cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
       cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/TDI.html");
     });
 

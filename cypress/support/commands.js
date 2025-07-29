@@ -45,3 +45,11 @@ Cypress.Commands.add("checkIneligibleCore", () => {
   cy.get(".complete").contains("Review").should("be.visible");
   cy.get(".complete.end").contains("Decision").should("be.visible");
 });
+
+Cypress.Commands.add("checkCommonPostData", (formData) => {
+  expect(formData).to.include('__EVENTTARGET=');
+  expect(formData).to.include('__EVENTARGUMENT=');
+  expect(formData).to.match(/__VIEWSTATE=[^&]+/);
+  expect(formData).to.match(/__VIEWSTATEGENERATOR=[^&]+/);
+  expect(formData).to.match(/__EVENTVALIDATION=[^&]+/);
+});
