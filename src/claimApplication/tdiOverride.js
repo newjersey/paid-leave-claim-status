@@ -3,6 +3,7 @@ import 'uswds/css/uswds.css';
 import {
   setupAnalytics,
 } from "../modules/shared.mjs";
+import { certificationLabels } from './otherBenefits/certification.js';
 import { citizenshipLabels } from './claimantProfile/citizenship.js';
 import { disabilityInformationLabels } from './disability/information.js';
 import { loginProfileLabels } from './claimantProfile/loginProfile.js';
@@ -40,7 +41,10 @@ function accessibilityContrast() {
     const computedStyle = window.getComputedStyle(element);
     const color = computedStyle.color;
 
-    if (color === 'rgb(128, 128, 128)' || color.toLowerCase() === 'gray') {
+    if (
+      color === 'rgb(255, 0, 0)' || color.toLowerCase() === 'red' ||
+      color === 'rgb(128, 128, 128)' || color.toLowerCase() === 'gray'
+    ) {
       element.style.color = 'black';
     }
   });
@@ -48,6 +52,7 @@ function accessibilityContrast() {
 
 function accessibilityLabels () {
   const labels = [
+    ...certificationLabels,
     ...citizenshipLabels,
     ...disabilityInformationLabels,
     ...loginProfileLabels,
