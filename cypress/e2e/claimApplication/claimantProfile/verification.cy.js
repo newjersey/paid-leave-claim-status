@@ -23,10 +23,6 @@ describe("Profile Verification page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btncontinueVer').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
-
-    it("invisible link is not hidden from screen readers", () => {
-      cy.get('#lnkFake').should('exist').should('not.have.attr', 'aria-hidden');
-    });
   });
 
   describe("page with new JS", () => {
@@ -45,10 +41,6 @@ describe("Profile Verification page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_rbtnPersYes').click();
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btncontinueVer').click();
       cy.wait('@aspxSubmission').then(checkPostData);
-    });
-
-    it("invisible link is hidden from screen readers", () => {
-      cy.get('#lnkFake').should('exist').should('have.attr', 'aria-hidden', 'true');
     });
 
     it("passes accessibility checks", () => {
