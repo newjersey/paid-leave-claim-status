@@ -1,0 +1,515 @@
+<!-- https://securest.dol.state.nj.us/tdi_iam/TDI_PndClaim_Search.aspx -->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8"><script src="TDI_files/t-Greafer-she-vs-inuish-We-wailes-a-With-his-to-.js" async=""></script><title>
+	TDI
+</title><link href="TDI_files/TabContainer.css" rel="stylesheet" type="text/css"><link href="TDI_files/CalendarControl.css" rel="stylesheet" type="text/css"><link href="TDI_files/FDDCalendarControl.css" rel="stylesheet" type="text/css"><link href="TDI_files/Grid.css" rel="stylesheet" type="text/css"><link href="TDI_files/Site.css" rel="stylesheet" type="text/css"><link href="TDI_files/Button.css" rel="Stylesheet" type="text/css"><link href="TDI_files/AjaxCalendar.css" rel="stylesheet" type="text/css"><link href="TDI_files/SessionPopup.css" rel="stylesheet" type="text/css">
+
+    <script src="TDI_files/CalendarControl.js" type="text/javascript"></script></head><body><iframe id="CalendarControlIFrame" src="javascript:false;" frameborder="0" scrolling="no"></iframe><div id="CalendarControl"></div>
+    <script src="TDI_files/jquery-1.4.1.min.js" type="text/javascript"></script>
+    <script src="TDI_files/FDDCalendarControl.js" type="text/javascript"></script><iframe id="CalendarControlIFrame" src="javascript:false;" frameborder="0" scrolling="no"></iframe><div id="FDDCalendarControl"></div>
+    <script src="TDI_files/date.js" type="text/javascript"></script>
+    <script type="text/javascript" src="TDI_files/CommonFunctions.js"></script>
+       <script type="text/javascript" src="TDI_files/Session.js"></script>
+  
+    <script type="text/javascript">
+        document.onkeydown = keyCheck;
+    </script>
+    
+    <style type="text/css">
+        legend
+        {
+            font-weight: bold;
+            padding: 5px;
+        }
+        fieldset
+        {
+            margin-bottom: 5px;
+            padding: 10px;
+        }
+        .hdrClass
+        {
+            font-family:verdana,tahoma,helvetica;
+            font-size:12pt;
+            font-weight:bold;
+        }
+        .lblClass1
+        {
+            font-family:verdana,tahoma,helvetica;
+            font-size:10pt;
+            vertical-align: top;
+        }
+        .lblClass
+	    {
+	        font-family:verdana,tahoma,helvetica;
+	        font-size:10pt;
+        }
+        .hideCol
+        {
+            display:none;
+        }
+        .dispCol
+        {
+            display:block;
+        }
+    </style>
+
+    <script type="text/javascript" src="TDI_files/CharacterCheck.js"></script>
+    
+
+
+    
+    <form method="post" action="./TDI_PndClaim_Search.aspx" id="form1" autocomplete="off">
+<div class="aspNetHidden">
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" autocomplete="off">
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" autocomplete="off">
+<input type="hidden" name="__LASTFOCUS" id="__LASTFOCUS" value="" autocomplete="off">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="z7ax23Zq5hYXQ+L4Hp6wwnSVde9pHjlAPK8nJXQieAKjxn4pgBPFjVjDm2gJYyrD+kHQWOxAyCdxG6uQf5oAwlj7Dbaoih3gmJPV6QDxlNoOSMDfuvTrGtV0pKYDg57eo+3rK/c9eDwnNH7bmi2qjDSXYGb66wqR6HklwvfryBU97cmnvc90UHPxklZJB4ZIEhnZP+ZgLmGXtwsvJ2SajJmTmCllHzuzlhig4vDCd2pnXv+oaZG8lWTCGLl0mMBTadpapbkaEHvUpK2DsGhzuDaTsCzoNfXtr2Vh0AjZhFFo/GrwJMsv+JRrGZSHPEsTGY+AnVG1kUFEkXgs8VYBtT/idfUcVW8R6gnycpodzXcAV/DbpW3lqZcoBgS2R0IH8t+U6185QSGniGiCfKE3AttsaLSSnY5NNDDProg84sRQEYs7SnkcELnaLK3dUKtI1UDK5pa2moLu5gq1GvsBFFGtp9bLF7TDd40ONqc2K7GiN40OC34beo21q3jW1cDqaB3J3ukCtjqoI4kQCOUPzzGuepSSoz7bW4GoV/Y9ueYjEJ1njrZNhta0ZPHEduaq9AIG9YKj7nIqzzwlCYgbokcHCg4Vch3SrHbLrWAsGKo3PfltIY0DtBhkJoKykfVno39CgsieXstRYI6Xxr8Lpyh5rpW6vHsxnZvmUMnByyfYpf2GBR1sfQf8TpV78kwtPzrUQCJlTQ3wykf1t+EXHzO6+FFHBy/6AAaNAzgVf0TcG9tUBV7/E5L3w9I3OsadWPxeHPeg6xvRoukHbe4YqojcEQqOsMeL4mK2f+szrCwM4B2O16sj3G2KICrNGzj/GbW4gJLkjlWsuo+tG4UZXYWWTQ/GUuneWFZA4uV2u65928T+QQ7JyhhGkUssXDPyNC+5wsGAvXrnDwLBtkNLLgrHevFfcxxdx514H7Ms3HhNRfstnXO07Qv82o30NfEaqHl6JxXJtvR8xVM9R+ZJtyyFf1yhBA5IgD/WEyQe4jIw6Sk24JtFGrVrwMnfObW7eOPU52fRLIHmsvSEztogTadzb6P16yb6tU0Um1vUZsBVlOUlcovrFLEeZM6TnMmUD4cOqwajaJtSmTxRCflmudbQu4udbtt+7/vcoddDpMgKVi8CN1BzGUuJUXdqPjFH9qotu1hIvf5mEhhvBJHXLeV/Ll09BBOa1wZnGlBl+E56xq9L6iiNgly/dDGPR4i2HxIxJ+nO0o07ActiT0ZzqSg3y/LyM+BVk21SaU6zlb8Edz1rOsbNOkK47BB4N9EHQRJ/yYTFA1zpeftFgq6Pztu5ZxVYLYDLZnlVP3TeaB1ZK41Vfc4CBfooVi6PBcgSQDs9CnK+XYJy5TmYfccIzpZn7o3f9DDQVw7MnPF0QXIB3OVF/SF3/2h0tlLwSRmBRA5ti2CBovkEetoaffL2fqB1Zn/H6qY5dAHbCYuuEo9Zf79IiFAZ41y0opJo/9F0PXTQ/jJV2J6rFXp7v6MczzNC4Rl8JwFyAzJvh0olVgbtHLf8HByhLi4pHe7FaeEf1xXDGrBu6OhwBT8ZvfoS/J2RCYayATJZ3zgO6IUgJRtYSculzJ6U7h2FtxO/bwO1TVQRkuS2tOc5y8SPr4AMUb8L5MgQWnsD+e8dORf6HVxD50RxbompTI7i9h++58cJ" autocomplete="off">
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="TDI_files/WebResource.js" type="text/javascript"></script>
+
+<script language="javascript">
+window.history.forward(1);
+
+</script>
+<script src="TDI_files/ScriptResource_009.js" type="text/javascript"></script>
+<script src="TDI_files/ScriptResource_012.js" type="text/javascript"></script>
+<script src="TDI_files/ScriptResource_004.js" type="text/javascript"></script>
+<script src="TDI_files/ScriptResource_005.js" type="text/javascript"></script>
+<script src="TDI_files/ScriptResource_008.js" type="text/javascript"></script>
+<script src="TDI_files/ScriptResource_003.js" type="text/javascript"></script>
+<script src="TDI_files/ScriptResource_007.js" type="text/javascript"></script>
+<script src="TDI_files/ScriptResource_013.js" type="text/javascript"></script>
+<script src="TDI_files/ScriptResource_010.js" type="text/javascript"></script>
+<script src="TDI_files/ScriptResource_011.js" type="text/javascript"></script>
+<script src="TDI_files/ScriptResource_006.js" type="text/javascript"></script>
+<script src="TDI_files/ScriptResource_002.js" type="text/javascript"></script>
+<script src="TDI_files/ScriptResource.js" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="746443DF" autocomplete="off">
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" autocomplete="off">
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="eMDe5EYr650BVoT0CDNRX1Dxj3Yo8f7nCyu5SI+RwuKVBedKTNKYxMjfn3teNVF8n68juEf2niq1ODnDZNzS5eas2mCMisbZV6YKXV1BtuATSzUX9mY7xdEUZfGsp0cJYtLRBeamoZwfXTkfeDc51vOVDumL1j2AHlFTfDG7WjQ8M8Xt0+hH8kIYloUfeH1cZbl15Z6At8sDWsi+CxmnjEluh7zN4D9RlnyNtrgyRNSqh0xz6Niy34J7pPCO2gjTcKwi9xSvBAaqD8GCZR36Khbg9aXhOGPfufN0zkUt5wbz+zBHZaiwA34sDGzliOmGe9NpuXUTsxv8EhqmXtJnwgmQhdmBhM4d3zR6d73hoAJ6L06/saMv+0f4W9uNoORmVEHv82RZZ0t5nfDcE9Km2nNHOKrH1yF2BckPCtF/NctTxvX14H7xfnacMqrgYcBajojbcrWL2DsCIRZHT346izPZOJJVrHxVcgB/+IK7Tp2BR0MvULMyNw1MIoX0KFpSRNtFSW+8LLOoQU7sFenXJ6vdsZBdrTQR6Y+mhVM8UBDCs6VUVFxXC3kFeM8igLtI12aW1NpnyAWEeFY3iM5VM0qfXxs5DBMucGZOOCAHza1Y0eV6TxfcUqnD5bqd6mK9J6K4K++nwN1+YWU/8x/w+D2cResaj8cRytEW76TwuBOh00oVuuyc4igKwSy+eJiC" autocomplete="off">
+</div>
+    <table width="100%">
+        <tbody><tr>
+            <td>
+                
+    <table width="100%" border="1" style="border-color: #800080; background-color: White;
+        border-width: medium;">
+        <tbody><tr>
+            <td align="left">
+                <img src="TDI_files/lwd_banner.jpg" alt="No Image Found">
+            </td>
+            <td align="right">
+                <img alt="Image Not Found" src="TDI_files/lwd_logo.jpg">
+            </td>
+        </tr>
+    </tbody></table>
+    <div id="divLogout" style="display:block;">
+        <table width="100%">
+            <tbody><tr>
+            <td style="width: 90%">
+            </td>
+            <td align="left" style="border-style:none; width:5%">
+                <a onclick="javascript: return openFAQWindow('http://lwd.dol.state.nj.us/labor/tdi/content/webapplicationfaq.html#1');" id="header_lbtnShowFAQ" class="headerLink" href="javascript:__doPostBack('ctl00$header$lbtnShowFAQ','')" style="font-family:Verdana,Arial,Sans-Serif;">Help</a>
+            </td>
+            <td align="center" style="border-style:none; color: Navy; width: 5%;">
+                <a onclick="javascript:return confirmLogout();" id="header_lbtnLogout" class="headerLink" href="javascript:__doPostBack('ctl00$header$lbtnLogout','')" style="display:inline-block;font-family:Verdana,Arial,Sans-Serif;width:180px;">Logout</a>                
+            </td>
+            </tr>
+        </tbody></table>
+    </div>
+
+            </td>
+        </tr>
+       </tbody></table> 
+
+            <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$ScriptManager1', 'form1', [], [], [], 90, 'ctl00');
+//]]>
+</script>
+ 
+       
+
+         
+    <a id="lnkFake" href="javascript:__doPostBack('ctl00$lnkFake','')"></a>
+
+<div id="pnlPopup" class="modelPopup" style="display: none; position: fixed; z-index: 100001;">
+	
+    <div class="header">
+        Session Expiring!
+    </div>
+    <div class="body">
+        Your Session will expire in&nbsp;<span id="seconds">30</span>&nbsp;minute(s).<br>
+        Do you want to remain on this page?
+    </div>
+    <div class="footer" align="right">
+        <input type="submit" name="ctl00$btnYes" value="Yes" id="btnYes" class="yes" autocomplete="off">
+        <input type="submit" name="ctl00$btnNo" value="No" id="btnNo" class="no" autocomplete="off">
+    </div>
+
+</div>
+                
+
+    <script type="text/javascript">
+        function pageLoad() {
+            $get("dvIANMYes").style.display = $get("ContentPlaceHolder1_rbtnIAMYes").checked == true ? "block" : "none";
+            $get("dvIANMNo").style.display = $get("ContentPlaceHolder1_rbtnIAMNo").checked == true ? "block" : "none";
+            $get("dvClmYes").style.display = $get("ContentPlaceHolder1_rbtnClmYes").checked == true ? "block" : "none";
+            $get("dvClmNo").style.display = $get("ContentPlaceHolder1_rbtnClmNo").checked == true ? "block" : "none";
+
+            if ($get("ContentPlaceHolder1_hdnNumAttempt").value != "" && Number($get("ContentPlaceHolder1_hdnNumAttempt").value) >= 3) {
+                displayClaimPanel("No");
+                $get("divMessageInfo").style.display = "none";
+
+            }
+        }
+
+        function displayIANMPanel(flg) {
+            if (flg == "Yes") {
+                $get("dvIANMYes").style.display = "block";
+                $get("dvIANMNo").style.display = "none";
+
+                if ($get("ContentPlaceHolder1_rbtnClmNo").checked == true) {
+                    $get("divMessageInfo").style.display = "block";
+                }
+
+
+                if ($get("ContentPlaceHolder1_hdnNumAttempt").value != "" && Number($get("ContentPlaceHolder1_hdnNumAttempt").value) >= 3) {
+                    $get("dvClmYes").style.display = "none";
+                    $get("dvIANMNo").style.display = "none";
+                    $get("dvClmNo").style.display = "block";
+                    $get("divNumOfAttempts").style.display = "block";
+                    $get("ContentPlaceHolder1_txtClmID").value = "";
+                    $get("ContentPlaceHolder1_rbtnClmYes").disabled = true;
+                    $get("ContentPlaceHolder1_rbtnClmNo").disabled = true;
+                }
+                else if (Number($get("ContentPlaceHolder1_hdnNumAttempt").value) != "" && Number($get("ContentPlaceHolder1_hdnNumAttempt").value) < 3) {
+                    if ($get("ContentPlaceHolder1_rbtnClmNo").checked == true) {
+                        $get("ContentPlaceHolder1_rbtnClmYes").disabled = false;
+                        $get("ContentPlaceHolder1_rbtnClmNo").disabled = false;
+                        $get("ContentPlaceHolder1_dvPndClaims").style.display = "block";
+                        $get("dvClmNo").style.display = "block";
+                    }
+                    else if ($get("ContentPlaceHolder1_rbtnClmYes").checked == true) {
+                        $get("dvClmNo").style.display = "block";
+                        $get("dvClmYes").style.display = "block";
+                        $get("ContentPlaceHolder1_dvPndClaims").style.display = "none";
+                    }
+                }
+                else {
+                    if ($get("ContentPlaceHolder1_rbtnClmNo").checked == true) {
+                        $get("dvClmNo").style.display = "block";
+                        $get("ContentPlaceHolder1_dvPndClaims").style.display = "block";
+                    }
+                    else if ($get("ContentPlaceHolder1_rbtnClmYes").checked == true) {
+                        $get("dvClmYes").style.display = "block";
+
+                        if ($get("ContentPlaceHolder1_txtClmID").value != "") {
+                            $get("dvClmNo").style.display = "block";
+                            $get("ContentPlaceHolder1_dvPndClaims").style.display = "none";
+                        }
+                        else {
+                            $get("dvClmNo").style.display = "none";
+                            $get("ContentPlaceHolder1_dvPndClaims").style.display = "none";
+                        }
+                    }
+                }
+            }
+            else {
+                $get("dvIANMYes").style.display = "none";
+                $get("dvIANMNo").style.display = "block";
+                $get("dvClmYes").style.display = "none";
+                $get("dvClmNo").style.display = "none";
+                $get("divNumOfAttempts").style.display = "none";
+                $get("divErrorMessage").style.display = "none";
+                $get("divMessageInfo").style.display = "none";
+            }
+        }
+
+        function displayClaimPanel(flg) {
+            if (flg == "Yes") {
+                $get("dvClmYes").style.display = "block";
+                $get("dvClmNo").style.display = "none";
+                $get("divMessageInfo").style.display = "none";
+
+
+            }
+            else {
+                $get("dvClmYes").style.display = "none";
+                $get("dvClmNo").style.display = "block";
+                $get("divErrorMessage").style.display = "none";
+
+                if ($get("ContentPlaceHolder1_dvNoData").style.display == "block") {
+
+                    var nodes = document.getElementById("ContentPlaceHolder1_divMain").getElementsByTagName('*');
+                    for (var i = 0; i < nodes.length; i++) {
+                        nodes[i].disabled = true;
+                    }
+
+                    $get("dvClmNo").style.display = "block";
+                    $get("dvIANMYes").style.display = "block";
+                    return;
+                }
+
+                $get("divMessageInfo").style.display = "block";
+                if ($get("ContentPlaceHolder1_txtClmID").value != "")
+                    $get("ContentPlaceHolder1_txtClmID").value = "";
+
+                $get("ContentPlaceHolder1_dvPndClaims").style.display = "block";
+                //GridCheckboxes(false);
+            }
+        }
+        //        function GridCheckboxes(chk) {
+
+        //            var currentRow;
+        //            var gvClaims = document.getElementById("ContentPlaceHolder1_gvPndClaims");
+        //            var gvClaimsItems = gvClaims.getElementsByTagName('input');
+
+        //             for (i = 0; i < gvClaimsItems.length; i++) {
+        //                if ((gvClaimsItems[i].type == "checkbox") && (gvClaimsItems[i].checked == true)) {
+        //                    currentRow = gvClaimsItems[i].id;
+        //                }
+        //            }                      
+        //           
+        //            for (i = 0; i < gvClaimsItems.length; i++) {
+        //                if ((gvClaimsItems[i].type == "checkbox") && ($get("ContentPlaceHolder1_hdnCheck").value == gvClaimsItems[i].id)) {
+        //                    gvClaimsItems[i].checked = false;
+        //                }
+        //            }
+        //            
+
+        //            $get("ContentPlaceHolder1_hdnCheck").value = currentRow;
+
+
+
+
+
+        //           
+        //        }
+
+    </script>
+
+    <div id="ContentPlaceHolder1_pnlSearchClm">
+	
+    <table id="ContentPlaceHolder1_tblContent" border="0" style="width: 99%; top: 75px; left: 25px;">
+		<tbody><tr style="background-color: #00bfff; height: 10px;">
+			<td align="center">
+                <a class="hdrClass">COMPLETE A PRIOR CLAIM </a>
+            </td>
+		</tr>
+		<tr>
+			<td><hr></td>
+		</tr>
+		<tr>
+			<td>
+                
+            </td>
+		</tr>
+		<tr>
+			<td>
+                <div id="dvMain" style="margin-left: 30px; margin-right: 30px;">
+                    <div id="ContentPlaceHolder1_Panel1">
+				
+                        <table style="left: 40px; right: 25px;">
+                        <tbody><tr>
+                            <td colspan="3">
+                                <a class="lblClass">The information listed below was obtained from your user logon profile.</a>
+                                <br>
+                                <br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <span id="ContentPlaceHolder1_lblFName" class="lblClass1">Name: </span>
+                                <input name="ctl00$ContentPlaceHolder1$txtFName" type="text" value="FirstNameTest LastNameTest" readonly="readonly" id="ContentPlaceHolder1_txtFName" style="border-style:None;height:22px;width:1000px;" autocomplete="off">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+                                <br>
+                                <span id="ContentPlaceHolder1_lblDOB" class="lblClass1">Date of Birth: </span>
+                                <input name="ctl00$ContentPlaceHolder1$txtDOB" type="text" value="01/01/2000" readonly="readonly" id="ContentPlaceHolder1_txtDOB" style="border-style:None;height:22px;width:147px;" autocomplete="off">                                
+                            </td>
+                            <td>
+                            </td>                            
+                        </tr>
+                      
+                        <tr>
+                           <td colspan="3">
+                            <div id="ContentPlaceHolder1_divMain">
+                                <br>
+                                <div id="ContentPlaceHolder1_divInfocorrect" style="display: none;">
+                                <a style="color: Red;">*</a>&nbsp;<strong>1. </strong> <a class="lblClass">Is this information correct? </a>
+                                &nbsp;&nbsp;<span class="lblClass"><input id="ContentPlaceHolder1_rbtnIAMYes" type="radio" name="ctl00$ContentPlaceHolder1$IANM" value="rbtnIAMYes" checked="checked" onclick="javascript:displayIANMPanel('Yes');" autocomplete="off"><label for="ContentPlaceHolder1_rbtnIAMYes">Yes</label></span>&nbsp;
+                                <span class="lblClass"><input id="ContentPlaceHolder1_rbtnIAMNo" type="radio" name="ctl00$ContentPlaceHolder1$IANM" value="rbtnIAMNo" onclick="javascript:displayIANMPanel('No');" autocomplete="off"><label for="ContentPlaceHolder1_rbtnIAMNo">No</label></span>
+                               </div>
+                                <div id="dvIANMNo" style="display: none;">
+                                    <br>
+                                    &nbsp;&nbsp;<a class="lblClass" style="color: Red;">In order to change your information, you must correct your Logon Profile. To correct your Logon Profile, </a>
+                                    <a style="color: Red;" href="https://securest.dol.state.nj.us/sso/XUI/#profile/details">click here.</a>
+                                </div>
+                                <div id="dvIANMYes" style="display: block;">
+                                    <table>
+                                        <tbody><tr>
+                                            <td><br>
+                                                <a class="lblClass" style="color: Red;">*</a>&nbsp;<strong>1. </strong><a class="lblClass">You have chosen to complete a prior claim.  All data previously entered will need to be verified.</a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                &nbsp;&nbsp;&nbsp;<span id="ContentPlaceHolder1_lblEx" class="lblClass1">&nbsp;&nbsp;&nbsp;&nbsp;</span><a class="lblClass">Do you know your Claim ID Number?&nbsp;&nbsp;&nbsp;&nbsp;</a>
+                                                    <span class="lblClass"><input id="ContentPlaceHolder1_rbtnClmYes" type="radio" name="ctl00$ContentPlaceHolder1$CheckClm" value="rbtnClmYes" onclick="javascript:displayClaimPanel('Yes');" autocomplete="off"><label for="ContentPlaceHolder1_rbtnClmYes">Yes</label></span>&nbsp;
+                                                    <span class="lblClass"><input id="ContentPlaceHolder1_rbtnClmNo" type="radio" name="ctl00$ContentPlaceHolder1$CheckClm" value="rbtnClmNo" onclick="javascript:displayClaimPanel('No');" autocomplete="off"><label for="ContentPlaceHolder1_rbtnClmNo">No</label></span>
+                                            </td>
+                                        </tr>
+                                    </tbody></table>
+                                </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody></table>
+                    
+			</div>
+                </div>
+               <br>
+               <input type="hidden" name="ctl00$ContentPlaceHolder1$hdnNumAttempt" id="ContentPlaceHolder1_hdnNumAttempt" value="0" autocomplete="off">
+               <input type="hidden" name="ctl00$ContentPlaceHolder1$hdnNoData" id="ContentPlaceHolder1_hdnNoData" value="0" autocomplete="off">
+               <input type="hidden" name="ctl00$ContentPlaceHolder1$hdnCheck" id="ContentPlaceHolder1_hdnCheck" autocomplete="off">
+
+               <div id="dvClmYes" style="margin-left: 30px; margin-right: 30px; display:none;">
+                    <fieldset>
+                    <legend></legend>
+                        <br>&nbsp;&nbsp;
+                        <span id="ContentPlaceHolder1_lblClmID" class="lblClass">Enter Your Claim ID : </span>&nbsp;
+                        <input name="ctl00$ContentPlaceHolder1$txtClmID" type="text" maxlength="9" id="ContentPlaceHolder1_txtClmID" class="lblClass numbersonly" onkeypress="return onlyNumbers(event);" style="width:100px;" autocomplete="off">&nbsp;&nbsp;&nbsp;&nbsp;
+                        <input type="submit" name="ctl00$ContentPlaceHolder1$btnRetrieve" value="Proceed to Complete Claim" id="ContentPlaceHolder1_btnRetrieve" class="btnContinue" style="width:200px;" autocomplete="off">
+                        <br><br>
+                    </fieldset>
+               </div>
+                <div id="divNumOfAttempts" style="display: none; margin-left: 30px; margin-right: 30px; ">
+                    <br>
+                    <a style="font-weight: bold; color: Red;">You have exceeded number of attempts to enter
+                        valid Claim Identification Number, select a claim from below list or logout.</a>
+                </div>
+                 <div id="divErrorMessage" style="display: none; margin-left: 30px; margin-right: 30px; ">
+                    <br>
+                    <table style="width:100%;">
+                   <tbody><tr>
+                   <td>
+                        <span id="ContentPlaceHolder1_lblErrorMEssage" style="color:Red;font-weight:bold;"></span>
+                        
+                  </td>
+                  </tr>
+                  </tbody></table>
+                </div>
+                 <div id="divMessageInfo" style="display: none; margin-left: 30px; margin-right: 30px; ">
+                    <br>
+                    <table style="width:100%;">
+                   <tbody><tr>
+                   <td>
+                        <span id="ContentPlaceHolder1_lblMesgInfo" style="color:Red;">Claims
+ that were not confirmed within 14 days of creation have been removed. 
+                        Also, claims that were filed for temporary 
+disability dates in the future and have not been certified within 14 
+days after the first date of temporary disability have been removed. 
+                        If no claim appears in the box below, you will 
+have to begin the application process again. Click </span>
+                        <a id="ContentPlaceHolder1_lnkMsgInfo" class="headerLink" href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$lnkMsgInfo','')" style="font-family:Verdana,Arial,Sans-Serif;">here</a>
+                                                        <span id="ContentPlaceHolder1_lblMsgInfo" style="color:Red;">to file a new claim.</span>
+                        
+                  </td>
+                  </tr>
+                  </tbody></table>
+                </div>
+               <div id="dvClmNo" style="margin-left: 30px; margin-right: 30px; width:90%; display:none;">
+                    <div id="ContentPlaceHolder1_dvPndClaims" style="left:5px;width:90%;display:block;">
+                        <fieldset>
+                        <legend>PENDING CLAIMS</legend>
+                            <br>
+                            <table style="width:100%;">
+                                <tbody><tr>
+                                    <td align="left">
+                                        <div>
+				<table class="mGrid" cellspacing="0" id="ContentPlaceHolder1_gvPndClaims" style="border-collapse:collapse;">
+					<tbody><tr>
+						<th scope="col">CLAIM ID</th><th scope="col">DISABILITY START DATE</th><th scope="col">DATE LAST WORKED</th><th scope="col">RETURNED TO WORK</th><th scope="col">EXPECTED DATE TO RETURN</th><th scope="col">DISABILITY DESCRIPTION</th><th class="hideCol" scope="col">&nbsp;</th><th class="hideCol" scope="col">&nbsp;</th><th class="hideCol" scope="col">&nbsp;</th>
+					</tr><tr>
+						<td align="left">
+                                                          <span horizontalalign="Center"><input id="ContentPlaceHolder1_gvPndClaims_chkClaimID_0" type="checkbox" name="ctl00$ContentPlaceHolder1$gvPndClaims$ctl02$chkClaimID" onclick="javascript:setTimeout('__doPostBack(\'ctl00$ContentPlaceHolder1$gvPndClaims$ctl02$chkClaimID\',\'\')', 0)" autocomplete="off"><label for="ContentPlaceHolder1_gvPndClaims_chkClaimID_0">12115</label></span>
+                                                    </td><td align="center">07/01/2024</td><td align="center">06/25/2024</td><td align="center">07/10/2024</td><td align="center">&nbsp;</td><td align="center">Injury</td><td class="hideCol">
+                                                         <input type="hidden" name="ctl00$ContentPlaceHolder1$gvPndClaims$ctl02$FlgCertifyClaim" id="ContentPlaceHolder1_gvPndClaims_FlgCertifyClaim_0" autocomplete="off">
+                                                    </td><td class="hideCol">
+                                                         <input type="hidden" name="ctl00$ContentPlaceHolder1$gvPndClaims$ctl02$ClmtID" id="ContentPlaceHolder1_gvPndClaims_ClmtID_0" value="13600" autocomplete="off">
+                                                    </td><td class="hideCol">
+                                                         <input type="hidden" name="ctl00$ContentPlaceHolder1$gvPndClaims$ctl02$RSASTATUS" id="ContentPlaceHolder1_gvPndClaims_RSASTATUS_0" autocomplete="off">
+                                                    </td>
+					</tr>
+				</tbody></table>
+			</div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td align="center">
+                                        <input type="submit" name="ctl00$ContentPlaceHolder1$btnRetrieveClm" value="Proceed to Complete Claim" id="ContentPlaceHolder1_btnRetrieveClm" class="btnContinue" style="width:200px;" autocomplete="off">
+                                    </td>
+                                </tr>
+                            </tbody></table>
+                        <br>
+                        </fieldset>
+                    </div>
+                    <div id="ContentPlaceHolder1_dvNoData" style="position:absolute;left:5px;width:100%;display:none;">
+                        <fieldset>
+                        <legend>PENDING CLAIMS</legend>
+                            <br>
+                        <a class="lblClass" style="color:Red;">No 
+pending claims have been found. Claims that were started 14 days ago or 
+longer and have not been certified have been removed. Click</a>
+                        <a id="ContentPlaceHolder1_lbtnUILogout" class="headerLink" href="javascript:__doPostBack('ctl00$ContentPlaceHolder1$lbtnUILogout','')" style="font-family:Verdana,Arial,Sans-Serif;">here</a>
+                        <a class="lblClass" style="color:Red;"> to file a new claim. </a>
+                        </fieldset>
+                    </div>
+               </div>
+            </td>
+		</tr>
+	</tbody></table>
+	
+    
+</div>
+  
+
+           
+  
+    
+
+<script type="text/javascript">
+//<![CDATA[
+SessionExpireAlert(1800000,'Clmt');Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modelBackground","CancelControlID":"btnNo","OkControlID":"btnYes","OnCancelScript":"javascript:RedirectSession(\u0027Clmt\u0027)","OnOkScript":"ResetSession()","PopupControlID":"pnlPopup","dynamicServicePath":"/tdi_iam/TDI_PndClaim_Search.aspx","id":"mpeTimeout"}, null, null, $get("lnkFake"));
+});
+//]]>
+</script>
+<div id="mpeTimeout_backgroundElement" style="display: none; position: fixed; left: 0px; top: 0px; z-index: 10000;" class="modelBackground"></div></form>
+
+
+</body></html>
