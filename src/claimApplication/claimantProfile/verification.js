@@ -1,4 +1,4 @@
-export const verificationLabels = [
+export const claimantProfileVerificationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerFname', label: 'Name' },
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerDob', label: 'Date of Birth' },
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerGender', label: 'Gender' },

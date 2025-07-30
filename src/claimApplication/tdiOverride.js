@@ -1,17 +1,16 @@
 import 'uswds/css/uswds.css';
 
-import {
-  setupAnalytics,
-} from "../modules/shared.mjs";
+import { setupAnalytics } from "../modules/shared.mjs";
+
 import { accessibilityAltText } from './otherBenefits/confirmation.js'
 import { certificationLabels } from './otherBenefits/certification.js';
 import { citizenshipLabels } from './claimantProfile/citizenship.js';
+import { claimantProfileVerificationLabels } from './claimantProfile/verification.js';
 import { disabilityInformationLabels } from './disability/information.js';
 import { loginProfileLabels } from './claimantProfile/loginProfile.js';
 import { medicalTreatmentLabels } from './medical/treatment.js';
+import { otherBenefitsVerificationLabels } from './otherBenefits/verification.js';
 import { personalProfileLabels } from './claimantProfile/personalProfile.js';
-import { verificationLabels } from './claimantProfile/verification.js';
-
 
 if (document.readyState === "loading") {
   window.addEventListener("DOMContentLoaded", () => {
@@ -56,11 +55,12 @@ function accessibilityLabels () {
   const labels = [
     ...certificationLabels,
     ...citizenshipLabels,
+    ...claimantProfileVerificationLabels,
     ...disabilityInformationLabels,
     ...loginProfileLabels,
     ...medicalTreatmentLabels,
+    ...otherBenefitsVerificationLabels,
     ...personalProfileLabels,
-    ...verificationLabels,
   ];
 
   labels.forEach(({ id, label }) => {
