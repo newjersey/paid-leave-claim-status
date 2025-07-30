@@ -32,10 +32,6 @@ describe("Claimant Personal Profile page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_btnCitiZen').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
-
-    it("invisible link is not hidden from screen readers", () => {
-      cy.get('#lnkFake').should('exist').should('not.have.attr', 'aria-hidden');
-    });
   });
 
   describe("page with new JS", () => {
@@ -65,8 +61,8 @@ describe("Claimant Personal Profile page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
-    it("invisible link is hidden from screen readers", () => {
-      cy.get('#lnkFake').should('exist').should('have.attr', 'aria-hidden', 'true');
+    it("passes accessibility checks", () => {
+      cy.checkBodyA11y();
     });
   });
 });

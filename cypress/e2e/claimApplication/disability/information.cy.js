@@ -26,10 +26,6 @@ describe("Disability Information page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_btnSubmitConflictCheck').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
-
-    it("invisible link is not hidden from screen readers", () => {
-      cy.get('#lnkFake').should('exist').should('not.have.attr', 'aria-hidden');
-    });
   });
 
   describe("page with new JS", () => {
@@ -53,8 +49,8 @@ describe("Disability Information page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
-    it("invisible link is hidden from screen readers", () => {
-      cy.get('#lnkFake').should('exist').should('have.attr', 'aria-hidden', 'true');
+    it("passes accessibility checks", () => {
+      cy.checkBodyA11y();
     });
   });
 });
