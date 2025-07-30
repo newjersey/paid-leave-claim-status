@@ -1,5 +1,3 @@
-import 'uswds/css/uswds.css';
-
 import { setupAnalytics } from "../modules/shared.mjs";
 
 import { accessibilityAltText } from './otherBenefits/confirmation.js'
@@ -26,7 +24,6 @@ function executeOverride() {
   accessibilityAltText();
   accessibilityContrast();
   accessibilityLabels();
-  applyFont();
 }
 
 function makeLinkAccessible() {
@@ -68,12 +65,5 @@ function accessibilityLabels () {
     if (element && !element.hasAttribute('aria-label')) {
       element.setAttribute('aria-label', label);
     }
-  });
-}
-
-function applyFont() {
-  document.body.style.fontFamily = '"Public Sans", sans-serif';
-  document.querySelectorAll('*').forEach(element => {
-    element.style.fontFamily = '"Public Sans", sans-serif';
   });
 }
