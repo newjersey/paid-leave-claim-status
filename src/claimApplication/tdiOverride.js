@@ -3,6 +3,7 @@ import 'uswds/css/uswds.css';
 import {
   setupAnalytics,
 } from "../modules/shared.mjs";
+import { accessibilityAltText } from './otherBenefits/confirmation.js'
 import { certificationLabels } from './otherBenefits/certification.js';
 import { citizenshipLabels } from './claimantProfile/citizenship.js';
 import { disabilityInformationLabels } from './disability/information.js';
@@ -23,6 +24,7 @@ if (document.readyState === "loading") {
 function executeOverride() {
   setupAnalytics();
   makeLinkAccessible();
+  accessibilityAltText();
   accessibilityContrast();
   accessibilityLabels();
   applyFont();

@@ -18,7 +18,7 @@ describe("Confirmation page", () => {
       cy.visit("./cypress/fixtures/claimApplication/otherBenefits/confirmation.html");
     });
 
-    it("user can print claim summary", () => {
+    it("user can open PDF of claim summary", () => {
       mockASPX();
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue').click();
       cy.wait('@aspxSubmission').then(checkPostData);
@@ -40,7 +40,7 @@ describe("Confirmation page", () => {
       cy.wait('@script');
     });
 
-    it("user can print claim summary", () => {
+    it("user can open PDF of claim summary", () => {
       mockASPX();
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue').click();
       cy.wait('@aspxSubmission').then(checkPostData);
@@ -48,6 +48,10 @@ describe("Confirmation page", () => {
 
     it("invisible link is hidden from screen readers", () => {
       cy.get('#lnkFake').should('exist').should('have.attr', 'aria-hidden', 'true');
+    });
+
+    it("passes accessibility checks", () => {
+      cy.checkBodyA11y();
     });
   });
 });
