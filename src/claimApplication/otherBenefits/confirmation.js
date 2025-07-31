@@ -1,6 +1,3 @@
-export function accessibilityAltText() {
-  const imageButton = document.getElementById('ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_imgbtnM01');
-  if (imageButton) {
-    imageButton.setAttribute('alt', 'Submit Query');
-  }
-}
+export const confirmationAltTexts = [
+  { id: 'ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_imgbtnM01', alt: 'Submit Query' },
+];
