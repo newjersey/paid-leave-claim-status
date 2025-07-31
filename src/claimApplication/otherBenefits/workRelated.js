@@ -1,0 +1,16 @@
+export const workRelatedLabels = [
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpNm', label: 'Employer Name' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtEmpadd1', label: 'Employer Address Line 1' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtEmpadd2', label: 'Employer Address Line 2' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtCity', label: 'Employer City' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_ddlEmpStates', label: 'Employer State' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtEmpZip1', label: 'Employer Zipcode 1' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtEmpZip2', label: 'Employer Zipcode 2' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpPh', label: 'Employer Phone Number First 3 Digits' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpPh2', label: 'Employer Phone Number Digits 4, 5, and 6' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpPh3', label: 'Employer Phone Number Last 4 Digits' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpPh4', label: 'Employer Phone Number Extension' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjDt', label: 'Injury Date' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtNoClaim', label: 'Why No Workers Comp Claim' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_text_num_noClaim', label: 'No Claim Characters Left' },
+];
