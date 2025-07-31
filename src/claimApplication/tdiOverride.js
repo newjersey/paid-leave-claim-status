@@ -11,6 +11,7 @@ import { loginProfileLabels } from './claimantProfile/loginProfile.js';
 import { medicalTreatmentLabels } from './medical/treatment.js';
 import { otherBenefitsVerificationLabels } from './otherBenefits/verification.js';
 import { personalProfileLabels } from './claimantProfile/personalProfile.js';
+import { priorClaimSearchLabels } from './priorClaimSearch/priorClaimSearch.js';
 import { verifyEmployerLabels } from './otherBenefits/verifyEmployer.js';
 import { workRelatedLabels } from './otherBenefits/workRelated.js';
 import { workScheduleLabels } from './otherBenefits/workSchedule.js';
@@ -65,6 +66,7 @@ function accessibilityLabels () {
     ...medicalTreatmentLabels,
     ...otherBenefitsVerificationLabels,
     ...personalProfileLabels,
+    ...priorClaimSearchLabels,
     ...verifyEmployerLabels,
     ...workRelatedLabels,
     ...workScheduleLabels,
