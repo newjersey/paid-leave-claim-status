@@ -5,6 +5,7 @@ import { certificationLabels } from './otherBenefits/certification.js';
 import { citizenshipLabels } from './claimantProfile/citizenship.js';
 import { claimantProfileVerificationLabels } from './claimantProfile/verification.js';
 import { disabilityInformationLabels } from './disability/information.js';
+import { employerDetailsLabels } from './otherBenefits/employerDetails.js';
 import { employmentDetailsLabels } from './employmentDetails/employmentDetails.js';
 import { loginProfileLabels } from './claimantProfile/loginProfile.js';
 import { medicalTreatmentLabels } from './medical/treatment.js';
@@ -55,6 +56,7 @@ function accessibilityLabels () {
     ...citizenshipLabels,
     ...claimantProfileVerificationLabels,
     ...disabilityInformationLabels,
+    ...employerDetailsLabels,
     ...employmentDetailsLabels,
     ...loginProfileLabels,
     ...medicalTreatmentLabels,
