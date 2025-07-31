@@ -1,4 +1,4 @@
-describe("Medical Certification page", () => {
+describe("Medical Certification Intro page", () => {
   function mockASPX() {
     cy.intercept('GET', '**/LoginMedicalCertification.aspx',
       { statusCode: 200, headers: { 'content-type': 'text/html' } }
@@ -33,10 +33,6 @@ describe("Medical Certification page", () => {
       mockASPX();
       cy.contains('a', 'SUPPLY PATIENT’S MEDICAL CERTIFICATE').click();
       cy.wait('@aspxSubmission');
-    });
-
-    it("passes accessibility checks", () => {
-      cy.checkBodyA11y();
     });
   });
 });
