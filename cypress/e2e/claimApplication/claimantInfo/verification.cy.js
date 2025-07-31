@@ -15,7 +15,7 @@ describe("Disability Verification page", () => {
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/otherBenefits/verification.html");
+      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/verification.html");
     });
 
     it("user can input info and proceed to next page", () => {
@@ -33,7 +33,7 @@ describe("Disability Verification page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/otherBenefits/verification.html");
+      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/verification.html");
       cy.wait('@script');
     });
 

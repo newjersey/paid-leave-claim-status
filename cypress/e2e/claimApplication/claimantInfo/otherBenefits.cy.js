@@ -14,7 +14,7 @@ describe("Other Benefits page", () => {
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/otherBenefits/otherBenefits.html");
+      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/otherBenefits.html");
     });
 
     it("user can input info and proceed to next page", () => {
@@ -35,7 +35,7 @@ describe("Other Benefits page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/otherBenefits/otherBenefits.html");
+      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/otherBenefits.html");
       cy.wait('@script');
     });
 

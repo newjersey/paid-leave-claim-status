@@ -15,7 +15,7 @@ describe("Work Schedule page", () => {
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/otherBenefits/workSchedule.html");
+      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/workSchedule.html");
     });
 
     it("user can input info and proceed to next page", () => {
@@ -38,7 +38,7 @@ describe("Work Schedule page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/otherBenefits/workSchedule.html");
+      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/workSchedule.html");
       cy.wait('@script');
     });
 

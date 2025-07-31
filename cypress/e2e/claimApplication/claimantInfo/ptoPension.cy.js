@@ -15,7 +15,7 @@ describe("PTO and Pension page", () => {
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/otherBenefits/ptoPension.html");
+      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/ptoPension.html");
     });
 
     it("user can input info and proceed to next page", () => {
@@ -34,7 +34,7 @@ describe("PTO and Pension page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/otherBenefits/ptoPension.html");
+      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/ptoPension.html");
       cy.wait('@script');
     });
 

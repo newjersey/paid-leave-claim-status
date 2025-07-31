@@ -15,7 +15,7 @@ describe("Intermittent Employment page", () => {
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/otherBenefits/intermittent.html");
+      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/intermittent.html");
     });
 
     it("user can input info and proceed to next page", () => {
@@ -34,7 +34,7 @@ describe("Intermittent Employment page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/otherBenefits/intermittent.html");
+      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/intermittent.html");
       cy.wait('@script');
     });
 

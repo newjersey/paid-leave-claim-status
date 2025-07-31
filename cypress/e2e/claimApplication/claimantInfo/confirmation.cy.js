@@ -15,7 +15,7 @@ describe("Confirmation page", () => {
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/otherBenefits/confirmation.html");
+      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/confirmation.html");
     });
 
     it("user can open PDF of claim summary", () => {
@@ -32,7 +32,7 @@ describe("Confirmation page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/otherBenefits/confirmation.html");
+      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/confirmation.html");
       cy.wait('@script');
     });
 

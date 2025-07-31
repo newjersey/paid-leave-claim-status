@@ -15,7 +15,7 @@ describe("Certification page", () => {
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/otherBenefits/certification.html");
+      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/certification.html");
     });
 
     it("user can agree and proceed to next page", () => {
@@ -33,7 +33,7 @@ describe("Certification page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/otherBenefits/certification.html");
+      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/certification.html");
       cy.wait('@script');
     });
 

@@ -1,18 +1,18 @@
-import { confirmationAltTexts } from './otherBenefits/confirmation.js'
-import { certificationLabels } from './otherBenefits/certification.js';
+import { confirmationAltTexts } from './claimantInfo/confirmation.js'
+import { certificationLabels } from './claimantInfo/certification.js';
 import { citizenshipLabels } from './claimantProfile/citizenship.js';
 import { claimantProfileVerificationLabels } from './claimantProfile/verification.js';
 import { disabilityInformationLabels } from './disability/information.js';
-import { employerDetailsLabels } from './otherBenefits/employerDetails.js';
+import { employerDetailsLabels } from './claimantInfo/employerDetails.js';
 import { employmentDetailsLabels } from './employmentDetails/employmentDetails.js';
 import { loginProfileLabels } from './claimantProfile/loginProfile.js';
 import { medicalTreatmentLabels } from './medical/treatment.js';
-import { otherBenefitsVerificationLabels } from './otherBenefits/verification.js';
+import { otherBenefitsVerificationLabels } from './claimantInfo/verification.js';
 import { personalProfileLabels } from './claimantProfile/personalProfile.js';
 import { priorClaimSearchLabels } from './priorClaimSearch/priorClaimSearch.js';
-import { verifyEmployerLabels } from './otherBenefits/verifyEmployer.js';
-import { workRelatedLabels } from './otherBenefits/workRelated.js';
-import { workScheduleLabels } from './otherBenefits/workSchedule.js';
+import { verifyEmployerLabels } from './claimantInfo/verifyEmployer.js';
+import { workRelatedLabels } from './claimantInfo/workRelated.js';
+import { workScheduleLabels } from './claimantInfo/workSchedule.js';
 
 function accessibilityAltText() {
   const altTexts = [
