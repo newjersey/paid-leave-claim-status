@@ -13,6 +13,7 @@ import { otherBenefitsVerificationLabels } from './otherBenefits/verification.js
 import { personalProfileLabels } from './claimantProfile/personalProfile.js';
 import { verifyEmployerLabels } from './otherBenefits/verifyEmployer.js';
 import { workRelatedLabels } from './otherBenefits/workRelated.js';
+import { workScheduleLabels } from './otherBenefits/workSchedule.js';
 
 if (document.readyState === "loading") {
   window.addEventListener("DOMContentLoaded", () => {
@@ -66,6 +67,7 @@ function accessibilityLabels () {
     ...personalProfileLabels,
     ...verifyEmployerLabels,
     ...workRelatedLabels,
+    ...workScheduleLabels,
   ];
 
   labels.forEach(({ id, label }) => {
