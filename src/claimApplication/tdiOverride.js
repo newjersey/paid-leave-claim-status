@@ -1,7 +1,7 @@
 import 'uswds/css/uswds.css';
 import { setupAnalytics } from "../modules/shared.mjs";
 import { accessibilityChanges } from './accessibility.js';
-import { pathnames } from './urls.js';
+import { identifyPage } from './identifyPage.js';
 
 if (document.readyState === "loading") {
   window.addEventListener("DOMContentLoaded", () => {
@@ -13,10 +13,14 @@ if (document.readyState === "loading") {
 
 function executeOverride() {
   setupAnalytics();
-  if (pathnames.some(path => window.location.pathname.includes(path))) {
-    accessibilityChanges();
-    applyGlobalFont();
+
+  const pageId = identifyPage();
+  if (pageId === 'other') {
+    return; // do not apply any other changes
   }
+
+  accessibilityChanges();
+  applyGlobalFont();
 }
 
 function applyGlobalFont() {

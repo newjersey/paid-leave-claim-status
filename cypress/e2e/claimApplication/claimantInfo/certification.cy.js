@@ -44,6 +44,14 @@ describe("Certification page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
+    it("applies the new font family", () => {
+      cy.get('body')
+        .should('have.css', 'font-family')
+        .then(fontFamily => {
+          expect(fontFamily).to.contain('"Public Sans", sans-serif');
+        });
+    });
+
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();
     });
