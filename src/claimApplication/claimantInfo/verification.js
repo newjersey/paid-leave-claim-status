@@ -24,3 +24,11 @@ export const otherBenefitsVerificationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerTDUIbenfRecvd', label: 'Unemployment Insurance Benefits' },
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_lblFIT', label: 'Federal Income Tax Withholding' },
 ];
+
+export const id = "verification";
+
+export const identifyingContent = {
+  id,
+  elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification',
+  text: 'My disability information is correct',
+};
