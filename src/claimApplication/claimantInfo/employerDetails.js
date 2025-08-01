@@ -13,3 +13,11 @@ export const employerDetailsLabels = [
   { id: 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt', label: 'Employment Start Date' },
   { id: 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt', label: 'Employment End Date' },
 ];
+
+export const id = "employerDetails";
+
+export const identifyingContent = {
+  id,
+  elementId: 'divEmp',
+  text: 'Employers Details',
+};
