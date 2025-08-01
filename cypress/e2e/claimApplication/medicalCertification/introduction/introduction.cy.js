@@ -16,6 +16,10 @@ describe("Medical Certification Intro page", () => {
       cy.contains('a', 'SUPPLY PATIENT’S MEDICAL CERTIFICATE').click();
       cy.wait('@aspxSubmission');
     });
+
+    it("invisible link is not hidden from screen readers", () => {
+      cy.get('#lnkFake').should('exist').should('not.have.attr', 'aria-hidden');
+    });
   });
 
   describe("page with new JS", () => {
@@ -33,6 +37,10 @@ describe("Medical Certification Intro page", () => {
       mockASPX();
       cy.contains('a', 'SUPPLY PATIENT’S MEDICAL CERTIFICATE').click();
       cy.wait('@aspxSubmission');
+    });
+
+    it("invisible link is not hidden from screen readers", () => {
+      cy.get('#lnkFake').should('exist').should('not.have.attr', 'aria-hidden');
     });
   });
 });

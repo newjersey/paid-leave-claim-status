@@ -25,6 +25,10 @@ describe("Medical Certification Login page", () => {
       cy.get('#ContentPlaceHolder1_btnLogIn').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
+
+    it("invisible link is not hidden from screen readers", () => {
+      cy.get('#lnkFake').should('exist').should('not.have.attr', 'aria-hidden');
+    });
   });
 
   describe("page with new JS", () => {
@@ -44,6 +48,10 @@ describe("Medical Certification Login page", () => {
       cy.get('#ContentPlaceHolder1_txtDOB').type('01/01/2000');
       cy.get('#ContentPlaceHolder1_btnLogIn').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it("invisible link is not hidden from screen readers", () => {
+      cy.get('#lnkFake').should('exist').should('not.have.attr', 'aria-hidden');
     });
   });
 });
