@@ -1,0 +1,80 @@
+﻿
+  
+   .group{
+    margin:0 0 1.5em 0;
+    padding:0;
+    clear:both;
+    min-width:47.5em;
+   
+    border:1px #CFCDCB solid;
+     /*width: 80%;*/
+  }
+  
+  .group h2.groupHeader{
+    padding:0 0 0 0.2em;
+    margin:0;
+    float:left;
+   font-weight:bold;
+    font-size:1em;
+    color: #3A3A3A ;
+  }
+   .group .group h2.groupHeader {
+    padding:0 0 0 0.2em;
+    margin:0;
+    float:left;
+    font-weight:bold;
+    font-size:1em;
+    color:#3A3A3A;
+  }
+  
+  .group .groupWidgets {
+    padding:0 2px 0 5px;
+    margin:0;
+    font-size:1.1em;
+    font-weight:normal;
+    text-align:right;
+    border-bottom:1px #CFCDCB solid;
+    background-color:#D3DEEB;
+   
+    
+  }
+  .group .group .groupContent {
+    padding:0.4em;
+    background-color:#FEFDFC;
+  }
+  
+  .group .group .groupWidgets {
+    padding:0 2px 0 5px;
+    margin:0;
+    font-size:1.1em;
+    font-weight:normal;
+    text-align:right;
+    border-bottom:1px #CFCDCB solid;
+    background-color:#D3DEEB;
+  }
+  
+  .group .groupContent{
+    padding: 0.4em;
+    background-color: #FEFDFC;
+  }
+  
+   h3.instructions {
+    display: block;
+    color: #3A3A3A;
+    font-size:1em;
+    font-weight: normal;
+    margin: 1em 1em 1em 1em;
+  }
+  
+  #content div.contentBody {
+    margin: 0;
+    padding:1em 1em 2em 1em;
+   /* font-size:0.9em;*/
+   
+  }
+  .groupContent div.indent {
+  	margin-left: 2em;
+  	margin-bottom: 1em;
+  }
+
+
