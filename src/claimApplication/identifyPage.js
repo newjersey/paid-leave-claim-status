@@ -4,6 +4,7 @@ import { identifyingContent as employerDetailsContent } from "./claimantInfo/emp
 import { identifyingContent as employmentContent } from "./claimantInfo/employment.js";
 import { identifyingContent as intermittentContent } from "./claimantInfo/intermittent.js";
 import { identifyingContent as otherBenefitsContent } from "./claimantInfo/otherBenefits.js";
+import { identifyingContent as paymentInfoContent } from "./claimantInfo/paymentInfo.js";
 
 const identifyingContents = [
   certificationContent,
@@ -12,6 +13,7 @@ const identifyingContents = [
   employmentContent,
   intermittentContent,
   otherBenefitsContent,
+  paymentInfoContent,
 ];
 
 export function identifyPage() {
