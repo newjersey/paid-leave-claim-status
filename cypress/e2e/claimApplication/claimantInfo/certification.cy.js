@@ -45,11 +45,7 @@ describe("Certification page", () => {
     });
 
     it("applies the new font family", () => {
-      cy.get('body')
-        .should('have.css', 'font-family')
-        .then(fontFamily => {
-          expect(fontFamily).to.contain('"Public Sans", sans-serif');
-        });
+      cy.checkFontFamily();
     });
 
     it("passes accessibility checks", () => {
