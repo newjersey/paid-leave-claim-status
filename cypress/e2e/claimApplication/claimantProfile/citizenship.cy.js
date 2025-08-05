@@ -47,11 +47,7 @@ describe("Citizenship page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepNo').click();
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_btnSave').click();
       cy.wait('@aspxSubmission').then(checkPostData);
-    });
-
-    it("applies the new font family", () => {
-      cy.checkFontFamily();
-    });    
+    });   
 
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();

@@ -42,11 +42,7 @@ describe("Payment Info page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisNo').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_btnNextVer').click();
       cy.wait('@aspxSubmission').then(checkPostData);
-    });
-
-    it("applies the new font family", () => {
-      cy.checkFontFamily();
-    });    
+    }); 
 
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();

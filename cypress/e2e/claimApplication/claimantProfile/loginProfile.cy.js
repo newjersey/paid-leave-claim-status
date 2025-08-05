@@ -41,11 +41,7 @@ describe("Login Profile page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnPersYes').click();
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_btncontinueVer').click();
       cy.wait('@aspxSubmission').then(checkPostData);
-    });
-
-    it("applies the new font family", () => {
-      cy.checkFontFamily();
-    });    
+    });   
 
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();

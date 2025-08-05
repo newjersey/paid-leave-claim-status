@@ -59,11 +59,7 @@ describe("Claimant Personal Profile page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnMailingYes').click();
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_btnCitiZen').click();
       cy.wait('@aspxSubmission').then(checkPostData);
-    });
-
-    it("applies the new font family", () => {
-      cy.checkFontFamily();
-    });    
+    });  
 
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();

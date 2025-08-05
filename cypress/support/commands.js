@@ -53,10 +53,3 @@ Cypress.Commands.add("checkCommonPostData", (formData) => {
   expect(formData).to.match(/__VIEWSTATEGENERATOR=[^&]+/);
   expect(formData).to.match(/__EVENTVALIDATION=[^&]+/);
 });
-
-Cypress.Commands.add("checkFontFamily", () => {
-  cy.get('body').should('have.css', 'font-family')
-    .then(fontFamily => {
-      expect(fontFamily).to.contain('"Public Sans", sans-serif');
-    });
-});

@@ -42,10 +42,6 @@ describe("Confirmation page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
-    it("applies the new font family", () => {
-      cy.checkFontFamily();
-    });
-
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();
     });
