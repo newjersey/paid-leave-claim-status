@@ -14,3 +14,11 @@ export const workRelatedLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtNoClaim', label: 'Why No Workers Comp Claim' },
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_text_num_noClaim', label: 'No Claim Characters Left' },
 ];
+
+export const id = "workRelated";
+
+export const identifyingContent = {
+  id,
+  elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC',
+  text: 'Work Related Information',
+};

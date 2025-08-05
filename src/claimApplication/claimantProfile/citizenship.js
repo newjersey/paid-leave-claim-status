@@ -10,3 +10,11 @@ export const citizenshipLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_TxtEmail', label: 'Email Address' },
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_TxtConEmail', label: 'Email Address Confirmation' },
 ];
+
+export const id = "citizenship";
+
+export const identifyingContent = {
+  id,
+  elementId: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlCitizen',
+  text: 'Are you a citizen',
+};

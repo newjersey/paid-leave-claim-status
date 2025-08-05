@@ -17,3 +17,11 @@ export const verifyEmployerLabels = [
   { id: 'ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtEVerInt', label: 'Intermittent' },
   { id: 'ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtVerELD', label: 'Labor Dispute' },
 ];
+
+export const id = "verifyEmployer";
+
+export const identifyingContent = {
+  id,
+  elementId: 'ContentPlaceHolder1_TabEmployment_TabPanelVerify',
+  text: 'The information for this employer is correct',
+};

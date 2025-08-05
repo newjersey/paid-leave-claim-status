@@ -9,3 +9,11 @@ export const employmentDetailsLabels = [
   { id: 'ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtDeptUnitSOE', label: 'Unit worked for' },
   { id: 'ContentPlaceHolder1_TabEmployment_TabPanelSpan_textDeptUnitSOECount', label: 'Unit worked for characters left' },
 ];
+
+export const id = "employmentDetails";
+
+export const identifyingContent = {
+  id,
+  elementId: 'ContentPlaceHolder1_TabEmployment_TabPanelSpan',
+  text: 'My physical work location is',
+};

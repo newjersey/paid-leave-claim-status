@@ -15,7 +15,7 @@ describe("Introduction page", () => {
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/TDI.html");
+      cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html");
     });
 
     it("agrees to terms and checks POST data", () => {
@@ -32,7 +32,7 @@ describe("Introduction page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/TDI.html");
+      cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html");
       cy.wait('@script');
     });
 
