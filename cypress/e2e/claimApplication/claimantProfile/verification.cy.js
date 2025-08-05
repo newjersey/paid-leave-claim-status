@@ -41,7 +41,7 @@ describe("Profile Verification page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_rbtnPersYes').click();
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btncontinueVer').click();
       cy.wait('@aspxSubmission').then(checkPostData);
-    });  
+    });
 
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();

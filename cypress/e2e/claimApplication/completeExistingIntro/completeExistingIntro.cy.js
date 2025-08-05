@@ -40,7 +40,7 @@ describe("Complete Existing Intro page", () => {
       mockASPX();
       cy.get('#ContentPlaceHolder1_chkAgree').check();
       cy.wait('@aspxSubmission').then(checkPostData);
-    }); 
+    });
 
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();

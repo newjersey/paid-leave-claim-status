@@ -52,7 +52,7 @@ describe("Work Schedule page", () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCFri').type('8');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_btnNextWrkSch').click();
       cy.wait('@aspxSubmission').then(checkPostData);
-    });  
+    });
 
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();

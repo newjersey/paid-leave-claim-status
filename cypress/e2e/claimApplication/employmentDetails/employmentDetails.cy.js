@@ -58,7 +58,7 @@ describe("Employment Details page", () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtLocalNoSOE').type('1');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_btnNextSpanOfEmpymt').click();
       cy.wait('@aspxSubmission').then(checkPostData);
-    });  
+    });
 
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();
