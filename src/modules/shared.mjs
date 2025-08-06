@@ -7,6 +7,8 @@ export function logEvent(name, parameters) {
   if (window.gtag != null && isProduction()) {
     gtag("event", name, parameters);
   } else {
+    window.loggedEvents = window.loggedEvents || [];
+    window.loggedEvents.push({ name, parameters });
     console.log(
       "In production, the following event would be logged to Google Analytics:",
       {

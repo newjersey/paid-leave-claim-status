@@ -1,4 +1,4 @@
-import { setupAnalytics } from "../modules/shared.mjs";
+import { logEvent, setupAnalytics } from "../modules/shared.mjs";
 import { accessibilityChanges } from './accessibility.js';
 import { identifyPage } from './identifyPage.js';
 
@@ -19,4 +19,5 @@ function executeOverride() {
   }
 
   accessibilityChanges();
+  logEvent(`${pageId} viewed`, {});
 }

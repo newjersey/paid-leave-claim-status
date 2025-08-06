@@ -45,5 +45,13 @@ describe("Introduction page", () => {
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();
     });
+
+    it("tracks the page view", () => {
+      cy.window().then((win) => {
+        const pageId = 'tdiIntroduction';
+        const loggedEvent = win.loggedEvents.find(event => event.name === `${pageId} viewed`);
+        expect(loggedEvent.parameters).to.deep.equal({});
+      });
+    });
   });
 });
