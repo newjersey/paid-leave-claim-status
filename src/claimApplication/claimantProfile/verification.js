@@ -20,3 +20,11 @@ export const claimantProfileVerificationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerAltTelExt', label: 'Alternate Phone Number Extension' },
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerEmail', label: 'Email' },
 ];
+
+export const id = "claimantProfileVerification";
+
+export const identifyingContent = {
+  id,
+  elementId: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification',
+  text: 'My personal and contact information is correct.',
+};

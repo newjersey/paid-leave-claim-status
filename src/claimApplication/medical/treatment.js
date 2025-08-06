@@ -7,3 +7,11 @@ export const medicalTreatmentLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh3', label: 'Last 4 digits of Doctor/Hospital Phone Number' },
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh4', label: 'Doctor/Hospital Phone Number Extension' },
 ];
+
+export const id = "medicalTreatment";
+
+export const identifyingContent = {
+  id,
+  elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor',
+  text: 'Describe your disability.',
+};

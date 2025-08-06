@@ -12,12 +12,7 @@ describe("Medical Certification Login page", () => {
     ).as('aspxSubmission');
   };
 
-  describe("page without new JS", () => {
-    beforeEach(() => {
-      cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/medicalCertification/login/LoginMedicalCertification.aspx.html");
-    });
-
+  function currentPageBehavior() {
     it("user can fill in info and search", () => {
       mockASPX();
       cy.get('#ContentPlaceHolder1_txtMedFormId').type('11111');
@@ -25,6 +20,19 @@ describe("Medical Certification Login page", () => {
       cy.get('#ContentPlaceHolder1_btnLogIn').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
+
+    it("invisible link is not hidden from screen readers", () => {
+      cy.get('#lnkFake').should('exist').should('not.have.attr', 'aria-hidden');
+    });
+  }
+
+  describe("page without new JS", () => {
+    beforeEach(() => {
+      cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
+      cy.visit("./cypress/fixtures/claimApplication/medicalCertification/login/LoginMedicalCertification.aspx.html");
+    });
+
+    currentPageBehavior();
   });
 
   describe("page with new JS", () => {
@@ -38,12 +46,6 @@ describe("Medical Certification Login page", () => {
       cy.wait('@script');
     });
 
-    it("user can fill in info and search", () => {
-      mockASPX();
-      cy.get('#ContentPlaceHolder1_txtMedFormId').type('11111');
-      cy.get('#ContentPlaceHolder1_txtDOB').type('01/01/2000');
-      cy.get('#ContentPlaceHolder1_btnLogIn').click();
-      cy.wait('@aspxSubmission').then(checkPostData);
-    });
+    currentPageBehavior();
   });
 });

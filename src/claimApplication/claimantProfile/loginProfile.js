@@ -7,3 +7,12 @@ export const loginProfileLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtLName', label: 'Last Name' },
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtDOB', label: 'Date of Birth' }
 ];
+
+export const id = "loginProfile";
+
+export const identifyingContent = {
+  id,
+  elementId: 'divSSN',
+  text: 'Please confirm your profile information to ensure secure access',
+};
+
