@@ -80,11 +80,7 @@ describe("Other Benefits page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkSSDtStat').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
-      cy.window().then((win) => {
-        const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
-        const loggedEvent = events.find(event => event.name === `SocSec Yes Clicked`);
-        expect(loggedEvent.parameters).to.deep.equal({ date: "pending" });
-      });
+      cy.checkLogEvent(`SocSec Yes Clicked`, { date: "pending" });
     });
 
     it('tracks when page submitted with Yes with Date for receiving Soc Sec benefits', () => {
@@ -94,11 +90,7 @@ describe("Other Benefits page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtSSDate').type("01/01/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
-      cy.window().then((win) => {
-        const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
-        const loggedEvent = events.find(event => event.name === `SocSec Yes Clicked`);
-        expect(loggedEvent.parameters).to.deep.equal({ date: "01/01/2025" });
-      });
+      cy.checkLogEvent(`SocSec Yes Clicked`, { date: "01/01/2025" });
     });
   });
 });

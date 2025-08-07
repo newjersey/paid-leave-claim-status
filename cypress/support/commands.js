@@ -54,20 +54,20 @@ Cypress.Commands.add("checkCommonPostData", (formData) => {
   expect(formData).to.match(/__EVENTVALIDATION=[^&]+/);
 });
 
-Cypress.Commands.add("trackPageView", (pageId) => {
+Cypress.Commands.add("checkLogEvent", (name, parameters) => {
   cy.window().then((win) => {
     const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
-    const loggedEvent = events.find(event => event.name === `${pageId} viewed`);
-    expect(loggedEvent.parameters).to.deep.equal({});
+    const loggedEvent = events.find(event => event.name === name);
+    expect(loggedEvent.parameters).to.deep.equal(parameters);
   });
 });
 
+Cypress.Commands.add("trackPageView", (pageId) => {
+  cy.checkLogEvent(`${pageId} viewed`, {});
+});
+
 Cypress.Commands.add("trackHelpClick", (pageId) => {
-  cy.window().then((win) => {
-    const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
-    const loggedEvent = events.find(event => event.name === `Help Clicked`);
-    expect(loggedEvent.parameters).to.deep.equal({ pageId });
-  });
+  cy.checkLogEvent(`Help Clicked`, { pageId });
 });
 
 Cypress.Commands.add("checkHelpButtonBehavior", () => {
