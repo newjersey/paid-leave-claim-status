@@ -1,6 +1,5 @@
-describe("page without new JS", () => {
+describe("Claim Application on Secure Test environment", () => {
   beforeEach(() => {
-    cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
     cy.on('uncaught:exception', (_err, _runnable) => { return false; });
     cy.visit("https://securest.dol.state.nj.us/tdi_iam/TDIIntroduction.aspx");
   });
