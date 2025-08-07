@@ -8,6 +8,16 @@ export const identifyingContent = {
   text: 'Social Security Benefits',
 };
 
+function isOnCorrectPage(formData) {
+  const clientStateString = formData.get('ContentPlaceHolder1_ClaimantDisabilityTab_ClientState');
+  const clientState = clientStateString ? JSON.parse(clientStateString) : null;
+  const correctActiveTabIndex = 3;
+  const correctTabState = [true, true, false, true, false, false];
+  return clientState &&
+    clientState.ActiveTabIndex === correctActiveTabIndex &&
+    JSON.stringify(clientState.TabState) === JSON.stringify(correctTabState);
+}
+
 export function trackSocSecYesSubmission(pageId) {
   if (pageId !== id) {
     return;
@@ -18,10 +28,8 @@ export function trackSocSecYesSubmission(pageId) {
   if (form) {
     form.addEventListener('submit', function() {
       const formData = new FormData(form);
-      
-      if (formData.get('ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$rbSS') === 'rbSSYes') {
+      if (isOnCorrectPage(formData) && formData.get('ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$rbSS') === 'rbSSYes') {
         const date = formData.get('ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$txtSSDate') || 'pending';
-        
         logEvent('SocSec Yes Clicked', { date });
       }
     });
