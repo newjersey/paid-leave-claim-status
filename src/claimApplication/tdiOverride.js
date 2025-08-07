@@ -21,6 +21,7 @@ function executeOverride() {
   accessibilityChanges();
   logEvent(`${pageId} viewed`, {});
   trackHelpClicks(pageId);
+  trackSocSecYesSubmissions();
 }
 
 function trackHelpClicks(pageId) {
@@ -28,6 +29,29 @@ function trackHelpClicks(pageId) {
   if (helpLink) {
     helpLink.addEventListener('click', function() {
       logEvent('Help Clicked', { pageId });
+    });
+  }
+}
+
+function trackSocSecYesSubmissions() {
+  const submitButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI');
+  const ssYesRadio = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes');
+  const ssPendingCheckbox = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkSSDtStat');
+  const ssDateInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtSSDate');
+
+  if (submitButton && ssYesRadio && ssPendingCheckbox && ssDateInput) {
+    submitButton.addEventListener('click', function() {
+      if (ssYesRadio.checked) {
+        let date;
+
+        if (ssPendingCheckbox.checked) {
+          date = 'pending';
+        } else {
+          date = ssDateInput.value.trim();
+        }
+
+        logEvent('SocSec Yes Clicked', { date });
+      }
     });
   }
 }

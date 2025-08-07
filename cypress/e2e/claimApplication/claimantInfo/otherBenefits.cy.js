@@ -53,6 +53,11 @@ describe("Other Benefits page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+      cy.window().then((win) => {
+        const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
+        const loggedEvent = events.find(event => event.name === `SocSec Yes Clicked`);
+        expect(loggedEvent).to.be.undefined;
+      });
     });
 
     it("passes accessibility checks", () => {
@@ -66,6 +71,34 @@ describe("Other Benefits page", () => {
     it('should open FAQ, post data, and track when the Help link is clicked', () => {
       cy.checkHelpButtonBehavior();
       cy.trackHelpClick(PAGE_ID);
+    });
+
+    it('tracks when page submitted with Yes Pending for receiving Soc Sec benefits', () => {
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkSSDtStat').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
+      cy.window().then((win) => {
+        const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
+        const loggedEvent = events.find(event => event.name === `SocSec Yes Clicked`);
+        expect(loggedEvent.parameters).to.deep.equal({ date: "pending" });
+      });
+    });
+
+    it('tracks when page submitted with Yes with Date for receiving Soc Sec benefits', () => {
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtSSDate').type("01/01/2025");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
+      cy.window().then((win) => {
+        const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
+        const loggedEvent = events.find(event => event.name === `SocSec Yes Clicked`);
+        expect(loggedEvent.parameters).to.deep.equal({ date: "01/01/2025" });
+      });
     });
   });
 });

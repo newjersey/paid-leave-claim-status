@@ -56,14 +56,16 @@ Cypress.Commands.add("checkCommonPostData", (formData) => {
 
 Cypress.Commands.add("trackPageView", (pageId) => {
   cy.window().then((win) => {
-    const loggedEvent = win.loggedEvents.find(event => event.name === `${pageId} viewed`);
+    const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
+    const loggedEvent = events.find(event => event.name === `${pageId} viewed`);
     expect(loggedEvent.parameters).to.deep.equal({});
   });
 });
 
 Cypress.Commands.add("trackHelpClick", (pageId) => {
   cy.window().then((win) => {
-    const loggedEvent = win.loggedEvents.find(event => event.name === `Help Clicked`);
+    const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
+    const loggedEvent = events.find(event => event.name === `Help Clicked`);
     expect(loggedEvent.parameters).to.deep.equal({ pageId });
   });
 });
