@@ -8,7 +8,7 @@ export const identifyingContent = {
   text: 'Social Security Benefits',
 };
 
-function isOnCorrectPage(formData) {
+function formFromCorrectPage(formData) {
   const clientStateString = formData.get('ContentPlaceHolder1_ClaimantDisabilityTab_ClientState');
   const clientState = clientStateString ? JSON.parse(clientStateString) : null;
   const correctActiveTabIndex = 3;
@@ -28,7 +28,10 @@ export function trackSocSecYesSubmission(pageId) {
   if (form) {
     form.addEventListener('submit', function() {
       const formData = new FormData(form);
-      if (isOnCorrectPage(formData) && formData.get('ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$rbSS') === 'rbSSYes') {
+      if (
+        formFromCorrectPage(formData) &&
+        formData.get('ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$rbSS') === 'rbSSYes'
+      ) {
         const date = formData.get('ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$txtSSDate') || 'pending';
         logEvent('SocSec Yes Clicked', { date });
       }
