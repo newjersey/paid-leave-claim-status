@@ -1,7 +1,7 @@
-import { logEvent, setupAnalytics } from "../modules/shared.mjs";
+import { setupAnalytics } from "../modules/shared.mjs";
 import { accessibilityChanges } from './accessibility.js';
+import { analyticsChanges } from './analytics.js';
 import { identifyPage } from './identifyPage.js';
-import { trackSocSecYesSubmission } from './claimantInfo/otherBenefits.js';
 
 if (document.readyState === "loading") {
   window.addEventListener("DOMContentLoaded", () => {
@@ -20,16 +20,5 @@ function executeOverride() {
   }
 
   accessibilityChanges();
-  logEvent(`${pageId} viewed`, {});
-  trackHelpClicks(pageId);
-  trackSocSecYesSubmission(pageId);
-}
-
-function trackHelpClicks(pageId) {
-  const helpLink = document.getElementById('header_lbtnShowFAQ');
-  if (helpLink) {
-    helpLink.addEventListener('click', function() {
-      logEvent('Help Clicked', { pageId });
-    });
-  }
+  analyticsChanges(pageId);
 }

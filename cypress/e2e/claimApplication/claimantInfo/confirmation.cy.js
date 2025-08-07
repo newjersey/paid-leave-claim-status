@@ -46,6 +46,7 @@ describe("Confirmation page", () => {
       mockASPX();
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+      cy.checkLogEvent("Print Claim Summary Button Clicked", {});
     });
 
     it("passes accessibility checks", () => {
