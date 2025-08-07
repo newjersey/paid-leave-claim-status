@@ -7,6 +7,7 @@ export function analyticsChanges(pageId) {
   trackHelpClicks(pageId);
   trackSocSecYesSubmission(pageId);
   trackPrintClaimSummaryButton();
+  trackValidationErrors();
 }
 
 function trackHelpClicks(pageId) {
@@ -16,4 +17,15 @@ function trackHelpClicks(pageId) {
       logEvent('Help Clicked', { pageId });
     });
   }
+}
+
+function trackValidationErrors() {
+  const errorElements = document.querySelectorAll('[id*="lblError"], [id*="lblerror"]');
+  errorElements.forEach(element => {
+    const isVisible = element.offsetParent !== null;
+    if (isVisible) {
+      const contents = element.textContent.trim().substring(0, 100);
+      logEvent('Validation Error', { contents });
+    }
+  });
 }
