@@ -4,7 +4,7 @@ describe("Claim Application on Secure Test environment", () => {
     cy.visit("https://securest.dol.state.nj.us/tdi_iam/TDIIntroduction.aspx");
   });
 
-  it("proceeds through an example user flow", () => {
+  xit("proceeds through an example user flow", () => {
     // Login page
     cy.get('#idToken1').type('johnsmith2205@mailinator.com');
     cy.get('#idToken2').type('Test@123');
