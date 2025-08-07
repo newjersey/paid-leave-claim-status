@@ -1,5 +1,6 @@
 import { setupAnalytics } from "../modules/shared.mjs";
 import { accessibilityChanges } from './accessibility.js';
+import { analyticsChanges } from './analytics.js';
 import { identifyPage } from './identifyPage.js';
 
 if (document.readyState === "loading") {
@@ -19,4 +20,5 @@ function executeOverride() {
   }
 
   accessibilityChanges();
+  analyticsChanges(pageId);
 }
