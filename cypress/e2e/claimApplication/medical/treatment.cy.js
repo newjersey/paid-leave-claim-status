@@ -1,3 +1,5 @@
+const PAGE_ID = 'medicalTreatment';
+
 describe("Medical Treatment page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
@@ -30,6 +32,10 @@ describe("Medical Treatment page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it('should open FAQ and post data when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
     });
   });
 
@@ -64,7 +70,12 @@ describe("Medical Treatment page", () => {
     });
 
     it("tracks the page view", () => {
-      cy.trackPageView('medicalTreatment');
+      cy.trackPageView(PAGE_ID);
+    });
+
+    it('should open FAQ, post data, and track when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+      cy.trackHelpClick(PAGE_ID);
     });
   });
 });

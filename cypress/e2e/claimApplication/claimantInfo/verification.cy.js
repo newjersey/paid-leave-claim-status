@@ -1,3 +1,5 @@
+const PAGE_ID = 'verification';
+
 describe("Disability Verification page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
@@ -24,6 +26,10 @@ describe("Disability Verification page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
+
+    it('should open FAQ and post data when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+    });
   });
 
   describe("page with new JS", () => {
@@ -49,7 +55,12 @@ describe("Disability Verification page", () => {
     });
 
     it("tracks the page view", () => {
-      cy.trackPageView('verification');
+      cy.trackPageView(PAGE_ID);
+    });
+
+    it('should open FAQ, post data, and track when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+      cy.trackHelpClick(PAGE_ID);
     });
   });
 });

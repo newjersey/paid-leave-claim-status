@@ -60,3 +60,20 @@ Cypress.Commands.add("trackPageView", (pageId) => {
     expect(loggedEvent.parameters).to.deep.equal({});
   });
 });
+
+Cypress.Commands.add("trackHelpClick", (pageId) => {
+  cy.window().then((win) => {
+    const loggedEvent = win.loggedEvents.find(event => event.name === `Help Clicked`);
+    expect(loggedEvent.parameters).to.deep.equal({ pageId });
+  });
+});
+
+Cypress.Commands.add("checkHelpButtonBehavior", () => {
+  cy.window().then(win => {
+    cy.stub(win, 'openFAQWindow').as('openFAQWindowStub');
+    cy.stub(win, '__doPostBack').as('doPostBackStub');
+  });
+  cy.get('#header_lbtnShowFAQ').click();
+  cy.get('@openFAQWindowStub').should('be.calledWithMatch', 'http://lwd.dol.state.nj.us/labor/tdi/content/webapplicationfaq.html');
+  cy.get('@doPostBackStub').should('be.calledWith', 'ctl00$header$lbtnShowFAQ', '');
+});

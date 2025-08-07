@@ -1,3 +1,5 @@
+const PAGE_ID = 'citizenship';
+
 describe("Citizenship page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
@@ -25,6 +27,10 @@ describe("Citizenship page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepNo').click();
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_btnSave').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it('should open FAQ and post data when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
     });
   });
 
@@ -54,7 +60,12 @@ describe("Citizenship page", () => {
     });
 
     it("tracks the page view", () => {
-      cy.trackPageView('citizenship');
+      cy.trackPageView(PAGE_ID);
+    });
+
+    it('should open FAQ, post data, and track when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+      cy.trackHelpClick(PAGE_ID);
     });
   });
 });

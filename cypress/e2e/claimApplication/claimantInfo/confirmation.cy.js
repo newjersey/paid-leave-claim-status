@@ -1,3 +1,5 @@
+const PAGE_ID = 'confirmation';
+
 describe("Confirmation page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
@@ -23,6 +25,10 @@ describe("Confirmation page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
+
+    it('should open FAQ and post data when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+    });
   });
 
   describe("page with new JS", () => {
@@ -47,7 +53,12 @@ describe("Confirmation page", () => {
     });
 
     it("tracks the page view", () => {
-      cy.trackPageView('confirmation');
+      cy.trackPageView(PAGE_ID);
+    });
+
+    it('should open FAQ, post data, and track when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+      cy.trackHelpClick(PAGE_ID);
     });
   });
 });

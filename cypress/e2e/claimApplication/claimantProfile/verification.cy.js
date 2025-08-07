@@ -1,3 +1,5 @@
+const PAGE_ID = 'claimantProfileVerification';
+
 describe("Profile Verification page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
@@ -22,6 +24,10 @@ describe("Profile Verification page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_rbtnPersYes').click();
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btncontinueVer').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it('should open FAQ and post data when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
     });
   });
 
@@ -48,7 +54,12 @@ describe("Profile Verification page", () => {
     });
 
     it("tracks the page view", () => {
-      cy.trackPageView('claimantProfileVerification');
+      cy.trackPageView(PAGE_ID);
+    });
+
+    it('should open FAQ, post data, and track when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+      cy.trackHelpClick(PAGE_ID);
     });
   });
 });

@@ -1,3 +1,5 @@
+const PAGE_ID = 'otherBenefits';
+
 describe("Other Benefits page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
@@ -25,6 +27,10 @@ describe("Other Benefits page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it('should open FAQ and post data when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
     });
   });
 
@@ -54,7 +60,12 @@ describe("Other Benefits page", () => {
     });
 
     it("tracks the page view", () => {
-      cy.trackPageView('otherBenefits');
+      cy.trackPageView(PAGE_ID);
+    });
+
+    it('should open FAQ, post data, and track when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+      cy.trackHelpClick(PAGE_ID);
     });
   });
 });

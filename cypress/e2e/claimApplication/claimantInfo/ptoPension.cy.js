@@ -1,3 +1,5 @@
+const PAGE_ID = 'ptoPension';
+
 describe("PTO and Pension page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
@@ -25,6 +27,10 @@ describe("PTO and Pension page", () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelPTO_btnNextPaidTimeOff').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
+
+    it('should open FAQ and post data when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+    });
   });
 
   describe("page with new JS", () => {
@@ -51,7 +57,12 @@ describe("PTO and Pension page", () => {
     });
 
     it("tracks the page view", () => {
-      cy.trackPageView('ptoPension');
+      cy.trackPageView(PAGE_ID);
+    });
+
+    it('should open FAQ, post data, and track when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+      cy.trackHelpClick(PAGE_ID);
     });
   });
 });

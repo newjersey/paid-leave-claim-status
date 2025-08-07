@@ -1,3 +1,5 @@
+const PAGE_ID = 'workRelated';
+
 describe("Work Related page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
@@ -33,6 +35,10 @@ describe("Work Related page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_btnWC').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
+
+    it('should open FAQ and post data when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+    });
   });
 
   describe("page with new JS", () => {
@@ -67,7 +73,12 @@ describe("Work Related page", () => {
     });
 
     it("tracks the page view", () => {
-      cy.trackPageView('workRelated');
+      cy.trackPageView(PAGE_ID);
+    });
+
+    it('should open FAQ, post data, and track when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+      cy.trackHelpClick(PAGE_ID);
     });
   });
 });

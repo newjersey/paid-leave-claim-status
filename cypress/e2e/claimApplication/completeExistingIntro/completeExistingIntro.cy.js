@@ -1,3 +1,5 @@
+const PAGE_ID = 'completeExistingIntro';
+
 describe("Complete Existing Intro page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
@@ -23,6 +25,10 @@ describe("Complete Existing Intro page", () => {
       cy.get('#ContentPlaceHolder1_chkAgree').check();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
+
+    it('should open FAQ and post data when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+    });
   });
 
   describe("page with new JS", () => {
@@ -47,7 +53,12 @@ describe("Complete Existing Intro page", () => {
     });
 
     it("tracks the page view", () => {
-      cy.trackPageView('completeExistingIntro');
+      cy.trackPageView(PAGE_ID);
+    });
+
+    it('should open FAQ, post data, and track when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+      cy.trackHelpClick(PAGE_ID);
     });
   });
 });
