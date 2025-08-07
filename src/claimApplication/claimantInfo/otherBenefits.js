@@ -28,12 +28,33 @@ export function trackSocSecYesSubmission(pageId) {
   if (form) {
     form.addEventListener('submit', function() {
       const formData = new FormData(form);
-      if (
-        formFromCorrectPage(formData) &&
+
+      if (formFromCorrectPage(formData)) {
+        let otherBenefits = [];
+        if (
+        formData.get('ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$rbTDI') === 'rbTDIYes'
+        ) {
+          otherBenefits.push("another state");
+        }
+        if (
+        formData.get('ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$rbTDEmp') === 'rbTDEmpYes'
+        ) {
+          otherBenefits.push("employer/union");
+        }
+        if (
         formData.get('ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$rbSS') === 'rbSSYes'
-      ) {
-        const date = formData.get('ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$txtSSDate') || 'pending';
-        logEvent('SocSec Yes Clicked', { date });
+        ) {
+          otherBenefits.push("social security");
+        }
+        if (
+        formData.get('ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$rbUI') === 'rbUIYes'
+        ) {
+          otherBenefits.push("ui");
+        }
+
+        if (otherBenefits.length > 0) {
+          logEvent('Other Benefits Yes Clicked', { otherBenefits });
+        }
       }
     });
   }
