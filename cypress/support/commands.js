@@ -54,6 +54,14 @@ Cypress.Commands.add("checkCommonPostData", (formData) => {
   expect(formData).to.match(/__EVENTVALIDATION=[^&]+/);
 });
 
+Cypress.Commands.add("confirmEventIsNotTracked", (name) => {
+  cy.window().then((win) => {
+    const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
+    const loggedEvent = events.find(event => event.name === name);
+    expect(loggedEvent).to.be.undefined;
+  });
+});
+
 Cypress.Commands.add("checkLogEvent", (name, parameters) => {
   cy.window().then((win) => {
     const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];

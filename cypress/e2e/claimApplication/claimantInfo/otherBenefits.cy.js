@@ -53,11 +53,7 @@ describe("Other Benefits page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
       cy.wait('@aspxSubmission').then(checkPostData);
-      cy.window().then((win) => {
-        const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
-        const loggedEvent = events.find(event => event.name === `SocSec Yes Clicked`);
-        expect(loggedEvent).to.be.undefined;
-      });
+      cy.confirmEventIsNotTracked("SocSec Yes Clicked");
     });
 
     it("passes accessibility checks", () => {
