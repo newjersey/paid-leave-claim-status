@@ -53,3 +53,10 @@ Cypress.Commands.add("checkCommonPostData", (formData) => {
   expect(formData).to.match(/__VIEWSTATEGENERATOR=[^&]+/);
   expect(formData).to.match(/__EVENTVALIDATION=[^&]+/);
 });
+
+Cypress.Commands.add("trackPageView", (pageId) => {
+  cy.window().then((win) => {
+    const loggedEvent = win.loggedEvents.find(event => event.name === `${pageId} viewed`);
+    expect(loggedEvent.parameters).to.deep.equal({});
+  });
+});

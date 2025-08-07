@@ -62,5 +62,9 @@ describe("Medical Treatment page", () => {
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();
     });
+
+    it("tracks the page view", () => {
+      cy.trackPageView('medicalTreatment');
+    });
   });
 });
