@@ -18,7 +18,7 @@ function formFromCorrectPage(formData) {
     JSON.stringify(clientState.TabState) === JSON.stringify(correctTabState);
 }
 
-export function trackSocSecYesSubmission(pageId) {
+export function trackOtherBenefitsYesSubmission(pageId) {
   if (pageId !== id) {
     return;
   }
