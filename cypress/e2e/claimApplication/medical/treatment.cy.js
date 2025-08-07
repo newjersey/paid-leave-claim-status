@@ -63,6 +63,7 @@ describe("Medical Treatment page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+      cy.confirmEventIsNotTracked("WorkersComp Yes Clicked");
     });
 
     it("passes accessibility checks", () => {
@@ -76,6 +77,20 @@ describe("Medical Treatment page", () => {
     it('should open FAQ, post data, and track when the Help link is clicked', () => {
       cy.checkHelpButtonBehavior();
       cy.trackHelpClick(PAGE_ID);
+    });
+
+    it('tracks when workers comp Yes is submitted', () => {
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury').type('Injury');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm').type('Dr. Spaceman');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocAdd1').type('30 Livingston Avenue');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocCity').type('New Brunswick');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocZip1').type('08901');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERNO').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospNo').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc').click();
+      cy.checkLogEvent("WorkersComp Yes Clicked", {});
     });
   });
 });
