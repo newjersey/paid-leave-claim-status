@@ -47,11 +47,16 @@ const identifyingContents = [
 ];
 
 export function identifyPage() {
-  for (const { id, elementId, text } of identifyingContents) {
+  for (const { id, elementId, text, value } of identifyingContents) {
     const element = document.getElementById(elementId);
-    const isVisible = element && element.offsetParent !== null;
-    if (isVisible && element.textContent.includes(text)) {
-      return id;
+
+    if (element) {
+      const isVisible = element.offsetParent !== null;
+      const hasValue = value ? element.value === value : false;
+
+      if (hasValue || (isVisible && element.textContent.includes(text))) {
+        return id;
+      } 
     }
   }
 

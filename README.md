@@ -8,6 +8,8 @@ JavaScript scripts are injected onto the existing application and manually updat
 
 The script files are hosted on the `beta.nj.gov` domain and automatically pushed from the `beta` Github repository. This repository houses the code and tests for developing the scripts, while the `beta` repository simply houses the compiled assets that need to be hosted. Note that there is a `dev` and `prod` hosting of the scripts, which corresponds to the dev and prod (https://secure.dol.state.nj.us/DOL_DABI/) versions of the Claim Status application.
 
+The same approach is taken for the TDI Claim Application, which is built on an underlying codebase of .NET 4.0. Thus it is the `.NET Analytics, Modernization, and Accessibility for New Jersey (NAMAN)` approach.
+
 ## Setup
 
 1. Clone this `paid-leave-claim-status` repository
