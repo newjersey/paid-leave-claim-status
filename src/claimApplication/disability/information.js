@@ -8,6 +8,6 @@ export const id = "disabilityInformation";
 
 export const identifyingContent = {
   id,
-  elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD',
-  text: 'Select the date your disability',
+  elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_ClientState',
+  value: '{"ActiveTabIndex":0,"TabState":[true,false,false,false,false,false]}',
 };
