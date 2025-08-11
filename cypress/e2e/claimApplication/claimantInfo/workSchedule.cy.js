@@ -73,7 +73,7 @@ describe("Work Schedule page", () => {
     });
 
     it('should open FAQ, post data, and track when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
+      cy.checkNewHelpBehavior();
       cy.trackHelpClick(PAGE_ID);
     });
   });
