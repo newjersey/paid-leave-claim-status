@@ -52,7 +52,7 @@ export function identifyPage() {
 
     if (element) {
       const isVisible = element.offsetParent !== null;
-      const hasValue = value ? element.value === value : false;
+      const hasValue = value ? element.value.includes(value) : false;
 
       if (hasValue || (isVisible && element.textContent.includes(text))) {
         return id;

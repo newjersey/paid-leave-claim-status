@@ -9,5 +9,5 @@ export const id = "disabilityInformation";
 export const identifyingContent = {
   id,
   elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_ClientState',
-  value: '{"ActiveTabIndex":0,"TabState":[true,false,false,false,false,false]}',
+  value: '"TabState":[true,false,false,false,false,false]',
 };
