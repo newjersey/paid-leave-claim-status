@@ -1,3 +1,5 @@
+const PAGE_ID = 'workSchedule';
+
 describe("Work Schedule page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
@@ -28,6 +30,10 @@ describe("Work Schedule page", () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCFri').type('8');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_btnNextWrkSch').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it('should open FAQ and post data when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
     });
   });
 
@@ -60,6 +66,15 @@ describe("Work Schedule page", () => {
 
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();
+    });
+
+    it("tracks the page view", () => {
+      cy.trackPageView(PAGE_ID);
+    });
+
+    it('should open FAQ, post data, and track when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+      cy.trackHelpClick(PAGE_ID);
     });
   });
 });

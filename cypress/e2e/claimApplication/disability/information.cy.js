@@ -1,3 +1,5 @@
+const PAGE_ID = 'disabilityInformation';
+
 describe("Disability Information page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
@@ -25,6 +27,10 @@ describe("Disability Information page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').type("08/17/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_btnSubmitConflictCheck').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it('should open FAQ and post data when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
     });
   });
 
@@ -55,6 +61,20 @@ describe("Disability Information page", () => {
 
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();
+    });
+
+    it("tracks the page view", () => {
+      cy.trackPageView(PAGE_ID);
+    });
+
+    it('should open FAQ, post data, and track when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+      cy.trackHelpClick(PAGE_ID);
+    });
+
+    it("tracks that this page fixture has a validation error", () => {
+      const truncatedMessage = "PLEASE ANSWER THE FOLLOWING QUESTION(S). THEY MUST BE COMPLETED TO PROCEED:3a. Select the date you e";
+      cy.checkLogEvent("Validation Error", { contents: truncatedMessage });
     });
   });
 });

@@ -1,3 +1,5 @@
+const PAGE_ID = 'personalProfile';
+
 describe("Claimant Personal Profile page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
@@ -31,6 +33,10 @@ describe("Claimant Personal Profile page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnMailingYes').click();
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_btnCitiZen').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it('should open FAQ and post data when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
     });
   });
 
@@ -67,6 +73,15 @@ describe("Claimant Personal Profile page", () => {
 
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();
+    });
+
+    it("tracks the page view", () => {
+      cy.trackPageView(PAGE_ID);
+    });
+
+    it('should open FAQ, post data, and track when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+      cy.trackHelpClick(PAGE_ID);
     });
   });
 });

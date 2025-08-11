@@ -60,3 +60,37 @@ Cypress.Commands.add("checkFontFamily", () => {
       expect(fontFamily).to.contain('"Public Sans", sans-serif');
     });
 });
+
+Cypress.Commands.add("confirmEventIsNotTracked", (name) => {
+  cy.window().then((win) => {
+    const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
+    const loggedEvent = events.find(event => event.name === name);
+    expect(loggedEvent).to.be.undefined;
+  });
+});
+
+Cypress.Commands.add("checkLogEvent", (name, parameters) => {
+  cy.window().then((win) => {
+    const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
+    const loggedEvent = events.find(event => event.name === name);
+    expect(loggedEvent.parameters).to.deep.equal(parameters);
+  });
+});
+
+Cypress.Commands.add("trackPageView", (pageId) => {
+  cy.checkLogEvent(`${pageId} viewed`, {});
+});
+
+Cypress.Commands.add("trackHelpClick", (pageId) => {
+  cy.checkLogEvent(`Help Clicked`, { pageId });
+});
+
+Cypress.Commands.add("checkHelpButtonBehavior", () => {
+  cy.window().then(win => {
+    cy.stub(win, 'openFAQWindow').as('openFAQWindowStub');
+    cy.stub(win, '__doPostBack').as('doPostBackStub');
+  });
+  cy.get('#header_lbtnShowFAQ').click();
+  cy.get('@openFAQWindowStub').should('be.calledWithMatch', 'http://lwd.dol.state.nj.us/labor/tdi/content/webapplicationfaq.html');
+  cy.get('@doPostBackStub').should('be.calledWith', 'ctl00$header$lbtnShowFAQ', '');
+});

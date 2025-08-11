@@ -1,3 +1,5 @@
+const PAGE_ID = 'verifyEmployer';
+
 describe("Verify Employer page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
@@ -23,6 +25,10 @@ describe("Verify Employer page", () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectYes').click();
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelVerify_btnVer_Continue').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it('should open FAQ and post data when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
     });
   });
 
@@ -50,6 +56,15 @@ describe("Verify Employer page", () => {
 
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();
+    });
+
+    it("tracks the page view", () => {
+      cy.trackPageView(PAGE_ID);
+    });
+
+    it('should open FAQ, post data, and track when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+      cy.trackHelpClick(PAGE_ID);
     });
   });
 });

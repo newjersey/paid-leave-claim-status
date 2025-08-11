@@ -1,3 +1,5 @@
+const PAGE_ID = 'employerDetails';
+
 describe("Employment Details page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
@@ -31,6 +33,10 @@ describe("Employment Details page", () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('01/01/2022');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_btnNextEmpDet').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it('should open FAQ and post data when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
     });
   });
 
@@ -66,6 +72,15 @@ describe("Employment Details page", () => {
 
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();
+    });
+
+    it("tracks the page view", () => {
+      cy.trackPageView(PAGE_ID);
+    });
+
+    it('should open FAQ, post data, and track when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+      cy.trackHelpClick(PAGE_ID);
     });
   });
 });

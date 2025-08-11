@@ -32,11 +32,10 @@ function accessibilityContrast() {
     const computedStyle = window.getComputedStyle(element);
     const color = computedStyle.color;
 
-    if (
-      color === 'rgb(255, 0, 0)' || color.toLowerCase() === 'red' ||
-      color === 'rgb(128, 128, 128)' || color.toLowerCase() === 'gray'
-    ) {
-      element.style.color = 'black';
+    if (color === 'rgb(255, 0, 0)') {
+      element.style.color = 'rgb(139, 0, 0)';
+    } else if (color === 'rgb(128, 128, 128)') {
+      element.style.color = 'rgb(64, 64, 64)';
     }
   });
 }
