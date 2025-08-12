@@ -1,9 +1,9 @@
 import { logEvent } from "../modules/shared.mjs";
 
 export function globalDesignChanges(pageId) {
-  applyGlobalFont();
   replaceHeader();
   applyFooter(pageId);
+  applyGlobalFont();
 }
 
 function applyGlobalFont() {
@@ -27,13 +27,16 @@ function replaceHeader() {
       const alertBodyDiv = document.createElement('div');
       alertBodyDiv.classList.add('usa-alert__body');
 
-      const alertHeading = document.createElement('h4');
+      const alertHeading = document.createElement('p');
       alertHeading.classList.add('usa-alert__heading');
-      alertHeading.textContent = 'Informative status';
+      alertHeading.textContent = 'A new look is coming!';
 
       const alertText = document.createElement('p');
       alertText.classList.add('usa-alert__text');
-      alertText.innerHTML = 'Lorem ipsum dolor sit amet, <a class="usa-link" href="javascript:void(0);">consectetur adipiscing</a> elit, sed do eiusmod.';
+      alertText.innerHTML = `
+        You may notice design changes to the Temporary Disability Insurance application over the next few months.
+        <br>
+        <a href="">Dismiss</a>`;
 
       alertBodyDiv.append(alertHeading, alertText);
       bannerDiv.append(alertBodyDiv);
@@ -43,13 +46,10 @@ function replaceHeader() {
       styleElement.innerHTML = `
         .usa-alert--info::before {
           content: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0Ij48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6bTEgMTVoLTJ2LTZoMnY2em0wLThoLTJWN2gydjJ6Ii8+PC9zdmc+');
-          display: inline-block;
-          width: 1em;
-          height: 1em;
-          margin-right: 0.5em;
           background: none !important;
           -webkit-mask: none !important;
           mask: none !important;
+          top: auto !important;
         }
       `;
       document.head.appendChild(styleElement);
