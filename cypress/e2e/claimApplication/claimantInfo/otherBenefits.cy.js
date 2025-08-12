@@ -143,5 +143,9 @@ describe("Other Benefits page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
       cy.checkLogEvent(`Other Benefits Yes Clicked`, { otherBenefits: [ "another state", "employer/union", "social security", "ui" ] });
     });
+
+    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+      cy.infoAlert();
+    });
   });
 });

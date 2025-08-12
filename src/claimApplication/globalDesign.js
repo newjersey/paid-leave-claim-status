@@ -44,6 +44,7 @@ function newDesignAlert(bannerDiv) {
   }
 
   const alertDiv = document.createElement('div');
+  alertDiv.id = 'info-alert';
   alertDiv.classList.add('usa-alert', 'usa-alert--info');
 
   const alertBodyDiv = document.createElement('div');

@@ -82,5 +82,9 @@ describe("Employment Details page", () => {
       cy.checkNewHelpBehavior();
       cy.trackHelpClick(PAGE_ID);
     });
+
+    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+      cy.infoAlert();
+    });
   });
 });

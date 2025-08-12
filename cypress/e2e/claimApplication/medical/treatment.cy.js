@@ -96,5 +96,9 @@ describe("Medical Treatment page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc').click();
       cy.checkLogEvent("WorkersComp Yes Clicked", {});
     });
+
+    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+      cy.infoAlert();
+    });
   });
 });

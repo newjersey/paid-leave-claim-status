@@ -76,5 +76,9 @@ describe("Disability Information page", () => {
       const truncatedMessage = "PLEASE ANSWER THE FOLLOWING QUESTION(S). THEY MUST BE COMPLETED TO PROCEED:3a. Select the date you e";
       cy.checkLogEvent("Validation Error", { contents: truncatedMessage });
     });
+
+    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+      cy.infoAlert();
+    });
   });
 });
