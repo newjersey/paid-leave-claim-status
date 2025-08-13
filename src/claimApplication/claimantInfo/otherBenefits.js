@@ -11,10 +11,8 @@ export const identifyingContent = {
 function formFromCorrectPage(formData) {
   const clientStateString = formData.get('ContentPlaceHolder1_ClaimantDisabilityTab_ClientState');
   const clientState = clientStateString ? JSON.parse(clientStateString) : null;
-  const correctActiveTabIndex = 3;
   const correctTabState = [true, true, false, true, false, false];
   return clientState &&
-    clientState.ActiveTabIndex === correctActiveTabIndex &&
     JSON.stringify(clientState.TabState) === JSON.stringify(correctTabState);
 }
 
