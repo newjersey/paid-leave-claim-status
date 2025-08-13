@@ -56,11 +56,15 @@ function logoutHeader() {
   imgElement.style.marginRight = '18px';
 
   logoutHeader.appendChild(imgElement);
+
   var buttonElement = document.createElement('button');
+  buttonElement.style.display = 'flex';
+  buttonElement.style.alignItems = 'center';
   buttonElement.textContent = 'Logout';
   buttonElement.classList.add('usa-button', 'usa-button--outline');
 
   var iconElement = document.createElement('span');
+  iconElement.style.marginRight = '5px';
   iconElement.innerHTML = `
     <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
       <path d="M0 0h24v24H0z" fill="none"/>
