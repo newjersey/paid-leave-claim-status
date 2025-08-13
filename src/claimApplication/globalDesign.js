@@ -1,4 +1,4 @@
-import { logEvent } from "../modules/shared.mjs";
+import { HEADER_HTML, logEvent } from "../modules/shared.mjs";
 
 export function globalDesignChanges(pageId) {
   replaceHeader();
@@ -23,21 +23,20 @@ function replaceHeader() {
     if (bannerImage && logoImage && hasLogoutLink) {
       const bannerDiv = document.createElement('div');
 
-      const alertBodyDiv = newDesignAlert(bannerDiv);
+      const alertBodyDiv = newDesignAlert();
       if (alertBodyDiv) {
         bannerDiv.append(alertBodyDiv);
       }
 
-      const nonAlertContent = document.createElement('div');
-      nonAlertContent.textContent = 'Some header content that always displays.';
-      bannerDiv.append(nonAlertContent);
-
+      const header = document.createElement('div');
+      header.innerHTML = HEADER_HTML;
+      bannerDiv.append(header);
       table.replaceWith(bannerDiv);
     }
   });
 }
 
-function newDesignAlert(bannerDiv) {
+function newDesignAlert() {
   const isAlertDismissed = localStorage.getItem('newLookAlertDismissed');
   if (isAlertDismissed) {
     return null;
@@ -57,7 +56,7 @@ function newDesignAlert(bannerDiv) {
   const alertText = document.createElement('p');
   alertText.classList.add('usa-alert__text');
   alertText.innerHTML = `
-    You may notice design changes to the Temporary Disability Insurance application over the next few months.
+    You may notice changes to the New Jersey Temporary Disability Insurance application over the next few months.
     <br>
     <a href="#" id="dismiss-alert">Dismiss</a>`;
 
