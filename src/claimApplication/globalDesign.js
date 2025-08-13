@@ -41,6 +41,10 @@ function replaceHeader() {
 
 function logoutHeader() {
   const logoutHeader = document.createElement('div');
+  logoutHeader.style.display = 'flex';
+  logoutHeader.style.alignItems = 'center';
+  logoutHeader.style.justifyContent = 'space-between';
+  logoutHeader.style.width = '100%'
 
   var imgElement = document.createElement('img');
   imgElement.src = 'https://beta.nj.gov/files/dol_logo.png';
