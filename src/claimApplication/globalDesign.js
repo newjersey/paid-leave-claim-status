@@ -28,12 +28,32 @@ function replaceHeader() {
         bannerDiv.append(alertBodyDiv);
       }
 
-      const header = document.createElement('div');
-      header.innerHTML = HEADER_HTML;
-      bannerDiv.append(header);
+      const blackHeader = document.createElement('div');
+      blackHeader.innerHTML = HEADER_HTML;
+      bannerDiv.append(blackHeader);
+
+      bannerDiv.append(logoutHeader());
+
       table.replaceWith(bannerDiv);
     }
   });
+}
+
+function logoutHeader() {
+  const logoutHeader = document.createElement('div');
+
+  var imgElement = document.createElement('img');
+  imgElement.src = 'https://beta.nj.gov/files/dol_logo.png';
+  imgElement.height = 60;
+  imgElement.alt = 'Official logo for the New Jersey Department of Labor';
+  imgElement.style.marginTop = '36px';
+  imgElement.style.marginBottom = '8px';
+  imgElement.style.marginLeft = '18px';
+  imgElement.style.marginRight = '18px';
+
+  logoutHeader.appendChild(imgElement);
+
+  return logoutHeader;
 }
 
 function newDesignAlert() {
