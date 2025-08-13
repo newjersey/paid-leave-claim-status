@@ -60,7 +60,6 @@ function logoutHeader() {
   var buttonElement = document.createElement('button');
   buttonElement.style.display = 'flex';
   buttonElement.style.alignItems = 'center';
-  buttonElement.textContent = 'Logout';
   buttonElement.classList.add('usa-button', 'usa-button--outline');
 
   var iconElement = document.createElement('span');
@@ -73,6 +72,12 @@ function logoutHeader() {
   `;
 
   buttonElement.prepend(iconElement);
+
+  var textElement = document.createElement('span');
+  textElement.textContent = 'Logout';
+  textElement.style.marginTop = '3px';
+
+  buttonElement.appendChild(textElement);
 
   logoutHeader.appendChild(buttonElement);
 
