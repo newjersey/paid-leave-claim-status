@@ -50,7 +50,7 @@ function logoutHeader() {
   imgElement.src = 'https://beta.nj.gov/files/dol_logo.png';
   imgElement.height = 60;
   imgElement.alt = 'Official logo for the New Jersey Department of Labor';
-  imgElement.style.marginTop = '36px';
+  imgElement.style.marginTop = '8px';
   imgElement.style.marginBottom = '8px';
   imgElement.style.marginLeft = '18px';
   imgElement.style.marginRight = '18px';
