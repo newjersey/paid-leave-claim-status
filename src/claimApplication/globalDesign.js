@@ -166,6 +166,7 @@ export function createFooterElement(pageId) {
   footer.style.padding = `20px ${isDesktop() ? '54px' : '13px'}`;
   footer.style.borderTop = '1px solid #0b4778';
   footer.style.color = '#000000';
+  footer.style.margin = isDesktop() ? '20px 54px 40px' : '0';
 
   const h3 = document.createElement('h3');
   h3.style.margin = '0';
