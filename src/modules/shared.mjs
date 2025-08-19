@@ -293,7 +293,7 @@ export const FOOTER_HTML = html`
     <div
       style="display: grid; grid-template-columns: min-content auto; gap: 16px; margin-bottom: 8px"
     >
-      <div><img src="${ICON_BASE_URL}/phone.svg" alt="" /></div>
+      <div style="min-width: 20px;"><img src="${ICON_BASE_URL}/phone.svg" alt="" /></div>
       <div style="line-height: 21px">
         <strong>Call</strong> <a href="tel:609-292-7060">609-292-7060</a> |
         (8:00am - 4:30pm, Monday - Friday) Wait times are shortest Wednesday -

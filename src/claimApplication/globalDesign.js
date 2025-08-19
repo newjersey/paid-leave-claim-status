@@ -1,9 +1,14 @@
-import { HEADER_HTML, logEvent } from "../modules/shared.mjs";
+import { FOOTER_HTML, HEADER_HTML, logEvent } from "../modules/shared.mjs";
 
 export function globalDesignChanges(pageId) {
+  applyBackgroundColor();
   replaceHeader();
   applyFooter(pageId);
   applyGlobalFont();
+}
+
+function applyBackgroundColor() {
+  document.body.style.backgroundColor = "#FBFCFD";
 }
 
 function applyGlobalFont() {
@@ -137,6 +142,7 @@ function applyFooter(pageId) {
   const bodyContent = document.body;
   if (bodyContent) {
     const footerDiv = document.createElement('div');
+    footerDiv.innerHTML = FOOTER_HTML;
     footerDiv.appendChild(helpLink(pageId));
     bodyContent.appendChild(footerDiv);
   } else {
