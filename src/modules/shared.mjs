@@ -60,21 +60,11 @@ export function makeMobileFriendly() {
   }
 }
 
-export function addFeedbackLink() {
-  const feedbackUrl = "https://forms.office.com/g/mKz7hjnZ6N";
-  const aside = document.createElement("aside");
-  aside.innerHTML = `<a href="${feedbackUrl}" target="_blank" style="font-family: sans-serif; text-decoration: none; color: #ffffff">Give feedback</a>`;
-  aside.style.fontSize = "16px";
-  aside.style.lineHeight = "normal";
-  aside.style.backgroundColor = "#003366";
-  aside.style.padding = "8px 16px";
-  aside.style.borderRadius = "4px";
-  aside.style.position = "fixed";
-  aside.style.top = isDesktop() ? "15%" : "5%";
-  aside.style.right = "0px";
-  aside.style.transformOrigin = "bottom right";
-  aside.style.transform = "rotate(-90deg)";
-  document.body.appendChild(aside);
+export function addFeedbackWidgetScript() {
+  const feedbackWidgetScript = document.createElement('script');
+  feedbackWidgetScript.src = "https://unpkg.com/@newjersey/feedback-widget@0.6.0/feedback-widget.min.js";  
+  feedbackWidgetScript.defer = true;  
+  document.head.appendChild(feedbackWidgetScript);
 }
 
 export function updateDocument(title) {
@@ -270,7 +260,14 @@ export const HEADER_HTML = html`
   </header>
 `;
 
+export const FEEDBACK_WIDGET_HTML = html`
+  <feedback-widget
+    contact-link="https://www.example.com/contact"
+  ></feedback-widget>
+`
+
 export const FOOTER_HTML = html`
+  ${FEEDBACK_WIDGET_HTML}
   <footer
     id="helpSection"
     style="

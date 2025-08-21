@@ -2,7 +2,6 @@ import {
   logEvent,
   setupAnalytics,
   updateIcon,
-  addFeedbackLink,
   runWhenReady,
   makeMobileFriendly,
   styleBody,
@@ -38,7 +37,6 @@ function executeOverride() {
     addNewHtml(metadata);
 
     styleBody();
-    addFeedbackLink();
     updateIcon();
     updateDocument("Payments");
   } catch (e) {

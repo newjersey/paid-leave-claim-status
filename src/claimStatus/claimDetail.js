@@ -2,7 +2,6 @@ import {
   logEvent,
   setupAnalytics,
   updateIcon,
-  addFeedbackLink,
   html,
   makeMobileFriendly,
   styleBody,
@@ -41,7 +40,6 @@ function executeOverride() {
     addNewHtml(metadata);
 
     styleBody();
-    addFeedbackLink();
     updateIcon();
     updateDocument("Claim status details");
   } catch (e) {
