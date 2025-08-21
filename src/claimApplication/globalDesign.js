@@ -104,10 +104,14 @@ function newDesignAlert() {
 
   const alertHeading = document.createElement('p');
   alertHeading.classList.add('usa-alert__heading');
+  alertHeading.style.fontSize = '1.33rem';
+  alertHeading.style.fontWeight = 'bold';
   alertHeading.textContent = 'A new look is coming!';
 
   const alertText = document.createElement('p');
   alertText.classList.add('usa-alert__text');
+  alertText.style.fontSize = '1.06rem';
+  alertText.style.lineHeight = '1.5';
   alertText.innerHTML = `
     You may notice changes to the New Jersey Temporary Disability Insurance application over the next few months.
     <br>
@@ -147,18 +151,6 @@ function applyFooter(pageId) {
   }
 }
 
-function helpLink(pageId) {
-  const helpLink = document.createElement('a');
-  helpLink.id = 'footer_lbtnShowFAQ';
-  helpLink.href="javascript:__doPostBack('ctl00$header$lbtnShowFAQ','')"
-  helpLink.textContent = 'Help';
-  helpLink.onclick = function() {
-    logEvent('Help Clicked', { pageId });
-    return openFAQWindow('http://lwd.dol.state.nj.us/labor/tdi/content/webapplicationfaq.html#1');
-  };
-  return helpLink;
-}
-
 export function createFooterElement(pageId) {
   const footer = document.createElement('footer');
   footer.id = 'helpSection';
@@ -173,6 +165,9 @@ export function createFooterElement(pageId) {
   h3.style.fontSize = '22px';
   h3.style.lineHeight = '32px';
   h3.style.marginBottom = '8px';
+  h3.style.fontVariant = 'normal';
+  h3.style.fontWeight = 'bold';
+  h3.style.color = 'black';
   h3.textContent = 'Need help?';
   footer.appendChild(h3);
 
@@ -241,7 +236,7 @@ export function createFooterElement(pageId) {
   resourcesLink.innerHTML = "<strong>Helpful resources</strong>";
   
   resourcesLink.onclick = function () {
-    logEvent('Help Clicked', { pageId });
+    logEvent('FAQ Clicked', { pageId });
     return window.open('http://lwd.dol.state.nj.us/labor/tdi/content/webapplicationfaq.html#1');
   };
 
