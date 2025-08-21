@@ -20,10 +20,10 @@ describe("Payment Detail page - Leave Ended FLI", () => {
     
     cy.contains("Total payments issued: $4,366.00").should("be.visible");
     cy.get("#accordionFuture0id")
-      .contains("Next $770.00 to issue on August 13, 2025")
+      .contains("Next $770.00 to issue on August 13, 2035")
       .should("be.visible");
     cy.get("#accordionFuture0id")
-      .contains("Covers April 30, 2024 to May 5, 2024")
+      .contains("Covers April 30, 2034 to May 5, 2034")
       .should("be.visible");
 
     cy.get("#accordionPast0id")
@@ -92,10 +92,10 @@ describe("Payment Detail page - Leave Ended TDI", () => {
     
     cy.contains("Total payments issued: $4,366.00").should("be.visible");
     cy.get("#accordionFuture0id")
-      .contains("Next $770.00 to issue on August 13, 2025")
+      .contains("Next $770.00 to issue on August 13, 2035")
       .should("be.visible");
     cy.get("#accordionFuture0id")
-      .contains("Covers April 30, 2024 to May 5, 2024")
+      .contains("Covers April 30, 2034 to May 5, 2034")
       .should("be.visible");
   });
 
