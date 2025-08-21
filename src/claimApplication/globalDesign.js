@@ -49,7 +49,12 @@ function logoutHeader() {
   logoutHeader.style.display = 'flex';
   logoutHeader.style.alignItems = 'center';
   logoutHeader.style.justifyContent = 'space-between';
-  logoutHeader.style.width = '100%'
+  logoutHeader.style.width = '100%';
+
+  const logoTitleContainer = document.createElement('div');
+  logoTitleContainer.style.display = 'flex';
+  logoTitleContainer.style.alignItems = 'center';
+  logoTitleContainer.style.marginRight = '18px';
 
   var imgElement = document.createElement('img');
   imgElement.src = 'https://beta.nj.gov/files/dol_logo.png';
@@ -58,9 +63,21 @@ function logoutHeader() {
   imgElement.style.marginTop = '8px';
   imgElement.style.marginBottom = '8px';
   imgElement.style.marginLeft = '18px';
-  imgElement.style.marginRight = '18px';
+  imgElement.style.marginRight = '5px';
 
-  logoutHeader.appendChild(imgElement);
+  logoTitleContainer.appendChild(imgElement);
+
+  var title = document.createElement('h1');
+  title.style.fontVariant = 'normal';
+  title.style.color = 'black';
+  title.style.fontSize = '16px';
+  title.style.padding = '0';
+  title.style.margin = '0';
+  title.style.textAlign = 'left';
+  title.textContent = 'New Jersey Temporary Disability Insurance Application';
+  logoTitleContainer.appendChild(title);
+
+  logoutHeader.appendChild(logoTitleContainer);
 
   var buttonElement = document.createElement('button');
   buttonElement.style.display = 'flex';
@@ -85,6 +102,23 @@ function logoutHeader() {
   buttonElement.appendChild(textElement);
 
   logoutHeader.appendChild(buttonElement);
+
+  window.addEventListener('resize', adjustLayout);
+  adjustLayout();
+
+  function adjustLayout() {
+    if (window.innerWidth < 480) {
+      logoutHeader.style.flexDirection = 'column';
+      logoutHeader.style.alignItems = 'flex-start';
+      logoTitleContainer.style.marginBottom = '10px';
+      buttonElement.style.marginBottom = '10px';
+    } else {
+      logoutHeader.style.flexDirection = 'row';
+      logoutHeader.style.alignItems = 'center';
+      logoTitleContainer.style.marginBottom = '0';
+      buttonElement.style.marginBottom = '0';
+    }
+  }
 
   return logoutHeader;
 }
