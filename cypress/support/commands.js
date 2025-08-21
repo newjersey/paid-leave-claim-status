@@ -87,3 +87,32 @@ Cypress.Commands.add("checkHelpButtonBehavior", () => {
   cy.get('@openFAQWindowStub').should('be.calledWithMatch', 'http://lwd.dol.state.nj.us/labor/tdi/content/webapplicationfaq.html');
   cy.get('@doPostBackStub').should('be.calledWith', 'ctl00$header$lbtnShowFAQ', '');
 });
+
+Cypress.Commands.add("checkFeedbackWidgetIsRendered", () => {
+    cy.get("feedback-widget").should('have.length', 1)
+    cy.get("feedback-widget").within(() => {
+        cy.contains("Did you find what you were looking for on this page?").should('be.visible');
+    })
+})
+
+Cypress.Commands.add("checkFeedbackWidgetIsInteractable", () => {
+    const commentScreenTextMatcher = /what ideas come to mind/i
+    cy.intercept('POST', '**/rating', { message: "Success", feedbackId: "1"})
+      .as("postRating")
+
+    cy.get("feedback-widget").within(() => {
+      cy.contains(commentScreenTextMatcher).should('not.be.visible')
+    })
+
+    cy.get("feedback-widget")
+      .contains("button", /yes/i)
+      .click()
+
+    cy.wait("@postRating")
+      .its('request.body')
+      .should('have.property', 'rating', true)
+    
+    cy.get("feedback-widget").within(() => {
+      cy.contains(commentScreenTextMatcher).should('be.visible')
+  })
+})

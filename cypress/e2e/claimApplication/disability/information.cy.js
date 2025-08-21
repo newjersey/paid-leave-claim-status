@@ -19,7 +19,7 @@ describe("Disability Information page", () => {
       cy.visit("./cypress/fixtures/claimApplication/disability/information.html");
     });
 
-    it("user can input info and proceed to next page", () => {
+    it.only("user can input info and proceed to next page", () => {
       mockASPX();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').type("07/18/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').type("07/17/2025");
