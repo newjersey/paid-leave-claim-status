@@ -1,5 +1,8 @@
 describe("Payment Detail page - Leave Ended FLI", () => {
   it("renders with updated content", () => {
+    const fixedDate = new Date(2024, 9, 1); // October 1, 2024
+    cy.clock(fixedDate.getTime());
+
     cy.visit(
       "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html"
     );
@@ -57,6 +60,9 @@ describe("Payment Detail page - Leave Ended FLI", () => {
 });
 
 it("renders payment record accordion that opens and closes on click", () => {
+  const fixedDate = new Date(2024, 9, 1); // October 1, 2024
+  cy.clock(fixedDate.getTime());
+
   cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html");
 
   const accordionButton = cy.get("#accordionPast1id");
@@ -70,6 +76,9 @@ it("renders payment record accordion that opens and closes on click", () => {
 
 describe("Payment Detail page - Leave Ended TDI", () => {
   it("renders with updated content", () => {
+    const fixedDate = new Date(2024, 9, 1); // October 1, 2024
+    cy.clock(fixedDate.getTime());
+    
     cy.visit(
       "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedTDI.html"
     );
