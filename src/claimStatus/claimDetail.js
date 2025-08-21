@@ -6,7 +6,6 @@ import {
   makeMobileFriendly,
   styleBody,
   HEADER_HTML,
-  FOOTER_HTML,
   RETURN_TO_TOP_LINK,
   getClaimTypeContent,
   getUnstyledButtonHtml,
@@ -21,6 +20,8 @@ import {
   ICON_BASE_URL,
   PRIVATE_PLAN_STATUS,
   isFutureDate,
+  insertFooterAfter,
+  addFeedbackWidgetScriptToHead,
 } from "../modules/shared.mjs";
 import { Accordion } from "../modules/Accordion.mjs";
 
@@ -955,14 +956,15 @@ function addNewHtml(metadata) {
         : "13px"}; margin-bottom: 8px"
     >
       ${RETURN_TO_TOP_LINK}
-    </div>
-    ${FOOTER_HTML}`;
+    </div>`;
 
   root.append(newContainer);
   const accordions = document.querySelectorAll(".accordion-header");
   accordions.forEach((accordionEl) => {
     new Accordion(accordionEl, true);
   });
+
+  insertFooterAfter(root)
 }
 
 function logView(metadata) {

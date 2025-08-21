@@ -60,7 +60,7 @@ export function makeMobileFriendly() {
   }
 }
 
-export function addFeedbackWidgetScript() {
+export function addFeedbackWidgetScriptToHead() {
   const feedbackWidgetScript = document.createElement('script');
   feedbackWidgetScript.src = "https://unpkg.com/@newjersey/feedback-widget@0.6.0/feedback-widget.min.js";  
   feedbackWidgetScript.defer = true;  
@@ -260,15 +260,21 @@ export const HEADER_HTML = html`
   </header>
 `;
 
+export const RETURN_TO_TOP_LINK = html`<a
+  href="#header"
+  style="font-size: 16px; color: #0b4778; text-underline-offset: 2.5px"
+  >Return to top</a
+>`;
+
 export const FEEDBACK_WIDGET_HTML = html`
   <feedback-widget
     contact-link="https://www.example.com/contact"
   ></feedback-widget>
 `
 
-export const FOOTER_HTML = html`
+export const FOOTER_INNER_HTML = html`
   ${FEEDBACK_WIDGET_HTML}
-  <footer
+  <section
     id="helpSection"
     style="
       background-color: #eff6fb;
@@ -327,14 +333,24 @@ export const FOOTER_HTML = html`
       Due to technical constraints, you can access this claim status checker
       8:00am - 4:30pm, Monday - Friday.
     </div>
-  </footer>
+  </section>
 `;
 
-export const RETURN_TO_TOP_LINK = html`<a
-  href="#header"
-  style="font-size: 16px; color: #0b4778; text-underline-offset: 2.5px"
-  >Return to top</a
->`;
+export function insertFooterAfter(beforeElement) {
+  addFeedbackWidgetScriptToHead();
+  const footer = document.createElement("footer");
+  footer.innerHTML = FOOTER_INNER_HTML;
+  beforeElement?.after(footer);
+}
+
+
+export function insertFeedbackWidgetAfter(beforeElement) {
+  addFeedbackWidgetScriptToHead();
+  const div = document.createElement("div");
+  div.innerHTML = FEEDBACK_WIDGET_HTML;
+  beforeElement?.after(div);
+}
+
 
 export function getUnstyledButtonHtml(label, onClick) {
   return html` <button

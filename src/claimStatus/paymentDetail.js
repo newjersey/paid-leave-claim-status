@@ -14,10 +14,10 @@ import {
   getUnstyledButtonHtml,
   getClaimTypeContent,
   RETURN_TO_TOP_LINK,
-  FOOTER_HTML,
   getFormattedDate,
   isFutureDate,
   extractDateFromString,
+  insertFooterAfter,
 } from "../modules/shared.mjs";
 import { Accordion } from "../modules/Accordion.mjs";
 
@@ -275,14 +275,15 @@ function addNewHtml(metadata) {
         : "13px"}; margin-bottom: 8px"
     >
       ${RETURN_TO_TOP_LINK}
-    </div>
-    ${FOOTER_HTML}`;
+    </div>`;
 
   root.append(newContainer);
   const accordions = document.querySelectorAll(".accordion-header");
   accordions.forEach((accordionEl) => {
     new Accordion(accordionEl);
   });
+
+  insertFooterAfter(root)
 }
 
 function getParsedStatus(status) {

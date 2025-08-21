@@ -6,7 +6,7 @@ import {
   styleBody,
   html,
   HEADER_HTML,
-  FOOTER_HTML,
+  FOOTER_INNER_HTML,
   RETURN_TO_TOP_LINK,
   getClaimTypeContent,
   getClaimStatus,
@@ -17,7 +17,7 @@ import {
   runWhenReady,
   updateDocument,
   ICON_BASE_URL,
-  addFeedbackWidgetScript,
+  insertFooterAfter,
 } from "../modules/shared.mjs";
 
 runWhenReady(executeOverride);
@@ -35,7 +35,6 @@ function executeOverride() {
     addNewHtml(metadata);
 
     styleBody();
-    addFeedbackWidgetScript();
     updateIcon();
     updateDocument("Check claim status");
   } catch (e) {
@@ -81,7 +80,7 @@ function getClaimHandler(seqNum, type, status) {
 
 function addNewHtml(metadata) {
   const { name, claims } = metadata;
-  const claimListForm = document.getElementsByName("claimlist")[0];
+  const root = document.getElementsByName("claimlist")[0];
   const newContainer = document.createElement("div");
   const now = new Date();
   const [recentClaims, oldClaims] = partition(claims, (e) => {
@@ -259,10 +258,9 @@ function addNewHtml(metadata) {
     >
       ${RETURN_TO_TOP_LINK}
     </div>`;
-  claimListForm?.append(newContainer); // doesn't work
-  const footerContainer = document.createElement("div");
-  footerContainer.innerHTML = FOOTER_HTML;
-  claimListForm?.after(footerContainer)
+  root?.append(newContainer);
+
+  insertFooterAfter(root)
 }
 
 function logView(allClaims = []) {
