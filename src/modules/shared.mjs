@@ -343,14 +343,6 @@ export function insertFooterAfterElem(beforeElement) {
   beforeElement?.after(footer);
 }
 
-
-export function insertFeedbackWidgetAfterElem(beforeElement) {
-  addFeedbackWidgetScriptToHead();
-  const div = document.createElement("div");
-  div.innerHTML = FEEDBACK_WIDGET_HTML;
-  beforeElement?.after(div);
-}
-
 export function getUnstyledButtonHtml(label, onClick) {
   return html` <button
     onclick="${onClick}"

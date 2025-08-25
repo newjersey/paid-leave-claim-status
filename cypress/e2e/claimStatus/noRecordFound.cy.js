@@ -17,19 +17,5 @@ describe("No Record Found page", () => {
     cy.visit("./cypress/fixtures/claimStatus/noRecordFound/noRecordFound.html");
     cy.checkBodyA11y();
   });
-
-  describe("feedback widget", () => {
-    it("renders the feedback widget", () => {
-      cy.visit("./cypress/fixtures/claimStatus/noRecordFound/noRecordFound.html")
-      
-      cy.checkFeedbackWidgetIsRendered()
-    })
-
-    it("calls the /rating endpoint when the 'Yes' button is clicked and displays the next screen", () => {
-      cy.visit("./cypress/fixtures/claimStatus/claimList/claimList.html")
-
-      cy.checkFeedbackWidgetIsInteractable()
-    })
-  })
 });
 
