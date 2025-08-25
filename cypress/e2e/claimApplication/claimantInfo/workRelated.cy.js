@@ -80,9 +80,9 @@ describe("Work Related page", () => {
       cy.trackPageView(PAGE_ID);
     });
 
-    it('should open FAQ, post data, and track when the Help link is clicked', () => {
-      cy.checkNewHelpBehavior();
-      cy.trackHelpClick(PAGE_ID);
+    it('should open FAQ and track when clicked', () => {
+      cy.checkFAQBehavior();
+      cy.trackFAQClick(PAGE_ID);
     });
 
     it('clicks Dismiss on the info alert, alert hides and does not return', () => {

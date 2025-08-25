@@ -3,7 +3,6 @@ import { isDesktop, ICON_BASE_URL, HEADER_HTML, logEvent } from "../modules/shar
 export function globalDesignChanges(pageId) {
   applyBackgroundColor();
   replaceHeader();
-  removeOldStepTitle();
   applyFooter(pageId);
   adjustTabHeights();
   applyGlobalFont();
@@ -49,14 +48,25 @@ function replaceHeader() {
 
       bannerDiv.append(logoutHeader());
 
-      bannerDiv.append(createStepIndicator());
+      const stepIndicator = createStepIndicator();
+      if (stepIndicator) {
+        bannerDiv.append(stepIndicator);
+        replaceStepTitle();
+      } else {
+        bannerDiv.append();
+        replaceStepTitle(true);
+      }
 
       table.replaceWith(bannerDiv);
     }
   });
 }
 
-function removeOldStepTitle() {
+function capitalizeFirstLetterOfEachWord(text) {
+  return text.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+}
+
+function replaceStepTitle(singleStep = false) {
   // HACK: this element has no ID so selecting it is complicated
   const tables = document.querySelectorAll('table');
   tables.forEach(table => {
@@ -64,9 +74,17 @@ function removeOldStepTitle() {
     if (tbody) {
       const tr = tbody.querySelector('tr');
       if (tr && tr.style.backgroundColor === 'rgb(0, 191, 255)') {
-        const td = tr.querySelector('td');
-        if (td && td.querySelector('a')) {
-          table.remove();
+        if (tr.querySelector('td')) {
+          const stepTitleText = tr.textContent;
+          tr.remove();
+          if (singleStep) {
+            const stepTitle = document.createElement('h2');
+            stepTitle.style.fontVariant = 'normal';
+            stepTitle.style.color = 'black';
+            stepTitle.style.textAlign = 'center';
+            stepTitle.textContent = capitalizeFirstLetterOfEachWord(stepTitleText);
+            tbody.prepend(stepTitle);
+          }
         }
       }
     }
@@ -75,6 +93,10 @@ function removeOldStepTitle() {
 
 function createStepIndicator() {
   const inputs = document.querySelectorAll('table input[type="submit"][id*="header"]');
+
+  if (inputs.length === 0) {
+    return null;
+  }
 
   const steps = Array.from(inputs).map(input => input.value);
   const activeIndex = Array.from(inputs).findIndex(input => input.style.fontWeight === 'bold');
@@ -122,8 +144,8 @@ function createStepIndicator() {
   const header = document.createElement('div');
   header.className = 'usa-step-indicator__header';
 
-  const h4 = document.createElement('h4');
-  h4.className = 'usa-step-indicator__heading';
+  const title = document.createElement('h2');
+  title.className = 'usa-step-indicator__heading';
 
   const counterSpan = document.createElement('span');
   counterSpan.className = 'usa-step-indicator__heading-counter';
@@ -144,14 +166,14 @@ function createStepIndicator() {
   totalStepsSpan.textContent = `of ${steps.length}`;
   counterSpan.appendChild(totalStepsSpan);
 
-  h4.appendChild(counterSpan);
+  title.appendChild(counterSpan);
 
   const textSpan = document.createElement('span');
   textSpan.className = 'usa-step-indicator__heading-text';
   textSpan.textContent = steps[activeIndex];
-  h4.appendChild(textSpan);
+  title.appendChild(textSpan);
 
-  header.appendChild(h4);
+  header.appendChild(title);
   stepIndicator.appendChild(header);
 
   return stepIndicator;
@@ -298,7 +320,7 @@ function applyFooter(pageId) {
   }
 }
 
-export function createFooterElement(pageId) {
+function createFooterElement(pageId) {
   const footer = document.createElement('footer');
   footer.id = 'helpSection';
   footer.style.backgroundColor = '#eff6fb';
@@ -307,16 +329,16 @@ export function createFooterElement(pageId) {
   footer.style.color = '#000000';
   footer.style.margin = isDesktop() ? '20px 54px 40px' : '0';
 
-  const h3 = document.createElement('h3');
-  h3.style.margin = '0';
-  h3.style.fontSize = '22px';
-  h3.style.lineHeight = '32px';
-  h3.style.marginBottom = '8px';
-  h3.style.fontVariant = 'normal';
-  h3.style.fontWeight = 'bold';
-  h3.style.color = 'black';
-  h3.textContent = 'Need help?';
-  footer.appendChild(h3);
+  const title = document.createElement('h2');
+  title.style.margin = '0';
+  title.style.fontSize = '22px';
+  title.style.lineHeight = '32px';
+  title.style.marginBottom = '8px';
+  title.style.fontVariant = 'normal';
+  title.style.fontWeight = 'bold';
+  title.style.color = 'black';
+  title.textContent = 'Need help?';
+  footer.appendChild(title);
 
   const gridDiv = document.createElement('div');
   gridDiv.style.display = 'grid';
@@ -377,6 +399,7 @@ export function createFooterElement(pageId) {
   resourcesDiv.style.lineHeight = '21px';
   
   const resourcesLink = document.createElement('a');
+  resourcesLink.id = "resourcesLink";
   resourcesLink.href = "https://www.nj.gov/labor/myleavebenefits/worker/resources/";
   resourcesLink.target = "_blank";
   resourcesLink.style.textUnderlineOffset = '2px';
