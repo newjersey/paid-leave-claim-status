@@ -80,7 +80,8 @@ function createStepIndicator() {
   const activeIndex = Array.from(inputs).findIndex(input => input.style.fontWeight === 'bold');
 
   const stepIndicator = document.createElement('div');
-  stepIndicator.className = 'usa-step-indicator';
+  stepIndicator.className = 'usa-step-indicator--no-labels';
+  stepIndicator.style.padding = '10px';
 
   const ol = document.createElement('ol');
   ol.className = 'usa-step-indicator__segments';
@@ -134,6 +135,7 @@ function createStepIndicator() {
 
   const currentStepSpan = document.createElement('span');
   currentStepSpan.className = 'usa-step-indicator__current-step';
+  currentStepSpan.style.marginRight = '10px';
   currentStepSpan.textContent = activeIndex + 1;
   counterSpan.appendChild(currentStepSpan);
 
