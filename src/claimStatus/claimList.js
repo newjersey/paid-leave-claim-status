@@ -17,7 +17,7 @@ import {
   runWhenReady,
   updateDocument,
   ICON_BASE_URL,
-  insertFooterAfter,
+  insertFooterAfterElem,
 } from "../modules/shared.mjs";
 
 runWhenReady(executeOverride);
@@ -260,7 +260,7 @@ function addNewHtml(metadata) {
     </div>`;
   root?.append(newContainer);
 
-  insertFooterAfter(root)
+  insertFooterAfterElem(root)
 }
 
 function logView(allClaims = []) {

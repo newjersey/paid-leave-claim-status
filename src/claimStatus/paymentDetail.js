@@ -17,7 +17,7 @@ import {
   getFormattedDate,
   isFutureDate,
   extractDateFromString,
-  insertFooterAfter,
+  insertFooterAfterElem,
 } from "../modules/shared.mjs";
 import { Accordion } from "../modules/Accordion.mjs";
 
@@ -283,7 +283,7 @@ function addNewHtml(metadata) {
     new Accordion(accordionEl);
   });
 
-  insertFooterAfter(root)
+  insertFooterAfterElem(root)
 }
 
 function getParsedStatus(status) {

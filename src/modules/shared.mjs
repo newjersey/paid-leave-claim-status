@@ -336,7 +336,7 @@ export const FOOTER_INNER_HTML = html`
   </section>
 `;
 
-export function insertFooterAfter(beforeElement) {
+export function insertFooterAfterElem(beforeElement) {
   addFeedbackWidgetScriptToHead();
   const footer = document.createElement("footer");
   footer.innerHTML = FOOTER_INNER_HTML;
@@ -344,13 +344,12 @@ export function insertFooterAfter(beforeElement) {
 }
 
 
-export function insertFeedbackWidgetAfter(beforeElement) {
+export function insertFeedbackWidgetAfterElem(beforeElement) {
   addFeedbackWidgetScriptToHead();
   const div = document.createElement("div");
   div.innerHTML = FEEDBACK_WIDGET_HTML;
   beforeElement?.after(div);
 }
-
 
 export function getUnstyledButtonHtml(label, onClick) {
   return html` <button

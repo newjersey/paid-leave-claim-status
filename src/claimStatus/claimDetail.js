@@ -20,7 +20,7 @@ import {
   ICON_BASE_URL,
   PRIVATE_PLAN_STATUS,
   isFutureDate,
-  insertFooterAfter,
+  insertFooterAfterElem,
   addFeedbackWidgetScriptToHead,
 } from "../modules/shared.mjs";
 import { Accordion } from "../modules/Accordion.mjs";
@@ -964,7 +964,7 @@ function addNewHtml(metadata) {
     new Accordion(accordionEl, true);
   });
 
-  insertFooterAfter(root)
+  insertFooterAfterElem(root)
 }
 
 function logView(metadata) {
