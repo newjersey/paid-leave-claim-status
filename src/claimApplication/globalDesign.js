@@ -5,6 +5,7 @@ export function globalDesignChanges(pageId) {
   replaceHeader();
   applyFooter(pageId);
   applyGlobalFont();
+  adjustTabHeights();
 }
 
 function applyBackgroundColor() {
@@ -280,4 +281,13 @@ export function createFooterElement(pageId) {
   footer.appendChild(gridDiv);
 
   return footer;
+}
+
+function adjustTabHeights() {
+  const targetElements = document.querySelectorAll('div.ajax__tab_header span.ajax__tab_tab');
+  targetElements.forEach(element => {
+    if (element.id.includes('__tab_ContentPlaceHolder1')) {
+      element.style.height = '20px';
+    }
+  });
 }
