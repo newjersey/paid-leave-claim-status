@@ -3,6 +3,7 @@ import { isDesktop, ICON_BASE_URL, HEADER_HTML, logEvent } from "../modules/shar
 export function globalDesignChanges(pageId) {
   applyBackgroundColor();
   replaceHeader();
+  removeOldStepTitle();
   applyFooter(pageId);
   applyGlobalFont();
   adjustTabHeights();
@@ -40,9 +41,110 @@ function replaceHeader() {
 
       bannerDiv.append(logoutHeader());
 
+      bannerDiv.append(createStepIndicator());
+
       table.replaceWith(bannerDiv);
     }
   });
+}
+
+function removeOldStepTitle() {
+  // HACK: this element has no ID so selecting it is complicated
+  const tables = document.querySelectorAll('table');
+  tables.forEach(table => {
+    const tbody = table.querySelector('tbody');
+    if (tbody) {
+      const tr = tbody.querySelector('tr');
+      if (tr && tr.style.backgroundColor === 'rgb(0, 191, 255)') {
+        const td = tr.querySelector('td');
+        if (td && td.querySelector('a')) {
+          table.remove();
+        }
+      }
+    }
+  });
+}
+
+function createStepIndicator() {
+  const inputs = document.querySelectorAll('table input[type="submit"][id*="header"]');
+
+  const steps = Array.from(inputs).map(input => input.value);
+  const activeIndex = Array.from(inputs).findIndex(input => input.style.fontWeight === 'bold');
+
+  const stepIndicator = document.createElement('div');
+  stepIndicator.className = 'usa-step-indicator';
+
+  const ol = document.createElement('ol');
+  ol.className = 'usa-step-indicator__segments';
+
+  steps.forEach((step, index) => {
+    const li = document.createElement('li');
+    li.className = 'usa-step-indicator__segment';
+
+    if (index < activeIndex) {
+      li.classList.add('usa-step-indicator__segment--complete');
+    } else if (index === activeIndex) {
+      li.classList.add('usa-step-indicator__segment--current');
+      li.setAttribute('aria-current', 'true');
+    }
+
+    const span = document.createElement('span');
+    span.className = 'usa-step-indicator__segment-label';
+    span.textContent = step;
+
+    if (index < activeIndex) {
+      const srSpan = document.createElement('span');
+      srSpan.className = 'usa-sr-only';
+      srSpan.textContent = 'completed';
+      span.appendChild(srSpan);
+    } else if (index > activeIndex) {
+      const srSpan = document.createElement('span');
+      srSpan.className = 'usa-sr-only';
+      srSpan.textContent = 'not completed';
+      span.appendChild(srSpan);
+    }
+
+    li.appendChild(span);
+    ol.appendChild(li);
+  });
+
+  stepIndicator.appendChild(ol);
+
+  const header = document.createElement('div');
+  header.className = 'usa-step-indicator__header';
+
+  const h4 = document.createElement('h4');
+  h4.className = 'usa-step-indicator__heading';
+
+  const counterSpan = document.createElement('span');
+  counterSpan.className = 'usa-step-indicator__heading-counter';
+
+  const srSpanStep = document.createElement('span');
+  srSpanStep.className = 'usa-sr-only';
+  srSpanStep.textContent = 'Step';
+  counterSpan.appendChild(srSpanStep);
+
+  const currentStepSpan = document.createElement('span');
+  currentStepSpan.className = 'usa-step-indicator__current-step';
+  currentStepSpan.textContent = activeIndex + 1;
+  counterSpan.appendChild(currentStepSpan);
+
+  const totalStepsSpan = document.createElement('span');
+  totalStepsSpan.className = 'usa-step-indicator__total-steps';
+  totalStepsSpan.textContent = `of ${steps.length}`;
+  counterSpan.appendChild(totalStepsSpan);
+
+  h4.appendChild(counterSpan);
+
+  const textSpan = document.createElement('span');
+  textSpan.className = 'usa-step-indicator__heading-text';
+  textSpan.textContent = steps[activeIndex];
+  h4.appendChild(textSpan);
+
+  header.appendChild(h4);
+  stepIndicator.appendChild(header);
+
+  return stepIndicator;
 }
 
 function logoutHeader() {
