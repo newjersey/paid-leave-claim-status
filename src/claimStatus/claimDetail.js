@@ -21,7 +21,6 @@ import {
   PRIVATE_PLAN_STATUS,
   isFutureDate,
   insertFooterAfterElem,
-  addFeedbackWidgetScriptToHead,
 } from "../modules/shared.mjs";
 import { Accordion } from "../modules/Accordion.mjs";
 
