@@ -5,8 +5,16 @@ export function globalDesignChanges(pageId) {
   replaceHeader();
   removeOldStepTitle();
   applyFooter(pageId);
-  applyGlobalFont();
   adjustTabHeights();
+  applyGlobalFont();
+  applyFontVariantNormal();
+}
+
+function applyFontVariantNormal() {
+  const headings = document.querySelectorAll('h1, h2, h3, h4');
+  headings.forEach(heading => {
+    heading.style.fontVariant = 'normal';
+  });
 }
 
 function applyBackgroundColor() {
