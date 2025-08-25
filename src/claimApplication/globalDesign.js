@@ -63,7 +63,7 @@ function logoutHeader() {
   imgElement.style.marginTop = '8px';
   imgElement.style.marginBottom = '8px';
   imgElement.style.marginLeft = '18px';
-  imgElement.style.marginRight = '5px';
+  imgElement.style.marginRight = '10px';
 
   logoTitleContainer.appendChild(imgElement);
 
