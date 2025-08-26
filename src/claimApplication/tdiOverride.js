@@ -4,6 +4,7 @@ import { accessibilityChanges } from './accessibility.js';
 import { analyticsChanges } from './analytics.js';
 import { globalDesignChanges } from './globalDesign.js';
 import { identifyPage } from './identifyPage.js';
+import { pageSpecificChanges } from './pageSpecificChanges.js';
 
 if (document.readyState === "loading") {
   window.addEventListener("DOMContentLoaded", () => {
@@ -24,4 +25,5 @@ function executeOverride() {
   accessibilityChanges();
   analyticsChanges(pageId);
   globalDesignChanges(pageId);
+  pageSpecificChanges(pageId);
 }

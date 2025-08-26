@@ -54,8 +54,7 @@ describe("Certification page", () => {
       cy.checkFontFamily();
     });
 
-    xit("passes accessibility checks", () => {
-      // this page has strange h4's that will be fixed later
+    it("passes accessibility checks", () => {
       cy.checkBodyA11y();
     });
 
