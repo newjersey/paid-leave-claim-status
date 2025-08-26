@@ -27,6 +27,16 @@ describe("Disability Verification page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkOldLogout();
+    });
+
+    it("user can cancel logging out", () => {
+      mockASPX();
+      cy.checkOldLogoutCancel();
+    });
+
     it('should open FAQ and post data when the Help link is clicked', () => {
       cy.checkHelpButtonBehavior();
     });
@@ -60,6 +70,16 @@ describe("Disability Verification page", () => {
 
     it("tracks the page view", () => {
       cy.trackPageView(PAGE_ID);
+    });
+
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkNewLogout();
+    });
+
+    it("user can cancel logging out", () => {
+      mockASPX();
+      cy.checkNewLogoutCancel();
     });
 
     it('should open FAQ and track when clicked', () => {

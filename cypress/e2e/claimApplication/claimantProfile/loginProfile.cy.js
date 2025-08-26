@@ -26,6 +26,11 @@ describe("Login Profile page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkOldLogout();
+    });
+
     it('should open FAQ and post data when the Help link is clicked', () => {
       cy.checkHelpButtonBehavior();
     });
@@ -59,6 +64,11 @@ describe("Login Profile page", () => {
 
     it("tracks the page view", () => {
       cy.trackPageView(PAGE_ID);
+    });
+
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkNewLogout();
     });
 
     it('should open FAQ and track when clicked', () => {
