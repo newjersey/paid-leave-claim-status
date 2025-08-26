@@ -1,33 +1,6 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-
 Cypress.Commands.add("checkBodyA11y", () => {
   cy.injectAxe();
 
-  // Assert
   cy.checkA11y("body", {
     rules: {
       region: { enabled: false }, // Disable rule because can't control top-level elements easily
@@ -117,4 +90,31 @@ Cypress.Commands.add("infoAlert", () => {
   cy.get('#info-alert').should('not.be.visible');
   cy.reload();
   cy.get('#info-alert').should('not.exist');
+});
+
+function checkLogoutData(interception) {
+  const formData = interception.request.body;
+  expect(formData).to.include('__EVENTTARGET=ctl00%24header%24lbtnLogout');
+}
+
+Cypress.Commands.add("checkOldLogout", () => {
+  cy.get('#header_lbtnLogout').click();
+  cy.wait('@aspxSubmission').then(checkLogoutData);
+});
+
+Cypress.Commands.add("checkOldLogoutCancel", () => {
+  cy.on('window:confirm', () => false);
+  cy.get('#header_lbtnLogout').click();
+  cy.get('@aspxSubmission').should('not.exist');
+});
+
+Cypress.Commands.add("checkNewLogout", () => {
+  cy.get('#logoutButton').click();
+  cy.wait('@aspxSubmission').then(checkLogoutData);
+});
+
+Cypress.Commands.add("checkNewLogoutCancel", () => {
+  cy.on('window:confirm', () => false);
+  cy.get('#logoutButton').click();
+  cy.get('@aspxSubmission').should('not.exist');
 });

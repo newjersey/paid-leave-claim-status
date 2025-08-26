@@ -8,11 +8,6 @@ describe("Certification page", () => {
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertStatus=&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertFDD=07%2F15%2F2025&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24rbAgree=rbtnAgYes&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24btnConfirm=File+My+Claim');
   }
 
-  function checkLogoutData(interception) {
-    const formData = interception.request.body;
-    expect(formData).to.include('__EVENTTARGET=ctl00%24header%24lbtnLogout');
-  }
-
   function mockASPX() {
     cy.intercept('POST', '**/ClaimantCertification.aspx',
       { statusCode: 200, headers: { 'content-type': 'text/html' } }
@@ -34,15 +29,12 @@ describe("Certification page", () => {
 
     it("user can log out", () => {
       mockASPX();
-      cy.get('#header_lbtnLogout').click();
-      cy.wait('@aspxSubmission').then(checkLogoutData);
+      cy.checkOldLogout();
     });
 
     it("user can cancel logging out", () => {
       mockASPX();
-      cy.on('window:confirm', () => false);
-      cy.get('#header_lbtnLogout').click();
-      cy.get('@aspxSubmission').should('not.exist');
+      cy.checkOldLogoutCancel();
     });
 
     it('should open FAQ and post data when the Help link is clicked', () => {
@@ -91,15 +83,12 @@ describe("Certification page", () => {
 
     it("user can log out", () => {
       mockASPX();
-      cy.get('#logoutButton').click();
-      cy.wait('@aspxSubmission').then(checkLogoutData);
+      cy.checkNewLogout();
     });
 
     it("user can cancel logging out", () => {
       mockASPX();
-      cy.on('window:confirm', () => false);
-      cy.get('#logoutButton').click();
-      cy.get('@aspxSubmission').should('not.exist');
+      cy.checkNewLogoutCancel();
     });
   });
 });
