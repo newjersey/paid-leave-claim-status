@@ -214,10 +214,11 @@ function logoutHeader() {
 
   logoutHeader.appendChild(logoTitleContainer);
 
-  var buttonElement = document.createElement('button');
-  buttonElement.style.display = 'flex';
-  buttonElement.style.alignItems = 'center';
-  buttonElement.classList.add('usa-button', 'usa-button--outline');
+  var logoutButton = document.createElement('button');
+  logoutButton.id = 'logoutButton';
+  logoutButton.style.display = 'flex';
+  logoutButton.style.alignItems = 'center';
+  logoutButton.classList.add('usa-button', 'usa-button--outline');
 
   var iconElement = document.createElement('span');
   iconElement.style.marginRight = '5px';
@@ -228,15 +229,22 @@ function logoutHeader() {
     </svg>
   `;
 
-  buttonElement.prepend(iconElement);
+  logoutButton.prepend(iconElement);
 
   var textElement = document.createElement('span');
   textElement.textContent = 'Logout';
   textElement.style.marginTop = '3px';
 
-  buttonElement.appendChild(textElement);
+  logoutButton.appendChild(textElement);
 
-  logoutHeader.appendChild(buttonElement);
+  logoutButton.addEventListener('click', function (event) {
+    event.preventDefault();
+    if (confirmLogout()) {
+      __doPostBack('ctl00$header$lbtnLogout', '');
+    }
+  });
+
+  logoutHeader.appendChild(logoutButton);
 
   window.addEventListener('resize', adjustLayout);
   adjustLayout();
@@ -246,12 +254,12 @@ function logoutHeader() {
       logoutHeader.style.flexDirection = 'column';
       logoutHeader.style.alignItems = 'flex-start';
       logoTitleContainer.style.marginBottom = '10px';
-      buttonElement.style.marginBottom = '10px';
+      logoutButton.style.marginBottom = '10px';
     } else {
       logoutHeader.style.flexDirection = 'row';
       logoutHeader.style.alignItems = 'center';
       logoTitleContainer.style.marginBottom = '0';
-      buttonElement.style.marginBottom = '0';
+      logoutButton.style.marginBottom = '0';
     }
   }
 
