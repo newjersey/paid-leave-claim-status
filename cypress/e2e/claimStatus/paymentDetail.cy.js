@@ -419,10 +419,15 @@ describe("feedback widget", () => {
   })
 
   it("calls the /rating endpoint when the 'Yes' button is clicked and displays the next screen", () => {
-    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html")
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html")
 
     cy.get("footer").within(() => {
       cy.checkFeedbackWidgetIsInteractable()
     })
+  })
+
+   it("displays the overridden version of the email disclaimer text", () => {
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html")
+    cy.checkFeedbackWidgetEmailDisclaimerTextIsOverridden()
   })
 })

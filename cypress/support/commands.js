@@ -116,3 +116,27 @@ Cypress.Commands.add("checkFeedbackWidgetIsInteractable", () => {
       cy.contains(commentScreenTextMatcher).should('be.visible')
   })
 })
+
+Cypress.Commands.add("checkFeedbackWidgetEmailDisclaimerTextIsOverridden", () => {
+    cy.intercept('POST', '**/rating', { message: "Success", feedbackId: "test"})
+      .as("postRating")
+    cy.intercept('POST', '**/comment', { message: "Success", feedbackId: "test"})
+      .as("postComment")
+
+    
+    cy.get("feedback-widget").within(() => {
+      cy.contains("button", /yes/i)
+        .click()
+      cy.wait("@postRating")
+
+      const commentDisclaimerText = /what ideas come to mind/i
+      cy.contains(commentDisclaimerText).should("be.visible")
+      cy.get("textarea").type("i am a comment")
+      cy.contains("button", /send feedback/i).click()
+      cy.wait("@postComment")
+
+      cy.contains("label", /email address/i).should("be.visible")
+      const expectedEmailDisclaimerText = "To hear about feedback opportunities in the future, join our user testing list."
+      cy.contains(expectedEmailDisclaimerText).should("be.visible")
+  })
+})

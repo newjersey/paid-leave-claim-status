@@ -227,4 +227,9 @@ describe("feedback widget", () => {
       cy.checkFeedbackWidgetIsInteractable()
     })
   })
+
+  it("displays the overridden version of the email disclaimer text", () => {
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html")
+    cy.checkFeedbackWidgetEmailDisclaimerTextIsOverridden()
+  })
 })

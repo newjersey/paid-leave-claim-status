@@ -336,11 +336,22 @@ export const FOOTER_INNER_HTML = html`
   </section>
 `;
 
+export async function overrideFeedbackWidgetEmailDisclaimerText() {
+  await waitForElement("#emailPrompt")
+  const emailDislaimerTextParagraphElement = document.querySelector("#emailPrompt p.disclaimer-text")
+  if (emailDislaimerTextParagraphElement != null) {
+    emailDislaimerTextParagraphElement.textContent = "To hear about feedback opportunities in the future, join our user testing list."
+  }
+  console.log( { emailDislaimerTextParagraphElement })
+}
+
+
 export function insertFooterAfterElem(beforeElement) {
   addFeedbackWidgetScriptToHead();
   const footer = document.createElement("footer");
   footer.innerHTML = FOOTER_INNER_HTML;
   beforeElement?.after(footer);
+  overrideFeedbackWidgetEmailDisclaimerText()
 }
 
 export function getUnstyledButtonHtml(label, onClick) {
@@ -362,4 +373,26 @@ export function getUnstyledButtonHtml(label, onClick) {
   >
     ${label}
   </button>`;
+}
+
+// from https://stackoverflow.com/questions/5525071/how-to-wait-until-an-element-exists
+function waitForElement(selector) {
+    return new Promise(resolve => {
+        if (document.querySelector(selector)) {
+            return resolve(document.querySelector(selector));
+        }
+
+        const observer = new MutationObserver(mutations => {
+            if (document.querySelector(selector)) {
+                observer.disconnect();
+                resolve(document.querySelector(selector));
+            }
+        });
+
+        // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    });
 }
