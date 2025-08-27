@@ -268,7 +268,7 @@ export const RETURN_TO_TOP_LINK = html`<a
 
 export const FEEDBACK_WIDGET_HTML = html`
   <feedback-widget
-    contact-link="https://www.example.com/contact"
+    contact-link="https://www.nj.gov/labor/myleavebenefits/help/contact/"
   ></feedback-widget>
 `
 
