@@ -25,18 +25,29 @@ export function replaceHeader() {
       if (stepIndicator) {
         bannerDiv.append(stepIndicator);
         replaceStepTitle();
+        replaceTabs();
       } else {
-        bannerDiv.append();
         replaceStepTitle(true);
       }
 
-      table.replaceWith(bannerDiv);
+      table.replaceWith(bannerDiv); // TODO rename
     }
   });
 }
 
+function replaceTabs() {
+  const tabsDiv = document.querySelector('.ajax__tab_header');
+  if (tabsDiv) {
+    const activeTab = tabsDiv.querySelector('.ajax__tab_active');
+    if (activeTab) {
+      const activeTabText = activeTab.textContent;
+      tabsDiv.replaceWith(newStepTitle(activeTabText));
+    }
+  }
+}
+
 function replaceStepTitle(singleStep = false) {
-  // HACK: this element has no ID so selecting it is complicated
+  // HACK: this element has no ID or class so selecting it is complicated
   const tables = document.querySelectorAll('table');
   tables.forEach(table => {
     const tbody = table.querySelector('tbody');
