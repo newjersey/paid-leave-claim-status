@@ -1,7 +1,20 @@
 import { HEADER_HTML } from "../modules/shared.mjs";
 
 export function replaceHeader() {
+  resetHeader();
+  hideLogoHeader();
+  hideSectionTitle();
+  hideTabs();
+}
+
+function resetHeader() {
+  const existingHeader = document.getElementById('headerContainer');
+  if (existingHeader) {
+    existingHeader.remove();
+  }
+
   const newHeader = document.createElement('div');
+  newHeader.id = 'headerContainer';
 
   newHeader.append(createDolNameHeader());
 
@@ -28,13 +41,9 @@ export function replaceHeader() {
   newHeader.append(newPageTitle(activeTabTitle || sectionTitle));
 
   document.body.prepend(newHeader);
-
-  removeLogoHeader();
-  removeSectionTitle();
-  hideTabs();
 }
 
-function removeLogoHeader() {
+function hideLogoHeader() {
   const tables = document.querySelectorAll('#form1 > table');
   tables.forEach(table => {
     const bannerImage = Array.from(table.querySelectorAll('img')).find(img => img.src.includes('lwd_banner.jpg'));
@@ -42,7 +51,7 @@ function removeLogoHeader() {
     const hasLogoutLink = table.querySelector('a#header_lbtnLogout');
 
     if (bannerImage && logoImage && hasLogoutLink) {
-      table.remove();
+      table.style.display = 'none';
     }
   });
 }
@@ -74,6 +83,7 @@ function createBackButton() {
         const tabLink = previousTab.querySelector('a');
         if (tabLink) {
           tabLink.click();
+          resetHeader();
         }
       });
 
@@ -119,10 +129,10 @@ function getSectionTitleElement() {
   return null;
 }
 
-function removeSectionTitle() {
+function hideSectionTitle() {
   const table = getSectionTitleElement();
   if (table) {
-    table.remove();
+    table.style.display = 'none';
   }
 }
 
