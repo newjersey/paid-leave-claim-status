@@ -47,17 +47,22 @@ function replaceStepTitle(singleStep = false) {
           const stepTitleText = tr.textContent;
           tr.remove();
           if (singleStep) {
-            const stepTitle = document.createElement('h2');
-            stepTitle.style.fontVariant = 'normal';
-            stepTitle.style.color = 'black';
-            stepTitle.style.textAlign = 'center';
-            stepTitle.textContent = capitalizeFirstLetterOfEachWord(stepTitleText);
-            tbody.prepend(stepTitle);
+            tbody.prepend(newStepTitle(stepTitleText));
           }
         }
       }
     }
   });
+}
+
+function newStepTitle(text) {
+  const stepTitle = document.createElement('h1');
+  stepTitle.style.fontVariant = 'normal';
+  stepTitle.style.fontWeight = 'bold';
+  stepTitle.style.color = 'black';
+  stepTitle.style.textAlign = 'left';
+  stepTitle.textContent = capitalizeFirstLetterOfEachWord(text);
+  return stepTitle;
 }
 
 function createStepIndicator() {
@@ -113,7 +118,7 @@ function createStepIndicator() {
   const header = document.createElement('div');
   header.className = 'usa-step-indicator__header';
 
-  const title = document.createElement('h2');
+  const title = document.createElement('div');
   title.className = 'usa-step-indicator__heading';
 
   const counterSpan = document.createElement('span');
@@ -171,7 +176,7 @@ function logoutHeader() {
 
   logoTitleContainer.appendChild(imgElement);
 
-  var title = document.createElement('h1');
+  var title = document.createElement('p');
   title.style.fontVariant = 'normal';
   title.style.color = 'black';
   title.style.fontSize = '16px';
