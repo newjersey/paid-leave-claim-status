@@ -1,12 +1,11 @@
 
 import { applyFooter } from "./footer.js";
-import { adjustTabHeights, replaceHeader } from "./header.js";
+import { replaceHeader } from "./header.js";
 
 export function globalDesignChanges(pageId) {
   applyBackgroundColor();
   replaceHeader();
   applyFooter(pageId);
-  adjustTabHeights();
   applyGlobalFont();
   applyFontVariantNormal();
 }

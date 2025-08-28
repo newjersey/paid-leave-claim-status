@@ -1,6 +1,40 @@
 import { HEADER_HTML } from "../modules/shared.mjs";
 
 export function replaceHeader() {
+  const newHeader = document.createElement('div');
+
+  newHeader.append(createDolNameHeader());
+
+  const alertBodyDiv = newDesignAlert();
+  if (alertBodyDiv) {
+    newHeader.append(alertBodyDiv);
+  }
+
+  newHeader.append(createTitleHeader());
+
+  const backButton = createBackButton();
+  if (backButton) {
+    newHeader.append(backButton);
+  }
+
+  const stepIndicator = createStepIndicator();
+  if (stepIndicator) {
+    newHeader.append(stepIndicator);
+  }
+
+  const activeTabTitle = getActiveTabTitle();
+  const sectionTitle = getSectionTitle();
+  
+  newHeader.append(newPageTitle(activeTabTitle || sectionTitle));
+
+  document.body.prepend(newHeader);
+
+  removeLogoHeader();
+  removeSectionTitle();
+  hideTabs();
+}
+
+function removeLogoHeader() {
   const tables = document.querySelectorAll('#form1 > table');
   tables.forEach(table => {
     const bannerImage = Array.from(table.querySelectorAll('img')).find(img => img.src.includes('lwd_banner.jpg'));
@@ -8,65 +42,100 @@ export function replaceHeader() {
     const hasLogoutLink = table.querySelector('a#header_lbtnLogout');
 
     if (bannerImage && logoImage && hasLogoutLink) {
-      const bannerDiv = document.createElement('div');
-
-      const alertBodyDiv = newDesignAlert();
-      if (alertBodyDiv) {
-        bannerDiv.append(alertBodyDiv);
-      }
-
-      const blackHeader = document.createElement('div');
-      blackHeader.innerHTML = HEADER_HTML;
-      bannerDiv.append(blackHeader);
-
-      bannerDiv.append(logoutHeader());
-
-      const stepIndicator = createStepIndicator();
-      if (stepIndicator) {
-        bannerDiv.append(stepIndicator);
-        replaceStepTitle();
-        replaceTabs();
-      } else {
-        replaceStepTitle(true);
-      }
-
-      table.replaceWith(bannerDiv); // TODO rename
+      table.remove();
     }
   });
 }
 
-function replaceTabs() {
+function createDolNameHeader() {
+  const dolNameHeader = document.createElement('div');
+  dolNameHeader.innerHTML = HEADER_HTML;
+  return dolNameHeader;
+}
+
+
+function createBackButton() {
+  const tabsDiv = document.querySelector('.ajax__tab_header');
+  if (tabsDiv) {
+    const allTabs = Array.from(tabsDiv.children);
+
+    const selectableTabs = allTabs.filter(tab =>
+      !tab.classList.contains('ajax__tab_disabled') && !tab.classList.contains('ajax__tab_active')
+    );
+
+    if (selectableTabs.length > 0) {
+      const previousTab = selectableTabs[selectableTabs.length - 1];
+      const backButton = document.createElement('button');
+      backButton.className = 'usa-button usa-button--unstyled';
+      backButton.type = 'button';
+      backButton.textContent = 'Back';
+
+      backButton.addEventListener('click', () => {
+        const tabLink = previousTab.querySelector('a');
+        if (tabLink) {
+          tabLink.click();
+        }
+      });
+
+
+      return backButton;
+    }
+  }
+
+  return null;
+}
+
+function getActiveTabTitle() {
   const tabsDiv = document.querySelector('.ajax__tab_header');
   if (tabsDiv) {
     const activeTab = tabsDiv.querySelector('.ajax__tab_active');
     if (activeTab) {
-      const activeTabText = activeTab.textContent;
-      tabsDiv.replaceWith(newStepTitle(activeTabText));
+      return activeTab.textContent;
     }
+  }
+
+  return null;
+}
+
+function hideTabs() {
+  const tabsDiv = document.querySelector('.ajax__tab_header');
+  if (tabsDiv) {
+    tabsDiv.style.display = 'none';
   }
 }
 
-function replaceStepTitle(singleStep = false) {
+function getSectionTitleElement() {
   // HACK: this element has no ID or class so selecting it is complicated
   const tables = document.querySelectorAll('table');
-  tables.forEach(table => {
+  for (let table of tables) {
     const tbody = table.querySelector('tbody');
     if (tbody) {
       const tr = tbody.querySelector('tr');
-      if (tr && tr.style.backgroundColor === 'rgb(0, 191, 255)') {
-        if (tr.querySelector('td')) {
-          const stepTitleText = tr.textContent;
-          tr.remove();
-          if (singleStep) {
-            tbody.prepend(newStepTitle(stepTitleText));
-          }
-        }
+      if (tr && tr.style.backgroundColor === 'rgb(0, 191, 255)' && tr.querySelector('td')) {
+        return table;
       }
     }
-  });
+  }
+  return null;
 }
 
-function newStepTitle(text) {
+function removeSectionTitle() {
+  const table = getSectionTitleElement();
+  if (table) {
+    table.remove();
+  }
+}
+
+function getSectionTitle() {
+  const table = getSectionTitleElement();
+  if (table) {
+    const tr = table.querySelector('tbody tr');
+    return tr ? tr.textContent.trim() : null;
+  }
+  return null;
+}
+
+function newPageTitle(text) {
   const stepTitle = document.createElement('h1');
   stepTitle.style.fontVariant = 'normal';
   stepTitle.style.fontWeight = 'bold';
@@ -164,12 +233,12 @@ function createStepIndicator() {
   return stepIndicator;
 }
 
-function logoutHeader() {
-  const logoutHeader = document.createElement('div');
-  logoutHeader.style.display = 'flex';
-  logoutHeader.style.alignItems = 'center';
-  logoutHeader.style.justifyContent = 'space-between';
-  logoutHeader.style.width = '100%';
+function createTitleHeader() {
+  const titleHeader = document.createElement('div');
+  titleHeader.style.display = 'flex';
+  titleHeader.style.alignItems = 'center';
+  titleHeader.style.justifyContent = 'space-between';
+  titleHeader.style.width = '100%';
 
   const logoTitleContainer = document.createElement('div');
   logoTitleContainer.style.display = 'flex';
@@ -197,7 +266,7 @@ function logoutHeader() {
   title.textContent = 'New Jersey Temporary Disability Insurance Application';
   logoTitleContainer.appendChild(title);
 
-  logoutHeader.appendChild(logoTitleContainer);
+  titleHeader.appendChild(logoTitleContainer);
 
   var logoutButton = document.createElement('button');
   logoutButton.id = 'logoutButton';
@@ -229,26 +298,26 @@ function logoutHeader() {
     }
   });
 
-  logoutHeader.appendChild(logoutButton);
+  titleHeader.appendChild(logoutButton);
 
   window.addEventListener('resize', adjustLayout);
   adjustLayout();
 
   function adjustLayout() {
     if (window.innerWidth < 480) {
-      logoutHeader.style.flexDirection = 'column';
-      logoutHeader.style.alignItems = 'flex-start';
+      titleHeader.style.flexDirection = 'column';
+      titleHeader.style.alignItems = 'flex-start';
       logoTitleContainer.style.marginBottom = '10px';
       logoutButton.style.marginBottom = '10px';
     } else {
-      logoutHeader.style.flexDirection = 'row';
-      logoutHeader.style.alignItems = 'center';
+      titleHeader.style.flexDirection = 'row';
+      titleHeader.style.alignItems = 'center';
       logoTitleContainer.style.marginBottom = '0';
       logoutButton.style.marginBottom = '0';
     }
   }
 
-  return logoutHeader;
+  return titleHeader;
 }
 
 function newDesignAlert() {
@@ -302,15 +371,6 @@ function newDesignAlert() {
   document.head.appendChild(styleElement);
   
   return alertDiv;
-}
-
-export function adjustTabHeights() {
-  const targetElements = document.querySelectorAll('div.ajax__tab_header span.ajax__tab_tab');
-  targetElements.forEach(element => {
-    if (element.id.includes('__tab_ContentPlaceHolder1')) {
-      element.style.height = '20px';
-    }
-  });
 }
 
 function capitalizeFirstLetterOfEachWord(text) {
