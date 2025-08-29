@@ -347,13 +347,13 @@ function newDesignAlert() {
 
   const alertHeading = document.createElement('p');
   alertHeading.classList.add('usa-alert__heading');
-  alertHeading.style.fontSize = '1.33rem';
+  alertHeading.style.fontSize = '16px';
   alertHeading.style.fontWeight = 'bold';
   alertHeading.textContent = 'A new look is coming!';
 
   const alertText = document.createElement('p');
   alertText.classList.add('usa-alert__text');
-  alertText.style.fontSize = '1.06rem';
+  alertText.style.fontSize = '16px';
   alertText.style.lineHeight = '1.5';
   alertText.innerHTML = `
     You may notice changes to the New Jersey Temporary Disability Insurance application over the next few months.
