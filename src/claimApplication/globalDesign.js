@@ -32,6 +32,7 @@ function injectGlobalStyles() {
       width: auto;
     }
     form, #headerWithMargin {
+      color: black;
       margin-left: 142px;
       margin-right: 142px;
     }
