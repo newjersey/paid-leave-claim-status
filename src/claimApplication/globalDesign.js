@@ -3,27 +3,36 @@ import { applyFooter } from "./footer.js";
 import { replaceHeader } from "./header.js";
 
 export function globalDesignChanges(pageId) {
-  applyBackgroundColor();
   replaceHeader();
   applyFooter(pageId);
-  applyGlobalFont();
-  applyFontVariantNormal();
+  injectGlobalStyles();
+  styleButtons();
 }
 
-function applyFontVariantNormal() {
-  const headings = document.querySelectorAll('h1, h2, h3, h4');
-  headings.forEach(heading => {
-    heading.style.fontVariant = 'normal';
-  });
+function injectGlobalStyles() {
+  const style = document.createElement('style');
+  style.innerHTML = `
+    body {
+      background-color: #FBFCFD;
+    }
+    h1, h2, h3, h4, p, .ajax__tab_xp .ajax__tab_body {
+      font-family: "Public Sans", sans-serif;
+      font-variant: normal;
+    }
+    #ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment {
+      font-family: "Public Sans", sans-serif;
+      font-variant: normal;
+      font-size: 16pt;
+    }
+    .usa-button {
+      padding: 0 1.25rem;
+    }
+  `;
+  document.head.appendChild(style);
 }
 
-function applyBackgroundColor() {
-  document.body.style.backgroundColor = "#FBFCFD";
-}
-
-function applyGlobalFont() {
-  document.body.style.fontFamily = '"Public Sans", sans-serif';
-  document.querySelectorAll('*').forEach(element => {
-    element.style.fontFamily = '"Public Sans", sans-serif';
+function styleButtons() {
+  document.querySelectorAll('button, input[type="submit"]').forEach(button => {
+    button.classList.add('usa-button');
   });
 }
