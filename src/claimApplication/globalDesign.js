@@ -3,10 +3,18 @@ import { applyFooter } from "./footer.js";
 import { replaceHeader } from "./header.js";
 
 export function globalDesignChanges(pageId) {
+  addViewportMetaTag();
   replaceHeader();
   applyFooter(pageId);
   injectGlobalStyles();
   styleButtons();
+}
+
+function addViewportMetaTag() {
+  const metaTag = document.createElement('meta');
+  metaTag.name = 'viewport';
+  metaTag.content = 'width=device-width, initial-scale=1.0';
+  document.head.appendChild(metaTag);
 }
 
 function injectGlobalStyles() {

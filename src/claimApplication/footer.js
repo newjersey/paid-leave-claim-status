@@ -13,7 +13,8 @@ function createFooterElement(pageId) {
   const footer = document.createElement('footer');
   footer.id = 'helpSection';
   footer.style.backgroundColor = '#eff6fb';
-  footer.style.padding = `20px ${isDesktop() ? '54px' : '13px'}`;
+  const horizontalPadding = isDesktop() ? '54px' : '13px';
+  footer.style.padding = `20px ${horizontalPadding} 50px ${horizontalPadding}`;
   footer.style.border = '0.5px solid #565C65';
   footer.style.color = '#000000';
   footer.style.margin = '0';
