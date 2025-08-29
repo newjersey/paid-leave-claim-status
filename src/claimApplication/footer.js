@@ -16,7 +16,7 @@ function createFooterElement(pageId) {
   footer.style.padding = `20px ${isDesktop() ? '54px' : '13px'}`;
   footer.style.border = '0.5px solid #565C65';
   footer.style.color = '#000000';
-  footer.style.margin = isDesktop() ? '20px 54px 40px' : '0';
+  footer.style.margin = '0';
 
   const title = document.createElement('h2');
   title.style.margin = '0';
