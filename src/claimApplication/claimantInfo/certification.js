@@ -13,17 +13,23 @@ export const identifyingContent = {
 
 export function changes() {
   addStyles();
+  convertBodyTextFromH4();
+}
 
+function convertBodyTextFromH4() {
   const h4Elements = document.querySelectorAll('h4');
 
-  h4Elements.forEach((h4) => {
-    const p = document.createElement('p');
-    p.innerHTML = h4.innerHTML;
-    Array.from(h4.attributes).forEach(attr => {
-      p.setAttribute(attr.name, attr.value);
-    });
-    h4.parentNode.replaceChild(p, h4);
-  });
+  const newParagraph = document.createElement('p');
+  newParagraph.style.margin = '0';
+  newParagraph.innerHTML = `
+    By agreeing:<br><br>
+    I declare that the foregoing information is to the best of my knowledge and belief true, correct, and complete.<br><br>
+    I understand that I must contact the Division of Temporary Disability Insurance to report any circumstance that may change my entitlement to benefits.<br><br>
+    I hereby authorize the Division of Temporary Disability Insurance to verify my Social Security Number, and obtain any medical, employment, and Social Security benefit entitlement information that is necessary to determine my eligibility for benefits.
+  `;
+
+  h4Elements[0].parentNode.replaceChild(newParagraph, h4Elements[0]);
+  h4Elements[1].parentNode.removeChild(h4Elements[1]);
 }
 
 function addStyles() {
