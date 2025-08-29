@@ -1,10 +1,70 @@
 import { HEADER_HTML } from "../modules/shared.mjs";
 
 export function replaceHeader() {
+  addHeaderStyling();
   resetHeader();
   hideLogoHeader();
   hideSectionTitle();
   hideTabs();
+}
+
+function addHeaderStyling() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    #headerWithMargin {
+      margin-left: 142px;
+      margin-right: 142px;
+    }
+
+    #pageTitle {
+      margin-bottom: 20px;
+    }
+    
+    #titleHeader {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    #logoTitleContainer {
+      display: flex;
+      align-items: center;
+      margin-right: 18px;
+    }
+
+    #logoutButton {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.25rem;
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 767px) {
+      #headerWithMargin {
+        margin-left: 20px;
+        margin-right: 20px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #titleHeader {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      
+      #logoTitleContainer {
+        margin-bottom: 10px;
+      }
+      
+      #logoutButton {
+        margin-bottom: 10px;
+        width: 100%;
+      }
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 function resetHeader() {
@@ -157,13 +217,14 @@ function getSectionTitle() {
 }
 
 function newPageTitle(text) {
-  const stepTitle = document.createElement('h1');
-  stepTitle.style.fontVariant = 'normal';
-  stepTitle.style.fontWeight = 'bold';
-  stepTitle.style.color = 'black';
-  stepTitle.style.textAlign = 'left';
-  stepTitle.textContent = capitalizeFirstLetterOfEachWord(text);
-  return stepTitle;
+  const pageTitle = document.createElement('h1');
+  pageTitle.id = 'pageTitle';
+  pageTitle.style.fontVariant = 'normal';
+  pageTitle.style.fontWeight = 'bold';
+  pageTitle.style.color = 'black';
+  pageTitle.style.textAlign = 'left';
+  pageTitle.textContent = capitalizeFirstLetterOfEachWord(text);
+  return pageTitle;
 }
 
 function createStepIndicator() {
@@ -255,12 +316,14 @@ function createStepIndicator() {
 
 function createTitleHeader() {
   const titleHeader = document.createElement('div');
+  titleHeader.id = 'titleHeader';
   titleHeader.style.display = 'flex';
   titleHeader.style.alignItems = 'center';
   titleHeader.style.justifyContent = 'space-between';
   titleHeader.style.width = '100%';
 
   const logoTitleContainer = document.createElement('div');
+  logoTitleContainer.id = 'logoTitleContainer';
   logoTitleContainer.style.display = 'flex';
   logoTitleContainer.style.alignItems = 'center';
   logoTitleContainer.style.marginRight = '18px';
@@ -289,9 +352,6 @@ function createTitleHeader() {
 
   var logoutButton = document.createElement('button');
   logoutButton.id = 'logoutButton';
-  logoutButton.style.display = 'flex';
-  logoutButton.style.alignItems = 'center';
-  logoutButton.style.padding = '0.75rem 1.25rem';
   logoutButton.classList.add('usa-button', 'usa-button--outline');
 
   var iconElement = document.createElement('span');
@@ -319,23 +379,6 @@ function createTitleHeader() {
   });
 
   titleHeader.appendChild(logoutButton);
-
-  window.addEventListener('resize', adjustLayout);
-  adjustLayout();
-
-  function adjustLayout() {
-    if (window.innerWidth < 480) {
-      titleHeader.style.flexDirection = 'column';
-      titleHeader.style.alignItems = 'flex-start';
-      logoTitleContainer.style.marginBottom = '10px';
-      logoutButton.style.marginBottom = '10px';
-    } else {
-      titleHeader.style.flexDirection = 'row';
-      titleHeader.style.alignItems = 'center';
-      logoTitleContainer.style.marginBottom = '0';
-      logoutButton.style.marginBottom = '0';
-    }
-  }
 
   return titleHeader;
 }
