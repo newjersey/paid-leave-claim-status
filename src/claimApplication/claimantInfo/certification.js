@@ -12,6 +12,8 @@ export const identifyingContent = {
 };
 
 export function changes() {
+  addStyles();
+
   const h4Elements = document.querySelectorAll('h4');
 
   h4Elements.forEach((h4) => {
@@ -22,4 +24,14 @@ export function changes() {
     });
     h4.parentNode.replaceChild(p, h4);
   });
+}
+
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    #divPdd legend {
+      color: black !important;
+    }
+  `;
+  document.head.appendChild(style);
 }
