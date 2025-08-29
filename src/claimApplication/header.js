@@ -88,6 +88,7 @@ function createBackButton() {
       backButton.className = 'usa-button usa-button--unstyled';
       backButton.type = 'button';
       backButton.textContent = '< Back';
+      backButton.style.padding = '20px 0';
 
       backButton.addEventListener('click', () => {
         const tabLink = previousTab.querySelector('a');
@@ -177,7 +178,6 @@ function createStepIndicator() {
 
   const stepIndicator = document.createElement('div');
   stepIndicator.className = 'usa-step-indicator--no-labels';
-  stepIndicator.style.padding = '10px';
 
   const ol = document.createElement('ol');
   ol.className = 'usa-step-indicator__segments';
@@ -271,7 +271,6 @@ function createTitleHeader() {
   imgElement.alt = 'Official logo for the New Jersey Department of Labor';
   imgElement.style.marginTop = '8px';
   imgElement.style.marginBottom = '8px';
-  imgElement.style.marginLeft = '18px';
   imgElement.style.marginRight = '10px';
 
   logoTitleContainer.appendChild(imgElement);
