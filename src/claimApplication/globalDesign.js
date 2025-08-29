@@ -19,10 +19,10 @@ function injectGlobalStyles() {
       font-family: "Public Sans", sans-serif;
       font-variant: normal;
     }
-    #ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment {
-      font-family: "Public Sans", sans-serif;
-      font-variant: normal;
-      font-size: 16pt;
+    .ajax__tab_panel {
+      font-family: "Public Sans", sans-serif !important;
+      font-variant: normal !important;
+      font-size: 16pt !important;
     }
     .usa-button {
       padding: 0 1.25rem;
@@ -34,5 +34,7 @@ function injectGlobalStyles() {
 function styleButtons() {
   document.querySelectorAll('button, input[type="submit"]').forEach(button => {
     button.classList.add('usa-button');
+    button.style.width = null;
+    button.style.height = null;
   });
 }
