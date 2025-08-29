@@ -31,6 +31,11 @@ function injectGlobalStyles() {
     .usa-button.btnConfirm {
       width: auto;
     }
+
+    form .ajax__tab_xp .ajax__tab_body {
+      border: none;
+    }
+
     form {
       color: black;
       margin-left: 142px;
