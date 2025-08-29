@@ -16,29 +16,39 @@ function resetHeader() {
   const newHeader = document.createElement('div');
   newHeader.id = 'headerContainer';
 
-  newHeader.append(createDolNameHeader());
+  const fullWidthHeader = document.createElement('div');
+  fullWidthHeader.id = 'fullWidthHeader';
+
+  fullWidthHeader.append(createDolNameHeader());
 
   const alertBodyDiv = newDesignAlert();
   if (alertBodyDiv) {
-    newHeader.append(alertBodyDiv);
+    fullWidthHeader.append(alertBodyDiv);
   }
 
-  newHeader.append(createTitleHeader());
+  newHeader.append(fullWidthHeader);
+
+  const headerWithMargin = document.createElement('div');
+  headerWithMargin.id = 'headerWithMargin';
+
+  headerWithMargin.append(createTitleHeader());
 
   const backButton = createBackButton();
   if (backButton) {
-    newHeader.append(backButton);
+    headerWithMargin.append(backButton);
   }
 
   const stepIndicator = createStepIndicator();
   if (stepIndicator) {
-    newHeader.append(stepIndicator);
+    headerWithMargin.append(stepIndicator);
   }
 
   const activeTabTitle = getActiveTabTitle();
   const sectionTitle = getSectionTitle();
   
-  newHeader.append(newPageTitle(activeTabTitle || sectionTitle));
+  headerWithMargin.append(newPageTitle(activeTabTitle || sectionTitle));
+
+  newHeader.append(headerWithMargin);
 
   document.body.prepend(newHeader);
 }

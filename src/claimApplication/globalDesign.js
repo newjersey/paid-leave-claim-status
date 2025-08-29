@@ -31,14 +31,14 @@ function injectGlobalStyles() {
     .usa-button.btnConfirm {
       width: auto;
     }
-    form {
+    form, #headerWithMargin {
       margin-left: 142px;
       margin-right: 142px;
     }
 
     /* Media query for mobile devices */
     @media (max-width: 767px) {
-      form {
+      form, #headerWithMargin {
         margin-left: 20px;
         margin-right: 20px;
       }
