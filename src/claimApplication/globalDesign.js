@@ -31,6 +31,9 @@ function injectGlobalStyles() {
     .usa-button.btnConfirm {
       width: auto;
     }
+    #logoutButton {
+      padding: 0.75rem 1.25rem;
+    }
   `;
   document.head.appendChild(style);
 }
