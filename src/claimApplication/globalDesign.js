@@ -22,10 +22,14 @@ function injectGlobalStyles() {
     .ajax__tab_panel {
       font-family: "Public Sans", sans-serif !important;
       font-variant: normal !important;
-      font-size: 16pt !important;
+      font-size: 16px !important;
     }
     .usa-button {
       padding: 0 1.25rem;
+      width: auto;
+    }
+    .usa-button.btnConfirm {
+      width: auto;
     }
   `;
   document.head.appendChild(style);
