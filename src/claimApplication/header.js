@@ -77,7 +77,7 @@ function createBackButton() {
       const backButton = document.createElement('button');
       backButton.className = 'usa-button usa-button--unstyled';
       backButton.type = 'button';
-      backButton.textContent = 'Back';
+      backButton.textContent = '< Back';
 
       backButton.addEventListener('click', () => {
         const tabLink = previousTab.querySelector('a');
