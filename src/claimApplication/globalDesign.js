@@ -47,6 +47,11 @@ function injectGlobalStyles() {
         margin-left: 20px;
         margin-right: 20px;
       }
+
+      .usa-button {
+        min-height: 40px;
+        width: 100%;
+      }
     }
   `;
   document.head.appendChild(style);
