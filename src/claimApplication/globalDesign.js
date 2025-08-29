@@ -15,7 +15,7 @@ function injectGlobalStyles() {
     body {
       background-color: #FBFCFD;
     }
-    h1, h2, h3, h4, p, .ajax__tab_xp .ajax__tab_body {
+    h1, h2, h3, h4, p {
       font-family: "Public Sans", sans-serif;
       font-variant: normal;
     }
@@ -30,9 +30,6 @@ function injectGlobalStyles() {
     }
     .usa-button.btnConfirm {
       width: auto;
-    }
-    #logoutButton {
-      padding: 0.75rem 1.25rem;
     }
   `;
   document.head.appendChild(style);

@@ -282,6 +282,7 @@ function createTitleHeader() {
   logoutButton.id = 'logoutButton';
   logoutButton.style.display = 'flex';
   logoutButton.style.alignItems = 'center';
+  logoutButton.style.padding = '0.75rem 1.25rem';
   logoutButton.classList.add('usa-button', 'usa-button--outline');
 
   var iconElement = document.createElement('span');
@@ -338,6 +339,7 @@ function newDesignAlert() {
 
   const alertDiv = document.createElement('div');
   alertDiv.id = 'info-alert';
+  alertDiv.style.marginTop = '0';
   alertDiv.classList.add('usa-alert', 'usa-alert--info');
 
   const alertBodyDiv = document.createElement('div');
