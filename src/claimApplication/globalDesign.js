@@ -23,7 +23,7 @@ function injectGlobalStyles() {
     body {
       background-color: #FBFCFD;
     }
-    h1, h2, h3, h4, p {
+    h1, h2, h3, h4, p, a {
       font-family: "Public Sans", sans-serif;
       font-variant: normal;
     }

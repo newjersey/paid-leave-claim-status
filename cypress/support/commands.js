@@ -28,7 +28,7 @@ Cypress.Commands.add("checkCommonPostData", (formData) => {
 });
 
 Cypress.Commands.add("checkFontFamily", () => {
-  cy.get('body').should('have.css', 'font-family')
+  cy.get('p').should('have.css', 'font-family')
     .then(fontFamily => {
       expect(fontFamily).to.contain('"Public Sans", sans-serif');
     });

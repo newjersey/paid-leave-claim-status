@@ -41,6 +41,10 @@ function addHeaderStyling() {
       margin-bottom: 0;
     }
 
+    .usa-alert__heading {
+      font-family: "Public Sans", sans-serif;
+    }
+
     @media (max-width: 767px) {
       #headerWithMargin {
         margin-left: 20px;
