@@ -20,3 +20,17 @@ export function trackPrintClaimSummaryButton() {
     });
   }
 }
+
+export function changes() {
+  addStyles();
+}
+
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    #ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue {
+      width: auto;
+    }
+  `;
+  document.head.appendChild(style);
+}
