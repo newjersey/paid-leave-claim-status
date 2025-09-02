@@ -35,6 +35,9 @@ function convertBodyTextFromH4() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
+    #divPdd {
+      line-height: 1.6em;
+    }
     #divPdd legend {
       color: black !important;
     }
