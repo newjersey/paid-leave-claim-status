@@ -14,6 +14,16 @@ export const identifyingContent = {
 export function changes() {
   addStyles();
   convertBodyTextFromH4();
+  trimText();
+}
+
+function trimText() {
+  const fieldset = document.querySelector("#divPdd fieldset");
+  fieldset.childNodes.forEach(function(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      node.nodeValue = node.nodeValue.trim();
+    }
+  });
 }
 
 function convertBodyTextFromH4() {
@@ -35,11 +45,15 @@ function convertBodyTextFromH4() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
-    #divPdd {
+    #divPdd, #divCertNo {
       line-height: 1.6em;
     }
     #divPdd legend {
       display: none;
+    }
+    #divPdd input[type="radio"] {
+      margin-left: 20px;
+      margin-right: 2px;
     }
   `;
   document.head.appendChild(style);
