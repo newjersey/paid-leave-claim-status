@@ -241,7 +241,8 @@ function newPageTitle(text) {
   pageTitle.style.fontWeight = 'bold';
   pageTitle.style.color = 'black';
   pageTitle.style.textAlign = 'left';
-  pageTitle.textContent = capitalizeFirstLetterOfEachWord(text);
+  const capitalizedText = capitalizeFirstLetterOfEachWord(text);
+  pageTitle.textContent = spellCheck(capitalizedText);
   return pageTitle;
 }
 
@@ -453,6 +454,10 @@ function newDesignAlert() {
   document.head.appendChild(styleElement);
   
   return alertDiv;
+}
+
+function spellCheck(text) {
+  return text.replace(/Beneits/g, 'Benefits');
 }
 
 function capitalizeFirstLetterOfEachWord(text) {
