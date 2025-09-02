@@ -198,7 +198,7 @@ function getSectionTitleElement() {
     if (tbody) {
       const tr = tbody.querySelector('tr');
       if (tr && tr.style.backgroundColor === 'rgb(0, 191, 255)' && tr.querySelector('td')) {
-        return table;
+        return tr;
       }
     }
   }
@@ -206,9 +206,9 @@ function getSectionTitleElement() {
 }
 
 function hideSectionTitle() {
-  const table = getSectionTitleElement();
-  if (table) {
-    table.style.display = 'none';
+  const tr = getSectionTitleElement();
+  if (tr) {
+    tr.style.display = 'none';
   }
 }
 
@@ -224,10 +224,9 @@ function getIntroSectionTitleElement() {
 }
 
 function getSectionTitle() {
-  const table = getSectionTitleElement();
-  if (table) {
-    const tr = table.querySelector('tbody tr');
-    return tr ? tr.textContent.trim() : null;
+  const tr = getSectionTitleElement();
+  if (tr) {
+    return tr.textContent.trim();
   } else {
     const introSectionTitleElement = getIntroSectionTitleElement();
     return introSectionTitleElement ? introSectionTitleElement.textContent.trim() : null;
