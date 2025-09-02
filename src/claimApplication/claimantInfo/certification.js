@@ -39,7 +39,7 @@ function addStyles() {
       line-height: 1.6em;
     }
     #divPdd legend {
-      color: black !important;
+      display: none;
     }
   `;
   document.head.appendChild(style);
