@@ -31,6 +31,9 @@ function addStyles() {
     #ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue {
       width: auto;
     }
+    .imgbtnPrinter {
+      display: inline;
+    }
   `;
   document.head.appendChild(style);
 }
