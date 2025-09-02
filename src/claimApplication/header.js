@@ -6,6 +6,7 @@ export function replaceHeader() {
   hideLogoHeader();
   hideSectionTitle();
   hideTabs();
+  hideIntroSectionTitleElement();
 }
 
 function addHeaderStyling() {
@@ -211,13 +212,26 @@ function hideSectionTitle() {
   }
 }
 
+function hideIntroSectionTitleElement() {
+  const introSectionTitleElement = getIntroSectionTitleElement();
+  if (introSectionTitleElement) {
+    introSectionTitleElement.style.display = 'none';
+  }
+}
+
+function getIntroSectionTitleElement() {
+  return document.querySelector('#ContentPlaceHolder1_tblContent tbody tr');
+}
+
 function getSectionTitle() {
   const table = getSectionTitleElement();
   if (table) {
     const tr = table.querySelector('tbody tr');
     return tr ? tr.textContent.trim() : null;
+  } else {
+    const introSectionTitleElement = getIntroSectionTitleElement();
+    return introSectionTitleElement ? introSectionTitleElement.textContent.trim() : null;
   }
-  return null;
 }
 
 function newPageTitle(text) {
