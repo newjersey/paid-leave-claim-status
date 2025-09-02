@@ -342,7 +342,6 @@ export async function overrideFeedbackWidgetEmailDisclaimerText() {
   if (emailDislaimerTextParagraphElement != null) {
     emailDislaimerTextParagraphElement.textContent = "To hear about feedback opportunities in the future, join our user testing list."
   }
-  console.log( { emailDislaimerTextParagraphElement })
 }
 
 
