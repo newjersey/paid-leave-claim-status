@@ -338,12 +338,17 @@ export const FOOTER_INNER_HTML = html`
 
 export async function overrideFeedbackWidgetEmailDisclaimerText() {
   await waitForElement("#emailPrompt")
-  const emailDislaimerTextParagraphElement = document.querySelector("#emailPrompt p.disclaimer-text")
-  if (emailDislaimerTextParagraphElement != null) {
-    emailDislaimerTextParagraphElement.textContent = "To hear about feedback opportunities in the future, join our user testing list."
+  const selector = "#emailPrompt p.disclaimer-text";
+  const disclaimerParagraph = document.querySelector(selector)
+
+  if (disclaimerParagraph == null) {
+    logEvent("[DOL_DABI] Feedback Widget Error", {
+      object_details: `Email disclaimer override failed: No match for selector '${selector}'`,
+    });
+  } else {
+    disclaimerParagraph.textContent = "To hear about feedback opportunities in the future, join our user testing list."
   }
 }
-
 
 export function insertFooterAfterElem(beforeElement) {
   addFeedbackWidgetScriptToHead();

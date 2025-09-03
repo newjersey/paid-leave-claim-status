@@ -6,7 +6,6 @@ import {
   styleBody,
   html,
   HEADER_HTML,
-  FOOTER_INNER_HTML,
   RETURN_TO_TOP_LINK,
   getClaimTypeContent,
   getClaimStatus,
