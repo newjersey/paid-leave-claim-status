@@ -17,3 +17,29 @@ export const identifyingContent = {
   elementId: 'ContentPlaceHolder1_TabEmployment_TabPanelSpan',
   text: 'My physical work location is',
 };
+
+export function changes() {
+  adjustTextEntries();
+}
+
+function adjustTextEntries() {
+  const address1Entry = document.querySelector("#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtStreetAddrSOE");
+  if (address1Entry) {
+    address1Entry.style.width = '100%';
+  }
+
+  const address2Entry = document.querySelector("#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtStreetAddrSOE2");
+  if (address2Entry) {
+    address2Entry.style.width = '100%';
+  }
+
+  const cityEntry = document.querySelector("#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtCitySOE");
+  if (cityEntry) {
+    cityEntry.style.width = '100%';
+  }
+
+  const unitEntry = document.querySelector("#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtDeptUnitSOE");
+  if (unitEntry) {
+    unitEntry.style.width = '100%';
+  }
+}

@@ -2,6 +2,7 @@ import { changes as certificationChanges, id as certificationId } from "./claima
 import { changes as confirmationChanges, id as confirmationId } from "./claimantInfo/confirmation";
 import { changes as employerDetailsChanges, id as employerDetailsId } from "./claimantInfo/employerDetails";
 import { changes as employmentChanges, id as employmentId } from "./claimantInfo/employment";
+import { changes as employmentDetailsChanges, id as employmentDetailsId } from "./employmentDetails/employmentDetails";
 
 export function pageSpecificChanges(pageId) {
   if (pageId === certificationId) {
@@ -12,5 +13,7 @@ export function pageSpecificChanges(pageId) {
     employerDetailsChanges();
   } else if (pageId === employmentId) {
     employmentChanges();
+  } else if (pageId === employmentDetailsId) {
+    employmentDetailsChanges();
   }
 }
