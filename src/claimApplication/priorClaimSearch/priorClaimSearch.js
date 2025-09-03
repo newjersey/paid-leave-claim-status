@@ -11,3 +11,14 @@ export const identifyingContent = {
   elementId: 'dvIANMYes',
   text: 'Do you know your Claim ID Number?',
 };
+
+export function changes() {
+  adjustTextEntry();
+}
+
+function adjustTextEntry() {
+  const name = document.querySelector("#ContentPlaceHolder1_txtFName");
+  if (name) {
+    name.style.width = '100%';
+  }
+}

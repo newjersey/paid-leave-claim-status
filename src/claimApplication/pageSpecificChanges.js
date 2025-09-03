@@ -4,6 +4,7 @@ import { changes as employerDetailsChanges, id as employerDetailsId } from "./cl
 import { changes as employmentChanges, id as employmentId } from "./claimantInfo/employment";
 import { changes as employmentDetailsChanges, id as employmentDetailsId } from "./employmentDetails/employmentDetails";
 import { changes as medicalTreatmentChanges, id as medicalTreatmentId } from "./medical/treatment";
+import { changes as priorClaimSearchChanges, id as priorClaimSearchId } from "./priorClaimSearch/priorClaimSearch";
 
 export function pageSpecificChanges(pageId) {
   if (pageId === certificationId) {
@@ -18,5 +19,7 @@ export function pageSpecificChanges(pageId) {
     employmentDetailsChanges();
   } else if (pageId === medicalTreatmentId) {
     medicalTreatmentChanges();
+  } else if (pageId === priorClaimSearchId) {
+    priorClaimSearchChanges();
   }
 }
