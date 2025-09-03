@@ -49,3 +49,29 @@ export function trackWorkersCompYesSubmission(pageId) {
     });
   }
 }
+
+export function changes() {
+  adjustTextEntries();
+}
+
+function adjustTextEntries() {
+  const disabilityEntry = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury");
+  if (disabilityEntry) {
+    disabilityEntry.style.width = '100%';
+  }
+
+  const injuryDiv = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury').closest('div');
+  if (injuryDiv) {
+    injuryDiv.style.marginLeft = '0';
+  }
+
+  const doctorEntry = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm");
+  if (doctorEntry) {
+    doctorEntry.style.width = '100%';
+  }
+
+  const workersCompDiv = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').closest('div');
+  if (workersCompDiv) {
+    workersCompDiv.style.width = '100%';
+  }
+}
