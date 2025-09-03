@@ -10,7 +10,6 @@ describe("No Record Found page", () => {
     ).should("not.exist");
     cy.contains("No claim on file");
     cy.contains("If you recently applied, don't worry!");
-    cy.contains("Give feedback");
     cy.contains("Current as of April 14, 2021");
   });
 
@@ -19,3 +18,4 @@ describe("No Record Found page", () => {
     cy.checkBodyA11y();
   });
 });
+

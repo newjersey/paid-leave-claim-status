@@ -60,21 +60,11 @@ export function makeMobileFriendly() {
   }
 }
 
-export function addFeedbackLink() {
-  const feedbackUrl = "https://forms.office.com/g/mKz7hjnZ6N";
-  const aside = document.createElement("aside");
-  aside.innerHTML = `<a href="${feedbackUrl}" target="_blank" style="font-family: sans-serif; text-decoration: none; color: #ffffff">Give feedback</a>`;
-  aside.style.fontSize = "16px";
-  aside.style.lineHeight = "normal";
-  aside.style.backgroundColor = "#003366";
-  aside.style.padding = "8px 16px";
-  aside.style.borderRadius = "4px";
-  aside.style.position = "fixed";
-  aside.style.top = isDesktop() ? "15%" : "5%";
-  aside.style.right = "0px";
-  aside.style.transformOrigin = "bottom right";
-  aside.style.transform = "rotate(-90deg)";
-  document.body.appendChild(aside);
+export function addFeedbackWidgetScriptToHead() {
+  const feedbackWidgetScript = document.createElement('script');
+  feedbackWidgetScript.src = "https://unpkg.com/@newjersey/feedback-widget@0.6.0/feedback-widget.min.js";  
+  feedbackWidgetScript.defer = true;  
+  document.head.appendChild(feedbackWidgetScript);
 }
 
 export function updateDocument(title) {
@@ -270,8 +260,21 @@ export const HEADER_HTML = html`
   </header>
 `;
 
-export const FOOTER_HTML = html`
-  <footer
+export const RETURN_TO_TOP_LINK = html`<a
+  href="#header"
+  style="font-size: 16px; color: #0b4778; text-underline-offset: 2.5px"
+  >Return to top</a
+>`;
+
+export const FEEDBACK_WIDGET_HTML = html`
+  <feedback-widget
+    contact-link="https://www.nj.gov/labor/myleavebenefits/help/contact/"
+  ></feedback-widget>
+`
+
+export const FOOTER_INNER_HTML = html`
+  ${FEEDBACK_WIDGET_HTML}
+  <section
     id="helpSection"
     style="
       background-color: #eff6fb;
@@ -330,14 +333,30 @@ export const FOOTER_HTML = html`
       Due to technical constraints, you can access this claim status checker
       8:00am - 4:30pm, Monday - Friday.
     </div>
-  </footer>
+  </section>
 `;
 
-export const RETURN_TO_TOP_LINK = html`<a
-  href="#header"
-  style="font-size: 16px; color: #0b4778; text-underline-offset: 2.5px"
-  >Return to top</a
->`;
+export function insertFooterAfterElem(beforeElement) {
+  addFeedbackWidgetScriptToHead();
+  const footer = document.createElement("footer");
+  footer.innerHTML = FOOTER_INNER_HTML;
+  beforeElement?.after(footer);
+  overrideFeedbackWidgetEmailDisclaimerText()
+}
+
+export async function overrideFeedbackWidgetEmailDisclaimerText() {
+  await waitForElement("#emailPrompt")
+  const selector = "#emailPrompt p.disclaimer-text";
+  const disclaimerParagraph = document.querySelector(selector)
+
+  if (disclaimerParagraph == null) {
+    logEvent("[DOL_DABI] Feedback Widget Error", {
+      object_details: `Email disclaimer override failed: No match for selector '${selector}'`,
+    });
+  } else {
+    disclaimerParagraph.textContent = "To hear about feedback opportunities in the future, join our user testing list."
+  }
+}
 
 export function getUnstyledButtonHtml(label, onClick) {
   return html` <button
@@ -358,4 +377,26 @@ export function getUnstyledButtonHtml(label, onClick) {
   >
     ${label}
   </button>`;
+}
+
+// from https://stackoverflow.com/questions/5525071/how-to-wait-until-an-element-exists
+function waitForElement(selector) {
+    return new Promise(resolve => {
+        if (document.querySelector(selector)) {
+            return resolve(document.querySelector(selector));
+        }
+
+        const observer = new MutationObserver(mutations => {
+            if (document.querySelector(selector)) {
+                observer.disconnect();
+                resolve(document.querySelector(selector));
+            }
+        });
+
+        // If you get "parameter 1 is not of type 'Node'" error, see https://stackoverflow.com/a/77855838/492336
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    });
 }

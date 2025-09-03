@@ -3,7 +3,6 @@ import {
   setupAnalytics,
   updateIcon,
   makeMobileFriendly,
-  addFeedbackLink,
   HEADER_HTML,
   isDesktop,
   html,
@@ -24,7 +23,6 @@ function executeOverride() {
 
   try {
     makeMobileFriendly();
-    addFeedbackLink();
     styleBody();
     styleRoot();
     styleLogoutButton();

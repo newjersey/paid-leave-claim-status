@@ -87,3 +87,56 @@ Cypress.Commands.add("checkHelpButtonBehavior", () => {
   cy.get('@openFAQWindowStub').should('be.calledWithMatch', 'http://lwd.dol.state.nj.us/labor/tdi/content/webapplicationfaq.html');
   cy.get('@doPostBackStub').should('be.calledWith', 'ctl00$header$lbtnShowFAQ', '');
 });
+
+Cypress.Commands.add("checkFeedbackWidgetIsRendered", () => {
+    cy.get("feedback-widget").should('have.length', 1)
+    cy.get("feedback-widget").within(() => {
+        cy.contains("Did you find what you were looking for on this page?").should('be.visible');
+    })
+})
+
+Cypress.Commands.add("checkFeedbackWidgetIsInteractable", () => {
+    const commentScreenTextMatcher = /what ideas come to mind/i
+    cy.intercept('POST', '**/rating', { message: "Success", feedbackId: "1"})
+      .as("postRating")
+
+    cy.get("feedback-widget").within(() => {
+      cy.contains(commentScreenTextMatcher).should('not.be.visible')
+    })
+
+    cy.get("feedback-widget")
+      .contains("button", /yes/i)
+      .click()
+
+    cy.wait("@postRating")
+      .its('request.body')
+      .should('have.property', 'rating', true)
+    
+    cy.get("feedback-widget").within(() => {
+      cy.contains(commentScreenTextMatcher).should('be.visible')
+  })
+})
+
+Cypress.Commands.add("checkFeedbackWidgetEmailDisclaimerTextIsOverridden", () => {
+    cy.intercept('POST', '**/rating', { message: "Success", feedbackId: "test"})
+      .as("postRating")
+    cy.intercept('POST', '**/comment', { message: "Success", feedbackId: "test"})
+      .as("postComment")
+
+    
+    cy.get("feedback-widget").within(() => {
+      cy.contains("button", /yes/i)
+        .click()
+      cy.wait("@postRating")
+
+      const commentDisclaimerText = /what ideas come to mind/i
+      cy.contains(commentDisclaimerText).should("be.visible")
+      cy.get("textarea").type("i am a comment")
+      cy.contains("button", /send feedback/i).click()
+      cy.wait("@postComment")
+
+      cy.contains("label", /email address/i).should("be.visible")
+      const expectedEmailDisclaimerText = "To hear about feedback opportunities in the future, join our user testing list."
+      cy.contains(expectedEmailDisclaimerText).should("be.visible")
+  })
+})

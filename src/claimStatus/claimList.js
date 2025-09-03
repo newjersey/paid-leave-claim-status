@@ -2,12 +2,10 @@ import {
   logEvent,
   setupAnalytics,
   updateIcon,
-  addFeedbackLink,
   makeMobileFriendly,
   styleBody,
   html,
   HEADER_HTML,
-  FOOTER_HTML,
   RETURN_TO_TOP_LINK,
   getClaimTypeContent,
   getClaimStatus,
@@ -18,6 +16,7 @@ import {
   runWhenReady,
   updateDocument,
   ICON_BASE_URL,
+  insertFooterAfterElem,
 } from "../modules/shared.mjs";
 
 runWhenReady(executeOverride);
@@ -35,7 +34,6 @@ function executeOverride() {
     addNewHtml(metadata);
 
     styleBody();
-    addFeedbackLink();
     updateIcon();
     updateDocument("Check claim status");
   } catch (e) {
@@ -258,9 +256,10 @@ function addNewHtml(metadata) {
         : "13px"}; margin-right: ${isDesktop() ? "54px" : "13px"};"
     >
       ${RETURN_TO_TOP_LINK}
-    </div>
-    ${FOOTER_HTML}`;
+    </div>`;
   root?.append(newContainer);
+
+  insertFooterAfterElem(root)
 }
 
 function logView(allClaims = []) {
