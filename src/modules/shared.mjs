@@ -336,6 +336,14 @@ export const FOOTER_INNER_HTML = html`
   </section>
 `;
 
+export function insertFooterAfterElem(beforeElement) {
+  addFeedbackWidgetScriptToHead();
+  const footer = document.createElement("footer");
+  footer.innerHTML = FOOTER_INNER_HTML;
+  beforeElement?.after(footer);
+  overrideFeedbackWidgetEmailDisclaimerText()
+}
+
 export async function overrideFeedbackWidgetEmailDisclaimerText() {
   await waitForElement("#emailPrompt")
   const selector = "#emailPrompt p.disclaimer-text";
@@ -348,14 +356,6 @@ export async function overrideFeedbackWidgetEmailDisclaimerText() {
   } else {
     disclaimerParagraph.textContent = "To hear about feedback opportunities in the future, join our user testing list."
   }
-}
-
-export function insertFooterAfterElem(beforeElement) {
-  addFeedbackWidgetScriptToHead();
-  const footer = document.createElement("footer");
-  footer.innerHTML = FOOTER_INNER_HTML;
-  beforeElement?.after(footer);
-  overrideFeedbackWidgetEmailDisclaimerText()
 }
 
 export function getUnstyledButtonHtml(label, onClick) {
