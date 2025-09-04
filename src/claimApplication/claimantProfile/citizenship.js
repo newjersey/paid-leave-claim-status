@@ -18,3 +18,19 @@ export const identifyingContent = {
   elementId: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlCitizen',
   text: 'Are you a citizen',
 };
+
+export function changes() {
+  adjustWidths();
+}
+
+function adjustWidths () {
+  const emailField = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_TxtEmail');
+  if (emailField) {
+    emailField.style.width = '100%';
+  }
+
+  const confirmEmailField = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_TxtConEmail');
+  if (confirmEmailField) {
+    confirmEmailField.style.width = '100%';
+  }
+}
