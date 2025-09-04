@@ -15,10 +15,9 @@
 <!-- If this work affects a user's experience, provide steps to test these changes in-app. -->
 
 ## How to view changes
-HTML files in `cypress/fixtures/` show example pages with the override scripts. They can be viewd as vanilla HTML pages (e.g. opening the file in your browser). Compare with the THML pages in the dev branch to these to see the changes made.
-- If you want to see what a page looks like without the script altogether, delete the `<pageName>.min.js` override script in the directory (e.g. `claimDetail.min.js` in `cypress/fixtures/claimDetail/`),save, and then view one of the HTML files in that directory. `npm run build` will regenerate the scripts.
-- If you want to make changes to this, you can update the js in `src/claimStatus/paymentDetail.js`, run `npm run build` and then view these HTML pages.
-
+HTML files in `cypress/fixtures/` show example pages with the override scripts. They can be viewed as vanilla HTML pages (e.g. opening the file in your browser). To view changes, compare the HTML pages in the dev branch to the feature branch.
+- If you want to see what a page looks like without the script altogether, delete the `<pageName>.min.js` override script in the directory (e.g. `claimDetail.min.js` in `cypress/fixtures/claimDetail/`), save, and then view one of the HTML files in that directory. `npm run build` will regenerate the scripts.
+- If you want to make changes to the script, update the override script in `src` (e.g. `src/claimStatus/paymentDetail.js`), run `npm run build`, and then view these HTML pages.
 
 ## Notes
 

@@ -344,6 +344,14 @@ export function insertFooterAfterElem(beforeElement) {
   overrideFeedbackWidgetEmailDisclaimerText()
 }
 
+export function insertFeedbackWidgetAfterElem(beforeElement) {
+  addFeedbackWidgetScriptToHead();
+  const footer = document.createElement("footer");
+  footer.innerHTML = FEEDBACK_WIDGET_HTML;
+  beforeElement?.after(footer);
+  overrideFeedbackWidgetEmailDisclaimerText()
+}
+
 export async function overrideFeedbackWidgetEmailDisclaimerText() {
   await waitForElement("#emailPrompt")
   const selector = "#emailPrompt p.disclaimer-text";
