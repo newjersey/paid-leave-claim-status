@@ -29,14 +29,14 @@ export const identifyingContent = {
 export function changes() {
   addStyles();
   adjustTable();
-  styleButton();
+  styleButtons();
 }
 
-function styleButton() {
-  const button = document.querySelector('#ContentPlaceHolder1_TabEmployment_TabPanelVerify_btnVer_Continue');
-  if (button) {
-    button.classList.add('usa-button');
-  }
+function styleButtons() {
+  const buttons = document.querySelectorAll('.btnEdit, .btnContinue');
+  buttons.forEach(button => {
+      button.classList.add('usa-button');
+  });
 }
 
 function addStyles() {
