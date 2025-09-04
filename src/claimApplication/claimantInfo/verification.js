@@ -36,6 +36,14 @@ export const identifyingContent = {
 export function changes() {
   addStyles();
   adjustTable();
+  styleButton();
+}
+
+function styleButton() {
+  const button = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer');
+  if (button) {
+    button.classList.add('usa-button');
+  }
 }
 
 function addStyles() {
