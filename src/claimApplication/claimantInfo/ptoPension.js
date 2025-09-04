@@ -5,3 +5,78 @@ export const identifyingContent = {
   elementId: 'ContentPlaceHolder1_TabEmployment_TabPanelPTO',
   text: 'Paid Time Off',
 };
+
+export function changes() {
+  addStyles();
+  adjustTable();
+}
+
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    div {
+      max-width: 100%;
+    }
+
+    fieldset {
+      width: auto;
+      max-width: 100%;
+    }
+
+    table {
+      width: 100%;
+      table-layout: auto;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function adjustTable() {
+  const table = document.querySelector("#divYesPTO > table:nth-child(3)");
+
+  if (table) {
+    table.classList.add("usa-table", "usa-table--stacked");
+
+    const thead = document.createElement("thead");
+    const headerRow = table.querySelector("tr");
+    thead.appendChild(headerRow);
+    table.insertBefore(thead, table.firstChild);
+
+    const headerCells = headerRow.querySelectorAll("td");
+    headerCells.forEach(cell => {
+      cell.removeAttribute("width");
+      cell.style.width = "";
+    });
+
+    const tbody = table.querySelector("tbody");
+    const rows = tbody.querySelectorAll("tr");
+
+    rows.forEach((row) => {
+      const cells = row.querySelectorAll("td");
+      cells.forEach((cell, cellIndex) => {
+        cell.style.width = "";
+        cell.setAttribute("data-label", headerCells[cellIndex].innerText.trim());
+
+        if (cellIndex === 0) {
+          const th = document.createElement("th");
+          th.innerHTML = cell.innerHTML;
+          th.setAttribute("scope", "row");
+          th.setAttribute("data-label", headerCells[cellIndex].innerText.trim());
+          row.replaceChild(th, cell);
+        }
+
+        const childElements = cell.querySelectorAll('*');
+        childElements.forEach(child => {
+          child.style.width = "";
+          child.removeAttribute("width");
+        });
+      });
+    });
+  }
+}
