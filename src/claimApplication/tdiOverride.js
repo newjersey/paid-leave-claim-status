@@ -14,6 +14,10 @@ if (document.readyState === "loading") {
   executeOverride();
 }
 
+document.addEventListener('backButtonClicked', () => {
+  executeOverride();
+});
+
 function executeOverride() {
   setupAnalytics();
 

@@ -160,6 +160,7 @@ function createBackButton() {
         if (tabLink) {
           tabLink.click();
           resetHeader();
+          document.dispatchEvent(new CustomEvent('backButtonClicked'));
         }
       });
 
