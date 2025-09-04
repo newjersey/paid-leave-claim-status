@@ -7,6 +7,7 @@ import { changes as medicalTreatmentChanges, id as medicalTreatmentId } from "./
 import { changes as priorClaimSearchChanges, id as priorClaimSearchId } from "./priorClaimSearch/priorClaimSearch";
 import { changes as ptoPensionChanges, id as ptoPensionId } from "./claimantInfo/ptoPension";
 import { changes as verificationChanges, id as verificationId } from "./claimantInfo/verification";
+import { changes as verifyEmployerChanges, id as verifyEmployerId } from "./claimantInfo/verifyEmployer";
 
 export function pageSpecificChanges(pageId) {
   if (pageId === certificationId) {
@@ -27,5 +28,7 @@ export function pageSpecificChanges(pageId) {
     ptoPensionChanges();
   } else if (pageId === verificationId) {
     verificationChanges();
+  } else if (pageId === verifyEmployerId) {
+    verifyEmployerChanges();
   }
 }
