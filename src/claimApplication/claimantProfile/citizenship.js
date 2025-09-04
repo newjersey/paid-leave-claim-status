@@ -33,4 +33,9 @@ function adjustWidths () {
   if (confirmEmailField) {
     confirmEmailField.style.width = '100%';
   }
+
+  const repEntry = document.getElementById("ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtRepIns");
+  if (repEntry) {
+    repEntry.style.width = '100%';
+  }
 }
