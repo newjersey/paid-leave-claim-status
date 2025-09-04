@@ -11,6 +11,7 @@ import { changes as verifyEmployerChanges, id as verifyEmployerId } from "./clai
 import { changes as workRelatedChanges, id as workRelatedId } from "./claimantInfo/workRelated";
 import { changes as personalProfileChanges, id as personalProfileId } from "./claimantProfile/personalProfile";
 import { changes as citizenshipChanges, id as citizenshipId } from "./claimantProfile/citizenship";
+import { changes as claimantProfileVerificationChanges, id as claimantProfileVerificationId } from "./claimantProfile/verification";
 
 export function pageSpecificChanges(pageId) {
   if (pageId === certificationId) {
@@ -39,5 +40,7 @@ export function pageSpecificChanges(pageId) {
     personalProfileChanges();
   } else if (pageId === citizenshipId) {
     citizenshipChanges();
+  } else if (pageId === claimantProfileVerificationId) {
+    claimantProfileVerificationChanges();
   }
 }

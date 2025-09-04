@@ -28,3 +28,49 @@ export const identifyingContent = {
   elementId: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification',
   text: 'My personal and contact information is correct.',
 };
+
+export function changes() {
+  addStyles();
+  adjustTable();
+}
+
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    div {
+      max-width: 100%;
+    }
+
+    table {
+      width: 100%;
+      table-layout: auto;
+    }
+
+    input[type="text"], select {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function adjustTable() {
+  const tables = document.querySelectorAll('table');
+  tables.forEach(table => {
+      table.style.width = '100%';
+      table.style.tableLayout = 'auto';
+
+      const cells = table.querySelectorAll('td, th');
+      cells.forEach(cell => {
+          cell.style.width = '';
+      });
+
+      const inputsAndTextareas = table.querySelectorAll('input[type="text"], textarea');
+      inputsAndTextareas.forEach(element => {
+          element.style.width = '100%';
+          element.style.maxWidth = '100%';
+          element.style.boxSizing = 'border-box';
+      });
+  });
+}
