@@ -8,6 +8,7 @@ import {
   html,
   styleBody,
   updateDocument,
+  insertFeedbackWidgetAfterElem,
 } from "../modules/shared.mjs";
 
 if (document.readyState === "loading") {
@@ -162,6 +163,8 @@ function styleRoot() {
   `;
   root.children[0].children[0].children[3].children[0].innerHTML =
     getRedesignHtml(status, statusExtra, whatsNext, whatsNextExtra);
+
+  insertFeedbackWidgetAfterElem(root)
 
   document.getElementById("linkClaimDocs").addEventListener("click", () => {
     logEvent("[DOL_DABI] Clicked link on SSN Not Found page", {

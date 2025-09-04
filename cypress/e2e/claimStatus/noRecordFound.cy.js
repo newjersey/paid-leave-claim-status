@@ -17,5 +17,28 @@ describe("No Record Found page", () => {
     cy.visit("./cypress/fixtures/claimStatus/noRecordFound/noRecordFound.html");
     cy.checkBodyA11y();
   });
+
+  describe("feedback widget", () => {
+    it("renders the feedback widget inside the footer", () => {
+      cy.visit("./cypress/fixtures/claimStatus/noRecordFound/noRecordFound.html")
+      cy.get("footer").find("feedback-widget").should('have.length', 1)
+      cy.get("footer").within(() => {
+        cy.checkFeedbackWidgetIsRendered()
+      })
+    })
+
+    it("calls the /rating endpoint when the 'Yes' button is clicked and displays the next screen", () => {
+      cy.visit("./cypress/fixtures/claimStatus/noRecordFound/noRecordFound.html")
+      
+      cy.get("footer").within(() => {
+        cy.checkFeedbackWidgetIsInteractable()
+      })
+    })
+
+    it("displays the overridden version of the email disclaimer text", () => {
+      cy.visit("./cypress/fixtures/claimStatus/noRecordFound/noRecordFound.html")
+      cy.checkFeedbackWidgetEmailDisclaimerTextIsOverridden()
+    })
+  })
 });
 
