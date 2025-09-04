@@ -22,3 +22,63 @@ export const identifyingContent = {
   elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC',
   text: 'Work Related Information',
 };
+
+export function changes() {
+  addStyles();
+  adjustWidths();
+}
+
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    fieldset {
+      width: auto;
+      max-width: 100%;
+    }
+
+    table {
+      width: 100%;
+      table-layout: auto;
+    }
+
+    input[type="text"], select, textarea {
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function adjustWidths() {
+  const div = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_Panel3');
+  if (div) {
+    div.style.width = 'auto';
+    div.style.maxWidth = '700px';
+  }
+
+  const fieldsets = document.querySelectorAll('fieldset');
+
+    fieldsets.forEach(fieldset => {
+        fieldset.style.width = 'auto';
+        fieldset.style.maxWidth = '100%';
+
+        const tables = fieldset.querySelectorAll('table');
+        tables.forEach(table => {
+            table.style.width = '100%';
+            table.style.tableLayout = 'auto';
+
+            const cells = table.querySelectorAll('td');
+            cells.forEach(cell => {
+                cell.style.width = '';
+            });
+
+            const inputsAndSelects = table.querySelectorAll('input[type="text"], select, textarea');
+            inputsAndSelects.forEach(element => {
+                element.style.width = 'auto';
+                element.style.maxWidth = '100%';
+                element.style.boxSizing = 'border-box';
+            });
+        });
+    });
+}
