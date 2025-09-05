@@ -96,8 +96,7 @@ function createFooterElement(pageId) {
   resourcesLink.innerHTML = "<strong>Helpful resources</strong>";
   
   resourcesLink.onclick = function () {
-    logEvent('FAQ Clicked', { pageId });
-    return window.open('http://lwd.dol.state.nj.us/labor/tdi/content/webapplicationfaq.html#1');
+    logEvent('Resources Clicked', { pageId });
   };
 
   resourcesDiv.appendChild(resourcesLink);

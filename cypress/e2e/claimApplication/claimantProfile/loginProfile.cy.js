@@ -71,9 +71,9 @@ describe("Login Profile page", () => {
       cy.checkNewLogout();
     });
 
-    it('should open FAQ and track when clicked', () => {
-      cy.checkFAQBehavior();
-      cy.trackFAQClick(PAGE_ID);
+    it('should open Resources and track when clicked', () => {
+      cy.get('#resourcesLink').click();
+      cy.trackResourcesClick(PAGE_ID);
     });
 
     it('clicks Dismiss on the info alert, alert hides and does not return', () => {

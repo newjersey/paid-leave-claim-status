@@ -87,9 +87,9 @@ describe("Disability Information page", () => {
       cy.checkNewLogoutCancel();
     });
 
-    it('should open FAQ and track when clicked', () => {
-      cy.checkFAQBehavior();
-      cy.trackFAQClick(PAGE_ID);
+    it('should open Resources and track when clicked', () => {
+      cy.get('#resourcesLink').click();
+      cy.trackResourcesClick(PAGE_ID);
     });
 
     it("tracks that this page fixture has a validation error", () => {
