@@ -73,7 +73,7 @@ function convertScheduleInputToTextarea() {
     textareaElement.style.width = inputElement.style.width;
     textareaElement.style.maxWidth = inputElement.style.maxWidth;
     textareaElement.style.boxSizing = inputElement.style.boxSizing;
-    textareaElement.style.height = '100px'; // HACK: other options here still leave too short for text
+    textareaElement.style.height = '100px';
     textareaElement.setAttribute('autocomplete', inputElement.getAttribute('autocomplete'));
     textareaElement.setAttribute('aria-label', inputElement.getAttribute('aria-label'));
 
