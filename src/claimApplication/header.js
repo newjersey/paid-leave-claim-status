@@ -427,7 +427,7 @@ function newDesignAlert() {
   alertText.style.fontSize = '16px';
   alertText.style.lineHeight = '1.5';
   alertText.innerHTML = `
-    You may notice changes to the New Jersey Temporary Disability Insurance application over the next few months.
+    You may notice changes to the New Jersey Temporary Disability Insurance application this fall. Our policies and your eligibility have not changed.
     <br>
     <a href="#" id="dismiss-alert">Dismiss</a>`;
 
