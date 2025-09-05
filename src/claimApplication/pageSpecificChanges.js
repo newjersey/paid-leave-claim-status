@@ -31,5 +31,5 @@ const pageChangesMap = {
 };
 
 export function pageSpecificChanges(pageId) {
-  pageChangesMap[pageId]();
+  pageChangesMap[pageId]?.();
 }
