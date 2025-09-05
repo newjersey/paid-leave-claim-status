@@ -84,7 +84,7 @@ Cypress.Commands.add("checkFAQBehavior", () => {
   cy.get('@windowOpen').should('be.calledOnceWithExactly', 'http://lwd.dol.state.nj.us/labor/tdi/content/webapplicationfaq.html#1');
 });
 
-Cypress.Commands.add("infoAlert", () => {
+Cypress.Commands.add("checkInfoAlertBehavior", () => {
   cy.get('#info-alert').should('be.visible');
   cy.get('#dismiss-alert').click();
   cy.get('#info-alert').should('not.be.visible');

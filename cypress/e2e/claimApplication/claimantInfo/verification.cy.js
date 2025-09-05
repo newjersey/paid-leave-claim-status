@@ -88,7 +88,7 @@ describe("Disability Verification page", () => {
     });
 
     it('clicks Dismiss on the info alert, alert hides and does not return', () => {
-      cy.infoAlert();
+      cy.checkInfoAlertBehavior();
     });
   });
 });
