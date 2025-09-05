@@ -47,7 +47,7 @@ function createFooterElement(pageId) {
     iconDiv.style.minWidth = '20px';
     const img = document.createElement('img');
     img.src = `${ICON_BASE_URL}/${item.icon}`;
-    img.alt = '';
+    img.alt = item.label;
     iconDiv.appendChild(img);
     gridDiv.appendChild(iconDiv);
 
@@ -61,7 +61,7 @@ function createFooterElement(pageId) {
   emailIconDiv.style.minWidth = '20px';
   const emailImg = document.createElement('img');
   emailImg.src = `${ICON_BASE_URL}/email.svg`;
-  emailImg.alt = '';
+  emailImg.alt = 'email';
   emailIconDiv.appendChild(emailImg);
   gridDiv.appendChild(emailIconDiv);
 
@@ -81,7 +81,7 @@ function createFooterElement(pageId) {
   iconDiv.style.minWidth = '20px';
   const img = document.createElement('img');
   img.src = `${ICON_BASE_URL}/info.svg`;
-  img.alt = '';
+  img.alt = 'info';
   iconDiv.appendChild(img);
   gridDiv.appendChild(iconDiv);
 

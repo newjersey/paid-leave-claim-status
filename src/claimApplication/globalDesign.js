@@ -1,4 +1,3 @@
-
 import { applyFooter } from "./footer.js";
 import { replaceHeader } from "./header.js";
 
