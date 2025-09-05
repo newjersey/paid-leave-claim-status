@@ -48,19 +48,22 @@ function styleButton() {
 function adjustTable() {
   const tables = document.querySelectorAll('table');
   tables.forEach(table => {
-      table.style.width = '100%';
-      table.style.tableLayout = 'auto';
+    table.style.width = '100%';
+    table.style.tableLayout = 'auto';
 
-      const cells = table.querySelectorAll('td, th');
-      cells.forEach(cell => {
-          cell.style.width = '';
-      });
+    const cells = table.querySelectorAll('td, th');
+    cells.forEach(cell => {
+      cell.style.textAlign = 'left';
+      cell.style.width = '100%';
+      cell.style.display = 'block';
+    });
 
-      const inputsAndTextareas = table.querySelectorAll('input[type="text"], textarea');
-      inputsAndTextareas.forEach(element => {
-          element.style.width = '100%';
-          element.style.maxWidth = '100%';
-          element.style.boxSizing = 'border-box';
-      });
+    const inputsAndTextareas = table.querySelectorAll('input[type="text"], textarea');
+    inputsAndTextareas.forEach(element => {
+      element.style.width = '100%';
+      element.style.maxWidth = '100%';
+      element.style.boxSizing = 'border-box';
+      element.style.textAlign = 'left';
+    });
   });
 }
