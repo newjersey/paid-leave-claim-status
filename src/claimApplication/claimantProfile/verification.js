@@ -30,29 +30,7 @@ export const identifyingContent = {
 };
 
 export function changes() {
-  addStyles();
   adjustTable();
-}
-
-function addStyles() {
-  const style = document.createElement('style');  
-  style.innerHTML = `
-    div {
-      max-width: 100%;
-    }
-
-    table {
-      width: 100%;
-      table-layout: auto;
-    }
-
-    input[type="text"], select {
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
-    }
-  `;
-  document.head.appendChild(style);
 }
 
 function adjustTable() {

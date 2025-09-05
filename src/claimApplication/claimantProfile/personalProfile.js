@@ -13,42 +13,10 @@ export const identifyingContent = {
 };
 
 export function changes() {
-  addStyles();
   adjustWidths();
   adjustAddressTable();
   removeEmptyCells();
   removeOverlappingBorders();
-}
-
-function addStyles() {
-  const style = document.createElement('style');  
-  style.innerHTML = `
-    div, table {
-      display: block;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    fieldset {
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
-    }
-
-    td {
-      display: block;
-      width: 100%;
-    }
-
-    input[type="text"],
-    select,
-    textarea {
-      width: 100%;
-      max-width: 100%;
-      box-sizing: border-box;
-    }
-  `;
-  document.head.appendChild(style);
 }
 
 function adjustWidths() {

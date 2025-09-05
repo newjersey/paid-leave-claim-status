@@ -60,6 +60,26 @@ function injectGlobalStyles() {
         min-height: 40px;
         width: 100%;
       }
+
+      div {
+        max-width: 100%;
+      }
+
+      fieldset {
+        width: auto;
+        max-width: 100%;
+      }
+
+      table {
+        width: 100%;
+        table-layout: auto;
+      }
+        
+      input[type="text"], select, textarea {
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+      }
     }
   `;
   document.head.appendChild(style);
