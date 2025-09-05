@@ -62,18 +62,14 @@ Cypress.Commands.add("trackResourcesClick", (pageId) => {
   cy.checkLogEvent(`Resources Clicked`, { pageId });
 });
 
-function checkHelpBehavior(buttonSelector) {
+Cypress.Commands.add("checkHelpButtonBehavior", () => {
   cy.window().then(win => {
     cy.stub(win, 'openFAQWindow').as('openFAQWindowStub');
     cy.stub(win, '__doPostBack').as('doPostBackStub');
   });
-  cy.get(buttonSelector).click();
+  cy.get('#header_lbtnShowFAQ').click();
   cy.get('@openFAQWindowStub').should('be.calledWithMatch', 'http://lwd.dol.state.nj.us/labor/tdi/content/webapplicationfaq.html');
   cy.get('@doPostBackStub').should('be.calledWith', 'ctl00$header$lbtnShowFAQ', '');
-}
-
-Cypress.Commands.add("checkHelpButtonBehavior", () => {
-  checkHelpBehavior('#header_lbtnShowFAQ');
 });
 
 Cypress.Commands.add("checkInfoAlertBehavior", () => {
