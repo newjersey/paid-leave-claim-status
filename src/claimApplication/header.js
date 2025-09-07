@@ -1,4 +1,4 @@
-import { HEADER_HTML } from "../modules/shared.mjs";
+import { HEADER_HTML, ICON_BASE_URL } from "../modules/shared.mjs";
 
 export function replaceHeader() {
   addHeaderStyling();
@@ -444,7 +444,7 @@ function newDesignAlert() {
   const styleElement = document.createElement('style');
   styleElement.innerHTML = `
     .usa-alert--info::before {
-      content: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgd2lkdGg9IjI0Ij48cGF0aCBkPSJNMCAwaDI0djI0SDB6IiBmaWxsPSJub25lIi8+PHBhdGggZD0iTTEyIDJDNi40OCAyIDIgNi40OCAyIDEyczQuNDggMTAgMTAgMTAgMTAtNC40OCAxMC0xMFMxNy41MiAyIDEyIDJ6bTEgMTVoLTJ2LTZoMnY2em0wLThoLTJWN2gydjJ6Ii8+PC9zdmc+');
+      content: url('${ICON_BASE_URL}/info.svg');
       background: none !important;
       -webkit-mask: none !important;
       mask: none !important;
