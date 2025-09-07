@@ -36,6 +36,26 @@ describe("Login Profile page", () => {
     });
   });
 
+  describe("page with lazy loading header and new JS", () => {
+    beforeEach(() => {
+      cy.intercept('GET', '**/tdiOverride.min.js', (req) => {
+        req.continue((res) => {
+          expect([200, 304]).to.include(res.statusCode);
+        });
+      }).as('script');
+      cy.visit("./cypress/fixtures/claimApplication/claimantProfile/loginLazyHeader.html");
+      cy.wait('@script');
+    });
+
+    it("hides old tabs and shows new title", () => {
+      cy.get('.ajax__tab_header').should('not.exist');
+      cy.wait(1000);
+      cy.get('.ajax__tab_header').should('exist');
+      cy.get('.ajax__tab_header').should("not.be.visible");
+      cy.get('h1').contains('Profile Information').should('be.visible');
+    });
+  });
+
   describe("page with new JS", () => {
     beforeEach(() => {
       cy.intercept('GET', '**/tdiOverride.min.js', (req) => {
