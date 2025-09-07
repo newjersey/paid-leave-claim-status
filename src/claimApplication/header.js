@@ -108,10 +108,10 @@ function resetHeader() {
     headerWithMargin.append(stepIndicator);
   }
 
-  const activeTabTitle = getActiveTabTitle();
-  const sectionTitle = getSectionTitle();
-  
-  headerWithMargin.append(newPageTitle(activeTabTitle || sectionTitle));
+  const newPageTitleText = getActiveTabTitle() || getSectionTitle();
+  if (newPageTitleText) {
+    headerWithMargin.append(newPageTitle(newPageTitleText));
+  }
 
   newHeader.append(headerWithMargin);
 
@@ -177,7 +177,7 @@ function getActiveTabTitle() {
   if (tabsDiv) {
     const activeTab = tabsDiv.querySelector('.ajax__tab_active');
     if (activeTab) {
-      return activeTab.textContent;
+      return activeTab.textContent.trim();
     }
   }
 
