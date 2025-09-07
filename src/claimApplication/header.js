@@ -1,11 +1,29 @@
 import { HEADER_HTML, ICON_BASE_URL } from "../modules/shared.mjs";
 
 export function replaceHeader() {
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach(() => {
+      const tabsDiv = document.querySelector('.ajax__tab_header');
+      if (tabsDiv) {
+        replacePopulatedHeader();
+        observer.disconnect();
+      }
+    });
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+    attributes: true,
+    characterData: true,
+  });
+}
+
+function replacePopulatedHeader() {
   addHeaderStyling();
   resetHeader();
   hideLogoHeader();
   hideSectionTitle();
-  hideTabs();
   hideIntroSectionTitleElement();
 }
 
@@ -44,6 +62,10 @@ function addHeaderStyling() {
 
     .usa-alert__heading {
       font-family: "Public Sans", sans-serif;
+    }
+
+    .ajax__tab_header {
+      display: none;
     }
 
     @media (max-width: 767px) {
@@ -109,9 +131,7 @@ function resetHeader() {
   }
 
   const newPageTitleText = getActiveTabTitle() || getSectionTitle();
-  if (newPageTitleText) {
-    headerWithMargin.append(newPageTitle(newPageTitleText));
-  }
+  headerWithMargin.append(newPageTitle(newPageTitleText));
 
   newHeader.append(headerWithMargin);
 
@@ -182,13 +202,6 @@ function getActiveTabTitle() {
   }
 
   return null;
-}
-
-function hideTabs() {
-  const tabsDiv = document.querySelector('.ajax__tab_header');
-  if (tabsDiv) {
-    tabsDiv.style.display = 'none';
-  }
 }
 
 function getSectionTitleElement() {
