@@ -3,7 +3,7 @@ import { replaceHeader } from "./header.js";
 
 export function globalDesignChanges(pageId) {
   addViewportMetaTag();
-  replaceHeader();
+  replaceHeader(pageId);
   applyFooter(pageId);
   injectGlobalStyles();
   styleButtons();

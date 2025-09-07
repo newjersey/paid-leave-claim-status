@@ -1,22 +1,30 @@
 import { HEADER_HTML, ICON_BASE_URL } from "../modules/shared.mjs";
+import { id as priorClaimSearchId } from "./priorClaimSearch/priorClaimSearch";
+import { id as tdiIntroductionId } from "./tdiIntroduction/tdiIntroduction";
+import { id as completeExistingIntroId } from "./completeExistingIntro/completeExistingIntro";
 
-export function replaceHeader() {
-  const observer = new MutationObserver((mutations) => {
-    mutations.forEach(() => {
-      const tabsDiv = document.querySelector('.ajax__tab_header');
-      if (tabsDiv) {
-        replacePopulatedHeader();
-        observer.disconnect();
-      }
+export function replaceHeader(pageId) {
+  const screensWithoutTabs = [priorClaimSearchId, tdiIntroductionId, completeExistingIntroId];
+  if (screensWithoutTabs.includes(pageId)) {
+    replacePopulatedHeader();
+  } else {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach(() => {
+        const tabsDiv = document.querySelector('.ajax__tab_header');
+        if (tabsDiv) {
+          replacePopulatedHeader();
+          observer.disconnect();
+        }
+      });
     });
-  });
 
-  observer.observe(document.body, {
-    childList: true,
-    subtree: true,
-    attributes: true,
-    characterData: true,
-  });
+    observer.observe(document.body, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      characterData: true,
+    });
+  }
 }
 
 function replacePopulatedHeader() {
