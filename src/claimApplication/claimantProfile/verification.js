@@ -49,6 +49,7 @@ function adjustTable() {
     inputsAndTextareas.forEach(element => {
       element.style.width = '100%';
       element.style.maxWidth = '100%';
+      element.style.textAlign = 'left';
       element.style.boxSizing = 'border-box';
     });
   });
