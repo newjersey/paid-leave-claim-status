@@ -35,6 +35,7 @@ export const identifyingContent = {
 
 export function changes() {
   adjustTable();
+  fixOverflowingText();
   styleButton();
 }
 
@@ -66,4 +67,11 @@ function adjustTable() {
       element.style.textAlign = 'left';
     });
   });
+}
+
+function fixOverflowingText() {
+  const otherStateInfo = document.querySelector('#divVerTDI');
+  if (otherStateInfo) {
+    otherStateInfo.style.height = 'fit-content';
+  }
 }

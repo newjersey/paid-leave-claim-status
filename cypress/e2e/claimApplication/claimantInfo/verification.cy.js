@@ -90,5 +90,21 @@ describe("Disability Verification page", () => {
     it('clicks Dismiss on the info alert, alert hides and does not return', () => {
       cy.checkInfoAlertBehavior();
     });
+
+    it('items do not overlap', () => {
+      cy.get('#divVerTDI').invoke('css', 'display', 'block');
+
+      cy.get('#divVerBenDt').then(($child) => {
+        const childBottom = $child[0].getBoundingClientRect().bottom;
+
+        cy.contains('Temporary Disability Benefits Received from Employer/Union').then(($target) => {
+          const targetTop = $target[0].getBoundingClientRect().top;
+          
+          expect(childBottom).to.be.lessThan(targetTop);
+        });
+      });
+
+      cy.get('#divVerTDI').invoke('css', 'display', 'none');
+    });
   });
 });
