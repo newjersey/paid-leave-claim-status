@@ -167,5 +167,20 @@ describe("Other Benefits page", () => {
     it('clicks Dismiss on the info alert, alert hides and does not return', () => {
       cy.checkInfoAlertBehavior();
     });
+
+    it('clicks Back', () => {
+      cy.get('footer#helpSection').should('exist').and('have.length', 1);
+      
+      cy.get('#headerWithMargin > button').contains('< Back').click();
+
+      cy.get('h1').contains('Medical Treatment Information').should('be.visible');
+      cy.get('footer#helpSection').should('exist').and('have.length', 1);
+
+      cy.get('#headerWithMargin > button').contains('< Back').click();
+
+      cy.get('h1').contains('Disability Information').should('be.visible');
+      cy.get('footer#helpSection').should('exist').and('have.length', 1);
+      cy.get('#headerWithMargin > button').should('not.exist');
+    });
   });
 });

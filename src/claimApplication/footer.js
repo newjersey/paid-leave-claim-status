@@ -10,6 +10,11 @@ export function applyFooter(pageId) {
 }
 
 function createFooterElement(pageId) {
+  const existingFooter = document.getElementById('helpSection');
+  if (existingFooter) {
+    existingFooter.remove();
+  }
+
   const footer = document.createElement('footer');
   footer.id = 'helpSection';
   footer.style.backgroundColor = '#eff6fb';
