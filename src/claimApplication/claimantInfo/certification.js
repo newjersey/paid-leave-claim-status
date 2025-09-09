@@ -15,8 +15,14 @@ export function changes() {
   addStyles();
   convertBodyTextFromH4();
   trimText();
-  styleAgreeRadioButtons();
-  styleQuitRadioButtons();
+  styleRadioButtons(
+    'divPdd',
+    'I Agree'
+  );
+  styleRadioButtons(
+    'divCertNo',
+    'Do you still wish to leave this application and complete your application at a later time?'
+  );
 }
 
 function trimText() {
@@ -60,61 +66,13 @@ function addStyles() {
   document.head.appendChild(style);
 }
 
-function styleAgreeRadioButtons() {
-    const divPdd = document.getElementById('divPdd');
+function styleRadioButtons(containerId, legendText) {
+  const container = document.getElementById(containerId);
 
-  if (divPdd) {
-    const oldFieldset = divPdd.querySelector('fieldset');
-
-    if (oldFieldset) {
-      const textContent = oldFieldset.innerHTML.split('<p>')[0];
-
-      const textDiv = document.createElement('div');
-      textDiv.innerHTML = textContent;
-
-      const newFieldset = document.createElement('fieldset');
-      newFieldset.classList.add('usa-fieldset');
-      newFieldset.style.marginTop = '25px';
-      newFieldset.style.marginBottom = '25px';
-
-      const newLegend = document.createElement('legend');
-      newLegend.classList.add('usa-legend');
-      newLegend.textContent = 'I Agree';
-      newFieldset.appendChild(newLegend);
-
-      const radioButtons = oldFieldset.querySelectorAll('input[type="radio"]');
-      const radioLabels = ['Yes', 'No'];
-
-      radioButtons.forEach((radioButton, index) => {
-        const div = document.createElement('div');
-        div.classList.add('usa-radio');
-
-        const newRadioButton = radioButton.cloneNode(true);
-        newRadioButton.classList.add('usa-radio__input');
-
-        const newLabel = document.createElement('label');
-        newLabel.classList.add('usa-radio__label');
-        newLabel.setAttribute('for', newRadioButton.id);
-        newLabel.textContent = radioLabels[index];
-
-        div.appendChild(newRadioButton);
-        div.appendChild(newLabel);
-        newFieldset.appendChild(div);
-      });
-
-      oldFieldset.replaceWith(textDiv, newFieldset);
-    }
-  }
-}
-
-function styleQuitRadioButtons() {
-  const divCertNo = document.getElementById('divCertNo');
-
-  if (divCertNo) {
-    const oldFieldset = divCertNo.querySelector('fieldset');
+  if (container) {
+    const oldFieldset = container.querySelector('fieldset');
 
     if (oldFieldset) {
-      const legendText = 'Do you still wish to leave this application and complete your application at a later time?';
       const textContent = oldFieldset.innerHTML.split(legendText)[0].trim();
 
       const textDiv = document.createElement('div');
@@ -130,7 +88,6 @@ function styleQuitRadioButtons() {
       newFieldset.appendChild(newLegend);
 
       const radioButtons = oldFieldset.querySelectorAll('input[type="radio"]');
-      const radioLabels = ['Yes', 'No'];
 
       radioButtons.forEach((radioButton, index) => {
         const div = document.createElement('div');
@@ -142,7 +99,7 @@ function styleQuitRadioButtons() {
         const newLabel = document.createElement('label');
         newLabel.classList.add('usa-radio__label');
         newLabel.setAttribute('for', newRadioButton.id);
-        newLabel.textContent = radioLabels[index];
+        newLabel.textContent = ['Yes', 'No'][index];
 
         div.appendChild(newRadioButton);
         div.appendChild(newLabel);
