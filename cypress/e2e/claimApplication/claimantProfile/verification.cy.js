@@ -54,7 +54,7 @@ describe("Profile Verification page", () => {
 
     it("user can confirm info is correct and proceed to next page", () => {
       mockASPX();
-      cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_rbtnPersYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_rbtnPersYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btncontinueVer').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
