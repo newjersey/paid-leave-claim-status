@@ -56,8 +56,8 @@ describe("Intermittent Employment page", () => {
 
     it("user can input info and proceed to next page", () => {
       mockASPX();
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkDte_rdoWrkIntNo').click();
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkDte_rdoLbrDisNo').click();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkDte_rdoWrkIntNo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkDte_rdoLbrDisNo').click({ force: true });
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkDte_btnSaveEmp').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });

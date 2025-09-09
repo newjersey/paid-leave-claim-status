@@ -5,6 +5,7 @@ import { changes as confirmationChanges, id as confirmationId } from "./claimant
 import { changes as employerDetailsChanges, id as employerDetailsId } from "./claimantInfo/employerDetails";
 import { changes as employmentChanges, id as employmentId } from "./claimantInfo/employment";
 import { changes as employmentDetailsChanges, id as employmentDetailsId } from "./employmentDetails/employmentDetails";
+import { changes as intermittentChanges, id as intermittentId } from "./claimantInfo/intermittent";
 import { changes as medicalTreatmentChanges, id as medicalTreatmentId } from "./medical/treatment";
 import { changes as personalProfileChanges, id as personalProfileId } from "./claimantProfile/personalProfile";
 import { changes as priorClaimSearchChanges, id as priorClaimSearchId } from "./priorClaimSearch/priorClaimSearch";
@@ -21,6 +22,7 @@ const pageChangesMap = {
   [employerDetailsId]: employerDetailsChanges,
   [employmentId]: employmentChanges,
   [employmentDetailsId]: employmentDetailsChanges,
+  [intermittentId]: intermittentChanges,
   [medicalTreatmentId]: medicalTreatmentChanges,
   [personalProfileId]: personalProfileChanges,
   [priorClaimSearchId]: priorClaimSearchChanges,
