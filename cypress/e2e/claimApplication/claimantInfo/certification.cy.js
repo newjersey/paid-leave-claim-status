@@ -55,7 +55,7 @@ describe("Certification page", () => {
 
     it("user can agree and proceed to next page", () => {
       mockASPX();
-      cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_rbtnAgYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_rbtnAgYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_btnConfirm').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
