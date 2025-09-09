@@ -53,4 +53,10 @@ function adjustTable() {
       element.style.boxSizing = 'border-box';
     });
   });
+
+  const repInputElement = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepDOB');
+  if (repInputElement) {
+    const repElement = repInputElement.parentElement;
+    repElement.style.textAlign = 'left';
+  }
 }
