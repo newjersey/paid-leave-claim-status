@@ -70,6 +70,11 @@ function adjustTextEntries() {
     doctorEntry.style.width = '100%';
   }
 
+  const doctorAddressEntry = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_Panel1");
+  if (doctorAddressEntry) {
+    doctorAddressEntry.style.width = '100%';
+  }
+
   const workersCompDiv = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').closest('div');
   if (workersCompDiv) {
     workersCompDiv.style.width = '100%';
