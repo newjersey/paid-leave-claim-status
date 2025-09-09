@@ -59,3 +59,40 @@ export function trackOtherBenefitsYesSubmission(pageId) {
     });
   }
 }
+
+export function changes() {
+  const radioButtonIds = [
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo'
+  ];
+
+  radioButtonIds.forEach(transformRadioButton);
+}
+
+function transformRadioButton(radioButtonId) {
+  const radioButton = document.getElementById(radioButtonId);
+  const label = document.querySelector(`label[for="${radioButtonId}"]`);
+
+  if (radioButton && label) {
+    const radioDiv = document.createElement('div');
+    radioDiv.classList.add('usa-radio');
+
+    radioButton.classList.add('usa-radio__input');
+    label.classList.add('usa-radio__label');
+    label.style.textAlign = 'left';
+
+    radioDiv.appendChild(radioButton.cloneNode(true));
+    radioDiv.appendChild(label.cloneNode(true));
+
+    radioButton.parentNode.insertBefore(radioDiv, radioButton);
+
+    radioButton.remove();
+    label.remove();
+  }
+}
