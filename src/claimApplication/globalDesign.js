@@ -92,6 +92,8 @@ function styleButtons() {
   });
 }
 
+// TODO: this only styles the buttons.
+// When possible also use USWDS suggested HTML fieldset and legend structure
 export function styleRadioButton(radioButtonId, marginBottom = false) {
   const radioButton = document.getElementById(radioButtonId);
   const label = document.querySelector(`label[for="${radioButtonId}"]`);

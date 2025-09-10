@@ -36,6 +36,7 @@ export const identifyingContent = {
 export function changes() {
   adjustTable();
   fixOverflowingText();
+  fixPhoneNumberText();
   styleButton();
 }
 
@@ -73,5 +74,35 @@ function fixOverflowingText() {
   const otherStateInfo = document.querySelector('#divVerTDI');
   if (otherStateInfo) {
     otherStateInfo.style.height = 'fit-content';
+  }
+}
+
+function fixPhoneNumberText() {
+  const areaCodeInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTel');
+  if (areaCodeInput) {
+    areaCodeInput.style.maxWidth = '30px';
+
+    const parentTd = areaCodeInput.closest('td');
+    parentTd.style.whiteSpace = 'nowrap';
+    const labelLink = Array.from(parentTd.querySelectorAll('a')).find(a => a.textContent.includes("Telephone Number:"));
+      if (labelLink) {
+        const brElement = document.createElement('br');
+        labelLink.parentNode.insertBefore(brElement, labelLink.nextSibling);
+      }
+  }
+
+  const tel2Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTel2');
+  if (tel2Input) {
+    tel2Input.style.maxWidth = '40px';
+  }
+
+  const tel3Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTel3');
+  if (tel3Input) {
+    tel3Input.style.maxWidth = '50px';
+  }
+
+  const extInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTelExt');
+  if (extInput) {
+    extInput.style.maxWidth = '50px';
   }
 }
