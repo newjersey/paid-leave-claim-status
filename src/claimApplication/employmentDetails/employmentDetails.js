@@ -1,4 +1,4 @@
-import { styleRadioButton } from '../utils';
+import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const employmentDetailsLabels = [
   { id: 'ContentPlaceHolder1_TabEmployment_TabPanelSpan_ddlStopWorkReason', label: 'Reason work stopped' },
@@ -26,6 +26,10 @@ export function changes() {
   styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoLstSeperation_1');
   styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoUnionYes');
   styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoUnionNo');
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoUnionYes',
+    'ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoUnionNo'
+  );
   addStyles();
 }
 
