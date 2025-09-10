@@ -1,3 +1,5 @@
+import { styleRadioButton } from '../globalDesign';
+
 export const id = "ptoPension";
 
 export const identifyingContent = {
@@ -8,6 +10,7 @@ export const identifyingContent = {
 
 export function changes() {
   adjustTable();
+  styleRadioButtons();
 }
 
 function adjustTable() {
@@ -52,4 +55,15 @@ function adjustTable() {
       });
     });
   }
+}
+
+function styleRadioButtons() {
+  styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoPTOYes');
+  styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoPTONo', true);
+  styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoRecvPenYes');
+  styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoRecvPenNo', true);
+  styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoEPenYes');
+  styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoEPenNo', true);
+  styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoLPenYes');
+  styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoLPenNo', true);
 }

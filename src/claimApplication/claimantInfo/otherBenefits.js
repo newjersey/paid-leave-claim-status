@@ -1,4 +1,5 @@
 import { logEvent } from "../../modules/shared.mjs";
+import { styleRadioButton } from '../globalDesign';
 
 export const id = "otherBenefits";
 
@@ -72,27 +73,5 @@ export function changes() {
     'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo'
   ];
 
-  radioButtonIds.forEach(transformRadioButton);
-}
-
-function transformRadioButton(radioButtonId) {
-  const radioButton = document.getElementById(radioButtonId);
-  const label = document.querySelector(`label[for="${radioButtonId}"]`);
-
-  if (radioButton && label) {
-    const radioDiv = document.createElement('div');
-    radioDiv.classList.add('usa-radio');
-
-    radioButton.classList.add('usa-radio__input');
-    label.classList.add('usa-radio__label');
-    label.style.textAlign = 'left';
-
-    radioDiv.appendChild(radioButton.cloneNode(true));
-    radioDiv.appendChild(label.cloneNode(true));
-
-    radioButton.parentNode.insertBefore(radioDiv, radioButton);
-
-    radioButton.remove();
-    label.remove();
-  }
+  radioButtonIds.forEach(styleRadioButton);
 }

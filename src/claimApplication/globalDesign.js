@@ -91,3 +91,26 @@ function styleButtons() {
     button.style.height = null;
   });
 }
+
+export function styleRadioButton(radioButtonId, marginBottom = false) {
+  const radioButton = document.getElementById(radioButtonId);
+  const label = document.querySelector(`label[for="${radioButtonId}"]`);
+
+  if (radioButton && label) {
+    const radioDiv = document.createElement('div');
+    radioDiv.classList.add('usa-radio');
+
+    radioButton.classList.add('usa-radio__input');
+    label.classList.add('usa-radio__label');
+    label.style.marginBottom = marginBottom ? '20px': '0';
+    label.style.textAlign = 'left';
+
+    radioDiv.appendChild(radioButton.cloneNode(true));
+    radioDiv.appendChild(label.cloneNode(true));
+
+    radioButton.parentNode.insertBefore(radioDiv, radioButton);
+
+    radioButton.remove();
+    label.remove();
+  }
+}

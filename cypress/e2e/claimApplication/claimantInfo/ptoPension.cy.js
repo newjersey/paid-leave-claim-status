@@ -56,8 +56,8 @@ describe("PTO and Pension page", () => {
 
     it("user can input info and proceed to next page", () => {
       mockASPX();
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoPTONo').click();
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoRecvPenNo').click();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoPTONo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoRecvPenNo').click({ force: true });
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelPTO_btnNextPaidTimeOff').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
