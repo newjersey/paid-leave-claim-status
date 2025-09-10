@@ -1,3 +1,5 @@
+import { fixPhoneNumberText } from '../globalDesign';
+
 export const claimantProfileVerificationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerFname', label: 'Name' },
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerDob', label: 'Date of Birth' },
@@ -32,6 +34,18 @@ export const identifyingContent = {
 export function changes() {
   styleRadioButtons();
   adjustTable();
+  fixPhoneNumberText(
+    '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerTel1',
+    '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerTel2',
+    '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerTel3',
+    '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerTelExt'
+  );
+  fixPhoneNumberText(
+    '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerAltTel1',
+    '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerAltTel2',
+    '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerAltTel3',
+    '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerAltTelExt'
+  );
 }
 
 function adjustTable() {

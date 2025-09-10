@@ -116,3 +116,37 @@ export function styleRadioButton(radioButtonId, marginBottom = false) {
     label.remove();
   }
 }
+
+export function fixPhoneNumberText(
+  areaCodeInputId,
+  tel2InputId,
+  tel3InputId,
+  extInputId
+) {
+  const areaCodeInput = document.querySelector(areaCodeInputId);
+  if (areaCodeInput) {
+    areaCodeInput.style.maxWidth = '30px';
+
+    const parentTd = areaCodeInput.closest('td');
+    const labelLink = Array.from(parentTd.querySelectorAll('a')).find(a => a.textContent.includes("Telephone Number:"));
+      if (labelLink) {
+        const brElement = document.createElement('br');
+        labelLink.parentNode.insertBefore(brElement, labelLink.nextSibling);
+      }
+  }
+
+  const tel2Input = document.querySelector(tel2InputId);
+  if (tel2Input) {
+    tel2Input.style.maxWidth = '40px';
+  }
+
+  const tel3Input = document.querySelector(tel3InputId);
+  if (tel3Input) {
+    tel3Input.style.maxWidth = '50px';
+  }
+
+  const extInput = document.querySelector(extInputId);
+  if (extInput) {
+    extInput.style.maxWidth = '50px';
+  }
+}
