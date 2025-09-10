@@ -1,3 +1,5 @@
+import { styleRadioButton } from '../globalDesign';
+
 export const citizenshipLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum', label: 'First 3 digits of Phone Number' },
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum2', label: 'Fourth, fifth, and sixth digits of Phone Number' },
@@ -21,6 +23,10 @@ export const identifyingContent = {
 
 export function changes() {
   adjustWidths();
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenNo');
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepNo');
 }
 
 function adjustWidths () {
