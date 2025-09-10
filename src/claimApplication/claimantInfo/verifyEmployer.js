@@ -67,10 +67,10 @@ function convertScheduleInputToTextarea() {
   const inputElement = document.getElementById("ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtVerESchedule");
   if (inputElement) {
     const textareaElement = document.createElement('textarea');
-    
+
     textareaElement.name = inputElement.name;
     textareaElement.id = inputElement.id;
-    textareaElement.value = inputElement.value.replace(/hrs\.\s+/g, 'hrs.\n');
+    textareaElement.value = inputElement.value;
     textareaElement.readOnly = inputElement.readOnly;
     textareaElement.style.borderStyle = inputElement.style.borderStyle;
     textareaElement.style.fontWeight = inputElement.style.fontWeight;

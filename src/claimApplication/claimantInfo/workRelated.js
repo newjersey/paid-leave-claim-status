@@ -1,3 +1,5 @@
+import { styleRadioButton } from '../globalDesign';
+
 export const workRelatedLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpNm', label: 'Employer Name' },
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtEmpadd1', label: 'Employer Address Line 1' },
@@ -25,6 +27,12 @@ export const identifyingContent = {
 
 export function changes() {
   adjustWidths();
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo', true);
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCInsYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCInsNo', true);
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCBenYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCBenNo', true);
 }
 
 function adjustWidths() {
@@ -33,6 +41,21 @@ function adjustWidths() {
     div.style.width = 'auto';
     div.style.maxWidth = '700px';
   }
+
+  const outerDiv = document.getElementById('divWCNo');
+  if (outerDiv) {
+    const innerDivs = outerDiv.querySelectorAll('div');
+    innerDivs.forEach(div => {
+      div.style.width = '100%';
+      div.style.marginLeft = '0';
+    });
+
+    const textarea = outerDiv.querySelector('textarea');
+    if (textarea) {
+      textarea.style.width = '100%';
+    }
+  }
+  
 
   const fieldsets = document.querySelectorAll('fieldset');
 
