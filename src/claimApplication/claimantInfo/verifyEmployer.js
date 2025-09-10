@@ -1,3 +1,5 @@
+import { styleRadioButton } from '../globalDesign';
+
 export const verifyEmployerLabels = [
   { id: 'ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtVerEmpName', label: 'Employer Name' },
   { id: 'ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtEVerAdd', label: 'Employer Address' },
@@ -30,6 +32,8 @@ export function changes() {
   adjustTable();
   styleButtons();
   convertScheduleInputToTextarea();
+  styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectYes');
+  styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectNo', true);
 }
 
 function styleButtons() {
