@@ -15,6 +15,7 @@ import { changes as ptoPensionChanges, id as ptoPensionId } from "./claimantInfo
 import { changes as verificationChanges, id as verificationId } from "./claimantInfo/verification";
 import { changes as verifyEmployerChanges, id as verifyEmployerId } from "./claimantInfo/verifyEmployer";
 import { changes as workRelatedChanges, id as workRelatedId } from "./claimantInfo/workRelated";
+import { changes as workScheduleChanges, id as workScheduleId } from "./claimantInfo/workSchedule";
 
 const pageChangesMap = {
   [certificationId]: certificationChanges,
@@ -34,6 +35,7 @@ const pageChangesMap = {
   [verificationId]: verificationChanges,
   [verifyEmployerId]: verifyEmployerChanges,
   [workRelatedId]: workRelatedChanges,
+  [workScheduleId]: workScheduleChanges,
 };
 
 export function pageSpecificChanges(pageId) {
