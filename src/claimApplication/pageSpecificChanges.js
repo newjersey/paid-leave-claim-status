@@ -1,6 +1,7 @@
 import { changes as certificationChanges, id as certificationId } from "./claimantInfo/certification";
 import { changes as citizenshipChanges, id as citizenshipId } from "./claimantProfile/citizenship";
 import { changes as claimantProfileVerificationChanges, id as claimantProfileVerificationId } from "./claimantProfile/verification";
+import { changes as completeExistingIntroChanges, id as completeExistingIntroId } from "./completeExistingIntro/completeExistingIntro";
 import { changes as confirmationChanges, id as confirmationId } from "./claimantInfo/confirmation";
 import { changes as employerDetailsChanges, id as employerDetailsId } from "./claimantInfo/employerDetails";
 import { changes as employmentChanges, id as employmentId } from "./claimantInfo/employment";
@@ -22,6 +23,7 @@ const pageChangesMap = {
   [certificationId]: certificationChanges,
   [citizenshipId]: citizenshipChanges,
   [claimantProfileVerificationId]: claimantProfileVerificationChanges,
+  [completeExistingIntroId]: completeExistingIntroChanges,
   [confirmationId]: confirmationChanges,
   [employerDetailsId]: employerDetailsChanges,
   [employmentId]: employmentChanges,
