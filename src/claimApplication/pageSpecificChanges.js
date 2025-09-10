@@ -15,6 +15,7 @@ import { changes as paymentInfoChanges, id as paymentInfoId } from "./claimantIn
 import { changes as personalProfileChanges, id as personalProfileId } from "./claimantProfile/personalProfile";
 import { changes as priorClaimSearchChanges, id as priorClaimSearchId } from "./priorClaimSearch/priorClaimSearch";
 import { changes as ptoPensionChanges, id as ptoPensionId } from "./claimantInfo/ptoPension";
+import { changes as tdiIntroductionChanges, id as tdiIntroductionId } from "./tdiIntroduction/tdiIntroduction";
 import { changes as verificationChanges, id as verificationId } from "./claimantInfo/verification";
 import { changes as verifyEmployerChanges, id as verifyEmployerId } from "./claimantInfo/verifyEmployer";
 import { changes as workRelatedChanges, id as workRelatedId } from "./claimantInfo/workRelated";
@@ -38,6 +39,7 @@ const pageChangesMap = {
   [personalProfileId]: personalProfileChanges,
   [priorClaimSearchId]: priorClaimSearchChanges,
   [ptoPensionId]: ptoPensionChanges,
+  [tdiIntroductionId]: tdiIntroductionChanges,
   [verificationId]: verificationChanges,
   [verifyEmployerId]: verifyEmployerChanges,
   [workRelatedId]: workRelatedChanges,
