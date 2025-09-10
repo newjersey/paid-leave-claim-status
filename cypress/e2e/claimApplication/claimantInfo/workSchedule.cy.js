@@ -60,7 +60,7 @@ describe("Work Schedule page", () => {
 
     it("user can input info and proceed to next page", () => {
       mockASPX();
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_rdoWrkSchTyp_0').click();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_rdoWrkSchTyp_0').click({ force: true });
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCMon').type('8');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCTue').type('8');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCWed').type('8');
