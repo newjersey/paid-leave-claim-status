@@ -1,3 +1,5 @@
+import { styleRadioButton } from '../globalDesign';
+
 export const personalProfileLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtoccupation', label: 'Occupation' },
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_ddlRace', label: 'Race' },
@@ -17,6 +19,15 @@ export function changes() {
   adjustAddressTable();
   removeEmptyCells();
   removeOverlappingBorders();
+
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnMale');
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnFemale');
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnResUSAYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnResUSANo');
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnMailingYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnMailingNo', true);
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnMUSAYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnMUSANo');
 }
 
 function adjustWidths() {
