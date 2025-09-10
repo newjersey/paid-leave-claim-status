@@ -25,6 +25,11 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
+    .lblClass, .lblClass1 {
+      font-family: "Public Sans", sans-serif;
+      font-variant: normal;
+      font-size: 16px;
+    }
     @media (max-width: 767px) {
       #ContentPlaceHolder1_lblMesgInfo {
         display: block;
@@ -55,7 +60,7 @@ function adjustTable() {
 
   Array.from(headerRow.children).forEach((cell) => {
     if (cell.classList.contains('hideCol')) {
-      headerRow.removeChild(cell);
+      cell.style.display = 'none';
     }
   });
 
@@ -64,7 +69,7 @@ function adjustTable() {
   tbody.querySelectorAll('tr').forEach(row => {
     Array.from(row.children).forEach((cell) => {
       if (cell.classList.contains('hideCol')) {
-        row.removeChild(cell);
+        cell.style.display = 'none';
       }
     });
 
