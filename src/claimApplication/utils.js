@@ -56,3 +56,17 @@ export function fixPhoneNumberText(
     extInput.style.maxWidth = '50px';
   }
 }
+
+export function removeExtraSpaceBetweenRadioButtons(yesId, noId) {
+  const radioYes = document.getElementById(yesId).closest('.usa-radio');
+  const radioNo = document.getElementById(noId).closest('.usa-radio');
+
+  let currentNode = radioYes.nextSibling;
+  while (currentNode && currentNode !== radioNo) {
+    const nextNode = currentNode.nextSibling;
+    if (currentNode.nodeType === Node.TEXT_NODE || currentNode.nodeType === Node.ELEMENT_NODE && currentNode.tagName === 'BR') {
+        currentNode.parentNode.removeChild(currentNode);
+    }
+    currentNode = nextNode;
+  }
+}

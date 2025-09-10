@@ -1,4 +1,5 @@
 import { logEvent } from "../../modules/shared.mjs";
+import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const medicalTreatmentLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury', label: 'Describe your Disability' },
@@ -51,7 +52,36 @@ export function trackWorkersCompYesSubmission(pageId) {
 }
 
 export function changes() {
+  adjustTable();
   adjustTextEntries();
+  styleRadioButtons();
+}
+
+function styleRadioButtons() {
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddNo');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERNO');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospNo');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERNO'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo'
+  );
 }
 
 function adjustTextEntries() {
@@ -79,4 +109,32 @@ function adjustTextEntries() {
   if (workersCompDiv) {
     workersCompDiv.style.width = '100%';
   }
+}
+
+function adjustTable() {
+  const doctorAddress = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_pnlDocOCCAdd');
+  if (doctorAddress) {
+    doctorAddress.style.width = '100%';
+  }
+  
+  const tables = document.querySelectorAll('table');
+  tables.forEach(table => {
+    table.style.width = '100%';
+    table.style.tableLayout = 'auto';
+
+    const cells = table.querySelectorAll('td, th');
+    cells.forEach(cell => {
+      cell.style.textAlign = 'left';
+      cell.style.width = '100%';
+      cell.style.display = 'block';
+    });
+
+    const inputsAndTextareas = table.querySelectorAll('input[type="text"], textarea');
+    inputsAndTextareas.forEach(element => {
+      element.style.width = '100%';
+      element.style.maxWidth = '100%';
+      element.style.boxSizing = 'border-box';
+      element.style.textAlign = 'left';
+    });
+  });
 }
