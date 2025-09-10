@@ -1,3 +1,5 @@
+import { styleRadioButton } from '../globalDesign';
+
 export const otherBenefitsVerificationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDisabDate', label: 'First Day of Disability' },
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerReturn', label: 'Returned to Work' },
@@ -38,6 +40,8 @@ export function changes() {
   fixOverflowingText();
   fixPhoneNumberText();
   styleButton();
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsNo');
 }
 
 function styleButton() {
