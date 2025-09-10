@@ -65,33 +65,33 @@ function restructureDayOfWeekTable() {
     const tbody = mondayInput.closest('tbody');
 
     const inputIds = [
-        'ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCSun',
-        'ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCSat',
-        'ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCFri',
-        'ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCThu',
-        'ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCWed',
-        'ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCTue',
-        'ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCMon'
+      'ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCSun',
+      'ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCSat',
+      'ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCFri',
+      'ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCThu',
+      'ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCWed',
+      'ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCTue',
+      'ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCMon'
     ];
 
     const newRows = [];
 
     inputIds.forEach(id => {
-        const input = document.getElementById(id);
-        const td = input.closest('td');
-        const newRow = document.createElement('tr');
+      const input = document.getElementById(id);
+      const td = input.closest('td');
+      const newRow = document.createElement('tr');
 
-        const dayText = td.childNodes[0].nodeValue;
-        const hrsText = td.childNodes[td.childNodes.length - 1].nodeValue;
-        
-        newRow.innerHTML = `${dayText.trim()}&nbsp;${hrsText.trim()}&nbsp;`;
-        newRow.appendChild(input.cloneNode(true));
+      const dayText = td.childNodes[0].nodeValue;
+      const hrsText = td.childNodes[td.childNodes.length - 1].nodeValue;
+      
+      newRow.innerHTML = `${dayText.trim()}&nbsp;${hrsText.trim()}&nbsp;`;
+      newRow.appendChild(input.cloneNode(true));
 
-        newRows.push(newRow);
+      newRows.push(newRow);
     });
 
     for (let i = 0; i < 2; i++) {
-        tbody.removeChild(tbody.firstElementChild);
+      tbody.removeChild(tbody.firstElementChild);
     }
 
     newRows.forEach(row => tbody.insertBefore(row, tbody.firstChild));
