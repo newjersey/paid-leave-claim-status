@@ -1,3 +1,5 @@
+import { styleRadioButton } from '../globalDesign';
+
 export const employmentDetailsLabels = [
   { id: 'ContentPlaceHolder1_TabEmployment_TabPanelSpan_ddlStopWorkReason', label: 'Reason work stopped' },
   { id: 'ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtStreetAddrSOE', label: 'Physical work address line 1' },
@@ -20,6 +22,10 @@ export const identifyingContent = {
 
 export function changes() {
   adjustTextEntries();
+  styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoLstSeperation_0');
+  styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoLstSeperation_1');
+  styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoUnionYes');
+  styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoUnionNo');
 }
 
 function adjustTextEntries() {
