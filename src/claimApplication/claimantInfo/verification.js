@@ -1,4 +1,4 @@
-import { fixPhoneNumberText, styleRadioButton } from '../globalDesign';
+import { fixPhoneNumberText, styleRadioButton } from '../utils';
 
 export const otherBenefitsVerificationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDisabDate', label: 'First Day of Disability' },

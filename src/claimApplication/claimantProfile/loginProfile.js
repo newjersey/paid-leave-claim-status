@@ -1,4 +1,4 @@
-import { styleRadioButton } from '../globalDesign';
+import { styleRadioButton } from '../utils';
 
 export const loginProfileLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtClmntSSN1', label: 'First 3 digits of Social Security Number' },

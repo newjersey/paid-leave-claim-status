@@ -1,4 +1,4 @@
-import { styleRadioButton } from '../globalDesign';
+import { styleRadioButton } from '../utils';
 
 export const workRelatedLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpNm', label: 'Employer Name' },

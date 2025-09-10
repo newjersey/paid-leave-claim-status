@@ -1,4 +1,4 @@
-import { styleRadioButton } from '../globalDesign';
+import { styleRadioButton } from '../utils';
 
 export const personalProfileLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtoccupation', label: 'Occupation' },

@@ -1,4 +1,4 @@
-import { fixPhoneNumberText } from '../globalDesign';
+import { fixPhoneNumberText } from '../utils';
 
 export const claimantProfileVerificationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerFname', label: 'Name' },

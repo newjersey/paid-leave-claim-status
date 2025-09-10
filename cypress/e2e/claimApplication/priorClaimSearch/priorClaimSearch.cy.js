@@ -46,7 +46,7 @@ describe("Prior Claim Search page", () => {
 
     it("user can input info and proceed to next page", () => {
       mockASPX();
-      cy.get('#ContentPlaceHolder1_rbtnClmYes').click();
+      cy.get('#ContentPlaceHolder1_rbtnClmYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_txtClmID').type('11111');
       cy.get('#ContentPlaceHolder1_btnRetrieve').click();
       cy.wait('@aspxSubmission').then(checkPostData);

@@ -1,3 +1,5 @@
+import { styleRadioButton } from '../utils';
+
 export const priorClaimSearchLabels = [
   { id: 'ContentPlaceHolder1_txtFName', label: 'Full Name' },
   { id: 'ContentPlaceHolder1_txtDOB', label: 'Date of Birth' },
@@ -13,7 +15,24 @@ export const identifyingContent = {
 };
 
 export function changes() {
+  addStyles();
   adjustTextEntry();
+  styleRadioButton('ContentPlaceHolder1_rbtnClmYes');
+  styleRadioButton('ContentPlaceHolder1_rbtnClmNo');
+  adjustTable();
+}
+
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    @media (max-width: 767px) {
+      #ContentPlaceHolder1_lblMesgInfo {
+        display: block;
+        width: 300px;
+      }
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 function adjustTextEntry() {
@@ -21,4 +40,46 @@ function adjustTextEntry() {
   if (name) {
     name.style.width = '100%';
   }
+}
+
+function adjustTable() {
+  const table = document.getElementById('ContentPlaceHolder1_gvPndClaims');
+    
+  table.className = 'usa-table usa-table--stacked';
+  
+  const thead = document.createElement('thead');
+  const headerRow = table.querySelector('tr:first-child');
+  thead.appendChild(headerRow);
+
+  table.insertBefore(thead, table.firstChild);
+
+  Array.from(headerRow.children).forEach((cell) => {
+    if (cell.classList.contains('hideCol')) {
+      headerRow.removeChild(cell);
+    }
+  });
+
+  const tbody = table.querySelector('tbody');
+
+  tbody.querySelectorAll('tr').forEach(row => {
+    Array.from(row.children).forEach((cell) => {
+      if (cell.classList.contains('hideCol')) {
+        row.removeChild(cell);
+      }
+    });
+
+    row.querySelectorAll('td, th').forEach((cell, index) => {
+      const headerText = headerRow.children[index].textContent.trim();
+      
+      cell.setAttribute('data-label', headerText);
+      
+      if (index === 0 && cell.tagName !== 'TH') {
+        const th = document.createElement('th');
+        th.setAttribute('scope', 'row');
+        th.setAttribute('data-label', headerText);
+        th.innerHTML = cell.innerHTML;
+        row.replaceChild(th, cell);
+      }
+    });
+  });
 }

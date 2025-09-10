@@ -1,4 +1,4 @@
-import { styleRadioButton } from '../globalDesign';
+import { styleRadioButton } from '../utils';
 
 export const verifyEmployerLabels = [
   { id: 'ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtVerEmpName', label: 'Employer Name' },

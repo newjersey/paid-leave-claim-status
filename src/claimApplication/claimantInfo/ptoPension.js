@@ -1,4 +1,4 @@
-import { styleRadioButton } from '../globalDesign';
+import { styleRadioButton } from '../utils';
 
 export const id = "ptoPension";
 

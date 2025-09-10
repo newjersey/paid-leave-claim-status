@@ -1,4 +1,4 @@
-import { styleRadioButton } from '../globalDesign';
+import { styleRadioButton } from '../utils';
 
 export const workScheduleLabels = [
   { id: 'ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCMon', label: 'Hours Worked Mondays' },

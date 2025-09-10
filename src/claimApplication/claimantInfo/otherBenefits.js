@@ -1,5 +1,5 @@
 import { logEvent } from "../../modules/shared.mjs";
-import { styleRadioButton } from '../globalDesign';
+import { styleRadioButton } from '../utils';
 
 export const id = "otherBenefits";
 

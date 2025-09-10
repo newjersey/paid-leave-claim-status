@@ -1,4 +1,4 @@
-import { styleRadioButton } from '../globalDesign';
+import { styleRadioButton } from '../utils';
 
 export const employmentDetailsLabels = [
   { id: 'ContentPlaceHolder1_TabEmployment_TabPanelSpan_ddlStopWorkReason', label: 'Reason work stopped' },

@@ -1,0 +1,58 @@
+// TODO: this only styles the buttons.
+// When possible also use USWDS suggested HTML fieldset and legend structure
+export function styleRadioButton(radioButtonId, marginBottom = false) {
+  const radioButton = document.getElementById(radioButtonId);
+  const label = document.querySelector(`label[for="${radioButtonId}"]`);
+
+  if (radioButton && label) {
+    const radioDiv = document.createElement('div');
+    radioDiv.classList.add('usa-radio');
+
+    radioButton.classList.add('usa-radio__input');
+    label.classList.add('usa-radio__label');
+    label.style.marginBottom = marginBottom ? '20px': '0';
+    label.style.textAlign = 'left';
+
+    radioDiv.appendChild(radioButton.cloneNode(true));
+    radioDiv.appendChild(label.cloneNode(true));
+
+    radioButton.parentNode.insertBefore(radioDiv, radioButton);
+
+    radioButton.remove();
+    label.remove();
+  }
+}
+
+export function fixPhoneNumberText(
+  areaCodeInputId,
+  tel2InputId,
+  tel3InputId,
+  extInputId
+) {
+  const areaCodeInput = document.querySelector(areaCodeInputId);
+  if (areaCodeInput) {
+    areaCodeInput.style.maxWidth = '30px';
+
+    const parentTd = areaCodeInput.closest('td');
+    const labelLink = Array.from(parentTd.querySelectorAll('a')).find(a => a.textContent.includes("Telephone Number:"));
+      if (labelLink) {
+        const brElement = document.createElement('br');
+        labelLink.parentNode.insertBefore(brElement, labelLink.nextSibling);
+      }
+  }
+
+  const tel2Input = document.querySelector(tel2InputId);
+  if (tel2Input) {
+    tel2Input.style.maxWidth = '40px';
+  }
+
+  const tel3Input = document.querySelector(tel3InputId);
+  if (tel3Input) {
+    tel3Input.style.maxWidth = '50px';
+  }
+
+  const extInput = document.querySelector(extInputId);
+  if (extInput) {
+    extInput.style.maxWidth = '50px';
+  }
+}
