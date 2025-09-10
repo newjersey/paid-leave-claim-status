@@ -255,6 +255,7 @@ export const HEADER_HTML = html`
     <a
       href="https://www.nj.gov/labor/myleavebenefits/"
       style="text-decoration: underline; color: #ffffff; text-underline-offset: 2px"
+      target="_blank"
       >myLeaveBenefits.nj.gov</a
     >
   </header>
