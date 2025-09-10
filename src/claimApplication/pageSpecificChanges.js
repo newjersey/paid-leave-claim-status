@@ -6,6 +6,7 @@ import { changes as employerDetailsChanges, id as employerDetailsId } from "./cl
 import { changes as employmentChanges, id as employmentId } from "./claimantInfo/employment";
 import { changes as employmentDetailsChanges, id as employmentDetailsId } from "./employmentDetails/employmentDetails";
 import { changes as intermittentChanges, id as intermittentId } from "./claimantInfo/intermittent";
+import { changes as loginProfileChanges, id as loginProfileId } from "./claimantProfile/loginProfile";
 import { changes as medicalTreatmentChanges, id as medicalTreatmentId } from "./medical/treatment";
 import { changes as otherBenefitsChanges, id as otherBenefitsId } from "./claimantInfo/otherBenefits";
 import { changes as paymentInfoChanges, id as paymentInfoId } from "./claimantInfo/paymentInfo";
@@ -26,6 +27,7 @@ const pageChangesMap = {
   [employmentId]: employmentChanges,
   [employmentDetailsId]: employmentDetailsChanges,
   [intermittentId]: intermittentChanges,
+  [loginProfileId]: loginProfileChanges,
   [medicalTreatmentId]: medicalTreatmentChanges,
   [otherBenefitsId]: otherBenefitsChanges,
   [paymentInfoId]: paymentInfoChanges,
