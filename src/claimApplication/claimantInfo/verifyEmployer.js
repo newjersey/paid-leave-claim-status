@@ -70,14 +70,14 @@ function convertScheduleInputToTextarea() {
     
     textareaElement.name = inputElement.name;
     textareaElement.id = inputElement.id;
-    textareaElement.value = inputElement.value;
+    textareaElement.value = inputElement.value.replace(/hrs\.\s+/g, 'hrs.\n');
     textareaElement.readOnly = inputElement.readOnly;
     textareaElement.style.borderStyle = inputElement.style.borderStyle;
     textareaElement.style.fontWeight = inputElement.style.fontWeight;
     textareaElement.style.width = inputElement.style.width;
     textareaElement.style.maxWidth = inputElement.style.maxWidth;
     textareaElement.style.boxSizing = inputElement.style.boxSizing;
-    textareaElement.style.height = '100px';
+    textareaElement.style.height = '140px';
     textareaElement.setAttribute('autocomplete', inputElement.getAttribute('autocomplete'));
     textareaElement.setAttribute('aria-label', inputElement.getAttribute('aria-label'));
 
