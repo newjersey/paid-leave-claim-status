@@ -26,6 +26,17 @@ export function changes() {
   styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoLstSeperation_1');
   styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoUnionYes');
   styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoUnionNo');
+  addStyles();
+}
+
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    #ContentPlaceHolder1_TabEmployment_TabPanelSpan {
+      background-color: #FBFCFD;
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 function adjustTextEntries() {

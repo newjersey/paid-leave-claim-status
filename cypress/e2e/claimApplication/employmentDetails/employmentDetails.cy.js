@@ -64,12 +64,12 @@ describe("Employment Details page", () => {
     it("user can input info and proceed to next page", () => {
       mockASPX();
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_ddlStopWorkReason').select('Illness/Injury');
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoLstSeperation_0').click();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoLstSeperation_0').click({ force: true });
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtStreetAddrSOE').type('30 Livingston Avenue');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtCitySOE').type('New Brunswick');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtZipSOE1').type('08901');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtDeptUnitSOE').type('Workers');
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoUnionYes').click();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoUnionYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtUnionNameSOE').type('Union');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtLocalNoSOE').type('1');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_btnNextSpanOfEmpymt').click();
