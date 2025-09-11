@@ -46,6 +46,12 @@ export function changes() {
     '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerAltTel3',
     '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerAltTelExt'
   );
+  fixPhoneNumberText(
+    '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepTel1',
+    '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepTel2',
+    '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepTel3',
+    '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepTelExt'
+  );
 }
 
 function adjustTable() {
