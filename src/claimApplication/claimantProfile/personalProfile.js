@@ -1,4 +1,4 @@
-import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
+import { adjustTableWidths, removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const personalProfileLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtoccupation', label: 'Occupation' },
@@ -48,27 +48,8 @@ export function changes() {
 
 function adjustWidths() {
   const parentDiv = document.getElementById("ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_btnCitBtn");
-
   if (parentDiv) {
-    const tables = parentDiv.querySelectorAll('table');
-    tables.forEach(table => {
-      table.style.width = 'auto';
-      table.style.maxWidth = '100%';
-      table.style.tableLayout = 'auto';
-
-      const cells = table.querySelectorAll('td');
-      cells.forEach(cell => {
-        cell.style.width = 'auto';
-        cell.style.maxWidth = '100%';
-      });
-
-      const inputsAndSelects = table.querySelectorAll('input[type="text"], select, textarea');
-      inputsAndSelects.forEach(element => {
-        element.style.width = 'auto';
-        element.style.maxWidth = '100%';
-        element.style.boxSizing = 'border-box';
-      });
-    });
+    adjustTableWidths(parentDiv);
   }
 }
 

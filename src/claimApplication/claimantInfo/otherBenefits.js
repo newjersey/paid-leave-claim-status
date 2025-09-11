@@ -1,5 +1,5 @@
 import { logEvent } from "../../modules/shared.mjs";
-import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
+import { adjustTableWidths, removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const id = "otherBenefits";
 
@@ -70,7 +70,7 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
-    fieldset div {
+    .usa-radio {
       padding: 0;
     }
   `;
@@ -116,26 +116,8 @@ function adjustWidths() {
     employerDiv.style.width = '100%';
   }
 
-  const employerParentDiv = document.getElementById("divEmp");
-  if (employerParentDiv) {
-    const tables = employerParentDiv.querySelectorAll('table');
-    tables.forEach(table => {
-      table.style.width = 'auto';
-      table.style.maxWidth = '100%';
-      table.style.tableLayout = 'auto';
-
-      const cells = table.querySelectorAll('td');
-      cells.forEach(cell => {
-        cell.style.width = 'auto';
-        cell.style.maxWidth = '100%';
-      });
-
-      const inputsAndSelects = table.querySelectorAll('input[type="text"], select, textarea');
-      inputsAndSelects.forEach(element => {
-        element.style.width = 'auto';
-        element.style.maxWidth = '100%';
-        element.style.boxSizing = 'border-box';
-      });
-    });
+  const parentDiv = document.getElementById("divEmp");
+  if (parentDiv) {
+    adjustTableWidths(parentDiv);
   }
 }

@@ -1,5 +1,5 @@
 import { logEvent } from "../../modules/shared.mjs";
-import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
+import { adjustTableWidths, removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const medicalTreatmentLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury', label: 'Describe your Disability' },
@@ -117,27 +117,6 @@ function adjustTable() {
     doctorAddress.style.width = 'auto';
     doctorAddress.style.maxWidth = '100%';
   }
-  
-  const tables = document.querySelectorAll('table');
-  tables.forEach(table => {
-    table.style.width = 'auto';
-    table.style.maxWidth = '100%';
-    table.style.tableLayout = 'auto';
 
-    const cells = table.querySelectorAll('td, th');
-    cells.forEach(cell => {
-      cell.style.textAlign = 'left';
-      cell.style.width = 'auto';
-      cell.style.maxWidth = '100%';
-      cell.style.display = 'block';
-    });
-
-    const inputsAndTextareas = table.querySelectorAll('input[type="text"], textarea');
-    inputsAndTextareas.forEach(element => {
-      element.style.width = 'auto';
-      element.style.maxWidth = '100%';
-      element.style.boxSizing = 'border-box';
-      element.style.textAlign = 'left';
-    });
-  });
+  adjustTableWidths(document);
 }

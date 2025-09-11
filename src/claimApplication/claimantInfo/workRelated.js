@@ -1,4 +1,4 @@
-import { styleRadioButton } from '../utils';
+import { adjustTableWidths, removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const workRelatedLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpNm', label: 'Employer Name' },
@@ -27,12 +27,28 @@ export const identifyingContent = {
 
 export function changes() {
   adjustWidths();
+  styleRadioButtons();
+}
+
+function styleRadioButtons() {
   styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes');
   styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo', true);
   styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCInsYes');
   styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCInsNo', true);
   styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCBenYes');
   styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCBenNo', true);
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCInsYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCInsNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCBenYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCBenNo'
+  );
 }
 
 function adjustWidths() {
@@ -62,25 +78,6 @@ function adjustWidths() {
   fieldsets.forEach(fieldset => {
     fieldset.style.width = 'auto';
     fieldset.style.maxWidth = '100%';
-
-    const tables = fieldset.querySelectorAll('table');
-    tables.forEach(table => {
-      table.style.width = 'auto';
-      table.style.maxWidth = '100%';
-      table.style.tableLayout = 'auto';
-
-      const cells = table.querySelectorAll('td');
-      cells.forEach(cell => {
-        cell.style.width = 'auto';
-        cell.style.maxWidth = '100%';
-      });
-
-      const inputsAndSelects = table.querySelectorAll('input[type="text"], select, textarea');
-      inputsAndSelects.forEach(element => {
-        element.style.width = 'auto';
-        element.style.maxWidth = '100%';
-        element.style.boxSizing = 'border-box';
-      });
-    });
+    adjustTableWidths(fieldset);
   });
 }
