@@ -65,12 +65,14 @@ function adjustWidths() {
 
     const tables = fieldset.querySelectorAll('table');
     tables.forEach(table => {
-      table.style.width = '100%';
+      table.style.width = 'auto';
+      table.style.maxWidth = '100%';
       table.style.tableLayout = 'auto';
 
       const cells = table.querySelectorAll('td');
       cells.forEach(cell => {
-        cell.style.width = '';
+        cell.style.width = 'auto';
+        cell.style.maxWidth = '100%';
       });
 
       const inputsAndSelects = table.querySelectorAll('input[type="text"], select, textarea');

@@ -64,6 +64,7 @@ export function trackOtherBenefitsYesSubmission(pageId) {
 export function changes() {
   addStyles();
   styleRadioButtons();
+  adjustWidths();
 }
 
 function addStyles() {
@@ -106,4 +107,35 @@ function styleRadioButtons() {
     'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes',
     'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo'
   );
+}
+
+function adjustWidths() {
+  const employerDiv = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_pnlEmpUnionadd");
+  if (employerDiv) {
+    employerDiv.style.marginLeft = '0';
+    employerDiv.style.width = '100%';
+  }
+
+  const employerParentDiv = document.getElementById("divEmp");
+  if (employerParentDiv) {
+    const tables = employerParentDiv.querySelectorAll('table');
+    tables.forEach(table => {
+      table.style.width = 'auto';
+      table.style.maxWidth = '100%';
+      table.style.tableLayout = 'auto';
+
+      const cells = table.querySelectorAll('td');
+      cells.forEach(cell => {
+        cell.style.width = 'auto';
+        cell.style.maxWidth = '100%';
+      });
+
+      const inputsAndSelects = table.querySelectorAll('input[type="text"], select, textarea');
+      inputsAndSelects.forEach(element => {
+        element.style.width = 'auto';
+        element.style.maxWidth = '100%';
+        element.style.boxSizing = 'border-box';
+      });
+    });
+  }
 }

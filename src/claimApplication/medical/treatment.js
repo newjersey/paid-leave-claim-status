@@ -114,24 +114,27 @@ function adjustTextEntries() {
 function adjustTable() {
   const doctorAddress = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_pnlDocOCCAdd');
   if (doctorAddress) {
-    doctorAddress.style.width = '100%';
+    doctorAddress.style.width = 'auto';
+    doctorAddress.style.maxWidth = '100%';
   }
   
   const tables = document.querySelectorAll('table');
   tables.forEach(table => {
-    table.style.width = '100%';
+    table.style.width = 'auto';
+    table.style.maxWidth = '100%';
     table.style.tableLayout = 'auto';
 
     const cells = table.querySelectorAll('td, th');
     cells.forEach(cell => {
       cell.style.textAlign = 'left';
-      cell.style.width = '100%';
+      cell.style.width = 'auto';
+      cell.style.maxWidth = '100%';
       cell.style.display = 'block';
     });
 
     const inputsAndTextareas = table.querySelectorAll('input[type="text"], textarea');
     inputsAndTextareas.forEach(element => {
-      element.style.width = '100%';
+      element.style.width = 'auto';
       element.style.maxWidth = '100%';
       element.style.boxSizing = 'border-box';
       element.style.textAlign = 'left';

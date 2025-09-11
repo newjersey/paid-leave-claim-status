@@ -52,17 +52,19 @@ function adjustWidths() {
   if (parentDiv) {
     const tables = parentDiv.querySelectorAll('table');
     tables.forEach(table => {
-      table.style.width = '100%';
+      table.style.width = 'auto';
+      table.style.maxWidth = '100%';
       table.style.tableLayout = 'auto';
 
       const cells = table.querySelectorAll('td');
       cells.forEach(cell => {
-        cell.style.width = '';
+        cell.style.width = 'auto';
+        cell.style.maxWidth = '100%';
       });
 
       const inputsAndSelects = table.querySelectorAll('input[type="text"], select, textarea');
       inputsAndSelects.forEach(element => {
-        element.style.width = '100%';
+        element.style.width = 'auto';
         element.style.maxWidth = '100%';
         element.style.boxSizing = 'border-box';
       });
@@ -79,25 +81,27 @@ function adjustAddressTable() {
   const addressTable = document.getElementById("ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_tblAddresses");
 
   if (addressTable) {
-    addressTable.style.width = '100%';
+    addressTable.style.width = 'auto';
+    addressTable.style.maxWidth = '100%';
     addressTable.style.tableLayout = 'auto';
 
     const cells = addressTable.querySelectorAll('td');
     cells.forEach(cell => {
       cell.style.display = 'block';
-      cell.style.width = '100%';
+      cell.style.width = 'auto';
+      cell.style.maxWidth = '100%';
     });
 
     const inputsAndSelects = addressTable.querySelectorAll('input[type="text"], select, textarea');
     inputsAndSelects.forEach(element => {
-      element.style.width = '100%';
+      element.style.width = 'auto';
       element.style.maxWidth = '100%';
       element.style.boxSizing = 'border-box';
     });
 
     const fieldsets = addressTable.querySelectorAll('fieldset');
     fieldsets.forEach(fieldset => {
-      fieldset.style.width = '100%';
+      fieldset.style.width = 'auto';
       fieldset.style.maxWidth = '100%';
       fieldset.style.boxSizing = 'border-box';
     });
