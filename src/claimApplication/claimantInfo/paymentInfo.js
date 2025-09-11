@@ -7,7 +7,30 @@ export const identifyingContent = {
 };
 
 export function changes() {
+  rearrangeTable();
   updateRadioButtons();
+}
+
+function rearrangeTable() {
+  const divReason = document.getElementById("divReason");
+
+  if (divReason) {
+    const table = divReason.querySelector("table");
+    const rows = table.querySelectorAll("tr");
+
+    const cells = rows[0].querySelectorAll("td");
+
+    const questionDiv = document.createElement("div");
+    questionDiv.innerHTML = cells[0].innerHTML;
+
+    const textAreaDiv = document.createElement("div");
+    textAreaDiv.innerHTML = cells[1].innerHTML;
+    textAreaDiv.style.marginTop = '20px';
+
+    divReason.innerHTML = "";
+    divReason.appendChild(questionDiv);
+    divReason.appendChild(textAreaDiv);
+  }
 }
 
 function updateRadioButtons() {
