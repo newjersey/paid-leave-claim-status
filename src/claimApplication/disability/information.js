@@ -16,7 +16,7 @@ export const identifyingContent = {
 
 export function changes() {
   styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
-  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo', true);
   removeExtraSpaceBetweenRadioButtons(
     'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes',
     'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo'
