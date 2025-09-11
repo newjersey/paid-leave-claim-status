@@ -21,4 +21,10 @@ export const identifyingContent = {
 export function changes() {
   styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnPersYes');
   styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnPersNo', true);
+  removeWhitespaceInPrompt();
+}
+
+function removeWhitespaceInPrompt() {
+  const div = document.getElementById("divPersInfo");
+  div.innerHTML = div.innerHTML.replace(/\s*&nbsp;\s*/g, ' ').trim();
 }
