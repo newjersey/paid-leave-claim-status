@@ -1,5 +1,5 @@
 import { logEvent } from "../../modules/shared.mjs";
-import { styleRadioButton } from '../utils';
+import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const id = "otherBenefits";
 
@@ -62,6 +62,21 @@ export function trackOtherBenefitsYesSubmission(pageId) {
 }
 
 export function changes() {
+  addStyles();
+  styleRadioButtons();
+}
+
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    fieldset div {
+      padding: 0;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function styleRadioButtons() {
   const radioButtonIds = [
     'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes',
     'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo',
@@ -74,4 +89,21 @@ export function changes() {
   ];
 
   radioButtonIds.forEach(styleRadioButton);
+
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo'
+  );
 }
