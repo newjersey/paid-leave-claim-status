@@ -1,4 +1,4 @@
-import { styleRadioButton } from '../utils';
+import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const citizenshipLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum', label: 'First 3 digits of Phone Number' },
@@ -27,6 +27,14 @@ export function changes() {
   styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenNo');
   styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepYes');
   styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepNo');
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenYes',
+    'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepYes',
+    'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepNo'
+  );
 }
 
 function adjustWidths () {
