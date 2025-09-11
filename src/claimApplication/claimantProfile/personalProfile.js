@@ -1,4 +1,4 @@
-import { styleRadioButton } from '../utils';
+import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const personalProfileLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtoccupation', label: 'Occupation' },
@@ -28,6 +28,22 @@ export function changes() {
   styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnMailingNo', true);
   styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnMUSAYes');
   styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnMUSANo');
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnMale',
+    'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnFemale'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnResUSAYes',
+    'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnResUSANo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnMailingYes',
+    'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnMailingNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnMUSAYes',
+    'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnMUSANo'
+  );
 }
 
 function adjustWidths() {
