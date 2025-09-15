@@ -89,7 +89,7 @@ function styleRadioButtons() {
     'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo'
   ];
 
-  radioButtonIds.forEach(styleRadioButton);
+  radioButtonIds.forEach((radioButtonId) => styleRadioButton(radioButtonId));
 
   removeExtraSpaceBetweenRadioButtons(
     'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes',
