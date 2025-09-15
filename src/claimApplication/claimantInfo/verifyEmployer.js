@@ -73,8 +73,6 @@ function adjustEmploymentInfo() {
 
   elementsToAdjust.forEach(id => {
     const textarea = document.getElementById(id);
-    textarea.style.overflow = 'scroll';
-
     if (textarea) {
       const parentTd = textarea.closest('td');
       const titleTd = parentTd.previousElementSibling;
