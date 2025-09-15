@@ -1,4 +1,4 @@
-import { styleRadioButton } from '../utils';
+import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const id = "ptoPension";
 
@@ -66,4 +66,20 @@ function styleRadioButtons() {
   styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoEPenNo', true);
   styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoLPenYes');
   styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoLPenNo', true);
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoPTOYes',
+    'ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoPTONo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoRecvPenYes',
+    'ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoRecvPenNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoEPenYes',
+    'ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoEPenNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoLPenYes',
+    'ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoLPenNo'
+  );
 }
