@@ -1,4 +1,4 @@
-import { fixPhoneNumberText, styleRadioButton } from '../utils';
+import { fixPhoneNumberText, removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const otherBenefitsVerificationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDisabDate', label: 'First Day of Disability' },
@@ -47,6 +47,10 @@ export function changes() {
   styleButton();
   styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes');
   styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsNo');
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsNo'
+  );
 }
 
 function styleButton() {
