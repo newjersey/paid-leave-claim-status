@@ -14,6 +14,21 @@ describe("Verify Employer page", () => {
     ).as('aspxSubmission');
   };
 
+  function seeEmploymentInfo() {
+    cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtEVerWrkAdd')
+      .should('be.visible')
+      .should('contain', '10 Main')
+      .should('contain', 'New Brunswick, NJ 08111');
+
+    cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtVerEDept')
+      .should('be.visible')
+      .should('contain', 'Time');
+
+    cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtEVerUnion')
+      .should('be.visible')
+      .should('contain', 'No');
+  }
+
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
@@ -39,6 +54,10 @@ describe("Verify Employer page", () => {
 
     it('should open FAQ and post data when the Help link is clicked', () => {
       cy.checkHelpButtonBehavior();
+    });
+
+    it("user can see all Employment Info", () => {
+      seeEmploymentInfo();
     });
   });
 
@@ -89,6 +108,10 @@ describe("Verify Employer page", () => {
 
     it('clicks Dismiss on the info alert, alert hides and does not return', () => {
       cy.checkInfoAlertBehavior();
+    });
+
+    it("user can see all Employment Info", () => {
+      seeEmploymentInfo();
     });
   });
 });

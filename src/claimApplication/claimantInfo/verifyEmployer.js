@@ -29,7 +29,8 @@ export const identifyingContent = {
 };
 
 export function changes() {
-  adjustTable();
+  adjustTables();
+  adjustEmploymentInfo();
   styleButtons();
   convertScheduleInputToTextarea();
   styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectYes');
@@ -43,7 +44,7 @@ function styleButtons() {
   });
 }
 
-function adjustTable() {
+function adjustTables() {
   const tables = document.querySelectorAll('table');
   tables.forEach(table => {
     table.style.width = '100%';
@@ -60,6 +61,39 @@ function adjustTable() {
       element.style.maxWidth = '100%';
       element.style.boxSizing = 'border-box';
     });
+  });
+}
+
+function adjustEmploymentInfo() {
+  const elementsToAdjust = [
+    'ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtEVerWrkAdd',
+    'ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtVerEDept',
+    'ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtEVerUnion'
+  ];
+
+  elementsToAdjust.forEach(id => {
+    const textarea = document.getElementById(id);
+    textarea.style.overflow = 'scroll';
+
+    if (textarea) {
+      const parentTd = textarea.closest('td');
+      const titleTd = parentTd.previousElementSibling;
+      
+      if (titleTd) {
+        const newTr = document.createElement('tr');
+        const newTd = document.createElement('td');
+        newTd.colSpan = 2;
+        newTd.style.width = "auto";
+        newTd.style.maxWidth = "100%";
+
+        newTd.appendChild(textarea);
+        newTr.appendChild(newTd);
+
+        const currentTr = titleTd.closest('tr');
+        currentTr.parentNode.insertBefore(newTr, currentTr.nextSibling);
+        parentTd.remove();
+      }
+    }
   });
 }
 
