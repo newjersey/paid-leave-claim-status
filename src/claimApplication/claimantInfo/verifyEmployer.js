@@ -1,4 +1,4 @@
-import { styleRadioButton } from '../utils';
+import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const verifyEmployerLabels = [
   { id: 'ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtVerEmpName', label: 'Employer Name' },
@@ -35,6 +35,10 @@ export function changes() {
   convertScheduleInputToTextarea();
   styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectYes');
   styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectNo', true);
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectYes',
+    'ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectNo'
+  );
 }
 
 function styleButtons() {
