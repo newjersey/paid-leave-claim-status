@@ -19,6 +19,7 @@ export function changes() {
   adjustTextEntry();
   styleRadioButton('ContentPlaceHolder1_rbtnClmYes');
   styleRadioButton('ContentPlaceHolder1_rbtnClmNo');
+  removeWhitespace();
   adjustTable();
 }
 
@@ -45,6 +46,18 @@ function adjustTextEntry() {
   if (name) {
     name.style.width = '100%';
   }
+}
+
+function removeWhitespace() {
+  const radioButtonYes = document.getElementById('ContentPlaceHolder1_rbtnClmYes');
+  const tdElement = radioButtonYes.closest('td');
+  const childNodes = tdElement.childNodes;
+
+  childNodes.forEach(node => {
+    if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim() === '') {
+      tdElement.removeChild(node);
+    }
+  });
 }
 
 function adjustTable() {
