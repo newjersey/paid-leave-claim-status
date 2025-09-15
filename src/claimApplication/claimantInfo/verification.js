@@ -1,0 +1,34 @@
+export const otherBenefitsVerificationLabels = [
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDisabDate', label: 'First Day of Disability' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerReturn', label: 'Returned to Work' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVetDtLast', label: 'Last Day Worked' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerRetWork', label: 'Expected Returned to Work Date' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDisabDesc', label: 'Disability/Injury Description' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocName', label: 'Doctor/Hospital Name' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocStreet', label: 'Doctor/Hospital Address Line 1' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocAddr2', label: 'Doctor/Hospital Address Line 2' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocCity', label: 'Doctor/Hospital City' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocState', label: 'Doctor/Hospital State' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocZip1', label: 'Doctor/Hospital Zipcode 1' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocZip2', label: 'Doctor/Hospital Zipcode 2' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTel', label: 'Doctor/Hospital Phone Number First 3 Digits' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTel2', label: 'Doctor/Hospital Phone Number Digits 4, 5, and 6' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTel3', label: 'Doctor/Hospital Phone Number Last 4 Digits' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTelExt', label: 'Doctor/Hospital Phone Number Extension' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerEmer', label: 'Emergency Room Treatment' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtHospVer', label: 'Hospitalization' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_TxtVerInjWk', label: 'Disability/Injury Work Related' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerTDBenefits', label: 'Temporary Disability Benefits Received from Another State' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerTDBenfEMP', label: 'Temporary Disability Benefits Received from Employer/Union' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerTDSSBenf', label: 'Social Security Disability Benefits Applied For or Received' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerTDUIbenfRecvd', label: 'Unemployment Insurance Benefits' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_lblFIT', label: 'Federal Income Tax Withholding' },
+];
+
+export const id = "verification";
+
+export const identifyingContent = {
+  id,
+  elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification',
+  text: 'My disability information is correct',
+};

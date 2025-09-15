@@ -1,5 +1,8 @@
 describe("Payment Detail page - Leave Ended FLI", () => {
   it("renders with updated content", () => {
+    const fixedDate = new Date(2024, 9, 1); // October 1, 2024
+    cy.clock(fixedDate.getTime());
+
     cy.visit(
       "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html"
     );
@@ -20,10 +23,10 @@ describe("Payment Detail page - Leave Ended FLI", () => {
     
     cy.contains("Total payments issued: $4,366.00").should("be.visible");
     cy.get("#accordionFuture0id")
-      .contains("Next $770.00 to issue on August 13, 2025")
+      .contains("Next $770.00 to issue on August 13, 2035")
       .should("be.visible");
     cy.get("#accordionFuture0id")
-      .contains("Covers April 30, 2024 to May 5, 2024")
+      .contains("Covers April 30, 2034 to May 5, 2034")
       .should("be.visible");
 
     cy.get("#accordionPast0id")
@@ -57,6 +60,9 @@ describe("Payment Detail page - Leave Ended FLI", () => {
 });
 
 it("renders payment record accordion that opens and closes on click", () => {
+  const fixedDate = new Date(2024, 9, 1); // October 1, 2024
+  cy.clock(fixedDate.getTime());
+
   cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html");
 
   const accordionButton = cy.get("#accordionPast1id");
@@ -70,6 +76,9 @@ it("renders payment record accordion that opens and closes on click", () => {
 
 describe("Payment Detail page - Leave Ended TDI", () => {
   it("renders with updated content", () => {
+    const fixedDate = new Date(2024, 9, 1); // October 1, 2024
+    cy.clock(fixedDate.getTime());
+    
     cy.visit(
       "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedTDI.html"
     );
@@ -92,10 +101,10 @@ describe("Payment Detail page - Leave Ended TDI", () => {
     
     cy.contains("Total payments issued: $4,366.00").should("be.visible");
     cy.get("#accordionFuture0id")
-      .contains("Next $770.00 to issue on August 13, 2025")
+      .contains("Next $770.00 to issue on August 13, 2035")
       .should("be.visible");
     cy.get("#accordionFuture0id")
-      .contains("Covers April 30, 2024 to May 5, 2024")
+      .contains("Covers April 30, 2034 to May 5, 2034")
       .should("be.visible");
   });
 
@@ -398,3 +407,27 @@ describe("Payment Detail page - Scheduled", () => {
     cy.checkBodyA11y();
   });
 });
+
+describe("feedback widget", () => {
+  it("renders the feedback widget inside the footer", () => {
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html")
+    
+    cy.get("footer").find("feedback-widget").should('have.length', 1)
+    cy.get("footer").within(() => {
+      cy.checkFeedbackWidgetIsRendered()
+    })
+  })
+
+  it("calls the /rating endpoint when the 'Yes' button is clicked and displays the next screen", () => {
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html")
+
+    cy.get("footer").within(() => {
+      cy.checkFeedbackWidgetIsInteractable()
+    })
+  })
+
+   it("displays the overridden version of the email disclaimer text", () => {
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html")
+    cy.checkFeedbackWidgetEmailDisclaimerTextIsOverridden()
+  })
+})

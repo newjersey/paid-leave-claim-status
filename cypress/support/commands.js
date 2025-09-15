@@ -45,3 +45,98 @@ Cypress.Commands.add("checkIneligibleCore", () => {
   cy.get(".complete").contains("Review").should("be.visible");
   cy.get(".complete.end").contains("Decision").should("be.visible");
 });
+
+Cypress.Commands.add("checkCommonPostData", (formData) => {
+  expect(formData).to.include('__EVENTTARGET=');
+  expect(formData).to.include('__EVENTARGUMENT=');
+  expect(formData).to.match(/__VIEWSTATE=[^&]+/);
+  expect(formData).to.match(/__VIEWSTATEGENERATOR=[^&]+/);
+  expect(formData).to.match(/__EVENTVALIDATION=[^&]+/);
+});
+
+Cypress.Commands.add("confirmEventIsNotTracked", (name) => {
+  cy.window().then((win) => {
+    const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
+    const loggedEvent = events.find(event => event.name === name);
+    expect(loggedEvent).to.be.undefined;
+  });
+});
+
+Cypress.Commands.add("checkLogEvent", (name, parameters) => {
+  cy.window().then((win) => {
+    const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
+    const loggedEvent = events.find(event => event.name === name);
+    expect(loggedEvent.parameters).to.deep.equal(parameters);
+  });
+});
+
+Cypress.Commands.add("trackPageView", (pageId) => {
+  cy.checkLogEvent(`${pageId} viewed`, {});
+});
+
+Cypress.Commands.add("trackHelpClick", (pageId) => {
+  cy.checkLogEvent(`Help Clicked`, { pageId });
+});
+
+Cypress.Commands.add("checkHelpButtonBehavior", () => {
+  cy.window().then(win => {
+    cy.stub(win, 'openFAQWindow').as('openFAQWindowStub');
+    cy.stub(win, '__doPostBack').as('doPostBackStub');
+  });
+  cy.get('#header_lbtnShowFAQ').click();
+  cy.get('@openFAQWindowStub').should('be.calledWithMatch', 'http://lwd.dol.state.nj.us/labor/tdi/content/webapplicationfaq.html');
+  cy.get('@doPostBackStub').should('be.calledWith', 'ctl00$header$lbtnShowFAQ', '');
+});
+
+Cypress.Commands.add("checkFeedbackWidgetIsRendered", () => {
+    cy.get("feedback-widget").should('have.length', 1)
+    cy.get("feedback-widget").within(() => {
+        cy.contains("Did you find what you were looking for on this page?").should('be.visible');
+    })
+})
+
+Cypress.Commands.add("checkFeedbackWidgetIsInteractable", () => {
+    const commentScreenTextMatcher = /what ideas come to mind/i
+    cy.intercept('POST', '**/rating', { message: "Success", feedbackId: "1"})
+      .as("postRating")
+
+    cy.get("feedback-widget").within(() => {
+      cy.contains(commentScreenTextMatcher).should('not.be.visible')
+    })
+
+    cy.get("feedback-widget")
+      .contains("button", /yes/i)
+      .click()
+
+    cy.wait("@postRating")
+      .its('request.body')
+      .should('have.property', 'rating', true)
+    
+    cy.get("feedback-widget").within(() => {
+      cy.contains(commentScreenTextMatcher).should('be.visible')
+  })
+})
+
+Cypress.Commands.add("checkFeedbackWidgetEmailDisclaimerTextIsOverridden", () => {
+    cy.intercept('POST', '**/rating', { message: "Success", feedbackId: "test"})
+      .as("postRating")
+    cy.intercept('POST', '**/comment', { message: "Success", feedbackId: "test"})
+      .as("postComment")
+
+    
+    cy.get("feedback-widget").within(() => {
+      cy.contains("button", /yes/i)
+        .click()
+      cy.wait("@postRating")
+
+      const commentDisclaimerText = /what ideas come to mind/i
+      cy.contains(commentDisclaimerText).should("be.visible")
+      cy.get("textarea").type("i am a comment")
+      cy.contains("button", /send feedback/i).click()
+      cy.wait("@postComment")
+
+      cy.contains("label", /email address/i).should("be.visible")
+      const expectedEmailDisclaimerText = "To hear about feedback opportunities in the future, join our user testing list."
+      cy.contains(expectedEmailDisclaimerText).should("be.visible")
+  })
+})

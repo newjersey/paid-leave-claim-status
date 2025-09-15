@@ -1,0 +1,18 @@
+export const loginProfileLabels = [
+  { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtClmntSSN1', label: 'First 3 digits of Social Security Number' },
+  { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtClmntSSN2', label: 'Fourth and fifth digits of Social Security Number' },
+  { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtClmntSSN3', label: 'Last 4 digits of Social Security Number' },
+  { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtFName', label: 'First Name' },
+  { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtMInit', label: 'Middle Initial' },
+  { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtLName', label: 'Last Name' },
+  { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtDOB', label: 'Date of Birth' }
+];
+
+export const id = "loginProfile";
+
+export const identifyingContent = {
+  id,
+  elementId: 'divSSN',
+  text: 'Please confirm your profile information to ensure secure access',
+};
+

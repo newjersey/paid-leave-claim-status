@@ -1,0 +1,64 @@
+const PAGE_ID = 'tdiIntroduction';
+
+describe("Introduction page", () => {
+  function checkPostData(interception) {
+    const formData = interception.request.body;
+    cy.checkCommonPostData(formData);
+    expect(formData).to.include('__EVENTTARGET=ctl00%24ContentPlaceHolder1%24chkAgree');
+    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24chkAgree=on');
+  }
+
+  function mockASPX() {
+    cy.intercept('POST', '**/TDIIntroduction.aspx',
+      { statusCode: 200, headers: { 'content-type': 'text/html' } }
+    ).as('aspxSubmission');
+  };
+
+  describe("page without new JS", () => {
+    beforeEach(() => {
+      cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
+      cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html");
+    });
+
+    it("agrees to terms and checks POST data", () => {
+      mockASPX();
+      cy.get('#ContentPlaceHolder1_chkAgree').check();
+      cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it('should open FAQ and post data when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+    });
+  });
+
+  describe("page with new JS", () => {
+    beforeEach(() => {
+      cy.intercept('GET', '**/tdiOverride.min.js', (req) => {
+        req.continue((res) => {
+          expect([200, 304]).to.include(res.statusCode);
+        });
+      }).as('script');
+      cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html");
+      cy.wait('@script');
+    });
+
+    it("agrees to terms and checks POST data", () => {
+      mockASPX();
+      cy.get('#ContentPlaceHolder1_chkAgree').check();
+      cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it("passes accessibility checks", () => {
+      cy.checkBodyA11y();
+    });
+
+    it("tracks the page view", () => {
+      cy.trackPageView(PAGE_ID);
+    });
+
+    it('should open FAQ, post data, and track when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
+      cy.trackHelpClick(PAGE_ID);
+    });
+  });
+});
