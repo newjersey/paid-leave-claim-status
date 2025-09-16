@@ -35,6 +35,16 @@ describe("Employment Details page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkOldLogout();
+    });
+
+    it("user can cancel logging out", () => {
+      mockASPX();
+      cy.checkOldLogoutCancel();
+    });
+
     it('should open FAQ and post data when the Help link is clicked', () => {
       cy.checkHelpButtonBehavior();
     });
@@ -54,16 +64,20 @@ describe("Employment Details page", () => {
     it("user can input info and proceed to next page", () => {
       mockASPX();
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_ddlStopWorkReason').select('Illness/Injury');
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoLstSeperation_0').click();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoLstSeperation_0').click({ force: true });
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtStreetAddrSOE').type('30 Livingston Avenue');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtCitySOE').type('New Brunswick');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtZipSOE1').type('08901');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtDeptUnitSOE').type('Workers');
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoUnionYes').click();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_rdoUnionYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtUnionNameSOE').type('Union');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtLocalNoSOE').type('1');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelSpan_btnNextSpanOfEmpymt').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it("applies the new font family", () => {
+      cy.checkFontFamily();
     });
 
     it("passes accessibility checks", () => {
@@ -74,9 +88,23 @@ describe("Employment Details page", () => {
       cy.trackPageView(PAGE_ID);
     });
 
-    it('should open FAQ, post data, and track when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-      cy.trackHelpClick(PAGE_ID);
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkNewLogout();
+    });
+
+    it("user can cancel logging out", () => {
+      mockASPX();
+      cy.checkNewLogoutCancel();
+    });
+
+    it('should open Resources and track when clicked', () => {
+      cy.get('#resourcesLink').click();
+      cy.trackResourcesClick(PAGE_ID);
+    });
+
+    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+      cy.checkInfoAlertBehavior();
     });
   });
 });

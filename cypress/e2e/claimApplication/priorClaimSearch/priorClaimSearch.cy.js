@@ -46,10 +46,14 @@ describe("Prior Claim Search page", () => {
 
     it("user can input info and proceed to next page", () => {
       mockASPX();
-      cy.get('#ContentPlaceHolder1_rbtnClmYes').click();
+      cy.get('#ContentPlaceHolder1_rbtnClmYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_txtClmID').type('11111');
       cy.get('#ContentPlaceHolder1_btnRetrieve').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it("applies the new font family", () => {
+      cy.checkFontFamily();
     });
 
     it("passes accessibility checks", () => {
@@ -60,9 +64,13 @@ describe("Prior Claim Search page", () => {
       cy.trackPageView(PAGE_ID);
     });
 
-    it('should open FAQ, post data, and track when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-      cy.trackHelpClick(PAGE_ID);
+    it('should open Resources and track when clicked', () => {
+      cy.get('#resourcesLink').click();
+      cy.trackResourcesClick(PAGE_ID);
+    });
+
+    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+      cy.checkInfoAlertBehavior();
     });
   });
 });

@@ -1,3 +1,5 @@
+import { fixPhoneNumberText, removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
+
 export const otherBenefitsVerificationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDisabDate', label: 'First Day of Disability' },
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerReturn', label: 'Returned to Work' },
@@ -32,3 +34,58 @@ export const identifyingContent = {
   elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification',
   text: 'My disability information is correct',
 };
+
+export function changes() {
+  adjustTable();
+  fixOverflowingText();
+  fixPhoneNumberText(
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTel',
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTel2',
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTel3',
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTelExt'
+  );
+  styleButton();
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsNo');
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsNo'
+  );
+}
+
+function styleButton() {
+  const button = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer');
+  if (button) {
+    button.classList.add('usa-button');
+  }
+}
+
+function adjustTable() {
+  const tables = document.querySelectorAll('table');
+  tables.forEach(table => {
+    table.style.width = '100%';
+    table.style.tableLayout = 'auto';
+
+    const cells = table.querySelectorAll('td, th');
+    cells.forEach(cell => {
+      cell.style.textAlign = 'left';
+      cell.style.width = '100%';
+      cell.style.display = 'block';
+    });
+
+    const inputsAndTextareas = table.querySelectorAll('input[type="text"], textarea');
+    inputsAndTextareas.forEach(element => {
+      element.style.width = '100%';
+      element.style.maxWidth = '100%';
+      element.style.boxSizing = 'border-box';
+      element.style.textAlign = 'left';
+    });
+  });
+}
+
+function fixOverflowingText() {
+  const otherStateInfo = document.querySelector('#divVerTDI');
+  if (otherStateInfo) {
+    otherStateInfo.style.height = 'fit-content';
+  }
+}

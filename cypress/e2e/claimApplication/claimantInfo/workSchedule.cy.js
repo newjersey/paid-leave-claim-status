@@ -32,6 +32,16 @@ describe("Work Schedule page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkOldLogout();
+    });
+
+    it("user can cancel logging out", () => {
+      mockASPX();
+      cy.checkOldLogoutCancel();
+    });
+
     it('should open FAQ and post data when the Help link is clicked', () => {
       cy.checkHelpButtonBehavior();
     });
@@ -50,7 +60,7 @@ describe("Work Schedule page", () => {
 
     it("user can input info and proceed to next page", () => {
       mockASPX();
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_rdoWrkSchTyp_0').click();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_rdoWrkSchTyp_0').click({ force: true });
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCMon').type('8');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCTue').type('8');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCWed').type('8');
@@ -58,6 +68,10 @@ describe("Work Schedule page", () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_txtWCFri').type('8');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_btnNextWrkSch').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it("applies the new font family", () => {
+      cy.checkFontFamily();
     });
 
     it("passes accessibility checks", () => {
@@ -68,9 +82,23 @@ describe("Work Schedule page", () => {
       cy.trackPageView(PAGE_ID);
     });
 
-    it('should open FAQ, post data, and track when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-      cy.trackHelpClick(PAGE_ID);
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkNewLogout();
+    });
+
+    it("user can cancel logging out", () => {
+      mockASPX();
+      cy.checkNewLogoutCancel();
+    });
+
+    it('should open Resources and track when clicked', () => {
+      cy.get('#resourcesLink').click();
+      cy.trackResourcesClick(PAGE_ID);
+    });
+
+    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+      cy.checkInfoAlertBehavior();
     });
   });
 });

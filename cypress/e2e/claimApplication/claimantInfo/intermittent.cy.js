@@ -28,6 +28,16 @@ describe("Intermittent Employment page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkOldLogout();
+    });
+
+    it("user can cancel logging out", () => {
+      mockASPX();
+      cy.checkOldLogoutCancel();
+    });
+
     it('should open FAQ and post data when the Help link is clicked', () => {
       cy.checkHelpButtonBehavior();
     });
@@ -46,10 +56,14 @@ describe("Intermittent Employment page", () => {
 
     it("user can input info and proceed to next page", () => {
       mockASPX();
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkDte_rdoWrkIntNo').click();
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkDte_rdoLbrDisNo').click();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkDte_rdoWrkIntNo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkDte_rdoLbrDisNo').click({ force: true });
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkDte_btnSaveEmp').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it("applies the new font family", () => {
+      cy.checkFontFamily();
     });
 
     it("passes accessibility checks", () => {
@@ -60,9 +74,23 @@ describe("Intermittent Employment page", () => {
       cy.trackPageView(PAGE_ID);
     });
 
-    it('should open FAQ, post data, and track when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-      cy.trackHelpClick(PAGE_ID);
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkNewLogout();
+    });
+
+    it("user can cancel logging out", () => {
+      mockASPX();
+      cy.checkNewLogoutCancel();
+    });
+
+    it('should open Resources and track when clicked', () => {
+      cy.get('#resourcesLink').click();
+      cy.trackResourcesClick(PAGE_ID);
+    });
+
+    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+      cy.checkInfoAlertBehavior();
     });
   });
 });

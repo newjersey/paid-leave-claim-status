@@ -35,6 +35,16 @@ describe("Claimant Personal Profile page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkOldLogout();
+    });
+
+    it("user can cancel logging out", () => {
+      mockASPX();
+      cy.checkOldLogoutCancel();
+    });
+
     it('should open FAQ and post data when the Help link is clicked', () => {
       cy.checkHelpButtonBehavior();
     });
@@ -53,18 +63,22 @@ describe("Claimant Personal Profile page", () => {
 
     it("user can fill in info and proceed to next page", () => {
       mockASPX();
-      cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnMale').click();
+      cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnMale').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_ddlRace').select('Caucasian');
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_ddlEdctn').select('Have not graduated high school');
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtoccupation').type('Worker');
-      cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnResUSAYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnResUSAYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtAddress1').type('30 Livingston Avenue');
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtCity').type('New Brunswick');
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtZipCode1').type('08901');
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_ddlCounties').select('MIDDLESEX');
-      cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnMailingYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnMailingYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_btnCitiZen').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it("applies the new font family", () => {
+      cy.checkFontFamily();
     });
 
     it("passes accessibility checks", () => {
@@ -75,9 +89,23 @@ describe("Claimant Personal Profile page", () => {
       cy.trackPageView(PAGE_ID);
     });
 
-    it('should open FAQ, post data, and track when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-      cy.trackHelpClick(PAGE_ID);
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkNewLogout();
+    });
+
+    it("user can cancel logging out", () => {
+      mockASPX();
+      cy.checkNewLogoutCancel();
+    });
+
+    it('should open Resources and track when clicked', () => {
+      cy.get('#resourcesLink').click();
+      cy.trackResourcesClick(PAGE_ID);
+    });
+
+    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+      cy.checkInfoAlertBehavior();
     });
   });
 });

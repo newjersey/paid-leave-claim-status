@@ -14,6 +14,21 @@ describe("Verify Employer page", () => {
     ).as('aspxSubmission');
   };
 
+  function seeEmploymentInfo() {
+    cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtEVerWrkAdd')
+      .should('be.visible')
+      .should('contain', '10 Main')
+      .should('contain', 'New Brunswick, NJ 08111');
+
+    cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtVerEDept')
+      .should('be.visible')
+      .should('contain', 'Time');
+
+    cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtEVerUnion')
+      .should('be.visible')
+      .should('contain', 'No');
+  }
+
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
@@ -27,8 +42,22 @@ describe("Verify Employer page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkOldLogout();
+    });
+
+    it("user can cancel logging out", () => {
+      mockASPX();
+      cy.checkOldLogoutCancel();
+    });
+
     it('should open FAQ and post data when the Help link is clicked', () => {
       cy.checkHelpButtonBehavior();
+    });
+
+    it("user can see all Employment Info", () => {
+      seeEmploymentInfo();
     });
   });
 
@@ -45,22 +74,44 @@ describe("Verify Employer page", () => {
 
     it("user can input info and proceed to next page", () => {
       mockASPX();
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectYes').click();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelVerify_btnVer_Continue').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it("applies the new font family", () => {
+      cy.checkFontFamily();
     });
 
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();
     });
 
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkNewLogout();
+    });
+
+    it("user can cancel logging out", () => {
+      mockASPX();
+      cy.checkNewLogoutCancel();
+    });
+
     it("tracks the page view", () => {
       cy.trackPageView(PAGE_ID);
     });
 
-    it('should open FAQ, post data, and track when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-      cy.trackHelpClick(PAGE_ID);
+    it('should open Resources and track when clicked', () => {
+      cy.get('#resourcesLink').click();
+      cy.trackResourcesClick(PAGE_ID);
+    });
+
+    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+      cy.checkInfoAlertBehavior();
+    });
+
+    it("user can see all Employment Info", () => {
+      seeEmploymentInfo();
     });
   });
 });

@@ -26,8 +26,33 @@ describe("Login Profile page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkOldLogout();
+    });
+
     it('should open FAQ and post data when the Help link is clicked', () => {
       cy.checkHelpButtonBehavior();
+    });
+  });
+
+  describe("page with lazy loading header and new JS", () => {
+    beforeEach(() => {
+      cy.intercept('GET', '**/tdiOverride.min.js', (req) => {
+        req.continue((res) => {
+          expect([200, 304]).to.include(res.statusCode);
+        });
+      }).as('script');
+      cy.visit("./cypress/fixtures/claimApplication/claimantProfile/loginLazyHeader.html");
+      cy.wait('@script');
+    });
+
+    it("hides old tabs and shows new title", () => {
+      cy.get('.ajax__tab_header').should('not.exist');
+      cy.wait(1000);
+      cy.get('.ajax__tab_header').should('exist');
+      cy.get('.ajax__tab_header').should("not.be.visible");
+      cy.get('h1').contains('Profile Information').should('be.visible');
     });
   });
 
@@ -44,9 +69,13 @@ describe("Login Profile page", () => {
 
     it("user can confirm info is correct and proceed to next page", () => {
       mockASPX();
-      cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnPersYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnPersYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_btncontinueVer').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it("applies the new font family", () => {
+      cy.checkFontFamily();
     });
 
     it("passes accessibility checks", () => {
@@ -57,9 +86,18 @@ describe("Login Profile page", () => {
       cy.trackPageView(PAGE_ID);
     });
 
-    it('should open FAQ, post data, and track when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-      cy.trackHelpClick(PAGE_ID);
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkNewLogout();
+    });
+
+    it('should open Resources and track when clicked', () => {
+      cy.get('#resourcesLink').click();
+      cy.trackResourcesClick(PAGE_ID);
+    });
+
+    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+      cy.checkInfoAlertBehavior();
     });
   });
 });

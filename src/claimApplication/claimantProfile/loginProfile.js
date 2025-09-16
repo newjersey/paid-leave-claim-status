@@ -1,3 +1,5 @@
+import { styleRadioButton } from '../utils';
+
 export const loginProfileLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtClmntSSN1', label: 'First 3 digits of Social Security Number' },
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtClmntSSN2', label: 'Fourth and fifth digits of Social Security Number' },
@@ -16,3 +18,13 @@ export const identifyingContent = {
   text: 'Please confirm your profile information to ensure secure access',
 };
 
+export function changes() {
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnPersYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnPersNo', true);
+  removeWhitespaceInPrompt();
+}
+
+function removeWhitespaceInPrompt() {
+  const div = document.getElementById("divPersInfo");
+  div.innerHTML = div.innerHTML.replace(/\s*&nbsp;\s*/g, ' ').trim();
+}

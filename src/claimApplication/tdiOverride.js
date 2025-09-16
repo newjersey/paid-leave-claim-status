@@ -1,7 +1,10 @@
+import 'uswds/css/uswds.css';
 import { setupAnalytics } from "../modules/shared.mjs";
 import { accessibilityChanges } from './accessibility.js';
 import { analyticsChanges } from './analytics.js';
+import { globalDesignChanges } from './globalDesign.js';
 import { identifyPage } from './identifyPage.js';
+import { pageSpecificChanges } from './pageSpecificChanges.js';
 
 if (document.readyState === "loading") {
   window.addEventListener("DOMContentLoaded", () => {
@@ -10,6 +13,10 @@ if (document.readyState === "loading") {
 } else {
   executeOverride();
 }
+
+document.addEventListener('backButtonClicked', () => {
+  executeOverride();
+});
 
 function executeOverride() {
   setupAnalytics();
@@ -21,4 +28,6 @@ function executeOverride() {
 
   accessibilityChanges();
   analyticsChanges(pageId);
+  globalDesignChanges(pageId);
+  pageSpecificChanges(pageId);
 }

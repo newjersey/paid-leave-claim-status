@@ -48,6 +48,10 @@ describe("Complete Existing Intro page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
+    it("applies the new font family", () => {
+      cy.checkFontFamily();
+    });
+
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();
     });
@@ -56,9 +60,13 @@ describe("Complete Existing Intro page", () => {
       cy.trackPageView(PAGE_ID);
     });
 
-    it('should open FAQ, post data, and track when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-      cy.trackHelpClick(PAGE_ID);
+    it('should open Resources and track when clicked', () => {
+      cy.get('#resourcesLink').click();
+      cy.trackResourcesClick(PAGE_ID);
+    });
+
+    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+      cy.checkInfoAlertBehavior();
     });
   });
 });

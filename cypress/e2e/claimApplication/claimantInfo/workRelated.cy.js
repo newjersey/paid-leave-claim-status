@@ -36,6 +36,16 @@ describe("Work Related page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkOldLogout();
+    });
+
+    it("user can cancel logging out", () => {
+      mockASPX();
+      cy.checkOldLogoutCancel();
+    });
+
     it('should open FAQ and post data when the Help link is clicked', () => {
       cy.checkHelpButtonBehavior();
     });
@@ -62,10 +72,14 @@ describe("Work Related page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpPh2').type('555');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpPh3').type('1111');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjDt').type('01/01/2024');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCInsNo').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCInsNo').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_btnWC').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it("applies the new font family", () => {
+      cy.checkFontFamily();
     });
 
     it("passes accessibility checks", () => {
@@ -76,9 +90,23 @@ describe("Work Related page", () => {
       cy.trackPageView(PAGE_ID);
     });
 
-    it('should open FAQ, post data, and track when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-      cy.trackHelpClick(PAGE_ID);
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkNewLogout();
+    });
+
+    it("user can cancel logging out", () => {
+      mockASPX();
+      cy.checkNewLogoutCancel();
+    });
+
+    it('should open Resources and track when clicked', () => {
+      cy.get('#resourcesLink').click();
+      cy.trackResourcesClick(PAGE_ID);
+    });
+
+    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+      cy.checkInfoAlertBehavior();
     });
   });
 });

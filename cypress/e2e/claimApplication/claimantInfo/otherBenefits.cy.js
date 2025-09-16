@@ -29,6 +29,16 @@ describe("Other Benefits page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkOldLogout();
+    });
+
+    it("user can cancel logging out", () => {
+      mockASPX();
+      cy.checkOldLogoutCancel();
+    });
+
     it('should open FAQ and post data when the Help link is clicked', () => {
       cy.checkHelpButtonBehavior();
     });
@@ -47,13 +57,17 @@ describe("Other Benefits page", () => {
 
     it("user can input info and proceed to next page", () => {
       mockASPX();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
       cy.wait('@aspxSubmission').then(checkPostData);
       cy.confirmEventIsNotTracked("Other Benefits Yes Clicked");
+    });
+
+    it("applies the new font family", () => {
+      cy.checkFontFamily();
     });
 
     it("passes accessibility checks", () => {
@@ -64,25 +78,35 @@ describe("Other Benefits page", () => {
       cy.trackPageView(PAGE_ID);
     });
 
-    it('should open FAQ, post data, and track when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-      cy.trackHelpClick(PAGE_ID);
+    it("user can log out", () => {
+      mockASPX();
+      cy.checkNewLogout();
+    });
+
+    it("user can cancel logging out", () => {
+      mockASPX();
+      cy.checkNewLogoutCancel();
+    });
+
+    it('should open Resources and track when clicked', () => {
+      cy.get('#resourcesLink').click();
+      cy.trackResourcesClick(PAGE_ID);
     });
 
     it('tracks when page submitted with Yes for Another State', () => {
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenSt').select("CA");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkBenDtStat').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
       cy.checkLogEvent(`Other Benefits Yes Clicked`, { otherBenefits: [ "another state" ] });
     });
 
     it('tracks when page submitted with Yes for Employer/Union', () => {
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpNm').type('Murch');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpAdd1').type('30 Livingston Avenue');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpCity').type('New Brunswick');
@@ -91,27 +115,27 @@ describe("Other Benefits page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh2').type('111');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh3').type('2222');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkEmpBenDtStat').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
       cy.checkLogEvent(`Other Benefits Yes Clicked`, { otherBenefits: [ "employer/union" ] });
     });
 
     it('tracks when page submitted with Yes Pending for receiving Soc Sec benefits', () => {
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkSSDtStat').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
       cy.checkLogEvent(`Other Benefits Yes Clicked`, { otherBenefits: [ "social security" ] });
     });
 
     it('tracks when page submitted with Yes for UI', () => {
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlUISt').select('AK');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkUIStatusPend').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
@@ -119,10 +143,10 @@ describe("Other Benefits page", () => {
     });
 
     it('tracks when page submitted with Yes for everything', () => {
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenSt').select("CA");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkBenDtStat').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpNm').type('Murch');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpAdd1').type('30 Livingston Avenue');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpCity').type('New Brunswick');
@@ -131,13 +155,32 @@ describe("Other Benefits page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh2').type('111');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh3').type('2222');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkEmpBenDtStat').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkSSDtStat').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlUISt').select('AK');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkUIStatusPend').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
       cy.checkLogEvent(`Other Benefits Yes Clicked`, { otherBenefits: [ "another state", "employer/union", "social security", "ui" ] });
+    });
+
+    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+      cy.checkInfoAlertBehavior();
+    });
+
+    it('clicks Back', () => {
+      cy.get('footer#helpSection').should('exist').and('have.length', 1);
+      
+      cy.get('#headerWithMargin > button').contains('< Back').click();
+
+      cy.get('h1').contains('Medical Treatment Information').should('be.visible');
+      cy.get('footer#helpSection').should('exist').and('have.length', 1);
+
+      cy.get('#headerWithMargin > button').contains('< Back').click();
+
+      cy.get('h1').contains('Disability Information').should('be.visible');
+      cy.get('footer#helpSection').should('exist').and('have.length', 1);
+      cy.get('#headerWithMargin > button').should('not.exist');
     });
   });
 });

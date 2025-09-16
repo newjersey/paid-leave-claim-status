@@ -1,4 +1,5 @@
 import { logEvent } from "../../modules/shared.mjs";
+import { adjustTableWidths, removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const id = "otherBenefits";
 
@@ -57,5 +58,66 @@ export function trackOtherBenefitsYesSubmission(pageId) {
         }
       }
     });
+  }
+}
+
+export function changes() {
+  addStyles();
+  styleRadioButtons();
+  adjustWidths();
+}
+
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    .usa-radio {
+      padding: 0;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function styleRadioButtons() {
+  const radioButtonIds = [
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo'
+  ];
+
+  radioButtonIds.forEach((radioButtonId) => styleRadioButton(radioButtonId));
+
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo'
+  );
+}
+
+function adjustWidths() {
+  const employerDiv = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_pnlEmpUnionadd");
+  if (employerDiv) {
+    employerDiv.style.marginLeft = '0';
+    employerDiv.style.width = '100%';
+  }
+
+  const parentDiv = document.getElementById("divEmp");
+  if (parentDiv) {
+    adjustTableWidths(parentDiv);
   }
 }
