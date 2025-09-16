@@ -2,6 +2,7 @@ import { identifyingContent as certificationContent } from "./claimantInfo/certi
 import { identifyingContent as confirmationContent } from "./claimantInfo/confirmation.js";
 import { identifyingContent as employerDetailsContent } from "./claimantInfo/employerDetails.js";
 import { identifyingContent as employmentContent } from "./claimantInfo/employment.js";
+import { identifyingContent as incompleteEmployerContent } from "./claimantInfo/incompleteEmployer.js";
 import { identifyingContent as intermittentContent } from "./claimantInfo/intermittent.js";
 import { identifyingContent as otherBenefitsContent } from "./claimantInfo/otherBenefits.js";
 import { identifyingContent as paymentInfoContent } from "./claimantInfo/paymentInfo.js";
@@ -26,6 +27,7 @@ const identifyingContents = [
   confirmationContent,
   employerDetailsContent,
   employmentContent,
+  incompleteEmployerContent,
   intermittentContent,
   otherBenefitsContent,
   paymentInfoContent,
