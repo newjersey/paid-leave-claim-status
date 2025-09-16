@@ -40,7 +40,10 @@ function redoTable() {
         const status = cells[3].textContent.trim() || '&nbsp;';
 
         const isAddEmployerRow = employerName === 'Add Employer';
-        const checkboxAttributes = isAddEmployerRow ? '' : 'checked="checked" disabled="disabled"';
+        const isIncompleteEmployerRow = status === 'Incomplete';
+        const checkboxAttributes = (isAddEmployerRow || isIncompleteEmployerRow) 
+          ? '' 
+          : 'checked="checked" disabled="disabled"';
 
         newTableContent += `
           <tr>

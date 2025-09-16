@@ -7,6 +7,7 @@ import { changes as disabilityInformationChanges, id as disabilityInformationId 
 import { changes as employerDetailsChanges, id as employerDetailsId } from "./claimantInfo/employerDetails";
 import { changes as employmentChanges, id as employmentId } from "./claimantInfo/employment";
 import { changes as employmentDetailsChanges, id as employmentDetailsId } from "./employmentDetails/employmentDetails";
+import { changes as incompleteEmployerChanges, id as incompleteEmployerId } from "./claimantInfo/incompleteEmployer";
 import { changes as intermittentChanges, id as intermittentId } from "./claimantInfo/intermittent";
 import { changes as loginProfileChanges, id as loginProfileId } from "./claimantProfile/loginProfile";
 import { changes as medicalTreatmentChanges, id as medicalTreatmentId } from "./medical/treatment";
@@ -31,6 +32,7 @@ const pageChangesMap = {
   [employerDetailsId]: employerDetailsChanges,
   [employmentId]: employmentChanges,
   [employmentDetailsId]: employmentDetailsChanges,
+  [incompleteEmployerId]: incompleteEmployerChanges,
   [intermittentId]: intermittentChanges,
   [loginProfileId]: loginProfileChanges,
   [medicalTreatmentId]: medicalTreatmentChanges,
