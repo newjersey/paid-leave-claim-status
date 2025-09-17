@@ -39,16 +39,14 @@ function redoTable() {
         const tradingName = cells[2].textContent.trim() || '&nbsp;';
         const status = cells[3].textContent.trim() || '&nbsp;';
 
-        const isAddEmployerRow = employerName === 'Add Employer';
-        const isIncompleteEmployerRow = status === 'Incomplete';
-        const checkboxAttributes = (isAddEmployerRow || isIncompleteEmployerRow) 
-          ? '' 
-          : 'checked="checked" disabled="disabled"';
+        const checkbox = cells[0].querySelector('input[type="checkbox"]');
+        const checkedAttribute = checkbox.checked ? 'checked="checked"' : '';
+        const disabledAttribute = checkbox.disabled ? 'disabled="disabled"' : '';
 
         newTableContent += `
           <tr>
             <th scope="row" data-label="Employer Name" style="text-align:left;">
-              <input id="ContentPlaceHolder1_TabEmployment_tbpnlEMP_gvEmployers_chkEmployer_${index-1}" type="checkbox" name="ctl00$ContentPlaceHolder1$TabEmployment$tbpnlEMP$gvEmployers$ctl0${index + 1}$chkEmployer" ${checkboxAttributes} onclick="setTimeout('__doPostBack(\\'ctl00$ContentPlaceHolder1$TabEmployment$tbpnlEMP$gvEmployers$ctl0${index + 1}$chkEmployer\\', \\'\\')', 0)" autocomplete="off">
+              <input id="ContentPlaceHolder1_TabEmployment_tbpnlEMP_gvEmployers_chkEmployer_${index-1}" type="checkbox" name="ctl00$ContentPlaceHolder1$TabEmployment$tbpnlEMP$gvEmployers$ctl0${index + 1}$chkEmployer" ${checkedAttribute} ${disabledAttribute} onclick="setTimeout('__doPostBack(\\'ctl00$ContentPlaceHolder1$TabEmployment$tbpnlEMP$gvEmployers$ctl0${index + 1}$chkEmployer\\', \\'\\')', 0)" autocomplete="off">
               <label for="ContentPlaceHolder1_TabEmployment_tbpnlEMP_gvEmployers_chkEmployer_${index-1}">${employerName}</label>
             </th>
             <td data-label="FEIN Number" align="center">${feinNumber}</td>
