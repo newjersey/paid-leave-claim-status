@@ -1,4 +1,8 @@
+import { globalTestsNew, globalTestsOld } from "../shared";
+
 const PAGE_ID = 'employment';
+const URL = 'ClaimentEmployment';
+const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/employment.html";
 
 describe("Employment Info page", () => {
   function checkPostData(interception) {
@@ -8,14 +12,8 @@ describe("Employment Info page", () => {
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24TabEmployment%24tbpnlEMP%24hdnFDDate=5%2F24%2F2025&ctl00%24ContentPlaceHolder1%24TabEmployment%24tbpnlEMP%24hdnClmtLWD=05%2F21%2F2025&ctl00%24ContentPlaceHolder1%24TabEmployment%24tbpnlEMP%24hdnDispOtherTabs=Y&ctl00%24ContentPlaceHolder1%24TabEmployment%24tbpnlEMP%24hdnBaseYearStart=1%2F1%2F2024&ctl00%24ContentPlaceHolder1%24TabEmployment%24tbpnlEMP%24hdnBaseYearEnd=5%2F23%2F2025&ctl00%24ContentPlaceHolder1%24TabEmployment%24tbpnlEMP%24btnEmpCertify=Confirmation&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24hdnPersTabCnt=&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24hdnExtEmplSel=0&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabPanelSpan%24hdnDeptUnitSOE=&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabPanelWrkDte%24hdnInterMtFlgs=');
   }
 
-  function mockASPX() {
-    cy.intercept('POST', '**/ClaimentEmployment.aspx',
-      { statusCode: 200, headers: { 'content-type': 'text/html' } }
-    ).as('aspxSubmission');
-  };
-
   function checkConfirm() {
-    mockASPX();
+    cy.mockASPX(URL);
     cy.get('#ContentPlaceHolder1_TabEmployment_tbpnlEMP_btnEmpCertify').click();
     cy.wait('@aspxSubmission').then(checkPostData);
   }
@@ -31,7 +29,7 @@ describe("Employment Info page", () => {
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/employment.html");
+      cy.visit(FIXTURE);
     });
 
     it("user can input info and proceed to next page", () => {
@@ -42,19 +40,7 @@ describe("Employment Info page", () => {
       checkAddEmployer();
     });
 
-    it("user can log out", () => {
-      mockASPX();
-      cy.checkOldLogout();
-    });
-
-    it("user can cancel logging out", () => {
-      mockASPX();
-      cy.checkOldLogoutCancel();
-    });
-
-    it('should open FAQ and post data when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-    });
+    globalTestsOld(URL);
   });
 
   describe("page with new JS", () => {
@@ -64,7 +50,7 @@ describe("Employment Info page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/employment.html");
+      cy.visit(FIXTURE);
       cy.wait('@script');
     });
 
@@ -76,35 +62,6 @@ describe("Employment Info page", () => {
       checkAddEmployer();
     });
 
-    it("applies the new font family", () => {
-      cy.checkFontFamily();
-    });
-
-    it("passes accessibility checks", () => {
-      cy.checkBodyA11y();
-    });
-
-    it("tracks the page view", () => {
-      cy.trackPageView(PAGE_ID);
-    });
-
-    it("user can log out", () => {
-      mockASPX();
-      cy.checkNewLogout();
-    });
-
-    it("user can cancel logging out", () => {
-      mockASPX();
-      cy.checkNewLogoutCancel();
-    });
-
-    it('should open Resources and track when clicked', () => {
-      cy.get('#resourcesLink').click();
-      cy.trackResourcesClick(PAGE_ID);
-    });
-
-    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
-      cy.checkInfoAlertBehavior();
-    });
+    globalTestsNew(PAGE_ID, URL);
   });
 });

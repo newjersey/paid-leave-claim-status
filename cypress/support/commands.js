@@ -59,6 +59,7 @@ Cypress.Commands.add("trackHelpClick", (pageId) => {
 });
 
 Cypress.Commands.add("trackResourcesClick", (pageId) => {
+  cy.get('#resourcesLink').click();
   cy.checkLogEvent(`Resources Clicked`, { pageId });
 });
 
@@ -85,26 +86,36 @@ function checkLogoutData(interception) {
   expect(formData).to.include('__EVENTTARGET=ctl00%24header%24lbtnLogout');
 }
 
-Cypress.Commands.add("checkOldLogout", () => {
+Cypress.Commands.add("checkOldLogout", (url) => {
+  cy.mockASPX(url);
   cy.get('#header_lbtnLogout').click();
   cy.wait('@aspxSubmission').then(checkLogoutData);
 });
 
-Cypress.Commands.add("checkOldLogoutCancel", () => {
+Cypress.Commands.add("checkOldLogoutCancel", (url) => {
+  cy.mockASPX(url);
   cy.on('window:confirm', () => false);
   cy.get('#header_lbtnLogout').click();
   cy.get('@aspxSubmission').should('not.exist');
 });
 
-Cypress.Commands.add("checkNewLogout", () => {
+Cypress.Commands.add("checkNewLogout", (url) => {
+  cy.mockASPX(url);
   cy.get('#logoutButton').click();
   cy.wait('@aspxSubmission').then(checkLogoutData);
 });
 
-Cypress.Commands.add("checkNewLogoutCancel", () => {
+Cypress.Commands.add("checkNewLogoutCancel", (url) => {
+  cy.mockASPX(url);
   cy.on('window:confirm', () => false);
   cy.get('#logoutButton').click();
   cy.get('@aspxSubmission').should('not.exist');
+});
+
+Cypress.Commands.add("mockASPX", (url) => {
+  cy.intercept('POST', `**/${url}.aspx`,
+    { statusCode: 200, headers: { 'content-type': 'text/html' } }
+  ).as('aspxSubmission');
 });
 
 Cypress.Commands.add("checkFeedbackWidgetIsRendered", () => {

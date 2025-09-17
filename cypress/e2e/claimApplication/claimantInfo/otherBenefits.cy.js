@@ -1,4 +1,8 @@
+import { globalTestsNew, globalTestsOld } from "../shared";
+
 const PAGE_ID = 'otherBenefits';
+const URL = 'ClaimantDisabililty';
+const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/otherBenefits.html";
 
 describe("Other Benefits page", () => {
   function checkPostData(interception) {
@@ -8,7 +12,7 @@ describe("Other Benefits page", () => {
   }
 
   function mockASPX() {
-    cy.intercept('POST', '**/ClaimantDisabililty.aspx',
+    cy.intercept('POST', '**/.aspx',
       { statusCode: 200, headers: { 'content-type': 'text/html' } }
     ).as('aspxSubmission');
   };
@@ -16,11 +20,11 @@ describe("Other Benefits page", () => {
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/otherBenefits.html");
+      cy.visit(FIXTURE);
     });
 
     it("user can input info and proceed to next page", () => {
-      mockASPX();
+      cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo').click();
@@ -29,19 +33,7 @@ describe("Other Benefits page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
-    it("user can log out", () => {
-      mockASPX();
-      cy.checkOldLogout();
-    });
-
-    it("user can cancel logging out", () => {
-      mockASPX();
-      cy.checkOldLogoutCancel();
-    });
-
-    it('should open FAQ and post data when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-    });
+    globalTestsOld(URL);
   });
 
   describe("page with new JS", () => {
@@ -51,12 +43,12 @@ describe("Other Benefits page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/otherBenefits.html");
+      cy.visit(FIXTURE);
       cy.wait('@script');
     });
 
     it("user can input info and proceed to next page", () => {
-      mockASPX();
+      cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo').click({ force: true });
@@ -64,33 +56,6 @@ describe("Other Benefits page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
       cy.wait('@aspxSubmission').then(checkPostData);
       cy.confirmEventIsNotTracked("Other Benefits Yes Clicked");
-    });
-
-    it("applies the new font family", () => {
-      cy.checkFontFamily();
-    });
-
-    it("passes accessibility checks", () => {
-      cy.checkBodyA11y();
-    });
-
-    it("tracks the page view", () => {
-      cy.trackPageView(PAGE_ID);
-    });
-
-    it("user can log out", () => {
-      mockASPX();
-      cy.checkNewLogout();
-    });
-
-    it("user can cancel logging out", () => {
-      mockASPX();
-      cy.checkNewLogoutCancel();
-    });
-
-    it('should open Resources and track when clicked', () => {
-      cy.get('#resourcesLink').click();
-      cy.trackResourcesClick(PAGE_ID);
     });
 
     it('tracks when page submitted with Yes for Another State', () => {
@@ -164,10 +129,6 @@ describe("Other Benefits page", () => {
       cy.checkLogEvent(`Other Benefits Yes Clicked`, { otherBenefits: [ "another state", "employer/union", "social security", "ui" ] });
     });
 
-    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
-      cy.checkInfoAlertBehavior();
-    });
-
     it('clicks Back', () => {
       cy.get('footer#helpSection').should('exist').and('have.length', 1);
       
@@ -182,5 +143,7 @@ describe("Other Benefits page", () => {
       cy.get('footer#helpSection').should('exist').and('have.length', 1);
       cy.get('#headerWithMargin > button').should('not.exist');
     });
+
+    globalTestsNew(PAGE_ID, URL);
   });
 });

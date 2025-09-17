@@ -1,4 +1,8 @@
+import { globalTestsNew, globalTestsOld } from "../shared";
+
 const PAGE_ID = 'confirmation';
+const URL = 'ClaimantCertification';
+const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/confirmation.html";
 
 describe("Confirmation page", () => {
   function checkPostData(interception) {
@@ -8,37 +12,19 @@ describe("Confirmation page", () => {
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertStatus=&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertFDD=07%2F15%2F2025&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPConfirmation%24btnContinue=Print+Claim+Summary');
   }
 
-  function mockASPX() {
-    cy.intercept('POST', '**/ClaimantCertification.aspx',
-      { statusCode: 200, headers: { 'content-type': 'text/html' } }
-    ).as('aspxSubmission');
-  };
-
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/confirmation.html");
+      cy.visit(FIXTURE);
     });
 
     it("user can open PDF of claim summary", () => {
-      mockASPX();
+      cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
-    it("user can log out", () => {
-      mockASPX();
-      cy.checkOldLogout();
-    });
-
-    it("user can cancel logging out", () => {
-      mockASPX();
-      cy.checkOldLogoutCancel();
-    });
-
-    it('should open FAQ and post data when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-    });
+    globalTestsOld(URL);
   });
 
   describe("page with new JS", () => {
@@ -48,46 +34,17 @@ describe("Confirmation page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/confirmation.html");
+      cy.visit(FIXTURE);
       cy.wait('@script');
     });
 
     it("user can open PDF of claim summary", () => {
-      mockASPX();
+      cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue').click();
       cy.wait('@aspxSubmission').then(checkPostData);
       cy.checkLogEvent("Print Claim Summary Button Clicked", {});
     });
 
-    it("applies the new font family", () => {
-      cy.checkFontFamily();
-    });
-
-    it("passes accessibility checks", () => {
-      cy.checkBodyA11y();
-    });
-
-    it("tracks the page view", () => {
-      cy.trackPageView(PAGE_ID);
-    });
-
-    it('should open Resources and track when clicked', () => {
-      cy.get('#resourcesLink').click();
-      cy.trackResourcesClick(PAGE_ID);
-    });
-    
-    it("user can log out", () => {
-      mockASPX();
-      cy.checkNewLogout();
-    });
-
-    it("user can cancel logging out", () => {
-      mockASPX();
-      cy.checkNewLogoutCancel();
-    });
-
-    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
-      cy.checkInfoAlertBehavior();
-    });
+    globalTestsNew(PAGE_ID, URL);
   });
 });

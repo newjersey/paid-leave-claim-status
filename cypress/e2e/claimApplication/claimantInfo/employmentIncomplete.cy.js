@@ -1,12 +1,10 @@
+import { globalTestsNew, globalTestsOld } from "../shared";
+
 const PAGE_ID = 'employment';
+const URL = 'ClaimentEmployment';
+const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/employmentIncomplete.html";
 
 describe("Employment Info page", () => {
-  function mockASPX() {
-    cy.intercept('POST', '**/ClaimentEmployment.aspx',
-      { statusCode: 200, headers: { 'content-type': 'text/html' } }
-    ).as('aspxSubmission');
-  };
-
   function checkConfirm() {
     cy.get('#ContentPlaceHolder1_TabEmployment_tbpnlEMP_btnEmpCertify').click();
     cy.on('window:alert', (alertText) => {
@@ -33,7 +31,7 @@ describe("Employment Info page", () => {
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/employmentIncomplete.html");
+      cy.visit(FIXTURE);
     });
 
     it("user can input info and proceed to next page", () => {
@@ -48,19 +46,7 @@ describe("Employment Info page", () => {
       checkCompleteEmployer();
     });
 
-    it("user can log out", () => {
-      mockASPX();
-      cy.checkOldLogout();
-    });
-
-    it("user can cancel logging out", () => {
-      mockASPX();
-      cy.checkOldLogoutCancel();
-    });
-
-    it('should open FAQ and post data when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-    });
+    globalTestsOld(URL);
   });
 
   describe("page with new JS", () => {
@@ -70,7 +56,7 @@ describe("Employment Info page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/employmentIncomplete.html");
+      cy.visit(FIXTURE);
       cy.wait('@script');
     });
 
@@ -86,35 +72,6 @@ describe("Employment Info page", () => {
       checkCompleteEmployer();
     });
 
-    it("applies the new font family", () => {
-      cy.checkFontFamily();
-    });
-
-    it("passes accessibility checks", () => {
-      cy.checkBodyA11y();
-    });
-
-    it("tracks the page view", () => {
-      cy.trackPageView(PAGE_ID);
-    });
-
-    it("user can log out", () => {
-      mockASPX();
-      cy.checkNewLogout();
-    });
-
-    it("user can cancel logging out", () => {
-      mockASPX();
-      cy.checkNewLogoutCancel();
-    });
-
-    it('should open Resources and track when clicked', () => {
-      cy.get('#resourcesLink').click();
-      cy.trackResourcesClick(PAGE_ID);
-    });
-
-    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
-      cy.checkInfoAlertBehavior();
-    });
+    globalTestsNew(PAGE_ID, URL);
   });
 });
