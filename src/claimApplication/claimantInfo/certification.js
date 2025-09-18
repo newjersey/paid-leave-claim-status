@@ -1,3 +1,5 @@
+import i18next from 'i18next';
+
 export const certificationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantCertTab_TPCertification_rbtnAgYes', label: 'Yes, I agree' },
   { id: 'ContentPlaceHolder1_ClaimantCertTab_TPCertification_rbtnAgNo', label: 'I do not agree' },
@@ -54,22 +56,22 @@ function replaceBody() {
     newMain.innerHTML = `
       <div class="usa-alert usa-alert--info">
         <div class="usa-alert__body">
-          <p class="usa-alert__heading" style="font-size: 16px;font-weight: bold;">Before you submit</p>
+          <p class="usa-alert__heading" style="font-size: 16px;font-weight: bold;">${i18next.t('certification.beforeSubmit')}</p>
           <p class="usa-alert__text">
-            Be sure that all your answers are correct. You can't change any of your answers after you click submit below. You must contact the Division of Temporary Disability Insurance to report any changes that may affect your claim.
+            ${i18next.t('certification.alertText')}
           </p>
         </div>
       </div>
-      <p style="margin-top: 20px;">By submitting, I certify:</p>
+      <p style="margin-top: 20px;">${i18next.t('certification.certifyText')}</p>
       <ul>
-        <li>I have answered all questions completely and truthfully to the best of my knowledge.</li>
-        <li>I could face fines and criminal charges if I purposefully provide false information or don't share crucial details that could impact my claim.</li>
-        <li>I will have to pay back any benefits I'm not entitled to or be subject to deductions of funds from future benefits.</li>
-        <li>I allow the Division of Temporary Disability Insurance to verify my Social Security number. I allow them to access any necessary medical, employment, and Social Security benefit entitlement information to determine my eligibility for benefits.</li>
+        <li>${i18next.t('certification.agreement1')}</li>
+        <li>${i18next.t('certification.agreement2')}</li>
+        <li>${i18next.t('certification.agreement3')}</li>
+        <li>${i18next.t('certification.agreement4')}</li>
       </ul>
-      <button id="agreeAndSubmit" class="usa-button" type="button">Agree and submit application</button>
-      <button id="saveAndLogout" class="usa-button usa-button--unstyled" type="button">Save and logout</button>
-      <p><strong>Note:</strong> If you wait more than 14 days to come back and finish your application, you'll have to start over.</p>
+      <button id="agreeAndSubmit" class="usa-button" type="button">${i18next.t('certification.agreeAndSubmit')}</button>
+      <button id="saveAndLogout" class="usa-button usa-button--unstyled" type="button">${i18next.t('certification.saveAndLogout')}</button>
+      <p>${i18next.t('certification.noteText')}</p>
     `;
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
   }
