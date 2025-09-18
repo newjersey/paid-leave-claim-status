@@ -15,9 +15,9 @@ export function globalTestsOld(url) {
 }
 
 export function globalTestsNew(pageId, url) {
-  // it("applies the new font family", () => {
-  //   cy.checkFontFamily();
-  // });
+  it("applies the new font family", () => {
+    cy.checkFontFamily();
+  });
 
   it("passes accessibility checks", () => {
     cy.checkBodyA11y();
