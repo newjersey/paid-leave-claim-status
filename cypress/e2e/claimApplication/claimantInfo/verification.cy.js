@@ -1,4 +1,8 @@
+import { globalTestsNew, globalTestsOld } from "../shared";
+
 const PAGE_ID = 'verification';
+const URL = 'ClaimantDisabililty';
+const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/verification.html";
 
 describe("Disability Verification page", () => {
   function checkPostData(interception) {
@@ -8,38 +12,20 @@ describe("Disability Verification page", () => {
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24hdnDisStartDt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24hdnPregFlg=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24hdnDtLDW=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24hdnRTWFlg=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24hdnDtRTW=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24hdnDtExpRDTW=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24hdnConflictType=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24hdnTDIPayCode=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24hdnInjCount=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabWC%24hdnNoClaimCount=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tbpnlLatePayment%24hdnLPay=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDisabDate=07%2F15%2F2025&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVetDtLast=07%2F14%2F2025&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerReturn=No&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerRetWork=08%2F13%2F2025&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDisabDesc=Injury&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDocName=Dr.+Spaceman&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDocStreet=30+Livingston+Avenue&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDocAddr2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDocCity=New+Brunswick&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDocState=NJ&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDocZip1=08901&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDocZip2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDocVerZip=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDocAddOOC1=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDocAddOOC2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDocAddOOC3=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDocAddOOC4=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDocTel=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDocTel2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDocTel3=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDocTelExt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerEmer=No&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerEmerStart=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerEmerEnd=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtHospVer=No&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerHspStart=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerHspEnd=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24TxtVerInjWk=No&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerInjEmpNm=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerEmpadd1=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerEmpadd2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerEmpCity=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerEmpState=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerEmpZip1=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerEmpZip2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerEmpZipCountry=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerEmpCountry=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerInjEmpPh=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerInjEmpPh2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerInjEmpPh3=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerInjEmpPh4=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerInjDt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerWcComp=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerWCExp=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerDeter=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTempWC=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDBenefits=No&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDPayingState=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDStatusPending=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDBenfStartDate=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDBenfEndDate=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDBenfEMP=No&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDEmpName=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDEmpAddr1=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDEmpAddr2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDEmpCity=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDEmpState=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDZipCode1=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDZipCode2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDPostalCode=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDEmpCountry=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDPhone1=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDPhone2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDPhone3=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDPhoneExt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDEmpBenfStatus=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDEmpBnfStartDate=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDEmpBnfEndDate=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDSSBenf=No&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDSSDAStatus=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDSSDADate=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDUIbenfRecvd=No&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerTDUIBPayingState=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerUI_Pend=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerUIBenStDt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtVerUIBenEndDt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24lblFIT=No&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtAmtWK=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24txtRsnLate=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tabpnlDisabilityVerification%24VerDisab=rbtnDisabsYes');
   }
 
-  function mockASPX() {
-    cy.intercept('POST', '**/ClaimantDisabililty.aspx',
-      { statusCode: 200, headers: { 'content-type': 'text/html' } }
-    ).as('aspxSubmission');
-  };
-
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/verification.html");
+      cy.visit(FIXTURE);
     });
 
     it("user can input info and proceed to next page", () => {
-      mockASPX();
+      cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
-    it("user can log out", () => {
-      mockASPX();
-      cy.checkOldLogout();
-    });
-
-    it("user can cancel logging out", () => {
-      mockASPX();
-      cy.checkOldLogoutCancel();
-    });
-
-    it('should open FAQ and post data when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-    });
+    globalTestsOld(URL);
   });
 
   describe("page with new JS", () => {
@@ -49,46 +35,15 @@ describe("Disability Verification page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/verification.html");
+      cy.visit(FIXTURE);
       cy.wait('@script');
     });
 
     it("user can input info and proceed to next page", () => {
-      mockASPX();
+      cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer').click();
       cy.wait('@aspxSubmission').then(checkPostData);
-    });
-
-    it("applies the new font family", () => {
-      cy.checkFontFamily();
-    });
-
-    it("passes accessibility checks", () => {
-      cy.checkBodyA11y();
-    });
-
-    it("tracks the page view", () => {
-      cy.trackPageView(PAGE_ID);
-    });
-
-    it("user can log out", () => {
-      mockASPX();
-      cy.checkNewLogout();
-    });
-
-    it("user can cancel logging out", () => {
-      mockASPX();
-      cy.checkNewLogoutCancel();
-    });
-
-    it('should open Resources and track when clicked', () => {
-      cy.get('#resourcesLink').click();
-      cy.trackResourcesClick(PAGE_ID);
-    });
-
-    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
-      cy.checkInfoAlertBehavior();
     });
 
     it('items do not overlap', () => {
@@ -106,5 +61,7 @@ describe("Disability Verification page", () => {
 
       cy.get('#divVerTDI').invoke('css', 'display', 'none');
     });
+
+    globalTestsNew(PAGE_ID, URL);
   });
 });

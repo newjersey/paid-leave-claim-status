@@ -1,4 +1,8 @@
+import { globalTestsNew, globalTestsOld } from "../shared";
+
 const PAGE_ID = 'paymentInfo';
+const URL = 'ClaimantDisabililty';
+const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/paymentInfo.html";
 
 describe("Payment Info page", () => {
   function checkPostData(interception) {
@@ -8,38 +12,20 @@ describe("Payment Info page", () => {
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24txtDisStartDt=07%2F15%2F2025&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24hdnDisStartDt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24hdnPregFlg=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24hdnDtLDW=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24hdnRTWFlg=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24hdnDtRTW=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24hdnDtExpRDTW=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24txtDtLastWorkd=07%2F14%2F2025&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24rbRec=rbtnRecNo&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24txtDtReturnedToWrk=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24txtExpectedReturnedDtToWrk=08%2F13%2F2025&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24hdnConflictType=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24Dis1%24hdnTDIPayCode=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtInjury=Injury&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24hdnInjCount=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24text_num_inj=294&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtDocNm=Dr.+Spaceman&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24rbnDocAdd=rbnDocAddYes&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtDocAdd1=30+Livingston+Avenue&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtDocAdd2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtDocCity=New+Brunswick&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24ddlDocStates=34&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtDocZip1=08901&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtDocZip2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtOutCtryDocZip=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24ddlDocCountry=0&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtOOCDocAdd1=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtOOCDocAdd2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtOOCDocAdd3=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtOOCDocAdd4=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtDocPh=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtDocPh2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtDocPh3=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtDocPh4=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24rbER=rbtnERNO&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtERStDt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtEREndDt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24rbHosp=rbtnHospNo&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtHospStDt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24txtHospEndDt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabDoctor%24rbInj=rbtnInjNo&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabWC%24hdnNoClaimCount=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24rbTDI=rbTDINo&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24ddlBenSt=0&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtBenStDt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtBenEndDt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24rbTDEmp=rbTDEmpNo&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtBenEmpNm=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtBenEmpAdd1=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtBenEmpAdd2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtBenEmpCity=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24ddlBenEmpSt=34&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtBenEmpZip1=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtBenEmpZip2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtBenEmpOutCtryZip=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24ddlBenEmpCountry=0&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtBenEmpPh=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtBenEmpPh2=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtBenEmpPh3=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtBenEmpPh4=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtEmpBenStDt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtEmpBenEndDt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24rbSS=rbSSNo&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtSSDate=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24rbUI=rbUINo&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24ddlUISt=0&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtUIBenStDt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24TabBenefits%24txtUIBenEndDt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tbpnlLatePayment%24TempDisab=rbtnDisNo&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tbpnlLatePayment%24txtWeeklyAmt=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tbpnlLatePayment%24lpayReason=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tbpnlLatePayment%24hdnLPay=&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tbpnlLatePayment%24text_num_lpayreason=300&ctl00%24ContentPlaceHolder1%24ClaimantDisabilityTab%24tbpnlLatePayment%24btnNextVer=Continue');
   }
 
-  function mockASPX() {
-    cy.intercept('POST', '**/ClaimantDisabililty.aspx',
-      { statusCode: 200, headers: { 'content-type': 'text/html' } }
-    ).as('aspxSubmission');
-  };
-
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/paymentInfo.html");
+      cy.visit(FIXTURE);
     });
 
     it("user can input info and proceed to next page", () => {
-      mockASPX();
+      cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisNo').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_btnNextVer').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
-    it("user can log out", () => {
-      mockASPX();
-      cy.checkOldLogout();
-    });
-
-    it("user can cancel logging out", () => {
-      mockASPX();
-      cy.checkOldLogoutCancel();
-    });
-
-    it('should open FAQ and post data when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-    });
+    globalTestsOld(URL);
   });
 
   describe("page with new JS", () => {
@@ -49,46 +35,17 @@ describe("Payment Info page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/paymentInfo.html");
+      cy.visit(FIXTURE);
       cy.wait('@script');
     });
 
     it("user can input info and proceed to next page", () => {
-      mockASPX();
+      cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisNo').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_btnNextVer').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
-    it("applies the new font family", () => {
-      cy.checkFontFamily();
-    });
-
-    it("passes accessibility checks", () => {
-      cy.checkBodyA11y();
-    });
-
-    it("user can log out", () => {
-      mockASPX();
-      cy.checkNewLogout();
-    });
-
-    it("user can cancel logging out", () => {
-      mockASPX();
-      cy.checkNewLogoutCancel();
-    });
-
-    it("tracks the page view", () => {
-      cy.trackPageView(PAGE_ID);
-    });
-
-    it('should open Resources and track when clicked', () => {
-      cy.get('#resourcesLink').click();
-      cy.trackResourcesClick(PAGE_ID);
-    });
-
-    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
-      cy.checkInfoAlertBehavior();
-    });
+    globalTestsNew(PAGE_ID, URL);
   });
 });
