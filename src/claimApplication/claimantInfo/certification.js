@@ -12,11 +12,12 @@ export const identifyingContent = {
 };
 
 export function changes() {
-  hideOldHtml();
+  addStyles();
+  replaceBody();
   document.addEventListener('headerReady', setNewTitle);
 
 
-  // addStyles();
+  // 
   // convertBodyTextFromH4();
   // trimText();
   // styleRadioButtons(
@@ -29,10 +30,30 @@ export function changes() {
   // );
 }
 
-function hideOldHtml() {
+function replaceBody() {
   const oldContainer = document.querySelector("#ContentPlaceHolder1_ClaimantCertTab");
   if (oldContainer) {
     oldContainer.style.display = 'none';
+
+    const newMain = document.createElement('main');
+    newMain.innerHTML = `
+      <div class="usa-alert usa-alert--info">
+        <div class="usa-alert__body">
+          <p class="usa-alert__heading" style="font-size: 16px;font-weight: bold;">Before you submit</p>
+          <p class="usa-alert__text">
+            Be sure that all your answers are correct. You can't change any of your answers after you click submit below. You must contact the Division of Temporary Disability Insurance to report any changes that may affect your claim.
+          </p>
+        </div>
+      </div>
+      <p>By submitting, I certify:</p>
+      <ul>
+        <li>I have answered all questions completely and truthfully to the best of my knowledge.</li>
+        <li>I could face fines and criminal charges if I purposefully provide false information or don't share crucial details that could impact my claim.</li>
+        <li>I will have to pay back any benefits I'm not entitled to or be subject to deductions of funds from future benefits.</li>
+        <li>I allow the Division of Temporary Disability Insurance to verify my Social Security number. I allow them to access any necessary medical, employment, and Social Security benefit entitlement information to determine my eligibility for benefits.</li>
+      </ul>
+    `;
+    oldContainer.parentNode.insertBefore(newMain, oldContainer);
   }
 }
 
@@ -72,14 +93,9 @@ function convertBodyTextFromH4() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
-    #divPdd, #divCertNo {
+    ul {
       line-height: 1.6em;
-    }
-    #divPdd legend {
-      display: none;
-    }
-    #divPdd .usa-legend {
-      display: block;
+      padding: 0 20px;
     }
   `;
   document.head.appendChild(style);
