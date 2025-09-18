@@ -45,13 +45,14 @@ function replaceBody() {
           </p>
         </div>
       </div>
-      <p>By submitting, I certify:</p>
+      <p style="margin-top: 20px;">By submitting, I certify:</p>
       <ul>
         <li>I have answered all questions completely and truthfully to the best of my knowledge.</li>
         <li>I could face fines and criminal charges if I purposefully provide false information or don't share crucial details that could impact my claim.</li>
         <li>I will have to pay back any benefits I'm not entitled to or be subject to deductions of funds from future benefits.</li>
         <li>I allow the Division of Temporary Disability Insurance to verify my Social Security number. I allow them to access any necessary medical, employment, and Social Security benefit entitlement information to determine my eligibility for benefits.</li>
       </ul>
+      <button class="usa-button" type="button">Agree and submit application</button>
     `;
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
   }
@@ -93,6 +94,10 @@ function convertBodyTextFromH4() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
+    .usa-button {
+      margin: 20px 0;
+      min-height: 40px;
+    }
     ul {
       line-height: 1.6em;
       padding: 0 20px;
