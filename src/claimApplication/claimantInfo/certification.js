@@ -12,17 +12,36 @@ export const identifyingContent = {
 };
 
 export function changes() {
-  addStyles();
-  convertBodyTextFromH4();
-  trimText();
-  styleRadioButtons(
-    'divPdd',
-    'I Agree'
-  );
-  styleRadioButtons(
-    'divCertNo',
-    'Do you still wish to leave this application and complete your application at a later time?'
-  );
+  hideOldHtml();
+  document.addEventListener('headerReady', setNewTitle);
+
+
+  // addStyles();
+  // convertBodyTextFromH4();
+  // trimText();
+  // styleRadioButtons(
+  //   'divPdd',
+  //   'I Agree'
+  // );
+  // styleRadioButtons(
+  //   'divCertNo',
+  //   'Do you still wish to leave this application and complete your application at a later time?'
+  // );
+}
+
+function hideOldHtml() {
+  const oldContainer = document.querySelector("#ContentPlaceHolder1_ClaimantCertTab");
+  if (oldContainer) {
+    oldContainer.style.display = 'none';
+  }
+}
+
+function setNewTitle() {
+  const title = document.querySelector("#pageTitle");
+  if (title) {
+    title.textContent = 'Agree and finish';
+    document.removeEventListener('headerReady', setNewTitle);
+  }
 }
 
 function trimText() {

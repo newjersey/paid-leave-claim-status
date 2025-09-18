@@ -8,11 +8,16 @@ export function replaceHeader(pageId) {
   if (screensWithoutTabs.includes(pageId)) {
     replacePopulatedHeader();
   } else {
+    let headerReady = false;
     const observer = new MutationObserver((mutations) => {
       mutations.forEach(() => {
+        if (headerReady) return;
         const tabsDiv = document.querySelector('.ajax__tab_header');
         if (tabsDiv) {
+          headerReady = true;
           replacePopulatedHeader();
+          const event = new CustomEvent('headerReady');
+          document.dispatchEvent(event);
           observer.disconnect();
         }
       });
