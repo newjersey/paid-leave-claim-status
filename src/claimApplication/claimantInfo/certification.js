@@ -53,6 +53,8 @@ function replaceBody() {
         <li>I allow the Division of Temporary Disability Insurance to verify my Social Security number. I allow them to access any necessary medical, employment, and Social Security benefit entitlement information to determine my eligibility for benefits.</li>
       </ul>
       <button class="usa-button" type="button">Agree and submit application</button>
+      <button class="usa-button usa-button--unstyled" type="button">Save and logout</button>
+      <p><strong>Note:</strong> If you wait more than 14 days to come back and finish your application, you'll have to start over.</p>
     `;
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
   }
@@ -95,8 +97,11 @@ function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
     .usa-button {
-      margin: 20px 0;
+      margin: 20px 20px 20px 0;
       min-height: 40px;
+    }
+    .usa-button--unstyled {
+      padding: 0;
     }
     ul {
       line-height: 1.6em;
