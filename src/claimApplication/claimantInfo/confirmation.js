@@ -37,6 +37,18 @@ function addStyles() {
       top: -1px;
       vertical-align: middle;
     }
+    section {
+      background-color: #FBFCFD;
+      border: 0.5px solid #C6CACE;
+      padding: 10px;
+    }
+    section h2 {
+      color: black;
+      font-size: 18px;
+      font-variant: normal;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
     @media (max-width: 767px) {
       .aligned-icon {
         position: static;
@@ -62,6 +74,10 @@ function replaceBody() {
         />
         ${i18next.t('confirmation.submitted')}
       </p>
+      <section id="m01section">
+        <h2>${i18next.t('confirmation.m01.title')}</h2>
+        <p>${i18next.t('confirmation.m01.directions')}</p>
+      </section>
     `;
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
   }
@@ -87,4 +103,3 @@ function setupApplicationPdfDownloadLink() {
     });
   }
 }
-
