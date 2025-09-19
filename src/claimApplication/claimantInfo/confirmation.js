@@ -27,6 +27,7 @@ export function changes() {
   replaceBody();
   setupApplicationPdfDownloadLink();
   setupExpandM01Button();
+  setupCopyM01Button();
   document.addEventListener('headerReady', setNewTitle);
 }
 
@@ -132,7 +133,7 @@ function replaceBody() {
           <div id="sampleLanguageBody" class="usa-prose">
             ${i18next.t('confirmation.m01.sample.body')}
           </div>
-          <button class="usa-button">
+          <button id="m01CopyButton" class="usa-button">
             ${i18next.t('confirmation.m01.sample.copyButton')}
           </button>
         </div>
@@ -180,4 +181,22 @@ function setupExpandM01Button() {
       icon.alt = 'Expand more';
     }
   });
+}
+
+function setupCopyM01Button() {
+  const copyButton = document.getElementById('m01CopyButton');
+  const sampleLanguageBody = document.getElementById('sampleLanguageBody');
+
+  if (copyButton && sampleLanguageBody) {
+    copyButton.addEventListener('click', function(event) {
+      event.preventDefault();
+      const textToCopy = sampleLanguageBody.textContent.trim();
+
+      navigator.clipboard.writeText(textToCopy).then(() => {
+        // Put a green checkmark next to the button
+      }).catch(err => {
+        console.error('Failed to copy text: ', err);
+      });
+    });
+  }
 }
