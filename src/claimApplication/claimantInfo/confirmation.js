@@ -26,6 +26,7 @@ export function changes() {
   addStyles();
   replaceBody();
   setupApplicationPdfDownloadLink();
+  setupExpandM01Button();
   document.addEventListener('headerReady', setNewTitle);
 }
 
@@ -92,6 +93,13 @@ function replaceBody() {
         <div class="due-date">${i18next.t('confirmation.m01.dueDate')}</div>
         <h2>${i18next.t('confirmation.m01.title')}</h2>
         <p>${i18next.t('confirmation.m01.directions')}</p>
+        <button id="expandM01">
+          <img
+            src="${ICON_BASE_URL}/expand_more.svg"
+            alt="Expand more"
+          />
+        </button>
+        <p id="sampleLanguage" style="display: none;">More!</p>
       </section>
     `;
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
@@ -117,4 +125,23 @@ function setupApplicationPdfDownloadLink() {
       }
     });
   }
+}
+
+function setupExpandM01Button() {
+  const expandButton = document.getElementById('expandM01');
+  const sampleLanguage = document.querySelector('#sampleLanguage');
+  const icon = expandButton.querySelector('img');
+
+  expandButton.addEventListener('click', function(event) {
+    event.preventDefault();
+    if (sampleLanguage.style.display === 'none') {
+      sampleLanguage.style.display = 'block';
+      icon.src = `${ICON_BASE_URL}/expand_less.svg`;
+      icon.alt = 'Expand less';
+    } else {
+      sampleLanguage.style.display = 'none';
+      icon.src = `${ICON_BASE_URL}/expand_more.svg`;
+      icon.alt = 'Expand more';
+    }
+  });
 }
