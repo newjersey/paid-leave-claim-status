@@ -54,6 +54,23 @@ function addStyles() {
       border: 0;
       padding: 10px;
     }
+    #sampleLanguageBody {
+      background-color: white;
+      padding: 10px;
+      margin: 10px 0;
+    }
+    #sampleLanguageContainer {
+      background-color: #E8F5FF;
+      flex-direction: column;
+      padding: 20px;
+    }
+    #sampleLanguageContainer h3 {
+      color: #005EA2;
+      font-size: 18px;
+      font-variant: normal;
+      font-weight: 400;
+      margin-bottom: 10px;
+    }
     section {
       background-color: #FBFCFD;
       border: 0.5px solid #C6CACE;
@@ -68,6 +85,9 @@ function addStyles() {
       font-variant: normal;
       font-weight: bold;
       margin-bottom: 5px;
+    }
+    .usa-button {
+      min-height: 40px;
     }
     @media (max-width: 767px) {
       .aligned-icon {
@@ -107,7 +127,15 @@ function replaceBody() {
             alt="Expand more"
           />
         </button>
-        <p id="sampleLanguage" style="display: none;">${i18next.t('certification.agreement4')}</p>
+        <div id="sampleLanguageContainer" style="display: none;">
+          <h3>${i18next.t('confirmation.m01.sample.title')}</h3>
+          <div id="sampleLanguageBody" class="usa-prose">
+            ${i18next.t('confirmation.m01.sample.body')}
+          </div>
+          <button class="usa-button">
+            ${i18next.t('confirmation.m01.sample.copyButton')}
+          </button>
+        </div>
       </section>
     `;
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
@@ -137,13 +165,13 @@ function setupApplicationPdfDownloadLink() {
 
 function setupExpandM01Button() {
   const expandButton = document.getElementById('expandM01');
-  const sampleLanguage = document.querySelector('#sampleLanguage');
+  const sampleLanguage = document.querySelector('#sampleLanguageContainer');
   const icon = expandButton.querySelector('img');
 
   expandButton.addEventListener('click', function(event) {
     event.preventDefault();
     if (sampleLanguage.style.display === 'none') {
-      sampleLanguage.style.display = 'block';
+      sampleLanguage.style.display = 'flex';
       icon.src = `${ICON_BASE_URL}/expand_less.svg`;
       icon.alt = 'Expand less';
     } else {

@@ -22,6 +22,11 @@ const resources = {
           dueDate: "Best to complete by August 30, 2025",
           title: "1. Follow up with your medical provider about Form M01",
           directions: "A qualified healthcare provider must confirm your disability. They will do this by completing Form M01 for you.",
+          sample: {
+            title: "Sample language to send to your provider",
+            body: "Hello. I am requesting you fill out form M01.",
+            copyButton: "Copy this starter message",
+          },
         },
       },
     }
