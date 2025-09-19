@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { logEvent } from "../../modules/shared.mjs";
 
 export const confirmationAltTexts = [
@@ -23,25 +24,50 @@ export function trackPrintClaimSummaryButton() {
 
 export function changes() {
   addStyles();
-  removeWhitespace();
+  replaceBody();
+  setupApplicationPdfDownloadLink();
+  document.addEventListener('headerReady', setNewTitle);
 }
 
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
-    #ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue {
-      width: auto;
-    }
-    .imgbtnPrinter {
-      display: inline;
-    }
+    
   `;
   document.head.appendChild(style);
 }
 
-function removeWhitespace() {
-  const element = document.querySelector("#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_tblPrintForms > tbody > tr:nth-child(14) > td > strong > a");
-  if (element) {
-    element.innerHTML = element.innerHTML.replace(/(<br>|&nbsp;)/g, '').trim();
+function replaceBody() {
+  const oldContainer = document.querySelector("#ContentPlaceHolder1_ClaimantCertTab");
+  if (oldContainer) {
+    oldContainer.style.display = 'none';
+
+    const newMain = document.createElement('main');
+    newMain.innerHTML = `
+      <p>${i18next.t('confirmation.submitted')}</p>
+    `;
+    oldContainer.parentNode.insertBefore(newMain, oldContainer);
   }
 }
+
+function setNewTitle() {
+  const title = document.querySelector("#pageTitle");
+  if (title) {
+    title.textContent = `${i18next.t('confirmation.title')}`;
+    document.removeEventListener('headerReady', setNewTitle);
+  }
+}
+
+function setupApplicationPdfDownloadLink() {
+  const downloadLink = document.getElementById('applicationPdfDownload');
+  if (downloadLink) {
+    downloadLink.addEventListener('click', function(event) {
+      event.preventDefault();
+      const pdfDownloadBtn = document.getElementById('ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue');
+      if (pdfDownloadBtn) {
+        pdfDownloadBtn.click();
+      }
+    });
+  }
+}
+

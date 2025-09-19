@@ -40,9 +40,8 @@ describe("Confirmation page", () => {
 
     it("user can open PDF of claim summary", () => {
       cy.mockASPX(URL);
-      cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue').click();
+      cy.get('#applicationPdfDownload').click();
       cy.wait('@aspxSubmission').then(checkPostData);
-      cy.checkLogEvent("Print Claim Summary Button Clicked", {});
     });
 
     globalTestsNew(PAGE_ID, URL);

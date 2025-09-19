@@ -80,7 +80,7 @@ function replaceBody() {
 function setNewTitle() {
   const title = document.querySelector("#pageTitle");
   if (title) {
-    title.textContent = 'Agree and finish';
+    title.textContent = `${i18next.t('certification.title')}`;
     document.removeEventListener('headerReady', setNewTitle);
   }
 }

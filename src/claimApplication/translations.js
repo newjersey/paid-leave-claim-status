@@ -2,6 +2,7 @@ const resources = {
   en: {
     translation: {
       certification: {
+        title: "Agree and finish",
         beforeSubmit: "Before you submit",
         alertText: "Be sure that all your answers are correct. You can't change any of your answers after you click submit below. You must contact the Division of Temporary Disability Insurance to report any changes that may affect your claim.",
         certifyText: "By submitting, I certify:",
@@ -12,6 +13,10 @@ const resources = {
         agreeAndSubmit: "Agree and submit application",
         saveAndLogout: "Save and logout",
         noteText: "<strong>Note:</strong> If you wait more than 14 days to come back and finish your application, you'll have to start over.",
+      },
+      confirmation: {
+        title: "You're almost done!",
+        submitted: `Your information was submitted. <a id="applicationPdfDownload" class="usa-link">You can download a copy of your application (PDF).</a>`,
       },
     }
   },
