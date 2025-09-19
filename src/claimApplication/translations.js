@@ -16,6 +16,7 @@ const resources = {
       },
       confirmation: {
         title: "You're almost done!",
+        checkmark: "Checkmark",
         submitted: `Your information was submitted. <a id="applicationPdfDownload" class="usa-link">You can download a copy of your application (PDF).</a>`,
       },
     }

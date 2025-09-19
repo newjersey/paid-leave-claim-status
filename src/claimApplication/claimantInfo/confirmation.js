@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { logEvent } from "../../modules/shared.mjs";
+import { ICON_BASE_URL, logEvent } from "../../modules/shared.mjs";
 
 export const confirmationAltTexts = [
   { id: 'ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_imgbtnM01', alt: 'Submit Query' },
@@ -32,7 +32,17 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
-    
+    .aligned-icon {
+      position: relative;
+      top: -1px;
+      vertical-align: middle;
+    }
+    @media (max-width: 767px) {
+      .aligned-icon {
+        position: static;
+        vertical-align: text-top;
+      }
+    }
   `;
   document.head.appendChild(style);
 }
@@ -44,7 +54,14 @@ function replaceBody() {
 
     const newMain = document.createElement('main');
     newMain.innerHTML = `
-      <p>${i18next.t('confirmation.submitted')}</p>
+      <p>
+        <img
+          src="${ICON_BASE_URL}/check_circle.svg"
+          alt="${i18next.t('confirmation.checkmark')}"
+          class="aligned-icon"
+        />
+        ${i18next.t('confirmation.submitted')}
+      </p>
     `;
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
   }
