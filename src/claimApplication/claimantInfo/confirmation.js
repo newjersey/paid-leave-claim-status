@@ -48,9 +48,17 @@ function addStyles() {
       right: 10px;
       top: 10px;
     }
+    #expandM01 {
+      align-self: flex-end;
+      background-color: white;
+      border: 0;
+      padding: 10px;
+    }
     section {
       background-color: #FBFCFD;
       border: 0.5px solid #C6CACE;
+      display: flex;
+      flex-direction: column;
       padding: 20px;
       position: relative;
     }
@@ -99,7 +107,7 @@ function replaceBody() {
             alt="Expand more"
           />
         </button>
-        <p id="sampleLanguage" style="display: none;">More!</p>
+        <p id="sampleLanguage" style="display: none;">${i18next.t('certification.agreement4')}</p>
       </section>
     `;
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
