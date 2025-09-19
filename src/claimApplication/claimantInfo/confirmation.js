@@ -37,10 +37,21 @@ function addStyles() {
       top: -1px;
       vertical-align: middle;
     }
+    .due-date {
+      background-color: #FEE685;
+      color: #936F38;
+      font-size: 14px;
+      font-weight: bold;
+      padding: 3px 5px;
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
     section {
       background-color: #FBFCFD;
       border: 0.5px solid #C6CACE;
-      padding: 10px;
+      padding: 20px;
+      position: relative;
     }
     section h2 {
       color: black;
@@ -53,6 +64,9 @@ function addStyles() {
       .aligned-icon {
         position: static;
         vertical-align: text-top;
+      }
+      section {
+        padding: 50px 10px 10px;
       }
     }
   `;
@@ -75,6 +89,7 @@ function replaceBody() {
         ${i18next.t('confirmation.submitted')}
       </p>
       <section id="m01section">
+        <div class="due-date">${i18next.t('confirmation.m01.dueDate')}</div>
         <h2>${i18next.t('confirmation.m01.title')}</h2>
         <p>${i18next.t('confirmation.m01.directions')}</p>
       </section>

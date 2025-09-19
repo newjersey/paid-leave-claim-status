@@ -19,6 +19,7 @@ const resources = {
         checkmark: "Checkmark",
         submitted: `Your information was submitted. <a id="applicationPdfDownload" class="usa-link">You can download a copy of your application (PDF).</a>`,
         m01: {
+          dueDate: "Best to complete by August 30, 2025",
           title: "1. Follow up with your medical provider about Form M01",
           directions: "A qualified healthcare provider must confirm your disability. They will do this by completing Form M01 for you.",
         },
