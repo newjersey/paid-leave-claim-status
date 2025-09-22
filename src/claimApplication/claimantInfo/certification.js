@@ -54,24 +54,22 @@ function replaceBody() {
 
     const newMain = document.createElement('main');
     newMain.innerHTML = `
-      <div class="usa-alert usa-alert--info">
-        <div class="usa-alert__body">
-          <p class="usa-alert__heading" style="font-size: 16px;font-weight: bold;">${i18next.t('certification.beforeSubmit')}</p>
-          <p class="usa-alert__text">
-            ${i18next.t('certification.alertText')}
-          </p>
-        </div>
-      </div>
-      <p style="margin-top: 20px;">${i18next.t('certification.certifyText')}</p>
+      <p>${i18next.t('certification.certifyText')}</p>
       <ul>
         <li>${i18next.t('certification.agreement1')}</li>
         <li>${i18next.t('certification.agreement2')}</li>
         <li>${i18next.t('certification.agreement3')}</li>
         <li>${i18next.t('certification.agreement4')}</li>
       </ul>
+      <div class="usa-alert usa-alert--info">
+        <div class="usa-alert__body">
+          <p class="usa-alert__heading" style="font-size: 16px;font-weight: bold;">${i18next.t('certification.beforeSubmit')}</p>
+          <p class="usa-alert__text">
+            ${i18next.t('certification.alertText', { hostname: window.location.hostname })}
+          </p>
+        </div>
+      </div>
       <button id="agreeAndSubmit" class="usa-button" type="button">${i18next.t('certification.agreeAndSubmit')}</button>
-      <button id="saveAndLogout" class="usa-button usa-button--unstyled" type="button">${i18next.t('certification.saveAndLogout')}</button>
-      <p>${i18next.t('certification.noteText')}</p>
     `;
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
   }
