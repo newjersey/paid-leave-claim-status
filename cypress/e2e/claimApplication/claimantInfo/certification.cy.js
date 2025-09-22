@@ -45,15 +45,6 @@ describe("Certification page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
-    it("user can logout with new button", () => {
-      cy.mockASPX(URL);
-      cy.get('#saveAndLogout').click();
-      cy.wait('@aspxSubmission').then((interception) => {
-        const formData = interception.request.body;
-        expect(formData).to.include('__EVENTTARGET=ctl00%24header%24lbtnLogout');
-      });
-    });
-
     globalTestsNew(PAGE_ID, URL);
   });
 });
