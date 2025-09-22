@@ -59,18 +59,20 @@ function addStyles() {
       padding: 10px;
       margin: 10px 0;
     }
+    .usa-accordion__button,
+    .usa-accordion__button:focus,
     #sampleLanguageContainer {
       background-color: #E8F5FF;
+    }
+    .usa-accordion__button:hover {
+      background-color: #badefaff;
+    }
+
+    #sampleLanguageContainer {
       flex-direction: column;
       padding: 20px;
     }
-    #sampleLanguageContainer h3 {
-      color: #005EA2;
-      font-size: 18px;
-      font-variant: normal;
-      font-weight: 400;
-      margin-bottom: 10px;
-    }
+
     section {
       background-color: #FBFCFD;
       border: 0.5px solid #C6CACE;
@@ -121,7 +123,7 @@ function replaceBody() {
         <div class="due-date">${i18next.t('confirmation.m01.dueDate')}</div>
         <h2>${i18next.t('confirmation.m01.title')}</h2>
         <p>${i18next.t('confirmation.m01.directions')}</p>
-        <div class="usa-accordion usa-accordion--bordered">
+        <div class="usa-accordion">
           <h3 class="usa-accordion__heading">
             <button
               type="button"
