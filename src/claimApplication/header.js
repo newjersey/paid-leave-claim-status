@@ -438,7 +438,7 @@ function newDesignAlert() {
   const alertDiv = document.createElement('div');
   alertDiv.id = 'info-alert';
   alertDiv.style.marginTop = '0';
-  alertDiv.classList.add('usa-alert', 'usa-alert--info');
+  alertDiv.classList.add('usa-alert', 'usa-alert--info', 'usa-alert--no-icon');
 
   const alertBodyDiv = document.createElement('div');
   alertBodyDiv.classList.add('usa-alert__body');
