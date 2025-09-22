@@ -22,9 +22,24 @@ const resources = {
           dueDate: "Best to complete by August 30, 2025",
           title: "1. Follow up with your medical provider about Form M01",
           directions: "A qualified healthcare provider must confirm your disability. They will do this by completing Form M01 for you.",
+          expand_less: "Expand less",
+          expand_more: "Expand more",
           sample: {
             title: "Sample language to send to your provider",
-            body: "Hello. I am requesting you fill out form M01.",
+            body: `Subject: Request for Medical Form M01 - Temporary Disability Claim
+<br><br>
+Dear {{provider_name}},
+<br><br>
+I'm requesting your help to complete Form M01 for my New Jersey Temporary Disability Insurance claim (Claim ID: {{claim_id}}, DOB: {{user_dob}}). The easiest way to submit it is online at www.nj.gov/labor/MedicalApplicationTDI using this Online Form ID: {{online_form_id}}. Fill out the required medical information and submit online. 
+<br><br>
+Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Thank you for your help.
+<br><br>
+{{user_name}}
+<br>
+{{user_email}}
+<br>
+{{user_phone}}
+            `,
             copyButton: "Copy this starter message",
           },
         },

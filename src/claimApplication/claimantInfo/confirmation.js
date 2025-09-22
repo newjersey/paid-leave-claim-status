@@ -125,13 +125,24 @@ function replaceBody() {
         <button id="expandM01">
           <img
             src="${ICON_BASE_URL}/expand_more.svg"
-            alt="Expand more"
+            alt=${i18next.t('confirmation.m01.expand_more')}
           />
         </button>
         <div id="sampleLanguageContainer" style="display: none;">
           <h3>${i18next.t('confirmation.m01.sample.title')}</h3>
           <div id="sampleLanguageBody" class="usa-prose">
-            ${i18next.t('confirmation.m01.sample.body')}
+            ${i18next.t('confirmation.m01.sample.body', 
+              {
+                provider_name: "Dr. Spaceman",
+                claim_id: "12345",
+                online_form_id: "78910",
+                est_deadline_date: "June 1, 2027",
+                user_dob: "January 1, 2000",
+                user_name: "Liz Lemon",
+                user_email: "liz@tgs.com",
+                user_phone: "(555) 555-5555"
+              }
+            )}
           </div>
           <button id="m01CopyButton" class="usa-button">
             ${i18next.t('confirmation.m01.sample.copyButton')}
@@ -174,11 +185,11 @@ function setupExpandM01Button() {
     if (sampleLanguage.style.display === 'none') {
       sampleLanguage.style.display = 'flex';
       icon.src = `${ICON_BASE_URL}/expand_less.svg`;
-      icon.alt = 'Expand less';
+      icon.alt = `${i18next.t('confirmation.m01.expand_less')}`;
     } else {
       sampleLanguage.style.display = 'none';
       icon.src = `${ICON_BASE_URL}/expand_more.svg`;
-      icon.alt = 'Expand more';
+      icon.alt = `${i18next.t('confirmation.m01.expand_more')}`;
     }
   });
 }
