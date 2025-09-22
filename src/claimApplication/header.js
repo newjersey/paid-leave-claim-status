@@ -8,11 +8,16 @@ export function replaceHeader(pageId) {
   if (screensWithoutTabs.includes(pageId)) {
     replacePopulatedHeader();
   } else {
+    let headerReady = false;
     const observer = new MutationObserver((mutations) => {
       mutations.forEach(() => {
+        if (headerReady) return;
         const tabsDiv = document.querySelector('.ajax__tab_header');
         if (tabsDiv) {
+          headerReady = true;
           replacePopulatedHeader();
+          const event = new CustomEvent('headerReady');
+          document.dispatchEvent(event);
           observer.disconnect();
         }
       });
@@ -433,7 +438,7 @@ function newDesignAlert() {
   const alertDiv = document.createElement('div');
   alertDiv.id = 'info-alert';
   alertDiv.style.marginTop = '0';
-  alertDiv.classList.add('usa-alert', 'usa-alert--info');
+  alertDiv.classList.add('usa-alert', 'usa-alert--info', 'usa-alert--no-icon');
 
   const alertBodyDiv = document.createElement('div');
   alertBodyDiv.classList.add('usa-alert__body');
