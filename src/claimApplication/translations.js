@@ -20,8 +20,6 @@ const resources = {
           dueDate: "Best to complete by August 30, 2025",
           title: "1. Follow up with your medical provider about Form M01",
           directions: "A qualified healthcare provider must confirm your disability. They will do this by completing Form M01 for you.",
-          expand_less: "Expand less",
-          expand_more: "Expand more",
           sample: {
             title: "Sample language to send to your provider",
             body: `Subject: Request for Medical Form M01 - Temporary Disability Claim

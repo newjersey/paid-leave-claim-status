@@ -1,4 +1,5 @@
 import 'uswds/css/uswds.css';
+import 'uswds/js/uswds.min.js';
 import i18next from 'i18next';
 import resources from './translations.js';
 import { setupAnalytics } from "../modules/shared.mjs";
