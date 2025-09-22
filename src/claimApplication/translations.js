@@ -39,6 +39,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Tha
 {{user_phone}}
             `,
             copyButton: "Copy this starter message",
+            copied: "Copied!",
           },
         },
       },

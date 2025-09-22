@@ -204,7 +204,7 @@ function setupCopyM01Button() {
       const textToCopy = sampleLanguageBody.textContent.trim();
 
       navigator.clipboard.writeText(textToCopy).then(() => {
-        // Put a green checkmark next to the button
+        copyButton.textContent = i18next.t('confirmation.m01.sample.copied');
       }).catch(err => {
         console.error('Failed to copy text: ', err);
       });
