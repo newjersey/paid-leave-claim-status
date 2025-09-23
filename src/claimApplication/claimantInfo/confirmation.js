@@ -65,7 +65,7 @@ function addStyles() {
       background-color: #E8F5FF;
     }
     .usa-accordion__button:hover {
-      background-color: #badefaff;
+      background-color: #bde3ff;
     }
 
     #sampleLanguageContainer {
