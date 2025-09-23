@@ -222,7 +222,13 @@ function claimId() {
 }
 
 function m01estDeadlineDate() {
-  return "August 1, 2026";
+  const currentDate = new Date();
+  const deadlineDate = new Date(currentDate);
+  
+  deadlineDate.setDate(currentDate.getDate() + 14);
+
+  const options = { month: 'long', day: 'numeric', year: 'numeric' };
+  return deadlineDate.toLocaleDateString('en-US', options);
 }
 
 function m01formId() {

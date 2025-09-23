@@ -86,6 +86,7 @@ describe("Confirmation page", () => {
     });
 
     it("user can copy sample M01 text", () => {
+      cy.clock(new Date(2025, 8, 23)); // 0-indexed; Sept. 23, 2025
       cy.window().then((win) => {
         win.localStorage.setItem("provider_name", "Dr. Spaceman");
         win.localStorage.setItem("user_dob", "Jan 1, 2000");
@@ -106,7 +107,7 @@ describe("Confirmation page", () => {
         The easiest way to submit it is online at www.nj.gov/labor/MedicalApplicationTDI
         using this Online Form ID: 25091950002.
         Fill out the required medical information and submit online.
-        Please submit the form by August 1, 2026 to avoid delays on my claim.
+        Please submit the form by October 7, 2025 to avoid delays on my claim.
         Thank you for your help.
         Liz Lemon
         lemon@nbc.com
