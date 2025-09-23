@@ -152,9 +152,21 @@ function replaceBody() {
           </div>
         </div>
       </section>
+      ${noEmpText()}
     `;
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
   }
+}
+
+function noEmpText() {
+  const noEmp = document.getElementById('DivNoEmps');
+  if (noEmp && noEmp.style.display != 'none') {
+    const noEmpText = document.createElement('p');
+    noEmpText.textContent = "There are no employers that you worked for in the 180 days prior to your first day of disability.";
+    return noEmpText.outerHTML;
+  }
+
+  return '';
 }
 
 function claimId() {

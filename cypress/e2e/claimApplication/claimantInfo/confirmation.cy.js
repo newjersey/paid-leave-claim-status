@@ -12,6 +12,19 @@ describe("Confirmation page", () => {
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertStatus=&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertFDD=07%2F15%2F2025&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPConfirmation%24btnContinue=Print+Claim+Summary');
   }
 
+  function showNoEmp() {
+    cy.intercept('GET', '**/confirmation.html', (req) => {
+      req.reply((res) => {
+        const modifiedHtml = res.body.replace(
+          /<div id="DivNoEmps" style="display: none;">/g,
+          '<div id="DivNoEmps">'
+        );
+        res.send(modifiedHtml);
+      });
+    });
+    cy.visit(FIXTURE);
+  }
+
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
@@ -22,6 +35,12 @@ describe("Confirmation page", () => {
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it("shows the no employer message when needed", () => {
+      showNoEmp();
+      cy.contains('There are no employers that you worked for in the 180 days prior to your first day of disability.')
+        .should('be.visible');
     });
 
     globalTestsOld(URL);
@@ -42,6 +61,12 @@ describe("Confirmation page", () => {
       cy.mockASPX(URL);
       cy.get('#applicationPdfDownload').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it("shows the no employer message when needed", () => {
+      showNoEmp();
+      cy.contains('There are no employers that you worked for in the 180 days prior to your first day of disability.')
+        .should('be.visible');
     });
 
     globalTestsNew(PAGE_ID, URL);
