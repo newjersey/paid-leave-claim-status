@@ -85,6 +85,42 @@ describe("Confirmation page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
+    it("user can copy sample M01 text", () => {
+      cy.window().then((win) => {
+        win.localStorage.setItem("provider_name", "Dr. Spaceman");
+        win.localStorage.setItem("user_dob", "Jan 1, 2000");
+        win.localStorage.setItem("user_name", "Liz Lemon");
+        win.localStorage.setItem("user_email", "lemon@nbc.com");
+        win.localStorage.setItem("user_phone", "(555) 555-5555");
+      });
+      cy.visit(FIXTURE);
+
+      cy.get('button.usa-accordion__button[aria-controls="sampleLanguageContainer"]').click();
+      cy.get('#m01CopyButton').click();
+
+      const expectedText = `
+        Subject: Request for Medical Form M01 - Temporary Disability Claim
+        Dear Dr. Spaceman,
+        I'm requesting your help to complete Form M01 for my
+        New Jersey Temporary Disability Insurance claim (Claim ID: 12114, DOB: Jan 1, 2000).
+        The easiest way to submit it is online at www.nj.gov/labor/MedicalApplicationTDI
+        using this Online Form ID: 25091950002.
+        Fill out the required medical information and submit online.
+        Please submit the form by August 1, 2026 to avoid delays on my claim.
+        Thank you for your help.
+        Liz Lemon
+        lemon@nbc.com
+        (555) 555-5555
+      `;
+
+      const normalizeWhitespace = (text) => text.replace(/\s+/g, ' ').trim();
+      cy.window().then((win) => {
+        return win.navigator.clipboard.readText();
+      }).then((clipboardText) => {
+        expect(normalizeWhitespace(clipboardText)).to.eq(normalizeWhitespace(expectedText));
+      });
+    });
+
     it("shows the no employer message when needed", () => {
       showElement('DivNoEmps');
       cy.contains('There are no employers that you worked for in the 180 days prior to your first day of disability.')
