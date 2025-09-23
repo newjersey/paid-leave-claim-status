@@ -73,8 +73,7 @@ function addStyles() {
     }
 
     #sampleLanguageContainer {
-      flex-direction: column;
-      padding: 20px;
+      padding: 10px;
     }
 
     section {
@@ -82,7 +81,7 @@ function addStyles() {
       border: 0.5px solid #C6CACE;
       display: flex;
       flex-direction: column;
-      padding: 20px;
+      padding: 50px 10px 10px;
       position: relative;
     }
     section h2 {
@@ -95,13 +94,13 @@ function addStyles() {
     .usa-button {
       min-height: 40px;
     }
+    .usa-prose {
+      word-wrap: break-word;
+    }
     @media (max-width: 767px) {
       .aligned-icon {
         position: static;
         vertical-align: text-top;
-      }
-      section {
-        padding: 50px 10px 10px;
       }
     }
   `;
