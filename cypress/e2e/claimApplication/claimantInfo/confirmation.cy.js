@@ -59,6 +59,12 @@ describe("Confirmation page", () => {
         .should('be.visible');
     });
 
+    it("shows the V01 message when needed", () => {
+      showElement('divV01');
+      cy.contains('Print the Identity Validation, Form V01')
+        .should('be.visible');
+    });
+
     globalTestsOld(URL);
   });
 
@@ -100,6 +106,12 @@ describe("Confirmation page", () => {
     it("shows the W01 message when needed", () => {
       showElement('divW01');
       cy.contains('Info about W01')
+        .should('be.visible');
+    });
+
+    it("shows the V01 message when needed", () => {
+      showElement('divV01');
+      cy.contains('Info about V01')
         .should('be.visible');
     });
 

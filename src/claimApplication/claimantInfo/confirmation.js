@@ -156,6 +156,7 @@ function replaceBody() {
       ${c01Award()}
       ${c01Card()}
       ${w01()}
+      ${v01()}
     `;
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
   }
@@ -197,6 +198,16 @@ function w01() {
     const w01 = document.createElement('p');
     w01.textContent = "Info about W01";
     return w01.outerHTML;
+  }
+  return '';
+}
+
+function v01() {
+  const oldV01 = document.getElementById('divV01');
+  if (oldV01 && oldV01.style.display != 'none') {
+    const v01 = document.createElement('p');
+    v01.textContent = "Info about V01";
+    return v01.outerHTML;
   }
   return '';
 }
