@@ -38,6 +38,19 @@ describe("Confirmation page", () => {
     cy.visit(FIXTURE);
   }
 
+  function showW01() {
+    cy.intercept('GET', '**/confirmation.html', (req) => {
+      req.reply((res) => {
+        const modifiedHtml = res.body.replace(
+          /<div id="divW01" style="display: none;">/g,
+          '<div id="divW01">'
+        );
+        res.send(modifiedHtml);
+      });
+    });
+    cy.visit(FIXTURE);
+  }
+
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
@@ -59,6 +72,12 @@ describe("Confirmation page", () => {
     it("shows the C01 Award message when needed", () => {
       showC01Award();
       cy.contains('This form must be returned along with a photocopy of your Social Security Award Letter.')
+        .should('be.visible');
+    });
+
+    it("shows the W01 message when needed", () => {
+      showW01();
+      cy.contains('You have indicated that your disability is work related')
         .should('be.visible');
     });
 
@@ -91,6 +110,12 @@ describe("Confirmation page", () => {
     it("shows the C01 Award message when needed", () => {
       showC01Award();
       cy.contains('C01 Award!')
+        .should('be.visible');
+    });
+
+    it("shows the W01 message when needed", () => {
+      showW01();
+      cy.contains('Info about W01')
         .should('be.visible');
     });
 

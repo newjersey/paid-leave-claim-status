@@ -154,6 +154,7 @@ function replaceBody() {
       </section>
       ${noEmp()}
       ${c01Award()}
+      ${w01()}
     `;
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
   }
@@ -175,6 +176,16 @@ function c01Award() {
     const c01Award = document.createElement('p');
     c01Award.textContent = "C01 Award!";
     return c01Award.outerHTML;
+  }
+  return '';
+}
+
+function w01() {
+  const w01 = document.getElementById('divW01');
+  if (w01 && w01.style.display != 'none') {
+    const w01 = document.createElement('p');
+    w01.textContent = "Info about W01";
+    return w01.outerHTML;
   }
   return '';
 }
