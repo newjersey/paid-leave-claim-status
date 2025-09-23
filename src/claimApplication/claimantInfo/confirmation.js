@@ -47,7 +47,7 @@ function addStyles() {
     }
     .due-date {
       background-color: #FEE685;
-      color: #936F38;
+      color: #5C410A;
       font-size: 14px;
       font-weight: bold;
       padding: 3px 5px;
