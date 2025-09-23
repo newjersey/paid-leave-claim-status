@@ -152,20 +152,30 @@ function replaceBody() {
           </div>
         </div>
       </section>
-      ${noEmpText()}
+      ${noEmp()}
+      ${c01Award()}
     `;
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
   }
 }
 
-function noEmpText() {
+function noEmp() {
   const noEmp = document.getElementById('DivNoEmps');
   if (noEmp && noEmp.style.display != 'none') {
     const noEmpText = document.createElement('p');
     noEmpText.textContent = "There are no employers that you worked for in the 180 days prior to your first day of disability.";
     return noEmpText.outerHTML;
   }
+  return '';
+}
 
+function c01Award() {
+  const c01Award = document.getElementById('divC01Award');
+  if (c01Award && c01Award.style.display != 'none') {
+    const c01Award = document.createElement('p');
+    c01Award.textContent = "C01 Award!";
+    return c01Award.outerHTML;
+  }
   return '';
 }
 

@@ -25,6 +25,19 @@ describe("Confirmation page", () => {
     cy.visit(FIXTURE);
   }
 
+  function showC01Award() {
+    cy.intercept('GET', '**/confirmation.html', (req) => {
+      req.reply((res) => {
+        const modifiedHtml = res.body.replace(
+          /<div id="divC01Award" style="display: none;">/g,
+          '<div id="divC01Award">'
+        );
+        res.send(modifiedHtml);
+      });
+    });
+    cy.visit(FIXTURE);
+  }
+
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
@@ -40,6 +53,12 @@ describe("Confirmation page", () => {
     it("shows the no employer message when needed", () => {
       showNoEmp();
       cy.contains('There are no employers that you worked for in the 180 days prior to your first day of disability.')
+        .should('be.visible');
+    });
+
+    it("shows the C01 Award message when needed", () => {
+      showC01Award();
+      cy.contains('This form must be returned along with a photocopy of your Social Security Award Letter.')
         .should('be.visible');
     });
 
@@ -66,6 +85,12 @@ describe("Confirmation page", () => {
     it("shows the no employer message when needed", () => {
       showNoEmp();
       cy.contains('There are no employers that you worked for in the 180 days prior to your first day of disability.')
+        .should('be.visible');
+    });
+
+    it("shows the C01 Award message when needed", () => {
+      showC01Award();
+      cy.contains('C01 Award!')
         .should('be.visible');
     });
 

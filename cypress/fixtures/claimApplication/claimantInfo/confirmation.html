@@ -537,7 +537,8 @@ employers that you worked for in the 180 days prior to your first day of
 
 <script type="text/javascript">
 //<![CDATA[
-$get('divW01').style.display = 'none';$get('divC01Award').style.display = 'none';$get('divC01Card').style.display = 'none';$get('divV01').style.display = 'none';SessionExpireAlert(1800000,'Clmt');Sys.Application.add_init(function() {
+// $get('divW01').style.display = 'none';$get('divC01Award').style.display = 'none';$get('divC01Card').style.display = 'none';$get('divV01').style.display = 'none';SessionExpireAlert(1800000,'Clmt');
+Sys.Application.add_init(function() {
     $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modelBackground","CancelControlID":"btnNo","OkControlID":"btnYes","OnCancelScript":"javascript:RedirectSession(\u0027Clmt\u0027)","OnOkScript":"ResetSession()","PopupControlID":"pnlPopup","dynamicServicePath":"/tdi_iam/ClaimantCertification.aspx","id":"mpeTimeout"}, null, null, $get("lnkFake"));
 });
 Sys.Application.add_init(function() {
