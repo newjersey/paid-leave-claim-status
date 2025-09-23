@@ -21,6 +21,7 @@ export function changes() {
   styleRadioButton('ContentPlaceHolder1_rbtnClmNo');
   removeWhitespace();
   adjustTable();
+  adjustNoPendingClaimBox();
 }
 
 function addStyles() {
@@ -100,4 +101,9 @@ function adjustTable() {
       }
     });
   });
+}
+
+function adjustNoPendingClaimBox() {
+  const noPendingClaimsDiv = document.getElementById('ContentPlaceHolder1_dvNoData');
+  noPendingClaimsDiv.style.position = 'static';
 }
