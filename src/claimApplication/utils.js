@@ -1,3 +1,9 @@
+export const LOCAL_STORAGE_KEY_PROVIDER_NAME = "provider_name";
+export const LOCAL_STORAGE_KEY_USER_DOB = "user_dob";
+export const LOCAL_STORAGE_KEY_USER_NAME = "user_name";
+export const LOCAL_STORAGE_KEY_USER_EMAIL = "user_email";
+export const LOCAL_STORAGE_KEY_USER_PHONE = "user_phone";
+
 // TODO: this only styles the buttons.
 // When possible also use USWDS suggested HTML fieldset and legend structure
 export function styleRadioButton(radioButtonId, marginBottom = false) {

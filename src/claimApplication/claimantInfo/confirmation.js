@@ -1,5 +1,12 @@
 import i18next from 'i18next';
 import { ICON_BASE_URL, logEvent } from "../../modules/shared.mjs";
+import {
+  LOCAL_STORAGE_KEY_PROVIDER_NAME,
+  LOCAL_STORAGE_KEY_USER_DOB,
+  LOCAL_STORAGE_KEY_USER_NAME,
+  LOCAL_STORAGE_KEY_USER_EMAIL,
+  LOCAL_STORAGE_KEY_USER_PHONE,
+} from "../utils";
 
 export const confirmationAltTexts = [
   { id: 'ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_imgbtnM01', alt: 'Submit Query' },
@@ -48,11 +55,8 @@ function addStyles() {
       right: 10px;
       top: 10px;
     }
-    #expandM01 {
-      align-self: flex-end;
-      background-color: white;
-      border: 0;
-      padding: 10px;
+    #m01CopyButton {
+      width: 100%;
     }
     #sampleLanguageBody {
       background-color: white;
@@ -120,7 +124,12 @@ function replaceBody() {
         ${i18next.t('confirmation.submitted')}
       </p>
       <section id="m01section">
-        <div class="due-date">${i18next.t('confirmation.m01.dueDate')}</div>
+        <div class="due-date">
+          ${i18next.t(
+            'confirmation.m01.dueDate',
+            { est_deadline_date: m01estDeadlineDate() }
+          )}
+        </div>
         <h2>${i18next.t('confirmation.m01.title')}</h2>
         <p>${i18next.t('confirmation.m01.directions')}</p>
         <div class="usa-accordion">
@@ -136,18 +145,7 @@ function replaceBody() {
           </h3>
           <div id="sampleLanguageContainer" class="usa-accordion__content">
             <div id="sampleLanguageBody" class="usa-prose">
-              ${i18next.t('confirmation.m01.sample.body', 
-                {
-                  provider_name: "Dr. Spaceman",
-                  claim_id: "12345",
-                  online_form_id: "78910",
-                  est_deadline_date: "June 1, 2027",
-                  user_dob: "January 1, 2000",
-                  user_name: "Liz Lemon",
-                  user_email: "liz@tgs.com",
-                  user_phone: "(555) 555-5555"
-                }
-              )}
+              ${m01SampleText()}
             </div>
             <button id="m01CopyButton" class="usa-button">
               ${i18next.t('confirmation.m01.sample.copyButton')}
@@ -158,6 +156,71 @@ function replaceBody() {
     `;
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
   }
+}
+
+function claimId() {
+  const spanElement = document.getElementById('ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_lblClaimId');
+  if (spanElement) {
+    return spanElement.textContent.trim();
+  } else {
+    console.error('claim id not found.');
+  }
+}
+
+function m01estDeadlineDate() {
+  return "August 1, 2026";
+}
+
+function m01formId() {
+  const spanElement = document.getElementById('ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_lblmedicalFormId');
+  
+  if (spanElement) {
+    const textContent = spanElement.textContent;
+    const match = textContent.match(/\d+/);
+    
+    if (match) {
+      return match[0];
+    } else {
+      console.error('No m01 form number found.');
+    }
+  } else {
+    console.error('No m01 form number found.');
+  }
+}
+
+function m01SampleText() {
+  const provider_name = 
+    localStorage.getItem(LOCAL_STORAGE_KEY_PROVIDER_NAME) ||
+    i18next.t('confirmation.m01.sample.empty.provider_name');
+
+  const user_dob = 
+    localStorage.getItem(LOCAL_STORAGE_KEY_USER_DOB) ||
+    i18next.t('confirmation.m01.sample.empty.user_dob');
+
+  const user_name = 
+    localStorage.getItem(LOCAL_STORAGE_KEY_USER_NAME) ||
+    i18next.t('confirmation.m01.sample.empty.user_name');
+
+  const user_email = 
+    localStorage.getItem(LOCAL_STORAGE_KEY_USER_EMAIL) ||
+    i18next.t('confirmation.m01.sample.empty.user_email');
+
+  const user_phone = 
+    localStorage.getItem(LOCAL_STORAGE_KEY_USER_PHONE) ||
+    i18next.t('confirmation.m01.sample.empty.user_phone');
+  
+  return i18next.t('confirmation.m01.sample.body', 
+    {
+      provider_name,
+      claim_id: claimId(),
+      online_form_id: m01formId(),
+      est_deadline_date: m01estDeadlineDate(),
+      user_dob,
+      user_name,
+      user_email,
+      user_phone
+    }
+  );
 }
 
 function setNewTitle() {

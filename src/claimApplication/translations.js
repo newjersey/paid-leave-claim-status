@@ -17,7 +17,7 @@ const resources = {
         checkmark: "Checkmark",
         submitted: `Your information was submitted. <a id="applicationPdfDownload" class="usa-link">You can download a copy of your application (PDF).</a>`,
         m01: {
-          dueDate: "Best to complete by August 30, 2025",
+          dueDate: "Best to complete by {{est_deadline_date}}",
           title: "1. Follow up with your medical provider about Form M01",
           directions: "A qualified healthcare provider must confirm your disability. They will do this by completing Form M01 for you.",
           sample: {
@@ -36,6 +36,13 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Tha
 <br>
 {{user_phone}}
             `,
+            empty: {
+              provider_name: "{{ INSERT YOUR MEDICAL PROVIDER'S NAME }}",
+              user_dob: "{{ INSERT YOUR DATE OF BIRTH }}",
+              user_name: "{{ INSERT YOUR NAME }}",
+              user_email: "{{ INSERT YOUR EMAIL }}",
+              user_phone: "{{ INSERT YOUR PHONE NUMBER }}",
+            },
             copyButton: "Copy this starter message",
             copied: "Copied!",
           },
