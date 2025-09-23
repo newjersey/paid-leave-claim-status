@@ -12,39 +12,11 @@ describe("Confirmation page", () => {
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertStatus=&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertFDD=07%2F15%2F2025&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPConfirmation%24btnContinue=Print+Claim+Summary');
   }
 
-  function showNoEmp() {
+  function showElement(elementId) {
     cy.intercept('GET', '**/confirmation.html', (req) => {
       req.reply((res) => {
-        const modifiedHtml = res.body.replace(
-          /<div id="DivNoEmps" style="display: none;">/g,
-          '<div id="DivNoEmps">'
-        );
-        res.send(modifiedHtml);
-      });
-    });
-    cy.visit(FIXTURE);
-  }
-
-  function showC01Award() {
-    cy.intercept('GET', '**/confirmation.html', (req) => {
-      req.reply((res) => {
-        const modifiedHtml = res.body.replace(
-          /<div id="divC01Award" style="display: none;">/g,
-          '<div id="divC01Award">'
-        );
-        res.send(modifiedHtml);
-      });
-    });
-    cy.visit(FIXTURE);
-  }
-
-  function showW01() {
-    cy.intercept('GET', '**/confirmation.html', (req) => {
-      req.reply((res) => {
-        const modifiedHtml = res.body.replace(
-          /<div id="divW01" style="display: none;">/g,
-          '<div id="divW01">'
-        );
+        const regex = new RegExp(`<div id="${elementId}" style="display: none;">`, 'g');
+        const modifiedHtml = res.body.replace(regex, `<div id="${elementId}">`);
         res.send(modifiedHtml);
       });
     });
@@ -64,19 +36,25 @@ describe("Confirmation page", () => {
     });
 
     it("shows the no employer message when needed", () => {
-      showNoEmp();
+      showElement('DivNoEmps');
       cy.contains('There are no employers that you worked for in the 180 days prior to your first day of disability.')
         .should('be.visible');
     });
 
     it("shows the C01 Award message when needed", () => {
-      showC01Award();
+      showElement('divC01Award');
       cy.contains('This form must be returned along with a photocopy of your Social Security Award Letter.')
         .should('be.visible');
     });
 
+    it("shows the C01 Card message when needed", () => {
+      showElement('divC01Card');
+      cy.contains('be returned along with a legible photocopy of your social security card, issued by the Social Security Administration')
+        .should('be.visible');
+    });
+
     it("shows the W01 message when needed", () => {
-      showW01();
+      showElement('divW01');
       cy.contains('You have indicated that your disability is work related')
         .should('be.visible');
     });
@@ -102,19 +80,25 @@ describe("Confirmation page", () => {
     });
 
     it("shows the no employer message when needed", () => {
-      showNoEmp();
+      showElement('DivNoEmps');
       cy.contains('There are no employers that you worked for in the 180 days prior to your first day of disability.')
         .should('be.visible');
     });
 
     it("shows the C01 Award message when needed", () => {
-      showC01Award();
+      showElement('divC01Award');
       cy.contains('C01 Award!')
         .should('be.visible');
     });
 
+    it("shows the C01 Card message when needed", () => {
+      showElement('divC01Card');
+      cy.contains('C01 Card info')
+        .should('be.visible');
+    });
+
     it("shows the W01 message when needed", () => {
-      showW01();
+      showElement('divW01');
       cy.contains('Info about W01')
         .should('be.visible');
     });

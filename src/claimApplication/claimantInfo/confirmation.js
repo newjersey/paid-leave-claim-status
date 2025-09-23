@@ -154,6 +154,7 @@ function replaceBody() {
       </section>
       ${noEmp()}
       ${c01Award()}
+      ${c01Card()}
       ${w01()}
     `;
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
@@ -161,18 +162,18 @@ function replaceBody() {
 }
 
 function noEmp() {
-  const noEmp = document.getElementById('DivNoEmps');
-  if (noEmp && noEmp.style.display != 'none') {
-    const noEmpText = document.createElement('p');
-    noEmpText.textContent = "There are no employers that you worked for in the 180 days prior to your first day of disability.";
-    return noEmpText.outerHTML;
+  const oldNoEmp = document.getElementById('DivNoEmps');
+  if (oldNoEmp && oldNoEmp.style.display != 'none') {
+    const noEmp = document.createElement('p');
+    noEmp.textContent = "There are no employers that you worked for in the 180 days prior to your first day of disability.";
+    return noEmp.outerHTML;
   }
   return '';
 }
 
 function c01Award() {
-  const c01Award = document.getElementById('divC01Award');
-  if (c01Award && c01Award.style.display != 'none') {
+  const oldC01Award = document.getElementById('divC01Award');
+  if (oldC01Award && oldC01Award.style.display != 'none') {
     const c01Award = document.createElement('p');
     c01Award.textContent = "C01 Award!";
     return c01Award.outerHTML;
@@ -180,9 +181,19 @@ function c01Award() {
   return '';
 }
 
+function c01Card() {
+  const oldC01Card = document.getElementById('divC01Card');
+  if (oldC01Card && oldC01Card.style.display != 'none') {
+    const c01Award = document.createElement('p');
+    c01Award.textContent = "C01 Card info";
+    return c01Award.outerHTML;
+  }
+  return '';
+}
+
 function w01() {
-  const w01 = document.getElementById('divW01');
-  if (w01 && w01.style.display != 'none') {
+  const oldW01 = document.getElementById('divW01');
+  if (oldW01 && oldW01.style.display != 'none') {
     const w01 = document.createElement('p');
     w01.textContent = "Info about W01";
     return w01.outerHTML;
