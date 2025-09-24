@@ -34,6 +34,7 @@ export function changes() {
   replaceBody();
   setupApplicationPdfDownloadLink();
   setupCopyM01Button();
+  setupC01AwardDownloadButton();
   document.addEventListener('headerReady', setNewTitle);
 }
 
@@ -240,7 +241,7 @@ function c01Award() {
         )}
       </div>
       <h2>${i18next.t('confirmation.c01Award.title')}</h2>
-      <button class="usa-button usa-button--outline">
+      <button id="downloadC01Award" class="usa-button usa-button--outline">
         <svg class="usa-icon" aria-hidden="true" focusable="false" role="img" viewBox="0 0 24 24">
           <path d="M0 0h24v24H0z" fill="none"/><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
         </svg>
@@ -251,6 +252,17 @@ function c01Award() {
     return c01Award.outerHTML;
   }
   return '';
+}
+
+function setupC01AwardDownloadButton() {
+  const oldDownloadBtn = document.querySelector('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_lnkbtnClickC01Award');
+  const newDownloadBtn = document.querySelector('#downloadC01Award');
+  if (oldDownloadBtn && newDownloadBtn) {
+    newDownloadBtn.addEventListener('click', function (event) {
+      event.preventDefault();
+      oldDownloadBtn.click();
+    });
+  }
 }
 
 function c01Card() {
