@@ -81,10 +81,19 @@ function addStyles() {
       border: 0.5px solid #C6CACE;
       display: flex;
       flex-direction: column;
-      padding: 50px 10px 10px;
+      padding: 10px;
       position: relative;
     }
-    section h2 {
+
+    .dueAction {
+      padding: 50px 10px 10px;
+    }
+    
+    #moreInfo {
+      margin-top: 20px;
+    }
+
+    section h2, #moreInfo h2, #moreInfo h3 {
       color: black;
       font-size: 18px;
       font-variant: normal;
@@ -122,44 +131,85 @@ function replaceBody() {
         />
         ${i18next.t('confirmation.submitted')}
       </p>
-      <section id="m01section">
-        <div class="due-date">
-          ${i18next.t(
-            'confirmation.m01.dueDate',
-            { est_deadline_date: m01estDeadlineDate() }
-          )}
-        </div>
-        <h2>${i18next.t('confirmation.m01.title')}</h2>
-        <p>${i18next.t('confirmation.m01.directions')}</p>
-        <div class="usa-accordion">
-          <h3 class="usa-accordion__heading">
-            <button
-              type="button"
-              class="usa-accordion__button"
-              aria-expanded="false"
-              aria-controls="sampleLanguageContainer"
-            >
-              ${i18next.t('confirmation.m01.sample.title')}
-            </button>
-          </h3>
-          <div id="sampleLanguageContainer" class="usa-accordion__content">
-            <div id="sampleLanguageBody" class="usa-prose">
-              ${m01SampleText()}
-            </div>
-            <button id="m01CopyButton" class="usa-button">
-              ${i18next.t('confirmation.m01.sample.copyButton')}
-            </button>
-          </div>
-        </div>
-      </section>
+      ${m01()}
       ${noEmp()}
       ${c01Award()}
       ${c01Card()}
       ${w01()}
       ${v01()}
+      ${moreInfo()}
     `;
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
   }
+}
+
+function moreInfo() {
+  const moreInfoDiv = document.createElement('div');
+  moreInfoDiv.id = "moreInfo";
+  moreInfoDiv.innerHTML = `
+    <h2>${i18next.t('confirmation.moreInfo.title')}</h2>
+    <section>
+      <h3>${i18next.t('confirmation.moreInfo.mail.title')}</h3>
+      <p>${i18next.t('confirmation.moreInfo.mail.current_address')}</p>
+      ${"Liz Lemon"}
+      <br>
+      ${"12345 Main Street"}
+      <br>
+      ${"Apartment 207"}
+      <br>
+      ${"Trenton, NJ 08601"}
+      <div class="usa-alert usa-alert--warning usa-alert--slim usa-alert--no-icon">
+        <div class="usa-alert__body">
+          <p class="usa-alert__text">
+            ${i18next.t('confirmation.moreInfo.mail.change_address')}
+          </p>
+        </div>
+      </div>
+    </section>
+    <section>
+      <h3>${i18next.t('confirmation.moreInfo.next.title')}</h3>
+      <p>${i18next.t('confirmation.moreInfo.next.read_doc')}</p>
+      <p>${i18next.t('confirmation.moreInfo.next.check_status')}</p>
+    </section>
+  `;
+  return moreInfoDiv.outerHTML;
+}
+
+function m01() {
+  const m01Section = document.createElement('section');
+  m01Section.id = "m01section";
+  m01Section.classList.add("dueAction");
+  m01Section.innerHTML = `
+    <div class="due-date">
+      ${i18next.t(
+        'confirmation.m01.dueDate',
+        { est_deadline_date: m01estDeadlineDate() }
+      )}
+    </div>
+    <h2>${i18next.t('confirmation.m01.title')}</h2>
+    <p>${i18next.t('confirmation.m01.directions')}</p>
+    <div class="usa-accordion">
+      <h3 class="usa-accordion__heading">
+        <button
+          type="button"
+          class="usa-accordion__button"
+          aria-expanded="false"
+          aria-controls="sampleLanguageContainer"
+        >
+          ${i18next.t('confirmation.m01.sample.title')}
+        </button>
+      </h3>
+      <div id="sampleLanguageContainer" class="usa-accordion__content">
+        <div id="sampleLanguageBody" class="usa-prose">
+          ${m01SampleText()}
+        </div>
+        <button id="m01CopyButton" class="usa-button">
+          ${i18next.t('confirmation.m01.sample.copyButton')}
+        </button>
+      </div>
+    </div>
+  `;
+  return m01Section.outerHTML;
 }
 
 function noEmp() {

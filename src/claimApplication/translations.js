@@ -47,6 +47,19 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Tha
             copied: "Copied!",
           },
         },
+        moreInfo: {
+          title: "Good to know",
+          mail: {
+            title: "As we process your claim",
+            current_address: "We will mail forms to:",
+            change_address: `<strong>Need to change your address?</strong> <a href="{{hostname}}/tdi/AddressChange_Introduction.aspx">Submit a change of address form.</a>`,
+          },
+          next: {
+            title: "What happens next?",
+            read_doc: `Read through <a href="">"What happens when I apply?"</a> on myLeaveBenefits.nj.gov`,
+            check_status: `<a href="">Check your claim status</a> (note: it takes several days for your first status update)`,
+          },
+        },
       },
     }
   },
