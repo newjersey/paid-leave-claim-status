@@ -60,6 +60,9 @@ describe("Medical Treatment page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc').click();
       cy.wait('@aspxSubmission').then(checkPostData);
       cy.confirmEventIsNotTracked("WorkersComp Yes Clicked");
+      cy.window().then((win) => {
+        expect(win.localStorage.getItem('provider_name')).to.equal('Dr. Spaceman');
+      });
     });
 
     it('tracks when workers comp Yes is submitted', () => {

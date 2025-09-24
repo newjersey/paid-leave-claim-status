@@ -1,5 +1,10 @@
 import { logEvent } from "../../modules/shared.mjs";
-import { adjustTableWidths, removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
+import {
+  adjustTableWidths,
+  LOCAL_STORAGE_KEY_PROVIDER_NAME,
+  removeExtraSpaceBetweenRadioButtons,
+  styleRadioButton
+} from '../utils';
 
 export const medicalTreatmentLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury', label: 'Describe your Disability' },
@@ -55,6 +60,7 @@ export function changes() {
   adjustTable();
   adjustTextEntries();
   styleRadioButtons();
+  saveProvider();
 }
 
 function styleRadioButtons() {
@@ -119,4 +125,14 @@ function adjustTable() {
   }
 
   adjustTableWidths(document);
+}
+
+function saveProvider() {
+  const submit = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc');
+  const providerName = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm');
+  if (submit && providerName) {
+    submit.addEventListener('click', function () {
+      localStorage.setItem(LOCAL_STORAGE_KEY_PROVIDER_NAME, providerName.value.trim());
+    });
+  }
 }
