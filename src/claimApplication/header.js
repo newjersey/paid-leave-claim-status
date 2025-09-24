@@ -421,6 +421,7 @@ function createTitleHeader() {
     event.preventDefault();
     if (confirmLogout()) {
       __doPostBack('ctl00$header$lbtnLogout', '');
+      localStorage.clear();
     }
   });
 

@@ -100,9 +100,17 @@ Cypress.Commands.add("checkOldLogoutCancel", (url) => {
 });
 
 Cypress.Commands.add("checkNewLogout", (url) => {
+  cy.window().then((win) => {
+    win.localStorage.setItem('testKey', 'testValue');
+  });
+
   cy.mockASPX(url);
   cy.get('#logoutButton').click();
   cy.wait('@aspxSubmission').then(checkLogoutData);
+  
+  cy.window().then((win) => {
+    expect(win.localStorage.length).to.equal(0);
+  });
 });
 
 Cypress.Commands.add("checkNewLogoutCancel", (url) => {
