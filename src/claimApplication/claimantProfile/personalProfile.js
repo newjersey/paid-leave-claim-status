@@ -1,4 +1,10 @@
-import { adjustTableWidths, removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
+import {
+  adjustTableWidths,
+  LOCAL_STORAGE_KEY_USER_DOB,
+  LOCAL_STORAGE_KEY_USER_NAME,
+  removeExtraSpaceBetweenRadioButtons,
+  styleRadioButton,
+} from '../utils';
 
 export const personalProfileLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtoccupation', label: 'Occupation' },
@@ -44,6 +50,7 @@ export function changes() {
     'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnMUSAYes',
     'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnMUSANo'
   );
+  saveNameAndDOB();
 }
 
 function adjustWidths() {
@@ -114,5 +121,17 @@ function removeOverlappingBorders() {
   const mailingAddress = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_pnlMailing');
   if (mailingAddress) {
     mailingAddress.style.borderStyle = 'none';
+  }
+}
+
+function saveNameAndDOB() {
+  const submit = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_btnCitiZen');
+  const fullName = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtFName');
+  const dob = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtDOB');
+  if (submit && fullName && dob) {
+    submit.addEventListener('click', function () {
+      localStorage.setItem(LOCAL_STORAGE_KEY_USER_NAME, fullName.value.trim());
+      localStorage.setItem(LOCAL_STORAGE_KEY_USER_DOB, dob.value.trim());
+    });
   }
 }
