@@ -36,6 +36,7 @@ export function changes() {
   setupCopyM01Button();
   setupC01AwardDownloadButton();
   setupW01DownloadButton();
+  setupV01DownloadButton();
   document.addEventListener('headerReady', setNewTitle);
 }
 
@@ -189,7 +190,7 @@ function m01() {
     <div class="due-date">
       ${i18next.t(
         'confirmation.dueDate',
-        { est_deadline_date: m01estDeadlineDate() }
+        { est_deadline_date: estDeadlineDate() }
       )}
     </div>
     <h2>${i18next.t('confirmation.m01.title')}</h2>
@@ -260,7 +261,7 @@ function c01Award() {
       <div class="due-date">
         ${i18next.t(
           'confirmation.dueDate',
-          { est_deadline_date: m01estDeadlineDate() }
+          { est_deadline_date: estDeadlineDate() }
         )}
       </div>
       <h2>${i18next.t('confirmation.c01Award.title')}</h2>
@@ -296,7 +297,7 @@ function w01() {
       <div class="due-date">
         ${i18next.t(
           'confirmation.dueDate',
-          { est_deadline_date: m01estDeadlineDate() }
+          { est_deadline_date: estDeadlineDate() }
         )}
       </div>
       <h2>${i18next.t('confirmation.w01.title')}</h2>
@@ -335,11 +336,37 @@ function c01Card() {
 function v01() {
   const oldV01 = document.getElementById('divV01');
   if (oldV01 && oldV01.style.display != 'none') {
-    const v01 = document.createElement('p');
-    v01.textContent = "Info about V01";
+    const v01 = document.createElement('section');
+    v01.id = "v01Section";
+    v01.classList.add("dueAction");
+    v01.innerHTML = `
+      <div class="due-date">
+        ${i18next.t(
+          'confirmation.dueDate',
+          { est_deadline_date: estDeadlineDate() }
+        )}
+      </div>
+      <h2>${i18next.t('confirmation.v01.title')}</h2>
+      <button id="downloadV01" class="usa-button usa-button--outline">
+        ${downloadIcon()}
+        ${i18next.t('confirmation.v01.download_button')}
+      </button>
+      <p>${i18next.t('confirmation.form_directions', { claim_id: claimId() })}</p>
+    `;
     return v01.outerHTML;
   }
   return '';
+}
+
+function setupV01DownloadButton() {
+  const oldDownloadBtn = document.querySelector('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_lnkbtnClickV01');
+  const newDownloadBtn = document.querySelector('#downloadV01');
+  if (oldDownloadBtn && newDownloadBtn) {
+    newDownloadBtn.addEventListener('click', function (event) {
+      event.preventDefault();
+      oldDownloadBtn.click();
+    });
+  }
 }
 
 function claimId() {
@@ -351,7 +378,7 @@ function claimId() {
   }
 }
 
-function m01estDeadlineDate() {
+function estDeadlineDate() {
   const currentDate = new Date();
   const deadlineDate = new Date(currentDate);
   
@@ -404,7 +431,7 @@ function m01SampleText() {
       provider_name,
       claim_id: claimId(),
       online_form_id: m01formId(),
-      est_deadline_date: m01estDeadlineDate(),
+      est_deadline_date: estDeadlineDate(),
       user_dob,
       user_name,
       user_email,

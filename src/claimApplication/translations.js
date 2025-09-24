@@ -72,6 +72,10 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Tha
           title: "Fax or mail your Workers' Compensation form (Form W01)",
           download_button: "Download Form W01 (PDF)",
         },
+        v01: {
+          title: "Fax or mail your Identity Verification form (Form V01)",
+          download_button: "Download Form V01 (PDF)",
+        },
         moreInfo: {
           title: "Good to know",
           mail: {
