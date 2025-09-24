@@ -20,3 +20,28 @@ export function trackPrintClaimSummaryButton() {
     });
   }
 }
+
+export function changes() {
+  addStyles();
+  removeWhitespace();
+}
+
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    #ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue {
+      width: auto;
+    }
+    .imgbtnPrinter {
+      display: inline;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function removeWhitespace() {
+  const element = document.querySelector("#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_tblPrintForms > tbody > tr:nth-child(14) > td > strong > a");
+  if (element) {
+    element.innerHTML = element.innerHTML.replace(/(<br>|&nbsp;)/g, '').trim();
+  }
+}

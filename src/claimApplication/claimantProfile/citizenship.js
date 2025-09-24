@@ -1,3 +1,5 @@
+import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
+
 export const citizenshipLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum', label: 'First 3 digits of Phone Number' },
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum2', label: 'Fourth, fifth, and sixth digits of Phone Number' },
@@ -18,3 +20,36 @@ export const identifyingContent = {
   elementId: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlCitizen',
   text: 'Are you a citizen',
 };
+
+export function changes() {
+  adjustWidths();
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenNo');
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepNo');
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenYes',
+    'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepYes',
+    'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepNo'
+  );
+}
+
+function adjustWidths () {
+  const emailField = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_TxtEmail');
+  if (emailField) {
+    emailField.style.width = '100%';
+  }
+
+  const confirmEmailField = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_TxtConEmail');
+  if (confirmEmailField) {
+    confirmEmailField.style.width = '100%';
+  }
+
+  const repEntry = document.getElementById("ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtRepIns");
+  if (repEntry) {
+    repEntry.style.width = '100%';
+  }
+}

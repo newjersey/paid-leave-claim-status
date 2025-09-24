@@ -1,4 +1,5 @@
 import { logEvent } from "../../modules/shared.mjs";
+import { adjustTableWidths, removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const medicalTreatmentLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury', label: 'Describe your Disability' },
@@ -48,4 +49,74 @@ export function trackWorkersCompYesSubmission(pageId) {
       }
     });
   }
+}
+
+export function changes() {
+  adjustTable();
+  adjustTextEntries();
+  styleRadioButtons();
+}
+
+function styleRadioButtons() {
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddNo');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERNO');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospNo');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERNO'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo'
+  );
+}
+
+function adjustTextEntries() {
+  const disabilityEntry = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury");
+  if (disabilityEntry) {
+    disabilityEntry.style.width = '100%';
+  }
+
+  const injuryDiv = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury').closest('div');
+  if (injuryDiv) {
+    injuryDiv.style.marginLeft = '0';
+  }
+
+  const doctorEntry = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm");
+  if (doctorEntry) {
+    doctorEntry.style.width = '100%';
+  }
+
+  const doctorAddressEntry = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_Panel1");
+  if (doctorAddressEntry) {
+    doctorAddressEntry.style.width = '100%';
+  }
+
+  const workersCompDiv = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').closest('div');
+  if (workersCompDiv) {
+    workersCompDiv.style.width = '100%';
+  }
+}
+
+function adjustTable() {
+  const doctorAddress = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_pnlDocOCCAdd');
+  if (doctorAddress) {
+    doctorAddress.style.width = 'auto';
+    doctorAddress.style.maxWidth = '100%';
+  }
+
+  adjustTableWidths(document);
 }

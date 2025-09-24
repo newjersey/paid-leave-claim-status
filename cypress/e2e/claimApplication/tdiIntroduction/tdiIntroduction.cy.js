@@ -1,4 +1,8 @@
+import { globalTestsNew, globalTestsOld } from "../shared";
+
 const PAGE_ID = 'tdiIntroduction';
+const URL = 'TDIIntroduction';
+const FIXTURE = "./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html";
 
 describe("Introduction page", () => {
   function checkPostData(interception) {
@@ -8,20 +12,14 @@ describe("Introduction page", () => {
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24chkAgree=on');
   }
 
-  function mockASPX() {
-    cy.intercept('POST', '**/TDIIntroduction.aspx',
-      { statusCode: 200, headers: { 'content-type': 'text/html' } }
-    ).as('aspxSubmission');
-  };
-
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html");
+      cy.visit(FIXTURE);
     });
 
     it("agrees to terms and checks POST data", () => {
-      mockASPX();
+      cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_chkAgree').check();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
@@ -38,14 +36,18 @@ describe("Introduction page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html");
+      cy.visit(FIXTURE);
       cy.wait('@script');
     });
 
     it("agrees to terms and checks POST data", () => {
-      mockASPX();
+      cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_chkAgree').check();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+    
+    it("applies the new font family", () => {
+      cy.checkFontFamily();
     });
 
     it("passes accessibility checks", () => {
@@ -56,9 +58,12 @@ describe("Introduction page", () => {
       cy.trackPageView(PAGE_ID);
     });
 
-    it('should open FAQ, post data, and track when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-      cy.trackHelpClick(PAGE_ID);
+    it('should open Resources and track when clicked', () => {
+      cy.trackResourcesClick(PAGE_ID);
+    });
+
+    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+      cy.checkInfoAlertBehavior();
     });
   });
 });

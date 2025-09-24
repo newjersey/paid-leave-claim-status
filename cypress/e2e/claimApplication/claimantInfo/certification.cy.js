@@ -1,4 +1,8 @@
+import { globalTestsNew, globalTestsOld } from "../shared";
+
 const PAGE_ID = 'certification';
+const URL = 'ClaimantCertification';
+const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/certification.html";
 
 describe("Certification page", () => {
   function checkPostData(interception) {
@@ -8,28 +12,20 @@ describe("Certification page", () => {
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertStatus=&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertFDD=07%2F15%2F2025&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24rbAgree=rbtnAgYes&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24btnConfirm=File+My+Claim');
   }
 
-  function mockASPX() {
-    cy.intercept('POST', '**/ClaimantCertification.aspx',
-      { statusCode: 200, headers: { 'content-type': 'text/html' } }
-    ).as('aspxSubmission');
-  };
-
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/certification.html");
+      cy.visit(FIXTURE);
     });
 
     it("user can agree and proceed to next page", () => {
-      mockASPX();
+      cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_rbtnAgYes').click();
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_btnConfirm').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
-    it('should open FAQ and post data when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-    });
+    globalTestsOld(URL);
   });
 
   describe("page with new JS", () => {
@@ -39,28 +35,17 @@ describe("Certification page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/claimantInfo/certification.html");
+      cy.visit(FIXTURE);
       cy.wait('@script');
     });
 
     it("user can agree and proceed to next page", () => {
-      mockASPX();
-      cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_rbtnAgYes').click();
+      cy.mockASPX(URL);
+      cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_rbtnAgYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_btnConfirm').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
-    it("passes accessibility checks", () => {
-      cy.checkBodyA11y();
-    });
-
-    it("tracks the page view", () => {
-      cy.trackPageView(PAGE_ID);
-    });
-
-    it('should open FAQ, post data, and track when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-      cy.trackHelpClick(PAGE_ID);
-    });
+    globalTestsNew(PAGE_ID, URL);
   });
 });

@@ -21,3 +21,29 @@ export const identifyingContent = {
   elementId: 'divEmp',
   text: 'Employers Details',
 };
+
+export function changes() {
+  adjustTextEntries();
+}
+
+function adjustTextEntries() {
+  const employerNameEntry = document.querySelector("#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpNm");
+  if (employerNameEntry) {
+    employerNameEntry.style.width = '100%';
+  }
+
+  const employerAddress1Entry = document.querySelector("#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpAdd1");
+  if (employerAddress1Entry) {
+    employerAddress1Entry.style.width = '100%';
+  }
+
+  const employerAddress2Entry = document.querySelector("#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpAdd2");
+  if (employerAddress2Entry) {
+    employerAddress2Entry.style.width = '100%';
+  }
+
+  const employerCityEntry = document.querySelector("#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpCity");
+  if (employerCityEntry) {
+    employerCityEntry.style.width = '100%';
+  }
+}

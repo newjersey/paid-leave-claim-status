@@ -1,4 +1,8 @@
+import { globalTestsNew } from "../shared";
+
 const PAGE_ID = 'completeExistingIntro';
+const URL = 'TDI_PndClaim_Intro';
+const FIXTURE = "./cypress/fixtures/claimApplication/completeExistingIntro/completeExistingIntro.html";
 
 describe("Complete Existing Intro page", () => {
   function checkPostData(interception) {
@@ -8,20 +12,14 @@ describe("Complete Existing Intro page", () => {
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24chkAgree=on');
   }
 
-  function mockASPX() {
-    cy.intercept('POST', '**/TDI_PndClaim_Intro.aspx',
-      { statusCode: 200, headers: { 'content-type': 'text/html' } }
-    ).as('aspxSubmission');
-  };
-
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/completeExistingIntro/completeExistingIntro.html");
+      cy.visit(FIXTURE);
     });
 
     it("user can input info and proceed to next page", () => {
-      mockASPX();
+      cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_chkAgree').check();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
@@ -38,27 +36,16 @@ describe("Complete Existing Intro page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/completeExistingIntro/completeExistingIntro.html");
+      cy.visit(FIXTURE);
       cy.wait('@script');
     });
 
     it("user can input info and proceed to next page", () => {
-      mockASPX();
+      cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_chkAgree').check();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
-    it("passes accessibility checks", () => {
-      cy.checkBodyA11y();
-    });
-
-    it("tracks the page view", () => {
-      cy.trackPageView(PAGE_ID);
-    });
-
-    it('should open FAQ, post data, and track when the Help link is clicked', () => {
-      cy.checkHelpButtonBehavior();
-      cy.trackHelpClick(PAGE_ID);
-    });
+    globalTestsNew(PAGE_ID, URL);
   });
 });
