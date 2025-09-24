@@ -4,7 +4,7 @@ const resources = {
       certification: {
         title: "Agree and finish",
         beforeSubmit: "Before you submit",
-        alertText: `Be sure that all your answers are correct. You can <a href="{{hostname}}/tdi_iam/IAM_Login_Profile.aspx">review your entire application step by step</a> if you aren't sure. You'll need to contact the Division of Temporary Disability Insurance if anything important changes.`,
+        alertText: `Be sure that all your answers are correct. You can <a href="/tdi_iam/TDI_PndClaim_Intro.aspx">review your entire application step by step</a> if you aren't sure. You'll need to contact the Division of Temporary Disability Insurance if anything important changes.`,
         certifyText: "By submitting, I certify:",
         agreement1: "I have answered all questions completely and truthfully to the best of my knowledge.",
         agreement2: "I could face fines and criminal charges if I purposefully provide false information or don't share crucial details that could impact my claim.",
