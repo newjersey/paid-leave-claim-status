@@ -35,6 +35,7 @@ export function changes() {
   setupApplicationPdfDownloadLink();
   setupCopyM01Button();
   setupC01AwardDownloadButton();
+  setupW01DownloadButton();
   document.addEventListener('headerReady', setNewTitle);
 }
 
@@ -187,7 +188,7 @@ function m01() {
   m01Section.innerHTML = `
     <div class="due-date">
       ${i18next.t(
-        'confirmation.m01.dueDate',
+        'confirmation.dueDate',
         { est_deadline_date: m01estDeadlineDate() }
       )}
     </div>
@@ -227,6 +228,28 @@ function noEmp() {
   return '';
 }
 
+function downloadIcon() {
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const svgElement = document.createElementNS(svgNS, 'svg');
+  svgElement.setAttribute('class', 'usa-icon');
+  svgElement.setAttribute('aria-hidden', 'true');
+  svgElement.setAttribute('focusable', 'false');
+  svgElement.setAttribute('role', 'img');
+  svgElement.setAttribute('viewBox', '0 0 24 24');
+
+  const path1 = document.createElementNS(svgNS, 'path');
+  path1.setAttribute('d', 'M0 0h24v24H0z');
+  path1.setAttribute('fill', 'none');
+
+  const path2 = document.createElementNS(svgNS, 'path');
+  path2.setAttribute('d', 'M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z');
+
+  svgElement.appendChild(path1);
+  svgElement.appendChild(path2);
+
+  return svgElement.outerHTML;
+}
+
 function c01Award() {
   const oldC01Award = document.getElementById('divC01Award');
   if (oldC01Award && oldC01Award.style.display != 'none') {
@@ -236,18 +259,16 @@ function c01Award() {
     c01Award.innerHTML = `
       <div class="due-date">
         ${i18next.t(
-          'confirmation.m01.dueDate',
+          'confirmation.dueDate',
           { est_deadline_date: m01estDeadlineDate() }
         )}
       </div>
       <h2>${i18next.t('confirmation.c01Award.title')}</h2>
       <button id="downloadC01Award" class="usa-button usa-button--outline">
-        <svg class="usa-icon" aria-hidden="true" focusable="false" role="img" viewBox="0 0 24 24">
-          <path d="M0 0h24v24H0z" fill="none"/><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
-        </svg>
+        ${downloadIcon()}
         ${i18next.t('confirmation.c01Award.download_button')}
       </button>
-      <p>${i18next.t('confirmation.c01Award.directions', { claim_id: claimId() })}</p>
+      <p>${i18next.t('confirmation.form_directions', { claim_id: claimId() })}</p>
     `;
     return c01Award.outerHTML;
   }
@@ -265,22 +286,48 @@ function setupC01AwardDownloadButton() {
   }
 }
 
+function w01() {
+  const oldW01 = document.getElementById('divW01');
+  if (oldW01 && oldW01.style.display != 'none') {
+    const w01 = document.createElement('section');
+    w01.id = "w01Section";
+    w01.classList.add("dueAction");
+    w01.innerHTML = `
+      <div class="due-date">
+        ${i18next.t(
+          'confirmation.dueDate',
+          { est_deadline_date: m01estDeadlineDate() }
+        )}
+      </div>
+      <h2>${i18next.t('confirmation.w01.title')}</h2>
+      <button id="downloadW01" class="usa-button usa-button--outline">
+        ${downloadIcon()}
+        ${i18next.t('confirmation.w01.download_button')}
+      </button>
+      <p>${i18next.t('confirmation.form_directions', { claim_id: claimId() })}</p>
+    `;
+    return w01.outerHTML;
+  }
+  return '';
+}
+
+function setupW01DownloadButton() {
+  const oldDownloadBtn = document.querySelector('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_lnkbtnClickW01');
+  const newDownloadBtn = document.querySelector('#downloadW01');
+  if (oldDownloadBtn && newDownloadBtn) {
+    newDownloadBtn.addEventListener('click', function (event) {
+      event.preventDefault();
+      oldDownloadBtn.click();
+    });
+  }
+}
+
 function c01Card() {
   const oldC01Card = document.getElementById('divC01Card');
   if (oldC01Card && oldC01Card.style.display != 'none') {
     const c01Award = document.createElement('p');
     c01Award.textContent = "C01 Card info";
     return c01Award.outerHTML;
-  }
-  return '';
-}
-
-function w01() {
-  const oldW01 = document.getElementById('divW01');
-  if (oldW01 && oldW01.style.display != 'none') {
-    const w01 = document.createElement('p');
-    w01.textContent = "Info about W01";
-    return w01.outerHTML;
   }
   return '';
 }

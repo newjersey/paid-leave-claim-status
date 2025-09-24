@@ -16,8 +16,25 @@ const resources = {
         title: "You're almost done!",
         checkmark: "Checkmark",
         submitted: `Your information was submitted. <a id="applicationPdfDownload" class="usa-link">You can download a copy of your application (PDF).</a>`,
+        dueDate: "Best to complete by {{est_deadline_date}}",
+        form_directions: `
+            <ul class="usa-list">
+              <li>Complete the form</li>
+              <li>Write your 5-digit claim number on every page: {{claim_id}}</li>
+              <li>
+                Submit by fax to (609) 984-4138 (fastest)
+                <br><br>
+                Or, mail to:
+                <br>
+                Division of Temporary Disability Insurance
+                <br>
+                P.O. Box 387
+                <br>
+                Trenton, NJ 08625-0387
+              </li>
+            </ul>
+          `,
         m01: {
-          dueDate: "Best to complete by {{est_deadline_date}}",
           title: "1. Follow up with your medical provider about Form M01",
           directions: "A qualified healthcare provider must confirm your disability. They will do this by completing Form M01 for you.",
           sample: {
@@ -50,23 +67,10 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Tha
         c01Award: {
           title: "Fax or mail your verification form (C01)",
           download_button: "Download Form C01 (PDF)",
-          directions: `
-            <ul class="usa-list">
-              <li>Complete the form</li>
-              <li>Write your 5-digit claim number on every page: {{claim_id}}</li>
-              <li>
-                Submit by fax to (609) 984-4138 (fastest)
-                <br><br>
-                Or, mail to:
-                <br>
-                Division of Temporary Disability Insurance
-                <br>
-                P.O. Box 387
-                <br>
-                Trenton, NJ 08625-0387
-              </li>
-            </ul>
-          `,
+        },
+        w01: {
+          title: "Fax or mail your Workers' Compensation form (Form W01)",
+          download_button: "Download Form W01 (PDF)",
         },
         moreInfo: {
           title: "Good to know",
