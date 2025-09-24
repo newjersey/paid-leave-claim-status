@@ -47,6 +47,27 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Tha
             copied: "Copied!",
           },
         },
+        c01Award: {
+          title: "Fax or mail your verification form (C01)",
+          download_button: "Download Form C01 (PDF)",
+          directions: `
+            <ul class="usa-list">
+              <li>Complete the form</li>
+              <li>Write your 5-digit claim number on every page: {{claim_id}}</li>
+              <li>
+                Submit by fax to (609) 984-4138 (fastest)
+                <br><br>
+                Or, mail to:
+                <br>
+                Division of Temporary Disability Insurance
+                <br>
+                P.O. Box 387
+                <br>
+                Trenton, NJ 08625-0387
+              </li>
+            </ul>
+          `,
+        },
         moreInfo: {
           title: "Good to know",
           mail: {

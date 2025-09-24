@@ -103,6 +103,10 @@ function addStyles() {
     .usa-button {
       min-height: 40px;
     }
+    .usa-button .usa-icon {
+      margin-right: 5px;
+      vertical-align: middle;
+    }
     .usa-prose {
       word-wrap: break-word;
     }
@@ -134,8 +138,8 @@ function replaceBody() {
       ${m01()}
       ${noEmp()}
       ${c01Award()}
-      ${c01Card()}
       ${w01()}
+      ${c01Card()}
       ${v01()}
       ${moreInfo()}
     `;
@@ -225,8 +229,25 @@ function noEmp() {
 function c01Award() {
   const oldC01Award = document.getElementById('divC01Award');
   if (oldC01Award && oldC01Award.style.display != 'none') {
-    const c01Award = document.createElement('p');
-    c01Award.textContent = "C01 Award!";
+    const c01Award = document.createElement('section');
+    c01Award.id = "c01AwardSection";
+    c01Award.classList.add("dueAction");
+    c01Award.innerHTML = `
+      <div class="due-date">
+        ${i18next.t(
+          'confirmation.m01.dueDate',
+          { est_deadline_date: m01estDeadlineDate() }
+        )}
+      </div>
+      <h2>${i18next.t('confirmation.c01Award.title')}</h2>
+      <button class="usa-button usa-button--outline">
+        <svg class="usa-icon" aria-hidden="true" focusable="false" role="img" viewBox="0 0 24 24">
+          <path d="M0 0h24v24H0z" fill="none"/><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/>
+        </svg>
+        ${i18next.t('confirmation.c01Award.download_button')}
+      </button>
+      <p>${i18next.t('confirmation.c01Award.directions', { claim_id: claimId() })}</p>
+    `;
     return c01Award.outerHTML;
   }
   return '';
