@@ -1,4 +1,9 @@
-import { fixPhoneNumberText, removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
+import {
+  fixPhoneNumberText,
+  LOCAL_STORAGE_KEY_PROVIDER_NAME,
+  removeExtraSpaceBetweenRadioButtons,
+  styleRadioButton
+} from '../utils';
 
 export const otherBenefitsVerificationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDisabDate', label: 'First Day of Disability' },
@@ -51,6 +56,7 @@ export function changes() {
     'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes',
     'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsNo'
   );
+  saveProvider();
 }
 
 function styleButton() {
@@ -87,5 +93,15 @@ function fixOverflowingText() {
   const otherStateInfo = document.querySelector('#divVerTDI');
   if (otherStateInfo) {
     otherStateInfo.style.height = 'fit-content';
+  }
+}
+
+function saveProvider() {
+  const submit = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer');
+  const providerName = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocName');
+  if (submit && providerName) {
+    submit.addEventListener('click', function () {
+      localStorage.setItem(LOCAL_STORAGE_KEY_PROVIDER_NAME, providerName.value.trim());
+    });
   }
 }

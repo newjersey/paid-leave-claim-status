@@ -44,6 +44,9 @@ describe("Disability Verification page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+      cy.window().then((win) => {
+        expect(win.localStorage.getItem('provider_name')).to.equal('Dr. Spaceman');
+      });
     });
 
     it('items do not overlap', () => {
