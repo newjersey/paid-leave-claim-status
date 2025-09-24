@@ -65,7 +65,7 @@ function replaceBody() {
         <div class="usa-alert__body">
           <p class="usa-alert__heading" style="font-size: 16px;font-weight: bold;">${i18next.t('certification.beforeSubmit')}</p>
           <p class="usa-alert__text">
-            ${i18next.t('certification.alertText', { hostname: window.location.hostname })}
+            ${i18next.t('certification.alertText')}
           </p>
         </div>
       </div>
