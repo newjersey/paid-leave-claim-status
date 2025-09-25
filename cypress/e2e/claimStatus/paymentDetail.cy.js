@@ -294,12 +294,41 @@ describe("Payment Detail page - P30 sent", () => {
       .contains("Share the Form ID with your doctor.")
       .should("be.visible");
 
-      cy.contains("Total payments issued: $4,366.00").should("be.visible");
-      cy.get("#accordionFuture0id")
+    cy.contains("Total payments issued: $4,366.00").should("be.visible");
+    cy.get("#accordionFuture0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
     cy.get("#accordionFuture0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
+      .should("be.visible");
+  });
+
+  it("passes accessibility checks", () => {
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailP30Sent.html");
+    cy.checkBodyA11y();
+  });
+});
+
+
+describe("Payment Detail page - FL3 sent", () => {
+  it("renders with updated content", () => {
+    const fixedDate = new Date(2025, 10, 12); // September 12, 2025
+    cy.clock(fixedDate.getTime());
+
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailFl3Sent.html");
+
+    cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
+
+    cy.get("h1").contains("Payments").should("be.visible");
+    cy.contains("Claim for Family Leave Insurance (FLI)").should(
+      "be.visible"
+    );
+    cy.contains("JOHN").should("be.visible");
+    cy.contains(
+      "Your last scheduled payment is coming up. To request more days, you'll need to mail or fax us the Family Leave Insurance Continued Claim Certification (FL3 form), showing your updated leave schedule. We mailed this on September 10, 2025."
+    ).should("be.visible");
+    cy.get("li")
+      .contains("Caregiving leave?")
       .should("be.visible");
   });
 
