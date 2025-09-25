@@ -1,4 +1,11 @@
-import { fixPhoneNumberText } from '../utils';
+import {
+  fixPhoneNumberText,
+  LOCAL_STORAGE_KEY_USER_DOB,
+  LOCAL_STORAGE_KEY_USER_NAME,
+  LOCAL_STORAGE_KEY_USER_EMAIL,
+  LOCAL_STORAGE_KEY_USER_PHONE,
+  LOCAL_STORAGE_KEY_USER_MAIL_ADDRESS,
+} from '../utils';
 
 export const claimantProfileVerificationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerFname', label: 'Name' },
@@ -52,6 +59,7 @@ export function changes() {
     '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepTel3',
     '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepTelExt'
   );
+  saveInfo();
 }
 
 function adjustTable() {
@@ -122,4 +130,33 @@ function styleRadioButtons() {
       }
     });
   }
+}
+
+function saveInfo() {
+  const submit = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btncontinueVer');
+  const fullName = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerFname');
+  const dob = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerDob');
+  const address1 = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerMailUSAddr1Addr2');
+  const address2 = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerMailUSCityStZip');
+  const email = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerEmail');
+  const phone1 = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerTel1');
+  const phone2 = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerTel2');
+  const phone3 = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerTel3');
+  const phoneExt = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerTelExt');
+  
+  const phoneExtString = phoneExt.value.trim().length > 0 ? ` Ext: ${phoneExt.value.trim()}` : '';
+  const phone = `(${phone1.value.trim()}) ${phone2.value.trim()}-${phone3.value.trim()}${phoneExtString}`;
+
+  const address = {
+    line1: address1.value.trim(),
+    line2: address2.value.trim()
+  };
+
+  submit.addEventListener('click', function () {
+    localStorage.setItem(LOCAL_STORAGE_KEY_USER_NAME, fullName.value.trim());
+    localStorage.setItem(LOCAL_STORAGE_KEY_USER_DOB, dob.value.trim());
+    localStorage.setItem(LOCAL_STORAGE_KEY_USER_EMAIL, email.value.trim());
+    localStorage.setItem(LOCAL_STORAGE_KEY_USER_PHONE, phone);
+    localStorage.setItem(LOCAL_STORAGE_KEY_USER_MAIL_ADDRESS, JSON.stringify(address));
+  });
 }
