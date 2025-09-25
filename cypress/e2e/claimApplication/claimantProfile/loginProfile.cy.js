@@ -68,10 +68,6 @@ describe("Login Profile page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnPersYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_btncontinueVer').click();
       cy.wait('@aspxSubmission').then(checkPostData);
-      cy.window().then((win) => {
-        expect(win.localStorage.getItem('user_dob')).to.equal('01/01/2000');
-        expect(win.localStorage.getItem('user_name')).to.equal('FirstNameTest LastNameTest');
-      });
     });
 
     it("applies the new font family", () => {

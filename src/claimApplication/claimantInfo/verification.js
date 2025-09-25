@@ -99,9 +99,7 @@ function fixOverflowingText() {
 function saveProvider() {
   const submit = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer');
   const providerName = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocName');
-  if (submit && providerName) {
-    submit.addEventListener('click', function () {
-      localStorage.setItem(LOCAL_STORAGE_KEY_PROVIDER_NAME, providerName.value.trim());
-    });
-  }
+  submit.addEventListener('click', function () {
+    localStorage.setItem(LOCAL_STORAGE_KEY_PROVIDER_NAME, providerName.value.trim());
+  });
 }

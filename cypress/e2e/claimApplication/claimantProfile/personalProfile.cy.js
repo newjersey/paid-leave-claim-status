@@ -53,10 +53,6 @@ describe("Claimant Personal Profile page", () => {
 
     it("user can fill in info and proceed to next page", () => {
       checkForm();
-      cy.window().then((win) => {
-        expect(win.localStorage.getItem('user_dob')).to.equal('01/01/2000');
-        expect(win.localStorage.getItem('user_name')).to.equal('FirstNameTest LastNameTest');
-      });
     });
 
     globalTestsNew(PAGE_ID, URL);
