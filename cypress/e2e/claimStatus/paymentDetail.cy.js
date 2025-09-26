@@ -333,7 +333,7 @@ describe("Payment Detail page - FL3 sent", () => {
   });
 
   it("passes accessibility checks", () => {
-    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailP30Sent.html");
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailFl3Sent.html");
     cy.checkBodyA11y();
   });
 });
