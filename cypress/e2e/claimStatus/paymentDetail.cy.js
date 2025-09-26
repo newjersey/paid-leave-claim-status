@@ -312,7 +312,7 @@ describe("Payment Detail page - P30 sent", () => {
 
 describe("Payment Detail page - FL3 sent", () => {
   it("renders with updated content", () => {
-    const fixedDate = new Date(2025, 10, 12); // September 12, 2025
+    const fixedDate = new Date(2025, 8, 10); // September 10, 2025
     cy.clock(fixedDate.getTime());
 
     cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailFl3Sent.html");
@@ -329,6 +329,15 @@ describe("Payment Detail page - FL3 sent", () => {
     ).should("be.visible");
     cy.get("li")
       .contains("Caregiving leave?")
+      .should("be.visible");
+
+
+    cy.contains("Total payments issued: $1,081.00").should("be.visible");
+    cy.get("#accordionFuture0id")
+      .contains("Next $1,853.00 to issue on September 11, 2025")
+      .should("be.visible");
+    cy.get("#accordionPast0id")
+      .contains("1,081.00 issued on September 9, 2025")
       .should("be.visible");
   });
 
