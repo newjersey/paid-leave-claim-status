@@ -12,6 +12,11 @@ describe("Certification page", () => {
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertStatus=&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertFDD=07%2F15%2F2025&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24rbAgree=rbtnAgYes&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24btnConfirm=File+My+Claim');
   }
 
+  function checkClaimDownload(interception) {
+    const formData = interception.request.body;
+    cy.checkCommonPostData(formData);
+  }
+
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
@@ -43,6 +48,13 @@ describe("Certification page", () => {
       cy.mockASPX(URL);
       cy.get('#agreeAndSubmit').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+
+    it("user can view pdf preview", () => {
+      cy.mockASPX(URL);
+      cy.get('#preview').click();
+      cy.wait('@aspxSubmission').then(checkClaimDownload);
     });
 
     globalTestsNew(PAGE_ID, URL);

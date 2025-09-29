@@ -5,7 +5,7 @@ const URL = 'ClaimantCertification';
 const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/confirmation.html";
 
 describe("Confirmation page", () => {
-  function checkPostData(interception) {
+  function checkClaimDownload(interception) {
     const formData = interception.request.body;
     cy.checkCommonPostData(formData);
     expect(formData).to.include('__EVENTTARGET=&__EVENTARGUMENT=&ContentPlaceHolder1_ClaimantCertTab_ClientState=%7B%22ActiveTabIndex%22%3A1%2C%22TabState%22%3A%5Bfalse%2Ctrue%5D%7D&');
@@ -53,7 +53,7 @@ describe("Confirmation page", () => {
     it("user can open PDF of claim summary", () => {
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue').click();
-      cy.wait('@aspxSubmission').then(checkPostData);
+      cy.wait('@aspxSubmission').then(checkClaimDownload);
     });
 
     it("shows the no employer message when needed", () => {
@@ -106,7 +106,7 @@ describe("Confirmation page", () => {
     it("user can open PDF of claim summary", () => {
       cy.mockASPX(URL);
       cy.get('#applicationPdfDownload').click();
-      cy.wait('@aspxSubmission').then(checkPostData);
+      cy.wait('@aspxSubmission').then(checkClaimDownload);
     });
 
     it("user can copy sample M01 text", () => {
