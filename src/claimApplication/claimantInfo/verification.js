@@ -102,7 +102,7 @@ function saveProvider() {
   const providerName = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocName');
   submit.addEventListener('click', function () {
     addToSessionData({
-      STORAGE_KEY_PROVIDER_NAME: providerName.value.trim()
+      [STORAGE_KEY_PROVIDER_NAME]: providerName.value.trim()
     });
   });
 }

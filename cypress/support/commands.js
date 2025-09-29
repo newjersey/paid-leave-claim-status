@@ -113,17 +113,6 @@ Cypress.Commands.add("checkNewLogout", (url) => {
   });
 });
 
-Cypress.Commands.add("checkSessionStorage", (expectedData) => {
-  cy.clock(new Date(2025, 8, 23)); // 0-indexed; Sept. 23, 2025
-  cy.window().then((win) => {
-    const storageKey = CryptoJS.SHA256("2025-09-23").toString();
-    const encryptedData = win.localStorage.getItem('session_data');
-    const bytes = CryptoJS.AES.decrypt(encryptedData, storageKey);
-    const data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-    expect(data.to.equal(expectedData));
-  });
-});
-
 Cypress.Commands.add("checkNewLogoutCancel", (url) => {
   cy.mockASPX(url);
   cy.on('window:confirm', () => false);

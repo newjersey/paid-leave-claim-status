@@ -1,5 +1,5 @@
-import CryptoJS from 'crypto-js';
 import { globalTestsNew, globalTestsOld } from "../shared";
+import { encodeDecode } from '../../../../src/claimApplication/utils';
 
 const PAGE_ID = 'claimantProfileVerification';
 const URL = 'ClaimantProfile_IANM';
@@ -45,15 +45,21 @@ describe("Profile Verification page", () => {
 
     it("user can confirm info is correct and proceed to next page", () => {
       checkConfirmInfo();
-      cy.checkSessionStorage({
-        user_dob: '01/01/2000',
-        user_name: 'FirstNameTest LastNameTest',
-        user_phone: '(222) 111-2222',
-        user_email: 'time@time.com',
-        user_mail_address: {
-          line1: "111",
-          line2: "g, NJ 07123-1234"
-        }
+      cy.window().then((win) => {
+        const now = new Date();
+        const key = now.getFullYear() * 10000 + now.getMonth() * 100 + now.getDate();
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData, key));
+        expect(data).to.deep.equal({
+          user_dob: '01/01/2000',
+          user_name: 'FirstNameTest LastNameTest',
+          user_phone: '(222) 111-2222',
+          user_email: 'time@time.com',
+          user_mail_address: JSON.stringify({
+            line1: "111",
+            line2: "g, NJ 07123-1234"
+          })
+        });
       });
     });
 

@@ -1,4 +1,5 @@
 import { globalTestsNew, globalTestsOld } from "../shared";
+import { encodeDecode } from '../../../../src/claimApplication/utils';
 
 const PAGE_ID = 'confirmation';
 const URL = 'ClaimantCertification';
@@ -112,7 +113,7 @@ describe("Confirmation page", () => {
     it("user can copy sample M01 text", () => {
       cy.clock(new Date(2025, 8, 23)); // 0-indexed; Sept. 23, 2025
       cy.window().then((win) => {
-        const storageKey = CryptoJS.SHA256("2025-09-23").toString();
+        const key = "20250823";
         const data = {
           provider_name: "Dr. Spaceman",
           user_dob: "Jan 1, 2000",
@@ -120,8 +121,7 @@ describe("Confirmation page", () => {
           user_email: "lemon@nbc.com",
           user_phone: "(555) 555-5555"
         };
-        const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), storageKey).toString();
-        win.sessionStorage.setItem("session_data", encryptedData);
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data), key));
       });
       cy.visit(FIXTURE);
 

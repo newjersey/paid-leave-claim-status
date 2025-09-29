@@ -9,12 +9,11 @@ const STORAGE_KEY_SESSION_DATA = "session_data";
 
 export function getSessionData() {
   try {
-    const encryptedData = sessionStorage.getItem(STORAGE_KEY_SESSION_DATA);
-    if (!encryptedData) return {};
-    const decryptedData = encryptDecrypt(atob(encryptedData), storageKey());
-    return JSON.parse(decryptedData);
+    const encodedData = sessionStorage.getItem(STORAGE_KEY_SESSION_DATA);
+    if (!encodedData) return {};
+    return JSON.parse(encodeDecode(encodedData, storageKey()));
   } catch (error) {
-    console.error("Error decrypting data:", error);
+    console.error("Error decoding data:", error);
     return {};
   }
 }
@@ -24,14 +23,16 @@ export function addToSessionData(newData) {
   const sessionData = { ...existingData, ...newData };
 
   try {
-    const encryptedData = btoa(encryptDecrypt(JSON.stringify(sessionData), storageKey()));
-    sessionStorage.setItem(STORAGE_KEY_SESSION_DATA, encryptedData);
+    const encodedData = encodeDecode(JSON.stringify(sessionData), storageKey());
+    sessionStorage.setItem(STORAGE_KEY_SESSION_DATA, encodedData);
   } catch (error) {
-    console.error("Error encrypting data:", error);
+    console.error("Error encoding data:", error);
   }
 }
 
-function encryptDecrypt(data, key) {
+// Note: this is only a simple XOR to make not plaintext - not true encryption
+// Fetching from backend is more robust
+export function encodeDecode(data, key) {
   return data.split('').map(char => String.fromCharCode(char.charCodeAt(0) ^ key)).join('');
 }
 

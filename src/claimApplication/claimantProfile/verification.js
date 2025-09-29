@@ -155,11 +155,11 @@ function saveInfo() {
 
   submit.addEventListener('click', function () {
     addToSessionData({
-      STORAGE_KEY_USER_NAME: fullName.value.trim(),
-      STORAGE_KEY_USER_DOB: dob.value.trim(),
-      STORAGE_KEY_USER_EMAIL: email.value.trim(),
-      STORAGE_KEY_USER_PHONE: phone,
-      STORAGE_KEY_USER_MAIL_ADDRESS: JSON.stringify(address)
+      [STORAGE_KEY_USER_NAME]: fullName.value.trim(),
+      [STORAGE_KEY_USER_DOB]: dob.value.trim(),
+      [STORAGE_KEY_USER_EMAIL]: email.value.trim(),
+      [STORAGE_KEY_USER_PHONE]: phone,
+      [STORAGE_KEY_USER_MAIL_ADDRESS]: JSON.stringify(address)
     });
   });
 }
