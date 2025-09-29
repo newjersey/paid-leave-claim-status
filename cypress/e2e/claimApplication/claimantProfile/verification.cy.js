@@ -1,3 +1,4 @@
+import CryptoJS from 'crypto-js';
 import { globalTestsNew, globalTestsOld } from "../shared";
 
 const PAGE_ID = 'claimantProfileVerification';
@@ -44,12 +45,15 @@ describe("Profile Verification page", () => {
 
     it("user can confirm info is correct and proceed to next page", () => {
       checkConfirmInfo();
-      cy.window().then((win) => {
-        expect(win.localStorage.getItem('user_dob')).to.equal('01/01/2000');
-        expect(win.localStorage.getItem('user_name')).to.equal('FirstNameTest LastNameTest');
-        expect(win.localStorage.getItem('user_phone')).to.equal('(222) 111-2222');
-        expect(win.localStorage.getItem('user_email')).to.equal('time@time.com');
-        expect(win.localStorage.getItem('user_mail_address')).to.equal(JSON.stringify({ line1: "111", line2: "g, NJ 07123-1234"}));
+      cy.checkSessionStorage({
+        user_dob: '01/01/2000',
+        user_name: 'FirstNameTest LastNameTest',
+        user_phone: '(222) 111-2222',
+        user_email: 'time@time.com',
+        user_mail_address: {
+          line1: "111",
+          line2: "g, NJ 07123-1234"
+        }
       });
     });
 

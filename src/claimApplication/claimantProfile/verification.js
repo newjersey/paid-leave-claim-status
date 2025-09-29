@@ -1,10 +1,11 @@
 import {
+  addToSessionData,
   fixPhoneNumberText,
-  LOCAL_STORAGE_KEY_USER_DOB,
-  LOCAL_STORAGE_KEY_USER_NAME,
-  LOCAL_STORAGE_KEY_USER_EMAIL,
-  LOCAL_STORAGE_KEY_USER_PHONE,
-  LOCAL_STORAGE_KEY_USER_MAIL_ADDRESS,
+  STORAGE_KEY_USER_DOB,
+  STORAGE_KEY_USER_NAME,
+  STORAGE_KEY_USER_EMAIL,
+  STORAGE_KEY_USER_PHONE,
+  STORAGE_KEY_USER_MAIL_ADDRESS,
 } from '../utils';
 
 export const claimantProfileVerificationLabels = [
@@ -153,10 +154,12 @@ function saveInfo() {
   };
 
   submit.addEventListener('click', function () {
-    localStorage.setItem(LOCAL_STORAGE_KEY_USER_NAME, fullName.value.trim());
-    localStorage.setItem(LOCAL_STORAGE_KEY_USER_DOB, dob.value.trim());
-    localStorage.setItem(LOCAL_STORAGE_KEY_USER_EMAIL, email.value.trim());
-    localStorage.setItem(LOCAL_STORAGE_KEY_USER_PHONE, phone);
-    localStorage.setItem(LOCAL_STORAGE_KEY_USER_MAIL_ADDRESS, JSON.stringify(address));
+    addToSessionData({
+      STORAGE_KEY_USER_NAME: fullName.value.trim(),
+      STORAGE_KEY_USER_DOB: dob.value.trim(),
+      STORAGE_KEY_USER_EMAIL: email.value.trim(),
+      STORAGE_KEY_USER_PHONE: phone,
+      STORAGE_KEY_USER_MAIL_ADDRESS: JSON.stringify(address)
+    });
   });
 }

@@ -112,11 +112,16 @@ describe("Confirmation page", () => {
     it("user can copy sample M01 text", () => {
       cy.clock(new Date(2025, 8, 23)); // 0-indexed; Sept. 23, 2025
       cy.window().then((win) => {
-        win.localStorage.setItem("provider_name", "Dr. Spaceman");
-        win.localStorage.setItem("user_dob", "Jan 1, 2000");
-        win.localStorage.setItem("user_name", "Liz Lemon");
-        win.localStorage.setItem("user_email", "lemon@nbc.com");
-        win.localStorage.setItem("user_phone", "(555) 555-5555");
+        const storageKey = CryptoJS.SHA256("2025-09-23").toString();
+        const data = {
+          provider_name: "Dr. Spaceman",
+          user_dob: "Jan 1, 2000",
+          user_name: "Liz Lemon",
+          user_email: "lemon@nbc.com",
+          user_phone: "(555) 555-5555"
+        };
+        const encryptedData = CryptoJS.AES.encrypt(JSON.stringify(data), storageKey).toString();
+        win.sessionStorage.setItem("session_data", encryptedData);
       });
       cy.visit(FIXTURE);
 

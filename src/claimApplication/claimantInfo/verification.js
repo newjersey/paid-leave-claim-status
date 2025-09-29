@@ -1,6 +1,7 @@
 import {
+  addToSessionData,
   fixPhoneNumberText,
-  LOCAL_STORAGE_KEY_PROVIDER_NAME,
+  STORAGE_KEY_PROVIDER_NAME,
   removeExtraSpaceBetweenRadioButtons,
   styleRadioButton
 } from '../utils';
@@ -100,6 +101,8 @@ function saveProvider() {
   const submit = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer');
   const providerName = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocName');
   submit.addEventListener('click', function () {
-    localStorage.setItem(LOCAL_STORAGE_KEY_PROVIDER_NAME, providerName.value.trim());
+    addToSessionData({
+      STORAGE_KEY_PROVIDER_NAME: providerName.value.trim()
+    });
   });
 }

@@ -101,7 +101,7 @@ Cypress.Commands.add("checkOldLogoutCancel", (url) => {
 
 Cypress.Commands.add("checkNewLogout", (url) => {
   cy.window().then((win) => {
-    win.localStorage.setItem('testKey', 'testValue');
+    win.sessionStorage.setItem('testKey', 'testValue');
   });
 
   cy.mockASPX(url);
@@ -109,7 +109,18 @@ Cypress.Commands.add("checkNewLogout", (url) => {
   cy.wait('@aspxSubmission').then(checkLogoutData);
   
   cy.window().then((win) => {
-    expect(win.localStorage.length).to.equal(0);
+    expect(win.sessionStorage.length).to.equal(0);
+  });
+});
+
+Cypress.Commands.add("checkSessionStorage", (expectedData) => {
+  cy.clock(new Date(2025, 8, 23)); // 0-indexed; Sept. 23, 2025
+  cy.window().then((win) => {
+    const storageKey = CryptoJS.SHA256("2025-09-23").toString();
+    const encryptedData = win.localStorage.getItem('session_data');
+    const bytes = CryptoJS.AES.decrypt(encryptedData, storageKey);
+    const data = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    expect(data.to.equal(expectedData));
   });
 });
 

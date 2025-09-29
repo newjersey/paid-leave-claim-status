@@ -1,11 +1,12 @@
 import i18next from 'i18next';
 import { ICON_BASE_URL, logEvent } from "../../modules/shared.mjs";
 import {
-  LOCAL_STORAGE_KEY_PROVIDER_NAME,
-  LOCAL_STORAGE_KEY_USER_DOB,
-  LOCAL_STORAGE_KEY_USER_NAME,
-  LOCAL_STORAGE_KEY_USER_EMAIL,
-  LOCAL_STORAGE_KEY_USER_PHONE,
+  getSessionData,
+  STORAGE_KEY_PROVIDER_NAME,
+  STORAGE_KEY_USER_DOB,
+  STORAGE_KEY_USER_NAME,
+  STORAGE_KEY_USER_EMAIL,
+  STORAGE_KEY_USER_PHONE,
 } from "../utils";
 
 export const confirmationAltTexts = [
@@ -406,24 +407,21 @@ function m01formId() {
 }
 
 function m01SampleText() {
-  const provider_name = 
-    localStorage.getItem(LOCAL_STORAGE_KEY_PROVIDER_NAME) ||
+  const sessionData = getSessionData();
+
+  const provider_name = sessionData[STORAGE_KEY_PROVIDER_NAME] ||
     i18next.t('confirmation.m01.sample.empty.provider_name');
 
-  const user_dob = 
-    localStorage.getItem(LOCAL_STORAGE_KEY_USER_DOB) ||
+  const user_dob = sessionData[STORAGE_KEY_USER_DOB] ||
     i18next.t('confirmation.m01.sample.empty.user_dob');
 
-  const user_name = 
-    localStorage.getItem(LOCAL_STORAGE_KEY_USER_NAME) ||
+  const user_name = sessionData[STORAGE_KEY_USER_NAME] ||
     i18next.t('confirmation.m01.sample.empty.user_name');
 
-  const user_email = 
-    localStorage.getItem(LOCAL_STORAGE_KEY_USER_EMAIL) ||
+  const user_email = sessionData[STORAGE_KEY_USER_EMAIL] ||
     i18next.t('confirmation.m01.sample.empty.user_email');
 
-  const user_phone = 
-    localStorage.getItem(LOCAL_STORAGE_KEY_USER_PHONE) ||
+  const user_phone = sessionData[STORAGE_KEY_USER_PHONE] ||
     i18next.t('confirmation.m01.sample.empty.user_phone');
   
   return i18next.t('confirmation.m01.sample.body', 

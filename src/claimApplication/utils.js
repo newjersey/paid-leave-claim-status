@@ -1,9 +1,44 @@
-export const LOCAL_STORAGE_KEY_PROVIDER_NAME = "provider_name";
-export const LOCAL_STORAGE_KEY_USER_DOB = "user_dob";
-export const LOCAL_STORAGE_KEY_USER_NAME = "user_name";
-export const LOCAL_STORAGE_KEY_USER_EMAIL = "user_email";
-export const LOCAL_STORAGE_KEY_USER_PHONE = "user_phone";
-export const LOCAL_STORAGE_KEY_USER_MAIL_ADDRESS = "user_mail_address";
+export const STORAGE_KEY_PROVIDER_NAME = "provider_name";
+export const STORAGE_KEY_USER_DOB = "user_dob";
+export const STORAGE_KEY_USER_NAME = "user_name";
+export const STORAGE_KEY_USER_EMAIL = "user_email";
+export const STORAGE_KEY_USER_PHONE = "user_phone";
+export const STORAGE_KEY_USER_MAIL_ADDRESS = "user_mail_address";
+
+const STORAGE_KEY_SESSION_DATA = "session_data";
+
+export function getSessionData() {
+  try {
+    const encryptedData = sessionStorage.getItem(STORAGE_KEY_SESSION_DATA);
+    if (!encryptedData) return {};
+    const decryptedData = encryptDecrypt(atob(encryptedData), storageKey());
+    return JSON.parse(decryptedData);
+  } catch (error) {
+    console.error("Error decrypting data:", error);
+    return {};
+  }
+}
+
+export function addToSessionData(newData) {
+  const existingData = getSessionData();
+  const sessionData = { ...existingData, ...newData };
+
+  try {
+    const encryptedData = btoa(encryptDecrypt(JSON.stringify(sessionData), storageKey()));
+    sessionStorage.setItem(STORAGE_KEY_SESSION_DATA, encryptedData);
+  } catch (error) {
+    console.error("Error encrypting data:", error);
+  }
+}
+
+function encryptDecrypt(data, key) {
+  return data.split('').map(char => String.fromCharCode(char.charCodeAt(0) ^ key)).join('');
+}
+
+function storageKey() {
+  const now = new Date();
+  return now.getFullYear() * 10000 + now.getMonth() * 100 + now.getDate();
+}
 
 // TODO: this only styles the buttons.
 // When possible also use USWDS suggested HTML fieldset and legend structure
