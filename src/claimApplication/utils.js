@@ -30,7 +30,7 @@ export function addToSessionData(newData) {
   }
 }
 
-// Note: this is only a simple XOR to make not plaintext - not true encryption
+// Note: this is only a simple XOR to make not plaintext - not encryption
 // Fetching from backend is more robust
 export function encodeDecode(data, key) {
   return data.split('').map(char => String.fromCharCode(char.charCodeAt(0) ^ key)).join('');
