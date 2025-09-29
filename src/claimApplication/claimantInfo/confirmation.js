@@ -418,11 +418,9 @@ function m01SampleText() {
   const user_name = sessionData[STORAGE_KEY_USER_NAME] ||
     i18next.t('confirmation.m01.sample.empty.user_name');
 
-  const user_email = sessionData[STORAGE_KEY_USER_EMAIL] ||
-    i18next.t('confirmation.m01.sample.empty.user_email');
+  const user_email = sessionData[STORAGE_KEY_USER_EMAIL] || '';
 
-  const user_phone = sessionData[STORAGE_KEY_USER_PHONE] ||
-    i18next.t('confirmation.m01.sample.empty.user_phone');
+  const user_phone = sessionData[STORAGE_KEY_USER_PHONE] || '';
   
   return i18next.t('confirmation.m01.sample.body', 
     {

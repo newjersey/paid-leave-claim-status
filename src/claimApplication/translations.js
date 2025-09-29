@@ -57,8 +57,6 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Tha
               provider_name: "{{ INSERT YOUR MEDICAL PROVIDER'S NAME }}",
               user_dob: "{{ INSERT YOUR DATE OF BIRTH }}",
               user_name: "{{ INSERT YOUR NAME }}",
-              user_email: "{{ INSERT YOUR EMAIL }}",
-              user_phone: "{{ INSERT YOUR PHONE NUMBER }}",
             },
             copyButton: "Copy this starter message",
             copied: "Copied!",
