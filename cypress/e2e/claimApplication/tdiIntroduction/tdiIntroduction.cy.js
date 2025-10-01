@@ -41,9 +41,16 @@ describe("Introduction page", () => {
     });
 
     it("agrees to terms and checks POST data", () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem('session_data', 'testValue');
+      });
+      cy.visit(FIXTURE);
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_chkAgree').check();
       cy.wait('@aspxSubmission').then(checkPostData);
+      cy.window().then((win) => {
+        expect(win.sessionStorage.length).to.equal(0);
+      });
     });
     
     it("applies the new font family", () => {

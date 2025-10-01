@@ -101,7 +101,7 @@ Cypress.Commands.add("checkOldLogoutCancel", (url) => {
 
 Cypress.Commands.add("checkNewLogout", (url) => {
   cy.window().then((win) => {
-    win.sessionStorage.setItem('testKey', 'testValue');
+    win.sessionStorage.setItem('session_data', 'testValue');
   });
 
   cy.mockASPX(url);

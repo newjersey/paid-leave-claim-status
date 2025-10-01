@@ -5,7 +5,7 @@ export const STORAGE_KEY_USER_EMAIL = "user_email";
 export const STORAGE_KEY_USER_PHONE = "user_phone";
 export const STORAGE_KEY_USER_MAIL_ADDRESS = "user_mail_address";
 
-const STORAGE_KEY_SESSION_DATA = "session_data";
+export const STORAGE_KEY_SESSION_DATA = "session_data";
 
 export function getSessionData() {
   try {
