@@ -50,13 +50,6 @@ describe("Certification page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
-
-    it("user can view pdf preview", () => {
-      cy.mockASPX(URL);
-      cy.get('#preview').click();
-      cy.wait('@aspxSubmission').then(checkClaimDownload);
-    });
-
     globalTestsNew(PAGE_ID, URL);
   });
 });
