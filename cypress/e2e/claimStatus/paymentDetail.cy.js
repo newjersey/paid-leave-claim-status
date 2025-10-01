@@ -15,12 +15,12 @@ describe("Payment Detail page - Leave Ended FLI", () => {
     cy.contains("Your Family Leave claim ended on May 6, 2024.").should(
       "be.visible"
     );
-    
+
     cy.get("button")
-    .contains("Status")
-    .should("have.attr", "onclick")
-    .and("equal", "claimdetail()");
-    
+      .contains("Status")
+      .should("have.attr", "onclick")
+      .and("equal", "claimdetail()");
+
     cy.contains("Total payments issued: $4,366.00").should("be.visible");
     cy.get("#accordionFuture0id")
       .contains("Next $770.00 to issue on August 13, 2035")
@@ -78,7 +78,7 @@ describe("Payment Detail page - Leave Ended TDI", () => {
   it("renders with updated content", () => {
     const fixedDate = new Date(2024, 9, 1); // October 1, 2024
     cy.clock(fixedDate.getTime());
-    
+
     cy.visit(
       "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedTDI.html"
     );
@@ -94,11 +94,11 @@ describe("Payment Detail page - Leave Ended TDI", () => {
       "be.visible"
     );
     cy.get("li")
-    .contains(
-      "If you're taking bonding leave (Family Leave Insurance) immediately after, look out for an FL2 form in the mail. We'll send it to you after your P30 is processed."
-    )
-    .should("be.visible");
-    
+      .contains(
+        "If you're taking bonding leave (Family Leave Insurance) immediately after, look out for an FL2 form in the mail. We'll send it to you after your P30 is processed."
+      )
+      .should("be.visible");
+
     cy.contains("Total payments issued: $4,366.00").should("be.visible");
     cy.get("#accordionFuture0id")
       .contains("Next $770.00 to issue on August 13, 2035")
@@ -210,8 +210,8 @@ describe("Payment Detail page - P30 received FLI", () => {
       .contains("There's no action for you to take.")
       .should("be.visible");
 
-      cy.contains("Total payments issued: $4,366.00").should("be.visible");
-      cy.get("#accordionFuture0id")
+    cy.contains("Total payments issued: $4,366.00").should("be.visible");
+    cy.get("#accordionFuture0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
     cy.get("#accordionFuture0id")
@@ -294,8 +294,8 @@ describe("Payment Detail page - P30 sent", () => {
       .contains("Share the Form ID with your doctor.")
       .should("be.visible");
 
-      cy.contains("Total payments issued: $4,366.00").should("be.visible");
-      cy.get("#accordionFuture0id")
+    cy.contains("Total payments issued: $4,366.00").should("be.visible");
+    cy.get("#accordionFuture0id")
       .contains("Next payment to issue on October 13, 2024")
       .should("be.visible");
     cy.get("#accordionFuture0id")
@@ -305,6 +305,44 @@ describe("Payment Detail page - P30 sent", () => {
 
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailP30Sent.html");
+    cy.checkBodyA11y();
+  });
+});
+
+
+describe("Payment Detail page - FL3 sent", () => {
+  it("renders with updated content", () => {
+    const fixedDate = new Date(2025, 8, 10); // September 10, 2025
+    cy.clock(fixedDate.getTime());
+
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailFl3Sent.html");
+
+    cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
+
+    cy.get("h1").contains("Payments").should("be.visible");
+    cy.contains("Claim for Family Leave Insurance (FLI)").should(
+      "be.visible"
+    );
+    cy.contains("JOHN").should("be.visible");
+    cy.contains(
+      "Your last scheduled payment is coming up. To request more days, you'll need to mail or fax us the Family Leave Insurance Continued Claim Certification (FL3 form), showing your updated leave schedule. We mailed this on September 10, 2025."
+    ).should("be.visible");
+    cy.get("li")
+      .contains("Caregiving leave?")
+      .should("be.visible");
+
+
+    cy.contains("Total payments issued: $1,081.00").should("be.visible");
+    cy.get("#accordionFuture0id")
+      .contains("Next $1,853.00 to issue on September 11, 2025")
+      .should("be.visible");
+    cy.get("#accordionPast0id")
+      .contains("1,081.00 issued on September 9, 2025")
+      .should("be.visible");
+  });
+
+  it("passes accessibility checks", () => {
+    cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailFl3Sent.html");
     cy.checkBodyA11y();
   });
 });
@@ -411,7 +449,7 @@ describe("Payment Detail page - Scheduled", () => {
 describe("feedback widget", () => {
   it("renders the feedback widget inside the footer", () => {
     cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html")
-    
+
     cy.get("footer").find("feedback-widget").should('have.length', 1)
     cy.get("footer").within(() => {
       cy.checkFeedbackWidgetIsRendered()
@@ -426,7 +464,7 @@ describe("feedback widget", () => {
     })
   })
 
-   it("displays the overridden version of the email disclaimer text", () => {
+  it("displays the overridden version of the email disclaimer text", () => {
     cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html")
     cy.checkFeedbackWidgetEmailDisclaimerTextIsOverridden()
   })
