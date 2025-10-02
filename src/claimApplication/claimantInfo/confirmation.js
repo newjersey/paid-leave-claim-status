@@ -50,16 +50,17 @@ function addStyles() {
       top: -1px;
       vertical-align: middle;
     }
+
     .due-date {
       background-color: #FEE685;
       color: #5C410A;
       font-size: 14px;
       font-weight: bold;
+      margin-bottom: 15px;
       padding: 3px 5px;
-      position: absolute;
-      right: 10px;
-      top: 10px;
+      width: fit-content;
     }
+
     #m01CopyButton {
       width: 100%;
     }
@@ -87,15 +88,10 @@ function addStyles() {
       display: flex;
       flex-direction: column;
       padding: 10px;
-      position: relative;
     }
 
     .confirmationInfo {
       margin: 10px 0;
-    }
-
-    .dueAction {
-      padding: 50px 10px 10px;
     }
     
     #moreInfo {
@@ -196,7 +192,7 @@ function moreInfo() {
 function m01() {
   const m01Section = document.createElement('section');
   m01Section.id = "m01section";
-  m01Section.classList.add("confirmationInfo", "dueAction");
+  m01Section.classList.add("confirmationInfo");
   m01Section.innerHTML = `
     <div class="due-date">
       ${i18next.t(
@@ -267,7 +263,7 @@ function c01Award() {
   if (oldC01Award && oldC01Award.style.display != 'none') {
     const c01Award = document.createElement('section');
     c01Award.id = "c01AwardSection";
-    c01Award.classList.add("confirmationInfo", "dueAction");
+    c01Award.classList.add("confirmationInfo");
     c01Award.innerHTML = `
       <div class="due-date">
         ${i18next.t(
@@ -303,7 +299,7 @@ function w01() {
   if (oldW01 && oldW01.style.display != 'none') {
     const w01 = document.createElement('section');
     w01.id = "w01Section";
-    w01.classList.add("confirmationInfo", "dueAction");
+    w01.classList.add("confirmationInfo");
     w01.innerHTML = `
       <div class="due-date">
         ${i18next.t(
@@ -349,7 +345,7 @@ function v01() {
   if (oldV01 && oldV01.style.display != 'none') {
     const v01 = document.createElement('section');
     v01.id = "v01Section";
-    v01.classList.add("confirmationInfo", "dueAction");
+    v01.classList.add("confirmationInfo");
     v01.innerHTML = `
       <div class="due-date">
         ${i18next.t(
