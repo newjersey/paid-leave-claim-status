@@ -131,14 +131,13 @@ function replaceBody() {
 
     const newMain = document.createElement('main');
     newMain.innerHTML = `
-      <p>
-        <img
-          src="${ICON_BASE_URL}/check_circle.svg"
-          alt="${i18next.t('confirmation.checkmark')}"
-          class="aligned-icon"
-        />
-        ${i18next.t('confirmation.submitted')}
-      </p>
+      <div class="usa-alert usa-alert--info usa-alert--slim" id="submittedAlert">
+        <div class="usa-alert__body">
+          <p class="usa-alert__text">
+            ${i18next.t('confirmation.submitted')}
+          </p>
+        </div>
+      </div>
       ${m01()}
       ${noEmp()}
       ${c01Award()}

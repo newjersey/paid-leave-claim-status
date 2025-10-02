@@ -15,7 +15,7 @@ const resources = {
       confirmation: {
         title: "You're almost done!",
         checkmark: "Checkmark",
-        submitted: `Your information was submitted. <a id="applicationPdfDownload" class="usa-link">You can download a copy of your application (PDF).</a>`,
+        submitted: `Your information was submitted. <a id="applicationPdfDownload" class="usa-link">Download PDF</a>`,
         dueDate: "Best to complete by {{est_deadline_date}}",
         form_directions: `
             <ul class="usa-list">
