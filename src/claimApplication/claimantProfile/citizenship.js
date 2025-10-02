@@ -35,6 +35,7 @@ export function changes() {
     'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepYes',
     'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepNo'
   );
+  requirePhone();
 }
 
 function adjustWidths () {
@@ -52,4 +53,28 @@ function adjustWidths () {
   if (repEntry) {
     repEntry.style.width = '100%';
   }
+}
+
+function requirePhone() {
+  const phone1 = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum');
+  const phone2 = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum2');
+  const phone3 = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum3');
+
+  phone1.setAttribute('required', '');
+  phone1.setAttribute('pattern', '\\d{3}');
+  phone1.setAttribute('title', 'Please enter exactly 3 digits');
+
+  phone2.setAttribute('required', '');
+  phone2.setAttribute('pattern', '\\d{3}');
+  phone2.setAttribute('title', 'Please enter exactly 3 digits');
+
+  phone3.setAttribute('required', '');
+  phone3.setAttribute('pattern', '\\d{4}');
+  phone3.setAttribute('title', 'Please enter exactly 4 digits');
+
+  const label = phone1.previousElementSibling;
+  const asterisk = document.createElement('a');
+  asterisk.style.color = 'Red';
+  asterisk.textContent = '* ';
+  label.parentNode.insertBefore(asterisk, label);
 }
