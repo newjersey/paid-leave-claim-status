@@ -184,17 +184,18 @@ describe("Confirmation page", () => {
         .should('be.visible');
     });
 
-    it("user can download C01 when needed", () => {
+    it("user can download C01 when award normally shown", () => {
       cy.mockASPX(URL);
       showElement('divC01Award');
-      cy.get('#downloadC01Award').click();
+      cy.get('#downloadC01').click();
       cy.wait('@aspxSubmission').then(checkC01Download);
     });
 
-    it("shows the C01 Card message when needed", () => {
+    it("user can download C01 when card normally shown", () => {
+      cy.mockASPX(URL);
       showElement('divC01Card');
-      cy.contains('C01 Card info')
-        .should('be.visible');
+      cy.get('#downloadC01').click();
+      cy.wait('@aspxSubmission').then(checkC01Download);
     });
 
     it("user can download W01 when needed", () => {

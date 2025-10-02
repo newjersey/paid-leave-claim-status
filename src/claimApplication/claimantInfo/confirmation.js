@@ -36,7 +36,7 @@ export function changes() {
   replaceBody();
   setupApplicationPdfDownloadLink();
   setupCopyM01Button();
-  setupC01AwardDownloadButton();
+  setupC01DownloadButton();
   setupW01DownloadButton();
   setupV01DownloadButton();
   document.addEventListener('headerReady', setNewTitle);
@@ -127,11 +127,12 @@ function addStyles() {
   document.head.appendChild(style);
 }
 
+let requiredActionsIndex = 0;
+
 function replaceBody() {
   const oldContainer = document.querySelector("#ContentPlaceHolder1_ClaimantCertTab");
   if (oldContainer) {
     oldContainer.style.display = 'none';
-
     const newMain = document.createElement('main');
     newMain.innerHTML = `
       <div class="usa-alert usa-alert--info usa-alert--slim" id="submittedAlert">
@@ -143,9 +144,8 @@ function replaceBody() {
       </div>
       ${m01()}
       ${noEmp()}
-      ${c01Award()}
+      ${c01()}
       ${w01()}
-      ${c01Card()}
       ${v01()}
       ${moreInfo()}
     `;
@@ -190,6 +190,7 @@ function moreInfo() {
 }
 
 function m01() {
+  requiredActionsIndex += 1;
   const m01Section = document.createElement('section');
   m01Section.id = "m01section";
   m01Section.classList.add("confirmationInfo");
@@ -200,7 +201,7 @@ function m01() {
         { est_deadline_date: estDeadlineDate() }
       )}
     </div>
-    <h2>${i18next.t('confirmation.m01.title')}</h2>
+    <h2>${i18next.t('confirmation.m01.title', { requiredActionsIndex })}</h2>
     <p>${i18next.t('confirmation.m01.directions')}</p>
     <div class="usa-accordion">
       <h3 class="usa-accordion__heading">
@@ -258,34 +259,40 @@ function downloadIcon() {
   return svgElement.outerHTML;
 }
 
-function c01Award() {
+function c01() {
   const oldC01Award = document.getElementById('divC01Award');
-  if (oldC01Award && oldC01Award.style.display != 'none') {
-    const c01Award = document.createElement('section');
-    c01Award.id = "c01AwardSection";
-    c01Award.classList.add("confirmationInfo");
-    c01Award.innerHTML = `
+  const oldC01Card = document.getElementById('divC01Card');
+
+  const oldC01AwardPresent = oldC01Award && oldC01Award.style.display != 'none';
+  const oldC01CardPresent = oldC01Card && oldC01Card.style.display != 'none';
+  
+  if (oldC01AwardPresent || oldC01CardPresent) {
+    requiredActionsIndex += 1;
+    const c01 = document.createElement('section');
+    c01.id = "c01Section";
+    c01.classList.add("confirmationInfo");
+    c01.innerHTML = `
       <div class="due-date">
         ${i18next.t(
           'confirmation.dueDate',
           { est_deadline_date: estDeadlineDate() }
         )}
       </div>
-      <h2>${i18next.t('confirmation.c01Award.title')}</h2>
-      <button id="downloadC01Award" class="usa-button usa-button--outline">
+      <h2>${i18next.t('confirmation.c01.title', { requiredActionsIndex })}</h2>
+      <button id="downloadC01" class="usa-button usa-button--outline">
         ${downloadIcon()}
-        ${i18next.t('confirmation.c01Award.download_button')}
+        ${i18next.t('confirmation.c01.download_button')}
       </button>
       <p>${i18next.t('confirmation.form_directions', { claim_id: claimId() })}</p>
     `;
-    return c01Award.outerHTML;
+    return c01.outerHTML;
   }
   return '';
 }
 
-function setupC01AwardDownloadButton() {
+function setupC01DownloadButton() {
   const oldDownloadBtn = document.querySelector('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_lnkbtnClickC01Award');
-  const newDownloadBtn = document.querySelector('#downloadC01Award');
+  const newDownloadBtn = document.querySelector('#downloadC01');
   if (oldDownloadBtn && newDownloadBtn) {
     newDownloadBtn.addEventListener('click', function (event) {
       event.preventDefault();
@@ -297,6 +304,7 @@ function setupC01AwardDownloadButton() {
 function w01() {
   const oldW01 = document.getElementById('divW01');
   if (oldW01 && oldW01.style.display != 'none') {
+    requiredActionsIndex += 1;
     const w01 = document.createElement('section');
     w01.id = "w01Section";
     w01.classList.add("confirmationInfo");
@@ -307,7 +315,7 @@ function w01() {
           { est_deadline_date: estDeadlineDate() }
         )}
       </div>
-      <h2>${i18next.t('confirmation.w01.title')}</h2>
+      <h2>${i18next.t('confirmation.w01.title', { requiredActionsIndex })}</h2>
       <button id="downloadW01" class="usa-button usa-button--outline">
         ${downloadIcon()}
         ${i18next.t('confirmation.w01.download_button')}
@@ -330,19 +338,10 @@ function setupW01DownloadButton() {
   }
 }
 
-function c01Card() {
-  const oldC01Card = document.getElementById('divC01Card');
-  if (oldC01Card && oldC01Card.style.display != 'none') {
-    const c01Award = document.createElement('p');
-    c01Award.textContent = "C01 Card info";
-    return c01Award.outerHTML;
-  }
-  return '';
-}
-
 function v01() {
   const oldV01 = document.getElementById('divV01');
   if (oldV01 && oldV01.style.display != 'none') {
+    requiredActionsIndex += 1;
     const v01 = document.createElement('section');
     v01.id = "v01Section";
     v01.classList.add("confirmationInfo");
@@ -353,7 +352,7 @@ function v01() {
           { est_deadline_date: estDeadlineDate() }
         )}
       </div>
-      <h2>${i18next.t('confirmation.v01.title')}</h2>
+      <h2>${i18next.t('confirmation.v01.title', { requiredActionsIndex })}</h2>
       <button id="downloadV01" class="usa-button usa-button--outline">
         ${downloadIcon()}
         ${i18next.t('confirmation.v01.download_button')}

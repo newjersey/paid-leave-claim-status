@@ -35,7 +35,7 @@ const resources = {
             </ul>
           `,
         m01: {
-          title: "1. Follow up with your medical provider about Form M01",
+          title: "{{requiredActionsIndex}}. Follow up with your medical provider about Form M01",
           directions: "A qualified healthcare provider must confirm your disability. They will do this by completing Form M01 for you.",
           sample: {
             title: "Sample language to send to your provider",
@@ -62,16 +62,16 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Tha
             copied: "Copied!",
           },
         },
-        c01Award: {
-          title: "Fax or mail your verification form (C01)",
+        c01: {
+          title: "{{requiredActionsIndex}}. Fax or mail your verification form (C01)",
           download_button: "Download Form C01 (PDF)",
         },
         w01: {
-          title: "Fax or mail your Workers' Compensation form (Form W01)",
+          title: "{{requiredActionsIndex}}. Fax or mail your Workers' Compensation form (Form W01)",
           download_button: "Download Form W01 (PDF)",
         },
         v01: {
-          title: "Fax or mail your Identity Verification form (Form V01)",
+          title: "{{requiredActionsIndex}}. Fax or mail your Identity Verification form (Form V01)",
           download_button: "Download Form V01 (PDF)",
         },
         moreInfo: {
