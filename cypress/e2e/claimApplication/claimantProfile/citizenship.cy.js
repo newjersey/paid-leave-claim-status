@@ -72,12 +72,24 @@ describe("Citizenship page", () => {
       cy.wait('@aspxSubmission').then(checkFullInfoPostData);
     });
 
-    it("user unable to skip phone number entry", () => {
-      infoEntry("", "", "");
-      cy.get('input[name="ctl00$ContentPlaceHolder1$ClaimantProfileTab$tpnlCitizen$txtContactNum"]')
-        .then(($input) => {
-          expect($input[0].validationMessage).to.exist;
-        });
+    const testCases = [
+      { phone1: "", phone2: "", phone3: "", field: "txtContactNum" },
+      { phone1: "1", phone2: "", phone3: "", field: "txtContactNum" },
+      { phone1: "12", phone2: "", phone3: "", field: "txtContactNum" },
+      { phone1: "123", phone2: "1", phone3: "", field: "txtContactNum2" },
+      { phone1: "123", phone2: "12", phone3: "", field: "txtContactNum2" },
+      { phone1: "123", phone2: "456", phone3: "", field: "txtContactNum3" },
+      { phone1: "123", phone2: "456", phone3: "123", field: "txtContactNum3" }
+    ];
+
+    testCases.forEach(({ phone1, phone2, phone3, field }) => {
+      it(`user unable to submit with incomplete phone number entry for field ${field}`, () => {
+        infoEntry(phone1, phone2, phone3);
+        cy.get(`input[name="ctl00$ContentPlaceHolder1$ClaimantProfileTab$tpnlCitizen$${field}"]`)
+          .then(($input) => {
+            expect($input[0].validationMessage).to.exist;
+          });
+      });
     });
 
     globalTestsNew(PAGE_ID, URL);
