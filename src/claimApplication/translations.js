@@ -20,7 +20,7 @@ const resources = {
         form_directions: `
             <ul class="usa-list">
               <li>Complete the form</li>
-              <li>Write your 5-digit claim number on every page: {{claim_id}}</li>
+              <li>Write your 5-digit claim number on every page: <strong>{{claim_id}}</strong></li>
               <li>
                 Submit by fax to (609) 984-4138 (fastest)
                 <br><br>

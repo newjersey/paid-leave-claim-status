@@ -55,10 +55,10 @@ describe("Profile Verification page", () => {
           user_name: 'FirstNameTest LastNameTest',
           user_phone: '(222) 111-2222',
           user_email: 'time@time.com',
-          user_mail_address: JSON.stringify({
+          user_mail_address: {
             line1: "111",
             line2: "g, NJ 07123-1234"
-          })
+          }
         });
       });
     });

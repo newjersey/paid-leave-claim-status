@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { ICON_BASE_URL, logEvent } from "../../modules/shared.mjs";
+import { logEvent } from "../../modules/shared.mjs";
 import {
   getSessionData,
   STORAGE_KEY_PROVIDER_NAME,
@@ -7,6 +7,7 @@ import {
   STORAGE_KEY_USER_NAME,
   STORAGE_KEY_USER_EMAIL,
   STORAGE_KEY_USER_PHONE,
+  STORAGE_KEY_USER_MAIL_ADDRESS,
 } from "../utils";
 
 export const confirmationAltTexts = [
@@ -89,6 +90,10 @@ function addStyles() {
       position: relative;
     }
 
+    .confirmationInfo {
+      margin: 10px 0;
+    }
+
     .dueAction {
       padding: 50px 10px 10px;
     }
@@ -105,6 +110,8 @@ function addStyles() {
       margin-bottom: 5px;
     }
     .usa-button {
+      margin: 5px 0;
+      max-width: 400px;
       min-height: 40px;
     }
     .usa-button .usa-icon {
@@ -151,29 +158,33 @@ function replaceBody() {
 }
 
 function moreInfo() {
+  const sessionData = getSessionData();
+  const claimantName = sessionData[STORAGE_KEY_USER_NAME];
+  const claimantAddress = sessionData[STORAGE_KEY_USER_MAIL_ADDRESS];
+
+  if (!claimantName || !claimantAddress) {
+    return '';
+  }
+
+  const claimantAddressLine1 = claimantAddress['line1'];
+  const claimantAddressLine2 = claimantAddress['line2'];
+
   const moreInfoDiv = document.createElement('div');
   moreInfoDiv.id = "moreInfo";
   moreInfoDiv.innerHTML = `
     <h2>${i18next.t('confirmation.moreInfo.title')}</h2>
-    <section>
+    <section class="confirmationInfo">
       <h3>${i18next.t('confirmation.moreInfo.mail.title')}</h3>
       <p>${i18next.t('confirmation.moreInfo.mail.current_address')}</p>
-      ${"Liz Lemon"}
+      ${claimantName}
       <br>
-      ${"12345 Main Street"}
+      ${claimantAddressLine1}
       <br>
-      ${"Apartment 207"}
-      <br>
-      ${"Trenton, NJ 08601"}
-      <div class="usa-alert usa-alert--warning usa-alert--slim usa-alert--no-icon">
-        <div class="usa-alert__body">
-          <p class="usa-alert__text">
-            ${i18next.t('confirmation.moreInfo.mail.change_address')}
-          </p>
-        </div>
-      </div>
+      ${claimantAddressLine2}
+      <br><br>
+      ${i18next.t('confirmation.moreInfo.mail.change_address')}
     </section>
-    <section>
+    <section class="confirmationInfo">
       <h3>${i18next.t('confirmation.moreInfo.next.title')}</h3>
       <p>${i18next.t('confirmation.moreInfo.next.read_doc')}</p>
       <p>${i18next.t('confirmation.moreInfo.next.check_status')}</p>
@@ -185,7 +196,7 @@ function moreInfo() {
 function m01() {
   const m01Section = document.createElement('section');
   m01Section.id = "m01section";
-  m01Section.classList.add("dueAction");
+  m01Section.classList.add("confirmationInfo", "dueAction");
   m01Section.innerHTML = `
     <div class="due-date">
       ${i18next.t(
@@ -256,7 +267,7 @@ function c01Award() {
   if (oldC01Award && oldC01Award.style.display != 'none') {
     const c01Award = document.createElement('section');
     c01Award.id = "c01AwardSection";
-    c01Award.classList.add("dueAction");
+    c01Award.classList.add("confirmationInfo", "dueAction");
     c01Award.innerHTML = `
       <div class="due-date">
         ${i18next.t(
@@ -292,7 +303,7 @@ function w01() {
   if (oldW01 && oldW01.style.display != 'none') {
     const w01 = document.createElement('section');
     w01.id = "w01Section";
-    w01.classList.add("dueAction");
+    w01.classList.add("confirmationInfo", "dueAction");
     w01.innerHTML = `
       <div class="due-date">
         ${i18next.t(
@@ -338,7 +349,7 @@ function v01() {
   if (oldV01 && oldV01.style.display != 'none') {
     const v01 = document.createElement('section');
     v01.id = "v01Section";
-    v01.classList.add("dueAction");
+    v01.classList.add("confirmationInfo", "dueAction");
     v01.innerHTML = `
       <div class="due-date">
         ${i18next.t(
