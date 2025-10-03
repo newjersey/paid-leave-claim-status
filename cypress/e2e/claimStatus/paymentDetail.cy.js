@@ -51,7 +51,7 @@ describe("Payment Detail page - Leave Ended FLI", () => {
       .should("be.visible");
   });
 
-  it("adds a viewport meta tag", () => {
+  it("ensures viewport meta tag exists", () => {
     cy.visit(
       "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html"
     );
@@ -114,6 +114,12 @@ describe("Payment Detail page - Leave Ended TDI", () => {
       .contains("Covers April 30, 2034 to May 5, 2034")
       .should("be.visible");
   });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedTDI.html"
+    );
+    cy.checksViewportMetaTag();
+  });
 
   it("passes accessibility checks", () => {
     cy.visit(
@@ -154,6 +160,12 @@ describe("Payment Detail page - Max Entitlement", () => {
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
   });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlement.html"
+    );
+    cy.checksViewportMetaTag();
+  });
 
   it("passes accessibility checks", () => {
     cy.visit(
@@ -188,6 +200,12 @@ describe("Payment Detail page - No Additional Benefits", () => {
     cy.get("#accordionFuture0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
+  });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailNoAdditional.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
@@ -224,6 +242,12 @@ describe("Payment Detail page - P30 received FLI", () => {
     cy.get("#accordionFuture0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
+  });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailP30ReceivedFLI.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
@@ -271,6 +295,12 @@ describe("Payment Detail page - P30 received TDI", () => {
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
   });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailP30ReceivedTDI.html"
+    );
+    cy.checksViewportMetaTag();
+  });
 
   it("passes accessibility checks", () => {
     cy.visit(
@@ -308,6 +338,12 @@ describe("Payment Detail page - P30 sent", () => {
     cy.get("#accordionFuture0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
+  });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailP30Sent.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
@@ -347,6 +383,12 @@ describe("Payment Detail page - FL3 sent", () => {
       .contains("1,081.00 issued on September 9, 2025")
       .should("be.visible");
   });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailFl3Sent.html"
+    );
+    cy.checksViewportMetaTag();
+  });
 
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailFl3Sent.html");
@@ -379,6 +421,12 @@ describe("Payment Detail page - Pay code 99/6", () => {
     cy.get("#accordionFuture0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
+  });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailPayCode996.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
@@ -413,6 +461,12 @@ describe("Payment Detail page - Recovered", () => {
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
   });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailRecovered.html"
+    );
+    cy.checksViewportMetaTag();
+  });
 
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimStatus/paymentDetail/paymentDetailRecovered.html");
@@ -445,6 +499,12 @@ describe("Payment Detail page - Scheduled", () => {
     cy.get("#accordionFuture0id")
       .contains("Covers April 30, 2024 to May 5, 2024")
       .should("be.visible");
+  });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailScheduled.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {

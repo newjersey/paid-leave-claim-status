@@ -12,13 +12,13 @@ describe("Claim Detail page - Ineligible scenario with Blank claim notes", () =>
     ).should("be.visible");
   });
 
-  it("adds a viewport meta tag", () => {
+  it("ensures viewport meta tag exists", () => {
     cy.visit(
-      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html"
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleBlank.html"
     );
     cy.checksViewportMetaTag();
   });
-  
+
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleBlank.html");
     cy.checkBodyA11y();
@@ -42,6 +42,12 @@ describe("Claim Detail page - Ineligible scenario with C10 missing", () => {
         "You can also look for the Request for Claimant Information (C10) sent earlier."
       )
       .should("be.visible");
+  });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
@@ -68,6 +74,12 @@ describe("Claim Detail page - Ineligible scenario with M10 missing", () => {
       )
       .should("be.visible");
   });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleM10.html"
+    );
+    cy.checksViewportMetaTag();
+  });
 
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleM10.html");
@@ -93,6 +105,12 @@ describe("Claim Detail page - Ineligible scenario with C10 and M10 missing", () 
       )
       .should("be.visible");
   });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleC10M10.html"
+    );
+    cy.checksViewportMetaTag();
+  });
 
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleC10M10.html");
@@ -115,6 +133,12 @@ describe("Claim Detail page - Ineligible scenario for DDU", () => {
       "Your claim was sent to our Disability During Unemployment team for review."
     ).should("be.visible");
     cy.get("a").contains("Disability During Unemployment").should("be.visible");
+  });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleDDU.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
@@ -139,6 +163,12 @@ describe("Claim Detail page - Ineligible scenario for FLDU", () => {
       .contains("Family Leave During Unemployment")
       .should("be.visible");
   });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleFLDU.html"
+    );
+    cy.checksViewportMetaTag();
+  });
 
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleFLDU.html");
@@ -160,6 +190,12 @@ describe("Claim Detail page -  Ineligible scenario due to invalid wage (2010)", 
     cy.contains(
       "It looks like you didn't meet the wage requirement to qualify for benefits."
     ).should("be.visible");
+  });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleInvalidWage2007.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
@@ -184,6 +220,12 @@ describe("Claim Detail page - Ineligible scenario due to invalid wage (2010)", (
     cy.contains(
       "It looks like you didn't meet the wage requirement to qualify for benefits."
     ).should("be.visible");
+  });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleInvalidWage2010.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
@@ -223,6 +265,12 @@ describe("Claim Detail page - Ineligible scenario due to private plan", () => {
         "Contact your Human Resources department about your employer's private insurer."
       )
       .should("be.visible");
+  });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligiblePrivatePlan.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
