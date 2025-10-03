@@ -12,6 +12,13 @@ describe("Claim Detail page - Ineligible scenario with Blank claim notes", () =>
     ).should("be.visible");
   });
 
+  it("adds a viewport meta tag", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html"
+    );
+    cy.checksViewportMetaTag();
+  });
+  
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailIneligibleBlank.html");
     cy.checkBodyA11y();

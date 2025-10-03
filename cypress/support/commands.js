@@ -170,3 +170,7 @@ Cypress.Commands.add("checkFeedbackWidgetEmailDisclaimerTextIsOverridden", () =>
       cy.contains(expectedEmailDisclaimerText).should("be.visible")
   })
 })
+
+Cypress.Commands.add("checksViewportMetaTag", () => {
+  cy.get('head meta[name="viewport"]').should('have.attr', 'content', 'width=device-width, initial-scale=1');
+})

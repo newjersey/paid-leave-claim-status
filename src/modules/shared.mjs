@@ -49,7 +49,7 @@ export function makeMobileFriendly() {
   if (!viewportMeta) {
     const metaTag = document.createElement('meta');
     metaTag.name = 'viewport';
-    metaTag.content = 'width=device-width, initial-scale=1.0';
+    metaTag.content = 'width=device-width, initial-scale=1';
     document.head.appendChild(metaTag);
   }
 

@@ -24,6 +24,13 @@ describe("Claim Detail page - In Progress scenario", () => {
     cy.get("li").contains("We'll review your claim.").should("be.visible");
   });
 
+  it("adds a viewport meta tag", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html"
+    );
+    cy.checksViewportMetaTag();
+  });
+  
   it("passes accessibility checks", () => {
     cy.visit(
       "./cypress/fixtures/claimStatus/claimDetail/claimDetailUndeterminedInProgress.html"

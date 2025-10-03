@@ -51,6 +51,13 @@ describe("Payment Detail page - Leave Ended FLI", () => {
       .should("be.visible");
   });
 
+  it("adds a viewport meta tag", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html"
+    );
+    cy.checksViewportMetaTag();
+  });
+
   it("passes accessibility checks", () => {
     cy.visit(
       "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html"

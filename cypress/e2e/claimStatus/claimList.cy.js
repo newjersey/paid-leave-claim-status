@@ -26,6 +26,13 @@ describe("Claim List page - with recent and older claims", () => {
       .and("include", "populateMoreDetail('001', 'FLI', 'U')");
   });
 
+  it("adds a viewport meta tag", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html"
+    );
+    cy.checksViewportMetaTag();
+  });
+  
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimStatus/claimList/claimList.html");
     cy.checkBodyA11y();

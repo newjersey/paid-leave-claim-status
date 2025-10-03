@@ -44,6 +44,13 @@ describe("Claim Detail page - Eligible scenario with next pay date", () => {
       .should("be.visible");
   });
 
+  it("adds a viewport meta tag", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailLeaveEndedFLI.html"
+    );
+    cy.checksViewportMetaTag();
+  });
+  
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html");
     cy.checkBodyA11y();
