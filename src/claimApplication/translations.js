@@ -88,6 +88,16 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Tha
           },
         },
       },
+      reason_for_leave: {
+        title: "Reason for leave",
+        prompt: "Choose your reason for applying Temporary Disability benefits:",
+        pregnancy: "Pregnancy and recovery from childbirth",
+        pregnancy_comments: "(optional) Describe any work restrictions or pregnancy complications.",
+        illness: "Illness (including mental health)",
+        illness_comments: "Describe your illness.",
+        injury: "Injury",
+        injury_comments: "Describe your injury.",
+      }
     }
   },
 };
