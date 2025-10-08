@@ -13,6 +13,13 @@ describe("No Record Found page", () => {
     cy.contains("Current as of April 14, 2021");
   });
 
+    it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/noRecordFound/noRecordFound.html"
+    );
+    cy.checksViewportMetaTag();
+  });
+
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimStatus/noRecordFound/noRecordFound.html");
     cy.checkBodyA11y();

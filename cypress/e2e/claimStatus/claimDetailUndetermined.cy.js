@@ -24,6 +24,13 @@ describe("Claim Detail page - In Progress scenario", () => {
     cy.get("li").contains("We'll review your claim.").should("be.visible");
   });
 
+    it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html"
+    );
+    cy.checksViewportMetaTag();
+  });
+
   it("passes accessibility checks", () => {
     cy.visit(
       "./cypress/fixtures/claimStatus/claimDetail/claimDetailUndeterminedInProgress.html"
@@ -56,6 +63,12 @@ describe("Claim Detail page - 14 Day scenario", () => {
       .contains("There's no action for you to take.")
       .should("be.visible");
     cy.get("li").contains("We'll review your claim.").should("be.visible");
+  });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailUndetermined14Day.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
@@ -90,6 +103,12 @@ describe("Claim Detail page - Blank request scenario", () => {
       .contains("There's no action for you to take.")
       .should("be.visible");
     cy.get("li").contains("We'll review your claim.").should("be.visible");
+  });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailUndeterminedBlankRequest.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
@@ -198,6 +217,12 @@ describe("Claim Detail page - Information Needed scenario", () => {
       );
     accordionButton.click();
     cy.get("#sect7").should("not.be.visible");
+  });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailUndeterminedInfoNeeded.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
