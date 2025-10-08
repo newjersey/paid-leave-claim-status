@@ -45,12 +45,15 @@ export function updateIcon() {
 }
 
 export function makeMobileFriendly() {
-  if (!isDesktop()) {
-    const meta = document.createElement("meta");
-    meta.name = "viewport";
-    meta.content = "width=device-width, initial-scale=1";
-    document.getElementsByTagName("head")[0]?.appendChild(meta);
+  let viewportMeta = document.querySelector("meta[name='viewport']");
+  if (!viewportMeta) {
+    const metaTag = document.createElement('meta');
+    metaTag.name = 'viewport';
+    metaTag.content = 'width=device-width, initial-scale=1';
+    document.head.appendChild(metaTag);
+  }
 
+  if (!isDesktop()) {
     const images = document.getElementsByTagName("img");
     for (let i = 0; i < images.length; i++) {
       const node = images[i];
