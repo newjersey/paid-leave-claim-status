@@ -14,6 +14,8 @@ const resources = {
       },
       confirmation: {
         title: "Action required: final step!",
+        tasks_one: "You have the below task to complete.",
+        tasks_other: "You have the below tasks to complete. The tasks may be done in any order.",
         checkmark: "Checkmark",
         submitted: `Your information was submitted. <a id="applicationPdfDownload" class="usa-link" href="#">Download PDF</a>`,
         dueDate: "Best to complete by {{est_deadline_date}}",

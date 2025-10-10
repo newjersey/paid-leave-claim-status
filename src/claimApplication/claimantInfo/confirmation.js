@@ -141,6 +141,11 @@ function replaceBody() {
       ${v01()}
       ${moreInfo()}
     `;
+
+    const tasksParagraph = document.createElement('p');
+    tasksParagraph.textContent = i18next.t('confirmation.tasks', { count: requiredActionsIndex });
+    newMain.insertBefore(tasksParagraph, newMain.firstChild);
+
     oldContainer.parentNode.insertBefore(newMain, oldContainer);
   }
 }
