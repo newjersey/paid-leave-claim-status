@@ -35,6 +35,7 @@ export function changes() {
   addStyles();
   replaceBody();
   setupCopyM01Button();
+  setupM01InstructionsButton();
   setupC01AwardDownloadButton();
   setupC01CardDownloadButton();
   setupW01DownloadButton();
@@ -86,12 +87,12 @@ function addStyles() {
       padding: 10px;
     }
 
-    .confirmationInfo, .moreInfoNextSection {
+    .confirmationInfo {
       margin: 50px 0;
     }
 
-    .addressSection {
-      margin: 10px 0;
+    .moreInfoSection {
+      margin: 10px 0 50px;
     }
     
     #moreInfo {
@@ -165,7 +166,7 @@ function addressBox() {
   const claimantAddressLine2 = claimantAddress['line2'];
 
   const addressDiv = document.createElement('section');
-  addressDiv.classList.add("addressSection");
+  addressDiv.classList.add("moreInfoSection");
   addressDiv.innerHTML = `
     <h3>${i18next.t('confirmation.moreInfo.mail.title')}</h3>
     <br>
@@ -189,7 +190,7 @@ function moreInfo() {
   moreInfoDiv.innerHTML = `
     <h2>${i18next.t('confirmation.moreInfo.title')}</h2>
     ${addressBox()}
-    <section class="moreInfoNextSection">
+    <section class="moreInfoSection">
       <h3>${i18next.t('confirmation.moreInfo.next.title')}</h3>
       <br>
       <p>${i18next.t('confirmation.moreInfo.next.read_doc')}</p>
@@ -213,7 +214,9 @@ function m01() {
       )}
     </div>
     <h2>${i18next.t('confirmation.m01.title', { requiredActionsIndex })}</h2>
+    <br>
     <p>${i18next.t('confirmation.m01.directions')}</p>
+    <br>
     <div class="usa-accordion">
       <h3 class="usa-accordion__heading">
         <button
@@ -233,9 +236,24 @@ function m01() {
           ${i18next.t('confirmation.m01.sample.copyButton')}
         </button>
       </div>
+      <br>
+      <p>${i18next.t('confirmation.m01.alternative')}</p>
     </div>
   `;
   return m01Section.outerHTML;
+}
+
+function setupM01InstructionsButton() {
+  const downloadLink = document.getElementById('downloadM01Instructions');
+  if (downloadLink) {
+    downloadLink.addEventListener('click', function(event) {
+      event.preventDefault();
+      const pdfDownloadBtn = document.getElementById('ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_lnkbtnClickM01');
+      if (pdfDownloadBtn) {
+        pdfDownloadBtn.click();
+      }
+    });
+  }
 }
 
 function noEmp() {
@@ -285,6 +303,7 @@ function c01Award() {
         )}
       </div>
       <h2>${i18next.t('confirmation.c01.title', { requiredActionsIndex })}</h2>
+      <br>
       <button id="downloadC01Award" class="usa-button usa-button--outline">
         ${downloadIcon()}
         ${i18next.t('confirmation.c01.download_button')}
@@ -311,6 +330,7 @@ function c01Card() {
         )}
       </div>
       <h2>${i18next.t('confirmation.c01.title', { requiredActionsIndex })}</h2>
+      <br>
       <button id="downloadC01Card" class="usa-button usa-button--outline">
         ${downloadIcon()}
         ${i18next.t('confirmation.c01.download_button')}
@@ -378,6 +398,7 @@ function w01() {
         )}
       </div>
       <h2>${i18next.t('confirmation.w01.title', { requiredActionsIndex })}</h2>
+      <br>
       <button id="downloadW01" class="usa-button usa-button--outline">
         ${downloadIcon()}
         ${i18next.t('confirmation.w01.download_button')}
@@ -415,6 +436,7 @@ function v01() {
         )}
       </div>
       <h2>${i18next.t('confirmation.v01.title', { requiredActionsIndex })}</h2>
+      <br>
       <button id="downloadV01" class="usa-button usa-button--outline">
         ${downloadIcon()}
         ${i18next.t('confirmation.v01.download_button')}

@@ -215,10 +215,10 @@ describe("Confirmation page", () => {
       });
     });
 
-    xit("user can download M01 instructions", () => {
+    it("user can download M01 instructions", () => {
       cy.mockASPX(URL);
       showElement('divC01Award');
-      // cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_lnkbtnClickM01').click();
+      cy.get('#downloadM01Instructions').click();
       cy.wait('@aspxSubmission').then(checkM01InstructionsDownload);
     });
 

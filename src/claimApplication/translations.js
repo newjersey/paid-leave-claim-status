@@ -38,6 +38,7 @@ const resources = {
         m01: {
           title: "{{requiredActionsIndex}}. Follow up with your medical provider about Form M01",
           directions: "A qualified healthcare provider must confirm your disability. They will do this by completing Form M01 for you.",
+          alternative: `Alternatively, you may bring printed instructions to your healthcare provider. <a href="" id="downloadM01Instructions">Download provider instructions</a>.`,
           sample: {
             title: "Sample language to send to your provider",
             body: `Subject: Request for Medical Form M01 - Temporary Disability Claim
@@ -80,7 +81,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Tha
           mail: {
             title: "As we process your claim",
             current_address: "We will mail forms to:",
-            change_address: `<strong>Need to change your address?</strong> <a href="{{hostname}}/tdi/AddressChange_Introduction.aspx">Submit a change of address form.</a>`,
+            change_address: `<strong>Need to change your address?</strong> <a href="/tdi/AddressChange_Introduction.aspx">Submit a change of address form.</a>`,
           },
           next: {
             title: "What happens next?",
