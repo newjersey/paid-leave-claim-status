@@ -127,6 +127,21 @@ describe("Confirmation page", () => {
       cy.wait('@script');
     });
 
+    it("displays the mailing address when present", () => {
+      cy.window().then((win) => {
+        const data = {
+          user_name: "Liz Lemon",
+          user_mail_address: {
+            line1: "123 Main Street",
+            line2: "Newark, NJ 07123-1234"
+          }
+        };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));          
+      });
+      cy.visit(FIXTURE);
+      cy.get('body').should('contain.text', '123 Main Street');
+    });
+
     it("user can open PDF of claim summary", () => {
       cy.mockASPX(URL);
       cy.get('#applicationPdfDownload').click();
@@ -136,7 +151,6 @@ describe("Confirmation page", () => {
     it("user can copy sample M01 text when session has data", () => {
       cy.clock(new Date(2025, 8, 23)); // 0-indexed; Sept. 23, 2025
       cy.window().then((win) => {
-        const key = "20250823";
         const data = {
           provider_name: "Dr. Spaceman",
           user_dob: "Jan 1, 2000",
@@ -144,7 +158,7 @@ describe("Confirmation page", () => {
           user_email: "lemon@nbc.com",
           user_phone: "(555) 555-5555"
         };
-        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data), key));
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
       });
       cy.visit(FIXTURE);
 

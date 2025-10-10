@@ -47,10 +47,8 @@ describe("Disability Verification page", () => {
     it("user can input info and proceed to next page", () => {
       checkInfoEntry();
       cy.window().then((win) => {
-        const now = new Date();
-        const key = now.getFullYear() * 10000 + now.getMonth() * 100 + now.getDate();
         const encodedData = win.sessionStorage.getItem('session_data');
-        const data = JSON.parse(encodeDecode(encodedData, key));
+        const data = JSON.parse(encodeDecode(encodedData));
         expect(data["provider_name"]).to.equal('Dr. Spaceman');
       });
     });

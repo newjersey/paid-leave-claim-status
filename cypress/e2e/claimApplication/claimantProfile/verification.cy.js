@@ -46,10 +46,8 @@ describe("Profile Verification page", () => {
     it("user can confirm info is correct and proceed to next page", () => {
       checkConfirmInfo();
       cy.window().then((win) => {
-        const now = new Date();
-        const key = now.getFullYear() * 10000 + now.getMonth() * 100 + now.getDate();
         const encodedData = win.sessionStorage.getItem('session_data');
-        const data = JSON.parse(encodeDecode(encodedData, key));
+        const data = JSON.parse(encodeDecode(encodedData));
         expect(data).to.deep.equal({
           user_dob: '01/01/2000',
           user_name: 'FirstNameTest LastNameTest',
