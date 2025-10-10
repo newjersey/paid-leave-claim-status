@@ -280,12 +280,12 @@ function c01Award() {
           { est_deadline_date: estDeadlineDate() }
         )}
       </div>
-      <h2>${i18next.t('confirmation.c01Award.title', { requiredActionsIndex })}</h2>
+      <h2>${i18next.t('confirmation.c01.title', { requiredActionsIndex })}</h2>
       <button id="downloadC01Award" class="usa-button usa-button--outline">
         ${downloadIcon()}
-        ${i18next.t('confirmation.c01Award.download_button')}
+        ${i18next.t('confirmation.c01.download_button')}
       </button>
-      <p>${i18next.t('confirmation.form_directions', { claim_id: claimId() })}</p>
+      ${formDirections(true)}
     `;
     return c01Award.outerHTML;
   }
@@ -306,16 +306,35 @@ function c01Card() {
           { est_deadline_date: estDeadlineDate() }
         )}
       </div>
-      <h2>${i18next.t('confirmation.c01Card.title', { requiredActionsIndex })}</h2>
+      <h2>${i18next.t('confirmation.c01.title', { requiredActionsIndex })}</h2>
       <button id="downloadC01Card" class="usa-button usa-button--outline">
         ${downloadIcon()}
-        ${i18next.t('confirmation.c01Card.download_button')}
+        ${i18next.t('confirmation.c01.download_button')}
       </button>
-      <p>${i18next.t('confirmation.form_directions', { claim_id: claimId() })}</p>
+      ${formDirections()}
     `;
     return c01Card.outerHTML;
   }
   return '';
+}
+
+function formDirections(includeSocSecLetter = false) {
+  const directions = document.createElement('ul');
+  directions.classList.add("usa-list");
+  let listItems = '';
+
+  if (includeSocSecLetter) {
+    listItems += `<li>${i18next.t('confirmation.form_directions.copySocSecLetter')}</li>`;
+  }
+
+  listItems += `
+    <li>${i18next.t('confirmation.form_directions.complete')}</li>
+    <li>${i18next.t('confirmation.form_directions.claim_number', { claim_id: claimId() })}</li>
+    <li>${i18next.t('confirmation.form_directions.submit')}</li>
+  `;
+
+  directions.innerHTML = listItems;
+  return directions.outerHTML;
 }
 
 function setupC01AwardDownloadButton() {
@@ -359,7 +378,7 @@ function w01() {
         ${downloadIcon()}
         ${i18next.t('confirmation.w01.download_button')}
       </button>
-      <p>${i18next.t('confirmation.form_directions', { claim_id: claimId() })}</p>
+      ${formDirections()}
     `;
     return w01.outerHTML;
   }
@@ -396,7 +415,7 @@ function v01() {
         ${downloadIcon()}
         ${i18next.t('confirmation.v01.download_button')}
       </button>
-      <p>${i18next.t('confirmation.form_directions', { claim_id: claimId() })}</p>
+      ${formDirections()}
     `;
     return v01.outerHTML;
   }

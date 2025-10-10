@@ -19,23 +19,22 @@ const resources = {
         checkmark: "Checkmark",
         submitted: `Your information was submitted. <a id="applicationPdfDownload" class="usa-link" href="#">Download PDF</a>`,
         dueDate: "Best to complete by {{est_deadline_date}}",
-        form_directions: `
-            <ul class="usa-list">
-              <li>Complete the form</li>
-              <li>Write your 5-digit claim number on every page: <strong>{{claim_id}}</strong></li>
-              <li>
-                Submit by fax to (609) 984-4138 (fastest)
-                <br><br>
-                Or, mail to:
-                <br>
-                Division of Temporary Disability Insurance
-                <br>
-                P.O. Box 387
-                <br>
-                Trenton, NJ 08625-0387
-              </li>
-            </ul>
+        form_directions: {
+          copySocSecLetter: "Make a copy of your Social Security Award Letter",
+          complete: "Complete the form",
+          claim_number: "Write your 5-digit claim number on every page: <strong>{{claim_id}}</strong>",
+          submit: `
+            Submit by fax to (609) 984-4138 (fastest)
+            <br><br>
+            Or, mail to:
+            <br>
+            Division of Temporary Disability Insurance
+            <br>
+            P.O. Box 387
+            <br>
+            Trenton, NJ 08625-0387
           `,
+        },
         m01: {
           title: "{{requiredActionsIndex}}. Follow up with your medical provider about Form M01",
           directions: "A qualified healthcare provider must confirm your disability. They will do this by completing Form M01 for you.",
