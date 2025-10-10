@@ -63,8 +63,14 @@ function addStyles() {
     }
 
     #m01CopyButton {
+      background-color: white;
       width: 100%;
     }
+
+    #m01CopyButton svg {
+      margin-bottom: 1px;
+    }
+
     #sampleLanguageBody {
       background-color: white;
       padding: 10px;
@@ -232,7 +238,8 @@ function m01() {
         <div id="sampleLanguageBody" class="usa-prose">
           ${m01SampleText()}
         </div>
-        <button id="m01CopyButton" class="usa-button">
+        <button id="m01CopyButton" class="usa-button usa-button--outline">
+          ${contentCopyIcon()}
           ${i18next.t('confirmation.m01.sample.copyButton')}
         </button>
       </div>
@@ -264,6 +271,28 @@ function noEmp() {
     return noEmp.outerHTML;
   }
   return '';
+}
+
+function contentCopyIcon() {
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const svgElement = document.createElementNS(svgNS, 'svg');
+  svgElement.setAttribute('class', 'usa-icon');
+  svgElement.setAttribute('aria-hidden', 'true');
+  svgElement.setAttribute('width', '24');
+  svgElement.setAttribute('height', '24');
+  svgElement.setAttribute('viewBox', '0 0 24 24');
+
+  const path1 = document.createElementNS(svgNS, 'path');
+  path1.setAttribute('d', 'M0 0h24v24H0z');
+  path1.setAttribute('fill', 'none');
+
+  const path2 = document.createElementNS(svgNS, 'path');
+  path2.setAttribute('d', 'M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z');
+
+  svgElement.appendChild(path1);
+  svgElement.appendChild(path2);
+
+  return svgElement.outerHTML;
 }
 
 function downloadIcon() {
