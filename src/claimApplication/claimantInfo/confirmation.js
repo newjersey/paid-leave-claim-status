@@ -69,13 +69,9 @@ function addStyles() {
       padding: 10px;
       margin: 10px 0;
     }
-    .usa-accordion__button,
-    .usa-accordion__button:focus,
+
     #sampleLanguageContainer {
-      background-color: #E8F5FF;
-    }
-    .usa-accordion__button:hover {
-      background-color: #bde3ff;
+      background-color: #f0f0f0;
     }
 
     #sampleLanguageContainer {
