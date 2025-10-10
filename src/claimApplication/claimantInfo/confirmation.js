@@ -266,6 +266,7 @@ function setupM01InstructionsButton() {
 function noEmp() {
   const oldNoEmp = document.getElementById('DivNoEmps');
   if (oldNoEmp && oldNoEmp.style.display != 'none') {
+    logEvent('TDI Confirmation - No Emp Shown', {});
     const noEmp = document.createElement('p');
     noEmp.textContent = "There are no employers that you worked for in the 180 days prior to your first day of disability.";
     return noEmp.outerHTML;
@@ -320,6 +321,7 @@ function downloadIcon() {
 function c01Award() {
   const oldC01Award = document.getElementById('divC01Award');
   if (oldC01Award && oldC01Award.style.display != 'none') {
+    logEvent('TDI Confirmation - C01 Award Shown', {});
     requiredActionsIndex += 1;
     const c01Award = document.createElement('section');
     c01Award.id = "c01AwardSection";
@@ -347,6 +349,7 @@ function c01Award() {
 function c01Card() {
   const oldC01Card = document.getElementById('divC01Card');  
   if (oldC01Card && oldC01Card.style.display != 'none') {
+    logEvent('TDI Confirmation - C01 Card Shown', {});
     requiredActionsIndex += 1;
     const c01Card = document.createElement('section');
     c01Card.id = "c01CardSection";
@@ -415,6 +418,7 @@ function setupC01CardDownloadButton() {
 function w01() {
   const oldW01 = document.getElementById('divW01');
   if (oldW01 && oldW01.style.display != 'none') {
+    logEvent('TDI Confirmation - W01 Shown', {});
     requiredActionsIndex += 1;
     const w01 = document.createElement('section');
     w01.id = "w01Section";
@@ -453,6 +457,7 @@ function setupW01DownloadButton() {
 function v01() {
   const oldV01 = document.getElementById('divV01');
   if (oldV01 && oldV01.style.display != 'none') {
+    logEvent('TDI Confirmation - V01 Shown', {});
     requiredActionsIndex += 1;
     const v01 = document.createElement('section');
     v01.id = "v01Section";

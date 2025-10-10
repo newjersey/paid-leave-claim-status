@@ -224,6 +224,7 @@ describe("Confirmation page", () => {
 
     it("shows the no employer message when needed", () => {
       showElement('DivNoEmps');
+      cy.checkLogEvent(`TDI Confirmation - No Emp Shown`, {});
       cy.contains('There are no employers that you worked for in the 180 days prior to your first day of disability.')
         .should('be.visible');
     });
@@ -231,6 +232,7 @@ describe("Confirmation page", () => {
     it("user can download C01 when award normally shown", () => {
       cy.mockASPX(URL);
       showElement('divC01Award');
+      cy.checkLogEvent(`TDI Confirmation - C01 Award Shown`, {});
       cy.get('#downloadC01Award').click();
       cy.wait('@aspxSubmission').then(checkC01AwardDownload);
     });
@@ -238,6 +240,7 @@ describe("Confirmation page", () => {
     it("user can download C01 when card normally shown", () => {
       cy.mockASPX(URL);
       showElement('divC01Card');
+      cy.checkLogEvent(`TDI Confirmation - C01 Card Shown`, {});
       cy.get('#downloadC01Card').click();
       cy.wait('@aspxSubmission').then(checkC01CardDownload);
     });
@@ -245,6 +248,7 @@ describe("Confirmation page", () => {
     it("user can download W01 when needed", () => {
       cy.mockASPX(URL);
       showElement('divW01');
+      cy.checkLogEvent(`TDI Confirmation - W01 Shown`, {});
       cy.get('#downloadW01').click();
       cy.wait('@aspxSubmission').then(checkW01Download);
     });
@@ -252,6 +256,7 @@ describe("Confirmation page", () => {
     it("user can download V01 when needed", () => {
       cy.mockASPX(URL);
       showElement('divV01');
+      cy.checkLogEvent(`TDI Confirmation - V01 Shown`, {});
       cy.get('#downloadV01').click();
       cy.wait('@aspxSubmission').then(checkV01Download);
     });
