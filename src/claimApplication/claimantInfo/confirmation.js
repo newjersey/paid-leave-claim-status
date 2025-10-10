@@ -255,6 +255,7 @@ function setupM01InstructionsButton() {
   if (downloadLink) {
     downloadLink.addEventListener('click', function(event) {
       event.preventDefault();
+      logEvent('TDI Confirmation - Download M01 Instructions Clicked', {});
       const pdfDownloadBtn = document.getElementById('ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_lnkbtnClickM01');
       if (pdfDownloadBtn) {
         pdfDownloadBtn.click();
@@ -399,6 +400,7 @@ function setupC01AwardDownloadButton() {
   if (oldDownloadBtn && newDownloadBtn) {
     newDownloadBtn.addEventListener('click', function (event) {
       event.preventDefault();
+      logEvent('TDI Confirmation - Download C01 Award Clicked', {});
       oldDownloadBtn.click();
     });
   }
@@ -410,6 +412,7 @@ function setupC01CardDownloadButton() {
   if (oldDownloadBtn && newDownloadBtn) {
     newDownloadBtn.addEventListener('click', function (event) {
       event.preventDefault();
+      logEvent('TDI Confirmation - Download C01 Card Clicked', {});
       oldDownloadBtn.click();
     });
   }
@@ -449,6 +452,7 @@ function setupW01DownloadButton() {
   if (oldDownloadBtn && newDownloadBtn) {
     newDownloadBtn.addEventListener('click', function (event) {
       event.preventDefault();
+      logEvent('TDI Confirmation - Download W01 Clicked', {});
       oldDownloadBtn.click();
     });
   }
@@ -488,6 +492,7 @@ function setupV01DownloadButton() {
   if (oldDownloadBtn && newDownloadBtn) {
     newDownloadBtn.addEventListener('click', function (event) {
       event.preventDefault();
+      logEvent('TDI Confirmation - Download V01 Clicked', {});
       oldDownloadBtn.click();
     });
   }
@@ -584,6 +589,7 @@ function setupApplicationPdfDownloadLink() {
   if (downloadLink) {
     downloadLink.addEventListener('click', function(event) {
       event.preventDefault();
+      logEvent('TDI Confirmation - PDF Download Clicked', {});
       const pdfDownloadBtn = document.getElementById('ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue');
       if (pdfDownloadBtn) {
         pdfDownloadBtn.click();
@@ -599,6 +605,7 @@ function setupCopyM01Button() {
   if (copyButton && sampleLanguageBody) {
     copyButton.addEventListener('click', function(event) {
       event.preventDefault();
+      logEvent('TDI Confirmation - Copy M01 Sample Clicked', {});
       const textToCopy = sampleLanguageBody.textContent.trim();
 
       navigator.clipboard.writeText(textToCopy).then(() => {

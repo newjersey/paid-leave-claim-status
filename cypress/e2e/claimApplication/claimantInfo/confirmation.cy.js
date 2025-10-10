@@ -146,6 +146,7 @@ describe("Confirmation page", () => {
       cy.mockASPX(URL);
       cy.get('#applicationPdfDownload').click();
       cy.wait('@aspxSubmission').then(checkClaimDownload);
+      cy.checkLogEvent(`TDI Confirmation - PDF Download Clicked`, {});
     });
 
     it("user can copy sample M01 text when session has data", () => {
@@ -212,14 +213,15 @@ describe("Confirmation page", () => {
         return win.navigator.clipboard.readText();
       }).then((clipboardText) => {
         expect(normalizeWhitespace(clipboardText)).to.eq(normalizeWhitespace(expectedText));
+        cy.checkLogEvent(`TDI Confirmation - Copy M01 Sample Clicked`, {});
       });
     });
 
     it("user can download M01 instructions", () => {
       cy.mockASPX(URL);
-      showElement('divC01Award');
       cy.get('#downloadM01Instructions').click();
       cy.wait('@aspxSubmission').then(checkM01InstructionsDownload);
+      cy.checkLogEvent(`TDI Confirmation - Download M01 Instructions Clicked`, {});
     });
 
     it("shows the no employer message when needed", () => {
@@ -235,6 +237,7 @@ describe("Confirmation page", () => {
       cy.checkLogEvent(`TDI Confirmation - C01 Award Shown`, {});
       cy.get('#downloadC01Award').click();
       cy.wait('@aspxSubmission').then(checkC01AwardDownload);
+      cy.checkLogEvent(`TDI Confirmation - Download C01 Award Clicked`, {});
     });
 
     it("user can download C01 when card normally shown", () => {
@@ -243,6 +246,7 @@ describe("Confirmation page", () => {
       cy.checkLogEvent(`TDI Confirmation - C01 Card Shown`, {});
       cy.get('#downloadC01Card').click();
       cy.wait('@aspxSubmission').then(checkC01CardDownload);
+      cy.checkLogEvent(`TDI Confirmation - Download C01 Card Clicked`, {});
     });
 
     it("user can download W01 when needed", () => {
@@ -251,6 +255,7 @@ describe("Confirmation page", () => {
       cy.checkLogEvent(`TDI Confirmation - W01 Shown`, {});
       cy.get('#downloadW01').click();
       cy.wait('@aspxSubmission').then(checkW01Download);
+      cy.checkLogEvent(`TDI Confirmation - Download W01 Clicked`, {});
     });
 
     it("user can download V01 when needed", () => {
@@ -259,6 +264,7 @@ describe("Confirmation page", () => {
       cy.checkLogEvent(`TDI Confirmation - V01 Shown`, {});
       cy.get('#downloadV01').click();
       cy.wait('@aspxSubmission').then(checkV01Download);
+      cy.checkLogEvent(`TDI Confirmation - Download V01 Clicked`, {});
     });
 
     globalTestsNew(PAGE_ID, URL);
