@@ -11,7 +11,7 @@ export function getSessionData() {
   try {
     const encodedData = sessionStorage.getItem(STORAGE_KEY_SESSION_DATA);
     if (!encodedData) return {};
-    return JSON.parse(encodeDecode(encodedData, storageKey()));
+    return JSON.parse(encodeDecode(encodedData));
   } catch (error) {
     console.error("Error decoding data:", error);
     return {};
@@ -23,22 +23,17 @@ export function addToSessionData(newData) {
   const sessionData = { ...existingData, ...newData };
 
   try {
-    const encodedData = encodeDecode(JSON.stringify(sessionData), storageKey());
+    const encodedData = encodeDecode(JSON.stringify(sessionData));
     sessionStorage.setItem(STORAGE_KEY_SESSION_DATA, encodedData);
   } catch (error) {
     console.error("Error encoding data:", error);
   }
 }
 
-// Note: this is only a simple XOR to make not plaintext - not true encryption
-// Fetching from backend is more robust
-export function encodeDecode(data, key) {
-  return data.split('').map(char => String.fromCharCode(char.charCodeAt(0) ^ key)).join('');
-}
-
-function storageKey() {
-  const now = new Date();
-  return now.getFullYear() * 10000 + now.getMonth() * 100 + now.getDate();
+// Note: this is only a simple XOR to make not plaintext - not encryption
+// Fetching from backend is more robust and is in progress at DOL to replace this
+export function encodeDecode(data) {
+  return data.split('').map(char => String.fromCharCode(char.charCodeAt(0) ^ 100)).join('');
 }
 
 // TODO: this only styles the buttons.
