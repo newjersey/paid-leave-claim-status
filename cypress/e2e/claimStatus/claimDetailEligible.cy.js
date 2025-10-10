@@ -44,6 +44,13 @@ describe("Claim Detail page - Eligible scenario with next pay date", () => {
       .should("be.visible");
   });
 
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html"
+    );
+    cy.checksViewportMetaTag();
+  });
+
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html");
     cy.checkBodyA11y();
@@ -100,6 +107,13 @@ describe("Claim Detail page - Eligible scenario without next pay date", () => {
     cy.contains("Leave end date").should("not.exist");
   });
 
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailEligibleProcessing.html"
+    );
+    cy.checksViewportMetaTag();
+  });
+
   it("passes accessibility checks", () => {
     cy.visit(
       "./cypress/fixtures/claimStatus/claimDetail/claimDetailEligibleProcessing.html"
@@ -154,6 +168,13 @@ describe("Claim Detail page - Eligible scenario with next pay date", () => {
       .should("be.visible");
   });
 
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html"
+    );
+    cy.checksViewportMetaTag();
+  });
+
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html");
     cy.checkBodyA11y();
@@ -202,6 +223,13 @@ describe("Claim Detail page - Eligible scenario after claim ended", () => {
     cy.contains("Leave end date")
       .contains("December 1, 2023")
       .should("be.visible");
+  });
+
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailEligibleEnded.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
