@@ -75,7 +75,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Tha
           download_button: "Download Form V01 (PDF)",
         },
         moreInfo: {
-          title: "Good to know",
+          title: "Heads up",
           mail: {
             title: "As we process your claim",
             current_address: "We will mail forms to:",

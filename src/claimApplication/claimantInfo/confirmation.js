@@ -94,7 +94,7 @@ function addStyles() {
     }
     
     #moreInfo {
-      margin-top: 20px;
+      margin-top: 50px;
     }
 
     section h2, #moreInfo h2, #moreInfo h3 {
@@ -145,7 +145,7 @@ function replaceBody() {
   }
 }
 
-function moreInfo() {
+function addressBox() {
   const sessionData = getSessionData();
   const claimantName = sessionData[STORAGE_KEY_USER_NAME];
   const claimantAddress = sessionData[STORAGE_KEY_USER_MAIL_ADDRESS];
@@ -157,21 +157,29 @@ function moreInfo() {
   const claimantAddressLine1 = claimantAddress['line1'];
   const claimantAddressLine2 = claimantAddress['line2'];
 
+  const moreInfoDiv = document.createElement('section');
+  moreInfoDiv.classList.add("confirmationInfo");
+  moreInfoDiv.innerHTML = `
+    <h3>${i18next.t('confirmation.moreInfo.mail.title')}</h3>
+    <p>${i18next.t('confirmation.moreInfo.mail.current_address')}</p>
+    ${claimantName}
+    <br>
+    ${claimantAddressLine1}
+    <br>
+    ${claimantAddressLine2}
+    <br><br>
+    ${i18next.t('confirmation.moreInfo.mail.change_address')}
+  `;
+
+  return moreInfoDiv.outerHTML;
+}
+
+function moreInfo() {
   const moreInfoDiv = document.createElement('div');
   moreInfoDiv.id = "moreInfo";
   moreInfoDiv.innerHTML = `
     <h2>${i18next.t('confirmation.moreInfo.title')}</h2>
-    <section class="confirmationInfo">
-      <h3>${i18next.t('confirmation.moreInfo.mail.title')}</h3>
-      <p>${i18next.t('confirmation.moreInfo.mail.current_address')}</p>
-      ${claimantName}
-      <br>
-      ${claimantAddressLine1}
-      <br>
-      ${claimantAddressLine2}
-      <br><br>
-      ${i18next.t('confirmation.moreInfo.mail.change_address')}
-    </section>
+    ${addressBox()}
     <section class="confirmationInfo">
       <h3>${i18next.t('confirmation.moreInfo.next.title')}</h3>
       <p>${i18next.t('confirmation.moreInfo.next.read_doc')}</p>
