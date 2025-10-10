@@ -91,6 +91,10 @@ function addStyles() {
     }
 
     .confirmationInfo {
+      margin: 50px 0;
+    }
+
+    .moreInfoSection {
       margin: 10px 0;
     }
     
@@ -164,9 +168,9 @@ function addressBox() {
   const claimantAddressLine1 = claimantAddress['line1'];
   const claimantAddressLine2 = claimantAddress['line2'];
 
-  const moreInfoDiv = document.createElement('section');
-  moreInfoDiv.classList.add("confirmationInfo");
-  moreInfoDiv.innerHTML = `
+  const addressDiv = document.createElement('section');
+  addressDiv.classList.add("moreInfoSection");
+  addressDiv.innerHTML = `
     <h3>${i18next.t('confirmation.moreInfo.mail.title')}</h3>
     <p>${i18next.t('confirmation.moreInfo.mail.current_address')}</p>
     ${claimantName}
@@ -178,7 +182,7 @@ function addressBox() {
     ${i18next.t('confirmation.moreInfo.mail.change_address')}
   `;
 
-  return moreInfoDiv.outerHTML;
+  return addressDiv.outerHTML;
 }
 
 function moreInfo() {
@@ -187,7 +191,7 @@ function moreInfo() {
   moreInfoDiv.innerHTML = `
     <h2>${i18next.t('confirmation.moreInfo.title')}</h2>
     ${addressBox()}
-    <section class="confirmationInfo">
+    <section class="moreInfoSection">
       <h3>${i18next.t('confirmation.moreInfo.next.title')}</h3>
       <p>${i18next.t('confirmation.moreInfo.next.read_doc')}</p>
       <p>${i18next.t('confirmation.moreInfo.next.check_status')}</p>
