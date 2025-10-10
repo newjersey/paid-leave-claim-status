@@ -13,10 +13,25 @@ describe("Confirmation page", () => {
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertStatus=&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertFDD=07%2F15%2F2025&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPConfirmation%24btnContinue=Print+Claim+Summary');
   }
 
-  function checkC01Download(interception) {
+  function checkM01InstructionsDownload(interception) {
+    const formData = interception.request.body;
+    cy.checkCommonPostData(formData);
+    console.log(formData);
+    expect(formData).to.include('__EVENTTARGET=ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPConfirmation%24lnkbtnClickM01&__EVENTARGUMENT=&ContentPlaceHolder1_ClaimantCertTab_ClientState=%7B%22ActiveTabIndex%22%3A1%2C%22TabState%22%3A%5Bfalse%2Ctrue%5D%7D&');
+    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertStatus=&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertFDD=07%2F15%2F2025');
+  }
+
+  function checkC01AwardDownload(interception) {
     const formData = interception.request.body;
     cy.checkCommonPostData(formData);
     expect(formData).to.include('__EVENTTARGET=ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPConfirmation%24lnkbtnClickC01Award&__EVENTARGUMENT=&ContentPlaceHolder1_ClaimantCertTab_ClientState=%7B%22ActiveTabIndex%22%3A1%2C%22TabState%22%3A%5Bfalse%2Ctrue%5D%7D&');
+    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertStatus=&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertFDD=07%2F15%2F2025');
+  }
+
+  function checkC01CardDownload(interception) {
+    const formData = interception.request.body;
+    cy.checkCommonPostData(formData);
+    expect(formData).to.include('__EVENTTARGET=ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPConfirmation%24lnkbtnClickC01Card&__EVENTARGUMENT=&ContentPlaceHolder1_ClaimantCertTab_ClientState=%7B%22ActiveTabIndex%22%3A1%2C%22TabState%22%3A%5Bfalse%2Ctrue%5D%7D&');
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertStatus=&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertFDD=07%2F15%2F2025');
   }
 
@@ -57,23 +72,31 @@ describe("Confirmation page", () => {
       cy.wait('@aspxSubmission').then(checkClaimDownload);
     });
 
+    it("user can download M01 instructions", () => {
+      cy.mockASPX(URL);
+      showElement('divC01Award');
+      cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_lnkbtnClickM01').click();
+      cy.wait('@aspxSubmission').then(checkM01InstructionsDownload);
+    });
+
     it("shows the no employer message when needed", () => {
       showElement('DivNoEmps');
       cy.contains('There are no employers that you worked for in the 180 days prior to your first day of disability.')
         .should('be.visible');
     });
 
-    it("user can download C01 when needed", () => {
+    it("user can download C01 Award when needed", () => {
       cy.mockASPX(URL);
       showElement('divC01Award');
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_lnkbtnClickC01Award').click();
-      cy.wait('@aspxSubmission').then(checkC01Download);
+      cy.wait('@aspxSubmission').then(checkC01AwardDownload);
     });
 
-    it("shows the C01 Card message when needed", () => {
+    it("user can download C01 Card when needed", () => {
+      cy.mockASPX(URL);
       showElement('divC01Card');
-      cy.contains('be returned along with a legible photocopy of your social security card, issued by the Social Security Administration')
-        .should('be.visible');
+      cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_lnkbtnClickC01Card').click();
+      cy.wait('@aspxSubmission').then(checkC01CardDownload);
     });
 
     it("user can download W01 when needed", () => {
@@ -178,6 +201,13 @@ describe("Confirmation page", () => {
       });
     });
 
+    xit("user can download M01 instructions", () => {
+      cy.mockASPX(URL);
+      showElement('divC01Award');
+      // cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_lnkbtnClickM01').click();
+      cy.wait('@aspxSubmission').then(checkM01InstructionsDownload);
+    });
+
     it("shows the no employer message when needed", () => {
       showElement('DivNoEmps');
       cy.contains('There are no employers that you worked for in the 180 days prior to your first day of disability.')
@@ -187,15 +217,15 @@ describe("Confirmation page", () => {
     it("user can download C01 when award normally shown", () => {
       cy.mockASPX(URL);
       showElement('divC01Award');
-      cy.get('#downloadC01').click();
-      cy.wait('@aspxSubmission').then(checkC01Download);
+      cy.get('#downloadC01Award').click();
+      cy.wait('@aspxSubmission').then(checkC01AwardDownload);
     });
 
     it("user can download C01 when card normally shown", () => {
       cy.mockASPX(URL);
       showElement('divC01Card');
-      cy.get('#downloadC01').click();
-      cy.wait('@aspxSubmission').then(checkC01Download);
+      cy.get('#downloadC01Card').click();
+      cy.wait('@aspxSubmission').then(checkC01CardDownload);
     });
 
     it("user can download W01 when needed", () => {
