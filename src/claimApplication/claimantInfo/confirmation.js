@@ -34,12 +34,11 @@ export function trackPrintClaimSummaryButton() {
 export function changes() {
   addStyles();
   replaceBody();
-  setupApplicationPdfDownloadLink();
   setupCopyM01Button();
   setupC01DownloadButton();
   setupW01DownloadButton();
   setupV01DownloadButton();
-  document.addEventListener('headerReady', setNewTitle);
+  document.addEventListener('headerReady', setNewTitleAndAlert);
 }
 
 function addStyles() {
@@ -135,13 +134,6 @@ function replaceBody() {
     oldContainer.style.display = 'none';
     const newMain = document.createElement('main');
     newMain.innerHTML = `
-      <div class="usa-alert usa-alert--info usa-alert--slim" id="submittedAlert">
-        <div class="usa-alert__body">
-          <p class="usa-alert__text">
-            ${i18next.t('confirmation.submitted')}
-          </p>
-        </div>
-      </div>
       ${m01()}
       ${noEmp()}
       ${c01()}
@@ -441,12 +433,24 @@ function m01SampleText() {
   );
 }
 
-function setNewTitle() {
+function setNewTitleAndAlert() {
   const title = document.querySelector("#pageTitle");
-  if (title) {
-    title.textContent = `${i18next.t('confirmation.title')}`;
-    document.removeEventListener('headerReady', setNewTitle);
-  }
+  title.textContent = `${i18next.t('confirmation.title')}`;
+  document.removeEventListener('headerReady', setNewTitleAndAlert);
+
+  const alert = document.createElement('div');
+  alert.classList.add("usa-alert", "usa-alert--info", "usa-alert--slim");
+  alert.id = "submittedAlert";
+  alert.innerHTML = `
+    <div class="usa-alert__body">
+      <p class="usa-alert__text">
+        ${i18next.t('confirmation.submitted')}
+      </p>
+    </div>
+  `;
+  title.parentNode.insertBefore(alert, title);
+
+  setupApplicationPdfDownloadLink()
 }
 
 function setupApplicationPdfDownloadLink() {

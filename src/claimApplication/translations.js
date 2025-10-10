@@ -13,9 +13,9 @@ const resources = {
         agreeAndSubmit: "Agree and submit application",
       },
       confirmation: {
-        title: "You're almost done!",
+        title: "Action required: final step!",
         checkmark: "Checkmark",
-        submitted: `Your information was submitted. <a id="applicationPdfDownload" class="usa-link">Download PDF</a>`,
+        submitted: `Your information was submitted. <a id="applicationPdfDownload" class="usa-link" href="#">Download PDF</a>`,
         dueDate: "Best to complete by {{est_deadline_date}}",
         form_directions: `
             <ul class="usa-list">
