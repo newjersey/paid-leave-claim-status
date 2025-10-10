@@ -90,11 +90,11 @@ function addStyles() {
       padding: 10px;
     }
 
-    .confirmationInfo {
+    .confirmationInfo, .moreInfoNextSection {
       margin: 50px 0;
     }
 
-    .moreInfoSection {
+    .addressSection {
       margin: 10px 0;
     }
     
@@ -169,10 +169,12 @@ function addressBox() {
   const claimantAddressLine2 = claimantAddress['line2'];
 
   const addressDiv = document.createElement('section');
-  addressDiv.classList.add("moreInfoSection");
+  addressDiv.classList.add("addressSection");
   addressDiv.innerHTML = `
     <h3>${i18next.t('confirmation.moreInfo.mail.title')}</h3>
+    <br>
     <p>${i18next.t('confirmation.moreInfo.mail.current_address')}</p>
+    <br>
     ${claimantName}
     <br>
     ${claimantAddressLine1}
@@ -191,9 +193,11 @@ function moreInfo() {
   moreInfoDiv.innerHTML = `
     <h2>${i18next.t('confirmation.moreInfo.title')}</h2>
     ${addressBox()}
-    <section class="moreInfoSection">
+    <section class="moreInfoNextSection">
       <h3>${i18next.t('confirmation.moreInfo.next.title')}</h3>
+      <br>
       <p>${i18next.t('confirmation.moreInfo.next.read_doc')}</p>
+      <br>
       <p>${i18next.t('confirmation.moreInfo.next.check_status')}</p>
     </section>
   `;
