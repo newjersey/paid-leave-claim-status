@@ -74,7 +74,7 @@ function requirePhone() {
 
   const label = phone1.previousElementSibling;
   const asterisk = document.createElement('a');
-  asterisk.style.color = 'Red';
+  asterisk.style.color = 'rgb(139, 0, 0)';
   asterisk.textContent = '* ';
   label.parentNode.insertBefore(asterisk, label);
 }
