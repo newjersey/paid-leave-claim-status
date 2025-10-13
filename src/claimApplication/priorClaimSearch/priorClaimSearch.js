@@ -63,47 +63,50 @@ function removeWhitespace() {
 
 function adjustTable() {
   const table = document.getElementById('ContentPlaceHolder1_gvPndClaims');
-    
-  table.className = 'usa-table usa-table--stacked';
+  if (table) {
+    table.className = 'usa-table usa-table--stacked';
   
-  const thead = document.createElement('thead');
-  const headerRow = table.querySelector('tr:first-child');
-  thead.appendChild(headerRow);
+    const thead = document.createElement('thead');
+    const headerRow = table.querySelector('tr:first-child');
+    thead.appendChild(headerRow);
 
-  table.insertBefore(thead, table.firstChild);
+    table.insertBefore(thead, table.firstChild);
 
-  Array.from(headerRow.children).forEach((cell) => {
-    if (cell.classList.contains('hideCol')) {
-      cell.style.display = 'none';
-    }
-  });
-
-  const tbody = table.querySelector('tbody');
-
-  tbody.querySelectorAll('tr').forEach(row => {
-    Array.from(row.children).forEach((cell) => {
+    Array.from(headerRow.children).forEach((cell) => {
       if (cell.classList.contains('hideCol')) {
         cell.style.display = 'none';
       }
     });
 
-    row.querySelectorAll('td, th').forEach((cell, index) => {
-      const headerText = headerRow.children[index].textContent.trim();
-      
-      cell.setAttribute('data-label', headerText);
-      
-      if (index === 0 && cell.tagName !== 'TH') {
-        const th = document.createElement('th');
-        th.setAttribute('scope', 'row');
-        th.setAttribute('data-label', headerText);
-        th.innerHTML = cell.innerHTML;
-        row.replaceChild(th, cell);
-      }
+    const tbody = table.querySelector('tbody');
+
+    tbody.querySelectorAll('tr').forEach(row => {
+      Array.from(row.children).forEach((cell) => {
+        if (cell.classList.contains('hideCol')) {
+          cell.style.display = 'none';
+        }
+      });
+
+      row.querySelectorAll('td, th').forEach((cell, index) => {
+        const headerText = headerRow.children[index].textContent.trim();
+        
+        cell.setAttribute('data-label', headerText);
+        
+        if (index === 0 && cell.tagName !== 'TH') {
+          const th = document.createElement('th');
+          th.setAttribute('scope', 'row');
+          th.setAttribute('data-label', headerText);
+          th.innerHTML = cell.innerHTML;
+          row.replaceChild(th, cell);
+        }
+      });
     });
-  });
+  }
 }
 
 function adjustNoPendingClaimBox() {
   const noPendingClaimsDiv = document.getElementById('ContentPlaceHolder1_dvNoData');
-  noPendingClaimsDiv.style.position = 'static';
+  if (noPendingClaimsDiv) {
+    noPendingClaimsDiv.style.position = 'static';
+  }
 }

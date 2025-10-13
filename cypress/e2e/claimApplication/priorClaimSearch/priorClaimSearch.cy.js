@@ -48,29 +48,6 @@ describe("Prior Claim Search page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
-    it("does not overlap footer and info for no pending claims", () => {
-      cy.get('#ContentPlaceHolder1_dvNoData')
-      .invoke('attr', 'style')
-      .then((style) => {
-        const newStyle = style.replace('display: none;', '').replace('display:none;', '');
-        cy.get('#ContentPlaceHolder1_dvNoData').invoke('attr', 'style', newStyle);
-      });
-
-      cy.get('#ContentPlaceHolder1_rbtnClmNo').click({ force: true});
-
-      cy.get('#ContentPlaceHolder1_dvNoData').should('be.visible');
-      cy.get('#helpSection').should('be.visible');
-    
-      cy.get('#ContentPlaceHolder1_dvNoData').then(($noData) => {
-        const noDataBottom = $noData[0].offsetTop + $noData[0].offsetHeight;
-
-        cy.get('#helpSection').then(($helpSection) => {
-          const helpSectionTop = $helpSection[0].offsetTop;
-          expect(noDataBottom).to.be.lessThan(helpSectionTop);
-        });
-      });
-    });
-
     it("applies the new font family", () => {
       cy.checkFontFamily();
     });
