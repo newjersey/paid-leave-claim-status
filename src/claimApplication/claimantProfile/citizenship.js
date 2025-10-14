@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const citizenshipLabels = [
@@ -62,15 +63,15 @@ function requirePhone() {
 
   phone1.setAttribute('required', '');
   phone1.setAttribute('pattern', '\\d{3}');
-  phone1.setAttribute('title', 'Please enter exactly 3 digits');
+  phone1.setAttribute('title', i18next.t('citizenship.phoneValidation.digits_three'));
 
   phone2.setAttribute('required', '');
   phone2.setAttribute('pattern', '\\d{3}');
-  phone2.setAttribute('title', 'Please enter exactly 3 digits');
+  phone2.setAttribute('title', i18next.t('citizenship.phoneValidation.digits_three'));
 
   phone3.setAttribute('required', '');
   phone3.setAttribute('pattern', '\\d{4}');
-  phone3.setAttribute('title', 'Please enter exactly 4 digits');
+  phone3.setAttribute('title', i18next.t('citizenship.phoneValidation.digits_four'));
 
   const label = phone1.previousElementSibling;
   const asterisk = document.createElement('a');

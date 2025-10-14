@@ -9,6 +9,12 @@ const resources = {
         agreement4: "I allow the Division of Temporary Disability Insurance to verify my Social Security number. I allow them to access any necessary medical, employment, and Social Security benefit entitlement information to determine my eligibility for benefits.",
         agreeAndSubmit: "Agree and submit application",
       },
+      citizenship: {
+        phoneValidation: {
+          digits_three: "Please enter exactly 3 digits",
+          digits_four: "Please enter exactly 4 digits",
+        },
+      },
       confirmation: {
         title: "Action required: final step!",
         tasks_one: "You have the below task to complete.",
