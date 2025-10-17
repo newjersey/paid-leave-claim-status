@@ -114,6 +114,13 @@ function addStyles() {
       margin-top: 50px;
     }
 
+    .moreInfoContents {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      gap: 20px;
+    }
+
     #moreInfo li {
       margin-bottom: 10px;
     }
@@ -151,6 +158,10 @@ function addStyles() {
         position: static;
         vertical-align: text-top;
       }
+
+    .moreInfoContents {
+      flex-direction: column;
+    }
     }
   `;
   document.head.appendChild(style);
@@ -226,14 +237,16 @@ function moreInfo() {
   moreInfoDiv.id = "moreInfo";
   moreInfoDiv.innerHTML = `
     <h2>${i18next.t('confirmation.moreInfo.title')}</h2>
-    ${addressBox()}
-    <div class="moreInfoDiv">
-      <strong>${i18next.t('confirmation.moreInfo.next.title')}</strong>
-      <br><br>
-      <ul>
-        <li>${i18next.t('confirmation.moreInfo.next.read_doc')}</li>
-        <li>${i18next.t('confirmation.moreInfo.next.check_status')}</li>
-      </ul>
+    <div class="moreInfoContents">
+      ${addressBox()}
+      <div class="moreInfoDiv">
+        <strong>${i18next.t('confirmation.moreInfo.next.title')}</strong>
+        <br><br>
+        <ul>
+          <li>${i18next.t('confirmation.moreInfo.next.read_doc')}</li>
+          <li>${i18next.t('confirmation.moreInfo.next.check_status')}</li>
+        </ul>
+      </div>
     </div>
   `;
   return moreInfoDiv.outerHTML;
