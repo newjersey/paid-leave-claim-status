@@ -97,7 +97,7 @@ function addStyles() {
       margin: 50px 0;
     }
 
-    .moreInfoSection {
+    .moreInfoDiv {
       margin: 10px 0 50px;
     }
     
@@ -105,13 +105,21 @@ function addStyles() {
       margin-top: 50px;
     }
 
-    section h2, #moreInfo h2, #moreInfo h3 {
+    section h2, #moreInfo h2 {
       color: black;
-      font-size: 18px;
       font-variant: normal;
       font-weight: bold;
       margin-bottom: 5px;
     }
+
+    section h2 {
+      font-size: 18px;
+    }
+
+    #moreInfo h2 {
+      font-size: 24px;
+    }
+
     .usa-button {
       margin: 5px 0;
       max-width: 400px;
@@ -172,18 +180,16 @@ function addressBox() {
   const claimantAddressLine1 = claimantAddress['line1'];
   const claimantAddressLine2 = claimantAddress['line2'];
 
-  const addressDiv = document.createElement('section');
-  addressDiv.classList.add("moreInfoSection");
+  const addressDiv = document.createElement('div');
+  addressDiv.classList.add("moreInfoDiv");
   addressDiv.innerHTML = `
-    <h3>${i18next.t('confirmation.moreInfo.mail.title')}</h3>
+    <p>${i18next.t('confirmation.moreInfo.mail.title')}</p>
     <br>
-    <p>${i18next.t('confirmation.moreInfo.mail.current_address')}</p>
+    <strong>${claimantName}</strong>
     <br>
-    ${claimantName}
+    <strong>${claimantAddressLine1}</strong>
     <br>
-    ${claimantAddressLine1}
-    <br>
-    ${claimantAddressLine2}
+    <strong>${claimantAddressLine2}</strong>
     <br><br>
     ${i18next.t('confirmation.moreInfo.mail.change_address')}
   `;
@@ -197,13 +203,15 @@ function moreInfo() {
   moreInfoDiv.innerHTML = `
     <h2>${i18next.t('confirmation.moreInfo.title')}</h2>
     ${addressBox()}
-    <section class="moreInfoSection">
-      <h3>${i18next.t('confirmation.moreInfo.next.title')}</h3>
-      <br>
-      <p>${i18next.t('confirmation.moreInfo.next.read_doc')}</p>
-      <br>
-      <p>${i18next.t('confirmation.moreInfo.next.check_status')}</p>
-    </section>
+    <div class="moreInfoDiv">
+      <strong>${i18next.t('confirmation.moreInfo.next.title')}</strong>
+      <br><br>
+      <ul>
+        <li>${i18next.t('confirmation.moreInfo.next.read_doc')}</li>
+        <br>
+        <li>${i18next.t('confirmation.moreInfo.next.check_status')}</li>
+      </ul>
+    </div>
   `;
   return moreInfoDiv.outerHTML;
 }
@@ -339,11 +347,11 @@ function c01Award() {
           { est_deadline_date: estDeadlineDate() }
         )}
       </div>
-      <h2>${i18next.t('confirmation.c01.title', { requiredActionsIndex })}</h2>
+      <h2>${i18next.t('confirmation.c01Award.title', { requiredActionsIndex })}</h2>
       <br>
       <button id="downloadC01Award" class="usa-button usa-button--outline">
         ${downloadIcon()}
-        ${i18next.t('confirmation.c01.download_button')}
+        ${i18next.t('confirmation.c01Award.download_button')}
       </button>
       ${formDirections(true)}
     `;
@@ -383,14 +391,13 @@ function c01Card() {
 function formDirections(includeSocSecLetter = false) {
   const directions = document.createElement('ul');
   directions.classList.add("usa-list");
-  let listItems = '';
+  let listItems = `<li>${i18next.t('confirmation.form_directions.complete')}</li>`;
 
   if (includeSocSecLetter) {
     listItems += `<li>${i18next.t('confirmation.form_directions.copySocSecLetter')}</li>`;
   }
 
   listItems += `
-    <li>${i18next.t('confirmation.form_directions.complete')}</li>
     <li>${i18next.t('confirmation.form_directions.claim_number', { claim_id: claimId() })}</li>
     <li>${i18next.t('confirmation.form_directions.submit')}</li>
   `;
