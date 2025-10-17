@@ -114,6 +114,10 @@ function addStyles() {
       margin-top: 50px;
     }
 
+    #moreInfo li {
+      margin-bottom: 10px;
+    }
+
     section h2, #moreInfo h2 {
       color: black;
       font-variant: normal;
@@ -228,7 +232,6 @@ function moreInfo() {
       <br><br>
       <ul>
         <li>${i18next.t('confirmation.moreInfo.next.read_doc')}</li>
-        <br>
         <li>${i18next.t('confirmation.moreInfo.next.check_status')}</li>
       </ul>
     </div>
@@ -274,7 +277,7 @@ function m01() {
       </div>
       <br>
       <p>${i18next.t('confirmation.m01.alternative.instructions')}</p>
-      <button id="downloadm01InstructionsButton" class="usa-button usa-button--outline">
+      <button id="downloadM01InstructionsButton" class="usa-button usa-button--outline">
         ${downloadIcon()}
         ${i18next.t('confirmation.m01.alternative.buttonText')}
       </button>

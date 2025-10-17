@@ -170,12 +170,12 @@ describe("Confirmation page", () => {
         Subject: Request for Medical Form M01 - Temporary Disability Claim
         Dear Dr. Spaceman,
         I'm requesting your help to complete Form M01 for my
-        New Jersey Temporary Disability Insurance claim (Claim ID: 12114, DOB: Jan 1, 2000).
-        The easiest way to submit it is online at www.nj.gov/labor/MedicalApplicationTDI
-        using this Online Form ID: 25091950002.
-        Fill out the required medical information and submit online.
+        New Jersey Temporary Disability Insurance claim.
+        The easiest way to submit it is online at
+        www.nj.gov/labor/MedicalApplicationTDI using this
+        Online Form ID: 25091950002 and my date of birth: Jan 1, 2000.
         Please submit the form by October 7, 2025 to avoid delays on my claim.
-        Thank you for your help.
+        Please let me know when it's complete. Thank you for your help.
         Liz Lemon
         lemon@nbc.com
         (555) 555-5555
@@ -199,12 +199,12 @@ describe("Confirmation page", () => {
         Subject: Request for Medical Form M01 - Temporary Disability Claim
         Dear {{ INSERT YOUR MEDICAL PROVIDER'S NAME }},
         I'm requesting your help to complete Form M01 for my
-        New Jersey Temporary Disability Insurance claim (Claim ID: 12114, DOB: {{ INSERT YOUR DATE OF BIRTH }}).
-        The easiest way to submit it is online at www.nj.gov/labor/MedicalApplicationTDI
-        using this Online Form ID: 25091950002.
-        Fill out the required medical information and submit online.
+        New Jersey Temporary Disability Insurance claim.
+        The easiest way to submit it is online at
+        www.nj.gov/labor/MedicalApplicationTDI using this
+        Online Form ID: 25091950002 and my date of birth: {{ INSERT YOUR DATE OF BIRTH }}.
         Please submit the form by October 7, 2025 to avoid delays on my claim.
-        Thank you for your help.
+        Please let me know when it's complete. Thank you for your help.
         {{ INSERT YOUR NAME }}
       `;
 
@@ -219,7 +219,7 @@ describe("Confirmation page", () => {
 
     it("user can download M01 instructions", () => {
       cy.mockASPX(URL);
-      cy.get('#downloadM01Instructions').click();
+      cy.get('#downloadM01InstructionsButton').click();
       cy.wait('@aspxSubmission').then(checkM01InstructionsDownload);
       cy.checkLogEvent(`TDI Confirmation - Download M01 Instructions Clicked`, {});
     });
