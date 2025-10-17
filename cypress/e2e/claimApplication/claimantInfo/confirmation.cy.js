@@ -16,7 +16,6 @@ describe("Confirmation page", () => {
   function checkM01InstructionsDownload(interception) {
     const formData = interception.request.body;
     cy.checkCommonPostData(formData);
-    console.log(formData);
     expect(formData).to.include('__EVENTTARGET=ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPConfirmation%24lnkbtnClickM01&__EVENTARGUMENT=&ContentPlaceHolder1_ClaimantCertTab_ClientState=%7B%22ActiveTabIndex%22%3A1%2C%22TabState%22%3A%5Bfalse%2Ctrue%5D%7D&');
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertStatus=&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertFDD=07%2F15%2F2025');
   }
