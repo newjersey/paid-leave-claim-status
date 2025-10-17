@@ -3,6 +3,7 @@ const resources = {
     translation: {
       certification: {
         certifyText: "By submitting, I certify:",
+        alertText: "Your application has been saved. If needed, you can log out and finish your application within 14 days from when you first started it.",
         agreement1: "I have answered all questions completely and truthfully to the best of my knowledge.",
         agreement2: "I could face fines and criminal charges if I purposefully provide false information or don't share crucial details that could impact my claim.",
         agreement3: "I will have to pay back any benefits I'm not entitled to or be subject to deductions of funds from future benefits.",

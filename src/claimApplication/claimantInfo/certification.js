@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import { ICON_BASE_URL } from "../../modules/shared.mjs";
 
 export const certificationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantCertTab_TPCertification_rbtnAgYes', label: 'Yes, I agree' },
@@ -41,6 +42,14 @@ function replaceBody() {
     const newMain = document.createElement('main');
     newMain.innerHTML = `
       <br><br>
+      <div class="usa-alert usa-alert--info" id="reminderAlert">
+        <div class="usa-alert__body">
+          <p class="usa-alert__text">
+            ${i18next.t('certification.alertText')}
+          </p>
+        </div>
+      </div>
+      <br><br>
       <p>${i18next.t('certification.certifyText')}</p>
       <br>
       <ul>
@@ -73,6 +82,13 @@ function addStyles() {
     ul {
       line-height: 1.6em;
       padding: 0 20px;
+    }
+    #reminderAlert::before {
+      content: url('${ICON_BASE_URL}/info.svg');
+      background: none !important;
+      -webkit-mask: none !important;
+      mask: none !important;
+      top: auto !important;
     }
   `;
   document.head.appendChild(style);
