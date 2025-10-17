@@ -1,4 +1,4 @@
-import { STORAGE_KEY_SESSION_DATA } from "../utils";
+import { clearSessionData } from "../utils";
 
 export const id = "completeExistingIntro";
 
@@ -13,9 +13,5 @@ export function changes() {
   if (checkbox) {
     checkbox.style.margin = '0 5px';
   }
-  clearSessionStorage();
-}
-
-function clearSessionStorage() {
-  sessionStorage.removeItem(STORAGE_KEY_SESSION_DATA);
+  clearSessionData();
 }

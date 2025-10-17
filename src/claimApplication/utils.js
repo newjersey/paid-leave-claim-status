@@ -30,6 +30,10 @@ export function addToSessionData(newData) {
   }
 }
 
+export function clearSessionData() {
+  sessionStorage.removeItem(STORAGE_KEY_SESSION_DATA);
+}
+
 // Note: this is only a simple XOR to make not plaintext - not encryption
 // Fetching from backend is more robust and is in progress at DOL to replace this
 export function encodeDecode(data) {
