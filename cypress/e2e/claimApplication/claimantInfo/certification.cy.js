@@ -18,7 +18,7 @@ describe("Certification page", () => {
       cy.visit(FIXTURE);
     });
 
-    it("user can agree and proceed to next page", () => {
+    it("shows UI to agree and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_rbtnAgYes').click();
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_btnConfirm').click();
@@ -39,7 +39,7 @@ describe("Certification page", () => {
       cy.wait('@script');
     });
 
-    it("user can agree and proceed to next page", () => {
+    it("shows button to agree and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#agreeAndSubmit').click();
       cy.wait('@aspxSubmission').then(checkPostData);

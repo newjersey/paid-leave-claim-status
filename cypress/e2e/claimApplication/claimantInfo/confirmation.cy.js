@@ -142,14 +142,14 @@ describe("Confirmation page", () => {
       cy.get('body').should('contain.text', '123 Main Street');
     });
 
-    it("user can open PDF of claim summary", () => {
+    it("shows link to open PDF of claim summary", () => {
       cy.mockASPX(URL);
       cy.get('#applicationPdfDownload').click();
       cy.wait('@aspxSubmission').then(checkClaimDownload);
       cy.checkLogEvent(`TDI Confirmation - PDF Download Clicked`, {});
     });
 
-    it("user can copy sample M01 text when session has data", () => {
+    it("shows button to copy sample M01 text when session has data", () => {
       cy.clock(new Date(2025, 8, 23)); // 0-indexed; Sept. 23, 2025
       cy.window().then((win) => {
         const data = {
@@ -189,7 +189,7 @@ describe("Confirmation page", () => {
       });
     });
 
-    it("user can copy sample M01 text when session does not have data", () => {
+    it("shows button to copy sample M01 text when session does not have data", () => {
       cy.clock(new Date(2025, 8, 23)); // 0-indexed; Sept. 23, 2025
       cy.visit(FIXTURE);
       cy.get('button.usa-accordion__button[aria-controls="sampleLanguageContainer"]').click();
@@ -217,7 +217,7 @@ describe("Confirmation page", () => {
       });
     });
 
-    it("user can download M01 instructions", () => {
+    it("shows button to download M01 instructions", () => {
       cy.mockASPX(URL);
       cy.get('#downloadM01InstructionsButton').click();
       cy.wait('@aspxSubmission').then(checkM01InstructionsDownload);
@@ -231,7 +231,7 @@ describe("Confirmation page", () => {
         .should('be.visible');
     });
 
-    it("user can download C01 when award normally shown", () => {
+    it("shows C01 download button when award normally shown", () => {
       cy.mockASPX(URL);
       showElement('divC01Award');
       cy.checkLogEvent(`TDI Confirmation - C01 Award Shown`, {});
@@ -240,7 +240,7 @@ describe("Confirmation page", () => {
       cy.checkLogEvent(`TDI Confirmation - Download C01 Award Clicked`, {});
     });
 
-    it("user can download C01 when card normally shown", () => {
+    it("shows button to download C01 when card normally shown", () => {
       cy.mockASPX(URL);
       showElement('divC01Card');
       cy.checkLogEvent(`TDI Confirmation - C01 Card Shown`, {});
@@ -249,7 +249,7 @@ describe("Confirmation page", () => {
       cy.checkLogEvent(`TDI Confirmation - Download C01 Card Clicked`, {});
     });
 
-    it("user can download W01 when needed", () => {
+    it("shows button to download W01 when needed", () => {
       cy.mockASPX(URL);
       showElement('divW01');
       cy.checkLogEvent(`TDI Confirmation - W01 Shown`, {});
@@ -258,7 +258,7 @@ describe("Confirmation page", () => {
       cy.checkLogEvent(`TDI Confirmation - Download W01 Clicked`, {});
     });
 
-    it("user can download V01 when needed", () => {
+    it("shows button to download V01 when needed", () => {
       cy.mockASPX(URL);
       showElement('divV01');
       cy.checkLogEvent(`TDI Confirmation - V01 Shown`, {});
