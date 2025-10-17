@@ -24,7 +24,7 @@ const resources = {
         submitted: `Your application was submitted. <a id="applicationPdfDownload" class="usa-link" href="#">Download a copy here (PDF)</a>.`,
         dueDate: "Best to complete by {{est_deadline_date}}",
         form_directions: {
-          copySocSecLetter: "Make a copy of your Social Security Award Letter",
+          copySocSecLetter: `Attach a copy of your <a href="https://www.ssa.gov/manage-benefits/get-benefit-letter">Social Security benefit verification letter</a>`,
           complete: "Complete the form",
           claim_number: "Write your 5-digit claim number on every page: <strong>{{claim_id}}</strong>",
           submit: `
@@ -71,12 +71,16 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             buttonText: "Download provider instructions (Form M01)",
           },
         },
-        c01: {
-          title: "{{requiredActionsIndex}}. Fax or mail your verification form (C01)",
+        c01Award: {
+          title: "{{requiredActionsIndex}}. Fax or mail proof of your Social Security disability benefits.",
+          download_button: "Download Form C01 (PDF)",
+        },
+        c01Card: {
+          title: "{{requiredActionsIndex}}. Fax or mail our request for more information (C01)",
           download_button: "Download Form C01 (PDF)",
         },
         w01: {
-          title: "{{requiredActionsIndex}}. Fax or mail your Workers' Compensation form (Form W01)",
+          title: "{{requiredActionsIndex}}. Fax or mail your Workers' Compensation (Form W01)",
           download_button: "Download Form W01 (PDF)",
         },
         v01: {
@@ -86,8 +90,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         moreInfo: {
           title: "Heads up",
           mail: {
-            title: "As we process your claim",
-            current_address: "We will mail forms to:",
+            title: "As we process your claim, we will mail forms to:",
             change_address: `<strong>Need to change your address?</strong> <a href="/tdi/AddressChange_Introduction.aspx">Submit a change of address form.</a>`,
           },
           next: {

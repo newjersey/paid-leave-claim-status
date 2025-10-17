@@ -97,6 +97,15 @@ function addStyles() {
       margin: 50px 0;
     }
 
+    .icon {
+      margin-right: 10px;
+    }
+
+    .iconGroup {
+      display: flex;
+      align-items: flex-start;
+    }
+
     .moreInfoDiv {
       margin: 10px 0 50px;
     }
@@ -183,15 +192,26 @@ function addressBox() {
   const addressDiv = document.createElement('div');
   addressDiv.classList.add("moreInfoDiv");
   addressDiv.innerHTML = `
-    <p>${i18next.t('confirmation.moreInfo.mail.title')}</p>
     <br>
-    <strong>${claimantName}</strong>
-    <br>
-    <strong>${claimantAddressLine1}</strong>
-    <br>
-    <strong>${claimantAddressLine2}</strong>
+    <div class="iconGroup">
+      ${mailIcon()}
+      <div>
+        <p>${i18next.t('confirmation.moreInfo.mail.title')}</p>
+        <br>
+        <strong>${claimantName}</strong>
+        <br>
+        <strong>${claimantAddressLine1}</strong>
+        <br>
+        <strong>${claimantAddressLine2}</strong>
+      </div>
+    </div>
     <br><br>
-    ${i18next.t('confirmation.moreInfo.mail.change_address')}
+    <div class="iconGroup">
+      ${editIcon()}
+      <div>
+        ${i18next.t('confirmation.moreInfo.mail.change_address')}
+      </div>
+    </div>
   `;
 
   return addressDiv.outerHTML;
@@ -310,6 +330,28 @@ function contentCopyIcon() {
   return svgElement.outerHTML;
 }
 
+function editIcon() {
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const svgElement = document.createElementNS(svgNS, 'svg');
+  svgElement.classList.add("edit-icon", "icon");
+  svgElement.setAttribute('aria-hidden', 'true');
+  svgElement.setAttribute('width', '24');
+  svgElement.setAttribute('height', '24');
+  svgElement.setAttribute('viewBox', '0 0 24 24');
+
+  const path1 = document.createElementNS(svgNS, 'path');
+  path1.setAttribute('d', 'M0 0h24v24H0z');
+  path1.setAttribute('fill', 'none');
+
+  const path2 = document.createElementNS(svgNS, 'path');
+  path2.setAttribute('d', 'M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z');
+
+  svgElement.appendChild(path1);
+  svgElement.appendChild(path2);
+
+  return svgElement.outerHTML;
+}
+
 function downloadIcon() {
   const svgNS = 'http://www.w3.org/2000/svg';
   const svgElement = document.createElementNS(svgNS, 'svg');
@@ -325,6 +367,28 @@ function downloadIcon() {
 
   const path2 = document.createElementNS(svgNS, 'path');
   path2.setAttribute('d', 'M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z');
+
+  svgElement.appendChild(path1);
+  svgElement.appendChild(path2);
+
+  return svgElement.outerHTML;
+}
+
+function mailIcon() {
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const svgElement = document.createElementNS(svgNS, 'svg');
+  svgElement.classList.add("mail-icon", "icon");
+  svgElement.setAttribute('aria-hidden', 'true');
+  svgElement.setAttribute('width', '24');
+  svgElement.setAttribute('height', '24');
+  svgElement.setAttribute('viewBox', '0 0 24 24');
+
+  const path1 = document.createElementNS(svgNS, 'path');
+  path1.setAttribute('d', 'M0 0h24v24H0z');
+  path1.setAttribute('fill', 'none');
+
+  const path2 = document.createElementNS(svgNS, 'path');
+  path2.setAttribute('d', 'M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z');
 
   svgElement.appendChild(path1);
   svgElement.appendChild(path2);
