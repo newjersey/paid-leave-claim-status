@@ -4,7 +4,7 @@ const resources = {
       certification: {
         certifyText: "By submitting, I certify:",
         alertText: "Your application has been saved. If needed, you can log out and finish your application within 14 days from when you first started it.",
-        agreement1: "I have answered all questions completely and truthfully to the best of my knowledge.",
+        agreement1: "I have answered all questions completely and truthfully to the best of my knowledge and must report any changes that may affect my claim to the Division of Temporary Disability Insurance.",
         agreement2: "I could face fines and criminal charges if I purposefully provide false information or don't share crucial details that could impact my claim.",
         agreement3: "I will have to pay back any benefits I'm not entitled to or be subject to deductions of funds from future benefits.",
         agreement4: "I allow the Division of Temporary Disability Insurance to verify my Social Security number. I allow them to access any necessary medical, employment, and Social Security benefit entitlement information to determine my eligibility for benefits.",
