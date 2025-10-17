@@ -17,11 +17,11 @@ const resources = {
         },
       },
       confirmation: {
-        title: "Action required: final step!",
+        title: "Action required; final step!",
         tasks_one: "You have the below task to complete.",
-        tasks_other: "You have the below tasks to complete. The tasks may be done in any order.",
+        tasks_other: "You have the below tasks to complete. Tasks may be done in any order.",
         checkmark: "Checkmark",
-        submitted: `Your information was submitted. <a id="applicationPdfDownload" class="usa-link" href="#">Download PDF</a>`,
+        submitted: `Your application was submitted. <a id="applicationPdfDownload" class="usa-link" href="#">Download a copy here (PDF)</a>.`,
         dueDate: "Best to complete by {{est_deadline_date}}",
         form_directions: {
           copySocSecLetter: "Make a copy of your Social Security Award Letter",
@@ -40,18 +40,17 @@ const resources = {
           `,
         },
         m01: {
-          title: "{{requiredActionsIndex}}. Follow up with your medical provider about Form M01",
-          directions: "A qualified healthcare provider must confirm your disability. They will do this by completing Form M01 for you.",
-          alternative: `Alternatively, you may bring printed instructions to your healthcare provider. <a href="" id="downloadM01Instructions">Download provider instructions</a>.`,
+          title: "{{requiredActionsIndex}}. Ask your healthcare provider to complete Form M01",
+          directions: "A qualified healthcare provider must confirm your disability by completing the medical form online.",
           sample: {
-            title: "Sample language to send to your provider",
+            title: "How to tell your provider what's needed",
             body: `Subject: Request for Medical Form M01 - Temporary Disability Claim
 <br><br>
 Dear {{provider_name}},
 <br><br>
-I'm requesting your help to complete Form M01 for my New Jersey Temporary Disability Insurance claim (Claim ID: {{claim_id}}, DOB: {{user_dob}}). The easiest way to submit it is online at www.nj.gov/labor/MedicalApplicationTDI using this Online Form ID: {{online_form_id}}. Fill out the required medical information and submit online. 
+I'm requesting your help to complete Form M01 for my New Jersey Temporary Disability Insurance claim. The easiest way to submit it is online at www.nj.gov/labor/MedicalApplicationTDI using this Online Form ID: {{online_form_id}} and my date of birth: {{user_dob}}. 
 <br><br>
-Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Thank you for your help.
+Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Please let me know when it's complete. Thank you for your help.
 <br><br>
 {{user_name}}
 <br>
@@ -66,6 +65,10 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Tha
             },
             copyButton: "Copy this starter message",
             copied: "Copied!",
+          },
+          alternative: {
+            instructions: `Alternatively, you may bring printed instructions to your healthcare provider.`,
+            buttonText: "Download provider instructions (Form M01)",
           },
         },
         c01: {

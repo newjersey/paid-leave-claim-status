@@ -116,6 +116,7 @@ function addStyles() {
       margin: 5px 0;
       max-width: 400px;
       min-height: 40px;
+      padding: 10px;
     }
     .usa-button .usa-icon {
       margin-right: 5px;
@@ -244,14 +245,18 @@ function m01() {
         </button>
       </div>
       <br>
-      <p>${i18next.t('confirmation.m01.alternative')}</p>
+      <p>${i18next.t('confirmation.m01.alternative.instructions')}</p>
+      <button id="downloadm01InstructionsButton" class="usa-button usa-button--outline">
+        ${downloadIcon()}
+        ${i18next.t('confirmation.m01.alternative.buttonText')}
+      </button>
     </div>
   `;
   return m01Section.outerHTML;
 }
 
 function setupM01InstructionsButton() {
-  const downloadLink = document.getElementById('downloadM01Instructions');
+  const downloadLink = document.getElementById('downloadM01InstructionsButton');
   if (downloadLink) {
     downloadLink.addEventListener('click', function(event) {
       event.preventDefault();
