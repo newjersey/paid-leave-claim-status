@@ -91,7 +91,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           title: "Heads up",
           mail: {
             title: "As we process your claim, we will mail forms to:",
-            change_address: `<strong>Need to change your address?</strong> <a href="/tdi/AddressChange_Introduction.aspx">Submit a change of address form.</a>`,
+            change_address: `<strong>Need to change your address?</strong> <a href="/tdi/AddressChange_Introduction.aspx">Submit a change of address request.</a>`,
           },
           next: {
             title: "What happens next?",
