@@ -24,11 +24,11 @@ const resources = {
         submitted: `Your application was submitted. <a id="applicationPdfDownload" class="usa-link" href="#">Download a copy here (PDF)</a>.`,
         dueDate: "Best to complete by {{est_deadline_date}}",
         form_directions: {
-          copySocSecLetter: `Attach a copy of your <a href="https://www.ssa.gov/manage-benefits/get-benefit-letter">Social Security benefit verification letter</a>`,
-          complete: "Complete the form",
+          copySocSecLetter: `Attach a copy of your <a href="https://www.ssa.gov/manage-benefits/get-benefit-letter" target="_blank">Social Security benefit verification letter</a>`,
+          complete: "Complete and sign the form",
           claim_number: "Write your 5-digit claim number on every page: <strong>{{claim_id}}</strong>",
           submit: `
-            Submit by fax to (609) 984-4138 (fastest)
+            Fax to (609) 984-4138 (fastest)
             <br><br>
             Or, mail to:
             <br>
@@ -91,12 +91,12 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           title: "Heads up",
           mail: {
             title: "As we process your claim, we will mail forms to:",
-            change_address: `<strong>Need to change your address?</strong> <a href="/tdi/AddressChange_Introduction.aspx">Submit a change of address request.</a>`,
+            change_address: `<strong>Need to change your address?</strong> <a href="/tdi/AddressChange_Introduction.aspx" target="_blank">Submit a change of address request.</a>`,
           },
           next: {
             title: "What happens next?",
-            read_doc: `Read through <a href="https://www.nj.gov/labor/myleavebenefits/worker/resources/claims-status.shtml">"What happens when I apply?"</a> on myLeaveBenefits.nj.gov`,
-            check_status: `<a href="https://secure.dol.state.nj.us/DOL_DABI/">Check your claim status</a> (note: it takes several days for your first status update)`,
+            read_doc: `Read through <a href="https://www.nj.gov/labor/myleavebenefits/worker/resources/claims-status.shtml" target="_blank">"What happens when I apply?"</a> on myLeaveBenefits.nj.gov`,
+            check_status: `<a href="/DOL_DABI/" target="_blank">Check your claim status</a> (note: it takes several days for your first status update)`,
           },
         },
       },
