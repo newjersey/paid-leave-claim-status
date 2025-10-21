@@ -26,7 +26,7 @@ const resources = {
         form_directions: {
           copySocSecLetter: `Attach a copy of your <a href="https://www.ssa.gov/manage-benefits/get-benefit-letter" target="_blank">Social Security benefit verification letter</a>`,
           complete: "Complete and sign the form",
-          claim_number: "Write your 5-digit claim number on every page: <strong>{{claim_id}}</strong>",
+          claim_number: "Write your claim number on every page: <strong>{{claim_id}}</strong>",
           submit: `
             Fax to (609) 984-4138 (fastest)
             <br><br>
