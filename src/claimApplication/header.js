@@ -1,7 +1,8 @@
-import { HEADER_HTML, ICON_BASE_URL } from "../modules/shared.mjs";
+import { HEADER_HTML } from "../modules/shared.mjs";
 import { id as priorClaimSearchId } from "./priorClaimSearch/priorClaimSearch";
 import { id as tdiIntroductionId } from "./tdiIntroduction/tdiIntroduction";
 import { id as completeExistingIntroId } from "./completeExistingIntro/completeExistingIntro";
+import { clearSessionData } from "./utils";
 
 export function replaceHeader(pageId) {
   const screensWithoutTabs = [priorClaimSearchId, tdiIntroductionId, completeExistingIntroId];
@@ -421,6 +422,7 @@ function createTitleHeader() {
     event.preventDefault();
     if (confirmLogout()) {
       __doPostBack('ctl00$header$lbtnLogout', '');
+      clearSessionData();
     }
   });
 
@@ -467,18 +469,6 @@ function newDesignAlert() {
     alertDiv.style.display = 'none';
     localStorage.setItem('newLookAlertDismissed', 'true');
   });
-
-  const styleElement = document.createElement('style');
-  styleElement.innerHTML = `
-    .usa-alert--info::before {
-      content: url('${ICON_BASE_URL}/info.svg');
-      background: none !important;
-      -webkit-mask: none !important;
-      mask: none !important;
-      top: auto !important;
-    }
-  `;
-  document.head.appendChild(styleElement);
   
   return alertDiv;
 }

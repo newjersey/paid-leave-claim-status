@@ -1,0 +1,22 @@
+diff --git a/node_modules/uswds/dist/css/uswds.css b/node_modules/uswds/dist/css/uswds.css
+index f32e2ad..2c28233 100644
+--- a/node_modules/uswds/dist/css/uswds.css
++++ b/node_modules/uswds/dist/css/uswds.css
+@@ -603,7 +603,7 @@ template{
+ [hidden]{
+   display:none;
+ }
+-@font-face{
++/* @font-face{
+   font-family:"Roboto Mono Web";
+   font-style:normal;
+   font-weight:300;
+@@ -728,7 +728,7 @@ template{
+   font-weight:700;
+   font-display:fallback;
+   src:url(../fonts/merriweather/Latin-Merriweather-BoldItalic.woff2) format("woff2"), url(../fonts/merriweather/Latin-Merriweather-BoldItalic.woff) format("woff"), url(../fonts/merriweather/Latin-Merriweather-BoldItalic.ttf) format("truetype");
+-}
++} */
+ input:not([disabled]):focus,
+ select:not([disabled]):focus,
+ textarea:not([disabled]):focus,

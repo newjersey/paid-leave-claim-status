@@ -1,3 +1,45 @@
+export const STORAGE_KEY_PROVIDER_NAME = "provider_name";
+export const STORAGE_KEY_USER_DOB = "user_dob";
+export const STORAGE_KEY_USER_NAME = "user_name";
+export const STORAGE_KEY_USER_EMAIL = "user_email";
+export const STORAGE_KEY_USER_PHONE = "user_phone";
+export const STORAGE_KEY_USER_MAIL_ADDRESS = "user_mail_address";
+
+export const STORAGE_KEY_SESSION_DATA = "session_data";
+
+export function getSessionData() {
+  try {
+    const encodedData = sessionStorage.getItem(STORAGE_KEY_SESSION_DATA);
+    if (!encodedData) return {};
+    return JSON.parse(encodeDecode(encodedData));
+  } catch (error) {
+    console.error("Error decoding data:", error);
+    return {};
+  }
+}
+
+export function addToSessionData(newData) {
+  const existingData = getSessionData();
+  const sessionData = { ...existingData, ...newData };
+
+  try {
+    const encodedData = encodeDecode(JSON.stringify(sessionData));
+    sessionStorage.setItem(STORAGE_KEY_SESSION_DATA, encodedData);
+  } catch (error) {
+    console.error("Error encoding data:", error);
+  }
+}
+
+export function clearSessionData() {
+  sessionStorage.removeItem(STORAGE_KEY_SESSION_DATA);
+}
+
+// Note: this is only a simple XOR to make not plaintext - not encryption
+// Fetching from backend is more robust and is in progress at DOL to replace this
+export function encodeDecode(data) {
+  return data.split('').map(char => String.fromCharCode(char.charCodeAt(0) ^ 100)).join('');
+}
+
 // TODO: this only styles the buttons.
 // When possible also use USWDS suggested HTML fieldset and legend structure
 export function styleRadioButton(radioButtonId, marginBottom = false) {

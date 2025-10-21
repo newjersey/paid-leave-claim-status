@@ -1,4 +1,8 @@
-import { adjustTableWidths, removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
+import {
+  adjustTableWidths,
+  removeExtraSpaceBetweenRadioButtons,
+  styleRadioButton,
+} from '../utils';
 
 export const personalProfileLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtoccupation', label: 'Occupation' },
