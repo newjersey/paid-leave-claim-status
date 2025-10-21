@@ -1,3 +1,5 @@
+import { clearSessionData } from "../utils";
+
 export const id = "completeExistingIntro";
 
 export const identifyingContent = {
@@ -11,4 +13,5 @@ export function changes() {
   if (checkbox) {
     checkbox.style.margin = '0 5px';
   }
+  clearSessionData();
 }

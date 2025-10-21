@@ -100,9 +100,17 @@ Cypress.Commands.add("checkOldLogoutCancel", (url) => {
 });
 
 Cypress.Commands.add("checkNewLogout", (url) => {
+  cy.window().then((win) => {
+    win.sessionStorage.setItem('session_data', 'testValue');
+  });
+
   cy.mockASPX(url);
   cy.get('#logoutButton').click();
   cy.wait('@aspxSubmission').then(checkLogoutData);
+  
+  cy.window().then((win) => {
+    expect(win.sessionStorage.length).to.equal(0);
+  });
 });
 
 Cypress.Commands.add("checkNewLogoutCancel", (url) => {
@@ -169,4 +177,8 @@ Cypress.Commands.add("checkFeedbackWidgetEmailDisclaimerTextIsOverridden", () =>
       const expectedEmailDisclaimerText = "To hear about feedback opportunities in the future, join our user testing list."
       cy.contains(expectedEmailDisclaimerText).should("be.visible")
   })
+})
+
+Cypress.Commands.add("checksViewportMetaTag", () => {
+  cy.get('head meta[name="viewport"]').should('have.attr', 'content', 'width=device-width, initial-scale=1');
 })

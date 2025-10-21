@@ -1,4 +1,7 @@
 import 'uswds/css/uswds.css';
+import 'uswds/js/uswds.min.js';
+import i18next from 'i18next';
+import resources from './translations.js';
 import { setupAnalytics } from "../modules/shared.mjs";
 import { accessibilityChanges } from './accessibility.js';
 import { analyticsChanges } from './analytics.js';
@@ -6,13 +9,19 @@ import { globalDesignChanges } from './globalDesign.js';
 import { identifyPage } from './identifyPage.js';
 import { pageSpecificChanges } from './pageSpecificChanges.js';
 
-if (document.readyState === "loading") {
-  window.addEventListener("DOMContentLoaded", () => {
+i18next.init({
+  lng: 'en',
+  fallbackLng: 'en',
+  resources
+}).then(() => {
+  if (document.readyState === "loading") {
+    window.addEventListener("DOMContentLoaded", () => {
+      executeOverride();
+    });
+  } else {
     executeOverride();
-  });
-} else {
-  executeOverride();
-}
+  }
+});
 
 document.addEventListener('backButtonClicked', () => {
   executeOverride();

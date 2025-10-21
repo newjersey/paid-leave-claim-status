@@ -42,7 +42,7 @@ function createFooterElement(pageId) {
   gridDiv.style.marginBottom = '8px';
 
   const contactItems = [
-    { icon: 'phone.svg', label: 'Call', content: '<a href="tel:609-292-7060">609-292-7060</a> | (8:00am - 4:30pm, Monday - Friday) Wait times are shortest Wednesday - Friday' },
+    { icon: 'phone.svg', label: 'Call', content: '<a href="tel:609-292-7060">609-292-7060</a><br />8:00 am - 4:30 pm, Monday - Friday<br />Wait times are shortest Wednesday - Friday' },
     { icon: 'fax.svg', label: 'Fax', content: '609-984-4138' },
     { icon: 'mail.svg', label: 'Mail', content: 'Division of Temporary Disability and Family Leave Insurance<br />PO Box 387 Trenton, New Jersey 08625-0387' },
   ];

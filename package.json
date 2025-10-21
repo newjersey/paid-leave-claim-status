@@ -7,7 +7,8 @@
     "test:claim-status": "npx cypress run --spec './cypress/e2e/claimStatus/**.cy.js'",
     "build": "./build.sh",
     "prep-deploy-dev": "./prepareDeploy.sh dev",
-    "prep-deploy-prod": "./prepareDeploy.sh prod"
+    "prep-deploy-prod": "./prepareDeploy.sh prod",
+    "postinstall": "patch-package"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +18,8 @@
     "axe-core": "^4.8.4",
     "cypress": "^13.7.1",
     "cypress-axe": "^1.5.0",
+    "i18next": "^25.5.2",
+    "patch-package": "^8.0.1",
     "rollup": "^4.13.0",
     "rollup-plugin-html-literals": "^1.1.8",
     "rollup-plugin-postcss": "^4.0.2",

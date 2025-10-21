@@ -1,18 +1,24 @@
-import { HEADER_HTML, ICON_BASE_URL } from "../modules/shared.mjs";
+import { HEADER_HTML } from "../modules/shared.mjs";
 import { id as priorClaimSearchId } from "./priorClaimSearch/priorClaimSearch";
 import { id as tdiIntroductionId } from "./tdiIntroduction/tdiIntroduction";
 import { id as completeExistingIntroId } from "./completeExistingIntro/completeExistingIntro";
+import { clearSessionData } from "./utils";
 
 export function replaceHeader(pageId) {
   const screensWithoutTabs = [priorClaimSearchId, tdiIntroductionId, completeExistingIntroId];
   if (screensWithoutTabs.includes(pageId)) {
     replacePopulatedHeader();
   } else {
+    let headerReady = false;
     const observer = new MutationObserver((mutations) => {
       mutations.forEach(() => {
+        if (headerReady) return;
         const tabsDiv = document.querySelector('.ajax__tab_header');
         if (tabsDiv) {
+          headerReady = true;
           replacePopulatedHeader();
+          const event = new CustomEvent('headerReady');
+          document.dispatchEvent(event);
           observer.disconnect();
         }
       });
@@ -416,6 +422,7 @@ function createTitleHeader() {
     event.preventDefault();
     if (confirmLogout()) {
       __doPostBack('ctl00$header$lbtnLogout', '');
+      clearSessionData();
     }
   });
 
@@ -433,7 +440,7 @@ function newDesignAlert() {
   const alertDiv = document.createElement('div');
   alertDiv.id = 'info-alert';
   alertDiv.style.marginTop = '0';
-  alertDiv.classList.add('usa-alert', 'usa-alert--info');
+  alertDiv.classList.add('usa-alert', 'usa-alert--info', 'usa-alert--no-icon');
 
   const alertBodyDiv = document.createElement('div');
   alertBodyDiv.classList.add('usa-alert__body');
@@ -462,18 +469,6 @@ function newDesignAlert() {
     alertDiv.style.display = 'none';
     localStorage.setItem('newLookAlertDismissed', 'true');
   });
-
-  const styleElement = document.createElement('style');
-  styleElement.innerHTML = `
-    .usa-alert--info::before {
-      content: url('${ICON_BASE_URL}/info.svg');
-      background: none !important;
-      -webkit-mask: none !important;
-      mask: none !important;
-      top: auto !important;
-    }
-  `;
-  document.head.appendChild(styleElement);
   
   return alertDiv;
 }

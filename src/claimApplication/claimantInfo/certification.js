@@ -1,3 +1,6 @@
+import i18next from 'i18next';
+import { ICON_BASE_URL } from "../../modules/shared.mjs";
+
 export const certificationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantCertTab_TPCertification_rbtnAgYes', label: 'Yes, I agree' },
   { id: 'ContentPlaceHolder1_ClaimantCertTab_TPCertification_rbtnAgNo', label: 'I do not agree' },
@@ -13,100 +16,80 @@ export const identifyingContent = {
 
 export function changes() {
   addStyles();
-  convertBodyTextFromH4();
-  trimText();
-  styleRadioButtons(
-    'divPdd',
-    'I Agree'
-  );
-  styleRadioButtons(
-    'divCertNo',
-    'Do you still wish to leave this application and complete your application at a later time?'
-  );
+  replaceBody();
+  setupSubmitButton();
 }
 
-function trimText() {
-  const fieldset = document.querySelector("#divPdd fieldset");
-  fieldset.childNodes.forEach(function(node) {
-    if (node.nodeType === Node.TEXT_NODE) {
-      node.nodeValue = node.nodeValue.trim();
-    }
-  });
+function setupSubmitButton() {
+  const newSubmitButton = document.querySelector('#agreeAndSubmit');
+  const agreeButton = document.querySelector('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_rbtnAgYes');
+  const originalSubmitButton = document.querySelector('#ContentPlaceHolder1_ClaimantCertTab_TPCertification_btnConfirm');
+
+  if (newSubmitButton && agreeButton && originalSubmitButton) {
+    newSubmitButton.addEventListener('click', function (event) {
+      event.preventDefault();
+      agreeButton.click();
+      originalSubmitButton.click();
+    });
+  }
 }
 
-function convertBodyTextFromH4() {
-  const h4Elements = document.querySelectorAll('h4');
+function replaceBody() {
+  const oldContainer = document.querySelector("#ContentPlaceHolder1_ClaimantCertTab");
+  if (oldContainer) {
+    oldContainer.style.display = 'none';
 
-  const newParagraph = document.createElement('p');
-  newParagraph.style.margin = '0';
-  newParagraph.innerHTML = `
-    By agreeing:<br><br>
-    I declare that the foregoing information is to the best of my knowledge and belief true, correct, and complete.<br><br>
-    I understand that I must contact the Division of Temporary Disability Insurance to report any circumstance that may change my entitlement to benefits.<br><br>
-    I hereby authorize the Division of Temporary Disability Insurance to verify my Social Security Number, and obtain any medical, employment, and Social Security benefit entitlement information that is necessary to determine my eligibility for benefits.
-  `;
-
-  h4Elements[0].parentNode.replaceChild(newParagraph, h4Elements[0]);
-  h4Elements[1].parentNode.removeChild(h4Elements[1]);
+    const newMain = document.createElement('main');
+    newMain.innerHTML = `
+      <br><br>
+      <div class="usa-alert usa-alert--info" id="reminderAlert">
+        <div class="usa-alert__body">
+          <p class="usa-alert__text">
+            ${i18next.t('certification.alertText')}
+          </p>
+        </div>
+      </div>
+      <br><br>
+      <p>${i18next.t('certification.certifyText')}</p>
+      <br>
+      <ul>
+        <li>${i18next.t('certification.agreement1')}</li>
+        <li>${i18next.t('certification.agreement2')}</li>
+        <li>${i18next.t('certification.agreement3')}</li>
+        <li>${i18next.t('certification.agreement4')}</li>
+      </ul>
+      <br>
+      <button id="agreeAndSubmit" class="usa-button" type="button">${i18next.t('certification.agreeAndSubmit')}</button>
+    `;
+    oldContainer.parentNode.insertBefore(newMain, oldContainer);
+  }
 }
 
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
-    #divPdd, #divCertNo {
-      line-height: 1.6em;
-    }
-    #divPdd legend {
+    #pageTitle {
       display: none;
     }
-    #divPdd .usa-legend {
-      display: block;
+
+    .usa-button {
+      margin: 20px 20px 20px 0;
+      min-height: 40px;
+    }
+    .usa-button--unstyled {
+      padding: 0;
+    }
+    ul {
+      line-height: 1.6em;
+      padding: 0 20px;
+    }
+    #reminderAlert::before {
+      content: url('${ICON_BASE_URL}/info.svg');
+      background: none !important;
+      -webkit-mask: none !important;
+      mask: none !important;
+      top: auto !important;
     }
   `;
   document.head.appendChild(style);
-}
-
-function styleRadioButtons(containerId, legendText) {
-  const container = document.getElementById(containerId);
-
-  if (container) {
-    const oldFieldset = container.querySelector('fieldset');
-
-    if (oldFieldset) {
-      const textContent = oldFieldset.innerHTML.split(legendText)[0].trim();
-
-      const textDiv = document.createElement('div');
-      textDiv.innerHTML = textContent;
-
-      const newFieldset = document.createElement('fieldset');
-      newFieldset.classList.add('usa-fieldset');
-      newFieldset.style.marginBottom = '25px';
-
-      const newLegend = document.createElement('legend');
-      newLegend.classList.add('usa-legend');
-      newLegend.textContent = legendText;
-      newFieldset.appendChild(newLegend);
-
-      const radioButtons = oldFieldset.querySelectorAll('input[type="radio"]');
-
-      radioButtons.forEach((radioButton, index) => {
-        const div = document.createElement('div');
-        div.classList.add('usa-radio');
-
-        const newRadioButton = radioButton.cloneNode(true);
-        newRadioButton.classList.add('usa-radio__input');
-
-        const newLabel = document.createElement('label');
-        newLabel.classList.add('usa-radio__label');
-        newLabel.setAttribute('for', newRadioButton.id);
-        newLabel.textContent = ['Yes', 'No'][index];
-
-        div.appendChild(newRadioButton);
-        div.appendChild(newLabel);
-        newFieldset.appendChild(div);
-      });
-
-      oldFieldset.replaceWith(textDiv, newFieldset);
-    }
-  }
 }

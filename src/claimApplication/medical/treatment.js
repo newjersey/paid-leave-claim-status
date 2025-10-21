@@ -1,5 +1,9 @@
 import { logEvent } from "../../modules/shared.mjs";
-import { adjustTableWidths, removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
+import {
+  adjustTableWidths,
+  removeExtraSpaceBetweenRadioButtons,
+  styleRadioButton
+} from '../utils';
 
 export const medicalTreatmentLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury', label: 'Describe your Disability' },

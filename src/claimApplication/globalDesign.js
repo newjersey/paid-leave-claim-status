@@ -1,5 +1,6 @@
 import { applyFooter } from "./footer.js";
 import { replaceHeader } from "./header.js";
+import { ICON_BASE_URL } from "../modules/shared.mjs";
 
 export function globalDesignChanges(pageId) {
   addViewportMetaTag();
@@ -47,6 +48,22 @@ function injectGlobalStyles() {
       color: black;
       margin-left: 142px;
       margin-right: 142px;
+    }
+
+    .usa-alert--info::before {
+      content: url('${ICON_BASE_URL}/info.svg');
+      background: none !important;
+      -webkit-mask: none !important;
+      mask: none !important;
+      top: auto !important;
+    }
+
+    .usa-accordion__button[aria-expanded="false"] {
+      background-image: url('${ICON_BASE_URL}/add.svg'), linear-gradient(transparent, transparent);
+    }
+
+    .usa-accordion__button[aria-expanded="true"] {
+      background-image: url('${ICON_BASE_URL}/remove.svg'), linear-gradient(transparent, transparent);
     }
 
     @media (max-width: 767px) {
