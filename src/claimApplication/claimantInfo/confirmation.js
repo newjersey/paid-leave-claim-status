@@ -455,11 +455,11 @@ function c01Card() {
           { est_deadline_date: estDeadlineDate() }
         )}
       </div>
-      <h2>${i18next.t('confirmation.c01.title', { requiredActionsIndex })}</h2>
+      <h2>${i18next.t('confirmation.c01Card.title', { requiredActionsIndex })}</h2>
       <br>
       <button id="downloadC01Card" class="usa-button usa-button--outline">
         ${downloadIcon()}
-        ${i18next.t('confirmation.c01.download_button')}
+        ${i18next.t('confirmation.c01Card.download_button')}
       </button>
       ${formDirections()}
     `;
@@ -667,7 +667,7 @@ function setNewTitleAndAlert() {
   alert.innerHTML = `
     <div class="usa-alert__body">
       <p class="usa-alert__text">
-        ${i18next.t('confirmation.submitted')}
+        ${i18next.t('confirmation.submitted', { claim_id: claimId() })}
       </p>
     </div>
   `;
