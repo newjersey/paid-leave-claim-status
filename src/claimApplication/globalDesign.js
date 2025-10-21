@@ -1,6 +1,6 @@
 import { applyFooter } from "./footer.js";
 import { replaceHeader } from "./header.js";
-import { ICON_BASE_URL } from "../modules/shared.mjs";
+import { addFeedbackWidgetScriptToHead, ICON_BASE_URL } from "../modules/shared.mjs";
 
 export function globalDesignChanges(pageId) {
   addViewportMetaTag();
@@ -8,6 +8,8 @@ export function globalDesignChanges(pageId) {
   applyFooter(pageId);
   injectGlobalStyles();
   styleButtons();
+  addFeedbackWidgetScriptToHead();
+  addFeedbackWidget();
 }
 
 function addViewportMetaTag() {
@@ -107,4 +109,14 @@ function styleButtons() {
     button.style.width = null;
     button.style.height = null;
   });
+}
+
+function addFeedbackWidget() {
+  const feedbackWidget = document.createElement('feedback-widget');
+  feedbackWidget.setAttribute('contact-link', 'https://www.example.com/contact');
+
+  const footer = document.getElementById('helpSection');
+  if (footer) {
+    footer.parentNode.insertBefore(feedbackWidget, footer);
+  }
 }
