@@ -11,6 +11,7 @@ const resources = {
         agreeAndSubmit: "Agree and submit application",
       },
       citizenship: {
+        title: "Contact Information",
         phoneValidation: {
           digits_three: "Please enter exactly 3 digits",
           digits_four: "Please enter exactly 4 digits",

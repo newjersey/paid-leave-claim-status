@@ -24,19 +24,15 @@ export const identifyingContent = {
 
 export function changes() {
   adjustWidths();
-  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenYes');
-  styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenNo');
   styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepYes');
   styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepNo');
-  removeExtraSpaceBetweenRadioButtons(
-    'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenYes',
-    'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenNo'
-  );
   removeExtraSpaceBetweenRadioButtons(
     'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepYes',
     'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepNo'
   );
   requirePhone();
+  removeCitizenshipQuestion();
+  document.addEventListener('headerReady', setNewTitle);
 }
 
 function adjustWidths () {
@@ -78,4 +74,19 @@ function requirePhone() {
   asterisk.style.color = 'rgb(139, 0, 0)';
   asterisk.textContent = '* ';
   label.parentNode.insertBefore(asterisk, label);
+}
+
+function removeCitizenshipQuestion() {
+  const citizenshipQuestion = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlCitizen');
+  const citizenshipParentTr = citizenshipQuestion.closest('tr');
+  citizenshipParentTr.style.display = 'none';
+  const radioButtonYes = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenYes');
+  radioButtonYes.click();
+
+}
+
+function setNewTitle() {
+  const title = document.querySelector("#pageTitle");
+  title.textContent = `${i18next.t('citizenship.title')}`;
+  document.removeEventListener('headerReady', setNewTitleAndAlert);
 }
