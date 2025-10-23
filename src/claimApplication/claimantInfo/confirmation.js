@@ -682,9 +682,13 @@ function setupApplicationPdfDownloadLink() {
     downloadLink.addEventListener('click', function(event) {
       event.preventDefault();
       logEvent('TDI Confirmation - PDF Download Clicked', {});
+
       const pdfDownloadBtn = document.getElementById('ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue');
+      const pdfFutureDownloadBtn = document.getElementById('ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnFDDContinue');
       if (pdfDownloadBtn) {
         pdfDownloadBtn.click();
+      } else if (pdfFutureDownloadBtn) {
+        pdfFutureDownloadBtn.click();
       }
     });
   }

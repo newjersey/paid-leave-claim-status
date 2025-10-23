@@ -6,11 +6,18 @@ const URL = 'ClaimantCertification';
 const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/confirmation.html";
 
 describe("Confirmation page", () => {
-  function checkClaimDownload(interception) {
+  function checkClaimDownloadPast(interception) {
     const formData = interception.request.body;
     cy.checkCommonPostData(formData);
     expect(formData).to.include('__EVENTTARGET=&__EVENTARGUMENT=&ContentPlaceHolder1_ClaimantCertTab_ClientState=%7B%22ActiveTabIndex%22%3A1%2C%22TabState%22%3A%5Bfalse%2Ctrue%5D%7D&');
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertStatus=&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertFDD=07%2F15%2F2025&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPConfirmation%24btnContinue=Print+Claim+Summary');
+  }
+
+  function checkClaimDownloadFuture(interception) {
+    const formData = interception.request.body;
+    cy.checkCommonPostData(formData);
+    expect(formData).to.include('__EVENTTARGET=&__EVENTARGUMENT=&ContentPlaceHolder1_ClaimantCertTab_ClientState=%7B%22ActiveTabIndex%22%3A1%2C%22TabState%22%3A%5Bfalse%2Ctrue%5D%7D&');
+    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertStatus=&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPCertification%24hdnCertFDD=07%2F15%2F2025&ctl00%24ContentPlaceHolder1%24ClaimantCertTab%24TPConfirmation%24btnFDDContinue=Print+Claim+Summary');
   }
 
   function checkM01InstructionsDownload(interception) {
@@ -65,10 +72,17 @@ describe("Confirmation page", () => {
       cy.visit(FIXTURE);
     });
 
-    it("user can open PDF of claim summary", () => {
+    it("shows link to open PDF of claim summary when First Date of Disability is in the past", () => {
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue').click();
-      cy.wait('@aspxSubmission').then(checkClaimDownload);
+      cy.wait('@aspxSubmission').then(checkClaimDownloadPast);
+    });
+
+    it("shows link to open PDF of claim summary when First Date of Disability is in the future", () => {
+      // TODO: setup so `ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnFDDContinue` is the button
+      cy.mockASPX(URL);
+      cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue').click();
+      cy.wait('@aspxSubmission').then(checkClaimDownloadFuture);
     });
 
     it("user can download M01 instructions", () => {
@@ -141,11 +155,18 @@ describe("Confirmation page", () => {
       cy.get('body').should('contain.text', '123 Main Street');
     });
 
-    it("shows link to open PDF of claim summary", () => {
+    it("shows link to open PDF of claim summary when First Date of Disability is in the past", () => {
       cy.mockASPX(URL);
       cy.get('#applicationPdfDownload').click();
-      cy.wait('@aspxSubmission').then(checkClaimDownload);
+      cy.wait('@aspxSubmission').then(checkClaimDownloadPast);
       cy.checkLogEvent(`TDI Confirmation - PDF Download Clicked`, {});
+    });
+
+    it("shows link to open PDF of claim summary when First Date of Disability is in the future", () => {
+      // TODO: setup so `ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnFDDContinue` is the button
+      cy.mockASPX(URL);
+      cy.get('#ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue').click();
+      cy.wait('@aspxSubmission').then(checkClaimDownloadFuture);
     });
 
     it("shows button to copy sample M01 text when session has data", () => {
