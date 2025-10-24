@@ -102,6 +102,13 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           },
         },
       },
+      header: {
+        personal_information: "Personal Information",
+        leave_information: "Leave Information",
+        work_information: "Work Information",
+        agree_and_finish: "Agree and Finish",
+        summary_and_next_steps: "Summary and Next Steps",
+      },
     }
   },
 };

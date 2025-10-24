@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { HEADER_HTML } from "../modules/shared.mjs";
 import { id as priorClaimSearchId } from "./priorClaimSearch/priorClaimSearch";
 import { id as tdiIntroductionId } from "./tdiIntroduction/tdiIntroduction";
@@ -281,7 +282,13 @@ function createStepIndicator() {
     return null;
   }
 
-  const steps = Array.from(inputs).map(input => input.value);
+  const steps = [
+    i18next.t('header.personal_information'),
+    i18next.t('header.leave_information'),
+    i18next.t('header.work_information'),
+    i18next.t('header.agree_and_finish'),
+    i18next.t('header.summary_and_next_steps'),
+  ];
   const activeIndex = Array.from(inputs).findIndex(input => input.style.fontWeight === 'bold');
 
   const stepIndicator = document.createElement('div');
