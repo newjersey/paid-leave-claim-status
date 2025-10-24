@@ -98,7 +98,7 @@ function replaceRadioButtons() {
   if (parentContainer) {
     const tdElements = parentContainer.querySelectorAll('td');
 
-    tdElements.forEach(tdElement => {
+    for (const tdElement of tdElements) {
       if (tdElement.textContent.includes('My personal and contact information is correct')) {
         Array.from(tdElement.children).forEach(child => {
           child.style.display = 'none';
@@ -125,8 +125,9 @@ function replaceRadioButtons() {
         });
 
         tdElement.appendChild(submitButton);
+        break;
       }
-    });
+    };
   }
 }
 

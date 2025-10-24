@@ -60,8 +60,7 @@ describe("Verify Employer page", () => {
 
     it("user can input info and proceed to next page", () => {
       cy.mockASPX(URL);
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectYes').click({ force: true });
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelVerify_btnVer_Continue').click();
+      cy.get('#submitButton').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
