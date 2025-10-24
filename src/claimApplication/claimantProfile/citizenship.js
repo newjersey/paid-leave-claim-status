@@ -32,6 +32,7 @@ export function changes() {
   );
   requirePhone();
   removeCitizenshipQuestion();
+  adjustQuestionNumbers();
   document.addEventListener('headerReady', setNewTitle);
 }
 
@@ -82,11 +83,33 @@ function removeCitizenshipQuestion() {
   citizenshipParentTr.style.display = 'none';
   const radioButtonYes = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenYes');
   radioButtonYes.click();
+}
 
+function adjustQuestionNumbers() {
+  const contactInfo = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact');
+  const strongElements = Array.from(contactInfo.querySelectorAll('strong'));
+
+  const newQuestionNumbers = [
+    { current: ' 2.', updated: ' 1.' },
+    { current: ' 3.', updated: ' 2.' },
+    { current: ' 4.', updated: ' 3.' },
+    { current: '4a.', updated: '3a.' },
+    { current: '5.', updated: '4.' },
+    { current: '5a.', updated: '4a.' },
+    { current: '5b.', updated: '4b.' },
+    { current: '5c.', updated: '4c.' }
+  ];
+
+  newQuestionNumbers.forEach(({ current, updated }) => {
+    const element = strongElements.find(el => el.textContent === current);
+    if (element) {
+      element.textContent = updated;
+    }
+  });
 }
 
 function setNewTitle() {
   const title = document.querySelector("#pageTitle");
   title.textContent = `${i18next.t('citizenship.title')}`;
-  document.removeEventListener('headerReady', setNewTitleAndAlert);
+  document.removeEventListener('headerReady', setNewTitle);
 }
