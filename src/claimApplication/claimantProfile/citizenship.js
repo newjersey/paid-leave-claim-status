@@ -32,7 +32,7 @@ export function changes() {
   );
   requirePhone();
   removeCitizenshipQuestion();
-  adjustQuestionNumbers();
+  adjustQuestions();
   document.addEventListener('headerReady', setNewTitle);
 }
 
@@ -85,27 +85,49 @@ function removeCitizenshipQuestion() {
   radioButtonYes.click();
 }
 
-function adjustQuestionNumbers() {
+function adjustQuestions() {
   const contactInfo = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact');
-  const strongElements = Array.from(contactInfo.querySelectorAll('strong'));
+  const elements = Array.from(contactInfo.querySelectorAll('a, strong'));
 
-  const newQuestionNumbers = [
-    { current: ' 2.', updated: ' 1.' },
-    { current: ' 3.', updated: ' 2.' },
-    { current: ' 4.', updated: ' 3.' },
-    { current: '4a.', updated: '3a.' },
-    { current: '5.', updated: '4.' },
-    { current: '5a.', updated: '4a.' },
-    { current: '5b.', updated: '4b.' },
-    { current: '5c.', updated: '4c.' }
+  const contentUpdates = [
+    { existing: ' 2.', updated: ' 1. ' },
+    { existing: ' 3.', updated: ' 2. ' },
+    { existing: ' 4.', updated: ' 3. ' },
+    { existing: '4a.', updated: '3a. ' },
+    { existing: '5.', updated: '4. ' },
+    { existing: '5a.', updated: '4a. ' },
+    { existing: '5b.', updated: '4b. ' },
+    { existing: '5c.', updated: '4c. ' },
+
+    { existing: 'Provide your telephone number.', updated: i18next.t('citizenship.phone') },
+    { existing: 'Provide your cell phone', updated: i18next.t('citizenship.altPhone') },
+    { existing: 'Provide your e-mail address', updated: i18next.t('citizenship.email') },
+    { existing: 'Confirm your e-mail address', updated: i18next.t('citizenship.confirm_email') },
+    { existing: 'This e-mail address', updated: '' },
+    { existing: 'Would you like to designate', updated: i18next.t('citizenship.representative') },
+    { existing: 'This individual', updated: '' },
+    { existing: `representative's name`, updated: i18next.t('citizenship.representative_name') },
+    { existing: `representative's date of birth`, updated: i18next.t('citizenship.representative_dob') },
+    { existing: `your representative's telephone number.`, updated: i18next.t('citizenship.representative_phone') }
   ];
 
-  newQuestionNumbers.forEach(({ current, updated }) => {
-    const element = strongElements.find(el => el.textContent === current);
-    if (element) {
-      element.textContent = updated;
-    }
+  elements.forEach(element => {
+    element.childNodes.forEach(node => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        contentUpdates.forEach(({ existing, updated }) => {
+          const nodeText = removeWhitespace(node.textContent);
+          const existingText = removeWhitespace(existing);
+          if (nodeText.includes(existingText)) {
+            node.textContent = updated;
+          }
+        });
+      }
+    });
   });
+}
+
+function removeWhitespace(str) {
+  return str.replace(/\s+/g, '');
 }
 
 function setNewTitle() {
