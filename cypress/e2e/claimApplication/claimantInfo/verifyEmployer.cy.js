@@ -40,6 +40,8 @@ describe("Verify Employer page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
+    // TODO: test before/after of each Edit Button
+
     it("user can see all Employment Info", () => {
       seeEmploymentInfo();
     });

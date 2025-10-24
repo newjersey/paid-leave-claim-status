@@ -16,6 +16,7 @@ const resources = {
           digits_three: "Please enter exactly 3 digits",
           digits_four: "Please enter exactly 4 digits",
         },
+        altPhone: "Alternate Phone Number",
       },
       confirmation: {
         title: "Action required; final step!",

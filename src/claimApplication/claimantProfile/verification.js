@@ -62,6 +62,7 @@ export function changes() {
     '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepTelExt'
   );
   removeCitizenshipInfo();
+  renameCellNumber();
   saveInfo();
   document.addEventListener('headerReady', setNewTitle);
 }
@@ -170,18 +171,24 @@ function setNewTitle() {
 }
 
 function removeCitizenshipInfo() {
-  const parentContainer = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification');
-  
-  if (parentContainer) {
-    const targetElement = Array.from(parentContainer.querySelectorAll('legend')).find(el => el.textContent.includes('Citizenship and Contact Information'));
-    if (targetElement) {
-      targetElement.textContent = targetElement.textContent.replace('Citizenship and Contact Information', 'Contact Information');
-    }
+  const legendElement = Array.from(document.querySelectorAll('legend')).find(el => el.textContent.includes('Citizenship and Contact Information'));
+  if (legendElement) {
+    legendElement.childNodes.forEach(node => {
+      if (node.nodeType === Node.TEXT_NODE && node.textContent.includes('Citizenship and Contact Information')) {
+        node.textContent = node.textContent.replace('Citizenship and Contact Information', i18next.t('citizenship.title'));
+      }
+    });
+  }
 
-    const labelElement = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_Label1');
-    
-    if (labelElement) {
-      labelElement.parentElement.parentElement.style.display = 'none';
-    }
+  const labelElement = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_Label1');
+  if (labelElement) {
+    labelElement.parentElement.parentElement.style.display = 'none';
+  }
+}
+
+function renameCellNumber() {
+  const targetElement = Array.from(document.querySelectorAll('a')).find(el => el.textContent.includes('Cell Phone Number / Alternate Telephone Number:'));
+  if (targetElement) {
+    targetElement.textContent = targetElement.textContent.replace('Cell Phone Number / Alternate Telephone Number:', `${i18next.t('citizenship.altPhone')}:`);
   }
 }

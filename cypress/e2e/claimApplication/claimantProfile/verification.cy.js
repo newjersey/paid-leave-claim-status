@@ -33,6 +33,8 @@ describe("Profile Verification page", () => {
       checkConfirmInfo();
     });
 
+    // TODO: test before/after of each Edit Button
+
     globalTestsOld(URL);
   });
 
