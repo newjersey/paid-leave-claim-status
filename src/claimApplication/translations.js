@@ -112,6 +112,9 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       personalProfile: {
         title: "Demographic Information",
       },
+      profileVerification: {
+        title: "Review and Save",
+      },
     }
   },
 };
