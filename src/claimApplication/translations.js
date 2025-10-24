@@ -23,8 +23,8 @@ const resources = {
         tasks_one: "You have the below task to complete.",
         tasks_other: "You have the below tasks to complete. Tasks may be done in any order.",
         checkmark: "Checkmark",
-        submitted: `Your application was submitted. Your claim number is: <strong>{{claim_id}}</strong>. <a id="applicationPdfDownload" class="usa-link" href="#">Download a copy here (PDF)</a>.`,
-        future_claim: `Your claim number is: <strong>{{claim_id}}</strong>. <a id="futurePdfDownload" class="usa-link" href="#">Download a summary here (PDF)</a>.`,
+        submitted: `Your application was submitted. Your claim number is: <strong>{{claim_id}}</strong>. <a id="applicationPdfDownload" class="usa-link" href="#">Download PDF</a>`,
+        future_claim: `Your claim number is: <strong>{{claim_id}}</strong>. <a id="futurePdfDownload" class="usa-link" href="#">Download PDF</a>`,
         dueDate: "Best to complete by {{est_deadline_date}}",
         form_directions: {
           copySocSecLetter: `Attach a copy of your <a href="https://www.ssa.gov/manage-benefits/get-benefit-letter" target="_blank">Social Security benefit verification letter</a>`,
