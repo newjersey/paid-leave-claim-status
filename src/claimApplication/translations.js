@@ -11,12 +11,12 @@ const resources = {
         agreeAndSubmit: "Agree and submit application",
       },
       citizenship: {
-        title: "Contact Information",
+        title: "Contact information",
         phoneValidation: {
           digits_three: "Please enter exactly 3 digits",
           digits_four: "Please enter exactly 4 digits",
         },
-        altPhone: "Alternate Phone Number",
+        altPhone: "Alternate phone number",
       },
       confirmation: {
         title: "Action required; final step!",
@@ -104,21 +104,21 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         },
       },
       header: {
-        personal_information: "Personal Information",
-        leave_information: "Leave Information",
-        work_information: "Work Information",
-        agree_and_finish: "Agree and Finish",
-        summary_and_next_steps: "Summary and Next Steps",
+        personal_information: "Personal information",
+        leave_information: "Leave information",
+        work_information: "Work information",
+        agree_and_finish: "Agree and finish",
+        summary_and_next_steps: "Summary and next steps",
       },
       paymentInfo: {
-        title: "Federal Taxes",
+        title: "Federal taxes",
       },
       personalProfile: {
-        title: "Demographic Information",
+        title: "Demographic information",
       },
       reviewAndSave: {
-        title: "Review and Save",
-        button: "Save and Continue",
+        title: "Review and save",
+        button: "Save and continue",
       },
     }
   },
