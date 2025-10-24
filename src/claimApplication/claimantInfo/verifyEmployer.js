@@ -125,6 +125,6 @@ function convertScheduleInputToTextarea() {
 
 function setNewTitle() {
   const title = document.querySelector("#pageTitle");
-  title.textContent = `${i18next.t('employerVerification.title')}`;
+  title.textContent = `${i18next.t('reviewAndSave.title')}`;
   document.removeEventListener('headerReady', setNewTitle);
 }

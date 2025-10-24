@@ -41,7 +41,7 @@ export const identifyingContent = {
 };
 
 export function changes() {
-  styleRadioButtons();
+  replaceRadioButtons();
   adjustTable();
   fixPhoneNumberText(
     '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerTel1',
@@ -93,43 +93,38 @@ function adjustTable() {
   }
 }
 
-function styleRadioButtons() {
+function replaceRadioButtons() {
   const parentContainer = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification');
-
   if (parentContainer) {
     const tdElements = parentContainer.querySelectorAll('td');
 
     tdElements.forEach(tdElement => {
       if (tdElement.textContent.includes('My personal and contact information is correct')) {
-        const radioButtons = tdElement.querySelectorAll('input[type="radio"]');
-        const labels = tdElement.querySelectorAll('label');
-
-        const fieldset = document.createElement('fieldset');
-        fieldset.classList.add('usa-fieldset');
-        fieldset.style.marginBottom = '30px';
-
-        const legend = document.createElement('legend');
-        legend.classList.add('usa-legend');
-        legend.textContent = 'My personal and contact information is correct.';
-        fieldset.appendChild(legend);
-
-        radioButtons.forEach((radioButton, index) => {
-          const div = document.createElement('div');
-          div.classList.add('usa-radio');
-
-          const newRadioButton = radioButton.cloneNode(true);
-          newRadioButton.classList.add('usa-radio__input');
-
-          const newLabel = labels[index].cloneNode(true);
-          newLabel.classList.add('usa-radio__label');
-
-          div.appendChild(newRadioButton);
-          div.appendChild(newLabel);
-          fieldset.appendChild(div);
+        Array.from(tdElement.children).forEach(child => {
+          child.style.display = 'none';
         });
 
-        tdElement.innerHTML = '';
-        tdElement.appendChild(fieldset);
+        const originalSubmitContainer = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_Tr5');
+        originalSubmitContainer.style.display = 'none';
+
+        var submitButton = document.createElement('button');
+        submitButton.id = 'submitButton';
+        submitButton.classList.add('usa-button');
+        submitButton.textContent = i18next.t('reviewAndSave.button');
+        submitButton.style.display = 'block';
+        submitButton.style.margin = 'auto';
+        submitButton.style.padding = '10px';
+        submitButton.addEventListener('click', function (event) {
+          event.preventDefault();
+          const radioButtonYes = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_rbtnPersYes');
+          const originalSubmit = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btncontinueVer');
+          if (radioButtonYes && originalSubmit) {
+            radioButtonYes.click();
+            originalSubmit.click();
+          }
+        });
+
+        tdElement.appendChild(submitButton);
       }
     });
   }
@@ -168,6 +163,6 @@ function saveInfo() {
 
 function setNewTitle() {
   const title = document.querySelector("#pageTitle");
-  title.textContent = `${i18next.t('profileVerification.title')}`;
+  title.textContent = `${i18next.t('reviewAndSave.title')}`;
   document.removeEventListener('headerReady', setNewTitle);
 }
