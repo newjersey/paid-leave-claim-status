@@ -289,7 +289,10 @@ function createStepIndicator() {
     i18next.t('header.agree_and_finish'),
     i18next.t('header.summary_and_next_steps'),
   ];
-  const activeIndex = Array.from(inputs).findIndex(input => input.style.fontWeight === 'bold');
+
+  const activeIndex = getActiveTabTitle() == "Confirmation" 
+    ? 4
+    : Array.from(inputs).findIndex(input => input.style.fontWeight === 'bold');
 
   const stepIndicator = document.createElement('div');
   stepIndicator.className = 'usa-step-indicator--no-labels';
