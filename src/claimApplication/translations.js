@@ -109,6 +109,9 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         agree_and_finish: "Agree and Finish",
         summary_and_next_steps: "Summary and Next Steps",
       },
+      paymentInfo: {
+        title: "Federal Taxes",
+      },
       personalProfile: {
         title: "Demographic Information",
       },
