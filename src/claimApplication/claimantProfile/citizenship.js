@@ -111,5 +111,9 @@ function adjustQuestionNumbers() {
 function setNewTitle() {
   const title = document.querySelector("#pageTitle");
   title.textContent = `${i18next.t('citizenship.title')}`;
+
+  const legend = document.querySelector("#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact > fieldset > legend");
+  legend.style.display = 'none';
+
   document.removeEventListener('headerReady', setNewTitle);
 }
