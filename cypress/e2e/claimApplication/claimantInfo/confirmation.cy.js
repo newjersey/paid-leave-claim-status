@@ -310,9 +310,9 @@ describe("Confirmation page with First Day of Disability in the future", () => {
 
     it("shows link to open PDF of claim summary", () => {
       cy.mockASPX(URL);
-      cy.get('#applicationPdfDownload').click();
+      cy.get('#futurePdfDownload').click();
       cy.wait('@aspxSubmission').then(checkClaimDownload);
-      cy.checkLogEvent(`TDI Confirmation - PDF Download Clicked`, {});
+      cy.checkLogEvent(`TDI Confirmation - Future PDF Download Clicked`, {});
     });
 
     globalTestsNew(PAGE_ID, URL);
