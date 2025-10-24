@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const verifyEmployerLabels = [
@@ -39,6 +40,7 @@ export function changes() {
     'ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectYes',
     'ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectNo'
   );
+  document.addEventListener('headerReady', setNewTitle);
 }
 
 function styleButtons() {
@@ -119,4 +121,10 @@ function convertScheduleInputToTextarea() {
 
     inputElement.parentNode.replaceChild(textareaElement, inputElement);
   }
+}
+
+function setNewTitle() {
+  const title = document.querySelector("#pageTitle");
+  title.textContent = `${i18next.t('employerVerification.title')}`;
+  document.removeEventListener('headerReady', setNewTitle);
 }
