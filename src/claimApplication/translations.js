@@ -102,6 +102,9 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           },
         },
       },
+      disabilityVerification: {
+        title: "Review and Save",
+      },
       header: {
         personal_information: "Personal Information",
         leave_information: "Leave Information",
