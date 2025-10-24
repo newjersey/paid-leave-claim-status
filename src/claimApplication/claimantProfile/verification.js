@@ -61,6 +61,7 @@ export function changes() {
     '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepTel3',
     '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepTelExt'
   );
+  removeCitizenshipInfo();
   saveInfo();
   document.addEventListener('headerReady', setNewTitle);
 }
@@ -166,4 +167,21 @@ function setNewTitle() {
   const title = document.querySelector("#pageTitle");
   title.textContent = `${i18next.t('reviewAndSave.title')}`;
   document.removeEventListener('headerReady', setNewTitle);
+}
+
+function removeCitizenshipInfo() {
+  const parentContainer = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification');
+  
+  if (parentContainer) {
+    const targetElement = Array.from(parentContainer.querySelectorAll('legend')).find(el => el.textContent.includes('Citizenship and Contact Information'));
+    if (targetElement) {
+      targetElement.textContent = targetElement.textContent.replace('Citizenship and Contact Information', 'Contact Information');
+    }
+
+    const labelElement = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_Label1');
+    
+    if (labelElement) {
+      labelElement.parentElement.parentElement.style.display = 'none';
+    }
+  }
 }
