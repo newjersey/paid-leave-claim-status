@@ -43,7 +43,6 @@ export const identifyingContent = {
 
 export function changes() {
   replaceVerificationRadioButtons(
-    'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification',
     'My personal and contact information is correct',
     '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_rbtnPersYes',
     '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btncontinueVer'

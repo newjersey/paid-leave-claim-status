@@ -35,7 +35,6 @@ export function changes() {
   styleButtons();
   convertScheduleInputToTextarea();
   replaceVerificationRadioButtons(
-    'ContentPlaceHolder1_TabEmployment_TabPanelVerify',
     'The information for this employer is correct',
     '#ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectYes',
     '#ContentPlaceHolder1_TabEmployment_TabPanelVerify_btnVer_Continue'

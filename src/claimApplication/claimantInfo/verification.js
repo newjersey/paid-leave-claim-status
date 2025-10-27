@@ -52,7 +52,6 @@ export function changes() {
   );
   saveProvider();
   replaceVerificationRadioButtons(
-    'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification',
     'My disability information is correct',
     '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes',
     '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer'
