@@ -291,7 +291,7 @@ function createStepIndicator() {
   ];
 
   const activeIndex = getActiveTabTitle() == "Confirmation" 
-    ? 4
+    ? 4 // hardcode that this page gets its own new section; others reflect prior sections
     : Array.from(inputs).findIndex(input => input.style.fontWeight === 'bold');
 
   const stepIndicator = document.createElement('div');
