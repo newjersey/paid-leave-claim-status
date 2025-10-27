@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import { replaceVerificationRadioButtons } from '../utils';
 
 export const verifyEmployerLabels = [
   { id: 'ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtVerEmpName', label: 'Employer Name' },
@@ -33,7 +34,12 @@ export function changes() {
   adjustEmploymentInfo();
   styleButtons();
   convertScheduleInputToTextarea();
-  replaceRadioButtons();
+  replaceVerificationRadioButtons(
+    'ContentPlaceHolder1_TabEmployment_TabPanelVerify',
+    'The information for this employer is correct',
+    '#ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectYes',
+    '#ContentPlaceHolder1_TabEmployment_TabPanelVerify_btnVer_Continue'
+  );
   document.addEventListener('headerReady', setNewTitle);
 }
 
@@ -114,42 +120,6 @@ function convertScheduleInputToTextarea() {
     textareaElement.setAttribute('aria-label', inputElement.getAttribute('aria-label'));
 
     inputElement.parentNode.replaceChild(textareaElement, inputElement);
-  }
-}
-
-function replaceRadioButtons() {
-  const parentContainer = document.getElementById('ContentPlaceHolder1_TabEmployment_TabPanelVerify');
-  if (parentContainer) {
-    const tdElements = parentContainer.querySelectorAll('td');
-
-    for (const tdElement of tdElements) {
-      if (tdElement.textContent.includes('The information for this employer is correct')) {
-        Array.from(tdElement.children).forEach(child => {
-          child.style.display = 'none';
-        });
-
-        var submitButton = document.createElement('button');
-        submitButton.id = 'submitButton';
-        submitButton.classList.add('usa-button');
-        submitButton.textContent = i18next.t('reviewAndSave.button');
-        submitButton.style.display = 'block';
-        submitButton.style.margin = 'auto';
-        submitButton.style.padding = '10px';
-        submitButton.addEventListener('click', function (event) {
-          event.preventDefault();
-          const radioButtonYes = document.querySelector('#ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectYes');
-          const originalSubmit = document.querySelector('#ContentPlaceHolder1_TabEmployment_TabPanelVerify_btnVer_Continue');
-          if (radioButtonYes && originalSubmit) {
-            radioButtonYes.click();
-            originalSubmit.style.display = 'none';
-            originalSubmit.click();
-          }
-        });
-
-        tdElement.appendChild(submitButton);
-        break;
-      }
-    };
   }
 }
 

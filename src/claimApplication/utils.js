@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 export const STORAGE_KEY_PROVIDER_NAME = "provider_name";
 export const STORAGE_KEY_USER_DOB = "user_dob";
 export const STORAGE_KEY_USER_NAME = "user_name";
@@ -133,4 +134,45 @@ export function adjustTableWidths(parent) {
       element.style.boxSizing = 'border-box';
     });
   });
+}
+
+export function replaceVerificationRadioButtons(
+  containerId,
+  informationText,
+  radioButtonYesId,
+  originalSubmitId,
+) {
+  const parentContainer = document.getElementById(containerId);
+  if (parentContainer) {
+    const tdElements = parentContainer.querySelectorAll('td');
+
+    for (const tdElement of tdElements) {
+      if (tdElement.textContent.includes(informationText)) {
+        Array.from(tdElement.children).forEach(child => {
+          child.style.display = 'none';
+        });
+
+        var submitButton = document.createElement('button');
+        submitButton.id = 'submitButton';
+        submitButton.classList.add('usa-button');
+        submitButton.textContent = i18next.t('reviewAndSave.button');
+        submitButton.style.display = 'block';
+        submitButton.style.margin = 'auto';
+        submitButton.style.padding = '10px';
+        submitButton.addEventListener('click', function (event) {
+          event.preventDefault();
+          const radioButtonYes = document.querySelector(radioButtonYesId);
+          const originalSubmit = document.querySelector(originalSubmitId);
+          if (radioButtonYes && originalSubmit) {
+            radioButtonYes.click();
+            originalSubmit.style.display = 'none';
+            originalSubmit.click();
+          }
+        });
+
+        tdElement.appendChild(submitButton);
+        break;
+      }
+    };
+  }
 }

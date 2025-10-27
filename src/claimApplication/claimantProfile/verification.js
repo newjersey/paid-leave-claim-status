@@ -2,6 +2,7 @@ import i18next from 'i18next';
 import {
   addToSessionData,
   fixPhoneNumberText,
+  replaceVerificationRadioButtons,
   STORAGE_KEY_USER_DOB,
   STORAGE_KEY_USER_NAME,
   STORAGE_KEY_USER_EMAIL,
@@ -41,7 +42,12 @@ export const identifyingContent = {
 };
 
 export function changes() {
-  replaceRadioButtons();
+  replaceVerificationRadioButtons(
+    'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification',
+    'My personal and contact information is correct',
+    '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_rbtnPersYes',
+    '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btncontinueVer'
+  );
   adjustTable();
   fixPhoneNumberText(
     '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerTel1',
@@ -92,44 +98,6 @@ function adjustTable() {
   if (repInputElement) {
     const repElement = repInputElement.parentElement;
     repElement.style.textAlign = 'left';
-  }
-}
-
-function replaceRadioButtons() {
-  const parentContainer = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification');
-  if (parentContainer) {
-    const tdElements = parentContainer.querySelectorAll('td');
-
-    for (const tdElement of tdElements) {
-      if (tdElement.textContent.includes('My personal and contact information is correct')) {
-        Array.from(tdElement.children).forEach(child => {
-          child.style.display = 'none';
-        });
-
-        const originalSubmitContainer = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_Tr5');
-        originalSubmitContainer.style.display = 'none';
-
-        var submitButton = document.createElement('button');
-        submitButton.id = 'submitButton';
-        submitButton.classList.add('usa-button');
-        submitButton.textContent = i18next.t('reviewAndSave.button');
-        submitButton.style.display = 'block';
-        submitButton.style.margin = 'auto';
-        submitButton.style.padding = '10px';
-        submitButton.addEventListener('click', function (event) {
-          event.preventDefault();
-          const radioButtonYes = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_rbtnPersYes');
-          const originalSubmit = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btncontinueVer');
-          if (radioButtonYes && originalSubmit) {
-            radioButtonYes.click();
-            originalSubmit.click();
-          }
-        });
-
-        tdElement.appendChild(submitButton);
-        break;
-      }
-    };
   }
 }
 

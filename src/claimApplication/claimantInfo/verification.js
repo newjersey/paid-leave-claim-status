@@ -2,6 +2,7 @@ import i18next from 'i18next';
 import {
   addToSessionData,
   fixPhoneNumberText,
+  replaceVerificationRadioButtons,
   STORAGE_KEY_PROVIDER_NAME,
 } from '../utils';
 
@@ -50,7 +51,12 @@ export function changes() {
     '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTelExt'
   );
   saveProvider();
-  replaceRadioButtons();
+  replaceVerificationRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification',
+    'My disability information is correct',
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes',
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer'
+  );
   document.addEventListener('headerReady', setNewTitle);
 }
 
@@ -81,44 +87,6 @@ function fixOverflowingText() {
   const otherStateInfo = document.querySelector('#divVerTDI');
   if (otherStateInfo) {
     otherStateInfo.style.height = 'fit-content';
-  }
-}
-
-function replaceRadioButtons() {
-  const parentContainer = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification');
-  if (parentContainer) {
-    const tdElements = parentContainer.querySelectorAll('td');
-
-    for (const tdElement of tdElements) {
-      if (tdElement.textContent.includes('My disability information is correct')) {
-        Array.from(tdElement.children).forEach(child => {
-          child.style.display = 'none';
-        });
-
-        const originalSubmitContainer = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_Tr1');
-        originalSubmitContainer.style.display = 'none';
-
-        var submitButton = document.createElement('button');
-        submitButton.id = 'submitButton';
-        submitButton.classList.add('usa-button');
-        submitButton.textContent = i18next.t('reviewAndSave.button');
-        submitButton.style.display = 'block';
-        submitButton.style.margin = 'auto';
-        submitButton.style.padding = '10px';
-        submitButton.addEventListener('click', function (event) {
-          event.preventDefault();
-          const radioButtonYes = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes');
-          const originalSubmit = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer');
-          if (radioButtonYes && originalSubmit) {
-            radioButtonYes.click();
-            originalSubmit.click();
-          }
-        });
-
-        tdElement.appendChild(submitButton);
-        break;
-      }
-    };
   }
 }
 
