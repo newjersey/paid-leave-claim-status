@@ -37,6 +37,7 @@ export function changes() {
     'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepNo'
   );
   requirePhone();
+  document.addEventListener('headerReady', setNewTitle);
 }
 
 function adjustWidths () {
@@ -78,4 +79,14 @@ function requirePhone() {
   asterisk.style.color = 'rgb(139, 0, 0)';
   asterisk.textContent = '* ';
   label.parentNode.insertBefore(asterisk, label);
+}
+
+function setNewTitle() {
+  const title = document.querySelector("#pageTitle");
+  title.textContent = `${i18next.t('citizenship.title')}`;
+
+  const legend = document.querySelector("#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact > fieldset > legend");
+  legend.style.display = 'none';
+
+  document.removeEventListener('headerReady', setNewTitle);
 }

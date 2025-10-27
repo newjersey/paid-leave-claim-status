@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import {
   addToSessionData,
   fixPhoneNumberText,
@@ -58,6 +59,7 @@ export function changes() {
     'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsNo'
   );
   saveProvider();
+  document.addEventListener('headerReady', setNewTitle);
 }
 
 function styleButton() {
@@ -105,4 +107,10 @@ function saveProvider() {
       [STORAGE_KEY_PROVIDER_NAME]: providerName.value.trim()
     });
   });
+}
+
+function setNewTitle() {
+  const title = document.querySelector("#pageTitle");
+  title.textContent = `${i18next.t('reviewAndSave.title')}`;
+  document.removeEventListener('headerReady', setNewTitle);
 }

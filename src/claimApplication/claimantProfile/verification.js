@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import {
   addToSessionData,
   fixPhoneNumberText,
@@ -61,6 +62,7 @@ export function changes() {
     '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepTelExt'
   );
   saveInfo();
+  document.addEventListener('headerReady', setNewTitle);
 }
 
 function adjustTable() {
@@ -162,4 +164,10 @@ function saveInfo() {
       [STORAGE_KEY_USER_MAIL_ADDRESS]: address
     });
   });
+}
+
+function setNewTitle() {
+  const title = document.querySelector("#pageTitle");
+  title.textContent = `${i18next.t('reviewAndSave.title')}`;
+  document.removeEventListener('headerReady', setNewTitle);
 }

@@ -11,6 +11,7 @@ const resources = {
         agreeAndSubmit: "Agree and submit application",
       },
       citizenship: {
+        title: "Contact information",
         phoneValidation: {
           digits_three: "Please enter exactly 3 digits",
           digits_four: "Please enter exactly 4 digits",
@@ -100,6 +101,23 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             check_status: `<a href="/DOL_DABI/" target="_blank">Check your claim status</a> (note: it takes several days for your first status update)`,
           },
         },
+      },
+      header: {
+        personal_information: "Personal information",
+        leave_information: "Leave information",
+        work_information: "Work information",
+        agree_and_finish: "Agree and finish",
+        summary_and_next_steps: "Summary and next steps",
+      },
+      paymentInfo: {
+        title: "Federal taxes",
+      },
+      personalProfile: {
+        title: "Demographic information",
+      },
+      reviewAndSave: {
+        title: "Review and save",
+        button: "Save and continue",
       },
     }
   },
