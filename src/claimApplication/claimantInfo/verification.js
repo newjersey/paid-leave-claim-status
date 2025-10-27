@@ -2,9 +2,8 @@ import i18next from 'i18next';
 import {
   addToSessionData,
   fixPhoneNumberText,
+  replaceVerificationRadioButtons,
   STORAGE_KEY_PROVIDER_NAME,
-  removeExtraSpaceBetweenRadioButtons,
-  styleRadioButton
 } from '../utils';
 
 export const otherBenefitsVerificationLabels = [
@@ -51,22 +50,13 @@ export function changes() {
     '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTel3',
     '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTelExt'
   );
-  styleButton();
-  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes');
-  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsNo');
-  removeExtraSpaceBetweenRadioButtons(
-    'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes',
-    'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsNo'
-  );
   saveProvider();
+  replaceVerificationRadioButtons(
+    'My disability information is correct',
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes',
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer'
+  );
   document.addEventListener('headerReady', setNewTitle);
-}
-
-function styleButton() {
-  const button = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer');
-  if (button) {
-    button.classList.add('usa-button');
-  }
 }
 
 function adjustTable() {

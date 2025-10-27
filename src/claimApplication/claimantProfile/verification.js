@@ -2,6 +2,7 @@ import i18next from 'i18next';
 import {
   addToSessionData,
   fixPhoneNumberText,
+  replaceVerificationRadioButtons,
   STORAGE_KEY_USER_DOB,
   STORAGE_KEY_USER_NAME,
   STORAGE_KEY_USER_EMAIL,
@@ -41,7 +42,11 @@ export const identifyingContent = {
 };
 
 export function changes() {
-  styleRadioButtons();
+  replaceVerificationRadioButtons(
+    'My personal and contact information is correct',
+    '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_rbtnPersYes',
+    '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btncontinueVer'
+  );
   adjustTable();
   fixPhoneNumberText(
     '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerTel1',
@@ -90,48 +95,6 @@ function adjustTable() {
   if (repInputElement) {
     const repElement = repInputElement.parentElement;
     repElement.style.textAlign = 'left';
-  }
-}
-
-function styleRadioButtons() {
-  const parentContainer = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification');
-
-  if (parentContainer) {
-    const tdElements = parentContainer.querySelectorAll('td');
-
-    tdElements.forEach(tdElement => {
-      if (tdElement.textContent.includes('My personal and contact information is correct')) {
-        const radioButtons = tdElement.querySelectorAll('input[type="radio"]');
-        const labels = tdElement.querySelectorAll('label');
-
-        const fieldset = document.createElement('fieldset');
-        fieldset.classList.add('usa-fieldset');
-        fieldset.style.marginBottom = '30px';
-
-        const legend = document.createElement('legend');
-        legend.classList.add('usa-legend');
-        legend.textContent = 'My personal and contact information is correct.';
-        fieldset.appendChild(legend);
-
-        radioButtons.forEach((radioButton, index) => {
-          const div = document.createElement('div');
-          div.classList.add('usa-radio');
-
-          const newRadioButton = radioButton.cloneNode(true);
-          newRadioButton.classList.add('usa-radio__input');
-
-          const newLabel = labels[index].cloneNode(true);
-          newLabel.classList.add('usa-radio__label');
-
-          div.appendChild(newRadioButton);
-          div.appendChild(newLabel);
-          fieldset.appendChild(div);
-        });
-
-        tdElement.innerHTML = '';
-        tdElement.appendChild(fieldset);
-      }
-    });
   }
 }
 
