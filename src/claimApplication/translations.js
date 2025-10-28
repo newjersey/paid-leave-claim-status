@@ -112,6 +112,9 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       leaveSchedule: {
         title: "Leave schedule",
       },
+      otherBenefits: {
+        title: "Other benefits",
+      },
       paymentInfo: {
         title: "Federal taxes",
       },
@@ -127,6 +130,9 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       reviewAndSubmit: {
         title: "Review and submit",
+      },
+      workRelated: {
+        title: "Work related information",
       },
     }
   },
