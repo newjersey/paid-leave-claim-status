@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { logEvent } from "../../modules/shared.mjs";
 import {
   adjustTableWidths,
@@ -59,6 +60,7 @@ export function changes() {
   adjustTable();
   adjustTextEntries();
   styleRadioButtons();
+  document.addEventListener('headerReady', setNewTitle);
 }
 
 function styleRadioButtons() {
@@ -123,4 +125,10 @@ function adjustTable() {
   }
 
   adjustTableWidths(document);
+}
+
+function setNewTitle() {
+  const title = document.querySelector("#pageTitle");
+  title.textContent = `${i18next.t('reasonForLeave.title')}`;
+  document.removeEventListener('headerReady', setNewTitle);
 }

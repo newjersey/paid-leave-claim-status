@@ -109,15 +109,30 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         agree_and_finish: "Agree and finish",
         summary_and_next_steps: "Summary and next steps",
       },
+      leaveSchedule: {
+        title: "Leave schedule",
+      },
+      otherBenefits: {
+        title: "Other benefits",
+      },
       paymentInfo: {
         title: "Federal taxes",
       },
       personalProfile: {
         title: "Demographic information",
       },
+      reasonForLeave: {
+        title: "Reason for leave",
+      },
       reviewAndSave: {
         title: "Review and save",
         button: "Save and continue",
+      },
+      reviewAndSubmit: {
+        title: "Review and submit",
+      },
+      workRelated: {
+        title: "Work related information",
       },
     }
   },
