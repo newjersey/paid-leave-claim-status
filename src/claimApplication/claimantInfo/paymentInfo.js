@@ -9,9 +9,20 @@ export const identifyingContent = {
 };
 
 export function changes() {
+  addStyles();
   rearrangeTable();
   updateRadioButtons();
   document.addEventListener('headerReady', setNewTitle);
+}
+
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    .usa-legend {
+      max-width: fit-content;
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 function rearrangeTable() {
