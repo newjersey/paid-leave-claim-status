@@ -49,6 +49,7 @@ export function changes() {
     'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnMUSAYes',
     'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnMUSANo'
   );
+  validateMailingAddressBeforeSubmit();
   document.addEventListener('headerReady', setNewTitle);
 }
 
@@ -127,4 +128,91 @@ function setNewTitle() {
   const title = document.querySelector("#pageTitle");
   title.textContent = `${i18next.t('personalProfile.title')}`;
   document.removeEventListener('headerReady', setNewTitle);
+}
+
+function validateMailingAddressBeforeSubmit() {
+  const originalSubmitBtn = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_btnCitiZen');
+  const customSubmitBtn = document.getElementById('customSubmitBtn');
+
+  const submitBtn = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_btnCitiZen');
+  
+  const address1 = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtMAddress1').value;
+  const address2 = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtMAddress2').value;
+  const city = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtMCity').value;
+  const state = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_ddlMStates').value;
+  const zipcode1 = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtMZipCode1').value;
+  const zipcode2 = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtMZipCode2').value;
+
+
+  customSubmitBtn.addEventListener('click', function(event) {
+    event.preventDefault();
+
+    if (state.value === 'NJ') {
+      const address = encodeURIComponent(address1.value);
+      const address2Encoded = encodeURIComponent(address2.value);
+      const cityEncoded = encodeURIComponent(city.value);
+      const zipcode = encodeURIComponent(zipcode1.value);
+      const zipcodeExt = encodeURIComponent(zipcode2.value);
+
+      const url = `https://geo.nj.gov/arcgis/rest/services/Tasks/NJ_Geocode/GeocodeServer/findAddressCandidates?` +
+        `Address=${address}&` +
+        `Address2=${address2Encoded}&` +
+        `City=${cityEncoded}&` +
+        `Postal=${zipcode}&` +
+        `PostalExt=${zipcodeExt}&` +
+        `f=pjson`;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data);
+
+          // if response matches entry, proceed
+          originalSubmitBtn.click();
+
+          // if there's a different address with highest score above 90, prompt user with suggestion
+
+
+          // if nothing with a good score, prompt generic "are you sure?"
+        })
+        .catch(error => {
+          console.error('Error fetching address data:', error);
+        });
+    } else {
+      originalSubmitBtn.click();
+    }
+  });
+
+  // check that the state is "NJ"
+
+  // if so, insert strings into template like this: https://geo.nj.gov/arcgis/rest/services/Tasks/NJ_Geocode/GeocodeServer/findAddressCandidates?Address=123+Main+St.&Address2=Apt+200&City=Newark&Postal=08111&PostalExt=1234&f=pjson
+
+  // get JSON from URL (in format like this)
+  // {
+  // "spatialReference": {
+  //   "wkid": 102711,
+  //   "latestWkid": 3424
+  // },
+  // "candidates": [
+  //   {
+  //   "address": "123 Main Street, Newark, New Jersey, 07105",
+  //   "location": {
+  //     "x": 590375.503736172454,
+  //     "y": 689362.209437993588
+  //   },
+  //   "score": 97,
+  //   "attributes": {
+      
+  //   },
+  //   "extent": {
+  //     "xmin": 590099.821288942127,
+  //     "ymin": 688996.795748931472,
+  //     "xmax": 590651.17786089913,
+  //     "ymax": 689727.626358074602
+  //   }
+  //   }
+  // ]
+  // }
+
+  // for now just print that to console
 }
