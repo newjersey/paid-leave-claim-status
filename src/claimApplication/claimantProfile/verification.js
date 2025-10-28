@@ -67,6 +67,7 @@ export function changes() {
     '#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepTelExt'
   );
   saveInfo();
+  renamePages();
   document.addEventListener('headerReady', setNewTitle);
 }
 
@@ -133,4 +134,30 @@ function setNewTitle() {
   const title = document.querySelector("#pageTitle");
   title.textContent = `${i18next.t('reviewAndSave.title')}`;
   document.removeEventListener('headerReady', setNewTitle);
+}
+
+function renamePages() {
+  const elementsToRename = [
+    {
+      id: "#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btnEditPersInfo",
+      oldName: "Personal Information",
+      newNameKey: 'personalProfile.title'
+    },
+    {
+      id: "#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btnEditCitznInfo",
+      oldName: "Citizenship and Contact Information",
+      newNameKey: 'citizenship.title'
+    }
+  ];
+
+  elementsToRename.forEach(({ id, oldName, newNameKey }) => {
+    const legendElement = document.querySelector(id).parentElement;
+    if (legendElement) {
+      legendElement.childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE && node.textContent.includes(oldName)) {
+          node.textContent = node.textContent.replace(oldName, i18next.t(newNameKey));
+        }
+      });
+    }
+  });
 }
