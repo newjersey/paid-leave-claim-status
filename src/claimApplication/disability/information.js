@@ -11,8 +11,8 @@ export const id = "disabilityInformation";
 
 export const identifyingContent = {
   id,
-  elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_ClientState',
-  value: '"TabState":[true,false,false,false,false,false]',
+  elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD',
+  text: 'Select the date your disability',
 };
 
 export function changes() {
