@@ -1,6 +1,7 @@
 const resources = {
   en: {
     translation: {
+      continue: "Continue",
       certification: {
         certifyText: "By submitting, I certify:",
         alertText: "Your application has been saved. If needed, you can log out and finish your application within 14 days from when you first started it.",
