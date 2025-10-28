@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
 export const disabilityInformationLabels = [
@@ -21,4 +22,11 @@ export function changes() {
     'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes',
     'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo'
   );
+  document.addEventListener('headerReady', setNewTitle);
+}
+
+function setNewTitle() {
+  const title = document.querySelector("#pageTitle");
+  title.textContent = `${i18next.t('leaveSchedule.title')}`;
+  document.removeEventListener('headerReady', setNewTitle);
 }
