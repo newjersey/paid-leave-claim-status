@@ -119,6 +119,9 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         title: "Review and save",
         button: "Save and continue",
       },
+      reviewAndSubmit: {
+        title: "Review and submit",
+      },
     }
   },
 };
