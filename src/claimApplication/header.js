@@ -290,8 +290,10 @@ function createStepIndicator() {
     i18next.t('header.summary_and_next_steps'),
   ];
 
+  const newConfirmationSectionIndex = 4;
+
   const activeIndex = getActiveTabTitle() == "Confirmation" 
-    ? 4 // hardcode that this page gets its own new section; others reflect prior sections
+    ? newConfirmationSectionIndex
     : Array.from(inputs).findIndex(input => input.style.fontWeight === 'bold');
 
   const stepIndicator = document.createElement('div');
