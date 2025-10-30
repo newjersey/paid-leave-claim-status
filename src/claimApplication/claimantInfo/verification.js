@@ -1,9 +1,9 @@
+import i18next from 'i18next';
 import {
   addToSessionData,
   fixPhoneNumberText,
+  replaceVerificationRadioButtons,
   STORAGE_KEY_PROVIDER_NAME,
-  removeExtraSpaceBetweenRadioButtons,
-  styleRadioButton
 } from '../utils';
 
 export const otherBenefitsVerificationLabels = [
@@ -50,21 +50,14 @@ export function changes() {
     '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTel3',
     '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocTelExt'
   );
-  styleButton();
-  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes');
-  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsNo');
-  removeExtraSpaceBetweenRadioButtons(
-    'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes',
-    'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsNo'
-  );
   saveProvider();
-}
-
-function styleButton() {
-  const button = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer');
-  if (button) {
-    button.classList.add('usa-button');
-  }
+  replaceVerificationRadioButtons(
+    'My disability information is correct',
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_rbtnDisabsYes',
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer'
+  );
+  renamePages();
+  document.addEventListener('headerReady', setNewTitle);
 }
 
 function adjustTable() {
@@ -104,5 +97,52 @@ function saveProvider() {
     addToSessionData({
       [STORAGE_KEY_PROVIDER_NAME]: providerName.value.trim()
     });
+  });
+}
+
+function setNewTitle() {
+  const title = document.querySelector("#pageTitle");
+  title.textContent = `${i18next.t('reviewAndSave.title')}`;
+  document.removeEventListener('headerReady', setNewTitle);
+}
+
+function renamePages() {
+  const elementsToRename = [
+    {
+      id: "#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnDisInfoEdit",
+      oldName: "Disability Information",
+      newNameKey: 'leaveSchedule.title'
+    },
+    {
+      id: "#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btnVerDisab",
+      oldName: "Medical Treatment Information",
+      newNameKey: 'reasonForLeave.title'
+    },
+    {
+      id: "#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnWREdit",
+      oldName: "Work Related Information",
+      newNameKey: 'workRelated.title'
+    },
+    {
+      id: "#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnOBEdit",
+      oldName: "Other Benefits",
+      newNameKey: 'otherBenefits.title'
+    },
+    {
+      id: "#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btnVerLatepay",
+      oldName: "Payment Information",
+      newNameKey: 'paymentInfo.title'
+    }
+  ];
+
+  elementsToRename.forEach(({ id, oldName, newNameKey }) => {
+    const legendElement = document.querySelector(id).parentElement;
+    if (legendElement) {
+      legendElement.childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE && node.textContent.includes(oldName)) {
+          node.textContent = node.textContent.replace(oldName, i18next.t(newNameKey));
+        }
+      });
+    }
   });
 }

@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { logEvent } from "../../modules/shared.mjs";
 import { adjustTableWidths, removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
 
@@ -65,6 +66,7 @@ export function changes() {
   addStyles();
   styleRadioButtons();
   adjustWidths();
+  document.addEventListener('headerReady', setNewTitle);
 }
 
 function addStyles() {
@@ -120,4 +122,10 @@ function adjustWidths() {
   if (parentDiv) {
     adjustTableWidths(parentDiv);
   }
+}
+
+function setNewTitle() {
+  const title = document.querySelector("#pageTitle");
+  title.textContent = `${i18next.t('otherBenefits.title')}`;
+  document.removeEventListener('headerReady', setNewTitle);
 }

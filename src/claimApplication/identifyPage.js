@@ -16,7 +16,8 @@ import { identifyingContent as loginProfileContent } from "./claimantProfile/log
 import { identifyingContent as personalProfileContent } from "./claimantProfile/personalProfile.js";
 import { identifyingContent as claimantProfileVerificationContent } from "./claimantProfile/verification.js";
 import { identifyingContent as completeExistingIntroContent } from "./completeExistingIntro/completeExistingIntro.js";
-import { identifyingContent as disabilityInformationContent } from "./disability/information.js";
+import { identifyingContent as disabilityInformationContent,
+  alternateIdentifyingContent as alternateDisabilityInformationContent } from "./disability/information.js";
 import { identifyingContent as employmentDetailsContent } from "./employmentDetails/employmentDetails.js";
 import { identifyingContent as medicalTreatmentContent } from "./medical/treatment.js";
 import { identifyingContent as priorClaimSearchContent } from "./priorClaimSearch/priorClaimSearch.js";
@@ -43,6 +44,7 @@ const identifyingContents = [
   completeExistingIntroContent,
   employmentDetailsContent,
   disabilityInformationContent,
+  alternateDisabilityInformationContent,
   medicalTreatmentContent,
   priorClaimSearchContent,
   tdiIntroductionContent,
