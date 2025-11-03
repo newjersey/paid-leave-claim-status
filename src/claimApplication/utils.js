@@ -175,9 +175,11 @@ export function replaceVerificationRadioButtons(
 }
 
 export function setNewTitle(text) {
-  document.addEventListener('headerReady', function () {
+  const setText = () => {
     const title = document.querySelector("#pageTitle");
     title.textContent = text;
-    document.removeEventListener('headerReady', arguments.callee);
-  });
+    document.removeEventListener('headerReady', setText);
+  };
+
+  document.addEventListener('headerReady', setText);
 }
