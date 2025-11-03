@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { replaceVerificationRadioButtons } from '../utils';
+import { replaceVerificationRadioButtons, setNewTitle } from '../utils';
 
 export const verifyEmployerLabels = [
   { id: 'ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtVerEmpName', label: 'Employer Name' },
@@ -39,7 +39,7 @@ export function changes() {
     '#ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectYes',
     '#ContentPlaceHolder1_TabEmployment_TabPanelVerify_btnVer_Continue'
   );
-  document.addEventListener('headerReady', setNewTitle);
+  setNewTitle(i18next.t('reviewAndSubmit.title'));
 }
 
 function styleButtons() {
@@ -120,10 +120,4 @@ function convertScheduleInputToTextarea() {
 
     inputElement.parentNode.replaceChild(textareaElement, inputElement);
   }
-}
-
-function setNewTitle() {
-  const title = document.querySelector("#pageTitle");
-  title.textContent = `${i18next.t('reviewAndSubmit.title')}`;
-  document.removeEventListener('headerReady', setNewTitle);
 }

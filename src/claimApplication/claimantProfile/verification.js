@@ -3,6 +3,7 @@ import {
   addToSessionData,
   fixPhoneNumberText,
   replaceVerificationRadioButtons,
+  setNewTitle,
   STORAGE_KEY_USER_DOB,
   STORAGE_KEY_USER_NAME,
   STORAGE_KEY_USER_EMAIL,
@@ -68,7 +69,7 @@ export function changes() {
   );
   saveInfo();
   renamePages();
-  document.addEventListener('headerReady', setNewTitle);
+  setNewTitle(i18next.t('reviewAndSave.title'));
 }
 
 function adjustTable() {
@@ -128,12 +129,6 @@ function saveInfo() {
       [STORAGE_KEY_USER_MAIL_ADDRESS]: address
     });
   });
-}
-
-function setNewTitle() {
-  const title = document.querySelector("#pageTitle");
-  title.textContent = `${i18next.t('reviewAndSave.title')}`;
-  document.removeEventListener('headerReady', setNewTitle);
 }
 
 function renamePages() {
