@@ -3,6 +3,7 @@ import {
   addToSessionData,
   fixPhoneNumberText,
   replaceVerificationRadioButtons,
+  setNewTitle,
   STORAGE_KEY_PROVIDER_NAME,
 } from '../utils';
 
@@ -57,7 +58,7 @@ export function changes() {
     '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer'
   );
   renamePages();
-  document.addEventListener('headerReady', setNewTitle);
+  setNewTitle(i18next.t('reviewAndSave.title'));
 }
 
 function adjustTable() {
@@ -98,12 +99,6 @@ function saveProvider() {
       [STORAGE_KEY_PROVIDER_NAME]: providerName.value.trim()
     });
   });
-}
-
-function setNewTitle() {
-  const title = document.querySelector("#pageTitle");
-  title.textContent = `${i18next.t('reviewAndSave.title')}`;
-  document.removeEventListener('headerReady', setNewTitle);
 }
 
 function renamePages() {

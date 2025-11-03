@@ -173,3 +173,13 @@ export function replaceVerificationRadioButtons(
     }
   };
 }
+
+export function setNewTitle(text) {
+  const setText = () => {
+    const title = document.querySelector("#pageTitle");
+    title.textContent = text;
+    document.removeEventListener('headerReady', setText);
+  };
+
+  document.addEventListener('headerReady', setText);
+}

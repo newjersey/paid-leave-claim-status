@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import { setNewTitle } from '../utils';
 
 export const id = "paymentInfo";
 
@@ -12,7 +13,7 @@ export function changes() {
   addStyles();
   rearrangeTable();
   updateRadioButtons();
-  document.addEventListener('headerReady', setNewTitle);
+  setNewTitle(i18next.t('paymentInfo.title'));
 }
 
 function addStyles() {
@@ -92,10 +93,4 @@ function updateRadioButtons() {
     container.innerHTML = '';
     container.appendChild(fieldset);
   }
-}
-
-function setNewTitle() {
-  const title = document.querySelector("#pageTitle");
-  title.textContent = `${i18next.t('paymentInfo.title')}`;
-  document.removeEventListener('headerReady', setNewTitle);
 }

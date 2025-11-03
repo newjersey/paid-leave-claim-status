@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
+import { removeExtraSpaceBetweenRadioButtons, setNewTitle, styleRadioButton } from '../utils';
 
 export const disabilityInformationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt', label: 'Disability Start Date' },
@@ -29,11 +29,5 @@ export function changes() {
     'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes',
     'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo'
   );
-  document.addEventListener('headerReady', setNewTitle);
-}
-
-function setNewTitle() {
-  const title = document.querySelector("#pageTitle");
-  title.textContent = `${i18next.t('leaveSchedule.title')}`;
-  document.removeEventListener('headerReady', setNewTitle);
+  setNewTitle(i18next.t('leaveSchedule.title'));
 }

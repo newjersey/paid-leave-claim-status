@@ -2,6 +2,7 @@ import i18next from 'i18next';
 import {
   adjustTableWidths,
   removeExtraSpaceBetweenRadioButtons,
+  setNewTitle,
   styleRadioButton,
 } from '../utils';
 
@@ -49,7 +50,7 @@ export function changes() {
     'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnMUSAYes',
     'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnMUSANo'
   );
-  document.addEventListener('headerReady', setNewTitle);
+  setNewTitle(i18next.t('personalProfile.title'));
 }
 
 function adjustWidths() {
@@ -121,10 +122,4 @@ function removeOverlappingBorders() {
   if (mailingAddress) {
     mailingAddress.style.borderStyle = 'none';
   }
-}
-
-function setNewTitle() {
-  const title = document.querySelector("#pageTitle");
-  title.textContent = `${i18next.t('personalProfile.title')}`;
-  document.removeEventListener('headerReady', setNewTitle);
 }

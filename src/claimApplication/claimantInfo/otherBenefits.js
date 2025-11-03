@@ -1,6 +1,11 @@
 import i18next from 'i18next';
 import { logEvent } from "../../modules/shared.mjs";
-import { adjustTableWidths, removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
+import {
+  adjustTableWidths,
+  removeExtraSpaceBetweenRadioButtons,
+  setNewTitle,
+  styleRadioButton
+} from '../utils';
 
 export const id = "otherBenefits";
 
@@ -66,7 +71,7 @@ export function changes() {
   addStyles();
   styleRadioButtons();
   adjustWidths();
-  document.addEventListener('headerReady', setNewTitle);
+  setNewTitle(i18next.t('otherBenefits.title'));
 }
 
 function addStyles() {
@@ -122,10 +127,4 @@ function adjustWidths() {
   if (parentDiv) {
     adjustTableWidths(parentDiv);
   }
-}
-
-function setNewTitle() {
-  const title = document.querySelector("#pageTitle");
-  title.textContent = `${i18next.t('otherBenefits.title')}`;
-  document.removeEventListener('headerReady', setNewTitle);
 }
