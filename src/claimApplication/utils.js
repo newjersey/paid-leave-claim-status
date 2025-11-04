@@ -1,11 +1,14 @@
 import i18next from 'i18next';
 
+// remove these keys once DOL has deployed update to get from db
 export const STORAGE_KEY_PROVIDER_NAME = "provider_name";
 export const STORAGE_KEY_USER_DOB = "user_dob";
 export const STORAGE_KEY_USER_NAME = "user_name";
 export const STORAGE_KEY_USER_EMAIL = "user_email";
 export const STORAGE_KEY_USER_PHONE = "user_phone";
 export const STORAGE_KEY_USER_MAIL_ADDRESS = "user_mail_address";
+
+export const STORAGE_KEY_REASON_FOR_LEAVE = "reason_for_leave";
 
 export const STORAGE_KEY_SESSION_DATA = "session_data";
 
@@ -37,12 +40,12 @@ export function clearSessionData() {
 }
 
 // Note: this is only a simple XOR to make not plaintext - not encryption
-// Fetching from backend is more robust and is in progress at DOL to replace this
+// Fetching from backend is more robust when possible
 export function encodeDecode(data) {
   return data.split('').map(char => String.fromCharCode(char.charCodeAt(0) ^ 100)).join('');
 }
 
-// TODO: this only styles the buttons.
+// This only styles the buttons.
 // When possible also use USWDS suggested HTML fieldset and legend structure
 export function styleRadioButton(radioButtonId, marginBottom = false) {
   const radioButton = document.getElementById(radioButtonId);
@@ -177,9 +180,11 @@ export function replaceVerificationRadioButtons(
 export function setNewTitle(text) {
   const setText = () => {
     const title = document.querySelector("#pageTitle");
-    title.textContent = text;
-    document.removeEventListener('headerReady', setText);
+    if (title) {
+      title.textContent = text;
+      document.removeEventListener('headerReady', setText);
+    }
   };
-
+  setText();
   document.addEventListener('headerReady', setText);
 }

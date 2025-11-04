@@ -123,6 +123,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       reasonForLeave: {
         title: "Reason for leave",
+        button: "Continue",
       },
       reviewAndSave: {
         title: "Review and save",
