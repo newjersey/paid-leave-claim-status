@@ -123,10 +123,13 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       reasonForLeave: {
         title: "Reason for leave",
+        characterLimit: "{{limit}} character limit",
         chooseReason: "Choose your reason for applying for Temporary Disability benefits:",
         illness: "Illness (including mental health)",
         injury: "Injury",
+        optional: "(optional)",
         pregnancy: "Pregnancy and recovery from childbirth",
+        pregnancyDetails: "If you have any pregnancy complications, describe them below. Otherwise, you can skip this.",
         button: "Continue",
       },
       reviewAndSave: {

@@ -52,12 +52,20 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
+    .bold-text {
+      font-weight: bold;
+    }
+
     .bordered-set {
       background: white;
       border: 1px solid #b2b2b2;
       border-radius: 5px;
       margin: 10px 0;
       padding: 10px;
+    }
+    
+    .optional-text {
+      color: #757575;
     }
 
     .required-asterisk {
@@ -67,6 +75,10 @@ function addStyles() {
 
     .usa-radio__label {
       text-align: left;
+    }
+
+    .usa-textarea {
+      resize: none;
     }
   `;
   document.head.appendChild(style);
@@ -163,6 +175,18 @@ function reasonForLeavePage() {
             <label class="usa-radio__label" for="reason-pregnancy">
               ${i18next.t('reasonForLeave.pregnancy')}
             </label>
+            <div id="pregnancy-details" class="additional-content" style="display: none;">
+              <p class="optional-text">
+                <span class="bold-text">${i18next.t('reasonForLeave.optional')} </span>
+                ${i18next.t('reasonForLeave.pregnancyDetails')}
+              </p>
+              <textarea
+                class="usa-textarea"
+                id="pregnancy-details"
+                maxlength="250"
+                name="pregnancy-details"></textarea>
+              <p class="optional-text">${i18next.t('reasonForLeave.characterLimit', { limit: 250 })}</p>
+            </div>
           </div>
           <div class="usa-radio">
             <input
@@ -199,7 +223,28 @@ function reasonForLeavePage() {
     leaveScheduleContainer.parentNode.insertBefore(newMain, leaveScheduleContainer);
   }
 
+  setupRadioButtonListeners();
   setupSubmitReasonForLeaveButton();
+}
+
+function setupRadioButtonListeners() {
+  const pregnancyRadio = document.getElementById('reason-pregnancy');
+  const illnessRadio = document.getElementById('reason-illness');
+  const injuryRadio = document.getElementById('reason-injury');
+
+  const pregnancyDetails = document.getElementById('pregnancy-details');
+
+  pregnancyRadio.addEventListener('change', function () {
+    pregnancyDetails.style.display = 'block';
+  });
+
+  illnessRadio.addEventListener('change', function () {
+    pregnancyDetails.style.display = 'none';
+  });
+
+  injuryRadio.addEventListener('change', function () {
+    pregnancyDetails.style.display = 'none';
+  });
 }
 
 function setupSubmitReasonForLeaveButton() {
