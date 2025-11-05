@@ -35,10 +35,11 @@ const Screens = Object.freeze({
   LEAVE_SCHEDULE: 'leaveSchedule',
 });
 
+const backButtonId = "leaveScheduleBack";
+
 let currentScreen = Screens.REASON_FOR_LEAVE;
 
 export function changes() {
-  console.log(`currentScreen: ${currentScreen}`);
   if (currentScreen == Screens.REASON_FOR_LEAVE) {
     reasonForLeavePage();
   } else {
@@ -58,7 +59,7 @@ function leaveSchedulePage() {
     leaveScheduleContainer.style.display = 'block';
   }
   
-  addBackButton();
+  showBackButton();
 
   styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
   styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo', true);
@@ -67,16 +68,25 @@ function leaveSchedulePage() {
     'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo'
   );
   setNewTitle(i18next.t('leaveSchedule.title'));
-
-  const sessionData = getSessionData();
-  const reasonForLeave = sessionData[STORAGE_KEY_REASON_FOR_LEAVE];
-  console.log(`reasonForLeave: ${reasonForLeave}`);
 }
 
-function addBackButton() {
+function hideBackButton() {
+  const existingButton = document.getElementById(backButtonId);
+  if (existingButton) {
+    existingButton.style.display = 'none';
+  }
+}
+
+function showBackButton() {
+  const existingButton = document.getElementById(backButtonId);
+  if (existingButton) {
+    existingButton.style.display = 'block';
+    return;
+  }
+
   const backButton = document.createElement('button');
   backButton.textContent = 'Back';
-  backButton.id = 'leaveScheduleBack';
+  backButton.id = backButtonId;
 
   backButton.addEventListener('click', function (event) {
     event.preventDefault();
@@ -94,13 +104,22 @@ function addBackButton() {
 }
 
 function reasonForLeavePage() {
+  hideBackButton();
   setNewTitle(i18next.t('reasonForLeave.title'));
 
-  const leaveScheduleContainer = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab");
+  const leaveScheduleContainer = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab");
   if (leaveScheduleContainer) {
     leaveScheduleContainer.style.display = 'none';
+
+    const mainId = "reasonForLeaveMain";
+    const existingMain = document.getElementById(mainId);
+    if (existingMain) {
+      existingMain.style.display = 'block';
+      return;
+    }
+
     const newMain = document.createElement('main');
-    newMain.id = "reasonForLeaveMain";
+    newMain.id = mainId;
     newMain.innerHTML = `
       <p>Hello there!</p>
 
@@ -114,7 +133,6 @@ function reasonForLeavePage() {
 }
 
 function setupSubmitReasonForLeaveButton() {
-  console.log();
   const submitBtn = document.querySelector('#submitReasonForLeave');
   if (submitBtn) {
     submitBtn.addEventListener('click', function (event) {
