@@ -60,6 +60,11 @@ function addStyles() {
       padding: 10px;
     }
 
+    .required-asterisk {
+      color: rgb(139, 0, 0);
+      font-weight: bold;
+    }
+
     .usa-radio__label {
       text-align: left;
     }
@@ -143,7 +148,10 @@ function reasonForLeavePage() {
     newMain.innerHTML = `
       <div class="bordered-set">
         <fieldset class="usa-fieldset">
-          <legend class="usa-legend usa-legend">${i18next.t('reasonForLeave.chooseReason')}</legend>
+          <legend class="usa-legend usa-legend">
+            <span class="required-asterisk">*</span>
+            ${i18next.t('reasonForLeave.chooseReason')}
+          </legend>
           <div class="usa-radio">
             <input
               class="usa-radio__input"
