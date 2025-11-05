@@ -40,11 +40,31 @@ const backButtonId = "leaveScheduleBack";
 let currentScreen = Screens.REASON_FOR_LEAVE;
 
 export function changes() {
+  addStyles();
+
   if (currentScreen == Screens.REASON_FOR_LEAVE) {
     reasonForLeavePage();
   } else {
     leaveSchedulePage();
   }
+}
+
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    .bordered-set {
+      background: white;
+      border: 1px solid #b2b2b2;
+      border-radius: 5px;
+      margin: 10px 0;
+      padding: 10px;
+    }
+
+    .usa-radio__label {
+      text-align: left;
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 function leaveSchedulePage() {
@@ -121,9 +141,51 @@ function reasonForLeavePage() {
     const newMain = document.createElement('main');
     newMain.id = mainId;
     newMain.innerHTML = `
-      <p>Hello there!</p>
+      <div class="bordered-set">
+        <fieldset class="usa-fieldset">
+          <legend class="usa-legend usa-legend">${i18next.t('reasonForLeave.chooseReason')}</legend>
+          <div class="usa-radio">
+            <input
+              class="usa-radio__input"
+              id="reason-pregnancy"
+              type="radio"
+              name="reasons"
+              value="pregnancy"
+            />
+            <label class="usa-radio__label" for="reason-pregnancy">
+              ${i18next.t('reasonForLeave.pregnancy')}
+            </label>
+          </div>
+          <div class="usa-radio">
+            <input
+              class="usa-radio__input"
+              id="reason-illness"
+              type="radio"
+              name="reasons"
+              value="illness"
+            />
+            <label class="usa-radio__label" for="reason-illness">
+              ${i18next.t('reasonForLeave.illness')}
+            </label>
+          </div>
+          <div class="usa-radio">
+            <input
+              class="usa-radio__input"
+              id="reason-injury"
+              type="radio"
+              name="reasons"
+              value="injury"
+            />
+            <label class="usa-radio__label" for="reason-injury">
+              ${i18next.t('reasonForLeave.injury')}
+            </label>
+          </div>
+        </fieldset>
+      </div>
 
-      <button id="submitReasonForLeave">${i18next.t('reasonForLeave.button')}</button>
+      <button class="usa-button" id="submitReasonForLeave">
+        ${i18next.t('reasonForLeave.button')}
+      </button>
     `;
 
     leaveScheduleContainer.parentNode.insertBefore(newMain, leaveScheduleContainer);
