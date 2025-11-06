@@ -38,6 +38,7 @@ const Screens = Object.freeze({
 
 const backButtonId = "leaveScheduleBack";
 
+let disabilityType = null;
 let currentScreen = Screens.REASON_FOR_LEAVE;
 
 export function changes() {
@@ -428,6 +429,12 @@ function reasonForLeavePage() {
             </div>
           </fieldset>
         </div>
+
+        <div id="employerInfo" style="display:none;">
+          <div class="bordered-set">
+            <p id="employerInfoPrompt"></p>
+          </div>
+        </div>
       </div>
 
       <button class="usa-button" id="submitReasonForLeave">
@@ -440,6 +447,7 @@ function reasonForLeavePage() {
 
   setupDisabilityTypeListeners();
   setupInputMasks();
+  setupCausedByJobListeners();
   setupWorkersCompListeners();
   setupSubmitReasonForLeaveButton();
 }
@@ -460,6 +468,7 @@ function setupDisabilityTypeListeners() {
   const pregnancyDetails = document.getElementById('pregnancy-details');
   const workDetails = document.getElementById('reasonForLeaveWork');
   const causedByJobText = document.getElementById('causedByJobText');
+  const employerInfoPrompt = document.getElementById('employerInfoPrompt');
   
   pregnancyRadio.addEventListener('change', function () {
     pregnancyDetails.style.display = 'block';
@@ -467,15 +476,34 @@ function setupDisabilityTypeListeners() {
   });
 
   illnessRadio.addEventListener('change', function () {
-    causedByJobText.textContent = i18next.t('reasonForLeave.work.causedByJob', { disabilityType: i18next.t('reasonForLeave.work.illness') });
+    disabilityType = i18next.t('reasonForLeave.work.illness');
+    causedByJobText.textContent = i18next.t('reasonForLeave.work.causedByJob', { disabilityType });
+    employerInfoPrompt.textContent = i18next.t('reasonForLeave.work.employerInfo.prompt', { disabilityType });
     pregnancyDetails.style.display = 'none';
     workDetails.style.display = 'block';
   });
 
   injuryRadio.addEventListener('change', function () {
-    causedByJobText.textContent = i18next.t('reasonForLeave.work.causedByJob', { disabilityType: i18next.t('reasonForLeave.work.injury') });
+    disabilityType = i18next.t('reasonForLeave.work.injury');
+    causedByJobText.textContent = i18next.t('reasonForLeave.work.causedByJob', { disabilityType });
+    employerInfoPrompt.textContent = i18next.t('reasonForLeave.work.employerInfo.prompt', { disabilityType });
     pregnancyDetails.style.display = 'none';
     workDetails.style.display = 'block';
+  });
+}
+
+function setupCausedByJobListeners() {
+  const workersCompYes = document.getElementById('workers-comp-yes');
+  const workersCompNo = document.getElementById('workers-comp-no');
+
+  const employerInfo = document.getElementById('employerInfo');
+  
+  workersCompYes.addEventListener('change', function () {
+    employerInfo.style.display = 'block';
+  });
+
+  workersCompNo.addEventListener('change', function () {
+    employerInfo.style.display = 'none';
   });
 }
 
