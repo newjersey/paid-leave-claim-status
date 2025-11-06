@@ -36,16 +36,9 @@ const Screens = Object.freeze({
   LEAVE_SCHEDULE: 'leaveSchedule',
 });
 
-const DisabilityType = Object.freeze({
-  PREGNANCY: 'pregnancy',
-  ILLNESS: 'illness',
-  INJURY: 'injury',
-});
-
 const backButtonId = "leaveScheduleBack";
 
 let currentScreen = Screens.REASON_FOR_LEAVE;
-let disabilityType = null;
 
 export function changes() {
   addStyles();
@@ -402,6 +395,39 @@ function reasonForLeavePage() {
             </div>
           </fieldset>
         </div>
+
+        <div id="workers-comp-claim" class="bordered-set" style="display:none;">
+          <fieldset class="usa-fieldset">
+            <legend class="usa-legend usa-legend">
+              <span class="required-asterisk">*</span>
+              ${i18next.t('reasonForLeave.work.workersCompClaim')}
+            </legend>
+            <div class="usa-radio">
+              <input
+                class="usa-radio__input"
+                id="workers-comp-yes"
+                type="radio"
+                name="workers-comp"
+                value="yes"
+              />
+              <label class="usa-radio__label" for="workers-comp-yes">
+                ${i18next.t('shared.yes')}
+              </label>
+            </div>
+            <div class="usa-radio">
+              <input
+                class="usa-radio__input"
+                id="workers-comp-no"
+                type="radio"
+                name="workers-comp"
+                value="no"
+              />
+              <label class="usa-radio__label" for="workers-comp-no">
+                ${i18next.t('shared.no')}
+              </label>
+            </div>
+          </fieldset>
+        </div>
       </div>
 
       <button class="usa-button" id="submitReasonForLeave">
@@ -412,8 +438,9 @@ function reasonForLeavePage() {
     leaveScheduleContainer.parentNode.insertBefore(newMain, leaveScheduleContainer);
   }
 
+  setupDisabilityTypeListeners();
   setupInputMasks();
-  setupRadioButtonListeners();
+  setupWorkersCompListeners();
   setupSubmitReasonForLeaveButton();
 }
 
@@ -425,7 +452,7 @@ function setupInputMasks() {
   IMask(phoneInput, { mask: '000-000-0000' });
 }
 
-function setupRadioButtonListeners() {
+function setupDisabilityTypeListeners() {
   const pregnancyRadio = document.getElementById('reason-pregnancy');
   const illnessRadio = document.getElementById('reason-illness');
   const injuryRadio = document.getElementById('reason-injury');
@@ -435,23 +462,35 @@ function setupRadioButtonListeners() {
   const causedByJobText = document.getElementById('causedByJobText');
   
   pregnancyRadio.addEventListener('change', function () {
-    disabilityType = DisabilityType.PREGNANCY;
     pregnancyDetails.style.display = 'block';
     workDetails.style.display = 'none';
   });
 
   illnessRadio.addEventListener('change', function () {
-    disabilityType = DisabilityType.ILLNESS;
-    causedByJobText.textContent = i18next.t('reasonForLeave.work.causedByJob', { disabilityType });
+    causedByJobText.textContent = i18next.t('reasonForLeave.work.causedByJob', { disabilityType: i18next.t('reasonForLeave.work.illness') });
     pregnancyDetails.style.display = 'none';
     workDetails.style.display = 'block';
   });
 
   injuryRadio.addEventListener('change', function () {
-    disabilityType = DisabilityType.INJURY;
-    causedByJobText.textContent = i18next.t('reasonForLeave.work.causedByJob', { disabilityType });
+    causedByJobText.textContent = i18next.t('reasonForLeave.work.causedByJob', { disabilityType: i18next.t('reasonForLeave.work.injury') });
     pregnancyDetails.style.display = 'none';
     workDetails.style.display = 'block';
+  });
+}
+
+function setupWorkersCompListeners() {
+  const causedByJobYes = document.getElementById('caused-by-job-yes');
+  const causedByJobNo = document.getElementById('caused-by-job-no');
+
+  const workersCompClaim = document.getElementById('workers-comp-claim');
+  
+  causedByJobYes.addEventListener('change', function () {
+    workersCompClaim.style.display = 'block';
+  });
+
+  causedByJobNo.addEventListener('change', function () {
+    workersCompClaim.style.display = 'none';
   });
 }
 
