@@ -180,6 +180,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           workersCompClaim: `Have you or your employer filed a <a href="https://www.nj.gov/labor/workerscompensation/injured-worker-protections/index.shtml" target="_blank">Workers' Compensation Claim</a>, or do you plan to file one?`,
           employerInfo: {
             prompt: "Provide employer information where the workplace {{disabilityType}} happened.",
+            name: "Employer name",
           },
         },
       },
