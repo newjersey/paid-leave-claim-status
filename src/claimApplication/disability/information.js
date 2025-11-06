@@ -419,10 +419,10 @@ function reasonForLeavePage() {
 
 function setupInputMasks() {
   const zipInput = document.getElementById('provider-zip');
-  IMask(zipInput, { mask: '00000[-0000]', overwrite: false });
+  IMask(zipInput, { mask: '00000[-0000]' });
 
   const phoneInput = document.getElementById('provider-phone');
-  IMask(phoneInput, { mask: '000-000-0000', overwrite: false });
+  IMask(phoneInput, { mask: '000-000-0000' });
 }
 
 function setupRadioButtonListeners() {
