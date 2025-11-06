@@ -1,6 +1,15 @@
 const resources = {
   en: {
     translation: {
+      contact: {
+        street1: "Street address",
+        street2: "Street address line 2",
+        city: "City",
+        state: "State",
+        zipcode: "ZIP code",
+        phone: "Phone number",
+        phoneHint: "10-digit, U.S. only, for example 999-999-9999",
+      },
       certification: {
         certifyText: "By submitting, I certify:",
         alertText: "Your application has been saved. If needed, you can log out and finish your application within 14 days from when you first started it.",
@@ -140,7 +149,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             select: "Select",
             description: "Providers we accept",
             advancedPracticeNurse: "Advanced Practice Nurse",
-            advancedPracticeRegisteredNurse: "Advanced Practice Registered Nurse",
+            registeredNurse: "Registered Nurse",
             certifiedNursePractitioner: "Certified Nurse Practitioner",
             clinicalNurseSpecialist: "Clinical Nurse Specialist",
             certifiedNurseMidwife: "Certified Nurse Midwife",
@@ -156,6 +165,9 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             physicianAssistant: "Physician Assistant (under supervision of a licensed physician)",
             specialist: "Specialist",
           },
+          firstName: "First Name",
+          lastName: "Last Name",
+
         },
       },
       reviewAndSave: {

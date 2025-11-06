@@ -262,6 +262,91 @@ function reasonForLeavePage() {
           <option value="specialist">${i18next.t('reasonForLeave.provider.type.specialist')}</option>
         </select>
 
+        <label class="usa-label" for="provider-first-name">${i18next.t('reasonForLeave.provider.firstName')}</label>
+        <input class="usa-input" id="provider-first-name" name="provider-first-name" />
+
+        <label class="usa-label" for="provider-last-name">${i18next.t('reasonForLeave.provider.lastName')}</label>
+        <input class="usa-input" id="provider-last-name" name="provider-last-name" />
+
+        <label class="usa-label" for="mailing-address-1">${i18next.t('contact.street1')}
+          <abbr title="required" class="usa-hint usa-hint--required">*</abbr></label>
+        <input class="usa-input" id="mailing-address-1" name="mailing-address-1" required />
+
+        <label class="usa-label" for="mailing-address-2">${i18next.t('contact.street2')}</label>
+        <input class="usa-input" id="mailing-address-2" name="mailing-address-2" />
+
+        <label class="usa-label" for="city">${i18next.t('contact.city')}
+          <abbr title="required" class="usa-hint usa-hint--required">*</abbr></label>
+        <input class="usa-input" id="city" name="city" required />
+
+        <label class="usa-label" for="state">${i18next.t('contact.state')}
+          <abbr title="required" class="usa-hint usa-hint--required">*</abbr></label>
+        <div class="usa-combo-box">
+          <select class="usa-select" id="state" name="state">
+            <option value>- Select -</option>
+            <option value="AL">AL - Alabama</option>
+            <option value="AK">AK - Alaska</option>
+            <option value="AZ">AZ - Arizona</option>
+            <option value="AR">AR - Arkansas</option>
+            <option value="CA">CA - California</option>
+            <option value="CO">CO - Colorado</option>
+            <option value="CT">CT - Connecticut</option>
+            <option value="DE">DE - Delaware</option>
+            <option value="DC">DC - District of Columbia</option>
+            <option value="FL">FL - Florida</option>
+            <option value="GA">GA - Georgia</option>
+            <option value="HI">HI - Hawaii</option>
+            <option value="ID">ID - Idaho</option>
+            <option value="IL">IL - Illinois</option>
+            <option value="IN">IN - Indiana</option>
+            <option value="IA">IA - Iowa</option>
+            <option value="KS">KS - Kansas</option>
+            <option value="KY">KY - Kentucky</option>
+            <option value="LA">LA - Louisiana</option>
+            <option value="ME">ME - Maine</option>
+            <option value="MD">MD - Maryland</option>
+            <option value="MA">MA - Massachusetts</option>
+            <option value="MI">MI - Michigan</option>
+            <option value="MN">MN - Minnesota</option>
+            <option value="MS">MS - Mississippi</option>
+            <option value="MO">MO - Missouri</option>
+            <option value="MT">MT - Montana</option>
+            <option value="NE">NE - Nebraska</option>
+            <option value="NV">NV - Nevada</option>
+            <option value="NH">NH - New Hampshire</option>
+            <option value="NJ">NJ - New Jersey</option>
+            <option value="NM">NM - New Mexico</option>
+            <option value="NY">NY - New York</option>
+            <option value="NC">NC - North Carolina</option>
+            <option value="ND">ND - North Dakota</option>
+            <option value="OH">OH - Ohio</option>
+            <option value="OK">OK - Oklahoma</option>
+            <option value="OR">OR - Oregon</option>
+            <option value="PA">PA - Pennsylvania</option>
+            <option value="RI">RI - Rhode Island</option>
+            <option value="SC">SC - South Carolina</option>
+            <option value="SD">SD - South Dakota</option>
+            <option value="TN">TN - Tennessee</option>
+            <option value="TX">TX - Texas</option>
+            <option value="UT">UT - Utah</option>
+            <option value="VT">VT - Vermont</option>
+            <option value="VI">VI - Virgin Islands</option>
+            <option value="VA">VA - Virginia</option>
+            <option value="WA">WA - Washington</option>
+            <option value="WV">WV - West Virginia</option>
+            <option value="WI">WI - Wisconsin</option>
+            <option value="WY">WY - Wyoming</option>
+          </select>
+        </div>
+
+        <label class="usa-label" for="zip">${i18next.t('contact.zipcode')}</label>
+        <input class="usa-input usa-input--medium" id="zip" name="zip" pattern="[\d]{5}(-[\d]{4})?" />
+
+        <label class="usa-label" for="tel-number">${i18next.t('contact.phone')}</label>
+        <div class="usa-hint" id="primaryPnHint">${i18next.t('contact.phoneHint')}</div>
+        <input class="usa-input margin-bottom-1" id="tel-number" name="tel-number" type="tel" aria-describedby="primaryPnHint"/>
+
+
       </div>
 
       <button class="usa-button" id="submitReasonForLeave">
