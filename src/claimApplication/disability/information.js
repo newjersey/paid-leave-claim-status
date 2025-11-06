@@ -52,6 +52,22 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
+    main h2, main h3 {
+      color: black;
+      font-variant: normal;
+      font-weight: bold;
+    }
+
+    main h2 {
+      font-size: 24px;
+      margin: 20px 0 10px;
+    }
+
+    main h3 {
+      font-size: 18px;
+      margin: 0 0 10px;
+    }
+
     .bold-text {
       font-weight: bold;
     }
@@ -73,7 +89,7 @@ function addStyles() {
       font-weight: bold;
     }
 
-    .usa-radio__label {
+    .usa-label, .usa-radio__label {
       text-align: left;
     }
 
@@ -215,8 +231,41 @@ function reasonForLeavePage() {
         </fieldset>
       </div>
 
+      <h2>${i18next.t('reasonForLeave.provider.title')}</h2>
+
+      <p>${i18next.t('reasonForLeave.provider.explanation')}</p>
+
+      <div class="bordered-set">
+        <h3>${i18next.t('reasonForLeave.provider.info')}</h3>
+
+        <label class="usa-label" for="provider-type">
+          <span class="required-asterisk">*</span>
+          ${i18next.t('reasonForLeave.provider.type.title')}
+        </label>
+        <select class="usa-select" name="provider-type" id="provider-type">
+          <option value>- ${i18next.t('reasonForLeave.provider.type.select')} -</option>
+          <option value="advancedPracticeNurse">${i18next.t('reasonForLeave.provider.type.advancedPracticeNurse')}</option>
+          <option value="advancedPracticeRegisteredNurse">${i18next.t('reasonForLeave.provider.type.advancedPracticeRegisteredNurse')}</option>
+          <option value="certifiedNursePractitioner">${i18next.t('reasonForLeave.provider.type.certifiedNursePractitioner')}</option>
+          <option value="clinicalNurseSpecialist">${i18next.t('reasonForLeave.provider.type.clinicalNurseSpecialist')}</option>
+          <option value="certifiedNurseMidwife">${i18next.t('reasonForLeave.provider.type.certifiedNurseMidwife')}</option>
+          <option value="certifiedProfessionalMidwife">${i18next.t('reasonForLeave.provider.type.certifiedProfessionalMidwife')}</option>
+          <option value="chiropractor">${i18next.t('reasonForLeave.provider.type.chiropractor')}</option>
+          <option value="dentist">${i18next.t('reasonForLeave.provider.type.dentist')}</option>
+          <option value="erPhysician">${i18next.t('reasonForLeave.provider.type.erPhysician')}</option>
+          <option value="medicalDoctor">${i18next.t('reasonForLeave.provider.type.medicalDoctor')}</option>
+          <option value="optometrist">${i18next.t('reasonForLeave.provider.type.optometrist')}</option>
+          <option value="osteopath">${i18next.t('reasonForLeave.provider.type.osteopath')}</option>
+          <option value="podiatrist">${i18next.t('reasonForLeave.provider.type.podiatrist')}</option>
+          <option value="psychologist">${i18next.t('reasonForLeave.provider.type.psychologist')}</option>
+          <option value="physicianAssistant">${i18next.t('reasonForLeave.provider.type.physicianAssistant')}</option>
+          <option value="specialist">${i18next.t('reasonForLeave.provider.type.specialist')}</option>
+        </select>
+
+      </div>
+
       <button class="usa-button" id="submitReasonForLeave">
-        ${i18next.t('reasonForLeave.button')}
+        ${i18next.t('reasonForLeave.continue')}
       </button>
     `;
 
