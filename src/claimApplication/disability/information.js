@@ -36,9 +36,16 @@ const Screens = Object.freeze({
   LEAVE_SCHEDULE: 'leaveSchedule',
 });
 
+const DisabilityType = Object.freeze({
+  PREGNANCY: 'pregnancy',
+  ILLNESS: 'illness',
+  INJURY: 'injury',
+});
+
 const backButtonId = "leaveScheduleBack";
 
 let currentScreen = Screens.REASON_FOR_LEAVE;
+let disabilityType = null;
 
 export function changes() {
   addStyles();
@@ -92,6 +99,10 @@ function addStyles() {
 
     .usa-label, .usa-radio__label {
       text-align: left;
+    }
+
+    .usa-legend {
+      max-width: fit-content;
     }
 
     .usa-textarea {
@@ -353,11 +364,48 @@ function reasonForLeavePage() {
           inputmode="numeric"
           pattern="[0-9]*"
           aria-describedby="provider-primaryPnHint"/>
+      </div>
 
+      <div id="reasonForLeaveWork" style="display: none;">
+
+        <h2>${i18next.t('reasonForLeave.work.title')}</h2>
+
+        <div class="bordered-set">
+          <fieldset class="usa-fieldset">
+            <legend class="usa-legend usa-legend">
+              <span class="required-asterisk">*</span>
+              <span id="causedByJobText"></span>
+            </legend>
+            <div class="usa-radio">
+              <input
+                class="usa-radio__input"
+                id="caused-by-job-yes"
+                type="radio"
+                name="caused-by-job"
+                value="yes"
+              />
+              <label class="usa-radio__label" for="caused-by-job-yes">
+                ${i18next.t('shared.yes')}
+              </label>
+            </div>
+            <div class="usa-radio">
+              <input
+                class="usa-radio__input"
+                id="caused-by-job-no"
+                type="radio"
+                name="caused-by-job"
+                value="no"
+              />
+              <label class="usa-radio__label" for="caused-by-job-no">
+                ${i18next.t('shared.no')}
+              </label>
+            </div>
+          </fieldset>
+        </div>
       </div>
 
       <button class="usa-button" id="submitReasonForLeave">
-        ${i18next.t('reasonForLeave.continue')}
+        ${i18next.t('shared.saveAndContinue')}
       </button>
     `;
 
@@ -383,17 +431,27 @@ function setupRadioButtonListeners() {
   const injuryRadio = document.getElementById('reason-injury');
 
   const pregnancyDetails = document.getElementById('pregnancy-details');
-
+  const workDetails = document.getElementById('reasonForLeaveWork');
+  const causedByJobText = document.getElementById('causedByJobText');
+  
   pregnancyRadio.addEventListener('change', function () {
+    disabilityType = DisabilityType.PREGNANCY;
     pregnancyDetails.style.display = 'block';
+    workDetails.style.display = 'none';
   });
 
   illnessRadio.addEventListener('change', function () {
+    disabilityType = DisabilityType.ILLNESS;
+    causedByJobText.textContent = i18next.t('reasonForLeave.work.causedByJob', { disabilityType });
     pregnancyDetails.style.display = 'none';
+    workDetails.style.display = 'block';
   });
 
   injuryRadio.addEventListener('change', function () {
+    disabilityType = DisabilityType.INJURY;
+    causedByJobText.textContent = i18next.t('reasonForLeave.work.causedByJob', { disabilityType });
     pregnancyDetails.style.display = 'none';
+    workDetails.style.display = 'block';
   });
 }
 

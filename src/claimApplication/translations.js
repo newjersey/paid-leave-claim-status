@@ -1,6 +1,11 @@
 const resources = {
   en: {
     translation: {
+      shared: {
+        no: "No",
+        saveAndContinue: "Save and continue",
+        yes: "Yes",
+      },
       contact: {
         street1: "Street address",
         street2: "Street address line 2",
@@ -134,7 +139,6 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         title: "Reason for leave",
         characterLimit: "{{limit}} character limit",
         chooseReason: "Choose your reason for applying for Temporary Disability benefits:",
-        continue: "Continue",
         illness: "Illness (including mental health)",
         injury: "Injury",
         optional: "(optional)",
@@ -167,7 +171,10 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           },
           firstName: "First Name",
           lastName: "Last Name",
-
+        },
+        work: {
+          title: "Worker's Compensation",
+          causedByJob: "Was your {{disabilityType}} caused by your job? (Could be a specific incident or happened over time)",
         },
       },
       reviewAndSave: {
