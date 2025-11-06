@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import IMask from 'imask';
 import { logEvent } from "../../modules/shared.mjs";
 import {
   addToSessionData,
@@ -339,13 +340,19 @@ function reasonForLeavePage() {
           </select>
         </div>
 
-        <label class="usa-label" for="zip">${i18next.t('contact.zipcode')}</label>
-        <input class="usa-input usa-input--medium" id="zip" name="zip" pattern="[\d]{5}(-[\d]{4})?" />
+        <label class="usa-label" for="provider-zip">${i18next.t('contact.zipcode')}</label>
+        <input class="usa-input usa-input--medium" id="provider-zip" name="provider-zip" pattern="[\d]{5}(-[\d]{4})?" />
 
-        <label class="usa-label" for="tel-number">${i18next.t('contact.phone')}</label>
-        <div class="usa-hint" id="primaryPnHint">${i18next.t('contact.phoneHint')}</div>
-        <input class="usa-input margin-bottom-1" id="tel-number" name="tel-number" type="tel" aria-describedby="primaryPnHint"/>
-
+        <label class="usa-label" for="provider-phone">${i18next.t('contact.phone')}</label>
+        <div class="usa-hint" id="provider-primaryPnHint">${i18next.t('contact.phoneHint')}</div>
+        <input
+          class="usa-input margin-bottom-1"
+          id="provider-phone"
+          name="provider-phone"
+          type="text"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          aria-describedby="provider-primaryPnHint"/>
 
       </div>
 
@@ -357,8 +364,17 @@ function reasonForLeavePage() {
     leaveScheduleContainer.parentNode.insertBefore(newMain, leaveScheduleContainer);
   }
 
+  setupInputMasks();
   setupRadioButtonListeners();
   setupSubmitReasonForLeaveButton();
+}
+
+function setupInputMasks() {
+  const zipInput = document.getElementById('provider-zip');
+  IMask(zipInput, { mask: '00000[-0000]', overwrite: false });
+
+  const phoneInput = document.getElementById('provider-phone');
+  IMask(phoneInput, { mask: '000-000-0000', overwrite: false });
 }
 
 function setupRadioButtonListeners() {
