@@ -91,8 +91,19 @@ function addStyles() {
       font-weight: bold;
     }
 
+    .usa-button {
+      margin: 5px 0;
+      max-width: 400px;
+      min-height: 40px;
+      padding: 10px;
+    }
+
     .usa-date-picker__button {
       background-image: url('data:image/svg+xml;charset=UTF-8,<svg%20xmlns=%22http://www.w3.org/2000/svg%22%20height=%2224%22%20viewBox=%220%200%2024%2024%22%20width=%2224%22><path%20d=%22M0%200h24v24H0z%22%20fill=%22none%22/><path%20d=%22M20%203h-1V1h-2v2H7V1H5v2H4c-1.1%200-2%20.9-2%202v16c0%201.1.9%202%202%202h16c1.1%200%202-.9%202-2V5c0-1.1-.9-2-2-2zm0%2018H4V8h16v13z%22/></svg>');
+    }
+
+    .usa-label {
+      margin-top: 30px;
     }
 
     .usa-label, .usa-radio__label {
@@ -105,6 +116,10 @@ function addStyles() {
 
     .usa-textarea {
       resize: none;
+    }
+
+    #workDisabilityDateLabel {
+      margin-top: 0;
     }
   `;
   document.head.appendChild(style);
@@ -525,21 +540,19 @@ function reasonForLeavePage() {
               aria-describedby="employer-primaryPnHint"/>
           </div>
           <div class="bordered-set">
-            <div class="usa-form-group">
-              <label class="usa-label" id="workDisabilityDateLabel" for="workDisabilityDate">
-              <span class="required-asterisk">*</span>
-              <span id="workDisabilityDateLabelText"></span>
-              </label>
-              <div class="usa-hint" id="workDisabilityDateHint">${i18next.t('shared.dateFormat')}</div>
-              <div class="usa-date-picker">
-                <input
-                  class="usa-input"
-                  id="workDisabilityDate"
-                  name="workDisabilityDate"
-                  aria-labelledby="workDisabilityDateLabel"
-                  aria-describedby="workDisabilityDateHint"
-                />
-              </div>
+            <label class="usa-label" id="workDisabilityDateLabel" for="workDisabilityDate">
+            <span class="required-asterisk">*</span>
+            <span id="workDisabilityDateLabelText"></span>
+            </label>
+            <div class="usa-hint" id="workDisabilityDateHint">${i18next.t('shared.dateFormat')}</div>
+            <div class="usa-date-picker">
+              <input
+                class="usa-input"
+                id="workDisabilityDate"
+                name="workDisabilityDate"
+                aria-labelledby="workDisabilityDateLabel"
+                aria-describedby="workDisabilityDateHint"
+              />
             </div>
           </div>
         </div>
