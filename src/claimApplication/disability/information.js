@@ -91,6 +91,10 @@ function addStyles() {
       font-weight: bold;
     }
 
+    .usa-date-picker__button {
+      background-image: url('data:image/svg+xml;charset=UTF-8,<svg%20xmlns=%22http://www.w3.org/2000/svg%22%20height=%2224%22%20viewBox=%220%200%2024%2024%22%20width=%2224%22><path%20d=%22M0%200h24v24H0z%22%20fill=%22none%22/><path%20d=%22M20%203h-1V1h-2v2H7V1H5v2H4c-1.1%200-2%20.9-2%202v16c0%201.1.9%202%202%202h16c1.1%200%202-.9%202-2V5c0-1.1-.9-2-2-2zm0%2018H4V8h16v13z%22/></svg>');
+    }
+
     .usa-label, .usa-radio__label {
       text-align: left;
     }
@@ -506,19 +510,37 @@ function reasonForLeavePage() {
               </select>
             </div>
 
-          <label class="usa-label" for="employer-zip">${i18next.t('contact.zipcode')}</label>
-          <input class="usa-input usa-input--medium" id="employer-zip" name="employer-zip" pattern="[\d]{5}(-[\d]{4})?" />
+            <label class="usa-label" for="employer-zip">${i18next.t('contact.zipcode')}</label>
+            <input class="usa-input usa-input--medium" id="employer-zip" name="employer-zip" pattern="[\d]{5}(-[\d]{4})?" />
 
-          <label class="usa-label" for="employer-phone">${i18next.t('contact.phone')}</label>
-          <div class="usa-hint" id="employer-primaryPnHint">${i18next.t('contact.phoneHint')}</div>
-          <input
-            class="usa-input margin-bottom-1"
-            id="employer-phone"
-            name="employer-phone"
-            type="text"
-            inputmode="numeric"
-            pattern="[0-9]*"
-            aria-describedby="employer-primaryPnHint"/>
+            <label class="usa-label" for="employer-phone">${i18next.t('contact.phone')}</label>
+            <div class="usa-hint" id="employer-primaryPnHint">${i18next.t('contact.phoneHint')}</div>
+            <input
+              class="usa-input margin-bottom-1"
+              id="employer-phone"
+              name="employer-phone"
+              type="text"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              aria-describedby="employer-primaryPnHint"/>
+          </div>
+          <div class="bordered-set">
+            <div class="usa-form-group">
+              <label class="usa-label" id="workDisabilityDateLabel" for="workDisabilityDate">
+              <span class="required-asterisk">*</span>
+              <span id="workDisabilityDateLabelText"></span>
+              </label>
+              <div class="usa-hint" id="workDisabilityDateHint">${i18next.t('shared.dateFormat')}</div>
+              <div class="usa-date-picker">
+                <input
+                  class="usa-input"
+                  id="workDisabilityDate"
+                  name="workDisabilityDate"
+                  aria-labelledby="workDisabilityDateLabel"
+                  aria-describedby="workDisabilityDateHint"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -559,9 +581,7 @@ function setupDisabilityTypeListeners() {
 
   const pregnancyDetails = document.getElementById('pregnancy-details');
   const workDetails = document.getElementById('reasonForLeaveWork');
-  const causedByJobText = document.getElementById('causedByJobText');
-  const employerInfoPrompt = document.getElementById('employerInfoPrompt');
-  
+
   pregnancyRadio.addEventListener('change', function () {
     pregnancyDetails.style.display = 'block';
     workDetails.style.display = 'none';
@@ -569,19 +589,27 @@ function setupDisabilityTypeListeners() {
 
   illnessRadio.addEventListener('change', function () {
     disabilityType = i18next.t('reasonForLeave.work.illness');
-    causedByJobText.textContent = i18next.t('reasonForLeave.work.causedByJob', { disabilityType });
-    employerInfoPrompt.textContent = i18next.t('reasonForLeave.work.employerInfo.prompt', { disabilityType });
+    updateStringsWithDisabilityType(disabilityType);
     pregnancyDetails.style.display = 'none';
     workDetails.style.display = 'block';
   });
 
   injuryRadio.addEventListener('change', function () {
     disabilityType = i18next.t('reasonForLeave.work.injury');
-    causedByJobText.textContent = i18next.t('reasonForLeave.work.causedByJob', { disabilityType });
-    employerInfoPrompt.textContent = i18next.t('reasonForLeave.work.employerInfo.prompt', { disabilityType });
+    updateStringsWithDisabilityType(disabilityType);
     pregnancyDetails.style.display = 'none';
     workDetails.style.display = 'block';
   });
+}
+
+function updateStringsWithDisabilityType(disabilityType) {
+  const causedByJobText = document.getElementById('causedByJobText');
+  const employerInfoPrompt = document.getElementById('employerInfoPrompt');
+  const workDisabilityDateLabelText = document.getElementById('workDisabilityDateLabelText');
+
+  causedByJobText.textContent = i18next.t('reasonForLeave.work.causedByJob', { disabilityType });
+  employerInfoPrompt.textContent = i18next.t('reasonForLeave.work.employerInfo.prompt', { disabilityType });
+  workDisabilityDateLabelText.textContent = i18next.t('reasonForLeave.work.dateOfDisability', { disabilityType });
 }
 
 function setupCausedByJobListeners() {

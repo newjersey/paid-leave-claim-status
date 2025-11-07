@@ -2,6 +2,7 @@ const resources = {
   en: {
     translation: {
       shared: {
+        dateFormat: "mm/dd/yyyy",
         no: "No",
         saveAndContinue: "Save and continue",
         yes: "Yes",
@@ -182,6 +183,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             prompt: "Provide employer information where the workplace {{disabilityType}} happened.",
             name: "Employer name",
           },
+          dateOfDisability: "When did this {{disabilityType}} happen (or start)?",
         },
       },
       reviewAndSave: {
