@@ -521,15 +521,13 @@ function setupDisabilityTypeListeners() {
   const pregnancyRadio = document.getElementById('reason-pregnancy');
   const illnessRadio = document.getElementById('reason-illness');
   const injuryRadio = document.getElementById('reason-injury');
-
   const reasonLegend = document.getElementById('reason-legend');
   const pregnancyDetails = document.getElementById('pregnancy-details');
-  const workDetails = document.getElementById('reasonForLeaveWork');
 
   pregnancyRadio.addEventListener('change', function () {
     resetElementText(reasonLegend);
     pregnancyDetails.style.display = 'block';
-    workDetails.style.display = 'none';
+    workDetailsVisible(false);
   });
 
   illnessRadio.addEventListener('change', function () {
@@ -537,7 +535,7 @@ function setupDisabilityTypeListeners() {
     disabilityType = i18next.t('reasonForLeave.work.illness');
     updateStringsWithDisabilityType(disabilityType);
     pregnancyDetails.style.display = 'none';
-    workDetails.style.display = 'block';
+    workDetailsVisible(true);
   });
 
   injuryRadio.addEventListener('change', function () {
@@ -545,7 +543,7 @@ function setupDisabilityTypeListeners() {
     disabilityType = i18next.t('reasonForLeave.work.injury');
     updateStringsWithDisabilityType(disabilityType);
     pregnancyDetails.style.display = 'none';
-    workDetails.style.display = 'block';
+    workDetailsVisible(true);
   });
 
   pregnancyRadio.addEventListener('invalid', function () {
@@ -563,6 +561,12 @@ function resetElementText(element) {
   element.style.fontWeight = '';
 }
 
+function workDetailsVisible(visible) {
+  document.getElementById('reasonForLeaveWork').style.display = visible ? "block" : "none";
+  document.getElementById('caused-by-job-yes').required = visible;
+  document.getElementById('caused-by-job-no').required = visible;
+}
+
 function updateStringsWithDisabilityType(disabilityType) {
   const causedByJobText = document.getElementById('causedByJobText');
   const employerInfoPrompt = document.getElementById('employerInfoPrompt');
@@ -574,33 +578,60 @@ function updateStringsWithDisabilityType(disabilityType) {
 }
 
 function setupCausedByJobListeners() {
-  const workersCompYes = document.getElementById('workers-comp-yes');
-  const workersCompNo = document.getElementById('workers-comp-no');
-
-  const employerInfo = document.getElementById('employerInfo');
-  
-  workersCompYes.addEventListener('change', function () {
-    employerInfo.style.display = 'block';
-  });
-
-  workersCompNo.addEventListener('change', function () {
-    employerInfo.style.display = 'none';
-  });
-}
-
-function setupWorkersCompListeners() {
   const causedByJobYes = document.getElementById('caused-by-job-yes');
   const causedByJobNo = document.getElementById('caused-by-job-no');
-
-  const workersCompClaim = document.getElementById('workers-comp-claim');
+  const causedByJobLegend = document.getElementById('caused-by-job-legend');
   
   causedByJobYes.addEventListener('change', function () {
-    workersCompClaim.style.display = 'block';
+    resetElementText(causedByJobLegend);
+    workersCompVisible(true);
   });
 
   causedByJobNo.addEventListener('change', function () {
-    workersCompClaim.style.display = 'none';
+    resetElementText(causedByJobLegend);
+    workersCompVisible(false);
   });
+
+  causedByJobYes.addEventListener('invalid', function () {
+    elementTextError(causedByJobLegend);
+  });
+}
+
+function workersCompVisible(visible) {
+  document.getElementById('workers-comp-claim').style.display = visible ? "block" : "none";
+  document.getElementById('workers-comp-yes').required = visible;
+  document.getElementById('workers-comp-no').required = visible;
+}
+
+function setupWorkersCompListeners() {
+  const workersCompYes = document.getElementById('workers-comp-yes');
+  const workersCompNo = document.getElementById('workers-comp-no');
+  const workersCompLegend = document.getElementById('workers-comp-legend');
+  
+  workersCompYes.addEventListener('change', function () {
+    resetElementText(workersCompLegend);
+    employerInfoVisible(true);
+  });
+
+  workersCompNo.addEventListener('change', function () {
+    resetElementText(workersCompLegend);
+    employerInfoVisible(false);
+  });
+
+  workersCompYes.addEventListener('invalid', function () {
+    elementTextError(workersCompLegend);
+  });
+}
+
+function employerInfoVisible(visible) {
+  document.getElementById('employerInfo').style.display = visible ? "block" : "none";
+  document.getElementById('employer-name').required = visible;
+  document.getElementById('employer-mailing-address-1').required = visible;
+  document.getElementById('employer-city').required = visible;
+  document.getElementById('employer-state').required = visible;
+  document.getElementById('employer-zip').required = visible;
+  document.getElementById('employer-phone').required = visible;
+  document.getElementById('workDisabilityDate').required = visible;
 }
 
 function setupSubmitReasonForLeave() {
