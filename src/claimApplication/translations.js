@@ -9,7 +9,7 @@ const resources = {
       },
       contact: {
         street1: "Street address",
-        street2: "Street address line 2",
+        street2: "(optional) Street address line 2",
         city: "City",
         state: "State",
         zipcode: "ZIP code",
