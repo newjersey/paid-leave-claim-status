@@ -281,7 +281,7 @@ function reasonForLeavePage() {
           <select class="usa-select" name="provider-type" id="provider-type" required>
             <option value>- ${i18next.t('reasonForLeave.provider.type.select')} -</option>
             <option value="advancedPracticeNurse">${i18next.t('reasonForLeave.provider.type.advancedPracticeNurse')}</option>
-            <option value="advancedPracticeRegisteredNurse">${i18next.t('reasonForLeave.provider.type.advancedPracticeRegisteredNurse')}</option>
+            <option value="registeredNurse">${i18next.t('reasonForLeave.provider.type.registeredNurse')}</option>
             <option value="certifiedNursePractitioner">${i18next.t('reasonForLeave.provider.type.certifiedNursePractitioner')}</option>
             <option value="clinicalNurseSpecialist">${i18next.t('reasonForLeave.provider.type.clinicalNurseSpecialist')}</option>
             <option value="certifiedNurseMidwife">${i18next.t('reasonForLeave.provider.type.certifiedNurseMidwife')}</option>
@@ -331,7 +331,7 @@ function reasonForLeavePage() {
           <label class="usa-label" for="provider-zip">${i18next.t('contact.zipcode')}
             <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
           </label>
-          <input class="usa-input usa-input--medium" id="provider-zip" name="provider-zip" pattern="[\d]{5}(-[\d]{4})?" required />
+          <input class="usa-input usa-input--medium" id="provider-zip" name="provider-zip" pattern="\\d{5}(-\\d{4})?" required />
 
           <label class="usa-label" for="provider-phone">${i18next.t('contact.phone')}
             <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
@@ -343,7 +343,7 @@ function reasonForLeavePage() {
             name="provider-phone"
             type="text"
             inputmode="numeric"
-            pattern="[0-9]*"
+            pattern="\\d{3}-\\d{3}-\\d{4}"
             aria-describedby="provider-primaryPnHint"
             required
           />
@@ -355,7 +355,7 @@ function reasonForLeavePage() {
 
           <div class="bordered-set">
             <fieldset class="usa-fieldset">
-              <legend class="usa-legend usa-legend">
+              <legend id="caused-by-job-legend" class="usa-legend usa-legend">
                 <span class="required-asterisk">*</span>
                 <span id="causedByJobText"></span>
               </legend>
@@ -452,7 +452,7 @@ function reasonForLeavePage() {
               <label class="usa-label" for="employer-zip">${i18next.t('contact.zipcode')}
                 <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
               </label>
-              <input class="usa-input usa-input--medium" id="employer-zip" name="employer-zip" pattern="[\d]{5}(-[\d]{4})?" />
+              <input class="usa-input usa-input--medium" id="employer-zip" name="employer-zip" pattern="\\d{5}(-\\d{4})?" />
 
               <label class="usa-label" for="employer-phone">${i18next.t('contact.phone')}
                 <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
@@ -464,7 +464,7 @@ function reasonForLeavePage() {
                 name="employer-phone"
                 type="text"
                 inputmode="numeric"
-                pattern="[0-9]*"
+                pattern="\\d{3}-\\d{3}-\\d{4}"
                 aria-describedby="employer-primaryPnHint"
               />
             </div>
