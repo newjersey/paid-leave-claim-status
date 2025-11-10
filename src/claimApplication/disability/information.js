@@ -167,8 +167,11 @@ function showBackButton() {
   }
 
   const backButton = document.createElement('button');
-  backButton.textContent = 'Back';
   backButton.id = backButtonId;
+  backButton.className = 'usa-button usa-button--unstyled';
+  backButton.type = 'button';
+  backButton.textContent = '< Back';
+  backButton.style.padding = '20px 0';
 
   backButton.addEventListener('click', function (event) {
     event.preventDefault();
@@ -635,27 +638,25 @@ function employerInfoVisible(visible) {
 }
 
 function setupSubmitReasonForLeave() {
-  // const form = document.getElementById('reason-for-leave-form');
-  // form.addEventListener('submit', function() {
-  //   console.log(`submit form: ${form}`);
-  // });
+  const form = document.getElementById('reason-for-leave-form');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
 
+    const formData = new FormData(form);
+    const formValues = {};
+    formData.forEach((value, key) => {
+      formValues[key] = value;
+    });
 
+    logEvent('Reason for leave submit clicked', {});
 
-  // const submitBtn = document.querySelector('#submitReasonForLeave');
-  // if (submitBtn) {
-  //   submitBtn.addEventListener('click', function (event) {
-  //     event.preventDefault();
-  //     logEvent('Reason for leave submit clicked', {});
+    addToSessionData({
+      [STORAGE_KEY_REASON_FOR_LEAVE]: JSON.stringify(formValues)
+    });      
 
-  //     addToSessionData({
-  //       [STORAGE_KEY_REASON_FOR_LEAVE]: "injury"
-  //     });      
-
-  //     currentScreen = Screens.LEAVE_SCHEDULE;
-  //     changes();
-  //   });
-  // }
+    currentScreen = Screens.LEAVE_SCHEDULE;
+    changes();
+  });
 }
 
 function stateOptions() {
