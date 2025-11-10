@@ -35,11 +35,17 @@ const Screens = Object.freeze({
   REASON_FOR_LEAVE: 'reasonForLeave',
   LEAVE_SCHEDULE: 'leaveSchedule',
 });
+let currentScreen = Screens.REASON_FOR_LEAVE;
 
 const backButtonId = "leaveScheduleBack";
 
-let disabilityType = null;
-let currentScreen = Screens.REASON_FOR_LEAVE;
+const DisabilityType = {
+    UNKNOWN: '',
+    PREGNANCY: 'pregnancy',
+    ILLNESS: 'illness',
+    INJURY: 'injury'
+};
+let disabilityType = DisabilityType.UNKNOWN;
 
 export function changes() {
   addStyles();
@@ -391,7 +397,7 @@ function reasonForLeavePage() {
 
           <div id="workers-comp-claim" class="bordered-set" style="display:none;">
             <fieldset class="usa-fieldset">
-              <legend class="usa-legend usa-legend">
+              <legend id="workers-comp-legend" class="usa-legend usa-legend">
                 <span class="required-asterisk">*</span>
                 ${i18next.t('reasonForLeave.work.workersCompClaim')}
               </legend>
@@ -487,6 +493,38 @@ function reasonForLeavePage() {
                 />
               </div>
             </div>
+            <div class="bordered-set">
+              <fieldset class="usa-fieldset">
+                <legend class="usa-legend usa-legend">
+                  <span class="required-asterisk">*</span>
+                  ${i18next.t('reasonForLeave.work.workersCompClaimApproved')}
+                </legend>
+                <div class="usa-radio">
+                  <input
+                    class="usa-radio__input"
+                    id="workers-comp-approved-yes"
+                    type="radio"
+                    name="workers-comp-approved"
+                    value="yes"
+                  />
+                  <label class="usa-radio__label" for="workers-comp-approved-yes">
+                    ${i18next.t('shared.yes')}
+                  </label>
+                </div>
+                <div class="usa-radio">
+                  <input
+                    class="usa-radio__input"
+                    id="workers-comp-approved-no"
+                    type="radio"
+                    name="workers-comp-approved"
+                    value="no"
+                  />
+                  <label class="usa-radio__label" for="workers-comp-approved-no">
+                    ${i18next.t('shared.no')}
+                  </label>
+                </div>
+              </fieldset>
+            </div>
           </div>
         </div>
 
@@ -529,22 +567,23 @@ function setupDisabilityTypeListeners() {
 
   pregnancyRadio.addEventListener('change', function () {
     resetElementText(reasonLegend);
+    disabilityType = DisabilityType.PREGNANCY;
     pregnancyDetails.style.display = 'block';
     workDetailsVisible(false);
   });
 
   illnessRadio.addEventListener('change', function () {
     resetElementText(reasonLegend);
-    disabilityType = i18next.t('reasonForLeave.work.illness');
-    updateStringsWithDisabilityType(disabilityType);
+    disabilityType = DisabilityType.ILLNESS;
+    updateStringsWithDisabilityTypeString(i18next.t('reasonForLeave.work.illness'));
     pregnancyDetails.style.display = 'none';
     workDetailsVisible(true);
   });
 
   injuryRadio.addEventListener('change', function () {
     resetElementText(reasonLegend);
-    disabilityType = i18next.t('reasonForLeave.work.injury');
-    updateStringsWithDisabilityType(disabilityType);
+    disabilityType = DisabilityType.INJURY;
+    updateStringsWithDisabilityTypeString(i18next.t('reasonForLeave.work.injury'));
     pregnancyDetails.style.display = 'none';
     workDetailsVisible(true);
   });
@@ -570,14 +609,14 @@ function workDetailsVisible(visible) {
   document.getElementById('caused-by-job-no').required = visible;
 }
 
-function updateStringsWithDisabilityType(disabilityType) {
+function updateStringsWithDisabilityTypeString(disabilityTypeString) {
   const causedByJobText = document.getElementById('causedByJobText');
   const employerInfoPrompt = document.getElementById('employerInfoPrompt');
   const workDisabilityDateLabelText = document.getElementById('workDisabilityDateLabelText');
 
-  causedByJobText.textContent = i18next.t('reasonForLeave.work.causedByJob', { disabilityType });
-  employerInfoPrompt.textContent = i18next.t('reasonForLeave.work.employerInfo.prompt', { disabilityType });
-  workDisabilityDateLabelText.textContent = i18next.t('reasonForLeave.work.dateOfDisability', { disabilityType });
+  causedByJobText.textContent = i18next.t('reasonForLeave.work.causedByJob', { disabilityTypeString });
+  employerInfoPrompt.textContent = i18next.t('reasonForLeave.work.employerInfo.prompt', { disabilityTypeString });
+  workDisabilityDateLabelText.textContent = i18next.t('reasonForLeave.work.dateOfDisability', { disabilityTypeString });
 }
 
 function setupCausedByJobListeners() {
