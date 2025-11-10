@@ -643,6 +643,8 @@ function workersCompVisible(visible) {
   document.getElementById('workers-comp-claim').style.display = visible ? "block" : "none";
   document.getElementById('workers-comp-yes').required = visible;
   document.getElementById('workers-comp-no').required = visible;
+  document.getElementById('workers-comp-approved-yes').required = visible;
+  document.getElementById('workers-comp-approved-no').required = visible;
 }
 
 function setupWorkersCompListeners() {
@@ -681,6 +683,14 @@ function setupSubmitReasonForLeave() {
   form.addEventListener('submit', function(event) {
     event.preventDefault();
 
+    // clear any user inputs for fields now hidden
+    const fields = form.querySelectorAll('*');
+    fields.forEach(field => {
+      if (field.offsetParent === null && 'value' in field) {
+        field.value = '';
+      }
+    });
+
     const formData = new FormData(form);
     const formValues = {};
     formData.forEach((value, key) => {
@@ -699,6 +709,7 @@ function setupSubmitReasonForLeave() {
 }
 
 function stateOptions() {
+  // TODO: accept more here, like territories etc?
   return `
     <option value>- Select -</option>
     <option value="AL">AL - Alabama</option>
