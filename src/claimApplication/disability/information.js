@@ -104,15 +104,19 @@ function addStyles() {
       padding: 10px;
     }
 
+    .usa-checkbox {
+      margin-bottom: 10px;
+    }
+
     .usa-date-picker__button {
       background-image: url('data:image/svg+xml;charset=UTF-8,<svg%20xmlns=%22http://www.w3.org/2000/svg%22%20height=%2224%22%20viewBox=%220%200%2024%2024%22%20width=%2224%22><path%20d=%22M0%200h24v24H0z%22%20fill=%22none%22/><path%20d=%22M20%203h-1V1h-2v2H7V1H5v2H4c-1.1%200-2%20.9-2%202v16c0%201.1.9%202%202%202h16c1.1%200%202-.9%202-2V5c0-1.1-.9-2-2-2zm0%2018H4V8h16v13z%22/></svg>');
     }
 
-    .usa-label {
+    .usa-label, .usa-checkbox__label {
       margin-top: 30px;
     }
 
-    .usa-label, .usa-radio__label {
+    .usa-label, .usa-checkbox__label, .usa-radio__label {
       text-align: left;
     }
 
@@ -283,29 +287,53 @@ function reasonForLeavePage() {
         <div class="bordered-set">
           <h3>${i18next.t('reasonForLeave.provider.info')}</h3>
 
-          <label class="usa-label" for="provider-type">
-            ${i18next.t('reasonForLeave.provider.type.title')}
-            <span class="required-asterisk">*</span>
-          </label>
-          <select class="usa-select" name="provider-type" id="provider-type" required>
-            <option value>- ${i18next.t('reasonForLeave.provider.type.select')} -</option>
-            <option value="advancedPracticeNurse">${i18next.t('reasonForLeave.provider.type.advancedPracticeNurse')}</option>
-            <option value="registeredNurse">${i18next.t('reasonForLeave.provider.type.registeredNurse')}</option>
-            <option value="certifiedNursePractitioner">${i18next.t('reasonForLeave.provider.type.certifiedNursePractitioner')}</option>
-            <option value="clinicalNurseSpecialist">${i18next.t('reasonForLeave.provider.type.clinicalNurseSpecialist')}</option>
-            <option value="certifiedNurseMidwife">${i18next.t('reasonForLeave.provider.type.certifiedNurseMidwife')}</option>
-            <option value="certifiedProfessionalMidwife">${i18next.t('reasonForLeave.provider.type.certifiedProfessionalMidwife')}</option>
-            <option value="chiropractor">${i18next.t('reasonForLeave.provider.type.chiropractor')}</option>
-            <option value="dentist">${i18next.t('reasonForLeave.provider.type.dentist')}</option>
-            <option value="erPhysician">${i18next.t('reasonForLeave.provider.type.erPhysician')}</option>
-            <option value="medicalDoctor">${i18next.t('reasonForLeave.provider.type.medicalDoctor')}</option>
-            <option value="optometrist">${i18next.t('reasonForLeave.provider.type.optometrist')}</option>
-            <option value="osteopath">${i18next.t('reasonForLeave.provider.type.osteopath')}</option>
-            <option value="podiatrist">${i18next.t('reasonForLeave.provider.type.podiatrist')}</option>
-            <option value="psychologist">${i18next.t('reasonForLeave.provider.type.psychologist')}</option>
-            <option value="physicianAssistant">${i18next.t('reasonForLeave.provider.type.physicianAssistant')}</option>
-            <option value="specialist">${i18next.t('reasonForLeave.provider.type.specialist')}</option>
-          </select>
+          <div class="usa-checkbox">
+            <input
+              class="usa-checkbox__input"
+              id="check-provider-type-accepted"
+              type="checkbox"
+              name="provider-type-accepted"
+              value="yes"
+              required
+            />
+            <label class="usa-checkbox__label" for="check-provider-type-accepted">
+              <span class="required-asterisk">*</span>
+              ${i18next.t('reasonForLeave.provider.type.isAccepted')}
+            </label>
+          </div>
+
+          <div class="usa-accordion usa-accordion--bordered">
+            <h4 class="usa-accordion__heading">
+              <button
+                type="button"
+                class="usa-accordion__button"
+                aria-expanded="false"
+                aria-controls="accepted-provider-types"
+              >
+                ${i18next.t('reasonForLeave.provider.type.weAccept')}
+              </button>
+            </h4>
+            <div id="accepted-provider-types" class="usa-accordion__content usa-prose">
+              <ul>
+                <li>${i18next.t('reasonForLeave.provider.type.advancedPracticeNurse')}</li>
+                <li>${i18next.t('reasonForLeave.provider.type.registeredNurse')}</li>
+                <li>${i18next.t('reasonForLeave.provider.type.certifiedNursePractitioner')}</li>
+                <li>${i18next.t('reasonForLeave.provider.type.clinicalNurseSpecialist')}</li>
+                <li>${i18next.t('reasonForLeave.provider.type.certifiedNurseMidwife')}</li>
+                <li>${i18next.t('reasonForLeave.provider.type.certifiedProfessionalMidwife')}</li>
+                <li>${i18next.t('reasonForLeave.provider.type.chiropractor')}</li>
+                <li>${i18next.t('reasonForLeave.provider.type.dentist')}</li>
+                <li>${i18next.t('reasonForLeave.provider.type.erPhysician')}</li>
+                <li>${i18next.t('reasonForLeave.provider.type.medicalDoctor')}</li>
+                <li>${i18next.t('reasonForLeave.provider.type.optometrist')}</li>
+                <li>${i18next.t('reasonForLeave.provider.type.osteopath')}</li>
+                <li>${i18next.t('reasonForLeave.provider.type.podiatrist')}</li>
+                <li>${i18next.t('reasonForLeave.provider.type.psychologist')}</li>
+                <li>${i18next.t('reasonForLeave.provider.type.physicianAssistant')}</li>
+                <li>${i18next.t('reasonForLeave.provider.type.specialist')}</li>
+              </ul>
+            </div>
+          </div>
 
           <label class="usa-label" for="provider-first-name">${i18next.t('reasonForLeave.provider.firstName')}
             <abbr title="required" class="usa-hint usa-hint--required">*</abbr>

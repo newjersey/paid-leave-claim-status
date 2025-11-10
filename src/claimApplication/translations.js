@@ -150,9 +150,8 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           explanation: "Your healthcare provider will need to confirm your medical condition and the start date of your disability.",
           info: "Healthcare provider information",
           type: {
-            title: "Provider type",
-            select: "Select",
-            description: "Providers we accept",
+            isAccepted: "My healthcare provider is one of the accepted types below.",
+            weAccept: "Providers we accept",
             advancedPracticeNurse: "Advanced Practice Nurse",
             registeredNurse: "Registered Nurse",
             certifiedNursePractitioner: "Certified Nurse Practitioner",
