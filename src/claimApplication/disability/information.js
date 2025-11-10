@@ -342,9 +342,7 @@ function reasonForLeavePage() {
           </label>
           <input class="usa-input usa-input--medium" id="provider-zip" name="provider-zip" pattern="\\d{5}(-\\d{4})?" required />
 
-          <label class="usa-label" for="provider-phone">${i18next.t('contact.phone')}
-            <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-          </label>
+          <label class="usa-label" for="provider-phone">${i18next.t('contact.phone')}</label>
           <div class="usa-hint" id="provider-primaryPnHint">${i18next.t('contact.phoneHint')}</div>
           <input
             class="usa-input margin-bottom-1"
@@ -354,7 +352,6 @@ function reasonForLeavePage() {
             inputmode="numeric"
             pattern="\\d{3}-\\d{3}-\\d{4}"
             aria-describedby="provider-primaryPnHint"
-            required
           />
         </div>
 
@@ -674,7 +671,6 @@ function employerInfoVisible(visible) {
   document.getElementById('employer-city').required = visible;
   document.getElementById('employer-state').required = visible;
   document.getElementById('employer-zip').required = visible;
-  document.getElementById('employer-phone').required = visible;
   document.getElementById('workDisabilityDate').required = visible;
 }
 
@@ -683,18 +679,20 @@ function setupSubmitReasonForLeave() {
   form.addEventListener('submit', function(event) {
     event.preventDefault();
 
-    // clear any user inputs for fields now hidden
+    const hiddenFieldNames = new Set();
     const fields = form.querySelectorAll('*');
     fields.forEach(field => {
-      if (field.offsetParent === null && 'value' in field) {
-        field.value = '';
+      if (field.offsetParent === null && 'name' in field) {
+        hiddenFieldNames.add(field.name);
       }
     });
 
     const formData = new FormData(form);
     const formValues = {};
     formData.forEach((value, key) => {
-      formValues[key] = value;
+      if (!hiddenFieldNames.has(key)) {
+        formValues[key] = value;
+      }
     });
 
     logEvent('Reason for leave submit clicked', {});
