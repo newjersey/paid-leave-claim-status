@@ -108,6 +108,11 @@ function addStyles() {
       margin-bottom: 10px;
     }
 
+    .usa-checkbox__input:checked+[class*=__label]:before, 
+    .usa-checkbox__input:checked:disabled+[class*=__label]:before {
+      background-image: url('data:image/svg+xml;charset=UTF-8,<svg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%2265%22%20height=%2250%22%20viewBox=%220%200%2065%2050%22><title>correct8</title><path%20fill=%22%23FFF%22%20fill-rule=%22evenodd%22%20d=%22M63.268%207.063l-5.616-5.61C56.882.685%2055.946.3%2054.845.3s-2.038.385-2.808%201.155L24.951%2028.552%2012.81%2016.385c-.77-.77-1.707-1.155-2.808-1.155-1.1%200-2.037.385-2.807%201.154l-5.616%205.61C.81%2022.764.425%2023.7.425%2024.8s.385%202.035%201.155%202.805l14.947%2014.93%205.616%205.61c.77.77%201.706%201.154%202.807%201.154s2.038-.384%202.808-1.154l5.616-5.61%2029.894-29.86c.77-.77%201.157-1.707%201.157-2.805%200-1.101-.385-2.036-1.156-2.805l-.001-.002z%22/></svg>'), linear-gradient(transparent, transparent);
+    }
+
     .usa-date-picker__button {
       background-image: url('data:image/svg+xml;charset=UTF-8,<svg%20xmlns=%22http://www.w3.org/2000/svg%22%20height=%2224%22%20viewBox=%220%200%2024%2024%22%20width=%2224%22><path%20d=%22M0%200h24v24H0z%22%20fill=%22none%22/><path%20d=%22M20%203h-1V1h-2v2H7V1H5v2H4c-1.1%200-2%20.9-2%202v16c0%201.1.9%202%202%202h16c1.1%200%202-.9%202-2V5c0-1.1-.9-2-2-2zm0%2018H4V8h16v13z%22/></svg>');
     }
