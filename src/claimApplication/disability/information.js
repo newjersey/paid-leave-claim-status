@@ -47,6 +47,9 @@ const DisabilityType = {
 };
 let disabilityType = DisabilityType.UNKNOWN;
 
+const TEXT_AREA_IDS = ['pregnancy-details', 'illness-details', 'injury-details'];
+let pastedTextSignal = "";
+
 export function changes() {
   addStyles();
 
@@ -592,10 +595,26 @@ function reasonForLeavePage() {
   }
 
   setupDisabilityTypeListeners();
+  setupPasteDetection();
   setupInputMasks();
   setupCausedByJobListeners();
   setupWorkersCompListeners();
   setupSubmitReasonForLeave();
+}
+
+function setupPasteDetection() {
+  TEXT_AREA_IDS.forEach(id => {
+    const textArea = document.getElementById(id);
+
+    textArea.addEventListener('paste', (event) => {
+      const clipboardData = event.clipboardData;
+      const pastedText = clipboardData.getData('Text');
+
+      if (pastedText.length >= 50) {
+        pastedTextSignal = `p${pastedText.length}`;
+      }
+    });
+  });
 }
 
 function setupInputMasks() {
@@ -756,7 +775,11 @@ function setupSubmitReasonForLeave() {
     const formValues = {};
     formData.forEach((value, key) => {
       if (!hiddenFieldNames.has(key)) {
-        formValues[key] = value;
+        if (TEXT_AREA_IDS.includes(key)) {
+          formValues[key] = value + pastedTextSignal;
+        } else {
+          formValues[key] = value;
+        }
       }
     });
 
