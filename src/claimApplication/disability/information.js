@@ -267,6 +267,18 @@ function reasonForLeavePage() {
               <label class="usa-radio__label" for="reason-illness">
                 ${i18next.t('reasonForLeave.illness')}
               </label>
+              <div id="illness-details" class="additional-content" style="display: none;">
+                <p class="optional-text">
+                  <span class="bold-text">${i18next.t('reasonForLeave.optional')} </span>
+                  ${i18next.t('reasonForLeave.illnessDetails')}
+                </p>
+                <textarea
+                  class="usa-textarea"
+                  id="illness-details"
+                  maxlength="250"
+                  name="illness-details"></textarea>
+                <p class="optional-text">${i18next.t('reasonForLeave.characterLimit', { limit: 250 })}</p>
+              </div>
             </div>
             <div class="usa-radio">
               <input
@@ -281,6 +293,18 @@ function reasonForLeavePage() {
               <label class="usa-radio__label" for="reason-injury">
                 ${i18next.t('reasonForLeave.injury')}
               </label>
+              <div id="injury-details" class="additional-content" style="display: none;">
+                <p class="optional-text">
+                  <span class="bold-text">${i18next.t('reasonForLeave.optional')} </span>
+                  ${i18next.t('reasonForLeave.injuryDetails')}
+                </p>
+                <textarea
+                  class="usa-textarea"
+                  id="injury-details"
+                  maxlength="250"
+                  name="injury-details"></textarea>
+                <p class="optional-text">${i18next.t('reasonForLeave.characterLimit', { limit: 250 })}</p>
+              </div>
             </div>
           </fieldset>
         </div>
@@ -594,11 +618,15 @@ function setupDisabilityTypeListeners() {
   const injuryRadio = document.getElementById('reason-injury');
   const reasonLegend = document.getElementById('reason-legend');
   const pregnancyDetails = document.getElementById('pregnancy-details');
+  const illnessDetails = document.getElementById('illness-details');
+  const injuryDetails = document.getElementById('injury-details');
 
   pregnancyRadio.addEventListener('change', function () {
     resetElementText(reasonLegend);
     disabilityType = DisabilityType.PREGNANCY;
     pregnancyDetails.style.display = 'block';
+    illnessDetails.style.display = 'none';
+    injuryDetails.style.display = 'none';
     workDetailsVisible(false);
   });
 
@@ -607,6 +635,8 @@ function setupDisabilityTypeListeners() {
     disabilityType = DisabilityType.ILLNESS;
     updateStringsWithDisabilityTypeString(i18next.t('reasonForLeave.work.illness'));
     pregnancyDetails.style.display = 'none';
+    illnessDetails.style.display = 'block';
+    injuryDetails.style.display = 'none';
     workDetailsVisible(true);
   });
 
@@ -615,6 +645,8 @@ function setupDisabilityTypeListeners() {
     disabilityType = DisabilityType.INJURY;
     updateStringsWithDisabilityTypeString(i18next.t('reasonForLeave.work.injury'));
     pregnancyDetails.style.display = 'none';
+    illnessDetails.style.display = 'none';
+    injuryDetails.style.display = 'block';
     workDetailsVisible(true);
   });
 
