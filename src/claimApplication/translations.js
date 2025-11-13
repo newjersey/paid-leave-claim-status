@@ -4,6 +4,7 @@ const resources = {
       shared: {
         dateFormat: "mm/dd/yyyy",
         no: "No",
+        optional: "(optional)",
         saveAndContinue: "Save and continue",
         yes: "Yes",
       },
@@ -137,10 +138,21 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           `,
           fddQuestion: "What is your first date of disability leave?",
           fddHint: "<strong>Hint:</strong> You are entitled to <strong>start</strong> your leave up to 4 weeks before your due date (or delivery date).",
-
+          beforeAfterTitle: "Before and after pregnancy/delivery",
+          lastWorkday: "What is your last workday?",
+          lastWorkdayHint: `<strong>Hint:</strong> you are entitled to <strong>start</strong> your leave up to`,
+          recoveryDate: "What is the date you recovered or expect to cover from childbirth?",
+          recoveryDateHint: "<strong>Hint:</strong> we have pre-filled this date at the default 6 weeks after your due date. This is just an estimate.",
+          whatsNext: "What's Next?",
+          howDelivered: `Confirm with us how you delivered, if you haven't already shared this with us.
+            <br><br>
+            <ul>
+              <li>You can receive 6 weeks recovery from vaginal birth</li>
+              <li>You can receive 8 weeks recovery from C-section birth</li>
+              <li>You can receive more with complications</li>
+            </ul>
+          `
         },
-        
-        
       },
       otherBenefits: {
         title: "Other benefits",
@@ -159,7 +171,6 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         illnessDetails: "Briefly describe your illness or condition (for example, what you're being treated for or recovering from).",
         injury: "Injury",
         injuryDetails: "Briefly describe how and where the injury happened (for example, a fall at work or a car accident).",
-        optional: "(optional)",
         pregnancy: "Pregnancy and recovery from childbirth",
         pregnancyDetails: "If you have any pregnancy complications, describe them below. Otherwise, you can skip this.",
         provider: {

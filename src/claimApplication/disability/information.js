@@ -53,13 +53,11 @@ export function changes() {
   const leaveScheduleContainer = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab");
   if (leaveScheduleContainer) {
     leaveScheduleContainer.style.display = 'none';
-    console.log(`test 1`);
-    const page = reasonForLeavePage();
-    console.log(`page: ${page}`);
-    leaveScheduleContainer.parentNode.insertBefore(page, leaveScheduleContainer);
+    leaveScheduleContainer.parentNode.insertBefore(reasonForLeavePage(), leaveScheduleContainer);
     leaveScheduleContainer.parentNode.insertBefore(leaveSchedulePage(), leaveScheduleContainer);
 
     setupReasonForLeavePage();
+    setupLeaveSchedulePage();
 
     refreshCurrentScreen();
   }
@@ -87,6 +85,10 @@ function addStyles() {
       margin: 50px 0 10px;
     }
 
+    .page h2.usa-alert__heading {
+      margin: 0 0 10px;
+    }
+
     .page h3 {
       font-size: 18px;
       margin: 0 0 10px;
@@ -106,6 +108,10 @@ function addStyles() {
     
     .optional-text {
       color: #757575;
+    }
+
+    .usa-label.no-margin-top {
+      margin-top: 0;
     }
 
     .required-asterisk {
@@ -156,10 +162,6 @@ function addStyles() {
     #fddPregnancyLabel {
       margin-bottom: 20px;
     }
-
-    #fddPregnancyLabel, #workDisabilityDateLabel {
-      margin-top: 0;
-    }
   `;
   document.head.appendChild(style);
 }
@@ -171,6 +173,10 @@ function setupReasonForLeavePage() {
   setupCausedByJobListeners();
   setupWorkersCompListeners();
   setupSubmitReasonForLeave();
+}
+
+function setupLeaveSchedulePage() {
+  // setup listeners
 }
 
 function showReasonForLeavePage() {
@@ -204,23 +210,17 @@ function showLeaveSchedulePage() {
 }
 
 function leaveSchedulePage() {
-  const newPage = document.createElement('div');
-  newPage.id = "leaveSchedulePage";
-  newPage.classList.add("page");
-
-
-    // apparently one must call either "on" or "init" on the picker
-    // https://github.com/uswds/uswds/issues/3753
-    // or perhaps could try simply rendering this all when page loads and then hiding
-    
-  newPage.innerHTML = `
+  const leaveSchedulePage = document.createElement('div');
+  leaveSchedulePage.id = "leaveSchedulePage";
+  leaveSchedulePage.classList.add("page");
+  leaveSchedulePage.innerHTML = `
       <form id="reason-for-leave-form">
         <h2>${i18next.t('leaveSchedule.pregnancy.fddTitle')}</h2>
         <p><strong>${i18next.t('leaveSchedule.pregnancy.importantNotes')}</strong></p>
         <p>${i18next.t('leaveSchedule.pregnancy.youCanApply')}</p>
 
         <div class="bordered-set">
-          <label class="usa-label" id="fddPregnancyLabel" for="fddPregnancy">
+          <label class="usa-label no-margin-top" id="fddPregnancyLabel" for="fddPregnancy">
             <span class="required-asterisk">*</span>
             ${i18next.t('leaveSchedule.pregnancy.fddQuestion')}
           </label>
@@ -236,12 +236,60 @@ function leaveSchedulePage() {
             />
           </div>
         </div>
+
+        <h2>${i18next.t('leaveSchedule.pregnancy.beforeAfterTitle')}</h2>
+        <div class="bordered-set">
+          <label class="usa-label no-margin-top" id="lastWorkdayPregnancyLabel" for="lastWorkdayPregnancy">
+            <span class="required-asterisk">*</span>
+            ${i18next.t('leaveSchedule.pregnancy.lastWorkday')}
+          </label>
+          <p>${i18next.t('leaveSchedule.pregnancy.lastWorkdayHint')}</p>
+          <div class="usa-hint" id="lastWorkdayPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+          <div class="usa-date-picker">
+            <input
+              class="usa-input"
+              id="lastWorkdayPregnancy"
+              name="lastWorkdayPregnancy"
+              aria-labelledby="lastWorkdayPregnancyLabel"
+              aria-describedby="lastWorkdayPregnancyHint"
+              required
+            />
+          </div>
+        </div>
+        <div class="bordered-set">
+          <label class="usa-label no-margin-top" id="recoveryDatePregnancyLabel" for="recoveryDatePregnancy">
+            <span class="required-asterisk">*</span>
+            ${i18next.t('leaveSchedule.pregnancy.recoveryDate')}
+          </label>
+          <p>${i18next.t('leaveSchedule.pregnancy.recoveryDateHint')}</p>
+          <div class="usa-hint" id="recoveryDatePregnancyHint">${i18next.t('shared.dateFormat')}</div>
+          <div class="usa-date-picker">
+            <input
+              class="usa-input"
+              id="recoveryDatePregnancy"
+              name="recoveryDatePregnancy"
+              aria-labelledby="recoveryDatePregnancyLabel"
+              aria-describedby="recoveryDatePregnancyHint"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="usa-alert usa-alert--info" id="pregnancyAlert">
+          <div class="usa-alert__body">
+            <h2 class="usa-alert__heading">${i18next.t('leaveSchedule.pregnancy.whatsNext')}</h2>
+            <p class="usa-alert__text">
+              ${i18next.t('leaveSchedule.pregnancy.howDelivered')}
+            </p>
+          </div>
+        </div>
+
+        <button class="usa-button" id="submitLeaveSchedule" type="submit">
+          ${i18next.t('shared.saveAndContinue')}
+        </button>
       </form>
     `;
-
-    // todo: listeners
-
-  return newPage;  
+  return leaveSchedulePage;  
 }
 
 function customizeForPregnancy() {
@@ -293,10 +341,10 @@ function showBackButton() {
 }
 
 function reasonForLeavePage() {
-  const newPage = document.createElement('div');
-  newPage.id = "reasonForLeavePage";
-  newPage.classList.add("page");
-  newPage.innerHTML = `
+  const reasonForLeavePage = document.createElement('div');
+  reasonForLeavePage.id = "reasonForLeavePage";
+  reasonForLeavePage.classList.add("page");
+  reasonForLeavePage.innerHTML = `
     <form id="reason-for-leave-form">
       <div class="bordered-set">
         <fieldset class="usa-fieldset">
@@ -319,7 +367,7 @@ function reasonForLeavePage() {
             </label>
             <div id="pregnancy-details" class="additional-content" style="display: none;">
               <p class="optional-text">
-                <span class="bold-text">${i18next.t('reasonForLeave.optional')} </span>
+                <span class="bold-text">${i18next.t('shared.optional')} </span>
                 ${i18next.t('reasonForLeave.pregnancyDetails')}
               </p>
               <textarea
@@ -345,7 +393,7 @@ function reasonForLeavePage() {
             </label>
             <div id="illness-details" class="additional-content" style="display: none;">
               <p class="optional-text">
-                <span class="bold-text">${i18next.t('reasonForLeave.optional')} </span>
+                <span class="bold-text">${i18next.t('shared.optional')} </span>
                 ${i18next.t('reasonForLeave.illnessDetails')}
               </p>
               <textarea
@@ -371,7 +419,7 @@ function reasonForLeavePage() {
             </label>
             <div id="injury-details" class="additional-content" style="display: none;">
               <p class="optional-text">
-                <span class="bold-text">${i18next.t('reasonForLeave.optional')} </span>
+                <span class="bold-text">${i18next.t('shared.optional')} </span>
                 ${i18next.t('reasonForLeave.injuryDetails')}
               </p>
               <textarea
@@ -608,7 +656,7 @@ function reasonForLeavePage() {
             />
           </div>
           <div class="bordered-set">
-            <label class="usa-label" id="workDisabilityDateLabel" for="workDisabilityDate">
+            <label class="usa-label no-margin-top" id="workDisabilityDateLabel" for="workDisabilityDate">
               <span class="required-asterisk">*</span>
               <span id="workDisabilityDateLabelText"></span>
             </label>
@@ -663,8 +711,7 @@ function reasonForLeavePage() {
       </button>
     </form>
   `;
-
-  return newPage;
+  return reasonForLeavePage;
 }
 
 function setupPasteDetection() {
