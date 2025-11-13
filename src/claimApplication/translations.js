@@ -126,6 +126,21 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       leaveSchedule: {
         title: "Leave schedule",
+        pregnancy: {
+          fddTitle: "First day of disability leave for pregnancy",
+          importantNotes: "Important notes:",
+          youCanApply: `You can apply starting the day your disability begins (your first day out of work).
+            <br><br>
+            Enter your "first day of disability leave" date carefully. If it changes later, you'll need to update us in writing.
+            <br><br>
+            Check out the <a href="" target="_blank">Maternity Timeline Coverage Tool</a> for more help planning this start of disability leave date.
+          `,
+          fddQuestion: "What is your first date of disability leave?",
+          fddHint: "<strong>Hint:</strong> You are entitled to <strong>start</strong> your leave up to 4 weeks before your due date (or delivery date).",
+
+        },
+        
+        
       },
       otherBenefits: {
         title: "Other benefits",

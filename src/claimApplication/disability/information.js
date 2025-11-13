@@ -3,7 +3,6 @@ import IMask from 'imask';
 import { logEvent } from "../../modules/shared.mjs";
 import {
   addToSessionData,
-  getSessionData,
   removeExtraSpaceBetweenRadioButtons,
   setNewTitle,
   STORAGE_KEY_REASON_FOR_LEAVE,
@@ -63,18 +62,18 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
-    main h2, main h3 {
+    .page h2, .page h3 {
       color: black;
       font-variant: normal;
       font-weight: bold;
     }
 
-    main h2 {
+    .page h2 {
       font-size: 24px;
       margin: 50px 0 10px;
     }
 
-    main h3 {
+    .page h3 {
       font-size: 18px;
       margin: 0 0 10px;
     }
@@ -140,7 +139,11 @@ function addStyles() {
       margin: 0;
     }
 
-    #workDisabilityDateLabel {
+    #fddPregnancyLabel {
+      margin-bottom: 20px;
+    }
+
+    #fddPregnancyLabel, #workDisabilityDateLabel {
       margin-top: 0;
     }
   `;
@@ -148,10 +151,9 @@ function addStyles() {
 }
 
 function leaveSchedulePage() {
-
-  const reasonForLeaveMain = document.querySelector("#reasonForLeaveMain");
-  if (reasonForLeaveMain) {
-    reasonForLeaveMain.style.display = 'none';
+  const reasonForLeavePage = document.querySelector("#reasonForLeavePage");
+  if (reasonForLeavePage) {
+    reasonForLeavePage.style.display = 'none';
   }
 
   const leaveScheduleContainer = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab");
@@ -168,6 +170,67 @@ function leaveSchedulePage() {
     'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo'
   );
   setNewTitle(i18next.t('leaveSchedule.title'));
+
+  if (disabilityType === DisabilityType.PREGNANCY) {
+    customizeForPregnancy();
+  } else if (disabilityType === DisabilityType.ILLNESS) {
+    customizeForIllness();
+  } else if (disabilityType === DisabilityType.INJURY) {
+    customizeForInjury();
+  } else {
+    // unknown -- have user fill out reason for leave again
+    const backButton = document.getElementById(backButtonId);
+    if (backButton) {
+      backButton.click();
+    }
+  }
+}
+
+function customizeForPregnancy () {
+  const leaveScheduleContainer = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab");
+  if (leaveScheduleContainer) {
+    leaveScheduleContainer.style.display = 'none';
+
+    const pageId = "leaveSchedulePage";
+    const existingPage = document.getElementById(pageId);
+    if (existingPage) {
+      existingPage.style.display = 'block';
+      return;
+    }
+
+    const newPage = document.createElement('div');
+    newPage.id = pageId;
+    newPage.classList.add("page");
+    newPage.innerHTML = `
+      <form id="reason-for-leave-form">
+        <h2>${i18next.t('leaveSchedule.pregnancy.fddTitle')}</h2>
+        <p><strong>${i18next.t('leaveSchedule.pregnancy.importantNotes')}</strong></p>
+        <p>${i18next.t('leaveSchedule.pregnancy.youCanApply')}</p>
+
+        <div class="bordered-set">
+          <label class="usa-label" id="fddPregnancyLabel" for="fddPregnancy">
+            <span class="required-asterisk">*</span>
+            ${i18next.t('leaveSchedule.pregnancy.fddQuestion')}
+          </label>
+          <div class="usa-hint" id="fddPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+          <div class="usa-date-picker">
+            <input
+              class="usa-input"
+              id="fddPregnancy"
+              name="fddPregnancy"
+              aria-labelledby="fddPregnancyLabel"
+              aria-describedby="fddPregnancyHint"
+              required
+            />
+          </div>
+        </div>
+      </form>
+    `;
+
+    leaveScheduleContainer.parentNode.insertBefore(newPage, leaveScheduleContainer);
+  }
+
+  // todo: listeners
 }
 
 function hideBackButton() {
@@ -214,16 +277,17 @@ function reasonForLeavePage() {
   if (leaveScheduleContainer) {
     leaveScheduleContainer.style.display = 'none';
 
-    const mainId = "reasonForLeaveMain";
-    const existingMain = document.getElementById(mainId);
-    if (existingMain) {
-      existingMain.style.display = 'block';
+    const pageId = "reasonForLeavePage";
+    const existingPage = document.getElementById(pageId);
+    if (existingPage) {
+      existingPage.style.display = 'block';
       return;
     }
 
-    const newMain = document.createElement('main');
-    newMain.id = mainId;
-    newMain.innerHTML = `
+    const newPage = document.createElement('div');
+    newPage.id = pageId;
+    newPage.classList.add("page");
+    newPage.innerHTML = `
       <form id="reason-for-leave-form">
         <div class="bordered-set">
           <fieldset class="usa-fieldset">
@@ -591,7 +655,7 @@ function reasonForLeavePage() {
       </form>
     `;
 
-    leaveScheduleContainer.parentNode.insertBefore(newMain, leaveScheduleContainer);
+    leaveScheduleContainer.parentNode.insertBefore(newPage, leaveScheduleContainer);
   }
 
   setupDisabilityTypeListeners();
@@ -688,6 +752,10 @@ function workDetailsVisible(visible) {
   document.getElementById('reasonForLeaveWork').style.display = visible ? "block" : "none";
   document.getElementById('caused-by-job-yes').required = visible;
   document.getElementById('caused-by-job-no').required = visible;
+
+  if (!visible) {
+    workersCompVisible(false);
+  }
 }
 
 function updateStringsWithDisabilityTypeString(disabilityTypeString) {
@@ -726,6 +794,10 @@ function workersCompVisible(visible) {
   document.getElementById('workers-comp-no').required = visible;
   document.getElementById('workers-comp-approved-yes').required = visible;
   document.getElementById('workers-comp-approved-no').required = visible;
+
+  if (!visible) {
+    employerInfoVisible(false);
+  }
 }
 
 function setupWorkersCompListeners() {
