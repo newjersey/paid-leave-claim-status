@@ -3,10 +3,8 @@ import IMask from 'imask';
 import { logEvent } from "../../modules/shared.mjs";
 import {
   addToSessionData,
-  removeExtraSpaceBetweenRadioButtons,
   setNewTitle,
   STORAGE_KEY_REASON_FOR_LEAVE,
-  styleRadioButton
 } from '../utils';
 
 export const disabilityInformationLabels = [
@@ -52,10 +50,26 @@ let pastedTextSignal = "";
 export function changes() {
   addStyles();
 
-  if (currentScreen == Screens.REASON_FOR_LEAVE) {
-    reasonForLeavePage();
+  const leaveScheduleContainer = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab");
+  if (leaveScheduleContainer) {
+    leaveScheduleContainer.style.display = 'none';
+    console.log(`test 1`);
+    const page = reasonForLeavePage();
+    console.log(`page: ${page}`);
+    leaveScheduleContainer.parentNode.insertBefore(page, leaveScheduleContainer);
+    leaveScheduleContainer.parentNode.insertBefore(leaveSchedulePage(), leaveScheduleContainer);
+
+    setupReasonForLeavePage();
+
+    refreshCurrentScreen();
+  }
+}
+
+function refreshCurrentScreen() {
+  if (currentScreen === Screens.REASON_FOR_LEAVE) {
+    showReasonForLeavePage();
   } else {
-    leaveSchedulePage();
+    showLeaveSchedulePage();
   }
 }
 
@@ -150,26 +164,29 @@ function addStyles() {
   document.head.appendChild(style);
 }
 
-function leaveSchedulePage() {
-  const reasonForLeavePage = document.querySelector("#reasonForLeavePage");
-  if (reasonForLeavePage) {
-    reasonForLeavePage.style.display = 'none';
-  }
+function setupReasonForLeavePage() {
+  setupDisabilityTypeListeners();
+  setupPasteDetection();
+  setupInputMasks();
+  setupCausedByJobListeners();
+  setupWorkersCompListeners();
+  setupSubmitReasonForLeave();
+}
 
-  const leaveScheduleContainer = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab");
-  if (leaveScheduleContainer) {
-    leaveScheduleContainer.style.display = 'block';
-  }
-  
+function showReasonForLeavePage() {
+  hideBackButton();
+  setNewTitle(i18next.t('reasonForLeave.title'));
+
+  document.querySelector("#reasonForLeavePage").style.display = 'block';
+  document.querySelector("#leaveSchedulePage").style.display = 'none';
+}
+
+function showLeaveSchedulePage() {
   showBackButton();
-
-  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
-  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo', true);
-  removeExtraSpaceBetweenRadioButtons(
-    'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes',
-    'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo'
-  );
   setNewTitle(i18next.t('leaveSchedule.title'));
+
+  document.querySelector("#reasonForLeavePage").style.display = 'none';
+  document.querySelector("#leaveSchedulePage").style.display = 'block';
 
   if (disabilityType === DisabilityType.PREGNANCY) {
     customizeForPregnancy();
@@ -186,22 +203,17 @@ function leaveSchedulePage() {
   }
 }
 
-function customizeForPregnancy () {
-  const leaveScheduleContainer = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab");
-  if (leaveScheduleContainer) {
-    leaveScheduleContainer.style.display = 'none';
+function leaveSchedulePage() {
+  const newPage = document.createElement('div');
+  newPage.id = "leaveSchedulePage";
+  newPage.classList.add("page");
 
-    const pageId = "leaveSchedulePage";
-    const existingPage = document.getElementById(pageId);
-    if (existingPage) {
-      existingPage.style.display = 'block';
-      return;
-    }
 
-    const newPage = document.createElement('div');
-    newPage.id = pageId;
-    newPage.classList.add("page");
-    newPage.innerHTML = `
+    // apparently one must call either "on" or "init" on the picker
+    // https://github.com/uswds/uswds/issues/3753
+    // or perhaps could try simply rendering this all when page loads and then hiding
+    
+  newPage.innerHTML = `
       <form id="reason-for-leave-form">
         <h2>${i18next.t('leaveSchedule.pregnancy.fddTitle')}</h2>
         <p><strong>${i18next.t('leaveSchedule.pregnancy.importantNotes')}</strong></p>
@@ -227,10 +239,21 @@ function customizeForPregnancy () {
       </form>
     `;
 
-    leaveScheduleContainer.parentNode.insertBefore(newPage, leaveScheduleContainer);
-  }
+    // todo: listeners
 
-  // todo: listeners
+  return newPage;  
+}
+
+function customizeForPregnancy() {
+  // TODO:
+}
+
+function customizeForIllness() {
+  // TODO:
+}
+
+function customizeForInjury() {
+  // TODO:
 }
 
 function hideBackButton() {
@@ -259,7 +282,7 @@ function showBackButton() {
     logEvent('Leave schedule back clicked', {});
 
     currentScreen = Screens.REASON_FOR_LEAVE;
-    changes();
+    refreshCurrentScreen();
   });
   
   const pageTitle = document.querySelector('#pageTitle');
@@ -270,400 +293,378 @@ function showBackButton() {
 }
 
 function reasonForLeavePage() {
-  hideBackButton();
-  setNewTitle(i18next.t('reasonForLeave.title'));
+  const newPage = document.createElement('div');
+  newPage.id = "reasonForLeavePage";
+  newPage.classList.add("page");
+  newPage.innerHTML = `
+    <form id="reason-for-leave-form">
+      <div class="bordered-set">
+        <fieldset class="usa-fieldset">
+          <legend id="reason-legend" class="usa-legend usa-legend">
+            <span class="required-asterisk">*</span>
+            ${i18next.t('reasonForLeave.chooseReason')}
+          </legend>
+          <div class="usa-radio">
+            <input
+              class="usa-radio__input"
+              id="reason-pregnancy"
+              type="radio"
+              name="reasons"
+              value="pregnancy"
+              required
+              title="please choose a reason"
+            />
+            <label class="usa-radio__label" for="reason-pregnancy">
+              ${i18next.t('reasonForLeave.pregnancy')}
+            </label>
+            <div id="pregnancy-details" class="additional-content" style="display: none;">
+              <p class="optional-text">
+                <span class="bold-text">${i18next.t('reasonForLeave.optional')} </span>
+                ${i18next.t('reasonForLeave.pregnancyDetails')}
+              </p>
+              <textarea
+                class="usa-textarea"
+                id="pregnancy-details"
+                maxlength="250"
+                name="pregnancy-details"></textarea>
+              <p class="optional-text">${i18next.t('reasonForLeave.characterLimit', { limit: 250 })}</p>
+            </div>
+          </div>
+          <div class="usa-radio">
+            <input
+              class="usa-radio__input"
+              id="reason-illness"
+              type="radio"
+              name="reasons"
+              value="illness"
+              required
+              title="please choose a reason"
+            />
+            <label class="usa-radio__label" for="reason-illness">
+              ${i18next.t('reasonForLeave.illness')}
+            </label>
+            <div id="illness-details" class="additional-content" style="display: none;">
+              <p class="optional-text">
+                <span class="bold-text">${i18next.t('reasonForLeave.optional')} </span>
+                ${i18next.t('reasonForLeave.illnessDetails')}
+              </p>
+              <textarea
+                class="usa-textarea"
+                id="illness-details"
+                maxlength="250"
+                name="illness-details"></textarea>
+              <p class="optional-text">${i18next.t('reasonForLeave.characterLimit', { limit: 250 })}</p>
+            </div>
+          </div>
+          <div class="usa-radio">
+            <input
+              class="usa-radio__input"
+              id="reason-injury"
+              type="radio"
+              name="reasons"
+              value="injury"
+              required
+              title="please choose a reason"
+            />
+            <label class="usa-radio__label" for="reason-injury">
+              ${i18next.t('reasonForLeave.injury')}
+            </label>
+            <div id="injury-details" class="additional-content" style="display: none;">
+              <p class="optional-text">
+                <span class="bold-text">${i18next.t('reasonForLeave.optional')} </span>
+                ${i18next.t('reasonForLeave.injuryDetails')}
+              </p>
+              <textarea
+                class="usa-textarea"
+                id="injury-details"
+                maxlength="250"
+                name="injury-details"></textarea>
+              <p class="optional-text">${i18next.t('reasonForLeave.characterLimit', { limit: 250 })}</p>
+            </div>
+          </div>
+        </fieldset>
+      </div>
 
-  const leaveScheduleContainer = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab");
-  if (leaveScheduleContainer) {
-    leaveScheduleContainer.style.display = 'none';
+      <h2>${i18next.t('reasonForLeave.provider.title')}</h2>
 
-    const pageId = "reasonForLeavePage";
-    const existingPage = document.getElementById(pageId);
-    if (existingPage) {
-      existingPage.style.display = 'block';
-      return;
-    }
+      <p>${i18next.t('reasonForLeave.provider.explanation')}</p>
 
-    const newPage = document.createElement('div');
-    newPage.id = pageId;
-    newPage.classList.add("page");
-    newPage.innerHTML = `
-      <form id="reason-for-leave-form">
+      <div class="bordered-set">
+        <h3>${i18next.t('reasonForLeave.provider.info')}</h3>
+
+        <div class="usa-checkbox">
+          <input
+            class="usa-checkbox__input"
+            id="check-provider-type-accepted"
+            type="checkbox"
+            name="provider-type-accepted"
+            value="yes"
+            required
+          />
+          <label class="usa-checkbox__label" for="check-provider-type-accepted">
+            <span class="required-asterisk">*</span>
+            ${i18next.t('reasonForLeave.provider.type.isAccepted')}
+          </label>
+        </div>
+
+        <div class="usa-accordion usa-accordion--bordered">
+          <h4 class="usa-accordion__heading">
+            <button
+              type="button"
+              class="usa-accordion__button"
+              aria-expanded="false"
+              aria-controls="accepted-provider-types"
+            >
+              ${i18next.t('reasonForLeave.provider.type.weAccept')}
+            </button>
+          </h4>
+          <div id="accepted-provider-types" class="usa-accordion__content usa-prose">
+            <ul>
+              <li>${i18next.t('reasonForLeave.provider.type.advancedPracticeNurse')}</li>
+              <li>${i18next.t('reasonForLeave.provider.type.registeredNurse')}</li>
+              <li>${i18next.t('reasonForLeave.provider.type.certifiedNursePractitioner')}</li>
+              <li>${i18next.t('reasonForLeave.provider.type.clinicalNurseSpecialist')}</li>
+              <li>${i18next.t('reasonForLeave.provider.type.certifiedNurseMidwife')}</li>
+              <li>${i18next.t('reasonForLeave.provider.type.certifiedProfessionalMidwife')}</li>
+              <li>${i18next.t('reasonForLeave.provider.type.chiropractor')}</li>
+              <li>${i18next.t('reasonForLeave.provider.type.dentist')}</li>
+              <li>${i18next.t('reasonForLeave.provider.type.erPhysician')}</li>
+              <li>${i18next.t('reasonForLeave.provider.type.medicalDoctor')}</li>
+              <li>${i18next.t('reasonForLeave.provider.type.optometrist')}</li>
+              <li>${i18next.t('reasonForLeave.provider.type.osteopath')}</li>
+              <li>${i18next.t('reasonForLeave.provider.type.podiatrist')}</li>
+              <li>${i18next.t('reasonForLeave.provider.type.psychologist')}</li>
+              <li>${i18next.t('reasonForLeave.provider.type.physicianAssistant')}</li>
+              <li>${i18next.t('reasonForLeave.provider.type.specialist')}</li>
+            </ul>
+          </div>
+        </div>
+
+        <label class="usa-label" for="provider-first-name">${i18next.t('reasonForLeave.provider.firstName')}
+          <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+        </label>
+        <input class="usa-input" id="provider-first-name" name="provider-first-name" required  title="hoooheee -0!" />
+
+        <label class="usa-label" for="provider-last-name">${i18next.t('reasonForLeave.provider.lastName')}
+          <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+        </label>
+        <input class="usa-input" id="provider-last-name" name="provider-last-name" required />
+
+        <label class="usa-label" for="provider-mailing-address-1">${i18next.t('contact.street1')}
+          <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+        </label>
+        <input class="usa-input" id="provider-mailing-address-1" name="provider-mailing-address-1" required />
+
+        <label class="usa-label" for="provider-mailing-address-2">${i18next.t('contact.street2')}</label>
+        <input class="usa-input" id="provider-mailing-address-2" name="provider-mailing-address-2" />
+
+        <label class="usa-label" for="provider-city">${i18next.t('contact.city')}
+          <abbr title="required" class="usa-hint usa-hint--required">*</abbr></label>
+        <input class="usa-input" id="provider-city" name="provider-city" required />
+
+        <label class="usa-label" for="provider-state">${i18next.t('contact.state')}
+          <abbr title="required" class="usa-hint usa-hint--required">*</abbr></label>
+        <div class="usa-combo-box">
+          <select class="usa-select" id="provider-state" name="provider-state" required>
+            ${stateOptions()}
+          </select>
+        </div>
+
+        <label class="usa-label" for="provider-zip">${i18next.t('contact.zipcode')}
+          <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+        </label>
+        <input class="usa-input usa-input--medium" id="provider-zip" name="provider-zip" pattern="\\d{5}(-\\d{4})?" required />
+
+        <label class="usa-label" for="provider-phone">${i18next.t('contact.phone')}</label>
+        <div class="usa-hint" id="provider-primaryPnHint">${i18next.t('contact.phoneHint')}</div>
+        <input
+          class="usa-input margin-bottom-1"
+          id="provider-phone"
+          name="provider-phone"
+          type="text"
+          inputmode="numeric"
+          pattern="\\d{3}-\\d{3}-\\d{4}"
+          aria-describedby="provider-primaryPnHint"
+        />
+      </div>
+
+      <div id="reasonForLeaveWork" style="display: none;">
+
+        <h2>${i18next.t('reasonForLeave.work.title')}</h2>
+
         <div class="bordered-set">
           <fieldset class="usa-fieldset">
-            <legend id="reason-legend" class="usa-legend usa-legend">
+            <legend id="caused-by-job-legend" class="usa-legend usa-legend">
               <span class="required-asterisk">*</span>
-              ${i18next.t('reasonForLeave.chooseReason')}
+              <span id="causedByJobText"></span>
             </legend>
             <div class="usa-radio">
               <input
                 class="usa-radio__input"
-                id="reason-pregnancy"
+                id="caused-by-job-yes"
                 type="radio"
-                name="reasons"
-                value="pregnancy"
-                required
-                title="please choose a reason"
+                name="caused-by-job"
+                value="yes"
               />
-              <label class="usa-radio__label" for="reason-pregnancy">
-                ${i18next.t('reasonForLeave.pregnancy')}
+              <label class="usa-radio__label" for="caused-by-job-yes">
+                ${i18next.t('shared.yes')}
               </label>
-              <div id="pregnancy-details" class="additional-content" style="display: none;">
-                <p class="optional-text">
-                  <span class="bold-text">${i18next.t('reasonForLeave.optional')} </span>
-                  ${i18next.t('reasonForLeave.pregnancyDetails')}
-                </p>
-                <textarea
-                  class="usa-textarea"
-                  id="pregnancy-details"
-                  maxlength="250"
-                  name="pregnancy-details"></textarea>
-                <p class="optional-text">${i18next.t('reasonForLeave.characterLimit', { limit: 250 })}</p>
-              </div>
             </div>
             <div class="usa-radio">
               <input
                 class="usa-radio__input"
-                id="reason-illness"
+                id="caused-by-job-no"
                 type="radio"
-                name="reasons"
-                value="illness"
-                required
-                title="please choose a reason"
+                name="caused-by-job"
+                value="no"
               />
-              <label class="usa-radio__label" for="reason-illness">
-                ${i18next.t('reasonForLeave.illness')}
+              <label class="usa-radio__label" for="caused-by-job-no">
+                ${i18next.t('shared.no')}
               </label>
-              <div id="illness-details" class="additional-content" style="display: none;">
-                <p class="optional-text">
-                  <span class="bold-text">${i18next.t('reasonForLeave.optional')} </span>
-                  ${i18next.t('reasonForLeave.illnessDetails')}
-                </p>
-                <textarea
-                  class="usa-textarea"
-                  id="illness-details"
-                  maxlength="250"
-                  name="illness-details"></textarea>
-                <p class="optional-text">${i18next.t('reasonForLeave.characterLimit', { limit: 250 })}</p>
-              </div>
-            </div>
-            <div class="usa-radio">
-              <input
-                class="usa-radio__input"
-                id="reason-injury"
-                type="radio"
-                name="reasons"
-                value="injury"
-                required
-                title="please choose a reason"
-              />
-              <label class="usa-radio__label" for="reason-injury">
-                ${i18next.t('reasonForLeave.injury')}
-              </label>
-              <div id="injury-details" class="additional-content" style="display: none;">
-                <p class="optional-text">
-                  <span class="bold-text">${i18next.t('reasonForLeave.optional')} </span>
-                  ${i18next.t('reasonForLeave.injuryDetails')}
-                </p>
-                <textarea
-                  class="usa-textarea"
-                  id="injury-details"
-                  maxlength="250"
-                  name="injury-details"></textarea>
-                <p class="optional-text">${i18next.t('reasonForLeave.characterLimit', { limit: 250 })}</p>
-              </div>
             </div>
           </fieldset>
         </div>
 
-        <h2>${i18next.t('reasonForLeave.provider.title')}</h2>
-
-        <p>${i18next.t('reasonForLeave.provider.explanation')}</p>
-
-        <div class="bordered-set">
-          <h3>${i18next.t('reasonForLeave.provider.info')}</h3>
-
-          <div class="usa-checkbox">
-            <input
-              class="usa-checkbox__input"
-              id="check-provider-type-accepted"
-              type="checkbox"
-              name="provider-type-accepted"
-              value="yes"
-              required
-            />
-            <label class="usa-checkbox__label" for="check-provider-type-accepted">
+        <div id="workers-comp-claim" class="bordered-set" style="display:none;">
+          <fieldset class="usa-fieldset">
+            <legend id="workers-comp-legend" class="usa-legend usa-legend">
               <span class="required-asterisk">*</span>
-              ${i18next.t('reasonForLeave.provider.type.isAccepted')}
-            </label>
-          </div>
-
-          <div class="usa-accordion usa-accordion--bordered">
-            <h4 class="usa-accordion__heading">
-              <button
-                type="button"
-                class="usa-accordion__button"
-                aria-expanded="false"
-                aria-controls="accepted-provider-types"
-              >
-                ${i18next.t('reasonForLeave.provider.type.weAccept')}
-              </button>
-            </h4>
-            <div id="accepted-provider-types" class="usa-accordion__content usa-prose">
-              <ul>
-                <li>${i18next.t('reasonForLeave.provider.type.advancedPracticeNurse')}</li>
-                <li>${i18next.t('reasonForLeave.provider.type.registeredNurse')}</li>
-                <li>${i18next.t('reasonForLeave.provider.type.certifiedNursePractitioner')}</li>
-                <li>${i18next.t('reasonForLeave.provider.type.clinicalNurseSpecialist')}</li>
-                <li>${i18next.t('reasonForLeave.provider.type.certifiedNurseMidwife')}</li>
-                <li>${i18next.t('reasonForLeave.provider.type.certifiedProfessionalMidwife')}</li>
-                <li>${i18next.t('reasonForLeave.provider.type.chiropractor')}</li>
-                <li>${i18next.t('reasonForLeave.provider.type.dentist')}</li>
-                <li>${i18next.t('reasonForLeave.provider.type.erPhysician')}</li>
-                <li>${i18next.t('reasonForLeave.provider.type.medicalDoctor')}</li>
-                <li>${i18next.t('reasonForLeave.provider.type.optometrist')}</li>
-                <li>${i18next.t('reasonForLeave.provider.type.osteopath')}</li>
-                <li>${i18next.t('reasonForLeave.provider.type.podiatrist')}</li>
-                <li>${i18next.t('reasonForLeave.provider.type.psychologist')}</li>
-                <li>${i18next.t('reasonForLeave.provider.type.physicianAssistant')}</li>
-                <li>${i18next.t('reasonForLeave.provider.type.specialist')}</li>
-              </ul>
+              ${i18next.t('reasonForLeave.work.workersCompClaim')}
+            </legend>
+            <div class="usa-radio">
+              <input
+                class="usa-radio__input"
+                id="workers-comp-yes"
+                type="radio"
+                name="workers-comp"
+                value="yes"
+              />
+              <label class="usa-radio__label" for="workers-comp-yes">
+                ${i18next.t('shared.yes')}
+              </label>
             </div>
-          </div>
-
-          <label class="usa-label" for="provider-first-name">${i18next.t('reasonForLeave.provider.firstName')}
-            <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-          </label>
-          <input class="usa-input" id="provider-first-name" name="provider-first-name" required  title="hoooheee -0!" />
-
-          <label class="usa-label" for="provider-last-name">${i18next.t('reasonForLeave.provider.lastName')}
-            <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-          </label>
-          <input class="usa-input" id="provider-last-name" name="provider-last-name" required />
-
-          <label class="usa-label" for="provider-mailing-address-1">${i18next.t('contact.street1')}
-            <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-          </label>
-          <input class="usa-input" id="provider-mailing-address-1" name="provider-mailing-address-1" required />
-
-          <label class="usa-label" for="provider-mailing-address-2">${i18next.t('contact.street2')}</label>
-          <input class="usa-input" id="provider-mailing-address-2" name="provider-mailing-address-2" />
-
-          <label class="usa-label" for="provider-city">${i18next.t('contact.city')}
-            <abbr title="required" class="usa-hint usa-hint--required">*</abbr></label>
-          <input class="usa-input" id="provider-city" name="provider-city" required />
-
-          <label class="usa-label" for="provider-state">${i18next.t('contact.state')}
-            <abbr title="required" class="usa-hint usa-hint--required">*</abbr></label>
-          <div class="usa-combo-box">
-            <select class="usa-select" id="provider-state" name="provider-state" required>
-              ${stateOptions()}
-            </select>
-          </div>
-
-          <label class="usa-label" for="provider-zip">${i18next.t('contact.zipcode')}
-            <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-          </label>
-          <input class="usa-input usa-input--medium" id="provider-zip" name="provider-zip" pattern="\\d{5}(-\\d{4})?" required />
-
-          <label class="usa-label" for="provider-phone">${i18next.t('contact.phone')}</label>
-          <div class="usa-hint" id="provider-primaryPnHint">${i18next.t('contact.phoneHint')}</div>
-          <input
-            class="usa-input margin-bottom-1"
-            id="provider-phone"
-            name="provider-phone"
-            type="text"
-            inputmode="numeric"
-            pattern="\\d{3}-\\d{3}-\\d{4}"
-            aria-describedby="provider-primaryPnHint"
-          />
+            <div class="usa-radio">
+              <input
+                class="usa-radio__input"
+                id="workers-comp-no"
+                type="radio"
+                name="workers-comp"
+                value="no"
+              />
+              <label class="usa-radio__label" for="workers-comp-no">
+                ${i18next.t('shared.no')}
+              </label>
+            </div>
+          </fieldset>
         </div>
 
-        <div id="reasonForLeaveWork" style="display: none;">
-
-          <h2>${i18next.t('reasonForLeave.work.title')}</h2>
-
+        <div id="employerInfo" style="display:none;">
           <div class="bordered-set">
-            <fieldset class="usa-fieldset">
-              <legend id="caused-by-job-legend" class="usa-legend usa-legend">
-                <span class="required-asterisk">*</span>
-                <span id="causedByJobText"></span>
-              </legend>
-              <div class="usa-radio">
-                <input
-                  class="usa-radio__input"
-                  id="caused-by-job-yes"
-                  type="radio"
-                  name="caused-by-job"
-                  value="yes"
-                />
-                <label class="usa-radio__label" for="caused-by-job-yes">
-                  ${i18next.t('shared.yes')}
-                </label>
-              </div>
-              <div class="usa-radio">
-                <input
-                  class="usa-radio__input"
-                  id="caused-by-job-no"
-                  type="radio"
-                  name="caused-by-job"
-                  value="no"
-                />
-                <label class="usa-radio__label" for="caused-by-job-no">
-                  ${i18next.t('shared.no')}
-                </label>
-              </div>
-            </fieldset>
+            <p id="employerInfoPrompt"></p>
+            
+            <label class="usa-label" for="employer-name">${i18next.t('reasonForLeave.work.employerInfo.name')}</label>
+              <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+            </label>
+            <input class="usa-input" id="employer-name" name="employer-name" />
+
+            <label class="usa-label" for="employer-mailing-address-1">${i18next.t('contact.street1')}
+              <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+            </label>
+            <input class="usa-input" id="employer-mailing-address-1" name="employer-mailing-address-1" />
+
+            <label class="usa-label" for="employer-mailing-address-2">${i18next.t('contact.street2')}</label>
+            <input class="usa-input" id="employer-mailing-address-2" name="employer-mailing-address-2" />
+
+            <label class="usa-label" for="employer-city">${i18next.t('contact.city')}
+              <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+            </label>
+            <input class="usa-input" id="employer-city" name="employer-city" />
+
+            <label class="usa-label" for="employer-state">${i18next.t('contact.state')}
+              <abbr title="required" class="usa-hint usa-hint--required">*</abbr></label>
+            <div class="usa-combo-box">
+              <select class="usa-select" id="employer-state" name="employer-state">
+                ${stateOptions()}
+              </select>
+            </div>
+
+            <label class="usa-label" for="employer-zip">${i18next.t('contact.zipcode')}
+              <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+            </label>
+            <input class="usa-input usa-input--medium" id="employer-zip" name="employer-zip" pattern="\\d{5}(-\\d{4})?" />
+
+            <label class="usa-label" for="employer-phone">${i18next.t('contact.phone')}
+              <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+            </label>
+            <div class="usa-hint" id="employer-primaryPnHint">${i18next.t('contact.phoneHint')}</div>
+            <input
+              class="usa-input margin-bottom-1"
+              id="employer-phone"
+              name="employer-phone"
+              type="text"
+              inputmode="numeric"
+              pattern="\\d{3}-\\d{3}-\\d{4}"
+              aria-describedby="employer-primaryPnHint"
+            />
           </div>
-
-          <div id="workers-comp-claim" class="bordered-set" style="display:none;">
-            <fieldset class="usa-fieldset">
-              <legend id="workers-comp-legend" class="usa-legend usa-legend">
-                <span class="required-asterisk">*</span>
-                ${i18next.t('reasonForLeave.work.workersCompClaim')}
-              </legend>
-              <div class="usa-radio">
-                <input
-                  class="usa-radio__input"
-                  id="workers-comp-yes"
-                  type="radio"
-                  name="workers-comp"
-                  value="yes"
-                />
-                <label class="usa-radio__label" for="workers-comp-yes">
-                  ${i18next.t('shared.yes')}
-                </label>
-              </div>
-              <div class="usa-radio">
-                <input
-                  class="usa-radio__input"
-                  id="workers-comp-no"
-                  type="radio"
-                  name="workers-comp"
-                  value="no"
-                />
-                <label class="usa-radio__label" for="workers-comp-no">
-                  ${i18next.t('shared.no')}
-                </label>
-              </div>
-            </fieldset>
-          </div>
-
-          <div id="employerInfo" style="display:none;">
-            <div class="bordered-set">
-              <p id="employerInfoPrompt"></p>
-              
-              <label class="usa-label" for="employer-name">${i18next.t('reasonForLeave.work.employerInfo.name')}</label>
-                <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-              </label>
-              <input class="usa-input" id="employer-name" name="employer-name" />
-
-              <label class="usa-label" for="employer-mailing-address-1">${i18next.t('contact.street1')}
-                <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-              </label>
-              <input class="usa-input" id="employer-mailing-address-1" name="employer-mailing-address-1" />
-
-              <label class="usa-label" for="employer-mailing-address-2">${i18next.t('contact.street2')}</label>
-              <input class="usa-input" id="employer-mailing-address-2" name="employer-mailing-address-2" />
-
-              <label class="usa-label" for="employer-city">${i18next.t('contact.city')}
-                <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-              </label>
-              <input class="usa-input" id="employer-city" name="employer-city" />
-
-              <label class="usa-label" for="employer-state">${i18next.t('contact.state')}
-                <abbr title="required" class="usa-hint usa-hint--required">*</abbr></label>
-              <div class="usa-combo-box">
-                <select class="usa-select" id="employer-state" name="employer-state">
-                  ${stateOptions()}
-                </select>
-              </div>
-
-              <label class="usa-label" for="employer-zip">${i18next.t('contact.zipcode')}
-                <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-              </label>
-              <input class="usa-input usa-input--medium" id="employer-zip" name="employer-zip" pattern="\\d{5}(-\\d{4})?" />
-
-              <label class="usa-label" for="employer-phone">${i18next.t('contact.phone')}
-                <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-              </label>
-              <div class="usa-hint" id="employer-primaryPnHint">${i18next.t('contact.phoneHint')}</div>
+          <div class="bordered-set">
+            <label class="usa-label" id="workDisabilityDateLabel" for="workDisabilityDate">
+              <span class="required-asterisk">*</span>
+              <span id="workDisabilityDateLabelText"></span>
+            </label>
+            <div class="usa-hint" id="workDisabilityDateHint">${i18next.t('shared.dateFormat')}</div>
+            <div class="usa-date-picker">
               <input
-                class="usa-input margin-bottom-1"
-                id="employer-phone"
-                name="employer-phone"
-                type="text"
-                inputmode="numeric"
-                pattern="\\d{3}-\\d{3}-\\d{4}"
-                aria-describedby="employer-primaryPnHint"
+                class="usa-input"
+                id="workDisabilityDate"
+                name="workDisabilityDate"
+                aria-labelledby="workDisabilityDateLabel"
+                aria-describedby="workDisabilityDateHint"
               />
             </div>
-            <div class="bordered-set">
-              <label class="usa-label" id="workDisabilityDateLabel" for="workDisabilityDate">
+          </div>
+          <div class="bordered-set">
+            <fieldset class="usa-fieldset">
+              <legend class="usa-legend usa-legend">
                 <span class="required-asterisk">*</span>
-                <span id="workDisabilityDateLabelText"></span>
-              </label>
-              <div class="usa-hint" id="workDisabilityDateHint">${i18next.t('shared.dateFormat')}</div>
-              <div class="usa-date-picker">
+                ${i18next.t('reasonForLeave.work.workersCompClaimApproved')}
+              </legend>
+              <div class="usa-radio">
                 <input
-                  class="usa-input"
-                  id="workDisabilityDate"
-                  name="workDisabilityDate"
-                  aria-labelledby="workDisabilityDateLabel"
-                  aria-describedby="workDisabilityDateHint"
+                  class="usa-radio__input"
+                  id="workers-comp-approved-yes"
+                  type="radio"
+                  name="workers-comp-approved"
+                  value="yes"
                 />
+                <label class="usa-radio__label" for="workers-comp-approved-yes">
+                  ${i18next.t('shared.yes')}
+                </label>
               </div>
-            </div>
-            <div class="bordered-set">
-              <fieldset class="usa-fieldset">
-                <legend class="usa-legend usa-legend">
-                  <span class="required-asterisk">*</span>
-                  ${i18next.t('reasonForLeave.work.workersCompClaimApproved')}
-                </legend>
-                <div class="usa-radio">
-                  <input
-                    class="usa-radio__input"
-                    id="workers-comp-approved-yes"
-                    type="radio"
-                    name="workers-comp-approved"
-                    value="yes"
-                  />
-                  <label class="usa-radio__label" for="workers-comp-approved-yes">
-                    ${i18next.t('shared.yes')}
-                  </label>
-                </div>
-                <div class="usa-radio">
-                  <input
-                    class="usa-radio__input"
-                    id="workers-comp-approved-no"
-                    type="radio"
-                    name="workers-comp-approved"
-                    value="no"
-                  />
-                  <label class="usa-radio__label" for="workers-comp-approved-no">
-                    ${i18next.t('shared.no')}
-                  </label>
-                </div>
-              </fieldset>
-            </div>
+              <div class="usa-radio">
+                <input
+                  class="usa-radio__input"
+                  id="workers-comp-approved-no"
+                  type="radio"
+                  name="workers-comp-approved"
+                  value="no"
+                />
+                <label class="usa-radio__label" for="workers-comp-approved-no">
+                  ${i18next.t('shared.no')}
+                </label>
+              </div>
+            </fieldset>
           </div>
         </div>
+      </div>
 
-        <button class="usa-button" id="submitReasonForLeave" type="submit">
-          ${i18next.t('shared.saveAndContinue')}
-        </button>
-      </form>
-    `;
+      <button class="usa-button" id="submitReasonForLeave" type="submit">
+        ${i18next.t('shared.saveAndContinue')}
+      </button>
+    </form>
+  `;
 
-    leaveScheduleContainer.parentNode.insertBefore(newPage, leaveScheduleContainer);
-  }
-
-  setupDisabilityTypeListeners();
-  setupPasteDetection();
-  setupInputMasks();
-  setupCausedByJobListeners();
-  setupWorkersCompListeners();
-  setupSubmitReasonForLeave();
+  return newPage;
 }
 
 function setupPasteDetection() {
@@ -862,7 +863,7 @@ function setupSubmitReasonForLeave() {
     });      
 
     currentScreen = Screens.LEAVE_SCHEDULE;
-    changes();
+    refreshCurrentScreen();
   });
 }
 
