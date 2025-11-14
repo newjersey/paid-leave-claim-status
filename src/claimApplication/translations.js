@@ -3,6 +3,8 @@ const resources = {
     translation: {
       shared: {
         dateFormat: "mm/dd/yyyy",
+        illness: "illness",
+        injury: "injury",
         no: "No",
         optional: "(optional)",
         saveAndContinue: "Save and continue",
@@ -127,6 +129,30 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       leaveSchedule: {
         title: "Leave schedule",
+        illnessInjury: {
+          fddTitle: "First day of disability leave",
+          fddNotes: `<strong>Heads up:</strong>
+            <br><br>
+            You can apply starting the day your disability begins-- the first day you stop working because of your illness or injury.
+            <br><br>
+            Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.
+          `,
+          fddQuestion: `When did this {{disabilityTypeString}} prevent you from working?
+            <br><br>
+            <strong>Hint:</strong> Enter the actual date your disability began, even if it was a day you don't usually work (like a weekend or holiday).
+          `,
+          beforeAfterTitle: "Dates of employment before and after disability",
+          lastWorkday: `What was the last day you worked?
+            <br><br>
+            <strong>Hint:</strong> This is the last day you actually worked-- not including PTO, vacation, or sick days you used before your leave started.
+          `,
+          recovered: `Have you recovered from this condition?
+            <br><br>
+            "Recovered" means you are able to return to work.
+          `,
+          recoveryDate: "When did you recover (felt able to return to work)?",
+          estRecoveryDate: "When do you anticipate being able to return to work? This can be an estimate and we will ask you again later to verify.",
+        },
         pregnancy: {
           fddTitle: "First day of disability leave for pregnancy",
           importantNotes: "Important notes:",
@@ -139,10 +165,21 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           fddQuestion: "What is your first date of disability leave?",
           fddHint: "<strong>Hint:</strong> You are entitled to <strong>start</strong> your leave up to 4 weeks before your due date (or delivery date).",
           beforeAfterTitle: "Before and after pregnancy/delivery",
-          lastWorkday: "What is your last workday?",
-          lastWorkdayHint: `<strong>Hint:</strong> you are entitled to <strong>start</strong> your leave up to`,
-          recoveryDate: "What is the date you recovered or expect to cover from childbirth?",
-          recoveryDateHint: "<strong>Hint:</strong> we have pre-filled this date at the default 6 weeks after your due date. This is just an estimate.",
+          lastWorkday: `What is your last workday?
+            <br><br>
+            <strong>Hint:</strong> This is the last day you actually worked-- not including PTO, vacation, or sick days you used before your leave started.
+          `,
+          recovered: `Have you recovered from childbirth? "Recovered" means you are available to return to work.
+            <br><br>
+            <strong>Hint:</strong> You are entitled to at least 6 or 8 weeks of Temporary Disability Insurance benefits to recover from childbirth.
+          `,
+          moreTimeAvailable: "More time available",
+          fliInfo: `You are entitled to up to 12 weeks of <a href="https://www.nj.gov/labor/myleavebenefits/worker/fli/index.shtml" target="_blank">Family Leave for bonding time</a>. This is a separate application. See the <a href="https://www.nj.gov/labor/myleavebenefits/worker/maternity/timeline-welcome.shtml" target="_blank">Maternity Timeline Tool</a>.`,
+          recoveryDate: `What is the date you recovered or expect to cover from childbirth?
+            <br><br>
+            <strong>Hint:</strong> we have pre-filled this date at the default 6 weeks after your due date. This is just an estimate.
+          `,
+          estRecoveryDate: "When do you anticipate being able to return to work? This can be an estimate and we will ask you again later to verify.",
           whatsNext: "What's Next?",
           howDelivered: `Confirm with us how you delivered, if you haven't already shared this with us.
             <br><br>
@@ -202,8 +239,6 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         },
         work: {
           title: "Worker's Compensation",
-          illness: "illness",
-          injury: "injury",
           causedByJob: "Was your {{disabilityTypeString}} caused by your job? (Could be a specific incident or happened over time)",
           workersCompClaim: `Have you or your employer filed a <a href="https://www.nj.gov/labor/workerscompensation/injured-worker-protections/index.shtml" target="_blank">Workers' Compensation Claim</a>, or do you plan to file one?`,
           workersCompClaimApproved: "Have you been approved for (or awarded, or received) Workers' Compensation benefits?",
