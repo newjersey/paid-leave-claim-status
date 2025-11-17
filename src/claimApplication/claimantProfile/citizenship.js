@@ -18,8 +18,8 @@ export const id = "citizenship";
 
 export const identifyingContent = {
   id,
-  elementId: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlCitizen',
-  text: 'Are you a citizen',
+  elementId: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact',
+  text: 'Provide your telephone number',
 };
 
 export function changes() {
