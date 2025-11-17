@@ -206,7 +206,6 @@ function providerAddressInUSA(inUSA) {
   document.getElementById('provider-zip').required = inUSA;
 
   document.getElementById('provider-intl-mailing-address-1').required = !inUSA;
-  // TODO: establish how many of the intl fields are required in existing webapp - assuming just 1 for now
 }
 
 function setupLeaveSchedulePage() {
