@@ -1,3 +1,30 @@
+export const EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY = {
+  "reasons":"pregnancy",
+  "pregnancy-details": "emergency C-section",
+  "provider-type-eligible":"yes",
+  "provider-name":"Dr. Spaceman",
+  "provider-mailing-address-1":"30 Livingston Avenue",
+  "provider-mailing-address-2":"",
+  "provider-city":"New Brunswick",
+  "provider-state":"NJ",
+  "provider-zip":"08901",
+  "provider-phone":"609-292-7060",
+};
+
+export const EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS = {
+  "reasons":"illness",
+  "illness-details": "inflammation in lungs",
+  "provider-type-eligible":"yes",
+  "provider-name":"Dr. Spaceman",
+  "provider-mailing-address-1":"30 Livingston Avenue",
+  "provider-mailing-address-2":"",
+  "provider-city":"New Brunswick",
+  "provider-state":"NJ",
+  "provider-zip":"08901",
+  "provider-phone":"609-292-7060",
+  "caused-by-job":"no",
+};
+
 export function globalTestsOld(url) {
   it("user can log out", () => {
     cy.mockASPX(url);
