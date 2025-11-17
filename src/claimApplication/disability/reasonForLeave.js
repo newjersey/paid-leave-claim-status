@@ -1,7 +1,13 @@
 import i18next from 'i18next';
 import IMask from 'imask';
 import { logEvent } from "../../modules/shared.mjs";
-import { DisabilityType, elementTextError, resetElementText } from '../utils';
+import {
+  addToSessionData,
+  DisabilityType,
+  elementTextError,
+  resetElementText,
+  STORAGE_KEY_REASON_FOR_LEAVE
+} from '../utils';
 
 const TEXT_AREA_IDS = ['pregnancy-details', 'illness-details', 'injury-details'];
 let pastedTextSignal = "";
@@ -424,14 +430,14 @@ export function reasonForLeavePage() {
   return reasonForLeavePage;
 }
 
-export function setupReasonForLeavePage(setDisabilityType) {
+export function setupReasonForLeavePage(setDisabilityType, showLeaveSchedulePage) {
   setupDisabilityTypeListeners(setDisabilityType);
   setupPasteDetection();
   setupAddressListeners();
   setupInputMasks();
   setupCausedByJobListeners();
   setupWorkersCompListeners();
-  setupSubmitReasonForLeave();
+  setupSubmitReasonForLeave(showLeaveSchedulePage);
 }
 
 function setupDisabilityTypeListeners(setDisabilityType) {
@@ -579,7 +585,7 @@ function setupWorkersCompListeners() {
 }
 
 
-function setupSubmitReasonForLeave() {
+function setupSubmitReasonForLeave(showLeaveSchedulePage) {
   const form = document.getElementById('reason-for-leave-form');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -610,8 +616,7 @@ function setupSubmitReasonForLeave() {
       [STORAGE_KEY_REASON_FOR_LEAVE]: JSON.stringify(formValues)
     });      
 
-    currentScreen = Screens.LEAVE_SCHEDULE;
-    refreshCurrentScreen();
+    showLeaveSchedulePage();
   });
 }
 

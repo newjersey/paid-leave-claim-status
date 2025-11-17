@@ -25,12 +25,6 @@ export const alternateIdentifyingContent = {
   text: 'Select the date your disability',
 };
 
-const Screens = Object.freeze({
-  REASON_FOR_LEAVE: 'reasonForLeave',
-  LEAVE_SCHEDULE: 'leaveSchedule',
-});
-let currentScreen = Screens.REASON_FOR_LEAVE;
-
 const backButtonId = "leaveScheduleBack";
 
 let disabilityType = DisabilityType.UNKNOWN;
@@ -47,18 +41,10 @@ export function changes() {
     leaveScheduleContainer.parentNode.insertBefore(reasonForLeavePage(), leaveScheduleContainer);
     leaveScheduleContainer.parentNode.insertBefore(leaveSchedulePage(), leaveScheduleContainer);
 
-    setupReasonForLeavePage(setDisabilityType);
+    setupReasonForLeavePage(setDisabilityType, showLeaveSchedulePage);
     setupLeaveSchedulePage();
 
-    refreshCurrentScreen();
-  }
-}
-
-function refreshCurrentScreen() {
-  if (currentScreen === Screens.REASON_FOR_LEAVE) {
     showReasonForLeavePage();
-  } else {
-    showLeaveSchedulePage();
   }
 }
 
@@ -166,6 +152,7 @@ function showReasonForLeavePage() {
 }
 
 function showLeaveSchedulePage() {
+  window.scrollTo(0, 0);
   showBackButton();
   setNewTitle(i18next.t('leaveSchedule.title'));
 
@@ -199,9 +186,7 @@ function showBackButton() {
   backButton.addEventListener('click', function (event) {
     event.preventDefault();
     logEvent('Leave schedule back clicked', {});
-
-    currentScreen = Screens.REASON_FOR_LEAVE;
-    refreshCurrentScreen();
+    showReasonForLeavePage();
   });
   
   const pageTitle = document.querySelector('#pageTitle');
