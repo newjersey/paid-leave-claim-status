@@ -584,7 +584,6 @@ function setupWorkersCompListeners() {
   });
 }
 
-
 function setupSubmitReasonForLeave(showLeaveSchedulePage) {
   const form = document.getElementById('reason-for-leave-form');
   form.addEventListener('submit', function(event) {

@@ -273,6 +273,8 @@ export function showLeaveScheduleForDisabilityType(disabilityType, backButtonId)
 export function setupLeaveSchedulePage() {
   setupRecoveredPregnancyListeners();
   setupRecoveredIllnessInjuryListeners();
+  setupSubmitLeaveSchedulePregnancy()
+  setupSubmitLeaveScheduleIllnessInjury();
 }
 
 function setupRecoveredPregnancyListeners() {
@@ -329,4 +331,64 @@ function recoveredIllnessInjury(recovered) {
 
   document.getElementById('estRecoveryDateIllnessInjuryContainer').style.display = recovered ? "none" : "block";
   document.getElementById('estRecoveryDateIllnessInjury').required = !recovered;
+}
+
+function setupSubmitLeaveSchedulePregnancy() {
+  const form = document.getElementById('leave-schedule-pregnancy-form');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // take fddPregnancy
+    document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt');
+    
+
+    // TODO: fill fields:
+    // 1. start date
+    
+
+
+
+    ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd
+
+    ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes
+    ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo
+
+
+    ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk
+
+    ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk
+
+    ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_btnSubmitConflictCheck
+
+  });
+}
+
+function setupSubmitLeaveScheduleIllnessInjury() {
+  const form = document.getElementById('leave-schedule-pregnancy-form');
+  form.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    // take fddPregnancy
+    document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt');
+    
+
+    // TODO: fill fields:
+    // 1. start date
+    
+
+
+
+    ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd
+
+    ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes
+    ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo
+
+
+    ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk
+
+    ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk
+
+    ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_btnSubmitConflictCheck
+
+  });
 }
