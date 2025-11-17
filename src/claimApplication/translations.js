@@ -11,6 +11,7 @@ const resources = {
         yes: "Yes",
       },
       contact: {
+        address: "Address",
         street1: "Street address",
         street2: "Street address line 2 (optional)",
         city: "City",
@@ -234,8 +235,8 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             physicianAssistant: "Physician Assistant (under supervision of a licensed physician)",
             specialist: "Specialist",
           },
-          firstName: "First Name",
-          lastName: "Last Name",
+          name: "Name",
+          inUSA: "Is your healthcare provider located in the United States?",
         },
         work: {
           title: "Worker's Compensation",

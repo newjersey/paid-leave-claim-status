@@ -169,10 +169,44 @@ function addStyles() {
 function setupReasonForLeavePage() {
   setupDisabilityTypeListeners();
   setupPasteDetection();
+  setupAddressListeners();
   setupInputMasks();
   setupCausedByJobListeners();
   setupWorkersCompListeners();
   setupSubmitReasonForLeave();
+}
+
+function setupAddressListeners() {
+  const addressInUSAYes = document.getElementById('provider-in-usa-yes');
+  const addressInUSANo = document.getElementById('provider-in-usa-no');
+  const addressInUSALegend = document.getElementById('provider-in-usa-legend');
+
+  addressInUSAYes.addEventListener('change', function () {
+    resetElementText(addressInUSALegend);
+    providerAddressInUSA(true);
+  });
+
+  addressInUSANo.addEventListener('change', function () {
+    resetElementText(addressInUSALegend);
+    providerAddressInUSA(false);
+  });
+
+  addressInUSAYes.addEventListener('invalid', function () {
+    elementTextError(addressInUSALegend);
+  });
+}
+
+function providerAddressInUSA(inUSA) {
+  document.getElementById('provider-intl-address').style.display = inUSA ? "none" : "block";
+  document.getElementById('provider-usa-address').style.display = inUSA ? "block" : "none";
+
+  document.getElementById('provider-mailing-address-1').required = inUSA;
+  document.getElementById('provider-city').required = inUSA;
+  document.getElementById('provider-state').required = inUSA;
+  document.getElementById('provider-zip').required = inUSA;
+
+  document.getElementById('provider-intl-mailing-address-1').required = !inUSA;
+  // TODO: establish how many of the intl fields are required in existing webapp - assuming just 1 for now
 }
 
 function setupLeaveSchedulePage() {
@@ -181,13 +215,11 @@ function setupLeaveSchedulePage() {
 }
 
 function setupRecoveredPregnancyListeners() {
-  console.log(`test1`);
   const recoveredPregnancyYes = document.getElementById('recovered-pregnancy-yes');
   const recoveredPregnancyNo = document.getElementById('recovered-pregnancy-no');
   const recoveredPregnancyLegend = document.getElementById('recovered-pregnancy-legend');
 
   recoveredPregnancyYes.addEventListener('change', function () {
-    console.log(`test2`);
     resetElementText(recoveredPregnancyLegend);
     recoveredPregnancy(true);
   });
@@ -198,7 +230,6 @@ function setupRecoveredPregnancyListeners() {
   });
 
   recoveredPregnancyYes.addEventListener('invalid', function () {
-    console.log(`test3`);
     elementTextError(recoveredPregnancyLegend);
   });
 }
@@ -703,40 +734,87 @@ function reasonForLeavePage() {
           </div>
         </div>
 
-        <label class="usa-label" for="provider-first-name">${i18next.t('reasonForLeave.provider.firstName')}
+        <label class="usa-label" for="provider-name">${i18next.t('reasonForLeave.provider.name')}
           <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
         </label>
-        <input class="usa-input" id="provider-first-name" name="provider-first-name" required  title="hoooheee -0!" />
+        <input class="usa-input" id="provider-name" name="provider-name" required />
 
-        <label class="usa-label" for="provider-last-name">${i18next.t('reasonForLeave.provider.lastName')}
-          <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-        </label>
-        <input class="usa-input" id="provider-last-name" name="provider-last-name" required />
+        <fieldset class="usa-fieldset margin-top-5">
+          <legend id="provider-in-usa-legend" class="usa-legend usa-legend">
+            <span class="required-asterisk">*</span>
+            ${i18next.t('reasonForLeave.provider.inUSA')}
+          </legend>
+          <div class="usa-radio">
+            <input
+              class="usa-radio__input"
+              id="provider-in-usa-yes"
+              type="radio"
+              name="provider-in-usa"
+              value="yes"
+              required
+            />
+            <label class="usa-radio__label" for="provider-in-usa-yes">
+              ${i18next.t('shared.yes')}
+            </label>
+          </div>
+          <div class="usa-radio">
+            <input
+              class="usa-radio__input"
+              id="provider-in-usa-no"
+              type="radio"
+              name="provider-in-usa"
+              value="no"
+              required
+            />
+            <label class="usa-radio__label" for="provider-in-usa-no">
+              ${i18next.t('shared.no')}
+            </label>
+          </div>
+        </fieldset>
 
-        <label class="usa-label" for="provider-mailing-address-1">${i18next.t('contact.street1')}
-          <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-        </label>
-        <input class="usa-input" id="provider-mailing-address-1" name="provider-mailing-address-1" required />
+        <div id="provider-intl-address" style="display:none;">
+          <label class="usa-label" for="provider-intl-mailing-address-1">${i18next.t('contact.address')} 1
+            <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+          </label>
+          <input class="usa-input" id="provider-intl-mailing-address-1" name="provider-intl-mailing-address-1" />
 
-        <label class="usa-label" for="provider-mailing-address-2">${i18next.t('contact.street2')}</label>
-        <input class="usa-input" id="provider-mailing-address-2" name="provider-mailing-address-2" />
+          <label class="usa-label" for="provider-intl-mailing-address-2">${i18next.t('contact.address')} 2</label>
+          <input class="usa-input" id="provider-intl-mailing-address-2" name="provider-intl-mailing-address-2" />
 
-        <label class="usa-label" for="provider-city">${i18next.t('contact.city')}
-          <abbr title="required" class="usa-hint usa-hint--required">*</abbr></label>
-        <input class="usa-input" id="provider-city" name="provider-city" required />
+          <label class="usa-label" for="provider-intl-mailing-address-3">${i18next.t('contact.address')} 3</label>
+          <input class="usa-input" id="provider-intl-mailing-address-3" name="provider-intl-mailing-address-3" />
 
-        <label class="usa-label" for="provider-state">${i18next.t('contact.state')}
-          <abbr title="required" class="usa-hint usa-hint--required">*</abbr></label>
-        <div class="usa-combo-box">
-          <select class="usa-select" id="provider-state" name="provider-state" required>
-            ${stateOptions()}
-          </select>
+          <label class="usa-label" for="provider-intl-mailing-address-4">${i18next.t('contact.address')} 4</label>
+          <input class="usa-input" id="provider-intl-mailing-address-4" name="provider-intl-mailing-address-4" />
         </div>
 
-        <label class="usa-label" for="provider-zip">${i18next.t('contact.zipcode')}
-          <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
-        </label>
-        <input class="usa-input usa-input--medium" id="provider-zip" name="provider-zip" pattern="\\d{5}(-\\d{4})?" required />
+        <div id="provider-usa-address" style="display:none;">
+          <label class="usa-label" for="provider-mailing-address-1">${i18next.t('contact.street1')}
+            <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+          </label>
+          <input class="usa-input" id="provider-mailing-address-1" name="provider-mailing-address-1" />
+
+          <label class="usa-label" for="provider-mailing-address-2">${i18next.t('contact.street2')}</label>
+          <input class="usa-input" id="provider-mailing-address-2" name="provider-mailing-address-2" />
+
+          <label class="usa-label" for="provider-city">${i18next.t('contact.city')}
+            <abbr title="required" class="usa-hint usa-hint--required">*</abbr></label>
+          <input class="usa-input" id="provider-city" name="provider-city" />
+
+          <label class="usa-label" for="provider-state">${i18next.t('contact.state')}
+            <abbr title="required" class="usa-hint usa-hint--required">*</abbr></label>
+          <div class="usa-combo-box">
+            <select class="usa-select" id="provider-state" name="provider-state">
+              ${stateOptions()}
+            </select>
+          </div>
+
+          <label class="usa-label" for="provider-zip">${i18next.t('contact.zipcode')}
+            <abbr title="required" class="usa-hint usa-hint--required">*</abbr>
+          </label>
+          <input class="usa-input usa-input--medium" id="provider-zip" name="provider-zip" pattern="\\d{5}(-\\d{4})?" />
+
+        </div>
 
         <label class="usa-label" for="provider-phone">${i18next.t('contact.phone')}</label>
         <div class="usa-hint" id="provider-primaryPnHint">${i18next.t('contact.phoneHint')}</div>
@@ -1130,7 +1208,7 @@ function setupSubmitReasonForLeave() {
 }
 
 function stateOptions() {
-  // TODO: accept more here, like territories etc?
+  // TODO: only accept 50 states + DC. all else must go through intl interface
   return `
     <option value>- Select -</option>
     <option value="AL">AL - Alabama</option>
