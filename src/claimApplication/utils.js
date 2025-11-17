@@ -188,3 +188,20 @@ export function setNewTitle(text) {
   setText();
   document.addEventListener('headerReady', setText);
 }
+
+export const DisabilityType = {
+    UNKNOWN: '',
+    PREGNANCY: 'pregnancy',
+    ILLNESS: 'illness',
+    INJURY: 'injury'
+};
+
+export function elementTextError(element) {
+  element.style.color = 'rgb(139, 0, 0)';
+  element.style.fontWeight = 'bold';
+}
+
+export function resetElementText(element) {
+  element.style.color = '';
+  element.style.fontWeight = '';
+}
