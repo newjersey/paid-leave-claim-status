@@ -34,6 +34,11 @@ function injectGlobalStyles() {
       font-variant: normal !important;
       font-size: 16px !important;
     }
+
+    .feedback-container {
+      margin: 50px 0 0 0;
+    }
+
     .usa-button {
       padding: 0 1.25rem;
       width: auto;
@@ -113,7 +118,8 @@ function styleButtons() {
 
 function addFeedbackWidget() {
   const feedbackWidget = document.createElement('feedback-widget');
-  feedbackWidget.setAttribute('contact-link', 'https://www.example.com/contact');
+  feedbackWidget.setAttribute('contact-link', 'https://www.nj.gov/labor/aboutlwd/contactus.shtml');
+  feedbackWidget.setAttribute('only-save-rating-to-analytics', 'true');
 
   const footer = document.getElementById('helpSection');
   if (footer) {
