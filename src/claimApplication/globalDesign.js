@@ -8,7 +8,6 @@ export function globalDesignChanges(pageId) {
   applyFooter(pageId);
   injectGlobalStyles();
   styleButtons();
-  addFeedbackWidgetScriptToHead();
   addFeedbackWidget();
 }
 
@@ -117,12 +116,16 @@ function styleButtons() {
 }
 
 function addFeedbackWidget() {
-  const feedbackWidget = document.createElement('feedback-widget');
-  feedbackWidget.setAttribute('contact-link', 'https://www.nj.gov/labor/aboutlwd/contactus.shtml');
-  feedbackWidget.setAttribute('only-save-rating-to-analytics', 'true');
+  const existingWidget = document.querySelector('feedback-widget');
+  if (!existingWidget) {
+    addFeedbackWidgetScriptToHead();
+    const feedbackWidget = document.createElement('feedback-widget');
+    feedbackWidget.setAttribute('contact-link', 'https://www.nj.gov/labor/aboutlwd/contactus.shtml');
+    feedbackWidget.setAttribute('only-save-rating-to-analytics', 'true');
 
-  const footer = document.getElementById('helpSection');
-  if (footer) {
-    footer.parentNode.insertBefore(feedbackWidget, footer);
+    const footer = document.getElementById('helpSection');
+    if (footer) {
+      footer.parentNode.insertBefore(feedbackWidget, footer);
+    }
   }
 }
