@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
+import { removeExtraSpaceBetweenRadioButtons, setNewTitle, styleRadioButton } from '../utils';
 
 export const citizenshipLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum', label: 'First 3 digits of Phone Number' },
@@ -37,6 +37,7 @@ export function changes() {
     'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepNo'
   );
   requirePhone();
+  setNewTitle(i18next.t('citizenship.title'));
 }
 
 function adjustWidths () {

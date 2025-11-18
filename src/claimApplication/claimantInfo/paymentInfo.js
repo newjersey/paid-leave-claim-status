@@ -1,3 +1,6 @@
+import i18next from 'i18next';
+import { setNewTitle } from '../utils';
+
 export const id = "paymentInfo";
 
 export const identifyingContent = {
@@ -7,8 +10,20 @@ export const identifyingContent = {
 };
 
 export function changes() {
+  addStyles();
   rearrangeTable();
   updateRadioButtons();
+  setNewTitle(i18next.t('paymentInfo.title'));
+}
+
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    .usa-legend {
+      max-width: fit-content;
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 function rearrangeTable() {

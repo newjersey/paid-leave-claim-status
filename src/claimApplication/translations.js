@@ -11,6 +11,7 @@ const resources = {
         agreeAndSubmit: "Agree and submit application",
       },
       citizenship: {
+        title: "Contact information",
         phoneValidation: {
           digits_three: "Please enter exactly 3 digits",
           digits_four: "Please enter exactly 4 digits",
@@ -21,12 +22,13 @@ const resources = {
         tasks_one: "You have the below task to complete.",
         tasks_other: "You have the below tasks to complete. Tasks may be done in any order.",
         checkmark: "Checkmark",
-        submitted: `Your application was submitted. <a id="applicationPdfDownload" class="usa-link" href="#">Download a copy here (PDF)</a>.`,
+        submitted: `Your application was submitted. Your claim number is: <strong>{{claim_id}}</strong>. <a id="applicationPdfDownload" class="usa-link" href="#">Download a copy here (PDF)</a>.`,
+        future_claim: `Your claim number is: <strong>{{claim_id}}</strong>. <a id="futurePdfDownload" class="usa-link" href="#">Download a summary here (PDF)</a>.`,
         dueDate: "Best to complete by {{est_deadline_date}}",
         form_directions: {
           copySocSecLetter: `Attach a copy of your <a href="https://www.ssa.gov/manage-benefits/get-benefit-letter" target="_blank">Social Security benefit verification letter</a>`,
           complete: "Complete and sign the form",
-          claim_number: "Write your 5-digit claim number on every page: <strong>{{claim_id}}</strong>",
+          claim_number: "Write your claim number on every page: <strong>{{claim_id}}</strong>",
           submit: `
             Fax to (609) 984-4138 (fastest)
             <br><br>
@@ -99,6 +101,38 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             check_status: `<a href="/DOL_DABI/" target="_blank">Check your claim status</a> (note: it takes several days for your first status update)`,
           },
         },
+      },
+      header: {
+        personal_information: "Personal information",
+        leave_information: "Leave information",
+        work_information: "Work information",
+        agree_and_finish: "Agree and finish",
+        summary_and_next_steps: "Summary and next steps",
+      },
+      leaveSchedule: {
+        title: "Leave schedule",
+      },
+      otherBenefits: {
+        title: "Other benefits",
+      },
+      paymentInfo: {
+        title: "Federal taxes",
+      },
+      personalProfile: {
+        title: "Demographic information",
+      },
+      reasonForLeave: {
+        title: "Reason for leave",
+      },
+      reviewAndSave: {
+        title: "Review and save",
+        button: "Save and continue",
+      },
+      reviewAndSubmit: {
+        title: "Review and submit",
+      },
+      workRelated: {
+        title: "Work related information",
       },
     }
   },

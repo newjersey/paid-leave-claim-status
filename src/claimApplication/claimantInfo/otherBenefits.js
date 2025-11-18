@@ -1,5 +1,11 @@
+import i18next from 'i18next';
 import { logEvent } from "../../modules/shared.mjs";
-import { adjustTableWidths, removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
+import {
+  adjustTableWidths,
+  removeExtraSpaceBetweenRadioButtons,
+  setNewTitle,
+  styleRadioButton
+} from '../utils';
 
 export const id = "otherBenefits";
 
@@ -65,6 +71,7 @@ export function changes() {
   addStyles();
   styleRadioButtons();
   adjustWidths();
+  setNewTitle(i18next.t('otherBenefits.title'));
 }
 
 function addStyles() {

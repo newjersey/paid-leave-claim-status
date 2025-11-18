@@ -1,6 +1,8 @@
+import i18next from 'i18next';
 import {
   adjustTableWidths,
   removeExtraSpaceBetweenRadioButtons,
+  setNewTitle,
   styleRadioButton,
 } from '../utils';
 
@@ -48,6 +50,7 @@ export function changes() {
     'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnMUSAYes',
     'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbnMUSANo'
   );
+  setNewTitle(i18next.t('personalProfile.title'));
 }
 
 function adjustWidths() {

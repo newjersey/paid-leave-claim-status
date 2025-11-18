@@ -1,4 +1,5 @@
-import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
+import i18next from 'i18next';
+import { replaceVerificationRadioButtons, setNewTitle } from '../utils';
 
 export const verifyEmployerLabels = [
   { id: 'ContentPlaceHolder1_TabEmployment_TabPanelVerify_txtVerEmpName', label: 'Employer Name' },
@@ -33,12 +34,12 @@ export function changes() {
   adjustEmploymentInfo();
   styleButtons();
   convertScheduleInputToTextarea();
-  styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectYes');
-  styleRadioButton('ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectNo', true);
-  removeExtraSpaceBetweenRadioButtons(
-    'ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectYes',
-    'ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectNo'
+  replaceVerificationRadioButtons(
+    'The information for this employer is correct',
+    '#ContentPlaceHolder1_TabEmployment_TabPanelVerify_rbtnTDICorrectYes',
+    '#ContentPlaceHolder1_TabEmployment_TabPanelVerify_btnVer_Continue'
   );
+  setNewTitle(i18next.t('reviewAndSubmit.title'));
 }
 
 function styleButtons() {

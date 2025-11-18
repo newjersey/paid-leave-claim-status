@@ -455,11 +455,11 @@ function c01Card() {
           { est_deadline_date: estDeadlineDate() }
         )}
       </div>
-      <h2>${i18next.t('confirmation.c01.title', { requiredActionsIndex })}</h2>
+      <h2>${i18next.t('confirmation.c01Card.title', { requiredActionsIndex })}</h2>
       <br>
       <button id="downloadC01Card" class="usa-button usa-button--outline">
         ${downloadIcon()}
-        ${i18next.t('confirmation.c01.download_button')}
+        ${i18next.t('confirmation.c01Card.download_button')}
       </button>
       ${formDirections()}
     `;
@@ -661,19 +661,25 @@ function setNewTitleAndAlert() {
   title.textContent = `${i18next.t('confirmation.title')}`;
   document.removeEventListener('headerReady', setNewTitleAndAlert);
 
+  const isFuture = document.getElementById('ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnFDDContinue') != null;
+  const alertText = isFuture 
+    ? i18next.t('confirmation.future_claim', { claim_id: claimId() }) 
+    : i18next.t('confirmation.submitted', { claim_id: claimId() });
+
   const alert = document.createElement('div');
   alert.classList.add("usa-alert", "usa-alert--info", "usa-alert--slim");
   alert.id = "submittedAlert";
   alert.innerHTML = `
     <div class="usa-alert__body">
       <p class="usa-alert__text">
-        ${i18next.t('confirmation.submitted')}
+        ${alertText}
       </p>
     </div>
   `;
   title.parentNode.insertBefore(alert, title);
 
-  setupApplicationPdfDownloadLink()
+  setupApplicationPdfDownloadLink();
+  setupFuturePdfDownloadLink();
 }
 
 function setupApplicationPdfDownloadLink() {
@@ -685,6 +691,21 @@ function setupApplicationPdfDownloadLink() {
       const pdfDownloadBtn = document.getElementById('ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue');
       if (pdfDownloadBtn) {
         pdfDownloadBtn.click();
+      }
+    });
+  }
+}
+
+function setupFuturePdfDownloadLink() {
+  const downloadLink = document.getElementById('futurePdfDownload');
+  if (downloadLink) {
+    downloadLink.addEventListener('click', function(event) {
+      event.preventDefault();
+      logEvent('TDI Confirmation - Future PDF Download Clicked', {});
+
+      const pdfFutureDownloadBtn = document.getElementById('ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnFDDContinue');
+      if (pdfFutureDownloadBtn) {
+        pdfFutureDownloadBtn.click();
       }
     });
   }

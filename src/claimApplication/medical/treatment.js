@@ -1,7 +1,9 @@
+import i18next from 'i18next';
 import { logEvent } from "../../modules/shared.mjs";
 import {
   adjustTableWidths,
   removeExtraSpaceBetweenRadioButtons,
+  setNewTitle,
   styleRadioButton
 } from '../utils';
 
@@ -59,6 +61,7 @@ export function changes() {
   adjustTable();
   adjustTextEntries();
   styleRadioButtons();
+  setNewTitle(i18next.t('reasonForLeave.title'));
 }
 
 function styleRadioButtons() {
