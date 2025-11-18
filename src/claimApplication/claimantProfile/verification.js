@@ -100,32 +100,6 @@ function adjustTable() {
   }
 }
 
-function renamePages() {
-  const elementsToRename = [
-    {
-      id: "#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btnEditPersInfo",
-      oldName: "Personal Information",
-      newNameKey: 'personalProfile.title'
-    },
-    {
-      id: "#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btnEditCitznInfo",
-      oldName: "Citizenship and Contact Information",
-      newNameKey: 'citizenship.title'
-    }
-  ];
-
-  elementsToRename.forEach(({ id, oldName, newNameKey }) => {
-    const legendElement = document.querySelector(id).parentElement;
-    if (legendElement) {
-      legendElement.childNodes.forEach(node => {
-        if (node.nodeType === Node.TEXT_NODE && node.textContent.includes(oldName)) {
-          node.textContent = node.textContent.replace(oldName, i18next.t(newNameKey));
-        }
-      });
-    }
-  });
-}
-
 function saveInfo() {
   const submit = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btncontinueVer');
   const fullName = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerFname');
@@ -154,5 +128,31 @@ function saveInfo() {
       [STORAGE_KEY_USER_PHONE]: phone,
       [STORAGE_KEY_USER_MAIL_ADDRESS]: address
     });
+  });
+}
+
+function renamePages() {
+  const elementsToRename = [
+    {
+      id: "#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btnEditPersInfo",
+      oldName: "Personal Information",
+      newNameKey: 'personalProfile.title'
+    },
+    {
+      id: "#ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_btnEditCitznInfo",
+      oldName: "Citizenship and Contact Information",
+      newNameKey: 'citizenship.title'
+    }
+  ];
+
+  elementsToRename.forEach(({ id, oldName, newNameKey }) => {
+    const legendElement = document.querySelector(id).parentElement;
+    if (legendElement) {
+      legendElement.childNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE && node.textContent.includes(oldName)) {
+          node.textContent = node.textContent.replace(oldName, i18next.t(newNameKey));
+        }
+      });
+    }
   });
 }
