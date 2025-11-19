@@ -4,6 +4,7 @@ const PAGE_ID = 'citizenship';
 const URL = 'ClaimantProfile_IANM';
 const FIXTURE = "./cypress/fixtures/claimApplication/claimantProfile/citizenship.html";
 
+// TODO: once Citizenship question is removed in underlying code, remove these tests and remove related Fixture
 describe("Citizenship page", () => {
   function checkFullInfoPostData(interception) {
     const formData = interception.request.body;
