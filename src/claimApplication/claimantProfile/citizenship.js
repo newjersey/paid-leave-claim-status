@@ -38,6 +38,7 @@ export function changes() {
   );
   requirePhone();
   adjustQuestions();
+  removeWhitespaceNodes();
   setNewTitle(i18next.t('citizenship.title'));
 }
 
@@ -116,4 +117,25 @@ function adjustQuestions() {
 
 function removeWhitespace(str) {
   return str.replace(/\s+/g, '');
+}
+
+function removeWhitespaceNodes() {
+  const selectors = [
+    "#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact > fieldset > a:nth-child(2)",
+    "#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact > fieldset > a:nth-child(13)",
+    "#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact > fieldset > a:nth-child(28)",
+    "#divctznRep > a:nth-child(2)",
+    "#divctznRep > a:nth-child(8)",
+    "#divctznRep > a:nth-child(14)"
+  ];
+
+  selectors.forEach(selector => {
+    const currentElement = document.querySelector(selector);
+    if (currentElement) {
+      const previousNode = currentElement.previousSibling;
+      if (previousNode && previousNode.nodeType === Node.TEXT_NODE && previousNode.textContent.trim() === '') {
+        previousNode.remove();
+      }
+    }
+  });
 }
