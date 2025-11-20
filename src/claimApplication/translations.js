@@ -186,10 +186,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           `,
           moreTimeAvailable: "More time available",
           fliInfo: `You are entitled to up to 12 weeks of <a href="https://www.nj.gov/labor/myleavebenefits/worker/fli/index.shtml" target="_blank">Family Leave for bonding time</a>. This is a separate application. See the <a href="https://www.nj.gov/labor/myleavebenefits/worker/maternity/timeline-welcome.shtml" target="_blank">Maternity Timeline Tool</a>.`,
-          recoveryDate: `What is the date you recovered or expect to cover from childbirth?
-            <br><br>
-            <strong>Hint:</strong> we have pre-filled this date at the default 6 weeks after your due date. This is just an estimate.
-          `,
+          recoveryDate: `When did you recover?`,
           estRecoveryDate: "When do you anticipate being able to return to work? This can be an estimate and we will ask you again later to verify.",
           whatsNext: "What's Next?",
           howDelivered: `Confirm with us how you delivered, if you haven't already shared this with us.

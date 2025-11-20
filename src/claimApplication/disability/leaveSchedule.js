@@ -325,7 +325,7 @@ function styleLDWQuestion(disabilityType) {
 
     const ldwDateInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd');
     const ldwLabel = `
-      <label class="usa-label no-margin-top" id="ldwPregnancyLabel" for="ldwPregnancy">
+      <label class="usa-label no-margin-top" id="ldwPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd">
         <span class="required-asterisk">*</span>
         ${i18next.t('leaveSchedule.pregnancy.lastWorkday')}
       </label>
@@ -360,6 +360,33 @@ function styleLDWQuestion(disabilityType) {
 
     styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
     styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo', true);
+
+    const returnInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk');
+    const returnLabel = `
+      <br><br>
+      <hr>
+      <label class="usa-label" id="returnPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk">
+        <span class="required-asterisk">*</span>
+        ${i18next.t('leaveSchedule.pregnancy.recoveryDate')}
+      </label>
+      <div class="usa-hint" id="returnPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+    `;
+    returnInput.insertAdjacentHTML('beforebegin', returnLabel);
+
+    const estReturnInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk');
+    const estReturnLabel = `
+      <br><br>
+      <hr>
+      <label class="usa-label" id="estReturnPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk">
+        <span class="required-asterisk">*</span>
+        ${i18next.t('leaveSchedule.pregnancy.estRecoveryDate')}
+      </label>
+      <div class="usa-hint" id="estReturnPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+    `;
+    estReturnInput.insertAdjacentHTML('beforebegin', estReturnLabel);
+
+
+    
   }
 }
 
