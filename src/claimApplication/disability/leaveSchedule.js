@@ -246,7 +246,7 @@ export function leaveSchedulePage() {
   return leaveSchedulePage;  
 }
 
-export function showLeaveScheduleForDisabilityType(disabilityType, backButtonId) {
+export function showLeaveScheduleForDisabilityType(disabilityType) {
   styleFDDQuestion(disabilityType);
   styleLDWQuestion(disabilityType);
 
@@ -280,6 +280,15 @@ export function setupLeaveSchedulePage() {
 function styleFDDQuestion(disabilityType) {
   if (disabilityType === DisabilityType.PREGNANCY) {
     const fieldset = document.querySelector('#MainDiv > fieldset');
+
+    const maternityTimelineToolHtml = `
+      <fieldset>
+        <svg style="vertical-align:-5px;" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>
+        ${i18next.t('leaveSchedule.pregnancy.maternityTimeline')}
+      </fieldset>
+    `;
+
+    fieldset.insertAdjacentHTML('beforebegin', maternityTimelineToolHtml);
 
     const legend = fieldset.querySelector('legend');
     legend.textContent = i18next.t('leaveSchedule.pregnancy.fddTitle');
@@ -352,7 +361,7 @@ function styleLDWQuestion(disabilityType) {
     recoveredNo.insertAdjacentHTML('beforebegin', recoveredNoLabel);
 
     styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
-    styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo', true);
+    styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo');
 
     const returnInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk');
     const returnLabel = `

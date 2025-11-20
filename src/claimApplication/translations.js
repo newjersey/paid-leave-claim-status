@@ -156,7 +156,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         },
         pregnancy: {
           fddTitle: "First day of disability leave for pregnancy",
-          importantNotes: "Important notes:",
+          maternityTimeline: `Use the <a href="https://www.nj.gov/labor/myleavebenefits/labor/myleavebenefits/worker/maternity/timeline-welcome.shtml" target="_blank">Maternity Timeline Coverage Tool</a> to help plan your leave dates.`,
           youCanApply: `You can apply starting the day your disability begins (your first day out of work).
             <br><br>
             Enter your "first day of disability leave" date carefully. If it changes later, you'll need to update us in writing.
@@ -174,7 +174,6 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             </ul>
             <br>
           `,
-          fddHint: "<strong>Hint:</strong> You are entitled to <strong>start</strong> your leave up to 4 weeks before your due date (or delivery date).",
           beforeAfterTitle: "Before and after pregnancy/delivery",
           lastWorkday: `What was the last day you worked?
             <br><br>
