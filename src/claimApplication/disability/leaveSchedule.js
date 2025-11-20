@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { DisabilityType, elementTextError, resetElementText } from '../utils';
+import { DisabilityType, elementTextError, resetElementText, styleRadioButton } from '../utils';
 
 export function leaveSchedulePage() {
   const leaveSchedulePage = document.createElement('div');
@@ -322,13 +322,44 @@ function styleLDWQuestion(disabilityType) {
 
     const legend = fieldset.querySelector('legend');
     legend.textContent = i18next.t('leaveSchedule.pregnancy.beforeAfterTitle');
+
+    const targetInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd');
+    const newHTML = `
+      <label class="usa-label no-margin-top" id="ldwPregnancyLabel" for="ldwPregnancy">
+        <span class="required-asterisk">*</span>
+        ${i18next.t('leaveSchedule.pregnancy.lastWorkday')}
+      </label>
+      <div class="usa-hint" id="ldwPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+    `;
+
+    targetInput.insertAdjacentHTML('beforebegin', newHTML);
+
+    const targetInput2 = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
+    const newHTML2 = `
+      <label class="usa-label" id="recPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes">
+        ${i18next.t('shared.yes')}
+      </label>
+    `;
+    targetInput2.insertAdjacentHTML('beforebegin', newHTML2);
+
+
+    const targetInput3 = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo');
+    const newHTML3 = `
+      <label class="usa-label" id="recPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo">
+        ${i18next.t('shared.no')}
+      </label>
+    `;
+    targetInput3.insertAdjacentHTML('beforebegin', newHTML3);
+
+    styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
+    styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo', true);
   }
 }
 
 function removeUnwantedElements(parent) {
   Array.from(parent.childNodes).forEach((node) => {
     if (node.nodeType === Node.ELEMENT_NODE) {
-      if (node.tagName.toLowerCase() !== 'legend' && node.tagName.toLowerCase() !== 'input') {
+      if (node.tagName.toLowerCase() !== 'legend' && node.tagName.toLowerCase() !== 'div' && node.tagName.toLowerCase() !== 'input') {
         node.remove();
       } else {
         removeUnwantedElements(node);

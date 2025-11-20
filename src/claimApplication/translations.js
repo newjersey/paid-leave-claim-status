@@ -176,7 +176,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           `,
           fddHint: "<strong>Hint:</strong> You are entitled to <strong>start</strong> your leave up to 4 weeks before your due date (or delivery date).",
           beforeAfterTitle: "Before and after pregnancy/delivery",
-          lastWorkday: `What is your last workday?
+          lastWorkday: `What was the last day you worked?
             <br><br>
             <strong>Hint:</strong> This is the last day you actually worked-- not including PTO, vacation, or sick days you used before your leave started.
           `,
