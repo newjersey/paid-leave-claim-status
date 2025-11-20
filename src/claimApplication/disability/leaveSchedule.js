@@ -11,6 +11,8 @@ export function leaveSchedulePage() {
       <p><strong>${i18next.t('leaveSchedule.pregnancy.importantNotes')}</strong></p>
       <p>${i18next.t('leaveSchedule.pregnancy.youCanApply')}</p>
 
+
+
       <div class="bordered-set">
         <label class="usa-label no-margin-top" id="fddPregnancyLabel" for="fddPregnancy">
           <span class="required-asterisk">*</span>
@@ -252,29 +254,93 @@ export function leaveSchedulePage() {
 }
 
 export function showLeaveScheduleForDisabilityType(disabilityType, backButtonId) {
-  const leaveSchedulePregnancyForm = document.getElementById('leave-schedule-pregnancy-form');
-  const leaveScheduleIllnessInjuryForm = document.getElementById('leave-schedule-illness-injury-form');
+  styleFDDQuestion(disabilityType);
 
-  if (disabilityType === DisabilityType.PREGNANCY) {
-    leaveSchedulePregnancyForm.style.display = 'block';
-    leaveScheduleIllnessInjuryForm.style.display = 'none';
-  } else if (disabilityType === DisabilityType.ILLNESS || disabilityType === DisabilityType.INJURY) {
-    leaveSchedulePregnancyForm.style.display = 'none';
-    leaveScheduleIllnessInjuryForm.style.display = 'block';
-  } else {
-    // unknown -- have user submit reason for leave again
-    const backButton = document.getElementById(backButtonId);
-    if (backButton) {
-      backButton.click();
-    }
-  }
+  // TODO:
+
+  // const leaveSchedulePregnancyForm = document.getElementById('leave-schedule-pregnancy-form');
+  // const leaveScheduleIllnessInjuryForm = document.getElementById('leave-schedule-illness-injury-form');
+
+  // if (disabilityType === DisabilityType.PREGNANCY) {
+  //   leaveSchedulePregnancyForm.style.display = 'block';
+  //   leaveScheduleIllnessInjuryForm.style.display = 'none';
+  // } else if (disabilityType === DisabilityType.ILLNESS || disabilityType === DisabilityType.INJURY) {
+  //   leaveSchedulePregnancyForm.style.display = 'none';
+  //   leaveScheduleIllnessInjuryForm.style.display = 'block';
+  // } else {
+  //   // unknown -- have user submit reason for leave again
+  //   const backButton = document.getElementById(backButtonId);
+  //   if (backButton) {
+  //     backButton.click();
+  //   }
+  // }
 }
 
 export function setupLeaveSchedulePage() {
-  setupRecoveredPregnancyListeners();
-  setupRecoveredIllnessInjuryListeners();
-  setupSubmitLeaveSchedulePregnancy()
-  setupSubmitLeaveScheduleIllnessInjury();
+  // setupRecoveredPregnancyListeners();
+  // setupRecoveredIllnessInjuryListeners();
+  // setupSubmitLeaveSchedulePregnancy()
+  // setupSubmitLeaveScheduleIllnessInjury();
+}
+
+function styleFDDQuestion(disabilityType) {
+  if (disabilityType === DisabilityType.PREGNANCY) {
+    const fieldset = document.querySelector('#MainDiv > fieldset');
+
+    const legend = fieldset.querySelector('legend');
+    legend.textContent = i18next.t('leaveSchedule.pregnancy.fddTitle');
+
+    const divElement = fieldset.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD');
+
+    // clear existing text
+    divElement.querySelector('a').remove();
+    divElement.querySelector('strong').remove();
+    const childNodes = divElement.childNodes;
+    childNodes.forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        node.remove();
+      }
+    });
+
+    const newParagraph = document.createElement('div');
+    newParagraph.innerHTML = `
+      <label class="usa-label no-margin-top" for="fddPregnancy">
+        <span class="required-asterisk">*</span>
+          ${i18next.t('leaveSchedule.pregnancy.fddQuestion')}
+        </label>
+      <div class="usa-hint" id="fddPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+    `;
+    divElement.insertBefore(newParagraph, divElement.firstChild);
+  }
+
+
+  // && node.nodeValue.includes('Select the date your disability')
+
+
+  // <p><strong>${i18next.t('leaveSchedule.pregnancy.importantNotes')}</strong></p>
+  //     <p>${i18next.t('leaveSchedule.pregnancy.youCanApply')}</p>
+
+
+
+
+      //   <div class="bordered-set">
+      //   <label class="usa-label no-margin-top" id="fddPregnancyLabel" for="fddPregnancy">
+      //     <span class="required-asterisk">*</span>
+      //     ${i18next.t('leaveSchedule.pregnancy.fddQuestion')}
+      //   </label>
+      //   <div class="usa-hint" id="fddPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+      //   <div class="usa-date-picker">
+      //     <input
+      //       class="usa-input"
+      //       id="fddPregnancy"
+      //       name="fddPregnancy"
+      //       aria-labelledby="fddPregnancyLabel"
+      //       aria-describedby="fddPregnancyHint"
+      //       required
+      //     />
+      //   </div>
+      // </div>
+
 }
 
 function setupRecoveredPregnancyListeners() {

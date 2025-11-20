@@ -26,6 +26,8 @@ export const alternateIdentifyingContent = {
 };
 
 const backButtonId = "leaveScheduleBack";
+const leaveScheduleId = "ContentPlaceHolder1_ClaimantDisabilityTab";
+const reasonForLeaveId = "reasonForLeavePage";
 
 let disabilityType = DisabilityType.UNKNOWN;
 function setDisabilityType(type) {
@@ -35,11 +37,9 @@ function setDisabilityType(type) {
 export function changes() {
   addStyles();
 
-  const leaveScheduleContainer = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab");
+  const leaveScheduleContainer = document.getElementById(leaveScheduleId); 
   if (leaveScheduleContainer) {
-    leaveScheduleContainer.style.display = 'none';
     leaveScheduleContainer.parentNode.insertBefore(reasonForLeavePage(), leaveScheduleContainer);
-    leaveScheduleContainer.parentNode.insertBefore(leaveSchedulePage(), leaveScheduleContainer);
 
     setupReasonForLeavePage(setDisabilityType, showLeaveSchedulePage);
     setupLeaveSchedulePage();
@@ -132,11 +132,11 @@ function addStyles() {
       resize: none;
     }
 
-    #reason-for-leave-form, #leave-schedule-pregnancy-form, #leave-schedule-illness-injury-form {
+    #reason-for-leave-form {
       margin: 0;
     }
 
-    #fddPregnancyLabel, #lastWorkdayPregnancyLabel {
+    #lastWorkdayPregnancyLabel {
       margin-bottom: 20px;
     }
   `;
@@ -147,8 +147,8 @@ function showReasonForLeavePage() {
   hideBackButton();
   setNewTitle(i18next.t('reasonForLeave.title'));
 
-  document.querySelector("#reasonForLeavePage").style.display = 'block';
-  document.querySelector("#leaveSchedulePage").style.display = 'none';
+  document.getElementById(reasonForLeaveId).style.display = 'block';
+  document.getElementById(leaveScheduleId).style.display = 'none';
 }
 
 function showLeaveSchedulePage() {
@@ -156,8 +156,8 @@ function showLeaveSchedulePage() {
   showBackButton();
   setNewTitle(i18next.t('leaveSchedule.title'));
 
-  document.querySelector("#reasonForLeavePage").style.display = 'none';
-  document.querySelector("#leaveSchedulePage").style.display = 'block';
+  document.getElementById(reasonForLeaveId).style.display = 'none';
+  document.getElementById(leaveScheduleId).style.display = 'block';
 
   showLeaveScheduleForDisabilityType(disabilityType, backButtonId);
 }

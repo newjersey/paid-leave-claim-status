@@ -163,7 +163,17 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             <br><br>
             Check out the <a href="" target="_blank">Maternity Timeline Coverage Tool</a> for more help planning this start of disability leave date.
           `,
-          fddQuestion: "What is your first date of disability leave?",
+          fddQuestion: `<strong>What is your first date of disability leave?</strong>
+            <br><br>
+            Remember:
+            <ul class="usa-list">
+              <li>* You can apply starting the day your leave begins.</li>
+              <li>* Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.</li>
+              <li>* You can begin your leave up to 4 weeks before your due date (or delivery date), or earlier if you experience complications.</li>
+              <li>* Enter the actual date your leave began, even if it was a day you don't usually work (like a weekend or holiday).</li>
+            </ul>
+            <br>
+          `,
           fddHint: "<strong>Hint:</strong> You are entitled to <strong>start</strong> your leave up to 4 weeks before your due date (or delivery date).",
           beforeAfterTitle: "Before and after pregnancy/delivery",
           lastWorkday: `What is your last workday?
@@ -192,25 +202,8 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           `
         },
       },
-      otherBenefits: {
-        title: "Other benefits",
-      },
-      paymentInfo: {
-        title: "Federal taxes",
-      },
-      personalProfile: {
-        title: "Demographic information",
-      },
-      reasonForLeave: {
-        title: "Reason for leave",
-        characterLimit: "{{limit}} character limit",
-        chooseReason: "Choose your reason for applying for Temporary Disability benefits:",
-        illness: "Illness (including mental health)",
-        illnessDetails: "Briefly describe your illness or condition (for example, what you're being treated for or recovering from).",
-        injury: "Injury",
-        injuryDetails: "Briefly describe how and where the injury happened (for example, a fall at work or a car accident).",
-        pregnancy: "Pregnancy and recovery from childbirth",
-        pregnancyDetails: "If you have any pregnancy complications, describe them below. Otherwise, you can skip this.",
+      medicalInfo: {
+        title: "Medical information",
         provider: {
           title: "Healthcare provider",
           explanation: "Your healthcare provider will need to confirm your medical condition and the start date of your disability.",
@@ -249,6 +242,26 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           },
           dateOfDisability: "When did this {{disabilityTypeString}} happen (or start)?",
         },
+      },
+      otherBenefits: {
+        title: "Other benefits",
+      },
+      paymentInfo: {
+        title: "Federal taxes",
+      },
+      personalProfile: {
+        title: "Demographic information",
+      },
+      reasonForLeave: {
+        title: "Reason for leave",
+        characterLimit: "{{limit}} character limit",
+        chooseReason: "Choose your reason for applying for Temporary Disability benefits:",
+        illness: "Illness (including mental health)",
+        illnessDetails: "Briefly describe your illness or condition (for example, what you're being treated for or recovering from).",
+        injury: "Injury",
+        injuryDetails: "Briefly describe how and where the injury happened (for example, a fall at work or a car accident).",
+        pregnancy: "Pregnancy and recovery from childbirth",
+        pregnancyDetails: "If you have any pregnancy complications, describe them below. Otherwise, you can skip this.",
       },
       reviewAndSave: {
         title: "Review and save",

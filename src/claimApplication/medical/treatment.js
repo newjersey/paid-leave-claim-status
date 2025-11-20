@@ -61,7 +61,8 @@ export function changes() {
   adjustTable();
   adjustTextEntries();
   styleRadioButtons();
-  setNewTitle(i18next.t('reasonForLeave.title'));
+  addProviderTypes();
+  setNewTitle(i18next.t('medicalInfo.title'));
 }
 
 function styleRadioButtons() {
@@ -126,4 +127,62 @@ function adjustTable() {
   }
 
   adjustTableWidths(document);
+}
+
+function addProviderTypes() {
+  // TODO: add this as a required form element
+
+
+      //   <p>${i18next.t('medicalInfo.provider.explanation')}</p>
+
+      // <div class="bordered-set">
+      //   <h3>${i18next.t('medicalInfo.provider.info')}</h3>
+
+      //   <div class="usa-checkbox">
+      //     <input
+      //       class="usa-checkbox__input"
+      //       id="check-provider-type-accepted"
+      //       type="checkbox"
+      //       name="provider-type-accepted"
+      //       value="yes"
+      //       required
+      //     />
+      //     <label class="usa-checkbox__label" for="check-provider-type-accepted">
+      //       <span class="required-asterisk">*</span>
+      //       ${i18next.t('medicalInfo.provider.type.isAccepted')}
+      //     </label>
+      //   </div>
+
+      //   <div class="usa-accordion usa-accordion--bordered">
+      //     <h4 class="usa-accordion__heading">
+      //       <button
+      //         type="button"
+      //         class="usa-accordion__button"
+      //         aria-expanded="false"
+      //         aria-controls="accepted-provider-types"
+      //       >
+      //         ${i18next.t('medicalInfo.provider.type.weAccept')}
+      //       </button>
+      //     </h4>
+      //     <div id="accepted-provider-types" class="usa-accordion__content usa-prose">
+      //       <ul>
+      //         <li>${i18next.t('medicalInfo.provider.type.advancedPracticeNurse')}</li>
+      //         <li>${i18next.t('medicalInfo.provider.type.registeredNurse')}</li>
+      //         <li>${i18next.t('medicalInfo.provider.type.certifiedNursePractitioner')}</li>
+      //         <li>${i18next.t('medicalInfo.provider.type.clinicalNurseSpecialist')}</li>
+      //         <li>${i18next.t('medicalInfo.provider.type.certifiedNurseMidwife')}</li>
+      //         <li>${i18next.t('medicalInfo.provider.type.certifiedProfessionalMidwife')}</li>
+      //         <li>${i18next.t('medicalInfo.provider.type.chiropractor')}</li>
+      //         <li>${i18next.t('medicalInfo.provider.type.dentist')}</li>
+      //         <li>${i18next.t('medicalInfo.provider.type.erPhysician')}</li>
+      //         <li>${i18next.t('medicalInfo.provider.type.medicalDoctor')}</li>
+      //         <li>${i18next.t('medicalInfo.provider.type.optometrist')}</li>
+      //         <li>${i18next.t('medicalInfo.provider.type.osteopath')}</li>
+      //         <li>${i18next.t('medicalInfo.provider.type.podiatrist')}</li>
+      //         <li>${i18next.t('medicalInfo.provider.type.psychologist')}</li>
+      //         <li>${i18next.t('medicalInfo.provider.type.physicianAssistant')}</li>
+      //         <li>${i18next.t('medicalInfo.provider.type.specialist')}</li>
+      //       </ul>
+      //     </div>
+      //   </div>
 }
