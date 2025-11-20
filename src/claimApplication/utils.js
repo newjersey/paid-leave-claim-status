@@ -105,16 +105,20 @@ export function fixPhoneNumberText(
 }
 
 export function removeExtraSpaceBetweenRadioButtons(yesId, noId) {
-  const radioYes = document.getElementById(yesId).closest('.usa-radio');
-  const radioNo = document.getElementById(noId).closest('.usa-radio');
+  const yesElement = document.getElementById(yesId);
+  const noElement = document.getElementById(noId);
+  if (yesElement && noElement) {
+    const radioYes = yesElement.closest('.usa-radio');
+    const radioNo = noElement.closest('.usa-radio');
 
-  let currentNode = radioYes.nextSibling;
-  while (currentNode && currentNode !== radioNo) {
-    const nextNode = currentNode.nextSibling;
-    if (currentNode.nodeType === Node.TEXT_NODE || currentNode.nodeType === Node.ELEMENT_NODE && currentNode.tagName === 'BR') {
-        currentNode.parentNode.removeChild(currentNode);
+    let currentNode = radioYes.nextSibling;
+    while (currentNode && currentNode !== radioNo) {
+      const nextNode = currentNode.nextSibling;
+      if (currentNode.nodeType === Node.TEXT_NODE || currentNode.nodeType === Node.ELEMENT_NODE && currentNode.tagName === 'BR') {
+          currentNode.parentNode.removeChild(currentNode);
+      }
+      currentNode = nextNode;
     }
-    currentNode = nextNode;
   }
 }
 

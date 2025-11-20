@@ -18,8 +18,8 @@ export const id = "citizenship";
 
 export const identifyingContent = {
   id,
-  elementId: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlCitizen',
-  text: 'Are you a citizen',
+  elementId: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact',
+  text: 'Provide your telephone number',
 };
 
 export function changes() {
@@ -37,6 +37,8 @@ export function changes() {
     'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepNo'
   );
   requirePhone();
+  adjustQuestions();
+  removeWhitespaceNodes();
   setNewTitle(i18next.t('citizenship.title'));
 }
 
@@ -79,4 +81,61 @@ function requirePhone() {
   asterisk.style.color = 'rgb(139, 0, 0)';
   asterisk.textContent = '* ';
   label.parentNode.insertBefore(asterisk, label);
+}
+
+function adjustQuestions() {
+  const contactInfo = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact');
+  const elements = Array.from(contactInfo.querySelectorAll('a, strong'));
+
+  const contentUpdates = [
+    { existing: 'Provide your telephone number.', updated: i18next.t('citizenship.phone') },
+    { existing: 'Provide your cell phone', updated: i18next.t('citizenship.altPhone') },
+    { existing: 'Provide your e-mail address', updated: i18next.t('citizenship.email') },
+    { existing: 'Confirm your e-mail address', updated: i18next.t('citizenship.confirm_email') },
+    { existing: 'This e-mail address', updated: '' },
+    { existing: 'Would you like to designate', updated: i18next.t('citizenship.representative') },
+    { existing: 'This individual', updated: '' },
+    { existing: `representative's name`, updated: i18next.t('citizenship.representative_name') },
+    { existing: `representative's date of birth`, updated: i18next.t('citizenship.representative_dob') },
+    { existing: `your representative's telephone number.`, updated: i18next.t('citizenship.representative_phone') }
+  ];
+
+  elements.forEach(element => {
+    element.childNodes.forEach(node => {
+      if (node.nodeType === Node.TEXT_NODE) {
+        contentUpdates.forEach(({ existing, updated }) => {
+          const nodeText = removeWhitespace(node.textContent);
+          const existingText = removeWhitespace(existing);
+          if (nodeText.includes(existingText)) {
+            node.textContent = ` ${updated}`;
+          }
+        });
+      }
+    });
+  });
+}
+
+function removeWhitespace(str) {
+  return str.replace(/\s+/g, '');
+}
+
+function removeWhitespaceNodes() {
+  const selectors = [
+    "#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact > fieldset > a:nth-child(2)",
+    "#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact > fieldset > a:nth-child(13)",
+    "#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact > fieldset > a:nth-child(28)",
+    "#divctznRep > a:nth-child(2)",
+    "#divctznRep > a:nth-child(8)",
+    "#divctznRep > a:nth-child(14)"
+  ];
+
+  selectors.forEach(selector => {
+    const currentElement = document.querySelector(selector);
+    if (currentElement) {
+      const previousNode = currentElement.previousSibling;
+      if (previousNode && previousNode.nodeType === Node.TEXT_NODE && previousNode.textContent.trim() === '') {
+        previousNode.remove();
+      }
+    }
+  });
 }
