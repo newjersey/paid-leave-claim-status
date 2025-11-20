@@ -304,7 +304,7 @@ function styleFDDQuestion(disabilityType) {
 
     const newParagraph = document.createElement('div');
     newParagraph.innerHTML = `
-      <label class="usa-label no-margin-top" for="fddPregnancy">
+      <label class="usa-label no-margin-top" id="fddPregnancyLabel" for="fddPregnancy">
         <span class="required-asterisk">*</span>
           ${i18next.t('leaveSchedule.pregnancy.fddQuestion')}
         </label>
@@ -312,35 +312,6 @@ function styleFDDQuestion(disabilityType) {
     `;
     divElement.insertBefore(newParagraph, divElement.firstChild);
   }
-
-
-  // && node.nodeValue.includes('Select the date your disability')
-
-
-  // <p><strong>${i18next.t('leaveSchedule.pregnancy.importantNotes')}</strong></p>
-  //     <p>${i18next.t('leaveSchedule.pregnancy.youCanApply')}</p>
-
-
-
-
-      //   <div class="bordered-set">
-      //   <label class="usa-label no-margin-top" id="fddPregnancyLabel" for="fddPregnancy">
-      //     <span class="required-asterisk">*</span>
-      //     ${i18next.t('leaveSchedule.pregnancy.fddQuestion')}
-      //   </label>
-      //   <div class="usa-hint" id="fddPregnancyHint">${i18next.t('shared.dateFormat')}</div>
-      //   <div class="usa-date-picker">
-      //     <input
-      //       class="usa-input"
-      //       id="fddPregnancy"
-      //       name="fddPregnancy"
-      //       aria-labelledby="fddPregnancyLabel"
-      //       aria-describedby="fddPregnancyHint"
-      //       required
-      //     />
-      //   </div>
-      // </div>
-
 }
 
 function setupRecoveredPregnancyListeners() {
