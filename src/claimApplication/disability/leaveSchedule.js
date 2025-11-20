@@ -323,33 +323,31 @@ function styleLDWQuestion(disabilityType) {
     const legend = fieldset.querySelector('legend');
     legend.textContent = i18next.t('leaveSchedule.pregnancy.beforeAfterTitle');
 
-    const targetInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd');
-    const newHTML = `
+    const ldwDateInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd');
+    const ldwLabel = `
       <label class="usa-label no-margin-top" id="ldwPregnancyLabel" for="ldwPregnancy">
         <span class="required-asterisk">*</span>
         ${i18next.t('leaveSchedule.pregnancy.lastWorkday')}
       </label>
       <div class="usa-hint" id="ldwPregnancyHint">${i18next.t('shared.dateFormat')}</div>
     `;
+    ldwDateInput.insertAdjacentHTML('beforebegin', ldwLabel);
 
-    targetInput.insertAdjacentHTML('beforebegin', newHTML);
-
-    const targetInput2 = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
-    const newHTML2 = `
+    const recoveredYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
+    const recoveredYesLabel = `
       <label class="usa-label" id="recPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes">
         ${i18next.t('shared.yes')}
       </label>
     `;
-    targetInput2.insertAdjacentHTML('beforebegin', newHTML2);
+    recoveredYes.insertAdjacentHTML('beforebegin', recoveredYesLabel);
 
-
-    const targetInput3 = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo');
-    const newHTML3 = `
+    const recoveredNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo');
+    const recoveredNoLabel = `
       <label class="usa-label" id="recPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo">
         ${i18next.t('shared.no')}
       </label>
     `;
-    targetInput3.insertAdjacentHTML('beforebegin', newHTML3);
+    recoveredNo.insertAdjacentHTML('beforebegin', recoveredNoLabel);
 
     styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
     styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo', true);
