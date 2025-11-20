@@ -688,7 +688,6 @@ function setupApplicationPdfDownloadLink() {
     downloadLink.addEventListener('click', function(event) {
       event.preventDefault();
       logEvent('TDI Confirmation - PDF Download Clicked', {});
-
       const pdfDownloadBtn = document.getElementById('ContentPlaceHolder1_ClaimantCertTab_TPConfirmation_btnContinue');
       if (pdfDownloadBtn) {
         pdfDownloadBtn.click();
