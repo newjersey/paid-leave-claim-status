@@ -255,6 +255,7 @@ export function leaveSchedulePage() {
 
 export function showLeaveScheduleForDisabilityType(disabilityType, backButtonId) {
   styleFDDQuestion(disabilityType);
+  styleLDWQuestion(disabilityType);
 
   // TODO:
 
@@ -312,6 +313,30 @@ function styleFDDQuestion(disabilityType) {
     `;
     divElement.insertBefore(newParagraph, divElement.firstChild);
   }
+}
+
+function styleLDWQuestion(disabilityType) {
+  if (disabilityType === DisabilityType.PREGNANCY) {
+    const fieldset = document.querySelector('#divLDW > fieldset');
+    removeUnwantedElements(fieldset);
+
+    const legend = fieldset.querySelector('legend');
+    legend.textContent = i18next.t('leaveSchedule.pregnancy.beforeAfterTitle');
+  }
+}
+
+function removeUnwantedElements(parent) {
+  Array.from(parent.childNodes).forEach((node) => {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      if (node.tagName.toLowerCase() !== 'legend' && node.tagName.toLowerCase() !== 'input') {
+        node.remove();
+      } else {
+        removeUnwantedElements(node);
+      }
+    } else if (node.nodeType === Node.TEXT_NODE) {
+      node.remove();
+    }
+  });
 }
 
 function setupRecoveredPregnancyListeners() {
