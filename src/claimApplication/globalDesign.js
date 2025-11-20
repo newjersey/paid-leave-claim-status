@@ -1,6 +1,10 @@
 import { applyFooter } from "./footer.js";
 import { replaceHeader } from "./header.js";
-import { addFeedbackWidgetScriptToHead, ICON_BASE_URL } from "../modules/shared.mjs";
+import {
+  addFeedbackWidgetScriptToHead,
+  ICON_BASE_URL,
+  overrideFeedbackWidgetEmailDisclaimerText
+} from "../modules/shared.mjs";
 
 export function globalDesignChanges(pageId) {
   addViewportMetaTag();
@@ -126,6 +130,7 @@ function addFeedbackWidget() {
     const footer = document.getElementById('helpSection');
     if (footer) {
       footer.parentNode.insertBefore(feedbackWidget, footer);
+      overrideFeedbackWidgetEmailDisclaimerText();
     }
   }
 }
