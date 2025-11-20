@@ -334,11 +334,20 @@ function styleLDWQuestion(disabilityType) {
     ldwDateInput.insertAdjacentHTML('beforebegin', ldwLabel);
 
     const recoveredYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
+    const recoveredQuestion = `
+      <br><br>
+      <hr>
+      <label class="usa-label">
+        <span class="required-asterisk">*</span>
+        ${i18next.t('leaveSchedule.pregnancy.recovered')}
+      </label>
+    `;
     const recoveredYesLabel = `
       <label class="usa-label" id="recPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes">
         ${i18next.t('shared.yes')}
       </label>
     `;
+    recoveredYes.insertAdjacentHTML('beforebegin', recoveredQuestion);
     recoveredYes.insertAdjacentHTML('beforebegin', recoveredYesLabel);
 
     const recoveredNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo');

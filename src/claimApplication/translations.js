@@ -180,9 +180,9 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             <br><br>
             <strong>Hint:</strong> This is the last day you actually worked-- not including PTO, vacation, or sick days you used before your leave started.
           `,
-          recovered: `Have you recovered from childbirth? "Recovered" means you are available to return to work.
+          recovered: `Have you recovered from pregnancy and delivery?
             <br><br>
-            <strong>Hint:</strong> You are entitled to at least 6 or 8 weeks of Temporary Disability Insurance benefits to recover from childbirth.
+            <strong>Hint:</strong> You are entitled to at least 6 or 8 weeks of recovery time using TDI. After it ends, you can apply separately for family leave to bond with your baby. The Maternity Timeline Tool can help you plan.
           `,
           moreTimeAvailable: "More time available",
           fliInfo: `You are entitled to up to 12 weeks of <a href="https://www.nj.gov/labor/myleavebenefits/worker/fli/index.shtml" target="_blank">Family Leave for bonding time</a>. This is a separate application. See the <a href="https://www.nj.gov/labor/myleavebenefits/worker/maternity/timeline-welcome.shtml" target="_blank">Maternity Timeline Tool</a>.`,
