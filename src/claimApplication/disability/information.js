@@ -51,24 +51,12 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
-    .page h2, .page h3 {
+    h2.usa-alert__heading {
+      font-size: 24px;
+      margin: 0 0 10px;
       color: black;
       font-variant: normal;
       font-weight: bold;
-    }
-
-    .page h2 {
-      font-size: 24px;
-      margin: 50px 0 10px;
-    }
-
-    .page h2.usa-alert__heading {
-      margin: 0 0 10px;
-    }
-
-    .page h3 {
-      font-size: 18px;
-      margin: 0 0 10px;
     }
 
     .bold-text {

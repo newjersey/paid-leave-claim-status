@@ -120,14 +120,7 @@ export function leaveSchedulePage() {
         </div>
       </div>
 
-      <div class="usa-alert usa-alert--info" id="pregnancyAlert">
-        <div class="usa-alert__body">
-          <h2 class="usa-alert__heading">${i18next.t('leaveSchedule.pregnancy.whatsNext')}</h2>
-          <p class="usa-alert__text">
-            ${i18next.t('leaveSchedule.pregnancy.howDelivered')}
-          </p>
-        </div>
-      </div>
+
 
       <button class="usa-button" id="submitLeaveSchedulePregnancy" type="submit">
         ${i18next.t('shared.saveAndContinue')}
@@ -385,8 +378,17 @@ function styleLDWQuestion(disabilityType) {
     `;
     estReturnInput.insertAdjacentHTML('beforebegin', estReturnLabel);
 
-
-    
+    const alertHtml = `
+      <div class="usa-alert usa-alert--info" id="pregnancyAlert">
+        <div class="usa-alert__body">
+          <h2 class="usa-alert__heading">${i18next.t('leaveSchedule.pregnancy.whatsNext')}</h2>
+          <p class="usa-alert__text">
+            ${i18next.t('leaveSchedule.pregnancy.howDelivered')}
+          </p>
+        </div>
+      </div>
+    `;
+    fieldset.insertAdjacentHTML('afterend', alertHtml);
   }
 }
 
