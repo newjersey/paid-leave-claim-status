@@ -22,7 +22,7 @@ function createFooterElement(pageId) {
   footer.style.padding = `20px ${horizontalPadding} 50px ${horizontalPadding}`;
   footer.style.border = '0.5px solid #565C65';
   footer.style.color = '#000000';
-  footer.style.margin = '50px 0 0 0';
+  footer.style.margin = '0';
 
   const title = document.createElement('h2');
   title.style.margin = '0';
