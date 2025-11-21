@@ -2,8 +2,10 @@ import i18next from 'i18next';
 import { logEvent } from "../../modules/shared.mjs";
 import {
   adjustTableWidths,
+  getSessionData,
   removeExtraSpaceBetweenRadioButtons,
   setNewTitle,
+  STORAGE_KEY_REASON_FOR_LEAVE,
   styleRadioButton
 } from '../utils';
 
@@ -58,11 +60,43 @@ export function trackWorkersCompYesSubmission(pageId) {
 }
 
 export function changes() {
+  loadReasonData();
   adjustTable();
   adjustTextEntries();
   styleRadioButtons();
   addProviderTypes();
   setNewTitle(i18next.t('medicalInfo.title'));
+}
+
+function loadReasonData() {
+  const sessionData = getSessionData();
+  const reasonData = sessionData[STORAGE_KEY_REASON_FOR_LEAVE];
+
+  if (!reasonData) {
+    return;
+  }
+
+  const reason = reasonData['reasons'];
+  if (!reason) {
+    return;
+  }
+
+  let details;
+  if (reason === 'pregnancy') {
+    details = reasonData['pregnancy-details'];
+  } else if (reason === 'illness') {
+    details = reasonData['illness-details'];
+  } else if (reason === 'injury') {
+    details = reasonData['injury-details'];
+  }
+
+  const textArea = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury');
+  if (textArea) {
+    textArea.value = `${reason}. ${details}`;
+    textArea.closest('fieldset').style.display = 'none'; 
+  }
+
+  // TODO: renumber rest of questions
 }
 
 function styleRadioButtons() {

@@ -1,4 +1,14 @@
-import { globalTestsNew, globalTestsOld } from "../shared";
+import {
+  EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS,
+  EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS,
+  EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY,
+  EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS,
+  EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY,
+  EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY_DETAILS,
+  globalTestsNew,
+  globalTestsOld
+} from "../shared";
+import { encodeDecode } from '../../../../src/claimApplication/utils';
 
 const PAGE_ID = 'medicalTreatment';
 const URL = 'ClaimantDisabililty';
@@ -50,9 +60,32 @@ describe("Medical Treatment page", () => {
       cy.wait('@script');
     });
 
-    it("user can input info and proceed to next page", () => {
+    it("user can input info when session storage empty and proceed to next page", () => {
       checkInfoEntry();
       cy.confirmEventIsNotTracked("WorkersComp Yes Clicked");
+    });
+
+    it("user can input info when session contains reason and proceed to next page", () => {
+      cy.window().then((win) => {
+        const data = { reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));     
+      });
+      cy.visit(FIXTURE);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury').should('not.be.visible');
+      
+      // TODO: DRY somehow
+      cy.mockASPX(URL);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm').type('Dr. Spaceman');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddYes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocAdd1').type('30 Livingston Avenue');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocCity').type('New Brunswick');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocZip1').type('08901');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERNO').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospNo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc').click();
+      // TODO: verify post data
+      // cy.wait('@aspxSubmission').then(checkPostData);
     });
 
     it('tracks when workers comp Yes is submitted', () => {
