@@ -1,14 +1,15 @@
 import i18next from 'i18next';
 import { DisabilityType, styleRadioButton } from '../utils';
 
-export function showLeaveScheduleForDisabilityType(disabilityType) {
-  styleFDD(disabilityType);
-  styleLDW(disabilityType);
-}
-
 export function setupLeaveSchedulePage() {
   setupFDD();
   setupLDW();
+  setupFutureDateAlert();
+}
+
+export function showLeaveScheduleForDisabilityType(disabilityType) {
+  styleFDD(disabilityType);
+  styleLDW(disabilityType);
 }
 
 function setupFDD() {
@@ -218,5 +219,51 @@ function removeUnwantedElements(parent) {
     } else if (node.nodeType === Node.TEXT_NODE) {
       node.remove();
     }
+  });
+}
+
+function setupFutureDateAlert() {
+  const futureDateDiv = document.getElementById('divPregRelated');
+
+  Array.from(futureDateDiv.childNodes).forEach(node => {
+    if (node.nodeType === Node.ELEMENT_NODE) {
+      node.style.display = 'none';
+    } else if (node.nodeType === Node.TEXT_NODE) {
+      node.remove();
+    }
+  });
+
+  const futureDateAlert = document.createElement('div');
+  futureDateAlert.classList.add("usa-alert", "usa-alert--error");
+  futureDateAlert.role = "alert"
+  futureDateAlert.innerHTML = `
+    <div class="usa-alert__body">
+      <h2 class="usa-alert__heading"> ${i18next.t('leaveSchedule.futureDate.title')}</h2>
+      <p class="usa-alert__text">
+        ${i18next.t('leaveSchedule.futureDate.body')}
+      </p>
+    </div>
+  `;
+  futureDateDiv.appendChild(futureDateAlert);
+
+  const callback = function(mutationsList) {
+    for (const mutation of mutationsList) {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
+        const currentDisplay = futureDateDiv.style.display;
+        const submitBtn = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_btnSubmitConflictCheck');
+        if (submitBtn) {
+          submitBtn.style.display = currentDisplay === 'block'
+            ? 'none'
+            : 'block';
+        }
+      }
+    }
+  };
+
+  const observer = new MutationObserver(callback);
+
+  observer.observe(futureDateDiv, {
+    attributes: true,
+    attributeFilter: ['style']
   });
 }

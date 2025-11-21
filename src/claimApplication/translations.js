@@ -130,6 +130,13 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       leaveSchedule: {
         title: "Leave schedule",
+        futureDate: {
+          title: "You're a little early",
+          body: `We can't accept applications dated in the future. You can come back and apply on the day your disability begins — the first day you stop working because of your condition.
+            <br><br>
+            We recommend setting a reminder so you can return and apply on time.
+          `,
+        },
         illnessInjury: {
           fddTitle: "First day of disability leave",
           fddNotes: `<strong>Heads up:</strong>
