@@ -41,14 +41,84 @@ describe("Disability Information page", () => {
       cy.wait('@script');
     });
 
-    it("user can input info and proceed to next page", () => {
-      cy.mockASPX(URL);
+    function checkLeaveSchedule() {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').type("07/18/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').type("07/17/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').type("08/17/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_btnSubmitConflictCheck').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    }
+
+    it("user can input info about pregnancy with blank extra text and proceed to next page", () => {
+      cy.mockASPX(URL);
+      cy.get('#reason-pregnancy').click({ force: true });
+      cy.get('#submitReasonForLeave').click();
+      checkLeaveSchedule();
+      // TODO: check session storage
+    });
+
+    it("user can input info about pregnancy and proceed to next page", () => {
+      cy.mockASPX(URL);
+      cy.get('#reason-pregnancy').click({ force: true });
+      cy.get('#pregnancy-details').type("Emergency C-Section.");
+      cy.get('#submitReasonForLeave').click();
+      checkLeaveSchedule();
+      // TODO: check session storage
+    });
+
+    it("user can input info about illness with blank extra text after first choosing injury and proceed to next page", () => {
+      cy.mockASPX(URL);
+      cy.get('#reason-injury').click({ force: true });
+      cy.get('#injury-details').type("Broken Elbow.");
+      cy.get('#reason-illness').click({ force: true });
+      cy.get('#submitReasonForLeave').click();
+      checkLeaveSchedule();
+      // TODO: check session storage
+    });
+
+    it("user can input info about illness and proceed to next page", () => {
+      cy.mockASPX(URL);
+      cy.get('#reason-illness').click({ force: true });
+      cy.get('#illness-details').type("Emergency C-Section.");
+      cy.get('#submitReasonForLeave').click();
+      checkLeaveSchedule();
+      // TODO: check session storage
+    });
+
+    it("user can input info about injury with blank extra text and proceed to next page", () => {
+      cy.mockASPX(URL);
+      cy.get('#reason-injury').click({ force: true });
+      cy.get('#submitReasonForLeave').click();
+      checkLeaveSchedule();
+      // TODO: check session storage
+    });
+
+    it("user can input info about injury and proceed to next page", () => {
+      cy.mockASPX(URL);
+      cy.get('#reason-injury').click({ force: true });
+      cy.get('#injury-details').type("Broken Elbow.");
+      cy.get('#submitReasonForLeave').click();
+      checkLeaveSchedule();
+      // TODO: check session storage
+    });
+
+    it("blocks user that enters First Date of Disability in the future", () => {
+      cy.mockASPX(URL);
+      cy.get('#reason-pregnancy').click({ force: true });
+      cy.get('#submitReasonForLeave').click();
+
+      const today = new Date();
+      const futureDate = new Date(today);
+      futureDate.setDate(today.getDate() + 1); // 1 day in future
+
+      // MM/DD/YYYY
+      const formattedFutureDate = `${(futureDate.getMonth() + 1).toString().padStart(2, '0')}/${
+        futureDate.getDate().toString().padStart(2, '0')}/${futureDate.getFullYear()}`;
+
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').type(formattedFutureDate);
+      cy.get('h2').contains("You're a little early").should('be.visible');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_btnSubmitConflictCheck').should('not.be.visible');
     });
 
     it("tracks that this page fixture has a validation error", () => {
