@@ -68,7 +68,6 @@ export function changes() {
   adjustTable();
   adjustTextEntries();
   styleRadioButtons();
-  addProviderTypes();
   setNewTitle(i18next.t('medicalInfo.title'));
 }
 
@@ -104,13 +103,12 @@ function addProviderScreener() {
         class="usa-checkbox__input"
         id="check-provider-type-accepted"
         type="checkbox"
-        name="provider-type-accepted"
         value="yes"
         required
       />
       <label id="provider-type-accepted-legend" class="usa-checkbox__label" for="check-provider-type-accepted">
         <span class="required-asterisk">*</span>
-        <strong>1. </strong>
+        <strong id="providerTypeQuestionNumber" style="display:none;">1. </strong>
         ${i18next.t('medicalInfo.provider.type.isAccepted')}
       </label>
     </div>
@@ -185,19 +183,15 @@ function loadReasonData() {
   }
 
   const textArea = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury');
-  if (textArea) {
-    textArea.value = `${reason}. ${details}`;
-    textArea.closest('fieldset').style.display = 'none'; 
-  }
+  textArea.value = `${reason}. ${details}`;
+  textArea.closest('fieldset').style.display = 'none';
+  document.getElementById('providerTypeQuestionNumber').style.display = 'inline';
 
   // if (reason === 'pregnancy') {
   //   const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
   //   workersCompNo.click();
   //   workersCompNo.parentElement.parentElement.style.display = 'none';
   // }
-
-
-  // TODO: renumber rest of questions
 
 }
 
