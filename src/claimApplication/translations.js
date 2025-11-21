@@ -179,10 +179,8 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           `,
           recovered: `Have you recovered from pregnancy and delivery?
             <br><br>
-            <strong>Hint:</strong> You are entitled to at least 6 or 8 weeks of recovery time using TDI. After it ends, you can apply separately for family leave to bond with your baby. The Maternity Timeline Tool can help you plan.
+            <strong>Hint:</strong> You are entitled to at least 6 or 8 weeks of recovery time using TDI. After it ends, you can apply separately for family leave to bond with your baby. The <a href="https://www.nj.gov/labor/myleavebenefits/labor/myleavebenefits/worker/maternity/timeline-welcome.shtml" target="_blank">Maternity Timeline Tool</a> can help you plan.
           `,
-          moreTimeAvailable: "More time available",
-          fliInfo: `You are entitled to up to 12 weeks of <a href="https://www.nj.gov/labor/myleavebenefits/worker/fli/index.shtml" target="_blank">Family Leave for bonding time</a>. This is a separate application. See the <a href="https://www.nj.gov/labor/myleavebenefits/worker/maternity/timeline-welcome.shtml" target="_blank">Maternity Timeline Tool</a>.`,
           recoveryDate: `When did you recover?`,
           estRecoveryDate: "When do you anticipate being able to return to work? This can be an estimate and we will ask you again later to verify.",
           whatsNext: "What's Next?",

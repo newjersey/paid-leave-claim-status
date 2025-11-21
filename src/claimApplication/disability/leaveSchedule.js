@@ -248,36 +248,12 @@ export function leaveSchedulePage() {
 
 export function showLeaveScheduleForDisabilityType(disabilityType) {
   styleFDD(disabilityType);
-  if (disabilityType === DisabilityType.PREGNANCY) {
-    // styleFDDForPregnancy();
-    // styleLDWForPregnancy();
-  } else {
-    // styleFDDForIllnessInjury(disabilityType);
-    // styleLDWForIllnessInjury(disabilityType);
-  }
-
-  // TODO:
-
-  // const leaveSchedulePregnancyForm = document.getElementById('leave-schedule-pregnancy-form');
-  // const leaveScheduleIllnessInjuryForm = document.getElementById('leave-schedule-illness-injury-form');
-
-  // if (disabilityType === DisabilityType.PREGNANCY) {
-  //   leaveSchedulePregnancyForm.style.display = 'block';
-  //   leaveScheduleIllnessInjuryForm.style.display = 'none';
-  // } else if (disabilityType === DisabilityType.ILLNESS || disabilityType === DisabilityType.INJURY) {
-  //   leaveSchedulePregnancyForm.style.display = 'none';
-  //   leaveScheduleIllnessInjuryForm.style.display = 'block';
-  // } else {
-  //   // unknown -- have user submit reason for leave again
-  //   const backButton = document.getElementById(backButtonId);
-  //   if (backButton) {
-  //     backButton.click();
-  //   }
-  // }
+  styleLDW(disabilityType);
 }
 
 export function setupLeaveSchedulePage() {
   setupFDD();
+  setupLDW();
 }
 
 function setupFDD() {
@@ -356,20 +332,18 @@ function removeOldFDDText() {
   });
 }
 
-function styleLDWForPregnancy() {
-  const fieldset = document.querySelector('#divLDW > fieldset');
-  removeUnwantedElements(fieldset);
-
-  const legend = fieldset.querySelector('legend');
-  legend.textContent = i18next.t('leaveSchedule.pregnancy.beforeAfterTitle');
+function setupLDW() {
+  const ldwFieldset = document.querySelector('#divLDW > fieldset');
+  ldwFieldset.id = "ldwFieldset";
+  removeUnwantedElements(ldwFieldset);
 
   const ldwDateInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd');
   const ldwLabel = `
     <label class="usa-label no-margin-top" id="ldwPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd">
       <span class="required-asterisk">*</span>
-      ${i18next.t('leaveSchedule.pregnancy.lastWorkday')}
+      <span id="lastWorkdayQuestion"></span>
     </label>
-    <div class="usa-hint" id="ldwPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+    <div class="usa-hint" id="ldwHint">${i18next.t('shared.dateFormat')}</div>
   `;
   ldwDateInput.insertAdjacentHTML('beforebegin', ldwLabel);
 
@@ -379,35 +353,36 @@ function styleLDWForPregnancy() {
     <hr>
     <label class="usa-label">
       <span class="required-asterisk">*</span>
-      ${i18next.t('leaveSchedule.pregnancy.recovered')}
+      <span id="recoveredQuestion"></span>
     </label>
   `;
   recoveredYes.insertAdjacentHTML('beforebegin', recoveredQuestion);
+
   styleRecoveryRadioButtons();
 
-  const returnInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk');
-  const returnLabel = `
+  const returnDateInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk');
+  const returnDateQuestion = `
     <br><br>
     <hr>
     <label class="usa-label" id="returnPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk">
       <span class="required-asterisk">*</span>
-      ${i18next.t('leaveSchedule.pregnancy.recoveryDate')}
+      <span id="returnDateQuestion"></span>
     </label>
     <div class="usa-hint" id="returnPregnancyHint">${i18next.t('shared.dateFormat')}</div>
   `;
-  returnInput.insertAdjacentHTML('beforebegin', returnLabel);
+  returnDateInput.insertAdjacentHTML('beforebegin', returnDateQuestion);
 
-  const estReturnInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk');
-  const estReturnLabel = `
+  const estReturnDateInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk');
+  const estReturnDateQuestion = `
     <br><br>
     <hr>
     <label class="usa-label" id="estReturnPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk">
       <span class="required-asterisk">*</span>
-      ${i18next.t('leaveSchedule.pregnancy.estRecoveryDate')}
+      <span id="estReturnDateQuestion"></span>
     </label>
     <div class="usa-hint" id="estReturnPregnancyHint">${i18next.t('shared.dateFormat')}</div>
   `;
-  estReturnInput.insertAdjacentHTML('beforebegin', estReturnLabel);
+  estReturnDateInput.insertAdjacentHTML('beforebegin', estReturnDateQuestion);
 
   const alertHtml = `
     <div class="usa-alert usa-alert--info" id="pregnancyAlert">
@@ -419,21 +394,47 @@ function styleLDWForPregnancy() {
       </div>
     </div>
   `;
-  fieldset.insertAdjacentHTML('afterend', alertHtml);
+  ldwFieldset.insertAdjacentHTML('afterend', alertHtml);
 }
 
-function styleLDWForIllnessInjury(disabilityType) {
-  const fieldset = document.querySelector('#divLDW > fieldset');
-  removeUnwantedElements(fieldset);
+function styleLDW(disabilityType) {
+  const ldwFieldset = document.getElementById('ldwFieldset');
 
-  const legend = fieldset.querySelector('legend');
-  legend.textContent = i18next.t('leaveSchedule.illnessInjury.beforeAfterTitle');
+  const legend = ldwFieldset.querySelector('legend');
+  legend.textContent = disabilityType === DisabilityType.PREGNANCY
+    ? i18next.t('leaveSchedule.pregnancy.beforeAfterTitle')
+    : i18next.t('leaveSchedule.illnessInjury.beforeAfterTitle');
+
+  const lastWorkdayQuestion = document.getElementById('lastWorkdayQuestion');
+  lastWorkdayQuestion.innerHTML = disabilityType === DisabilityType.PREGNANCY
+    ? i18next.t('leaveSchedule.pregnancy.lastWorkday')
+    : i18next.t('leaveSchedule.illnessInjury.lastWorkday');
+
+  const recoveredQuestion = document.getElementById('recoveredQuestion');
+  recoveredQuestion.innerHTML = disabilityType === DisabilityType.PREGNANCY
+    ? i18next.t('leaveSchedule.pregnancy.recovered')
+    : i18next.t('leaveSchedule.illnessInjury.recovered');
+
+  const returnDateQuestion = document.getElementById('returnDateQuestion');
+  returnDateQuestion.textContent = disabilityType === DisabilityType.PREGNANCY
+    ? i18next.t('leaveSchedule.pregnancy.recoveryDate')
+    : i18next.t('leaveSchedule.illnessInjury.recoveryDate');
+
+  const estReturnDateQuestion = document.getElementById('estReturnDateQuestion');
+  estReturnDateQuestion.textContent = disabilityType === DisabilityType.PREGNANCY
+    ? i18next.t('leaveSchedule.pregnancy.estRecoveryDate')
+    : i18next.t('leaveSchedule.illnessInjury.estRecoveryDate');
+
+  const pregnancyAlert = document.getElementById('pregnancyAlert');
+  pregnancyAlert.style.display = disabilityType === DisabilityType.PREGNANCY
+    ? 'block'
+    : 'none';
 }
 
 function styleRecoveryRadioButtons() {
   const recoveredYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
   const recoveredYesLabel = `
-    <label class="usa-label" id="recPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes">
+    <label class="usa-label" id="recLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes">
       ${i18next.t('shared.yes')}
     </label>
   `;
@@ -441,7 +442,7 @@ function styleRecoveryRadioButtons() {
 
   const recoveredNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo');
   const recoveredNoLabel = `
-    <label class="usa-label" id="recPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo">
+    <label class="usa-label" id="recLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo">
       ${i18next.t('shared.no')}
     </label>
   `;
