@@ -232,7 +232,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         },
         work: {
           title: "Worker's Compensation",
-          causedByJob: "Was your {{disabilityTypeString}} caused by your job? (Could be a specific incident or happened over time)",
+          causedByJob: "Was your disability caused by your job? (Could be a specific incident or happened over time)",
           workersCompClaim: `Have you or your employer filed a <a href="https://www.nj.gov/labor/workerscompensation/injured-worker-protections/index.shtml" target="_blank">Workers' Compensation Claim</a>, or do you plan to file one?`,
           workersCompClaimApproved: "Have you been approved for (or awarded, or received) Workers' Compensation benefits?",
           employerInfo: {

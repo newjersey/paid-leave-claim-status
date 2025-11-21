@@ -64,6 +64,7 @@ export function trackWorkersCompYesSubmission(pageId) {
 export function changes() {
   addStyles();
   addProviderScreener();
+  addWorkersCompScreener();
   loadReasonData();
   adjustTable();
   adjustTextEntries();
@@ -78,7 +79,7 @@ function addStyles() {
       margin-top: 10px;
     }
 
-    .usa-checkbox__label {
+    .usa-checkbox__label, .usa-radio__label {
       text-align: left;
     }
 
@@ -157,6 +158,76 @@ function addProviderScreener() {
 
   checkbox.addEventListener('invalid', function () {
     elementTextError(legend);
+  });
+}
+
+function addWorkersCompScreener() {
+  const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
+  const atWorkContainer = workersCompNo.closest('div').closest('div');
+  atWorkContainer.style.display = 'none';
+
+  const strongElements = atWorkContainer.querySelectorAll('strong');
+  strongElements.forEach((element) => {
+    if (element.textContent.trim() === '7.') {
+      element.textContent = '7a.';
+    }
+  });
+
+  const causedByJobQuestion = document.createElement('div');
+  causedByJobQuestion.style.margin = "0 0 20px";
+  causedByJobQuestion.innerHTML = `
+    <fieldset class="usa-fieldset">
+      <legend id="caused-by-job-legend" class="usa-legend usa-legend">
+        <span class="required-asterisk">*</span>
+        <strong>7. </strong>
+        <span id="causedByJobText">${i18next.t('medicalInfo.work.causedByJob')}</span>
+      </legend>
+      <div class="usa-radio">
+        <input
+          class="usa-radio__input"
+          id="caused-by-job-yes"
+          type="radio"
+          name="caused-by-job"
+          value="yes"
+        />
+        <label class="usa-radio__label" for="caused-by-job-yes">
+          ${i18next.t('shared.yes')}
+        </label>
+      </div>
+      <div class="usa-radio">
+        <input
+          class="usa-radio__input"
+          id="caused-by-job-no"
+          type="radio"
+          name="caused-by-job"
+          value="no"
+        />
+        <label class="usa-radio__label" for="caused-by-job-no">
+          ${i18next.t('shared.no')}
+        </label>
+      </div>
+    </fieldset>
+  `;
+  atWorkContainer.parentElement.insertBefore(causedByJobQuestion, atWorkContainer);
+
+  const causedByJobYes = document.getElementById('caused-by-job-yes');
+  const causedByJobNo = document.getElementById('caused-by-job-no');
+  const causedByJobLegend = document.getElementById('caused-by-job-legend');
+
+  causedByJobYes.addEventListener('change', function () {
+    resetElementText(causedByJobLegend);
+    atWorkContainer.style.display = 'block';
+    workersCompNo.checked = false;
+  });
+
+  causedByJobNo.addEventListener('change', function () {
+    resetElementText(causedByJobLegend);
+    atWorkContainer.style.display = 'none';
+    workersCompNo.click();
+  });
+
+  causedByJobYes.addEventListener('invalid', function () {
+    elementTextError(causedByJobLegend);
   });
 }
 
