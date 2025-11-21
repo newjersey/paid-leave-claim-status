@@ -247,12 +247,13 @@ export function leaveSchedulePage() {
 }
 
 export function showLeaveScheduleForDisabilityType(disabilityType) {
+  styleFDD(disabilityType);
   if (disabilityType === DisabilityType.PREGNANCY) {
-    styleFDDForPregnancy();
-    styleLDWForPregnancy();
+    // styleFDDForPregnancy();
+    // styleLDWForPregnancy();
   } else {
-    styleFDDForIllnessInjury(disabilityType);
-    styleLDWForIllnessInjury(disabilityType);
+    // styleFDDForIllnessInjury(disabilityType);
+    // styleLDWForIllnessInjury(disabilityType);
   }
 
   // TODO:
@@ -276,18 +277,16 @@ export function showLeaveScheduleForDisabilityType(disabilityType) {
 }
 
 export function setupLeaveSchedulePage() {
-  // setupRecoveredPregnancyListeners();
-  // setupRecoveredIllnessInjuryListeners();
-  // setupSubmitLeaveSchedulePregnancy()
-  // setupSubmitLeaveScheduleIllnessInjury();
+  setupFDD();
 }
 
-function styleFDDForPregnancy() {
+function setupFDD() {
   const fieldset = document.querySelector('#MainDiv > fieldset');
+  fieldset.id = "fddFieldset";
   const divElement = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD');
 
   const maternityTimelineToolHtml = `
-    <fieldset>
+    <fieldset id="maternityTimeline">
       <svg style="vertical-align:-5px;" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>
       ${i18next.t('leaveSchedule.pregnancy.maternityTimeline')}
     </fieldset>
@@ -295,53 +294,54 @@ function styleFDDForPregnancy() {
 
   fieldset.insertAdjacentHTML('beforebegin', maternityTimelineToolHtml);
 
-  const legend = fieldset.querySelector('legend');
-  legend.textContent = i18next.t('leaveSchedule.pregnancy.fddTitle');
+  const notesHtml = `
+    <br>
+    <p id="fddNotes"></p>
+    <br>
+  `;
+
+  fieldset.insertAdjacentHTML('beforebegin', notesHtml);
 
   removeOldFDDText();
 
-  const newParagraph = document.createElement('div');
-  newParagraph.innerHTML = `
-    <label class="usa-label no-margin-top" id="fddPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt">
+  const fddQuestion = document.createElement('div');
+  fddQuestion.innerHTML = `
+    <label class="usa-label no-margin-top" id="fddLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt">
       <span class="required-asterisk">*</span>
-        ${i18next.t('leaveSchedule.pregnancy.fddQuestion')}
+      <span id="fddQuestion"></span>
       </label>
-    <div class="usa-hint" id="fddPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+    <div class="usa-hint" id="fddHint">${i18next.t('shared.dateFormat')}</div>
   `;
-  divElement.insertBefore(newParagraph, divElement.firstChild);
+  divElement.insertBefore(fddQuestion, divElement.firstChild);
 }
 
-function styleFDDForIllnessInjury(disabilityType) {
-  const disabilityTypeString = disabilityType === DisabilityType.ILLNESS 
-    ? i18next.t('shared.illness') 
-    : i18next.t('shared.injury');
+function styleFDD(disabilityType) {
+  const fddFieldset = document.getElementById('fddFieldset');
+  
+  const maternityTimeline = document.getElementById('maternityTimeline');
+  maternityTimeline.style.display = disabilityType === DisabilityType.PREGNANCY
+    ? 'block'
+    : 'none';
 
-  const fieldset = document.querySelector('#MainDiv > fieldset');
-  const divElement = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD');
+  const fddNotes = document.getElementById('fddNotes');
+  fddNotes.innerHTML = disabilityType === DisabilityType.PREGNANCY
+    ? i18next.t('leaveSchedule.pregnancy.fddNotes')
+    : i18next.t('leaveSchedule.illnessInjury.fddNotes');
 
-  const infoHtml = `
-    <br>
-    <p>${i18next.t('leaveSchedule.illnessInjury.fddNotes')}</p>
-    <br>
-  `;
+  const legend = fddFieldset.querySelector('legend');
+  legend.textContent = disabilityType === DisabilityType.PREGNANCY
+    ? i18next.t('leaveSchedule.pregnancy.fddTitle')
+    : i18next.t('leaveSchedule.illnessInjury.fddTitle');
 
-  fieldset.insertAdjacentHTML('beforebegin', infoHtml);
-
-
-  const legend = fieldset.querySelector('legend');
-  legend.textContent = i18next.t('leaveSchedule.illnessInjury.fddTitle');
-
-  removeOldFDDText();
-
-  const newParagraph = document.createElement('div');
-  newParagraph.innerHTML = `
-    <label class="usa-label no-margin-top" id="fddIllnessInjuryLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt">
-      <span class="required-asterisk">*</span>
-        ${i18next.t('leaveSchedule.illnessInjury.fddQuestion', { disabilityTypeString })}
-      </label>
-    <div class="usa-hint" id="fddIllnessInjuryHint">${i18next.t('shared.dateFormat')}</div>
-  `;
-  divElement.insertBefore(newParagraph, divElement.firstChild);
+  const fddQuestion = document.getElementById('fddQuestion');
+  fddQuestion.innerHTML = disabilityType === DisabilityType.PREGNANCY
+    ? i18next.t('leaveSchedule.pregnancy.fddQuestion')
+    : i18next.t('leaveSchedule.illnessInjury.fddQuestion', {
+      disabilityTypeString: disabilityType === DisabilityType.ILLNESS 
+        ? i18next.t('shared.illness') 
+        : i18next.t('shared.injury') 
+      }
+    );
 }
 
 function removeOldFDDText() {
