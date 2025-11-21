@@ -196,7 +196,7 @@ function setupSubmitReasonForLeave(showLeaveSchedulePage) {
     logEvent('Reason for leave submit clicked', {});
 
     addToSessionData({
-      [STORAGE_KEY_REASON_FOR_LEAVE]: JSON.stringify(formValues)
+      [STORAGE_KEY_REASON_FOR_LEAVE]: formValues
     });      
 
     showLeaveSchedulePage();

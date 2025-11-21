@@ -1,28 +1,31 @@
 export const EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY = {
-  "reasons":"pregnancy",
-  "pregnancy-details": "emergency C-section",
-  "provider-type-eligible":"yes",
-  "provider-name":"Dr. Spaceman",
-  "provider-mailing-address-1":"30 Livingston Avenue",
-  "provider-mailing-address-2":"",
-  "provider-city":"New Brunswick",
-  "provider-state":"NJ",
-  "provider-zip":"08901",
-  "provider-phone":"609-292-7060",
+  "reasons": "pregnancy",
+  "pregnancy-details": "",
 };
 
 export const EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS = {
-  "reasons":"illness",
-  "illness-details": "inflammation in lungs",
-  "provider-type-eligible":"yes",
-  "provider-name":"Dr. Spaceman",
-  "provider-mailing-address-1":"30 Livingston Avenue",
-  "provider-mailing-address-2":"",
-  "provider-city":"New Brunswick",
-  "provider-state":"NJ",
-  "provider-zip":"08901",
-  "provider-phone":"609-292-7060",
-  "caused-by-job":"no",
+  "reasons": "illness",
+  "illness-details": "",
+};
+
+export const EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY = {
+  "reasons": "injury",
+  "injury-details": "",
+};
+
+export const EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY_DETAILS = {
+  "reasons": "pregnancy",
+  "pregnancy-details": "Emergency C-section.",
+};
+
+export const EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS = {
+  "reasons": "illness",
+  "illness-details": "Lung Inflammation.",
+};
+
+export const EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS = {
+  "reasons": "injury",
+  "injury-details": "Broken Elbow.",
 };
 
 export function globalTestsOld(url) {

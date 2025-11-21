@@ -138,6 +138,13 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       leaveSchedule: {
         title: "Leave schedule",
+        futureDate: {
+          title: "You're a little early",
+          body: `We can't accept applications dated in the future. You can come back and apply on the day your disability begins — the first day you stop working because of your condition.
+            <br><br>
+            We recommend setting a reminder so you can return and apply on time.
+          `,
+        },
         illnessInjury: {
           fddTitle: "First day of disability leave",
           fddNotes: `<strong>Heads up:</strong>
@@ -146,7 +153,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             <br><br>
             Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.
           `,
-          fddQuestion: `When did this {{disabilityTypeString}} prevent you from working?
+          fddQuestion: `<strong>When did this {{disabilityTypeString}} prevent you from working?</strong>
             <br><br>
             <strong>Hint:</strong> Enter the actual date your disability began, even if it was a day you don't usually work (like a weekend or holiday).
           `,
@@ -164,40 +171,32 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         },
         pregnancy: {
           fddTitle: "First day of disability leave for pregnancy",
-          importantNotes: "Important notes:",
-          youCanApply: `You can apply starting the day your disability begins (your first day out of work).
+          maternityTimeline: `Use the <a href="https://www.nj.gov/labor/myleavebenefits/labor/myleavebenefits/worker/maternity/timeline-welcome.shtml" target="_blank">Maternity Timeline Coverage Tool</a> to help plan your leave dates.`,
+          fddNotes: `<strong>Heads up:</strong>
             <br><br>
-            Enter your "first day of disability leave" date carefully. If it changes later, you'll need to update us in writing.
+            You can apply starting the day your leave begins.
             <br><br>
-            Check out the <a href="" target="_blank">Maternity Timeline Coverage Tool</a> for more help planning this start of disability leave date.
+            Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.
           `,
           fddQuestion: `<strong>What is your first date of disability leave?</strong>
             <br><br>
             Remember:
             <ul class="usa-list">
-              <li>* You can apply starting the day your leave begins.</li>
-              <li>* Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.</li>
               <li>* You can begin your leave up to 4 weeks before your due date (or delivery date), or earlier if you experience complications.</li>
               <li>* Enter the actual date your leave began, even if it was a day you don't usually work (like a weekend or holiday).</li>
             </ul>
             <br>
           `,
-          fddHint: "<strong>Hint:</strong> You are entitled to <strong>start</strong> your leave up to 4 weeks before your due date (or delivery date).",
           beforeAfterTitle: "Before and after pregnancy/delivery",
-          lastWorkday: `What is your last workday?
+          lastWorkday: `What was the last day you worked?
             <br><br>
             <strong>Hint:</strong> This is the last day you actually worked-- not including PTO, vacation, or sick days you used before your leave started.
           `,
-          recovered: `Have you recovered from childbirth? "Recovered" means you are available to return to work.
+          recovered: `Have you recovered from pregnancy and delivery?
             <br><br>
-            <strong>Hint:</strong> You are entitled to at least 6 or 8 weeks of Temporary Disability Insurance benefits to recover from childbirth.
+            <strong>Hint:</strong> You are entitled to at least 6 or 8 weeks of recovery time using TDI. After it ends, you can apply separately for family leave to bond with your baby. The <a href="https://www.nj.gov/labor/myleavebenefits/labor/myleavebenefits/worker/maternity/timeline-welcome.shtml" target="_blank">Maternity Timeline Tool</a> can help you plan.
           `,
-          moreTimeAvailable: "More time available",
-          fliInfo: `You are entitled to up to 12 weeks of <a href="https://www.nj.gov/labor/myleavebenefits/worker/fli/index.shtml" target="_blank">Family Leave for bonding time</a>. This is a separate application. See the <a href="https://www.nj.gov/labor/myleavebenefits/worker/maternity/timeline-welcome.shtml" target="_blank">Maternity Timeline Tool</a>.`,
-          recoveryDate: `What is the date you recovered or expect to cover from childbirth?
-            <br><br>
-            <strong>Hint:</strong> we have pre-filled this date at the default 6 weeks after your due date. This is just an estimate.
-          `,
+          recoveryDate: `When did you recover?`,
           estRecoveryDate: "When do you anticipate being able to return to work? This can be an estimate and we will ask you again later to verify.",
           whatsNext: "What's Next?",
           howDelivered: `Confirm with us how you delivered, if you haven't already shared this with us.
@@ -241,7 +240,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         },
         work: {
           title: "Worker's Compensation",
-          causedByJob: "Was your {{disabilityTypeString}} caused by your job? (Could be a specific incident or happened over time)",
+          causedByJob: "Was your disability caused by your job? (Could be a specific incident or happened over time)",
           workersCompClaim: `Have you or your employer filed a <a href="https://www.nj.gov/labor/workerscompensation/injured-worker-protections/index.shtml" target="_blank">Workers' Compensation Claim</a>, or do you plan to file one?`,
           workersCompClaimApproved: "Have you been approved for (or awarded, or received) Workers' Compensation benefits?",
           employerInfo: {

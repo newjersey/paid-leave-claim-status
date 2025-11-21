@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import { reasonForLeavePage, setupReasonForLeavePage } from "./reasonForLeave";
-import { leaveSchedulePage, setupLeaveSchedulePage, showLeaveScheduleForDisabilityType } from "./leaveSchedule";
+import { setupLeaveSchedulePage, showLeaveScheduleForDisabilityType } from "./leaveSchedule";
 import { logEvent } from "../../modules/shared.mjs";
 import { DisabilityType, setNewTitle } from '../utils';
 
@@ -51,24 +51,12 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
-    .page h2, .page h3 {
+    h2.usa-alert__heading {
+      font-size: 24px;
+      margin: 0 0 10px;
       color: black;
       font-variant: normal;
       font-weight: bold;
-    }
-
-    .page h2 {
-      font-size: 24px;
-      margin: 50px 0 10px;
-    }
-
-    .page h2.usa-alert__heading {
-      margin: 0 0 10px;
-    }
-
-    .page h3 {
-      font-size: 18px;
-      margin: 0 0 10px;
     }
 
     .bold-text {
@@ -87,6 +75,18 @@ function addStyles() {
       color: #757575;
     }
 
+    p.usa-alert__text {
+      margin: 0;
+    }
+
+    .usa-alert--error::before {
+      content: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>');
+      background: none !important;
+      -webkit-mask: none !important;
+      mask: none !important;
+      top: auto !important;
+    }
+
     .usa-label.no-margin-top {
       margin-top: 0;
     }
@@ -101,19 +101,6 @@ function addStyles() {
       max-width: 400px;
       min-height: 40px;
       padding: 10px;
-    }
-
-    .usa-checkbox {
-      margin-bottom: 10px;
-    }
-
-    .usa-checkbox__input:checked+[class*=__label]:before, 
-    .usa-checkbox__input:checked:disabled+[class*=__label]:before {
-      background-image: url('data:image/svg+xml;charset=UTF-8,<svg%20xmlns=%22http://www.w3.org/2000/svg%22%20width=%2265%22%20height=%2250%22%20viewBox=%220%200%2065%2050%22><title>correct8</title><path%20fill=%22%23FFF%22%20fill-rule=%22evenodd%22%20d=%22M63.268%207.063l-5.616-5.61C56.882.685%2055.946.3%2054.845.3s-2.038.385-2.808%201.155L24.951%2028.552%2012.81%2016.385c-.77-.77-1.707-1.155-2.808-1.155-1.1%200-2.037.385-2.807%201.154l-5.616%205.61C.81%2022.764.425%2023.7.425%2024.8s.385%202.035%201.155%202.805l14.947%2014.93%205.616%205.61c.77.77%201.706%201.154%202.807%201.154s2.038-.384%202.808-1.154l5.616-5.61%2029.894-29.86c.77-.77%201.157-1.707%201.157-2.805%200-1.101-.385-2.036-1.156-2.805l-.001-.002z%22/></svg>'), linear-gradient(transparent, transparent);
-    }
-
-    .usa-date-picker__button {
-      background-image: url('data:image/svg+xml;charset=UTF-8,<svg%20xmlns=%22http://www.w3.org/2000/svg%22%20height=%2224%22%20viewBox=%220%200%2024%2024%22%20width=%2224%22><path%20d=%22M0%200h24v24H0z%22%20fill=%22none%22/><path%20d=%22M20%203h-1V1h-2v2H7V1H5v2H4c-1.1%200-2%20.9-2%202v16c0%201.1.9%202%202%202h16c1.1%200%202-.9%202-2V5c0-1.1-.9-2-2-2zm0%2018H4V8h16v13z%22/></svg>');
     }
 
     .usa-label, .usa-checkbox__label {
@@ -135,10 +122,6 @@ function addStyles() {
     #reason-for-leave-form {
       margin: 0;
     }
-
-    #lastWorkdayPregnancyLabel {
-      margin-bottom: 20px;
-    }
   `;
   document.head.appendChild(style);
 }
@@ -159,7 +142,7 @@ function showLeaveSchedulePage() {
   document.getElementById(reasonForLeaveId).style.display = 'none';
   document.getElementById(leaveScheduleId).style.display = 'block';
 
-  showLeaveScheduleForDisabilityType(disabilityType, backButtonId);
+  showLeaveScheduleForDisabilityType(disabilityType);
 }
 
 function hideBackButton() {
