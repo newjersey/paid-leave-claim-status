@@ -247,8 +247,13 @@ export function leaveSchedulePage() {
 }
 
 export function showLeaveScheduleForDisabilityType(disabilityType) {
-  styleFDDQuestion(disabilityType);
-  styleLDWQuestion(disabilityType);
+  if (disabilityType === DisabilityType.PREGNANCY) {
+    styleFDDForPregnancy();
+    styleLDWForPregnancy();
+  } else {
+    styleFDDForIllnessInjury(disabilityType);
+    styleLDWForIllnessInjury(disabilityType);
+  }
 
   // TODO:
 
@@ -277,128 +282,173 @@ export function setupLeaveSchedulePage() {
   // setupSubmitLeaveScheduleIllnessInjury();
 }
 
-function styleFDDQuestion(disabilityType) {
-  if (disabilityType === DisabilityType.PREGNANCY) {
-    const fieldset = document.querySelector('#MainDiv > fieldset');
+function styleFDDForPregnancy() {
+  const fieldset = document.querySelector('#MainDiv > fieldset');
+  const divElement = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD');
 
-    const maternityTimelineToolHtml = `
-      <fieldset>
-        <svg style="vertical-align:-5px;" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>
-        ${i18next.t('leaveSchedule.pregnancy.maternityTimeline')}
-      </fieldset>
-    `;
+  const maternityTimelineToolHtml = `
+    <fieldset>
+      <svg style="vertical-align:-5px;" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>
+      ${i18next.t('leaveSchedule.pregnancy.maternityTimeline')}
+    </fieldset>
+  `;
 
-    fieldset.insertAdjacentHTML('beforebegin', maternityTimelineToolHtml);
+  fieldset.insertAdjacentHTML('beforebegin', maternityTimelineToolHtml);
 
-    const legend = fieldset.querySelector('legend');
-    legend.textContent = i18next.t('leaveSchedule.pregnancy.fddTitle');
+  const legend = fieldset.querySelector('legend');
+  legend.textContent = i18next.t('leaveSchedule.pregnancy.fddTitle');
 
-    const divElement = fieldset.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD');
+  removeOldFDDText();
 
-    // clear existing text
-    divElement.querySelector('a').remove();
-    divElement.querySelector('strong').remove();
-    const childNodes = divElement.childNodes;
-    childNodes.forEach((node) => {
-      if (node.nodeType === Node.TEXT_NODE) {
-        node.remove();
-      }
-    });
-
-    const newParagraph = document.createElement('div');
-    newParagraph.innerHTML = `
-      <label class="usa-label no-margin-top" id="fddPregnancyLabel" for="fddPregnancy">
-        <span class="required-asterisk">*</span>
-          ${i18next.t('leaveSchedule.pregnancy.fddQuestion')}
-        </label>
-      <div class="usa-hint" id="fddPregnancyHint">${i18next.t('shared.dateFormat')}</div>
-    `;
-    divElement.insertBefore(newParagraph, divElement.firstChild);
-  }
+  const newParagraph = document.createElement('div');
+  newParagraph.innerHTML = `
+    <label class="usa-label no-margin-top" id="fddPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt">
+      <span class="required-asterisk">*</span>
+        ${i18next.t('leaveSchedule.pregnancy.fddQuestion')}
+      </label>
+    <div class="usa-hint" id="fddPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+  `;
+  divElement.insertBefore(newParagraph, divElement.firstChild);
 }
 
-function styleLDWQuestion(disabilityType) {
-  if (disabilityType === DisabilityType.PREGNANCY) {
-    const fieldset = document.querySelector('#divLDW > fieldset');
-    removeUnwantedElements(fieldset);
+function styleFDDForIllnessInjury(disabilityType) {
+  const disabilityTypeString = disabilityType === DisabilityType.ILLNESS 
+    ? i18next.t('shared.illness') 
+    : i18next.t('shared.injury');
 
-    const legend = fieldset.querySelector('legend');
-    legend.textContent = i18next.t('leaveSchedule.pregnancy.beforeAfterTitle');
+  const fieldset = document.querySelector('#MainDiv > fieldset');
+  const divElement = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD');
 
-    const ldwDateInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd');
-    const ldwLabel = `
-      <label class="usa-label no-margin-top" id="ldwPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd">
-        <span class="required-asterisk">*</span>
-        ${i18next.t('leaveSchedule.pregnancy.lastWorkday')}
+  const infoHtml = `
+    <br>
+    <p>${i18next.t('leaveSchedule.illnessInjury.fddNotes')}</p>
+    <br>
+  `;
+
+  fieldset.insertAdjacentHTML('beforebegin', infoHtml);
+
+
+  const legend = fieldset.querySelector('legend');
+  legend.textContent = i18next.t('leaveSchedule.illnessInjury.fddTitle');
+
+  removeOldFDDText();
+
+  const newParagraph = document.createElement('div');
+  newParagraph.innerHTML = `
+    <label class="usa-label no-margin-top" id="fddIllnessInjuryLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt">
+      <span class="required-asterisk">*</span>
+        ${i18next.t('leaveSchedule.illnessInjury.fddQuestion', { disabilityTypeString })}
       </label>
-      <div class="usa-hint" id="ldwPregnancyHint">${i18next.t('shared.dateFormat')}</div>
-    `;
-    ldwDateInput.insertAdjacentHTML('beforebegin', ldwLabel);
+    <div class="usa-hint" id="fddIllnessInjuryHint">${i18next.t('shared.dateFormat')}</div>
+  `;
+  divElement.insertBefore(newParagraph, divElement.firstChild);
+}
 
-    const recoveredYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
-    const recoveredQuestion = `
-      <br><br>
-      <hr>
-      <label class="usa-label">
-        <span class="required-asterisk">*</span>
-        ${i18next.t('leaveSchedule.pregnancy.recovered')}
-      </label>
-    `;
-    const recoveredYesLabel = `
-      <label class="usa-label" id="recPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes">
-        ${i18next.t('shared.yes')}
-      </label>
-    `;
-    recoveredYes.insertAdjacentHTML('beforebegin', recoveredQuestion);
-    recoveredYes.insertAdjacentHTML('beforebegin', recoveredYesLabel);
+function removeOldFDDText() {
+  const divElement = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD');
+  divElement.querySelector('a').remove();
+  divElement.querySelector('strong').remove();
+  const childNodes = divElement.childNodes;
+  childNodes.forEach((node) => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      node.remove();
+    }
+  });
+}
 
-    const recoveredNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo');
-    const recoveredNoLabel = `
-      <label class="usa-label" id="recPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo">
-        ${i18next.t('shared.no')}
-      </label>
-    `;
-    recoveredNo.insertAdjacentHTML('beforebegin', recoveredNoLabel);
+function styleLDWForPregnancy() {
+  const fieldset = document.querySelector('#divLDW > fieldset');
+  removeUnwantedElements(fieldset);
 
-    styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
-    styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo');
+  const legend = fieldset.querySelector('legend');
+  legend.textContent = i18next.t('leaveSchedule.pregnancy.beforeAfterTitle');
 
-    const returnInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk');
-    const returnLabel = `
-      <br><br>
-      <hr>
-      <label class="usa-label" id="returnPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk">
-        <span class="required-asterisk">*</span>
-        ${i18next.t('leaveSchedule.pregnancy.recoveryDate')}
-      </label>
-      <div class="usa-hint" id="returnPregnancyHint">${i18next.t('shared.dateFormat')}</div>
-    `;
-    returnInput.insertAdjacentHTML('beforebegin', returnLabel);
+  const ldwDateInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd');
+  const ldwLabel = `
+    <label class="usa-label no-margin-top" id="ldwPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd">
+      <span class="required-asterisk">*</span>
+      ${i18next.t('leaveSchedule.pregnancy.lastWorkday')}
+    </label>
+    <div class="usa-hint" id="ldwPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+  `;
+  ldwDateInput.insertAdjacentHTML('beforebegin', ldwLabel);
 
-    const estReturnInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk');
-    const estReturnLabel = `
-      <br><br>
-      <hr>
-      <label class="usa-label" id="estReturnPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk">
-        <span class="required-asterisk">*</span>
-        ${i18next.t('leaveSchedule.pregnancy.estRecoveryDate')}
-      </label>
-      <div class="usa-hint" id="estReturnPregnancyHint">${i18next.t('shared.dateFormat')}</div>
-    `;
-    estReturnInput.insertAdjacentHTML('beforebegin', estReturnLabel);
+  const recoveredYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
+  const recoveredQuestion = `
+    <br><br>
+    <hr>
+    <label class="usa-label">
+      <span class="required-asterisk">*</span>
+      ${i18next.t('leaveSchedule.pregnancy.recovered')}
+    </label>
+  `;
+  recoveredYes.insertAdjacentHTML('beforebegin', recoveredQuestion);
+  styleRecoveryRadioButtons();
 
-    const alertHtml = `
-      <div class="usa-alert usa-alert--info" id="pregnancyAlert">
-        <div class="usa-alert__body">
-          <h2 class="usa-alert__heading">${i18next.t('leaveSchedule.pregnancy.whatsNext')}</h2>
-          <p class="usa-alert__text">
-            ${i18next.t('leaveSchedule.pregnancy.howDelivered')}
-          </p>
-        </div>
+  const returnInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk');
+  const returnLabel = `
+    <br><br>
+    <hr>
+    <label class="usa-label" id="returnPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk">
+      <span class="required-asterisk">*</span>
+      ${i18next.t('leaveSchedule.pregnancy.recoveryDate')}
+    </label>
+    <div class="usa-hint" id="returnPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+  `;
+  returnInput.insertAdjacentHTML('beforebegin', returnLabel);
+
+  const estReturnInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk');
+  const estReturnLabel = `
+    <br><br>
+    <hr>
+    <label class="usa-label" id="estReturnPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk">
+      <span class="required-asterisk">*</span>
+      ${i18next.t('leaveSchedule.pregnancy.estRecoveryDate')}
+    </label>
+    <div class="usa-hint" id="estReturnPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+  `;
+  estReturnInput.insertAdjacentHTML('beforebegin', estReturnLabel);
+
+  const alertHtml = `
+    <div class="usa-alert usa-alert--info" id="pregnancyAlert">
+      <div class="usa-alert__body">
+        <h2 class="usa-alert__heading">${i18next.t('leaveSchedule.pregnancy.whatsNext')}</h2>
+        <p class="usa-alert__text">
+          ${i18next.t('leaveSchedule.pregnancy.howDelivered')}
+        </p>
       </div>
-    `;
-    fieldset.insertAdjacentHTML('afterend', alertHtml);
-  }
+    </div>
+  `;
+  fieldset.insertAdjacentHTML('afterend', alertHtml);
+}
+
+function styleLDWForIllnessInjury(disabilityType) {
+  const fieldset = document.querySelector('#divLDW > fieldset');
+  removeUnwantedElements(fieldset);
+
+  const legend = fieldset.querySelector('legend');
+  legend.textContent = i18next.t('leaveSchedule.illnessInjury.beforeAfterTitle');
+}
+
+function styleRecoveryRadioButtons() {
+  const recoveredYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
+  const recoveredYesLabel = `
+    <label class="usa-label" id="recPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes">
+      ${i18next.t('shared.yes')}
+    </label>
+  `;
+  recoveredYes.insertAdjacentHTML('beforebegin', recoveredYesLabel);
+
+  const recoveredNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo');
+  const recoveredNoLabel = `
+    <label class="usa-label" id="recPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo">
+      ${i18next.t('shared.no')}
+    </label>
+  `;
+  recoveredNo.insertAdjacentHTML('beforebegin', recoveredNoLabel);
+
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo');
 }
 
 function removeUnwantedElements(parent) {
