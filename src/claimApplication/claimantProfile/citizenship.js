@@ -23,6 +23,7 @@ export const identifyingContent = {
 };
 
 export function changes() {
+  addStyles();
   adjustWidths();
   styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenYes');
   styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbtnCitizenNo');
@@ -40,6 +41,17 @@ export function changes() {
   adjustQuestions();
   removeWhitespaceNodes();
   setNewTitle(i18next.t('citizenship.title'));
+}
+
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    #ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_btnSave {
+      padding-top: 0;
+      padding-bottom: 0;
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 function adjustWidths () {
