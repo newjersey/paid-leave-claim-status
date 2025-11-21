@@ -81,7 +81,7 @@ describe("Medical Treatment page", () => {
       cy.confirmEventIsNotTracked("WorkersComp Yes Clicked");
     });
 
-    it("user can input info when session contains reason and proceed to next page", () => {
+    it("user can input info when session contains pregnant reason and proceed to next page", () => {
       cy.window().then((win) => {
         const data = { reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY };
         win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));     
@@ -99,7 +99,35 @@ describe("Medical Treatment page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocZip1').type('08901');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERNO').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospNo').click({ force: true });
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo').click({ force: true });
+
+      cy.get('#causedByJobQuestion').should('not.be.visible');
+      cy.get('#workersCompContainer').should('not.be.visible');
+
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc').click();
+      // TODO: verify post data for automatic entry
+      // cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it("user can input info when session contains injury reason and proceed to next page", () => {
+      cy.window().then((win) => {
+        const data = { reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));     
+      });
+      cy.visit(FIXTURE);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury').should('not.be.visible');
+      
+      // TODO: DRY somehow
+      cy.mockASPX(URL);
+      cy.get('#check-provider-type-accepted').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm').type('Dr. Spaceman');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddYes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocAdd1').type('30 Livingston Avenue');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocCity').type('New Brunswick');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocZip1').type('08901');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERNO').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospNo').click({ force: true });
+      cy.get('#caused-by-job-yes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc').click();
       // TODO: verify post data for automatic entry
       // cy.wait('@aspxSubmission').then(checkPostData);

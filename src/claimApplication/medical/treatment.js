@@ -163,11 +163,11 @@ function addProviderScreener() {
 
 function addWorkersCompScreener() {
   const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
-  const workerCompContainer = workersCompNo.closest('div').closest('div');
-  workerCompContainer.id = "workerCompContainer"
-  workerCompContainer.style.display = 'none';
+  const workersCompContainer = workersCompNo.closest('div').closest('div');
+  workersCompContainer.id = "workersCompContainer"
+  workersCompContainer.style.display = 'none';
 
-  const strongElements = workerCompContainer.querySelectorAll('strong');
+  const strongElements = workersCompContainer.querySelectorAll('strong');
   strongElements.forEach((element) => {
     if (element.textContent.trim() === '7.') {
       element.textContent = '7a.';
@@ -210,7 +210,7 @@ function addWorkersCompScreener() {
       </div>
     </fieldset>
   `;
-  workerCompContainer.parentElement.insertBefore(causedByJobQuestion, workerCompContainer);
+  workersCompContainer.parentElement.insertBefore(causedByJobQuestion, workersCompContainer);
 
   const causedByJobYes = document.getElementById('caused-by-job-yes');
   const causedByJobNo = document.getElementById('caused-by-job-no');
@@ -218,13 +218,13 @@ function addWorkersCompScreener() {
 
   causedByJobYes.addEventListener('change', function () {
     resetElementText(causedByJobLegend);
-    workerCompContainer.style.display = 'block';
+    workersCompContainer.style.display = 'block';
     workersCompNo.checked = false;
   });
 
   causedByJobNo.addEventListener('change', function () {
     resetElementText(causedByJobLegend);
-    workerCompContainer.style.display = 'none';
+    workersCompContainer.style.display = 'none';
     workersCompNo.click();
   });
 
@@ -263,11 +263,11 @@ function loadReasonData() {
   if (reason === 'pregnancy') {
     const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
     const causedByJobQuestion = document.getElementById('causedByJobQuestion');
-    const workerCompContainer = document.getElementById('workerCompContainer');
+    const workersCompContainer = document.getElementById('workersCompContainer');
 
     workersCompNo.click();
     causedByJobQuestion.style.display = 'none';
-    workerCompContainer.style.display = 'none';
+    workersCompContainer.style.display = 'none';
   }
 }
 
