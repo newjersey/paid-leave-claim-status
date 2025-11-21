@@ -163,10 +163,11 @@ function addProviderScreener() {
 
 function addWorkersCompScreener() {
   const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
-  const atWorkContainer = workersCompNo.closest('div').closest('div');
-  atWorkContainer.style.display = 'none';
+  const workerCompContainer = workersCompNo.closest('div').closest('div');
+  workerCompContainer.id = "workerCompContainer"
+  workerCompContainer.style.display = 'none';
 
-  const strongElements = atWorkContainer.querySelectorAll('strong');
+  const strongElements = workerCompContainer.querySelectorAll('strong');
   strongElements.forEach((element) => {
     if (element.textContent.trim() === '7.') {
       element.textContent = '7a.';
@@ -174,6 +175,7 @@ function addWorkersCompScreener() {
   });
 
   const causedByJobQuestion = document.createElement('div');
+  causedByJobQuestion.id = "causedByJobQuestion";
   causedByJobQuestion.style.margin = "0 0 20px";
   causedByJobQuestion.innerHTML = `
     <fieldset class="usa-fieldset">
@@ -208,7 +210,7 @@ function addWorkersCompScreener() {
       </div>
     </fieldset>
   `;
-  atWorkContainer.parentElement.insertBefore(causedByJobQuestion, atWorkContainer);
+  workerCompContainer.parentElement.insertBefore(causedByJobQuestion, workerCompContainer);
 
   const causedByJobYes = document.getElementById('caused-by-job-yes');
   const causedByJobNo = document.getElementById('caused-by-job-no');
@@ -216,13 +218,13 @@ function addWorkersCompScreener() {
 
   causedByJobYes.addEventListener('change', function () {
     resetElementText(causedByJobLegend);
-    atWorkContainer.style.display = 'block';
+    workerCompContainer.style.display = 'block';
     workersCompNo.checked = false;
   });
 
   causedByJobNo.addEventListener('change', function () {
     resetElementText(causedByJobLegend);
-    atWorkContainer.style.display = 'none';
+    workerCompContainer.style.display = 'none';
     workersCompNo.click();
   });
 
@@ -258,12 +260,15 @@ function loadReasonData() {
   textArea.closest('fieldset').style.display = 'none';
   document.getElementById('providerTypeQuestionNumber').style.display = 'inline';
 
-  // if (reason === 'pregnancy') {
-  //   const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
-  //   workersCompNo.click();
-  //   workersCompNo.parentElement.parentElement.style.display = 'none';
-  // }
+  if (reason === 'pregnancy') {
+    const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
+    const causedByJobQuestion = document.getElementById('causedByJobQuestion');
+    const workerCompContainer = document.getElementById('workerCompContainer');
 
+    workersCompNo.click();
+    causedByJobQuestion.style.display = 'none';
+    workerCompContainer.style.display = 'none';
+  }
 }
 
 function styleRadioButtons() {
