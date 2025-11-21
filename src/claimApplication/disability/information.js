@@ -1,6 +1,6 @@
 import i18next from 'i18next';
 import { reasonForLeavePage, setupReasonForLeavePage } from "./reasonForLeave";
-import { leaveSchedulePage, setupLeaveSchedulePage, showLeaveScheduleForDisabilityType } from "./leaveSchedule";
+import { setupLeaveSchedulePage, showLeaveScheduleForDisabilityType } from "./leaveSchedule";
 import { logEvent } from "../../modules/shared.mjs";
 import { DisabilityType, setNewTitle } from '../utils';
 
