@@ -63,6 +63,7 @@ export function trackWorkersCompYesSubmission(pageId) {
 
 export function changes() {
   addStyles();
+  replaceDoctorText();
   addProviderScreener();
   addWorkersCompScreener();
   loadReasonData();
@@ -89,6 +90,22 @@ function addStyles() {
     }
   `;
   document.head.appendChild(style);
+}
+
+function replaceDoctorText() {
+  // TODO: do in a translation-compatible way
+  const linkElements = document.querySelectorAll('a');
+
+  linkElements.forEach((element) => {
+    let text = element.textContent;
+    if (text.includes('doctor/hospital')) {
+      text = text.replace('doctor/hospital', 'healthcare provider');
+    }
+    if (text.includes('doctor’s/hospital’s')) {
+      text = text.replace('doctor’s/hospital’s', `healthcare provider's`);
+    }
+    element.textContent = text;
+  });
 }
 
 function addProviderScreener() { 
