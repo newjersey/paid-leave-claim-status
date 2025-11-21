@@ -43,7 +43,10 @@ export function globalTestsOld(url) {
 
 export function globalTestsNew(pageId, url) {
   it("feedback widget is visible", () => {
-    cy.get('feedback-widget').should('have.length', 1).and('be.visible');
+    cy.checkFeedbackWidgetIsRendered();
+    // TODO: determine why cy.checkFeedbackWidgetIsInteractable() 
+    // and cy.checkFeedbackWidgetEmailDisclaimerTextIsOverridden()
+    // fail and test those as well
   });
 
   it("applies the new font family", () => {

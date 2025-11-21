@@ -1,6 +1,10 @@
 import { applyFooter } from "./footer.js";
 import { replaceHeader } from "./header.js";
-import { addFeedbackWidgetScriptToHead, ICON_BASE_URL } from "../modules/shared.mjs";
+import {
+  addFeedbackWidgetScriptToHead,
+  ICON_BASE_URL,
+  overrideFeedbackWidgetEmailDisclaimerText
+} from "../modules/shared.mjs";
 
 export function globalDesignChanges(pageId) {
   addViewportMetaTag();
@@ -120,12 +124,13 @@ function addFeedbackWidget() {
   if (!existingWidget) {
     addFeedbackWidgetScriptToHead();
     const feedbackWidget = document.createElement('feedback-widget');
-    feedbackWidget.setAttribute('contact-link', 'https://www.nj.gov/labor/aboutlwd/contactus.shtml');
+    feedbackWidget.setAttribute('contact-link', 'https://www.nj.gov/labor/myleavebenefits/help/contact/');
     feedbackWidget.setAttribute('only-save-rating-to-analytics', 'true');
 
     const footer = document.getElementById('helpSection');
     if (footer) {
       footer.parentNode.insertBefore(feedbackWidget, footer);
+      overrideFeedbackWidgetEmailDisclaimerText();
     }
   }
 }
