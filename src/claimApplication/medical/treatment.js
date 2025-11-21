@@ -294,7 +294,7 @@ function loadReasonData() {
   }
 
   const textArea = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury');
-  textArea.value = `${reason}. ${details}`;
+  textArea.value = `${reason}${details ? `. ${details}` : ''}`;
   textArea.closest('fieldset').style.display = 'none';
   document.getElementById('providerTypeQuestionNumber').style.display = 'inline';
 
