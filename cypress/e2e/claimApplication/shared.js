@@ -10,7 +10,7 @@ export const EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS = {
 
 export const EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY = {
   "reasons": "injury",
-  "illness-details": "",
+  "injury-details": "",
 };
 
 export const EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY_DETAILS = {
@@ -25,7 +25,7 @@ export const EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS = {
 
 export const EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS = {
   "reasons": "injury",
-  "illness-details": "Broken Elbow.",
+  "injury-details": "Broken Elbow.",
 };
 
 export function globalTestsOld(url) {

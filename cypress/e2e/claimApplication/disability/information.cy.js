@@ -60,29 +60,33 @@ describe("Disability Information page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     }
 
+    function checkSessionData(reasonForLeaveData) {
+      cy.window().then((win) => {
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData));
+        expect(data).to.deep.equal({
+          reason_for_leave: reasonForLeaveData
+        });
+      });
+    }
+
     it("user can input info about pregnancy with blank extra text and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#reason-pregnancy').click({ force: true });
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
-      cy.window().then((win) => {
-        const encodedData = win.sessionStorage.getItem('session_data');
-        const data = JSON.parse(encodeDecode(encodedData));
-        expect(data).to.deep.equal({
-          reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY
-        });
-      });
+      checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY);
     });
 
     it("user can input info about pregnancy and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#reason-pregnancy').click({ force: true });
-      cy.get('#pregnancy-details').type("Emergency C-Section.");
+      cy.get('#pregnancy-details').type("Emergency C-section.");
       cy.get('#submitReasonForLeave').click();
       cy.get('#leaveScheduleBack').click();
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
-      // TODO: check session storage
+      checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY_DETAILS);
     });
 
     it("user can input info about illness with blank extra text after first choosing injury and proceed to next page", () => {
@@ -94,7 +98,7 @@ describe("Disability Information page", () => {
       cy.get('#reason-illness').click({ force: true });
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
-      // TODO: check session storage
+      checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS);
     });
 
     it("user can input info about illness and proceed to next page", () => {
@@ -103,7 +107,7 @@ describe("Disability Information page", () => {
       cy.get('#illness-details').type("Lung Inflammation.");
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
-      // TODO: check session storage
+      checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS);
     });
 
     it("user can input info about injury with blank extra text and proceed to next page", () => {
@@ -111,7 +115,7 @@ describe("Disability Information page", () => {
       cy.get('#reason-injury').click({ force: true });
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
-      // TODO: check session storage
+      checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY);
     });
 
     it("user can input info about injury and proceed to next page", () => {
@@ -120,7 +124,7 @@ describe("Disability Information page", () => {
       cy.get('#injury-details').type("Broken Elbow.");
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
-      // TODO: check session storage
+      checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS);
     });
 
     it("blocks user that enters First Date of Disability in the future", () => {
