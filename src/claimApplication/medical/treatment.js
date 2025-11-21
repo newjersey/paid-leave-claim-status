@@ -184,11 +184,13 @@ function addWorkersCompScreener() {
   workersCompContainer.id = "workersCompContainer"
   workersCompContainer.style.display = 'none';
 
-  const strongElements = workersCompContainer.querySelectorAll('strong');
-  strongElements.forEach((element) => {
-    if (element.textContent.trim() === '7.') {
-      element.textContent = '7a.';
+  const linkElements = workersCompContainer.querySelectorAll('a');
+  linkElements.forEach((element) => {
+    let text = element.textContent;
+    if (text.includes('7.')) {
+      text = text.replace('7.', '7a.');
     }
+    element.textContent = text;
   });
 
   const causedByJobQuestion = document.createElement('div');
@@ -198,8 +200,7 @@ function addWorkersCompScreener() {
     <fieldset class="usa-fieldset">
       <legend id="caused-by-job-legend" class="usa-legend usa-legend">
         <span class="required-asterisk">*</span>
-        <strong>7. </strong>
-        <span id="causedByJobText">${i18next.t('medicalInfo.work.causedByJob')}</span>
+        7. <span id="causedByJobText">${i18next.t('medicalInfo.work.causedByJob')}</span>
       </legend>
       <div class="usa-radio">
         <input
@@ -208,6 +209,7 @@ function addWorkersCompScreener() {
           type="radio"
           name="caused-by-job"
           value="yes"
+          required
         />
         <label class="usa-radio__label" for="caused-by-job-yes">
           ${i18next.t('shared.yes')}
@@ -220,6 +222,7 @@ function addWorkersCompScreener() {
           type="radio"
           name="caused-by-job"
           value="no"
+          required
         />
         <label class="usa-radio__label" for="caused-by-job-no">
           ${i18next.t('shared.no')}
@@ -234,15 +237,33 @@ function addWorkersCompScreener() {
   const causedByJobLegend = document.getElementById('caused-by-job-legend');
 
   causedByJobYes.addEventListener('change', function () {
+    const refreshedWorkersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
     resetElementText(causedByJobLegend);
     workersCompContainer.style.display = 'block';
-    workersCompNo.checked = false;
+    refreshedWorkersCompNo.checked = false;
   });
 
   causedByJobNo.addEventListener('change', function () {
+    const refreshedWorkersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
     resetElementText(causedByJobLegend);
     workersCompContainer.style.display = 'none';
-    workersCompNo.click();
+    refreshedWorkersCompNo.click();
+  });
+
+  const form = document.getElementById('form1');
+  form.addEventListener('submit', (event) => {
+    if (!causedByJobYes.checked && !causedByJobNo.checked) {
+      event.preventDefault();
+      elementTextError(causedByJobLegend);
+      causedByJobYes.focus();
+    } else {
+      causedByJobYes.removeAttribute('name');
+      causedByJobNo.removeAttribute('name');
+      form.addEventListener('formdata', () => {
+        causedByJobYes.setAttribute('name', 'caused-by-job');
+        causedByJobNo.setAttribute('name', 'caused-by-job');
+      }, { once: true });
+    }
   });
 
   causedByJobYes.addEventListener('invalid', function () {
@@ -278,10 +299,12 @@ function loadReasonData() {
   document.getElementById('providerTypeQuestionNumber').style.display = 'inline';
 
   if (reason === 'pregnancy') {
+    const causedByJobNo = document.getElementById('caused-by-job-no');
     const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
     const causedByJobQuestion = document.getElementById('causedByJobQuestion');
     const workersCompContainer = document.getElementById('workersCompContainer');
 
+    causedByJobNo.click();
     workersCompNo.click();
     causedByJobQuestion.style.display = 'none';
     workersCompContainer.style.display = 'none';
