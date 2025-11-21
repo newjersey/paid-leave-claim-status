@@ -1,4 +1,14 @@
-import { globalTestsNew, globalTestsOld } from "../shared";
+import {
+  EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS,
+  EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS,
+  EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY,
+  EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS,
+  EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY,
+  EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY_DETAILS,
+  globalTestsNew,
+  globalTestsOld
+} from "../shared";
+import { encodeDecode } from '../../../../src/claimApplication/utils';
 
 const PAGE_ID = 'disabilityInformation';
 const URL = 'ClaimantDisabililty';
@@ -55,13 +65,21 @@ describe("Disability Information page", () => {
       cy.get('#reason-pregnancy').click({ force: true });
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
-      // TODO: check session storage
+      cy.window().then((win) => {
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData));
+        expect(data).to.deep.equal({
+          reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY
+        });
+      });
     });
 
     it("user can input info about pregnancy and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#reason-pregnancy').click({ force: true });
       cy.get('#pregnancy-details').type("Emergency C-Section.");
+      cy.get('#submitReasonForLeave').click();
+      cy.get('#leaveScheduleBack').click();
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
       // TODO: check session storage
@@ -71,6 +89,8 @@ describe("Disability Information page", () => {
       cy.mockASPX(URL);
       cy.get('#reason-injury').click({ force: true });
       cy.get('#injury-details').type("Broken Elbow.");
+      cy.get('#submitReasonForLeave').click();
+      cy.get('#leaveScheduleBack').click();
       cy.get('#reason-illness').click({ force: true });
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
@@ -80,7 +100,7 @@ describe("Disability Information page", () => {
     it("user can input info about illness and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#reason-illness').click({ force: true });
-      cy.get('#illness-details').type("Emergency C-Section.");
+      cy.get('#illness-details').type("Lung Inflammation.");
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
       // TODO: check session storage
