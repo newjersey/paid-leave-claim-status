@@ -1,5 +1,5 @@
 import i18next from 'i18next';
-import { reasonForLeavePage, setupReasonForLeavePage } from "./reasonForLeave";
+import { reasonForLeavePage, setupReasonForLeavePage, restoreReasonForLeaveData } from "./reasonForLeave";
 import { setupLeaveSchedulePage, showLeaveScheduleForDisabilityType } from "./leaveSchedule";
 import { logEvent } from "../../modules/shared.mjs";
 import { DisabilityType, setNewTitle } from '../utils';
@@ -43,6 +43,7 @@ export function changes() {
 
     setupReasonForLeavePage(setDisabilityType, showLeaveSchedulePage);
     setupLeaveSchedulePage();
+    restoreReasonForLeaveData(setDisabilityType);
 
     showReasonForLeavePage();
   }

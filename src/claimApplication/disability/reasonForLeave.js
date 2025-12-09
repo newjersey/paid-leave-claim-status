@@ -5,6 +5,7 @@ import {
   DisabilityType,
   elementTextError,
   resetElementText,
+  getSessionData,
   STORAGE_KEY_REASON_FOR_LEAVE
 } from '../utils';
 
@@ -201,4 +202,42 @@ function setupSubmitReasonForLeave(showLeaveSchedulePage) {
 
     showLeaveSchedulePage();
   });
+}
+
+export function restoreReasonForLeaveData(setDisabilityType) {
+  const savedData = getSessionData();
+  const savedReason = savedData[STORAGE_KEY_REASON_FOR_LEAVE]
+  
+  if (!savedReason || !savedReason.reasons) {
+    return false;
+  };
+
+  const reason = savedReason.reasons;
+
+  const radioId = `reason-${reason}`
+  const radioButton = document.getElementById(radioId)
+  if (radioButton) {
+    radioButton.checked = true;
+    radioButton.dispatchEvent(new Event('change'));
+  }
+
+  const disabilityTypeMap = {
+    'pregnancy': DisabilityType.PREGNANCY,
+    'illness': DisabilityType.ILLNESS,
+    'injury': DisabilityType.INJURY
+  };
+  setDisabilityType(disabilityTypeMap[reason]);
+
+  const detailsKey = `${reason}-details`;
+    const savedDetails = savedReason[detailsKey];
+    if (savedDetails) {
+
+      // Remove the paste signal suffix if it exists (e.g., "p120")
+      const cleanedDetails = savedDetails.replace(/p\d+$/, '');
+      const textarea = document.querySelector(`textarea[name="${detailsKey}"]`);
+      if (textarea) {
+        textarea.value = cleanedDetails;
+      }
+    }
+
 }
