@@ -8,6 +8,8 @@ import {
   resetElementText,
   setNewTitle,
   STORAGE_KEY_REASON_FOR_LEAVE,
+  addToSessionData,
+  STORAGE_KEY_PROVIDER_TYPE_ACCEPTED,
   styleRadioButton
 } from '../utils';
 
@@ -168,9 +170,17 @@ function addProviderScreener() {
 
   const checkbox = document.getElementById("check-provider-type-accepted");
   const legend = document.getElementById("provider-type-accepted-legend");
+  
+  const sessionData = getSessionData();
+    if (sessionData[STORAGE_KEY_PROVIDER_TYPE_ACCEPTED]) {
+      checkbox.checked = true;
+    }
 
   checkbox.addEventListener('change', function () {
     resetElementText(legend);
+    addToSessionData({
+      [STORAGE_KEY_PROVIDER_TYPE_ACCEPTED]: checkbox.checked
+    });
   });
 
   checkbox.addEventListener('invalid', function () {

@@ -6,7 +6,8 @@ import {
   elementTextError,
   resetElementText,
   getSessionData,
-  STORAGE_KEY_REASON_FOR_LEAVE
+  STORAGE_KEY_REASON_FOR_LEAVE,
+  STORAGE_KEY_CAUSED_BY_JOB,
 } from '../utils';
 
 const TEXT_AREA_IDS = ['pregnancy-details', 'illness-details', 'injury-details'];
