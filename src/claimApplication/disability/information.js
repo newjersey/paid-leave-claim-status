@@ -2,7 +2,7 @@ import i18next from 'i18next';
 import { reasonForLeavePage, setupReasonForLeavePage, restoreReasonForLeaveData } from "./reasonForLeave";
 import { setupLeaveSchedulePage, showLeaveScheduleForDisabilityType } from "./leaveSchedule";
 import { logEvent } from "../../modules/shared.mjs";
-import { DisabilityType, setNewTitle } from '../utils';
+import { DisabilityType, setNewTitle, setRequiredForVisibleLeaveSectionFields } from '../utils';
 
 export const disabilityInformationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt', label: 'Disability Start Date' },
@@ -133,6 +133,7 @@ function showReasonForLeavePage() {
 
   document.getElementById(reasonForLeaveId).style.display = 'block';
   document.getElementById(leaveScheduleId).style.display = 'none';
+  setRequiredForVisibleLeaveSectionFields('reasonForLeave');
 }
 
 function showLeaveSchedulePage() {
@@ -144,6 +145,7 @@ function showLeaveSchedulePage() {
   document.getElementById(leaveScheduleId).style.display = 'block';
 
   showLeaveScheduleForDisabilityType(disabilityType);
+  setRequiredForVisibleLeaveSectionFields('leaveSchedule');
 }
 
 function hideBackButton() {

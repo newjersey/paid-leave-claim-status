@@ -10,6 +10,7 @@ import {
   STORAGE_KEY_REASON_FOR_LEAVE,
   addToSessionData,
   STORAGE_KEY_PROVIDER_TYPE_ACCEPTED,
+  setRequiredForVisibleLeaveSectionFields,
   styleRadioButton
 } from '../utils';
 
@@ -73,7 +74,13 @@ export function changes() {
   adjustTextEntries();
   styleRadioButtons();
   setNewTitle(i18next.t('medicalInfo.title'));
-}
+
+  const sessionData = getSessionData();
+    const reasonData = sessionData[STORAGE_KEY_REASON_FOR_LEAVE];
+    const reason = reasonData?.reasons;
+
+    setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason)
+  }
 
 function addStyles() {
   const style = document.createElement('style');  
