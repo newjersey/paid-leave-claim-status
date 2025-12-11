@@ -150,6 +150,161 @@ describe("Disability Information page", () => {
       cy.checkLogEvent("Validation Error", { contents: truncatedMessage });
     });
 
+    it("has required reason for leave fields on Leave Reason page", () => {
+      cy.get('#reason-pregnancy').should('have.attr', 'required');
+      cy.get('#reason-illness').should('have.attr', 'required');
+      cy.get('#reason-injury').should('have.attr', 'required');
+    });
+  
+    it("reason for leave fields are NOT required on when on Leave Schedule page", () => {
+      cy.get('#reason-illness').click({ force: true });
+      cy.get('#submitReasonForLeave').click();
+      cy.get('#reason-pregnancy').should('not.have.attr', 'required');
+      cy.get('#reason-illness').should('not.have.attr', 'required');
+      cy.get('#reason-injury').should('not.have.attr', 'required');
+    });
+  
+    it("reason fields become required again when navigating back", () => {
+      cy.get('#reason-illness').click({ force: true });
+      cy.get('#submitReasonForLeave').click();
+      cy.get('#leaveScheduleBack').click();
+      cy.get('#reason-pregnancy').should('have.attr', 'required');
+      cy.get('#reason-illness').should('have.attr', 'required');
+      cy.get('#reason-injury').should('have.attr', 'required');
+    });
+
+    it("restores reason for leave (pregnancy) with details from session storage", () => {
+      cy.window().then((win) => {
+        const data = {
+          reason_for_leave: {
+            reasons: "pregnancy",
+            "pregnancy-details": "Emergency C-section."
+          }
+        };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#reason-pregnancy').should('be.checked');
+      cy.get('textarea[name="pregnancy-details"]')
+        .should('be.visible')
+        .and('have.value', 'Emergency C-section.');
+      cy.get('#illness-details').should('not.be.visible');
+      cy.get('#injury-details').should('not.be.visible');
+    });
+
+    it("restores reason for leave (illness) with details from session storage", () => {
+      cy.window().then((win) => {
+        const data = {
+          reason_for_leave: {
+            reasons: "illness",
+            "illness-details": "Lung inflammation."
+          }
+        };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#reason-illness').should('be.checked');
+      cy.get('textarea[name="illness-details"]')
+        .should('be.visible')
+        .and('have.value', 'Lung inflammation.');
+    });
+  
+    it("restores reason for leave (injury) with details from session storage", () => {
+      cy.window().then((win) => {
+        const data = {
+          reason_for_leave: {
+            reasons: "injury",
+            "injury-details": "Fell down"
+          }
+        };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#reason-injury').should('be.checked');
+      cy.get('textarea[name="injury-details"]')
+        .should('be.visible')
+        .and('have.value', 'Fell down');
+    });
+
+    it("strips paste signal suffix from restored details", () => {
+      cy.window().then((win) => {
+        const data = {
+          reason_for_leave: {
+            reasons: "illness",
+            "illness-details": "Lung Inflammation.p120"  // has paste signal
+          }
+        };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('textarea[name="illness-details"]')
+        .should('have.value', 'Lung Inflammation.');
+    });
+  
+    it("shows pregnancy-specific Leave Schedule content after restoring from session data", () => {
+      cy.window().then((win) => {
+        const data = { reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#submitReasonForLeave').click();
+      cy.get('#maternityTimeline').should('be.visible');
+      cy.get('#pregnancyAlert').should('be.visible');
+    });
+    
+    it("does not show pregnancy related info with non-pregnancy leave type after restoring from session data", () => {
+      cy.window().then((win) => {
+        const data = { reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#submitReasonForLeave').click();
+      cy.get('#maternityTimeline').should('not.be.visible');
+      cy.get('#pregnancyAlert').should('not.be.visible');
+    });
+
+    it("handles empty session storage gracefully", () => {
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#reason-pregnancy').should('not.be.checked');
+      cy.get('#reason-illness').should('not.be.checked');
+      cy.get('#reason-injury').should('not.be.checked');
+    });
+    
+    it("handles malformed session data gracefully", () => {
+      cy.window().then((win) => {
+        const data = { reason_for_leave: { reasons: null } };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#reason-pregnancy').should('not.be.checked');
+    });
+    
+    it("handles missing details key gracefully when restoring from session data", () => {
+      cy.window().then((win) => {
+        const data = {
+          reason_for_leave: {
+            reasons: "illness"
+            // no details key
+          }
+        };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#reason-illness').should('be.checked');
+      cy.get('textarea[name="illness-details"]')
+        .should('be.visible')
+        .and('have.value', '');  
+    });
+
     globalTestsNew(PAGE_ID, URL);
   });
 });

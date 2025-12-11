@@ -144,6 +144,68 @@ describe("Medical Treatment page", () => {
       cy.checkLogEvent("WorkersComp Yes Clicked", {});
     });
 
+    it("is has required provider accepted checkbox and caused-by-job field when reason is not pregnancy", () => {
+      cy.window().then((win) => {
+        const data = { reason_for_leave: { reasons: "illness" } };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#check-provider-type-accepted').should('have.attr', 'required');
+      cy.get('#caused-by-job-yes').should('have.attr', 'required');
+    });
+
+    it("is has required provider accepted checkbox (caused-by-job field is not required) when reason is pregnancy", () => {  
+      cy.window().then((win) => {
+        const data = { reason_for_leave: { reasons: "pregnancy" } };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#check-provider-type-accepted').should('have.attr', 'required');
+      cy.get('#caused-by-job-yes').should('not.have.attr', 'required');
+    });
+
+    it("saves provider_type_accepted as true session storage when provider accepted checkbox is checked", () => {
+      cy.get('#check-provider-type-accepted').click({ force: true });
+      cy.window().then((win) => {
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData));
+        expect(data.provider_type_accepted).to.equal(true);
+      });
+    });
+    
+    it("saves provider_type_accepted as false session storage when provider accepted checkbox is unchecked", () => {
+      // Check then uncheck
+      cy.get('#check-provider-type-accepted').click({ force: true });
+      cy.get('#check-provider-type-accepted').click({ force: true });
+      cy.window().then((win) => {
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData));
+        expect(data.provider_type_accepted).to.equal(false);
+      });
+    });
+
+    it("has a checked provider accepted checkbox when provider_type_accepted is true in session storage", () => {
+      cy.window().then((win) => {
+        const data = { provider_type_accepted: true };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#check-provider-type-accepted').should('be.checked');
+    });
+    
+    it("does not have a checked provider accepted checkbox when provider_type_accepted is false in session storage", () => {
+      cy.window().then((win) => {
+        const data = { provider_type_accepted: false };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#check-provider-type-accepted').should('not.be.checked');
+    });
+
     globalTestsNew(PAGE_ID, URL);
   });
 });
