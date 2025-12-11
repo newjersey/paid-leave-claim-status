@@ -1,6 +1,25 @@
 const resources = {
   en: {
     translation: {
+      shared: {
+        dateFormat: "mm/dd/yyyy",
+        illness: "illness",
+        injury: "injury",
+        no: "No",
+        optional: "(optional)",
+        saveAndContinue: "Save and continue",
+        yes: "Yes",
+      },
+      contact: {
+        address: "Address",
+        street1: "Street address",
+        street2: "Street address line 2 (optional)",
+        city: "City",
+        state: "State",
+        zipcode: "ZIP code",
+        phone: "Phone number",
+        phoneHint: "10-digit, U.S. only, for example 999-999-9999",
+      },
       certification: {
         certifyText: "By submitting, I certify:",
         alertText: "Your application has been saved. If needed, you can log out and finish your application within 14 days from when you first started it.",
@@ -120,6 +139,117 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       leaveSchedule: {
         title: "Leave schedule",
+        futureDate: {
+          title: "You're a little early",
+          body: `We can't accept applications dated in the future. You can come back and apply on the day your disability begins — the first day you stop working because of your condition.
+            <br><br>
+            We recommend setting a reminder so you can return and apply on time.
+          `,
+        },
+        illnessInjury: {
+          fddTitle: "First day of disability leave",
+          fddNotes: `<strong>Heads up:</strong>
+            <br><br>
+            You can apply starting the day your disability begins-- the first day you stop working because of your illness or injury.
+            <br><br>
+            Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.
+          `,
+          fddQuestion: `<strong>When did this {{disabilityTypeString}} prevent you from working?</strong>
+            <br><br>
+            <strong>Hint:</strong> Enter the actual date your disability began, even if it was a day you don't usually work (like a weekend or holiday).
+          `,
+          beforeAfterTitle: "Dates of employment before and after disability",
+          lastWorkday: `What was the last day you worked?
+            <br><br>
+            <strong>Hint:</strong> This is the last day you actually worked-- not including PTO, vacation, or sick days you used before your leave started.
+          `,
+          recovered: `Have you recovered from this condition?
+            <br><br>
+            "Recovered" means you are able to return to work.
+          `,
+          recoveryDate: "When did you recover (felt able to return to work)?",
+          estRecoveryDate: "When do you anticipate being able to return to work? This can be an estimate and we will ask you again later to verify.",
+        },
+        pregnancy: {
+          fddTitle: "First day of disability leave for pregnancy",
+          maternityTimeline: `Use the <a href="https://www.nj.gov/labor/myleavebenefits/labor/myleavebenefits/worker/maternity/timeline-welcome.shtml" target="_blank">Maternity Timeline Coverage Tool</a> to help plan your leave dates.`,
+          fddNotes: `<strong>Heads up:</strong>
+            <br><br>
+            You can apply starting the day your leave begins.
+            <br><br>
+            Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.
+          `,
+          fddQuestion: `<strong>What is your first date of disability leave?</strong>
+            <br><br>
+            Remember:
+            <ul class="usa-list">
+              <li>* You can begin your leave up to 4 weeks before your due date (or delivery date), or earlier if you experience complications.</li>
+              <li>* Enter the actual date your leave began, even if it was a day you don't usually work (like a weekend or holiday).</li>
+            </ul>
+            <br>
+          `,
+          beforeAfterTitle: "Before and after pregnancy/delivery",
+          lastWorkday: `What was the last day you worked?
+            <br><br>
+            <strong>Hint:</strong> This is the last day you actually worked-- not including PTO, vacation, or sick days you used before your leave started.
+          `,
+          recovered: `Have you recovered from pregnancy and delivery?
+            <br><br>
+            <strong>Hint:</strong> You are entitled to at least 6 or 8 weeks of recovery time using TDI. After it ends, you can apply separately for family leave to bond with your baby. The <a href="https://www.nj.gov/labor/myleavebenefits/labor/myleavebenefits/worker/maternity/timeline-welcome.shtml" target="_blank">Maternity Timeline Tool</a> can help you plan.
+          `,
+          recoveryDate: `When did you recover?`,
+          estRecoveryDate: "When do you anticipate being able to return to work? This can be an estimate and we will ask you again later to verify.",
+          whatsNext: "What's Next?",
+          howDelivered: `Confirm with us how you delivered, if you haven't already shared this with us.
+            <br><br>
+            <ul>
+              <li>You can receive 6 weeks recovery from vaginal birth</li>
+              <li>You can receive 8 weeks recovery from C-section birth</li>
+              <li>You can receive more with complications</li>
+            </ul>
+          `
+        },
+      },
+      medicalInfo: {
+        title: "Medical information",
+        provider: {
+          title: "Healthcare provider",
+          explanation: "Your healthcare provider will need to confirm your medical condition and the start date of your disability.",
+          info: "Healthcare provider information",
+          type: {
+            isAccepted: "My healthcare provider is one of the accepted types below.",
+            weAccept: "Providers we accept",
+            advancedPracticeNurse: "Advanced Practice Nurse",
+            registeredNurse: "Registered Nurse",
+            certifiedNursePractitioner: "Certified Nurse Practitioner",
+            clinicalNurseSpecialist: "Clinical Nurse Specialist",
+            certifiedNurseMidwife: "Certified Nurse Midwife",
+            certifiedProfessionalMidwife: "Certified Professional Midwife (under supervision of a licensed physician)",
+            chiropractor: "Chiropractor",
+            dentist: "Dentist",
+            erPhysician: "ER Physician",
+            medicalDoctor: "Medical Doctor",
+            optometrist: "Optometrist",
+            osteopath: "Osteopath",
+            podiatrist: "Podiatrist",
+            psychologist: "Psychologist",
+            physicianAssistant: "Physician Assistant (under supervision of a licensed physician)",
+            specialist: "Specialist",
+          },
+          name: "Name",
+          inUSA: "Is your healthcare provider located in the United States?",
+        },
+        work: {
+          title: "Worker's Compensation",
+          causedByJob: "Was your disability caused by your job? (Could be a specific incident or happened over time)",
+          workersCompClaim: `Have you or your employer filed a <a href="https://www.nj.gov/labor/workerscompensation/injured-worker-protections/index.shtml" target="_blank">Workers' Compensation Claim</a>, or do you plan to file one?`,
+          workersCompClaimApproved: "Have you been approved for (or awarded, or received) Workers' Compensation benefits?",
+          employerInfo: {
+            prompt: "Provide employer information where the workplace {{disabilityTypeString}} happened.",
+            name: "Employer name",
+          },
+          dateOfDisability: "When did this {{disabilityTypeString}} happen (or start)?",
+        },
       },
       otherBenefits: {
         title: "Other benefits",
@@ -132,6 +262,14 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       reasonForLeave: {
         title: "Reason for leave",
+        characterLimit: "{{limit}} character limit",
+        chooseReason: "Choose your reason for applying for Temporary Disability benefits:",
+        illness: "Illness (including mental health)",
+        illnessDetails: "Briefly describe your illness or condition (for example, what you're being treated for or recovering from).",
+        injury: "Injury",
+        injuryDetails: "Briefly describe how and where the injury happened (for example, a fall at work or a car accident).",
+        pregnancy: "Pregnancy and recovery from childbirth",
+        pregnancyDetails: "If you have any pregnancy complications, describe them below. Otherwise, you can skip this.",
       },
       reviewAndSave: {
         title: "Review and save",
