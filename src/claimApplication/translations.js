@@ -12,6 +12,7 @@ const resources = {
       },
       citizenship: {
         title: "Contact information",
+        addRepresentativeTitle: "Add a representative",
         phoneValidation: {
           digits_three: "Please enter exactly 3 digits",
           digits_four: "Please enter exactly 4 digits",

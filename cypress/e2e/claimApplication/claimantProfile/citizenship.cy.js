@@ -81,6 +81,12 @@ describe("Citizenship page", () => {
         });
     });
 
+    it("displays 'Add a representative' title above the representative question", () => {
+      cy.get('#add-representative-title')
+        .should('be.visible')
+        .and('have.text', 'Add a representative');
+    });
+
     globalTestsNew(PAGE_ID, URL);
   });
 });

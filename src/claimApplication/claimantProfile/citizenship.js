@@ -39,6 +39,7 @@ export function changes() {
   );
   requirePhone();
   adjustQuestions();
+  addRepresentativeTitle();
   removeWhitespaceNodes();
   setNewTitle(i18next.t('citizenship.title'));
 }
@@ -50,6 +51,12 @@ function addStyles() {
       padding-top: 0;
       padding-bottom: 0;
     }
+    #add-representative-title {
+        font-family: "Public Sans", sans-serif !important;
+        font-size: 1.1em;
+        font-weight: bold;
+        font-variant: normal;
+      }
   `;
   document.head.appendChild(style);
 }
@@ -68,6 +75,28 @@ function adjustWidths () {
   const repEntry = document.getElementById("ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtRepIns");
   if (repEntry) {
     repEntry.style.width = '100%';
+  }
+}
+
+function addRepresentativeTitle() {
+  const repYes = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_rbnRepYes');
+  if (!repYes) return;
+
+  const title = document.createElement('p');
+  title.id = 'add-representative-title';
+  title.textContent = i18next.t('citizenship.addRepresentativeTitle');
+  title.style.marginBottom = '10px';
+  title.style.marginLeft = '0px';
+
+  const parentAnchor = repYes.closest('a');
+  if (parentAnchor) {
+    const strong = parentAnchor.previousElementSibling; // <strong>5.</strong>
+    if (strong) {
+      const asterisk = strong.previousElementSibling; // <a style="color: Red">* </a>
+      if (asterisk) {
+        asterisk.parentElement.insertBefore(title, asterisk);
+      }
+    }
   }
 }
 
