@@ -10,6 +10,8 @@ import {
   STORAGE_KEY_REASON_FOR_LEAVE,
   addToSessionData,
   STORAGE_KEY_PROVIDER_TYPE_ACCEPTED,
+  STORAGE_KEY_CAUSED_BY_JOB,
+  STORAGE_KEY_WORKERS_COMP,
   setRequiredForVisibleLeaveSectionFields,
   styleRadioButton
 } from '../utils';
@@ -69,10 +71,11 @@ export function changes() {
   replaceDoctorText();
   addProviderScreener();
   addWorkersCompScreener();
-  loadReasonData();
   adjustTable();
   adjustTextEntries();
   styleRadioButtons();
+  addWorkersCompListeners();
+  loadReasonData();
   setNewTitle(i18next.t('medicalInfo.title'));
 
   const sessionData = getSessionData();
@@ -255,16 +258,25 @@ function addWorkersCompScreener() {
 
   causedByJobYes.addEventListener('change', function () {
     const refreshedWorkersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
+    const refreshedWorkersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
     resetElementText(causedByJobLegend);
     workersCompContainer.style.display = 'block';
     refreshedWorkersCompNo.checked = false;
+    refreshedWorkersCompYes.checked = false;
+    addToSessionData({ [STORAGE_KEY_CAUSED_BY_JOB]: 'yes' });
   });
 
   causedByJobNo.addEventListener('change', function () {
     const refreshedWorkersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
+    const refreshedWorkersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
     resetElementText(causedByJobLegend);
     workersCompContainer.style.display = 'none';
-    refreshedWorkersCompNo.click();
+    refreshedWorkersCompYes.checked = false;
+    refreshedWorkersCompNo.checked = true;
+    addToSessionData({
+      [STORAGE_KEY_CAUSED_BY_JOB]: 'no',
+      [STORAGE_KEY_WORKERS_COMP]: null
+    });
   });
 
   const form = document.getElementById('form1');
@@ -287,6 +299,20 @@ function addWorkersCompScreener() {
     elementTextError(causedByJobLegend);
   });
 }
+
+function addWorkersCompListeners() {
+  const workersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
+  const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
+
+  workersCompYes.addEventListener('change', function () {
+    addToSessionData({ [STORAGE_KEY_WORKERS_COMP]: 'yes' });
+  });
+
+  workersCompNo.addEventListener('change', function () {
+    addToSessionData({ [STORAGE_KEY_WORKERS_COMP]: 'no' });
+  });
+}
+
 
 function loadReasonData() {
   const sessionData = getSessionData();
@@ -315,17 +341,59 @@ function loadReasonData() {
   textArea.closest('fieldset').style.display = 'none';
   document.getElementById('providerTypeQuestionNumber').style.display = 'inline';
 
-  if (reason === 'pregnancy') {
-    const causedByJobNo = document.getElementById('caused-by-job-no');
-    const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
-    const causedByJobQuestion = document.getElementById('causedByJobQuestion');
-    const workersCompContainer = document.getElementById('workersCompContainer');
+  const causedByJobYes = document.getElementById('caused-by-job-yes');
+  const causedByJobNo = document.getElementById('caused-by-job-no');
+  const workersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
+  const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
+  const causedByJobQuestion = document.getElementById('causedByJobQuestion');
+  const workersCompContainer = document.getElementById('workersCompContainer');
 
-    causedByJobNo.click();
-    workersCompNo.click();
+  if (reason === 'pregnancy') {
+    causedByJobNo.checked = true;
+    workersCompNo.checked = true;
     causedByJobQuestion.style.display = 'none';
     workersCompContainer.style.display = 'none';
+  } else {
+    // Show the caused-by-job question for illness/injury
+    causedByJobQuestion.style.display = 'block';
+
+    // Restore caused-by-job answer
+    const savedCausedByJob = sessionData[STORAGE_KEY_CAUSED_BY_JOB];
+
+    if (savedCausedByJob === 'yes') {
+      causedByJobYes.checked = true;
+      causedByJobNo.checked = false;
+      workersCompContainer.style.display = 'block';
+
+      // Restore workers comp answer
+      const savedWorkersComp = sessionData[STORAGE_KEY_WORKERS_COMP];
+      if (savedWorkersComp === 'yes') {
+        workersCompYes.checked = true;
+        workersCompNo.checked = false;
+      } else if (savedWorkersComp === 'no') {
+        workersCompYes.checked = false;
+        workersCompNo.checked = true;
+      } else {
+        // No saved workers comp answer - reset both
+        workersCompYes.checked = false;
+        workersCompNo.checked = false;
+      }
+    } else if (savedCausedByJob === 'no') {
+      causedByJobYes.checked = false;
+      causedByJobNo.checked = true;
+      workersCompContainer.style.display = 'none';
+      workersCompYes.checked = false;
+      workersCompNo.checked = true;
+    } else {
+      // No saved caused-by-job answer - reset both
+      causedByJobYes.checked = false;
+      causedByJobNo.checked = false;
+      workersCompContainer.style.display = 'none';
+      workersCompYes.checked = false;
+      workersCompNo.checked = false;
+    }
   }
+
 }
 
 function styleRadioButtons() {

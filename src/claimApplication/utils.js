@@ -11,6 +11,9 @@ export const STORAGE_KEY_USER_MAIL_ADDRESS = "user_mail_address";
 export const STORAGE_KEY_REASON_FOR_LEAVE = "reason_for_leave";
 export const STORAGE_KEY_PROVIDER_TYPE_ACCEPTED = "provider_type_accepted";
 
+export const STORAGE_KEY_CAUSED_BY_JOB = "caused_by_job";
+export const STORAGE_KEY_WORKERS_COMP = "workers_comp";
+
 export const STORAGE_KEY_SESSION_DATA = "session_data";
 
 export function getSessionData() {

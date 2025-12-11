@@ -206,6 +206,136 @@ describe("Medical Treatment page", () => {
       cy.get('#check-provider-type-accepted').should('not.be.checked');
     });
 
+    it("saves caused_by_job as 'yes' to session storage when caused-by-job-yes is clicked", () => {
+      cy.get('#caused-by-job-yes').click({ force: true });
+      cy.window().then((win) => {
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData));
+        expect(data.caused_by_job).to.equal('yes');
+      });
+    });
+    
+    it("saves caused_by_job as 'no' to session storage when caused-by-job-no is clicked", () => {
+      cy.get('#caused-by-job-no').click({ force: true });
+      cy.window().then((win) => {
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData));
+        expect(data.caused_by_job).to.equal('no');
+      });
+    });
+
+
+    it("saves workers_comp as 'yes' to session storage when workers comp yes is clicked", () => {
+      cy.get('#caused-by-job-yes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').click({ force: true });
+      cy.window().then((win) => {
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData));
+        expect(data.workers_comp).to.equal('yes');
+      });
+    });
+    
+    it("saves workers_comp as 'no' to session storage when workers comp no is clicked", () => {
+      cy.get('#caused-by-job-yes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo').click({ force: true });
+      cy.window().then((win) => {
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData));
+        expect(data.workers_comp).to.equal('no');
+      });
+    });
+
+    it("clears workers_comp from session storage when caused-by-job-no is clicked", () => {
+      cy.get('#caused-by-job-yes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').click({ force: true });
+      cy.get('#caused-by-job-no').click({ force: true });
+      cy.window().then((win) => {
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData));
+        expect(data.caused_by_job).to.equal('no');
+        expect(data.workers_comp).to.equal(null);
+      });
+    });
+
+    it("restores caused-by-job-yes from session storage on page load", () => {
+      cy.window().then((win) => {
+        const data = {
+          reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY,
+          caused_by_job: 'yes'
+        };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#caused-by-job-yes').should('be.checked');
+      cy.get('#caused-by-job-no').should('not.be.checked');
+      cy.get('#workersCompContainer').should('be.visible');
+    });
+    
+    it("restores caused-by-job-no from session storage on page load", () => {
+      cy.window().then((win) => {
+        const data = {
+          reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY,
+          caused_by_job: 'no'
+        };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#caused-by-job-yes').should('not.be.checked');
+      cy.get('#caused-by-job-no').should('be.checked');
+      cy.get('#workersCompContainer').should('not.be.visible');
+    });
+
+    it("restores workers_comp yes from session storage on page load", () => {
+      cy.window().then((win) => {
+        const data = {
+          reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY,
+          caused_by_job: 'yes',
+          workers_comp: 'yes'
+        };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+    
+      cy.get('#caused-by-job-yes').should('be.checked');
+      cy.get('#workersCompContainer').should('be.visible');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').should('be.checked');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo').should('not.be.checked');
+    });
+    
+    it("restores workers_comp no from session storage on page load", () => {
+      cy.window().then((win) => {
+        const data = {
+          reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY,
+          caused_by_job: 'yes',
+          workers_comp: 'no'
+        };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+    
+      cy.get('#caused-by-job-yes').should('be.checked');
+      cy.get('#workersCompContainer').should('be.visible');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').should('not.be.checked');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo').should('be.checked');
+    });
+
+    it("hides caused-by-job question when reason is pregnancy", () => {
+      cy.window().then((win) => {
+        const data = {
+          reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY_DETAILS
+        };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#causedByJobQuestion').should('not.be.visible');
+      cy.get('#workersCompContainer').should('not.be.visible');
+    });
+
     globalTestsNew(PAGE_ID, URL);
   });
 });
