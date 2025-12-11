@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import { logEvent } from "../../modules/shared.mjs";
 import {
   adjustTableWidths,
   removeExtraSpaceBetweenRadioButtons,
@@ -25,6 +26,7 @@ export function changes() {
   adjustAddressTable();
   removeEmptyCells();
   removeOverlappingBorders();
+  trackLongAddress();
 
   styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnMale');
   styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnFemale');
@@ -122,4 +124,18 @@ function removeOverlappingBorders() {
   if (mailingAddress) {
     mailingAddress.style.borderStyle = 'none';
   }
+}
+
+function trackLongAddress() {
+  const submit = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_btnCitiZen');
+  const address1 = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtAddress1');
+  const address2 = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtAddress2');
+  const city = document.querySelector('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtCity');
+  
+  submit.addEventListener('click', function () {
+    const addressLength = address1.value.trim().length + address2.value.trim().length + city.value.trim().length;
+    if (addressLength > 40) {
+      logEvent("Long Personal Address Submitted", { addressLength });
+    }
+  });
 }
