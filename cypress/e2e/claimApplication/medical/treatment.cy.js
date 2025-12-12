@@ -71,16 +71,19 @@ describe("Medical Treatment page", () => {
       cy.wait('@script');
     });
 
-    it("user cannot submit if provider type unchecked", () => {
+    it("user cannot submit if provider type unanswered", () => {
+      cy.get('#provider-type-accepted-yes').should('not.be.checked');
+      cy.get('#provider-type-accepted-no').should('not.be.checked');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc').click();
-      cy.get('#check-provider-type-accepted')
+      cy.get('#provider-type-accepted-yes')
         .then(($input) => {
           expect($input[0].validationMessage).to.exist;
         });
     });
 
+
     it("user cannot submit if caused-by-job unanswered", () => {
-      cy.get('#check-provider-type-accepted').click({ force: true });
+      cy.get('#provider-type-accepted-yes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc').click();
       cy.get('#caused-by-job-yes')
         .then(($input) => {
@@ -91,7 +94,7 @@ describe("Medical Treatment page", () => {
     it("user can input info when session storage empty and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury').type('injury');
-      cy.get('#check-provider-type-accepted').click({ force: true });
+      cy.get('#provider-type-accepted-yes').click({ force: true });
       fillCommonResponses();
       cy.get('#caused-by-job-no').click({ force: true });
       // cy.get('#workersCompContainer').should('not.be.visible');
@@ -109,7 +112,7 @@ describe("Medical Treatment page", () => {
       cy.mockASPX(URL);
 
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury').should('not.be.visible');
-      cy.get('#check-provider-type-accepted').click({ force: true });
+      cy.get('#provider-type-accepted-yes').click({ force: true });
       fillCommonResponses();
       cy.get('#causedByJobQuestion').should('not.be.visible');
       cy.get('#workersCompContainer').should('not.be.visible');
@@ -126,7 +129,7 @@ describe("Medical Treatment page", () => {
       cy.mockASPX(URL);
 
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury').should('not.be.visible');
-      cy.get('#check-provider-type-accepted').click({ force: true });
+      cy.get('#provider-type-accepted-yes').click({ force: true });
       fillCommonResponses();
       cy.get('#caused-by-job-no').click({ force: true });
       cy.get('#workersCompContainer').should('not.be.visible');
@@ -136,7 +139,7 @@ describe("Medical Treatment page", () => {
 
     it('tracks when workers comp Yes is submitted', () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury').type('Injury');
-      cy.get('#check-provider-type-accepted').click({ force: true });
+      cy.get('#provider-type-accepted-yes').click({ force: true });
       fillCommonResponses();
       cy.get('#caused-by-job-yes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').click({ force: true });
@@ -144,30 +147,30 @@ describe("Medical Treatment page", () => {
       cy.checkLogEvent("WorkersComp Yes Clicked", {});
     });
 
-    it("is has required provider accepted checkbox and caused-by-job field when reason is not pregnancy", () => {
+    it("has required provider type question and caused-by-job field when reason is not pregnancy", () => {
       cy.window().then((win) => {
         const data = { reason_for_leave: { reasons: "illness" } };
         win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
       });
       cy.visit(FIXTURE);
       cy.wait('@script');
-      cy.get('#check-provider-type-accepted').should('have.attr', 'required');
+      cy.get('#provider-type-accepted-yes').should('have.attr', 'required');
       cy.get('#caused-by-job-yes').should('have.attr', 'required');
     });
 
-    it("is has required provider accepted checkbox (caused-by-job field is not required) when reason is pregnancy", () => {  
+    it("has required provider type question (caused-by-job field is not required) when reason is pregnancy", () => {  
       cy.window().then((win) => {
         const data = { reason_for_leave: { reasons: "pregnancy" } };
         win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
       });
       cy.visit(FIXTURE);
       cy.wait('@script');
-      cy.get('#check-provider-type-accepted').should('have.attr', 'required');
+      cy.get('#provider-type-accepted-yes').should('have.attr', 'required');
       cy.get('#caused-by-job-yes').should('not.have.attr', 'required');
     });
 
-    it("saves provider_type_accepted as true session storage when provider accepted checkbox is checked", () => {
-      cy.get('#check-provider-type-accepted').click({ force: true });
+    it("saves provider_type_accepted as true session storage when provider accepted yes radio is checked", () => {
+      cy.get('#provider-type-accepted-yes').click({ force: true });
       cy.window().then((win) => {
         const encodedData = win.sessionStorage.getItem('session_data');
         const data = JSON.parse(encodeDecode(encodedData));
@@ -175,10 +178,8 @@ describe("Medical Treatment page", () => {
       });
     });
     
-    it("saves provider_type_accepted as false session storage when provider accepted checkbox is unchecked", () => {
-      // Check then uncheck
-      cy.get('#check-provider-type-accepted').click({ force: true });
-      cy.get('#check-provider-type-accepted').click({ force: true });
+    it("saves provider_type_accepted as false session storage when provider accepted no radio is selected", () => {
+      cy.get('#provider-type-accepted-no').click({ force: true });
       cy.window().then((win) => {
         const encodedData = win.sessionStorage.getItem('session_data');
         const data = JSON.parse(encodeDecode(encodedData));
@@ -186,24 +187,28 @@ describe("Medical Treatment page", () => {
       });
     });
 
-    it("has a checked provider accepted checkbox when provider_type_accepted is true in session storage", () => {
+    it("has Yes selected when provider_type_accepted is true in session storage", () => {
       cy.window().then((win) => {
         const data = { provider_type_accepted: true };
         win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
       });
       cy.visit(FIXTURE);
       cy.wait('@script');
-      cy.get('#check-provider-type-accepted').should('be.checked');
+      cy.get('#provider-type-accepted-yes').should('be.checked');
+      cy.get('#provider-type-accepted-no').should('not.be.checked');
+      cy.get('#provider-type-alert').should('not.be.visible');
     });
     
-    it("does not have a checked provider accepted checkbox when provider_type_accepted is false in session storage", () => {
+    it("has No selected when provider_type_accepted is false in session storage", () => {
       cy.window().then((win) => {
         const data = { provider_type_accepted: false };
         win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
       });
       cy.visit(FIXTURE);
       cy.wait('@script');
-      cy.get('#check-provider-type-accepted').should('not.be.checked');
+      cy.get('#provider-type-accepted-yes').should('not.be.checked');
+      cy.get('#provider-type-accepted-no').should('be.checked');
+      cy.get('#provider-type-alert').should('be.visible');
     });
 
     it("saves caused_by_job as 'yes' to session storage when caused-by-job-yes is clicked", () => {
@@ -334,6 +339,29 @@ describe("Medical Treatment page", () => {
       cy.wait('@script');
       cy.get('#causedByJobQuestion').should('not.be.visible');
       cy.get('#workersCompContainer').should('not.be.visible');
+    });
+
+    it("shows warning alert when No is selected for provider type", () => {
+      cy.get('#provider-type-alert').should('not.be.visible');
+      cy.get('#provider-type-accepted-no').click({ force: true });
+      cy.get('#provider-type-alert').should('be.visible');
+    });
+
+    it("hides warning alert when Yes is selected for provider type", () => {
+      cy.get('#provider-type-accepted-no').click({ force: true });
+      cy.get('#provider-type-alert').should('be.visible');
+      cy.get('#provider-type-accepted-yes').click({ force: true });
+      cy.get('#provider-type-alert').should('not.be.visible');
+    });
+
+    it("shows warning alert on page load when provider_type_accepted is false in session storage", () => {
+      cy.window().then((win) => {
+        const data = { provider_type_accepted: false };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#provider-type-alert').should('be.visible');
     });
 
     globalTestsNew(PAGE_ID, URL);

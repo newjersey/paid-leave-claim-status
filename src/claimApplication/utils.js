@@ -225,34 +225,29 @@ export function setRequiredForVisibleLeaveSectionFields(currentSection, reason =
   ];
 
   // Medical info fields
-  const providerCheckbox = document.getElementById('check-provider-type-accepted');
+  const providerYesRadio = document.getElementById('provider-type-accepted-yes');
   const causedByJobYes = document.getElementById('caused-by-job-yes');
   const causedByJobNo = document.getElementById('caused-by-job-no');
-  // const workersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
-  // const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
 
   // Step 1: First remove required from ALL custom fields first
   reasonFields.forEach(field => field?.removeAttribute('required'));
-  providerCheckbox?.removeAttribute('required');
+  providerYesRadio?.removeAttribute('required');
+
   causedByJobYes?.removeAttribute('required');
   causedByJobNo?.removeAttribute('required');
-  // Note: vendor's workers comp fields may have their own required handling
 
   // Step 2: Then add required based on current section
   if (currentSection === 'reasonForLeave') {
     reasonFields.forEach(field => field?.setAttribute('required', ''));
   }
   else if (currentSection === 'medicalTreatment') {
-    // Provider checkbox always required on this page
-    providerCheckbox?.setAttribute('required', '');
+    providerYesRadio?.setAttribute('required', '');
 
     // Caused by job only required if NOT pregnancy
     if (reason !== 'pregnancy') {
       causedByJobYes?.setAttribute('required', '');
       causedByJobNo?.setAttribute('required', '');
-    
-      // TODO: Workers comp 7a only required if caused-by-job is "yes"
-    }
+        }
   }
   // leaveSchedule: nothing required (all removed in step 1)
 }
