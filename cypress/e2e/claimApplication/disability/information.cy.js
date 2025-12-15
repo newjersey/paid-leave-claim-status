@@ -89,16 +89,18 @@ describe("Disability Information page", () => {
       checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY_DETAILS);
     });
 
-    it("user can input info about illness with blank extra text after first choosing injury and proceed to next page", () => {
+    it("user can input info about illness after first choosing injury and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#reason-injury').click({ force: true });
       cy.get('#injury-details').type("Broken Elbow.");
       cy.get('#submitReasonForLeave').click();
       cy.get('#leaveScheduleBack').click();
       cy.get('#reason-illness').click({ force: true });
+      cy.get('textarea[name="injury-details"]').should('have.value', '');
+      cy.get('textarea[name="illness-details"]').type("Lung Inflammation.");
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
-      checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS);
+      checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS);
     });
 
     it("user can input info about illness and proceed to next page", () => {
@@ -110,12 +112,13 @@ describe("Disability Information page", () => {
       checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS);
     });
 
-    it("user can input info about injury with blank extra text and proceed to next page", () => {
+    it("user can input info about injury and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#reason-injury').click({ force: true });
+      cy.get('textarea[name="injury-details"]').type("Broken Elbow.");
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
-      checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY);
+      checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS);
     });
 
     it("user can input info about injury and proceed to next page", () => {
@@ -150,27 +153,65 @@ describe("Disability Information page", () => {
       cy.checkLogEvent("Validation Error", { contents: truncatedMessage });
     });
 
-    it("has required reason for leave fields on Leave Reason page", () => {
+    it("has required reason for leave radio fields on Leave Reason page", () => {
       cy.get('#reason-pregnancy').should('have.attr', 'required');
       cy.get('#reason-illness').should('have.attr', 'required');
       cy.get('#reason-injury').should('have.attr', 'required');
     });
-  
-    it("reason for leave fields are NOT required on when on Leave Schedule page", () => {
-      cy.get('#reason-illness').click({ force: true });
-      cy.get('#submitReasonForLeave').click();
-      cy.get('#reason-pregnancy').should('not.have.attr', 'required');
-      cy.get('#reason-illness').should('not.have.attr', 'required');
-      cy.get('#reason-injury').should('not.have.attr', 'required');
-    });
-  
-    it("reason fields become required again when navigating back", () => {
-      cy.get('#reason-illness').click({ force: true });
+
+    it("reason radio fields become required again when navigating back", () => {
+      cy.get('#reason-pregnancy').click({ force: true });
       cy.get('#submitReasonForLeave').click();
       cy.get('#leaveScheduleBack').click();
       cy.get('#reason-pregnancy').should('have.attr', 'required');
       cy.get('#reason-illness').should('have.attr', 'required');
       cy.get('#reason-injury').should('have.attr', 'required');
+    });
+
+    it("reason for leave fields is NOT required when selecting a reason and moving on to the Leave Schedule page", () => {
+      cy.get('#reason-pregnancy').click({ force: true });
+      cy.get('#submitReasonForLeave').click();
+      cy.get('#pregnancy-details').should('not.have.attr', 'required');
+      cy.get('#illness-details').should('not.have.attr', 'required');
+      cy.get('#injury-details').should('not.have.attr', 'required');
+    });
+
+    it("illness details field is required when selecting illness on when on Leave Schedule page", () => {
+      cy.get('#reason-illness').click({ force: true });
+      cy.get('#submitReasonForLeave').click();
+      cy.get('#pregnancy-details').should('not.have.attr', 'required');
+      cy.get('#illness-details').should('have.attr', 'required');
+      cy.get('#injury-details').should('not.have.attr', 'required');
+    });
+
+    it("reason for leave fields is required when selecting injury on when on Leave Schedule page", () => {
+      cy.get('#reason-injury').click({ force: true });
+      cy.get('#submitReasonForLeave').click();
+      cy.get('#pregnancy-details').should('not.have.attr', 'required');
+      cy.get('#illness-details').should('not.have.attr', 'required');
+      cy.get('#injury-details').should('have.attr', 'required');
+    });
+
+    it("shows validation error when illness textarea is empty", () => {
+      cy.get('#reason-illness').click({ force: true });
+      cy.get('#submitReasonForLeave').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab').should('not.be.visible');
+      cy.get('#illness-details-container p').first().should('have.css', 'color', 'rgb(139, 0, 0)');;
+    });
+    
+    it("shows validation error when injury textarea is empty", () => {
+      cy.get('#reason-injury').click({ force: true });
+      cy.get('#submitReasonForLeave').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab').should('not.be.visible');
+      cy.get('#injury-details-container p').first().should('have.css', 'color', 'rgb(139, 0, 0)');;
+    });
+
+    it("clears error styling when user types in illness textarea", () => {
+      cy.get('#reason-illness').click({ force: true });
+      cy.get('#submitReasonForLeave').click();
+      cy.get('#illness-details-container p').first().should('have.css', 'color', 'rgb(139, 0, 0)');;
+      cy.get('textarea[name="illness-details"]').type("L");
+      cy.get('#illness-details-container p').first().should('not.have.css', 'color', 'rgb(139, 0, 0)');;
     });
 
     it("restores reason for leave (pregnancy) with details from session storage", () => {
