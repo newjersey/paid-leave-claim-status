@@ -10,6 +10,28 @@ export function setupLeaveSchedulePage() {
 export function showLeaveScheduleForDisabilityType(disabilityType) {
   styleFDD(disabilityType);
   styleLDW(disabilityType);
+  addStyles()
+}
+
+function addStyles() {
+  const style = document.createElement('style');
+  style.innerHTML = `
+    input[type="image"][alt="calendar"] {
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+      padding-bottom:2px;
+      margin-left:5px;
+    }
+
+  /* Calendar popup container */
+  #FDDCalendarControl table {
+    font-size: 16px;
+  }
+
+
+  `;
+  document.head.appendChild(style);
 }
 
 function setupFDD() {

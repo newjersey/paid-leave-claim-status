@@ -18,7 +18,7 @@ export function reasonForLeavePage() {
   reasonForLeavePage.id = "reasonForLeavePage";
   reasonForLeavePage.classList.add("page");
   reasonForLeavePage.innerHTML = `
-    <form id="reason-for-leave-form">
+    <form id="reason-for-leave-form" novalidate>
       <div class="bordered-set">
         <fieldset class="usa-fieldset">
           <legend id="reason-legend" class="usa-legend usa-legend">
@@ -37,7 +37,7 @@ export function reasonForLeavePage() {
             <label class="usa-radio__label" for="reason-pregnancy">
               ${i18next.t('reasonForLeave.pregnancy')}
             </label>
-            <div id="pregnancy-details" class="additional-content" style="display: none;">
+            <div id="pregnancy-details-container" class="additional-content" style="display: none;">
               <p class="optional-text">
                 <span class="bold-text">${i18next.t('shared.optional')} </span>
                 ${i18next.t('reasonForLeave.pregnancyDetails')}
@@ -62,9 +62,9 @@ export function reasonForLeavePage() {
             <label class="usa-radio__label" for="reason-illness">
               ${i18next.t('reasonForLeave.illness')}
             </label>
-            <div id="illness-details" class="additional-content" style="display: none;">
-              <p class="optional-text">
-                <span class="bold-text">${i18next.t('shared.optional')} </span>
+            <div id="illness-details-container" class="additional-content" style="display: none;">
+              <p>
+                <span class="required-asterisk">*</span>
                 ${i18next.t('reasonForLeave.illnessDetails')}
               </p>
               <textarea
@@ -87,9 +87,9 @@ export function reasonForLeavePage() {
             <label class="usa-radio__label" for="reason-injury">
               ${i18next.t('reasonForLeave.injury')}
             </label>
-            <div id="injury-details" class="additional-content" style="display: none;">
-              <p class="optional-text">
-                <span class="bold-text">${i18next.t('shared.optional')} </span>
+            <div id="injury-details-container" class="additional-content" style="display: none;">
+              <p>
+                <span class="required-asterisk">*</span>
                 ${i18next.t('reasonForLeave.injuryDetails')}
               </p>
               <textarea
@@ -122,9 +122,13 @@ function setupDisabilityTypeListeners(setDisabilityType) {
   const illnessRadio = document.getElementById('reason-illness');
   const injuryRadio = document.getElementById('reason-injury');
   const reasonLegend = document.getElementById('reason-legend');
-  const pregnancyDetails = document.getElementById('pregnancy-details');
-  const illnessDetails = document.getElementById('illness-details');
-  const injuryDetails = document.getElementById('injury-details');
+  const pregnancyDetails = document.getElementById('pregnancy-details-container');
+  const illnessDetails = document.getElementById('illness-details-container');
+  const injuryDetails = document.getElementById('injury-details-container');
+
+  const illnessTextarea = document.querySelector('textarea[name="illness-details"]');
+  const injuryTextarea = document.querySelector('textarea[name="injury-details"]');
+  const pregnancyTextarea = document.querySelector('textarea[name="pregnancy-details"]');
 
   pregnancyRadio.addEventListener('change', function () {
     resetElementText(reasonLegend);
@@ -132,6 +136,12 @@ function setupDisabilityTypeListeners(setDisabilityType) {
     pregnancyDetails.style.display = 'block';
     illnessDetails.style.display = 'none';
     injuryDetails.style.display = 'none';
+
+    illnessTextarea.required = false;
+    injuryTextarea.required = false;
+    
+    illnessTextarea.value = '';
+    injuryTextarea.value = '';
   });
 
   illnessRadio.addEventListener('change', function () {
@@ -140,6 +150,12 @@ function setupDisabilityTypeListeners(setDisabilityType) {
     pregnancyDetails.style.display = 'none';
     illnessDetails.style.display = 'block';
     injuryDetails.style.display = 'none';
+
+    illnessTextarea.required = true;
+    injuryTextarea.required = false;
+
+    injuryTextarea.value = '';
+    pregnancyTextarea.value = '';
   });
 
   injuryRadio.addEventListener('change', function () {
@@ -148,11 +164,38 @@ function setupDisabilityTypeListeners(setDisabilityType) {
     pregnancyDetails.style.display = 'none';
     illnessDetails.style.display = 'none';
     injuryDetails.style.display = 'block';
+
+    illnessTextarea.required = false;
+    injuryTextarea.required = true;
+
+    pregnancyTextarea.value = '';
+    illnessTextarea.value = '';
   });
 
   pregnancyRadio.addEventListener('invalid', function () {
     elementTextError(reasonLegend);
   });
+
+  illnessTextarea.addEventListener('invalid', function () {
+    const label = illnessDetails.querySelector('p');
+    elementTextError(label);
+  });
+
+  injuryTextarea.addEventListener('invalid', function () {
+    const label = injuryDetails.querySelector('p');
+    elementTextError(label);
+  });
+
+  illnessTextarea.addEventListener('input', function () {
+    const label = illnessDetails.querySelector('p');
+    resetElementText(label);
+  });
+
+  injuryTextarea.addEventListener('input', function () {
+    const label = injuryDetails.querySelector('p');
+    resetElementText(label);
+  });
+
 }
 
 function setupPasteDetection() {
@@ -174,6 +217,20 @@ function setupSubmitReasonForLeave(showLeaveSchedulePage) {
   const form = document.getElementById('reason-for-leave-form');
   form.addEventListener('submit', function(event) {
     event.preventDefault();
+
+    const visibleTextarea = form.querySelector('textarea[required]');
+    if (visibleTextarea && !visibleTextarea.value.trim()) {
+      const detailsDiv = visibleTextarea.closest('.additional-content');
+      const label = detailsDiv.querySelector('p');
+      elementTextError(label);
+      return; 
+    }
+    const reasonSelected = form.querySelector('input[name="reasons"]:checked');
+    if (!reasonSelected) {
+      const reasonLegend = document.getElementById('reason-legend');
+      elementTextError(reasonLegend);
+      return;
+    }
 
     const hiddenFieldNames = new Set();
     const fields = form.querySelectorAll('*');
