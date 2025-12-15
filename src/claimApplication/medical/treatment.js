@@ -129,14 +129,10 @@ function addProviderScreener() {
   const providerType = document.createElement('div');
   providerType.style.margin = "0 0 50px";
   providerType.innerHTML = `
-  <p>${i18next.t('medicalInfo.provider.explanation')}</p>
-
-    <div class="usa-card maxw-tablet">
-    <div class="usa-card__container">
-      <div class="usa-card__body">
+  <p class="margin-bottom-3">${i18next.t('medicalInfo.provider.explanation')}</p>
         <p>${i18next.t('medicalInfo.provider.theseTypesProviders')}</p>
 
-        <div class="provider-accepted-list">
+        <div class="provider-accepted-list margin-bottom-2">
           <ul class="usa-list margin-top-0">
             <li>
               ${i18next.t('medicalInfo.provider.type.advancedPracticeNurse')}
@@ -165,9 +161,6 @@ function addProviderScreener() {
             <li>${i18next.t('medicalInfo.provider.type.physicianAssistant')}</li>
             <li>${i18next.t('medicalInfo.provider.type.specialist')}</li>
           </ul>
-        </div>
-      </div>
-    </div>
   </div>
 
 
