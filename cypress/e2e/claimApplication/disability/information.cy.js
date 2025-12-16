@@ -346,6 +346,29 @@ describe("Disability Information page", () => {
         .and('have.value', '');  
     });
 
+    it("skips to Leave Schedule page when skipToLeaveSchedule flag is set", () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem('skipToLeaveSchedule', 'true');
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+  
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab').should('be.visible');
+      cy.get('#reasonForLeavePage').should('not.be.visible');
+    });
+
+    it("clears skipToLeaveSchedule flag after navigation", () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem('skipToLeaveSchedule', 'true');
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+  
+      cy.window().then((win) => {
+        expect(win.sessionStorage.getItem('skipToLeaveSchedule')).to.be.null;
+      });
+    });
+    
     globalTestsNew(PAGE_ID, URL);
   });
 });

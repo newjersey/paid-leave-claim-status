@@ -45,7 +45,13 @@ export function changes() {
     setupLeaveSchedulePage();
     restoreReasonForLeaveData(setDisabilityType);
 
-    showReasonForLeavePage();
+    const skipToLeaveSchedule = sessionStorage.getItem('skipToLeaveSchedule');
+    if (skipToLeaveSchedule === 'true') {
+      sessionStorage.removeItem('skipToLeaveSchedule');
+      showLeaveSchedulePage();
+    } else {
+      showReasonForLeavePage();
+    }
   }
 }
 
