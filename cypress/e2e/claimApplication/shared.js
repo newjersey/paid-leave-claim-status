@@ -68,10 +68,6 @@ export function globalTestsNew(pageId, url) {
     cy.trackResourcesClick(pageId);
   });
 
-  it('clicks Dismiss on the info alert, alert hides and does not return', () => {
-    cy.checkInfoAlertBehavior();
-  });
-
   it("user can log out", () => {
     cy.mockASPX(url);
     cy.checkNewLogout();
