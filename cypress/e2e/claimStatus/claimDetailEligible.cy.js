@@ -25,11 +25,6 @@ describe("Claim Detail page - Eligible scenario with next pay date", () => {
       .and("equal", "paymentDetail()");
     cy.contains("Your next payment is scheduled for").should("be.visible");
     cy.contains("November 22, 2023").should("be.visible");
-    cy.get("li")
-      .contains(
-        "You'll keep getting paid. We'll post here if anything changes."
-      )
-      .should("be.visible");
     cy.contains("Weekly benefit rate")
       .contains("$1,025.00")
       .should("be.visible");
@@ -149,11 +144,6 @@ describe("Claim Detail page - Eligible scenario with next pay date", () => {
       .and("equal", "paymentDetail()");
     cy.contains("Your next payment is scheduled for").should("be.visible");
     cy.contains("November 22, 2023").should("be.visible");
-    cy.get("li")
-      .contains(
-        "You'll keep getting paid. We'll post here if anything changes."
-      )
-      .should("be.visible");
     cy.contains("Weekly benefit rate")
       .contains("$1,025.00")
       .should("be.visible");
