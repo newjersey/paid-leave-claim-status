@@ -124,10 +124,11 @@ function resetHeader() {
 
   fullWidthHeader.append(createDolNameHeader());
 
-  const alertBodyDiv = newDesignAlert();
-  if (alertBodyDiv) {
-    fullWidthHeader.append(alertBodyDiv);
-  }
+  // Dismissable header can be added/removed as needed 
+  // const alertBodyDiv = newDesignAlert();
+  // if (alertBodyDiv) {
+  //   fullWidthHeader.append(alertBodyDiv);
+  // }
 
   newHeader.append(fullWidthHeader);
 
