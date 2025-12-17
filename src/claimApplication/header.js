@@ -195,6 +195,12 @@ function createBackButton() {
       backButton.addEventListener('click', () => {
         const tabLink = previousTab.querySelector('a');
         if (tabLink) {
+
+          const previousTabText = previousTab.textContent.trim();
+          if (previousTabText === 'Disability Information') {
+            sessionStorage.setItem('disabilityInfoView', 'leaveSchedule');
+          }
+
           tabLink.click();
           resetHeader();
           document.dispatchEvent(new CustomEvent('backButtonClicked'));

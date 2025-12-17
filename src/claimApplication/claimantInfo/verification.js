@@ -315,7 +315,7 @@ function setupEditButtonHandlers() {
     reasonEditBtn.addEventListener('click', function (e) {
       e.preventDefault();
       goingToReasonForLeave = true;
-      sessionStorage.removeItem('skipToLeaveSchedule');
+      sessionStorage.setItem('disabilityInfoView', 'reasonForLeave');
       // Click the Disability Information edit but no flag for skipping leave schedule
       if (disabilityEditBtn) {
         disabilityEditBtn.click();
@@ -326,7 +326,7 @@ function setupEditButtonHandlers() {
   if (disabilityEditBtn) {
     disabilityEditBtn.addEventListener('click', function () {
       if (!goingToReasonForLeave) {
-        sessionStorage.setItem('skipToLeaveSchedule', 'true');
+        sessionStorage.setItem('disabilityInfoView', 'leaveSchedule');
       }
     });
   }

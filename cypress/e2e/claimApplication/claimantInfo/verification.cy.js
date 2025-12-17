@@ -241,42 +241,19 @@ describe("Disability Verification page", () => {
       cy.get('#leaveScheduleDisplay').should('contain', '08/13/2025'); // Recovery date
     });
 
-    it("Reason for Leave edit button does not set skipToLeaveSchedule flag", () => {
+    it("Reason for Leave edit button sets disabilityInfoView flag to reasonForLeave", () => {
       cy.mockASPX(URL);
       cy.get('#editReasonForLeave').click();
       cy.window().then((win) => {
-        expect(win.sessionStorage.getItem('skipToLeaveSchedule')).to.be.null;
+        expect(win.sessionStorage.getItem('disabilityInfoView')).to.equal('reasonForLeave');
       });
     });
 
-    it("Reason for Leave edit button removes any existing skipToLeaveSchedule flag", () => {
-      cy.window().then((win) => {
-        win.sessionStorage.setItem('skipToLeaveSchedule', 'true');
-      });
-      cy.mockASPX(URL);
-      cy.get('#editReasonForLeave').click();
-      cy.window().then((win) => {
-        expect(win.sessionStorage.getItem('skipToLeaveSchedule')).to.be.null;
-      });
-    });
-
-    it("Reason for Leave edit button removes any existing skipToLeaveSchedule flag", () => {
-      cy.window().then((win) => {
-        win.sessionStorage.setItem('skipToLeaveSchedule', 'true');
-      });
-      cy.mockASPX(URL);
-      cy.get('#editReasonForLeave').click();
-  
-      cy.window().then((win) => {
-        expect(win.sessionStorage.getItem('skipToLeaveSchedule')).to.be.null;
-      });
-    });
-
-    it("Leave Schedule EDIT button sets skipToLeaveSchedule flag", () => {
+    it("Leave Schedule EDIT button sets disabilityInfoView flag to leaveSchedule", () => {
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnDisInfoEdit').click();
       cy.window().then((win) => {
-        expect(win.sessionStorage.getItem('skipToLeaveSchedule')).to.equal('true');
+        expect(win.sessionStorage.getItem('disabilityInfoView')).to.equal('leaveSchedule');
       });
     });
 
