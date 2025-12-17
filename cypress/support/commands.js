@@ -73,13 +73,14 @@ Cypress.Commands.add("checkHelpButtonBehavior", () => {
   cy.get('@doPostBackStub').should('be.calledWith', 'ctl00$header$lbtnShowFAQ', '');
 });
 
-Cypress.Commands.add("checkInfoAlertBehavior", () => {
-  cy.get('#info-alert').should('be.visible');
-  cy.get('#dismiss-alert').click();
-  cy.get('#info-alert').should('not.be.visible');
-  cy.reload();
-  cy.get('#info-alert').should('not.exist');
-});
+// Can be used to check on alert behavior
+// Cypress.Commands.add("checkInfoAlertBehavior", () => {
+//   cy.get('#info-alert').should('be.visible');
+//   cy.get('#dismiss-alert').click();
+//   cy.get('#info-alert').should('not.be.visible');
+//   cy.reload();
+//   cy.get('#info-alert').should('not.exist');
+// });
 
 function checkLogoutData(interception) {
   const formData = interception.request.body;

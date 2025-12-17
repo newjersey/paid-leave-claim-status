@@ -273,8 +273,21 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         pregnancyDetails: "If you have any pregnancy complications, describe them below. Otherwise, you can skip this.",
       },
       reviewAndSave: {
-        title: "Review and save",
-        button: "Save and continue",
+        title: 'Review and save',
+        button: 'Save and continue',
+        reasonForLeave: {
+          reasonLabel: 'Reason',
+          detailsLabel: 'Details',
+          illness: 'Illness',
+        },
+        leaveSchedule: {
+          firstDay: "First day of disability leave for",
+          returnedWork: 'Recovered/returned work',
+          lastWorkday: 'Last workday',
+          pregnancy: "pregnancy",
+          illness: "illness",
+          injury: "injury",
+        }
       },
       reviewAndSubmit: {
         title: "Review and submit",

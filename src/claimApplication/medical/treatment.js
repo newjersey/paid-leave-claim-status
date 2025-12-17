@@ -122,7 +122,6 @@ function replaceDoctorText() {
 }
 
 function addProviderScreener() { 
-  console.log('screenher is happening')
   const doctorNameInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm');
   const fieldset = doctorNameInput.closest('fieldset');
 

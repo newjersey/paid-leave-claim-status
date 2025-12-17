@@ -1,4 +1,8 @@
-import { globalTestsNew, globalTestsOld } from "../shared";
+import {
+  globalTestsNew,
+  globalTestsOld,
+  EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS
+} from "../shared";
 import { encodeDecode } from '../../../../src/claimApplication/utils';
 
 const PAGE_ID = 'verification';
@@ -158,11 +162,11 @@ describe("Disability Verification page", () => {
       cy.get('#divVerTDI').invoke('css', 'display', 'none');
     });
 
-    it("allows user to edit disability information", () => {
+    it("allows user to edit leave schedule information (formerlly disability information)", () => {
       checkDisabilityEdit();
     });
 
-    it("allows user to edit medical treatment information", () => {
+    it("allows user to edit medical information (formerlly medical treatment information)", () => {
       checkMedicalEdit();
     });
 
@@ -176,6 +180,99 @@ describe("Disability Verification page", () => {
 
     it("allows user to edit payment information", () => {
       checkPaymentEdit();
+    });
+
+    it("Reason for Leave section with reason exists", () => {
+      cy.get('#reasonForLeaveReviewSection').should('exist');
+      cy.get('#reasonForLeaveReviewSection legend').should('contain', 'Reason for leave');
+      cy.get('#editReasonForLeave').should('exist').and('have.value', 'EDIT');
+      cy.get('#reasonForLeaveReviewSection').should('contain', 'Injury');
+    });
+
+    it("renames Disability Information to Leave Schedule", () => {
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnDisInfoEdit')
+        .closest('fieldset')
+        .find('legend')
+        .should('contain', 'Leave schedule');
+    });
+
+    it("renames Medical Treatment Information to Medical Information", () => {
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btnVerDisab')
+        .closest('fieldset')
+        .find('legend')
+        .should('contain', 'Medical information');
+    });
+
+    it("hides Disability/Injury Description table from Medical section", () => {
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDisabDesc')
+        .closest('table')
+        .should('have.css', 'display', 'none');
+    });
+
+    it("hides the original Leave Schedule table", () => {
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnDisInfoEdit')
+        .closest('fieldset')
+        .find('table')
+        .should('have.css', 'display', 'none');
+    });
+
+    it("creates display div with leaveScheduleDisplay id", () => {
+      cy.get('#leaveScheduleDisplay').should('exist');
+    });
+
+    it("shows Last workday label first", () => {
+      cy.get('#leaveScheduleDisplay p').first().should('contain', 'Last workday:');
+    });
+
+    it("shows First day of disability leave for reason in text based on user's disability reason", () => {
+      cy.window().then((win) => {
+        const data = { reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+      cy.get('#leaveScheduleDisplay').should('contain', 'First day of disability leave for injury:');
+    });
+
+    it("displays the correct schedule values from the hidden form fields", () => {
+      cy.get('#leaveScheduleDisplay').should('contain', '07/14/2025'); // Last workday
+      cy.get('#leaveScheduleDisplay').should('contain', '07/15/2025'); // First day disability
+      cy.get('#leaveScheduleDisplay').should('contain', 'No');         // Returned to work
+      cy.get('#leaveScheduleDisplay').should('contain', '08/13/2025'); // Recovery date
+    });
+
+    it("Reason for Leave edit button sets disabilityInfoView flag to reasonForLeave", () => {
+      cy.mockASPX(URL);
+      cy.get('#editReasonForLeave').click();
+      cy.window().then((win) => {
+        expect(win.sessionStorage.getItem('disabilityInfoView')).to.equal('reasonForLeave');
+      });
+    });
+
+    it("Leave Schedule EDIT button sets disabilityInfoView flag to leaveSchedule", () => {
+      cy.mockASPX(URL);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnDisInfoEdit').click();
+      cy.window().then((win) => {
+        expect(win.sessionStorage.getItem('disabilityInfoView')).to.equal('leaveSchedule');
+      });
+    });
+
+    it("Reason for Leave EDIT button clicks BtnDisInfoEdit and submits form", () => {
+      cy.mockASPX(URL);
+      cy.get('#editReasonForLeave').click();
+      cy.wait('@aspxSubmission').then((interception) => {
+        const formData = interception.request.body;
+        expect(formData).to.include('BtnDisInfoEdit=EDIT');
+      });
+    });
+  
+    it("Leave Schedule EDIT button submits form with BtnDisInfoEdit", () => {
+      cy.mockASPX(URL);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnDisInfoEdit').click();
+      cy.wait('@aspxSubmission').then((interception) => {
+        const formData = interception.request.body;
+        expect(formData).to.include('BtnDisInfoEdit=EDIT');
+      });
     });
 
     globalTestsNew(PAGE_ID, URL);

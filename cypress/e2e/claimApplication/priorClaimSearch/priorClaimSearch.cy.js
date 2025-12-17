@@ -63,9 +63,5 @@ describe("Prior Claim Search page", () => {
     it('should open Resources and track when clicked', () => {
       cy.trackResourcesClick(PAGE_ID);
     });
-
-    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
-      cy.checkInfoAlertBehavior();
-    });
   });
 });

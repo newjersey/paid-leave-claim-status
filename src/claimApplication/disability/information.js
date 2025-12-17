@@ -45,7 +45,14 @@ export function changes() {
     setupLeaveSchedulePage();
     restoreReasonForLeaveData(setDisabilityType);
 
-    showReasonForLeavePage();
+    const disabilityInfoView = sessionStorage.getItem('disabilityInfoView');
+    sessionStorage.removeItem('disabilityInfoView');
+  
+    if (disabilityInfoView === 'leaveSchedule') {
+      showLeaveSchedulePage();
+    } else {
+      showReasonForLeavePage();
+    }
   }
 }
 
@@ -174,10 +181,20 @@ function showBackButton() {
     logEvent('Leave schedule back clicked', {});
     showReasonForLeavePage();
   });
-  
-  const pageTitle = document.querySelector('#pageTitle');
-  
-  if (pageTitle) {
-    pageTitle.parentNode.insertBefore(backButton, pageTitle);
-  }
+
+  const insertBackButton = () => {
+    if (document.getElementById(backButtonId)) {
+      document.removeEventListener('headerReady', insertBackButton);
+      return;
+    }
+
+    const stepIndicator = document.querySelector('.usa-step-indicator--no-labels');
+    if (stepIndicator) {
+      stepIndicator.parentNode.insertBefore(backButton, stepIndicator);
+      document.removeEventListener('headerReady', insertBackButton);
+    }
+  };
+
+  insertBackButton();
+  document.addEventListener('headerReady', insertBackButton);
 }

@@ -25,7 +25,7 @@ function addStyles() {
     }
 
   /* Calendar popup container */
-  #FDDCalendarControl table {
+  #FDDCalendarControl table, #CalendarControl table {
     font-size: 16px;
   }
 

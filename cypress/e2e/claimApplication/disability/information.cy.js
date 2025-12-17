@@ -55,7 +55,7 @@ describe("Disability Information page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').type("07/18/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').type("07/17/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes').click({ force: true });
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').type("08/17/2025");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').type("08/17/2025").blur();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_btnSubmitConflictCheck').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     }
@@ -346,6 +346,44 @@ describe("Disability Information page", () => {
         .and('have.value', '');  
     });
 
+    it("skips to Leave Schedule page when disabilityInfoView flag is set", () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem('disabilityInfoView', 'leaveSchedule');
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+  
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab').should('be.visible');
+      cy.get('#reasonForLeavePage').should('not.be.visible');
+    });
+
+    it("clears disabilityInfoView flag after navigation", () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem('disabilityInfoView', 'leaveSchedule');
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+  
+      cy.window().then((win) => {
+        expect(win.sessionStorage.getItem('disabilityInfoView')).to.be.null;
+      });
+    });
+
+    it('displays back button on Leave Schedule page', () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem('disabilityInfoView', 'leaveSchedule');
+      });
+      cy.visit(FIXTURE);
+      cy.wait('@script');
+
+      cy.get('#leaveScheduleBack').should('be.visible');
+    });
+
+    it('back button is hidden on Reason for Leave page', () => {
+      cy.get('#reasonForLeavePage').should('be.visible');
+      cy.get('#leaveScheduleBack').should('not.exist');
+    });
+    
     globalTestsNew(PAGE_ID, URL);
   });
 });
