@@ -1,4 +1,5 @@
 import { globalTestsNew, globalTestsOld } from "../shared";
+import { encodeDecode } from '../../../../src/claimApplication/utils';
 
 const PAGE_ID = 'workRelated';
 const URL = 'ClaimantDisabililty';
@@ -62,6 +63,76 @@ describe("Work Related page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCInsNo').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_btnWC').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it('hides question 2a and renames 2b and 2c when workers_comp is session storage', () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem('session_data', encodeDecode(JSON.stringify({ workers_comp: 'yes' })));
+      });
+      cy.visit(FIXTURE);
+      cy.mockASPX(URL);
+      //2a
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes')
+        .should('not.be.visible');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo')
+        .should('not.be.visible');
+      cy.get('label[for="ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes"]')
+        .should('not.be.visible');
+      cy.get('label[for="ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo"]')
+        .should('not.be.visible');
+      //2b is made visible and renamed to 2a
+      cy.get('#divWCIns').should('be.visible');
+      cy.get('#divWCIns a strong').should('have.text', '2a.');
+      //2c is renamed to 2b
+      cy.get('#divWCBen a strong').should('have.text', '2b.');
+    });
+
+    it('autofills 2a workers comp question with yes when workers_comp is "yes" in session storage', () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem('session_data', encodeDecode(JSON.stringify({ workers_comp: 'yes' })));
+      });
+      cy.visit(FIXTURE);
+      cy.mockASPX(URL);
+      // autofills and hides 2a
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes')
+        .should('be.checked');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo')
+        .should('not.be.checked');
+    });
+
+    it('autofills and hides 2a workers comp question with no when workers_comp is "no" in session storage', () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem('session_data', encodeDecode(JSON.stringify({ workers_comp: 'no' })));
+      });
+      cy.visit(FIXTURE);
+      cy.mockASPX(URL);
+      // autofills and hides 2a
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes')
+        .should('not.be.checked');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo')
+        .should('be.checked');
+    });
+
+    it('still submits the 2a Yes value with the form', () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem('session_data', encodeDecode(JSON.stringify({ workers_comp: 'yes' })));
+      });
+      cy.visit(FIXTURE);
+      cy.mockASPX(URL);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpNm').type('Test Employer');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtEmpadd1').type('123 Main St');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtCity').type('Newark');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_ddlEmpStates').select('NJ');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtEmpZip1').type('07101');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpPh').type('973');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpPh2').type('555');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpPh3').type('1234');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjDt').type('06/01/2024');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_btnWC').click();
+      cy.wait('@aspxSubmission').then((interception) => {
+        const formData = interception.request.body;
+        expect(formData).to.include('rbtnFWCYes');
+      });
     });
 
     globalTestsNew(PAGE_ID, URL);

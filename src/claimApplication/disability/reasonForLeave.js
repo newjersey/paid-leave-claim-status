@@ -8,6 +8,7 @@ import {
   getSessionData,
   STORAGE_KEY_REASON_FOR_LEAVE,
   STORAGE_KEY_CAUSED_BY_JOB,
+  STORAGE_KEY_WORKERS_COMP
 } from '../utils';
 
 const TEXT_AREA_IDS = ['pregnancy-details', 'illness-details', 'injury-details'];
@@ -142,6 +143,11 @@ function setupDisabilityTypeListeners(setDisabilityType) {
     
     illnessTextarea.value = '';
     injuryTextarea.value = '';
+
+    addToSessionData({
+      [STORAGE_KEY_CAUSED_BY_JOB]: 'no',
+      [STORAGE_KEY_WORKERS_COMP]: 'no'
+    });
   });
 
   illnessRadio.addEventListener('change', function () {
@@ -156,6 +162,11 @@ function setupDisabilityTypeListeners(setDisabilityType) {
 
     injuryTextarea.value = '';
     pregnancyTextarea.value = '';
+
+    addToSessionData({
+      [STORAGE_KEY_CAUSED_BY_JOB]: null,
+      [STORAGE_KEY_WORKERS_COMP]: null
+    });
   });
 
   injuryRadio.addEventListener('change', function () {
@@ -170,6 +181,11 @@ function setupDisabilityTypeListeners(setDisabilityType) {
 
     pregnancyTextarea.value = '';
     illnessTextarea.value = '';
+
+    addToSessionData({
+      [STORAGE_KEY_CAUSED_BY_JOB]: null,
+      [STORAGE_KEY_WORKERS_COMP]: null
+    });
   });
 
   pregnancyRadio.addEventListener('invalid', function () {
@@ -263,6 +279,7 @@ function setupSubmitReasonForLeave(showLeaveSchedulePage) {
 }
 
 export function restoreReasonForLeaveData(setDisabilityType) {
+
   const savedData = getSessionData();
   const savedReason = savedData[STORAGE_KEY_REASON_FOR_LEAVE]
   

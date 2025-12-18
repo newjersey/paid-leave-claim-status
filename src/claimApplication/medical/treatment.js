@@ -412,6 +412,10 @@ function loadReasonData() {
     workersCompNo.checked = true;
     causedByJobQuestion.style.display = 'none';
     workersCompContainer.style.display = 'none';
+    addToSessionData({
+      [STORAGE_KEY_CAUSED_BY_JOB]: 'no',
+      [STORAGE_KEY_WORKERS_COMP]: null
+    });
   } else {
     // Show the caused-by-job question for illness/injury
     causedByJobQuestion.style.display = 'block';

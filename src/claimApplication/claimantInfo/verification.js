@@ -62,6 +62,7 @@ export function changes() {
   renamePages();
   createReasonForLeaveSection();
   reorderAndRenameLeaveScheduleFields()
+  restructureWorkRelatedSection()
   hideDisabilityInfoInMedicalSection();
   setupEditButtonHandlers();
   setNewTitle(i18next.t('reviewAndSave.title'));
@@ -330,4 +331,124 @@ function setupEditButtonHandlers() {
       }
     });
   }
+}
+
+function restructureWorkRelatedSection() {
+  const workRelatedEditBtn = document.querySelector(
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnWREdit'
+  );
+  const fieldset = workRelatedEditBtn?.closest('fieldset');
+  if (!fieldset) return;
+
+  const savedData = getSessionData();
+  const reasonData = savedData[STORAGE_KEY_REASON_FOR_LEAVE];
+  const reason = reasonData?.reasons || i18next.t('reviewAndSave.workInfo.injuryIllness')
+
+  const injuredAtWorkplaceInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_TxtVerInjWk');
+  const empNameInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerInjEmpNm');
+  const empAddr1Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerEmpadd1');
+  const empAddr2Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerEmpadd2');
+  const empCityInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerEmpCity');
+  const empStateInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerEmpState');
+  const empZip1Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerEmpZip1');
+  const empZip2Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerEmpZip2');
+  const empPh1Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerInjEmpPh');
+  const empPh2Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerInjEmpPh2');
+  const empPh3Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerInjEmpPh3');
+  const empPh4Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerInjEmpPh4');
+  const injDateInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerInjDt');
+  const wcDeterInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDeter');
+  const wcBenefitsInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerTempWC');
+
+  const filedWorkersComp = injuredAtWorkplaceInput?.value || 'No';
+  const empName = empNameInput?.value || '';
+  const empAddr1 = empAddr1Input?.value || '';
+  const empAddr2 = empAddr2Input?.value || '';
+  const empCity = empCityInput?.value || '';
+  const empState = empStateInput?.value || '';
+  const empZip1 = empZip1Input?.value || '';
+  const empZip2 = empZip2Input?.value || '';
+  const empPhone = formatPhone(empPh1Input?.value, empPh2Input?.value, empPh3Input?.value, empPh4Input?.value);
+  const injDate = injDateInput?.value || '';
+  const wcDetermination = wcDeterInput?.value || '';
+  const wcBenefits = wcBenefitsInput?.value || '';
+
+  let addressParts = [empAddr1];
+  if (empAddr2) addressParts.push(empAddr2);
+  addressParts.push(`${empCity}, ${empState} ${empZip1}${empZip2 ? '-' + empZip2 : ''}`);
+  const fullAddress = addressParts.join('<br>');
+
+  // Hide the existing content
+  const divVerRelatedInfo = document.querySelector('#divVerRelatedInfo');
+  if (divVerRelatedInfo) {
+    divVerRelatedInfo.style.display = 'none';
+  }
+
+  // Hide the "Disability Injury Work Related" row (first row in the table)
+  const firstTable = fieldset.querySelector('table');
+  if (firstTable) {
+    firstTable.style.display = 'none';
+  }
+
+  const displayDiv = document.createElement('div');
+  displayDiv.id = 'workRelatedDisplay';
+
+  if (filedWorkersComp === 'Yes') {
+    displayDiv.innerHTML = `
+    <p class="margin-left-0">
+      <span>${i18next.t('reviewAndSave.workInfo.fileOrIntend')}</span>
+      <strong>${filedWorkersComp}</strong>
+    </p>
+    <p class="margin-left-0">
+      <span>${i18next.t('reviewAndSave.workInfo.employerInfo')} ${reason} ${i18next.t('reviewAndSave.workInfo.happened')}:</span>
+    </p>
+    <div style="margin-left: 10px;">
+      <p class="margin-left-0">
+        <span>Name:</span>
+        <strong>${empName}</strong>
+      </p>
+      <p class="margin-left-0">
+        <span>Address:</span><br>
+        <strong>${fullAddress}</strong>
+      </p>
+      <p class="margin-left-0">
+        <span>Phone:</span>
+        <strong>${empPhone}</strong>
+      </p>
+    </div>
+    <p class="margin-left-0">
+      <span>${i18next.t('reviewAndSave.workInfo.dateOf')} ${reason}:</span>
+      <strong>${injDate}</strong>
+    </p>
+    <p class="margin-left-0">
+      <span>${i18next.t('reviewAndSave.workInfo.approved')}</span>
+      <strong>${wcDetermination}</strong>
+    </p>
+    <p class="margin-left-0">
+      <span>${i18next.t('reviewAndSave.workInfo.receivingBenefits')}</span>
+      <strong>${wcBenefits}</strong>
+    </p>
+  `;
+  } else {
+    displayDiv.innerHTML = `
+    <p class="margin-left-0">
+      <span>${i18next.t('reviewAndSave.workInfo.fileOrIntend')}</span>
+      <strong>${filedWorkersComp}</strong>
+    </p>`;
+  }
+
+  // Insert after the legend
+  const legend = fieldset.querySelector('legend');
+  if (legend) {
+    legend.insertAdjacentElement('afterend', displayDiv);
+  }
+}
+
+function formatPhone(ph1, ph2, ph3, ext) {
+  if (!ph1 && !ph2 && !ph3) return '';
+  let phone = `(${ph1 || ''}) ${ph2 || ''}-${ph3 || ''}`;
+  if (ext) {
+    phone += ` ext. ${ext}`;
+  }
+  return phone;
 }
