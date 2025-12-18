@@ -12,10 +12,19 @@ const resources = {
       },
       citizenship: {
         title: "Contact information",
+        addRepresentativeTitle: "Add a representative",
         phoneValidation: {
           digits_three: "Please enter exactly 3 digits",
           digits_four: "Please enter exactly 4 digits",
         },
+        altPhone: "Alternate phone number",
+        phone: "Phone number",
+        email: "Email address. This is where we will send your application summary.",
+        confirm_email: "Confirm email address",
+        representative: `You can choose someone you trust to discuss your claim with us. When you contact customer support, we'll only share details with you or that person. Would you like to add a representative?`,
+        representative_name: "Representative's name",
+        representative_dob: "Representative's date of birth",
+        representative_phone: "Representative's phone number",
       },
       confirmation: {
         title: "Action required; final step!",

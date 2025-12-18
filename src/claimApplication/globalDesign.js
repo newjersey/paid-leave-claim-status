@@ -1,6 +1,10 @@
 import { applyFooter } from "./footer.js";
 import { replaceHeader } from "./header.js";
-import { ICON_BASE_URL } from "../modules/shared.mjs";
+import {
+  addFeedbackWidgetScriptToHead,
+  ICON_BASE_URL,
+  overrideFeedbackWidgetEmailDisclaimerText
+} from "../modules/shared.mjs";
 
 export function globalDesignChanges(pageId) {
   addViewportMetaTag();
@@ -8,6 +12,7 @@ export function globalDesignChanges(pageId) {
   applyFooter(pageId);
   injectGlobalStyles();
   styleButtons();
+  addFeedbackWidget();
 }
 
 function addViewportMetaTag() {
@@ -24,7 +29,7 @@ function injectGlobalStyles() {
       background-color: #FBFCFD;
     }
     h1, h2, h3, h4, p, a {
-      font-family: "Public Sans", sans-serif;
+      font-family: "Public Sans", sans-serif !important;
       font-variant: normal;
     }
     .ajax__tab_panel {
@@ -32,6 +37,11 @@ function injectGlobalStyles() {
       font-variant: normal !important;
       font-size: 16px !important;
     }
+
+    .feedback-container {
+      margin: 50px 0 0 0;
+    }
+
     .usa-button {
       padding: 0 1.25rem;
       width: auto;
@@ -107,4 +117,20 @@ function styleButtons() {
     button.style.width = null;
     button.style.height = null;
   });
+}
+
+function addFeedbackWidget() {
+  const existingWidget = document.querySelector('feedback-widget');
+  if (!existingWidget) {
+    addFeedbackWidgetScriptToHead();
+    const feedbackWidget = document.createElement('feedback-widget');
+    feedbackWidget.setAttribute('contact-link', 'https://www.nj.gov/labor/myleavebenefits/help/contact/');
+    feedbackWidget.setAttribute('only-save-rating-to-analytics', 'true');
+
+    const footer = document.getElementById('helpSection');
+    if (footer) {
+      footer.parentNode.insertBefore(feedbackWidget, footer);
+      overrideFeedbackWidgetEmailDisclaimerText();
+    }
+  }
 }
