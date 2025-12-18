@@ -1,7 +1,5 @@
 import {
-  EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS,
   EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS,
-  EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY,
   EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS,
   EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY,
   EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY_DETAILS,
@@ -64,9 +62,14 @@ describe("Disability Information page", () => {
       cy.window().then((win) => {
         const encodedData = win.sessionStorage.getItem('session_data');
         const data = JSON.parse(encodeDecode(encodedData));
-        expect(data).to.deep.equal({
-          reason_for_leave: reasonForLeaveData
-        });
+        expect(data.reason_for_leave).to.deep.equal(reasonForLeaveData);
+        if (data.reason_for_leave.reasons === 'pregnancy') {
+          expect(data.caused_by_job).to.equal('no');
+          expect(data.workers_comp).to.equal('no');
+        } else {
+          expect(data.caused_by_job).to.equal(null);
+          expect(data.workers_comp).to.equal(null);
+        }
       });
     }
 
@@ -95,6 +98,7 @@ describe("Disability Information page", () => {
       cy.get('#injury-details').type("Broken Elbow.");
       cy.get('#submitReasonForLeave').click();
       cy.get('#leaveScheduleBack').click();
+      checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS);
       cy.get('#reason-illness').click({ force: true });
       cy.get('textarea[name="injury-details"]').should('have.value', '');
       cy.get('textarea[name="illness-details"]').type("Lung Inflammation.");
@@ -300,7 +304,7 @@ describe("Disability Information page", () => {
     
     it("does not show pregnancy related info with non-pregnancy leave type after restoring from session data", () => {
       cy.window().then((win) => {
-        const data = { reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS };
+        const data = { reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS };
         win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
       });
       cy.visit(FIXTURE);

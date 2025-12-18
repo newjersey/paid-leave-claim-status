@@ -278,6 +278,15 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           pregnancy: "pregnancy",
           illness: "illness",
           injury: "injury",
+        },
+        workInfo: {
+          fileOrIntend: "File or intend to file Workers' Compensation claim:",
+          employerInfo: "Employer information where the",
+          happened: "happened",
+          dateOf: "Date of",
+          approved: "Approved for Workers' Compensation benefits",
+          receivingBenefits: "Receiving benefits same time as TDI:",
+          injuryIllness: "injury/illness"
         }
       },
       reviewAndSubmit: {
