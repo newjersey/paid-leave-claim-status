@@ -5,6 +5,8 @@
   "scripts": {
     "test": "npx cypress run",
     "test:claim-status": "npx cypress run --spec './cypress/e2e/claimStatus/**.cy.js'",
+    "test:claim-app": "npx cypress run --spec './cypress/e2e/claimApplication/**/*.cy.js'",
+    "test:open": "npx cypress open --e2e",
     "build": "./build.sh",
     "prep-deploy-dev": "./prepareDeploy.sh dev",
     "prep-deploy-prod": "./prepareDeploy.sh prod",

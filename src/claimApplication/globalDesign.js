@@ -68,6 +68,15 @@ function injectGlobalStyles() {
       top: auto !important;
     }
 
+    .usa-alert--warning::before {
+      content: url('${ICON_BASE_URL}/warning.svg');
+      background: none !important;
+      -webkit-mask: none !important;
+      mask: none !important;
+      top: auto !important;
+      margin-top:5px;
+    }
+
     .usa-accordion__button[aria-expanded="false"] {
       background-image: url('${ICON_BASE_URL}/add.svg'), linear-gradient(transparent, transparent);
     }
