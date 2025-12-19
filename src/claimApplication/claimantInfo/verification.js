@@ -244,7 +244,6 @@ function createReasonForLeaveSection() {
 }
 
 function reorderAndRenameLeaveScheduleFields() {
-  console.log('reorderAndRenameLeaveScheduleFields')
   const fieldset = document.querySelector(
     '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnDisInfoEdit'
   )?.closest('fieldset');

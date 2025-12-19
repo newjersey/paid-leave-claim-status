@@ -36,24 +36,7 @@ function setDisabilityType(type) {
 
 export function changes() {
   addStyles();
-
-  const leaveScheduleContainer = document.getElementById(leaveScheduleId); 
-  if (leaveScheduleContainer) {
-    leaveScheduleContainer.parentNode.insertBefore(reasonForLeavePage(), leaveScheduleContainer);
-
-    setupReasonForLeavePage(setDisabilityType, showLeaveSchedulePage);
-    setupLeaveSchedulePage();
-    restoreReasonForLeaveData(setDisabilityType);
-
-    const disabilityInfoView = sessionStorage.getItem('disabilityInfoView');
-    sessionStorage.removeItem('disabilityInfoView');
-  
-    if (disabilityInfoView === 'leaveSchedule') {
-      showLeaveSchedulePage();
-    } else {
-      showReasonForLeavePage();
-    }
-  }
+  determineLeaveScheduleScreen()
 }
 
 function addStyles() {
@@ -132,6 +115,26 @@ function addStyles() {
     }
   `;
   document.head.appendChild(style);
+}
+
+function determineLeaveScheduleScreen() {
+  const leaveScheduleContainer = document.getElementById(leaveScheduleId); 
+  if (leaveScheduleContainer) {
+    leaveScheduleContainer.parentNode.insertBefore(reasonForLeavePage(), leaveScheduleContainer);
+
+    setupReasonForLeavePage(setDisabilityType, showLeaveSchedulePage);
+    setupLeaveSchedulePage();
+    restoreReasonForLeaveData(setDisabilityType);
+
+    const disabilityInfoView = sessionStorage.getItem('disabilityInfoView');
+    sessionStorage.removeItem('disabilityInfoView');
+  
+    if (disabilityInfoView === 'leaveSchedule') {
+      showLeaveSchedulePage();
+    } else {
+      showReasonForLeavePage();
+    }
+  }
 }
 
 function showReasonForLeavePage() {

@@ -140,7 +140,7 @@ function setupDisabilityTypeListeners(setDisabilityType) {
 
     illnessTextarea.required = false;
     injuryTextarea.required = false;
-    
+
     illnessTextarea.value = '';
     injuryTextarea.value = '';
 
@@ -231,7 +231,7 @@ function setupPasteDetection() {
 
 function setupSubmitReasonForLeave(showLeaveSchedulePage) {
   const form = document.getElementById('reason-for-leave-form');
-  form.addEventListener('submit', function(event) {
+  form.addEventListener('submit', function (event) {
     event.preventDefault();
 
     const visibleTextarea = form.querySelector('textarea[required]');
@@ -239,7 +239,7 @@ function setupSubmitReasonForLeave(showLeaveSchedulePage) {
       const detailsDiv = visibleTextarea.closest('.additional-content');
       const label = detailsDiv.querySelector('p');
       elementTextError(label);
-      return; 
+      return;
     }
     const reasonSelected = form.querySelector('input[name="reasons"]:checked');
     if (!reasonSelected) {
@@ -272,19 +272,22 @@ function setupSubmitReasonForLeave(showLeaveSchedulePage) {
 
     addToSessionData({
       [STORAGE_KEY_REASON_FOR_LEAVE]: formValues
-    });      
+    });
 
     showLeaveSchedulePage();
   });
 }
 
 export function restoreReasonForLeaveData(setDisabilityType) {
-
   const savedData = getSessionData();
-  const savedReason = savedData[STORAGE_KEY_REASON_FOR_LEAVE]
-  
+  let savedReason = savedData[STORAGE_KEY_REASON_FOR_LEAVE]
+
   if (!savedReason || !savedReason.reasons) {
-    return false;
+    savedReason = parseReasonFromVendorField();
+    if (!savedReason) {
+      return false;
+    }
+    addToSessionData({ [STORAGE_KEY_REASON_FOR_LEAVE]: savedReason });
   };
 
   const reason = savedReason.reasons;
@@ -293,7 +296,6 @@ export function restoreReasonForLeaveData(setDisabilityType) {
   const radioButton = document.getElementById(radioId)
   if (radioButton) {
     radioButton.checked = true;
-    radioButton.dispatchEvent(new Event('change'));
   }
 
   const disabilityTypeMap = {
@@ -303,16 +305,72 @@ export function restoreReasonForLeaveData(setDisabilityType) {
   };
   setDisabilityType(disabilityTypeMap[reason]);
 
+  // Manually show the correct details container (without triggering change events which will update session storage)
+  const pregnancyDetails = document.getElementById('pregnancy-details-container');
+  const illnessDetails = document.getElementById('illness-details-container');
+  const injuryDetails = document.getElementById('injury-details-container');
+
+  const illnessTextarea = document.querySelector('textarea[name="illness-details"]');
+  const injuryTextarea = document.querySelector('textarea[name="injury-details"]');
+
+  pregnancyDetails.style.display = reason === 'pregnancy' ? 'block' : 'none';
+  illnessDetails.style.display = reason === 'illness' ? 'block' : 'none';
+  injuryDetails.style.display = reason === 'injury' ? 'block' : 'none';
+
+  illnessTextarea.required = reason === 'illness';
+  injuryTextarea.required = reason === 'injury';
+
   const detailsKey = `${reason}-details`;
-    const savedDetails = savedReason[detailsKey];
-    if (savedDetails) {
+  const savedDetails = savedReason[detailsKey];
+  if (savedDetails) {
 
-      // Remove the paste signal suffix if it exists (e.g., "p120")
-      const cleanedDetails = savedDetails.replace(/p\d+$/, '');
-      const textarea = document.querySelector(`textarea[name="${detailsKey}"]`);
-      if (textarea) {
-        textarea.value = cleanedDetails;
-      }
+    // Remove the paste signal suffix if it exists (e.g., "p120")
+    const cleanedDetails = savedDetails.replace(/p\d+$/, '');
+    const textarea = document.querySelector(`textarea[name="${detailsKey}"]`);
+    if (textarea) {
+      textarea.value = cleanedDetails;
     }
+  }
+}
 
+function parseReasonFromVendorField() {
+  const originalTextarea = document.getElementById(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDisabDesc'
+  );
+
+  if (!originalTextarea || !originalTextarea.value) {
+    return null;
+  }
+
+  let rawValue = originalTextarea.value.trim();
+  if (!rawValue) {
+    return null;
+  }
+
+  rawValue = rawValue.replace(/p\d+$/, '').trim();
+
+  const validReasons = ['pregnancy', 'illness', 'injury'];
+
+  const firstPeriodIndex = rawValue.indexOf('. ');
+
+  let reason;
+  let details = '';
+
+  if (firstPeriodIndex !== -1) {
+    reason = rawValue.substring(0, firstPeriodIndex).toLowerCase();
+    details = rawValue.substring(firstPeriodIndex + 2);
+  } else {
+    reason = rawValue.toLowerCase();
+  }
+
+  if (!validReasons.includes(reason)) {
+    return null;
+  }
+
+  const result = {
+    reasons: reason,
+    [`${reason}-details`]: details
+  };
+
+  return result;
 }
