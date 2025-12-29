@@ -1,4 +1,5 @@
 import { clearSessionData } from "../utils";
+import { styleBody } from "../../modules/shared.mjs";
 
 export const id = "completeExistingIntro";
 
@@ -14,4 +15,5 @@ export function changes() {
     checkbox.style.margin = '0 5px';
   }
   clearSessionData();
+  styleBody();
 }

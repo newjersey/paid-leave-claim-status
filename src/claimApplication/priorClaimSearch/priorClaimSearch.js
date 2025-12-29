@@ -27,11 +27,6 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
-    .lblClass, .lblClass1 {
-      font-family: "Public Sans", sans-serif;
-      font-variant: normal;
-      font-size: 16px;
-    }
     @media (max-width: 767px) {
       #ContentPlaceHolder1_lblMesgInfo {
         display: block;
