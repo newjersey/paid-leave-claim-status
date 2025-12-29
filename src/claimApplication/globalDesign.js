@@ -30,8 +30,15 @@ function injectGlobalStyles() {
     }
     h1, h2, h3, h4, p, a {
       font-family: "Public Sans", sans-serif !important;
-      font-variant: normal;
+      font-variant: normal; 
     }
+
+    a.lblClass, span.lblClass1 {
+      font-family: "Public Sans", sans-serif;
+      font-variant: normal;
+      font-size: 16px;
+    }
+
     .ajax__tab_panel {
       font-family: "Public Sans", sans-serif !important;
       font-variant: normal !important;

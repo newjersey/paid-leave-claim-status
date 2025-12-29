@@ -8,6 +8,7 @@
     "test:claim-app": "npx cypress run --spec './cypress/e2e/claimApplication/**/*.cy.js'",
     "test:open": "npx cypress open --e2e",
     "build": "./build.sh",
+    "build-dev": "./build.sh && ./generateLocalDevOverrides.sh",
     "prep-deploy-dev": "./prepareDeploy.sh dev",
     "prep-deploy-prod": "./prepareDeploy.sh prod",
     "postinstall": "patch-package"
