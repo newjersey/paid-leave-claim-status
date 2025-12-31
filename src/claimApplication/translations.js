@@ -200,12 +200,12 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           recoveryDate: `When did you recover?`,
           estRecoveryDate: "When do you anticipate being able to return to work? This can be an estimate and we will ask you again later to verify.",
           whatsNext: "What's Next?",
-          howDelivered: `Confirm with us how you delivered, if you haven't already shared this with us.
+          howDelivered: `After we approve your claim, we’ll mail you a form. It will ask how you delivered (if you haven't already told us) and whether you need more time to recover. 
             <br><br>
             <ul>
-              <li>You can receive 6 weeks recovery from vaginal birth</li>
-              <li>You can receive 8 weeks recovery from C-section birth</li>
-              <li>You can receive more with complications</li>
+              <li>You can receive 6 weeks to recover from vaginal birth</li>
+              <li>You can receive 8 weeks to recover from C-section birth</li>
+              <li>You can receive more with postpartum complications</li>
             </ul>
           `
         },
