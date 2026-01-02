@@ -13,6 +13,7 @@ export function globalDesignChanges(pageId) {
   injectGlobalStyles();
   styleButtons();
   addFeedbackWidget();
+  removeNumbersFromLabels();
 }
 
 function addViewportMetaTag() {
@@ -149,4 +150,11 @@ function addFeedbackWidget() {
       overrideFeedbackWidgetEmailDisclaimerText();
     }
   }
+}
+
+function removeNumbersFromLabels() {
+  document.querySelectorAll('strong').forEach(element => {
+    console.log('Before:', element.textContent);
+    element.textContent = element.textContent.replace(/^\s*\d[a-z]?\.\s*/, '')
+  });
 }
