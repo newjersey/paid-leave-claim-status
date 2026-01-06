@@ -33,13 +33,17 @@ function injectGlobalStyles() {
       font-variant: normal; 
     }
 
-    a.lblClass, span.lblClass1 {
+    a.lblClass, span.lblClass, span.lblClass1 {
       font-family: "Public Sans", sans-serif;
       font-variant: normal;
       font-size: 16px;
     }
 
-    .usa-checkbox__label, .usa-combo-box__input, .usa-combo-box__list, .usa-fieldset, .usa-hint, .usa-input, .usa-input-group, .usa-radio__label, .usa-range, .usa-select, .usa-textarea  {
+    span {
+      font-family: "Public Sans", sans-serif;
+    }
+
+    .usa-checkbox__label, .usa-combo-box__input, .usa-combo-box__list, .usa-fieldset, .usa-hint, .usa-input, .usa-input-group, .usa-radio__label, .usa-range, .usa-select, .usa-textarea, .usa-button, .usa-table, .usa-label, .usa-legend, .usa-alert  {
       font-family: "Public Sans", sans-serif;
     }
 
