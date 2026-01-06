@@ -166,7 +166,6 @@ function addProviderScreener() {
   <fieldset class="usa-fieldset">
     <legend id="provider-type-accepted-legend" class="usa-legend">
       <span class="required-asterisk">*</span>
-      <strong id="providerTypeQuestionNumber" style="display:none;">1. </strong>
       ${i18next.t('medicalInfo.provider.type.isAccepted')}
     </legend>
     <div class="usa-radio">
@@ -398,7 +397,6 @@ function loadReasonData() {
   const textArea = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury');
   textArea.value = `${reason}${details ? `. ${details}` : ''}`;
   textArea.closest('fieldset').style.display = 'none';
-  document.getElementById('providerTypeQuestionNumber').style.display = 'inline';
 
   const causedByJobYes = document.getElementById('caused-by-job-yes');
   const causedByJobNo = document.getElementById('caused-by-job-no');

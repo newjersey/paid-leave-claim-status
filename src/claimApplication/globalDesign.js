@@ -154,7 +154,6 @@ function addFeedbackWidget() {
 
 function removeNumbersFromLabels() {
   document.querySelectorAll('strong').forEach(element => {
-    console.log('Before:', element.textContent);
-    element.textContent = element.textContent.replace(/^\s*\d[a-z]?\.\s*/, '')
+    element.textContent = element.textContent.replace(/^\d[a-z]?[.]\s*/, '')
   });
 }

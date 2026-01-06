@@ -27,6 +27,10 @@ describe("Prior Claim Search page", () => {
     it('should open FAQ and post data when the Help link is clicked', () => {
       cy.checkHelpButtonBehavior();
     });
+
+    it("does not remove numbers from labels", () => {
+      cy.get('strong').should('contain.text', '1. 1. ');
+    });
   });
 
   describe("page with new JS", () => {
@@ -62,6 +66,10 @@ describe("Prior Claim Search page", () => {
 
     it('should open Resources and track when clicked', () => {
       cy.trackResourcesClick(PAGE_ID);
+    });
+
+    it("removes numbers from labels", () => {
+      cy.get('strong').should('not.contain.text', '1. 1. ');
     });
   });
 });
