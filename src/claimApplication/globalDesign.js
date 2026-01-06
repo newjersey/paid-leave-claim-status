@@ -39,6 +39,10 @@ function injectGlobalStyles() {
       font-size: 16px;
     }
 
+    .usa-checkbox__label, .usa-combo-box__input, .usa-combo-box__list, .usa-fieldset, .usa-hint, .usa-input, .usa-input-group, .usa-radio__label, .usa-range, .usa-select, .usa-textarea  {
+      font-family: "Public Sans", sans-serif;
+    }
+
     .ajax__tab_panel {
       font-family: "Public Sans", sans-serif !important;
       font-variant: normal !important;
