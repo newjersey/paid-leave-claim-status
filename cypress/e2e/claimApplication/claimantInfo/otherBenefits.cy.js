@@ -134,7 +134,7 @@ describe("Other Benefits page", () => {
       
       cy.get('#headerWithMargin > button').contains('< Back').click();
 
-      cy.get('h1').contains('Medical information').should('be.visible');
+      cy.get('h1').contains('Medical details').should('be.visible');
       cy.get('footer#helpSection').should('exist').and('have.length', 1);
 
       cy.get('#headerWithMargin > button').contains('< Back').click();
