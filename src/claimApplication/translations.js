@@ -168,7 +168,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             "Recovered" means you are able to return to work.
           `,
           recoveryDate: "When did you recover (felt able to return to work)?",
-          estRecoveryDate: "When do you anticipate being able to return to work? This can be an estimate and we will ask you again later to verify.",
+          estRecoveryDate: "When do you anticipate being able to return to work? This can be an estimate.",
         },
         pregnancy: {
           fddTitle: "First day of disability leave for pregnancy",
@@ -193,12 +193,12 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             <br><br>
             <strong>Hint:</strong> This is the last day you actually worked-- not including PTO, vacation, or sick days you used before your leave started.
           `,
-          recovered: `Have you recovered from pregnancy and delivery?
+          recovered: `Have you already recovered from delivery?
             <br><br>
             <strong>Hint:</strong> You are entitled to at least 6 or 8 weeks of recovery time using TDI. After it ends, you can apply separately for family leave to bond with your baby. The <a href="https://www.nj.gov/labor/myleavebenefits/labor/myleavebenefits/worker/maternity/timeline-welcome.shtml" target="_blank">Maternity Timeline Tool</a> can help you plan.
           `,
           recoveryDate: `When did you recover?`,
-          estRecoveryDate: "When do you anticipate being able to return to work? This can be an estimate and we will ask you again later to verify.",
+          estRecoveryDate: "When do you expect to recover?",
           whatsNext: "What's Next?",
           howDelivered: `After we approve your claim, we’ll mail you a form. It will ask how you delivered (if you haven't already told us) and whether you need more time to recover. 
             <br><br>
