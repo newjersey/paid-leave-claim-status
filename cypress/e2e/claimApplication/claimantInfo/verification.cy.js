@@ -268,12 +268,12 @@ describe("Disability Verification page", () => {
       });
     });
 
-    describe('Medical Information Section', () => {
-      it("renames Medical Treatment Information to Medical Information", () => {
+    describe('Medical Details Section', () => {
+      it("renames Medical Treatment Information to Medical Details", () => {
         cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btnVerDisab')
           .closest('fieldset')
           .find('legend')
-          .should('contain', 'Medical information');
+          .should('contain', 'Medical details');
       });
 
       it("hides Disability/Injury Description table from Medical section", () => {
