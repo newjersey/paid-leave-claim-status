@@ -211,9 +211,9 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         },
       },
       medicalInfo: {
-        title: "Medical information",
+        title: "Medical details",
         provider: {
-          title: "Healthcare provider",
+          title: "Your healthcare provider",
           explanation: "Your healthcare provider must confirm your medical condition and the start of your disability. They must also be qualified to treat your specific condition.",
           info: "Healthcare provider information",
           notAcceptedMessage:"Your application could get delayed or denied if it isn't certified by an approved healthcare provider.",

@@ -128,9 +128,9 @@ function addProviderScreener() {
   const providerType = document.createElement('div');
   providerType.style.margin = "0 0 50px";
   providerType.innerHTML = `
+  <h2 style="font-size: 20px; font-weight: bold; color: black; font-variant: none" class="margin-bottom-1"> ${i18next.t('medicalInfo.provider.title')}</h2>
   <p class="margin-bottom-3">${i18next.t('medicalInfo.provider.explanation')}</p>
         <p>${i18next.t('medicalInfo.provider.theseTypesProviders')}</p>
-
         <div class="provider-accepted-list margin-bottom-2">
           <ul class="usa-list margin-top-0">
             <li>
