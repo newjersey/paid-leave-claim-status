@@ -38,6 +38,7 @@ function setupFDD() {
   const fieldset = document.querySelector('#MainDiv > fieldset');
   fieldset.id = "fddFieldset";
   const divElement = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD');
+  const fddDateConfirmYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbConfFDDYes');
 
   const maternityTimelineToolHtml = `
     <fieldset id="maternityTimeline">
@@ -67,6 +68,9 @@ function setupFDD() {
     <div class="usa-hint" id="fddHint">${i18next.t('shared.dateFormat')}</div>
   `;
   divElement.insertBefore(fddQuestion, divElement.firstChild);
+  fddDateConfirmYes.addEventListener('click', () => {
+    sessionStorage.setItem('disabilityInfoView', 'leaveSchedule')
+  });
 }
 
 function styleFDD(disabilityType) {
