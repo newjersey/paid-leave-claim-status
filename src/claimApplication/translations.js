@@ -154,9 +154,9 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             <br><br>
             Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.
           `,
-          fddQuestion: `<strong>When did this {{disabilityTypeString}} prevent you from working?</strong>
+          fddQuestion: `<strong>What is your first day of disability leave?</strong>
             <br><br>
-            <strong>Hint:</strong> Enter the actual date your disability began, even if it was a day you don't usually work (like a weekend or holiday).
+            <strong>Hint:</strong> This is when your {{disabilityTypeString}} first prevented you from working. Enter the actual date, even if it was a day you don't usually work (like a weekend or holiday).
           `,
           beforeAfterTitle: "Dates of employment before and after disability",
           lastWorkday: `What was the last day you worked?
