@@ -302,7 +302,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         title: "Review and submit",
       },
       workRelated: {
-        title: "Work related information",
+        title: "Workers' Compensation",
       },
     }
   },
