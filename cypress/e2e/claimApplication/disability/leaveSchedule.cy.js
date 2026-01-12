@@ -28,14 +28,26 @@ describe("Disability Information page", () => {
       cy.wait('@script');
     });
 
-    it("navigates to Leave Schedule page when user affirms that their FDD is correct", () => {
+    it("sets disabilityInfoView to leaveSchedule when user selects YES on FDD confirmation", () => {
       cy.mockASPX(URL);
       cy.get('#reason-pregnancy').click({ force: true });
       cy.get('#submitReasonForLeave').click();
       cy.get('#fddFieldset').should('be.visible');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbConfFDDYes').click({ force: true });
-      cy.get('#reasonForLeavePage').should('not.exist')
-      cy.get('#divLDW').should('be.visible');
+      cy.window().then(win => {
+        expect(win.sessionStorage.getItem('disabilityInfoView')).to.eq('leaveSchedule')
+      });
+    });
+
+    it("sets disabilityInfoView to leaveSchedule when user selects NO on FDD confirmation", () => {
+      cy.mockASPX(URL);
+      cy.get('#reason-pregnancy').click({ force: true });
+      cy.get('#submitReasonForLeave').click();
+      cy.get('#fddFieldset').should('be.visible');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbConfFDDNo').click({ force: true });
+      cy.window().then(win => {
+        expect(win.sessionStorage.getItem('disabilityInfoView')).to.eq('leaveSchedule')
+      });
     });
 
     globalTestsNew(PAGE_ID, URL);
