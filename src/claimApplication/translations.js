@@ -154,9 +154,9 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             <br><br>
             Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.
           `,
-          fddQuestion: `<strong>When did this {{disabilityTypeString}} prevent you from working?</strong>
+          fddQuestion: `<strong>What is your first day of disability leave?</strong>
             <br><br>
-            <strong>Hint:</strong> Enter the actual date your disability began, even if it was a day you don't usually work (like a weekend or holiday).
+            <strong>Hint:</strong> This is when your {{disabilityTypeString}} first prevented you from working. Enter the actual date, even if it was a day you don't usually work (like a weekend or holiday).
           `,
           beforeAfterTitle: "Dates of employment before and after disability",
           lastWorkday: `What was the last day you worked?
@@ -221,21 +221,17 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           type: {
             isAccepted: "Is your healthcare provider one of these?",
             advancedPracticeNurse: "Advanced Practice Nurse",
-            registeredNurse: "Registered Nurse",
-            certifiedNursePractitioner: "Certified Nurse Practitioner",
-            clinicalNurseSpecialist: "Clinical Nurse Specialist",
             certifiedNurseMidwife: "Certified Nurse Midwife",
+            certifiedNursePractitioner: "Certified Nurse Practitioner",
             certifiedProfessionalMidwife: "Certified Professional Midwife (under supervision of a licensed physician)",
             chiropractor: "Chiropractor",
+            clinicalNurseSpecialist: "Clinical Nurse Specialist",
             dentist: "Dentist",
-            erPhysician: "ER Physician",
             medicalDoctor: "Medical Doctor",
             optometrist: "Optometrist",
-            osteopath: "Osteopath",
+            physicianAssistant: "Physician Assistant (under supervision of a licensed physician)",
             podiatrist: "Podiatrist",
             psychologist: "Psychologist",
-            physicianAssistant: "Physician Assistant (under supervision of a licensed physician)",
-            specialist: "Specialist",
           },
           name: "Name",
           inUSA: "Is your healthcare provider located in the United States?",
@@ -302,7 +298,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         title: "Review and submit",
       },
       workRelated: {
-        title: "Work related information",
+        title: "Workers' Compensation",
       },
     }
   },
