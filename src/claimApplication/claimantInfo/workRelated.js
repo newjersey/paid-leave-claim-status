@@ -1,4 +1,5 @@
 import { adjustTableWidths, removeExtraSpaceBetweenRadioButtons, styleRadioButton, getSessionData, STORAGE_KEY_WORKERS_COMP } from '../utils';
+import i18next from 'i18next';
 
 export const workRelatedLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpNm', label: 'Employer Name' },
@@ -28,7 +29,8 @@ export const identifyingContent = {
 export function changes() {
   adjustWidths();
   styleRadioButtons();
-  updateWorkersCompQuestions()
+  updateWorkersCompQuestions();
+  updateWorkersCompensationHeader();
 }
 
 function styleRadioButtons() {
@@ -52,6 +54,12 @@ function styleRadioButtons() {
   );
 }
 
+function updateWorkersCompensationHeader() {
+  const div = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC');
+  const legend = div.querySelector('legend')
+  legend.textContent = i18next.t('workRelated.title');
+}
+
 function adjustWidths() {
   const div = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_Panel3');
   if (div) {
@@ -72,7 +80,7 @@ function adjustWidths() {
       textarea.style.width = '100%';
     }
   }
-  
+
 
   const fieldsets = document.querySelectorAll('fieldset');
 
@@ -90,16 +98,16 @@ function updateWorkersCompQuestions() {
 
   if (!workersCompYes || !workersCompNo) return;
 
-    const sessionData = getSessionData();
-    const workersCompAnswer = sessionData[STORAGE_KEY_WORKERS_COMP];
+  const sessionData = getSessionData();
+  const workersCompAnswer = sessionData[STORAGE_KEY_WORKERS_COMP];
 
-    if (workersCompAnswer === 'yes') {
-      workersCompYes.checked = true;
-      workersCompNo.checked = false;
-    } else {
-      workersCompYes.checked = false;
-      workersCompNo.checked = true;
-    }
+  if (workersCompAnswer === 'yes') {
+    workersCompYes.checked = true;
+    workersCompNo.checked = false;
+  } else {
+    workersCompYes.checked = false;
+    workersCompNo.checked = true;
+  }
 
   hideQuestion2a();
   updateQuestion2bAnd2c();
@@ -140,7 +148,7 @@ function updateQuestion2bAnd2c() {
 
   const spacesBefore2c = document.querySelector('#divWCBen br').nextSibling;
   spacesBefore2c.textContent = ""
-  
+
   const question2cNumberElement = document.querySelector('#divWCBen a strong')
   question2cNumberElement.textContent = '2b.'
 }

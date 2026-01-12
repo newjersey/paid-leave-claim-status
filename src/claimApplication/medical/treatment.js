@@ -133,34 +133,20 @@ function addProviderScreener() {
         <p>${i18next.t('medicalInfo.provider.theseTypesProviders')}</p>
         <div class="provider-accepted-list margin-bottom-2">
           <ul class="usa-list margin-top-0">
-            <li>
-              ${i18next.t('medicalInfo.provider.type.advancedPracticeNurse')}
-            </li>
-            <li>${i18next.t('medicalInfo.provider.type.registeredNurse')}</li>
-            <li>
-              ${i18next.t('medicalInfo.provider.type.certifiedNursePractitioner')}
-            </li>
-            <li>
-              ${i18next.t('medicalInfo.provider.type.clinicalNurseSpecialist')}
-            </li>
-            <li>
-              ${i18next.t('medicalInfo.provider.type.certifiedNurseMidwife')}
-            </li>
-            <li>
-              ${i18next.t('medicalInfo.provider.type.certifiedProfessionalMidwife')}
-            </li>
+            <li>${i18next.t('medicalInfo.provider.type.advancedPracticeNurse')}</li>
+            <li>${i18next.t('medicalInfo.provider.type.certifiedNurseMidwife')}</li>
+            <li>${i18next.t('medicalInfo.provider.type.certifiedNursePractitioner')}</li>
+            <li>${i18next.t('medicalInfo.provider.type.certifiedProfessionalMidwife')}</li>
             <li>${i18next.t('medicalInfo.provider.type.chiropractor')}</li>
+            <li>${i18next.t('medicalInfo.provider.type.clinicalNurseSpecialist')}</li>
             <li>${i18next.t('medicalInfo.provider.type.dentist')}</li>
-            <li>${i18next.t('medicalInfo.provider.type.erPhysician')}</li>
             <li>${i18next.t('medicalInfo.provider.type.medicalDoctor')}</li>
             <li>${i18next.t('medicalInfo.provider.type.optometrist')}</li>
-            <li>${i18next.t('medicalInfo.provider.type.osteopath')}</li>
+            <li>${i18next.t('medicalInfo.provider.type.physicianAssistant')}</li>
             <li>${i18next.t('medicalInfo.provider.type.podiatrist')}</li>
             <li>${i18next.t('medicalInfo.provider.type.psychologist')}</li>
-            <li>${i18next.t('medicalInfo.provider.type.physicianAssistant')}</li>
-            <li>${i18next.t('medicalInfo.provider.type.specialist')}</li>
           </ul>
-  </div>
+        </div>
 
 
   <fieldset class="usa-fieldset">
