@@ -54,7 +54,7 @@ export function trackWorkersCompYesSubmission(pageId) {
   const form = document.getElementById('form1');
 
   if (form) {
-    form.addEventListener('submit', function() {
+    form.addEventListener('submit', function () {
       const formData = new FormData(form);
       if (
         formFromCorrectPage(formData) &&
@@ -77,16 +77,17 @@ export function changes() {
   addWorkersCompListeners();
   loadReasonData();
   setNewTitle(i18next.t('medicalInfo.title'));
+  addSubtitleAndExplainer();
 
   const sessionData = getSessionData();
-    const reasonData = sessionData[STORAGE_KEY_REASON_FOR_LEAVE];
-    const reason = reasonData?.reasons;
+  const reasonData = sessionData[STORAGE_KEY_REASON_FOR_LEAVE];
+  const reason = reasonData?.reasons;
 
-    setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason)
-  }
+  setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason)
+}
 
 function addStyles() {
-  const style = document.createElement('style');  
+  const style = document.createElement('style');
   style.innerHTML = `
 
     .usa-radio__label {
@@ -121,15 +122,24 @@ function replaceDoctorText() {
   });
 }
 
-function addProviderScreener() { 
+function addSubtitleAndExplainer() {
+  const questionDiv = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor');
+  const subtitleDiv = document.createElement('div');
+  subtitleDiv.style.margin = "0 0 0";
+  subtitleDiv.innerHTML = `
+  <h2 style="font-size: 20px; font-weight: bold; color: black; font-variant: none" class="margin-bottom-1"> ${i18next.t('medicalInfo.provider.title')}</h2>
+  <p class="margin-bottom-3">${i18next.t('medicalInfo.provider.explanation')}</p>`
+
+  questionDiv.prepend(subtitleDiv);
+}
+
+function addProviderScreener() {
   const doctorNameInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm');
   const fieldset = doctorNameInput.closest('fieldset');
 
   const providerType = document.createElement('div');
   providerType.style.margin = "0 0 50px";
   providerType.innerHTML = `
-  <h2 style="font-size: 20px; font-weight: bold; color: black; font-variant: none" class="margin-bottom-1"> ${i18next.t('medicalInfo.provider.title')}</h2>
-  <p class="margin-bottom-3">${i18next.t('medicalInfo.provider.explanation')}</p>
         <p>${i18next.t('medicalInfo.provider.theseTypesProviders')}</p>
         <div class="provider-accepted-list margin-bottom-2">
           <ul class="usa-list margin-top-0">
@@ -211,7 +221,7 @@ function addProviderScreener() {
     providerNo.checked = true;
   }
 
-  
+
   providerYes.addEventListener('change', function () {
     providerAlert.style.display = 'none';
     resetElementText(legend);
@@ -219,7 +229,7 @@ function addProviderScreener() {
       [STORAGE_KEY_PROVIDER_TYPE_ACCEPTED]: true
     });
   });
-  
+
   providerNo.addEventListener('change', function () {
     providerAlert.style.display = 'block';
     resetElementText(legend);
@@ -227,11 +237,11 @@ function addProviderScreener() {
       [STORAGE_KEY_PROVIDER_TYPE_ACCEPTED]: false
     });
   });
-  
+
   providerYes.addEventListener('invalid', function () {
     elementTextError(legend);
   });
-  
+
   const form = document.getElementById('form1');
   form.addEventListener('submit', (event) => {
     providerYes.removeAttribute('name');
