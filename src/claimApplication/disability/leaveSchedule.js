@@ -38,6 +38,8 @@ function setupFDD() {
   const fieldset = document.querySelector('#MainDiv > fieldset');
   fieldset.id = "fddFieldset";
   const divElement = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD');
+  const fddDateConfirmYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbConfFDDYes');
+  const fddDateConfirmNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbConfFDDNo');
 
   const maternityTimelineToolHtml = `
     <fieldset id="maternityTimeline">
@@ -67,11 +69,18 @@ function setupFDD() {
     <div class="usa-hint" id="fddHint">${i18next.t('shared.dateFormat')}</div>
   `;
   divElement.insertBefore(fddQuestion, divElement.firstChild);
+  // allow user to continue with flow after selecting Yes/No instead of seeing reason for leave prompt
+  fddDateConfirmYes.addEventListener('click', () => {
+    sessionStorage.setItem('disabilityInfoView', 'leaveSchedule')
+  });
+  fddDateConfirmNo.addEventListener('click', () => {
+    sessionStorage.setItem('disabilityInfoView', 'leaveSchedule')
+  });
 }
 
 function styleFDD(disabilityType) {
   const fddFieldset = document.getElementById('fddFieldset');
-  
+
   const maternityTimeline = document.getElementById('maternityTimeline');
   maternityTimeline.style.display = disabilityType === DisabilityType.PREGNANCY
     ? 'block'
@@ -91,10 +100,10 @@ function styleFDD(disabilityType) {
   fddQuestion.innerHTML = disabilityType === DisabilityType.PREGNANCY
     ? i18next.t('leaveSchedule.pregnancy.fddQuestion')
     : i18next.t('leaveSchedule.illnessInjury.fddQuestion', {
-      disabilityTypeString: disabilityType === DisabilityType.ILLNESS 
-        ? i18next.t('shared.illness') 
-        : i18next.t('shared.injury') 
-      }
+      disabilityTypeString: disabilityType === DisabilityType.ILLNESS
+        ? i18next.t('shared.illness')
+        : i18next.t('shared.injury')
+    }
     );
 }
 
@@ -268,7 +277,7 @@ function setupFutureDateAlert() {
   `;
   futureDateDiv.appendChild(futureDateAlert);
 
-  const callback = function(mutationsList) {
+  const callback = function (mutationsList) {
     for (const mutation of mutationsList) {
       if (mutation.type === 'attributes' && mutation.attributeName === 'style') {
         const currentDisplay = futureDateDiv.style.display;
