@@ -12,7 +12,7 @@ export function globalDesignChanges(pageId) {
   applyFooter(pageId);
   injectGlobalStyles();
   styleButtons();
-  addFeedbackWidget();
+  // addFeedbackWidget();
 }
 
 function addViewportMetaTag() {

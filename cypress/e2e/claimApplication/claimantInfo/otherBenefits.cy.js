@@ -142,8 +142,6 @@ describe("Other Benefits page", () => {
       cy.get('h1').contains('Leave schedule').should('be.visible');
       cy.get('footer#helpSection').should('exist').and('have.length', 1);
       cy.get('#headerWithMargin > button').should('not.exist');
-
-      cy.checkFeedbackWidgetIsRendered();
     });
 
     globalTestsNew(PAGE_ID, URL);
