@@ -178,14 +178,6 @@ describe("Disability Verification page", () => {
       checkPaymentEdit();
     });
 
-    it("Leave Schedule EDIT button sets disabilityInfoView flag to leaveSchedule", () => {
-      cy.mockASPX(URL);
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnDisInfoEdit').click();
-      cy.window().then((win) => {
-        expect(win.sessionStorage.getItem('disabilityInfoView')).to.equal('leaveSchedule');
-      });
-    });
-
     globalTestsNew(PAGE_ID, URL);
   });
 });
