@@ -124,11 +124,10 @@ function resetHeader() {
 
   fullWidthHeader.append(createDolNameHeader());
 
-  // Dismissable header can be added/removed as needed 
-  // const alertBodyDiv = newDesignAlert();
-  // if (alertBodyDiv) {
-  //   fullWidthHeader.append(alertBodyDiv);
-  // }
+  const alertBodyDiv = newDesignAlert();
+  if (alertBodyDiv) {
+    fullWidthHeader.append(alertBodyDiv);
+  }
 
   newHeader.append(fullWidthHeader);
 
@@ -195,12 +194,6 @@ function createBackButton() {
       backButton.addEventListener('click', () => {
         const tabLink = previousTab.querySelector('a');
         if (tabLink) {
-
-          const previousTabText = previousTab.textContent.trim();
-          if (previousTabText === 'Disability Information') {
-            sessionStorage.setItem('disabilityInfoView', 'leaveSchedule');
-          }
-
           tabLink.click();
           resetHeader();
           document.dispatchEvent(new CustomEvent('backButtonClicked'));
