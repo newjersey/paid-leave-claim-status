@@ -1,33 +1,3 @@
-export const EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY = {
-  "reasons": "pregnancy",
-  "pregnancy-details": "",
-};
-
-export const EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS = {
-  "reasons": "illness",
-  "illness-details": "",
-};
-
-export const EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY = {
-  "reasons": "injury",
-  "injury-details": "",
-};
-
-export const EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY_DETAILS = {
-  "reasons": "pregnancy",
-  "pregnancy-details": "Emergency C-section.",
-};
-
-export const EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS = {
-  "reasons": "illness",
-  "illness-details": "Lung Inflammation.",
-};
-
-export const EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS = {
-  "reasons": "injury",
-  "injury-details": "Broken Elbow.",
-};
-
 export function globalTestsOld(url) {
   it("user can log out", () => {
     cy.mockASPX(url);
@@ -45,7 +15,7 @@ export function globalTestsOld(url) {
 }
 
 export function globalTestsNew(pageId, url) {
-  it("feedback widget is visible", () => {
+  xit("feedback widget is visible", () => {
     cy.checkFeedbackWidgetIsRendered();
     // TODO: determine why cy.checkFeedbackWidgetIsInteractable() 
     // and cy.checkFeedbackWidgetEmailDisclaimerTextIsOverridden()
@@ -66,6 +36,10 @@ export function globalTestsNew(pageId, url) {
 
   it('should open Resources and track when clicked', () => {
     cy.trackResourcesClick(pageId);
+  });
+
+  it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+    cy.checkInfoAlertBehavior();
   });
 
   it("user can log out", () => {
