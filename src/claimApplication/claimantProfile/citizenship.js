@@ -100,20 +100,23 @@ function addRepresentativeTitle() {
   }
 }
 
-function requirePhone() {
-  const phone1 = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum');
-  const phone2 = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum2');
-  const phone3 = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum3');
+const PHONE_ENTRY_ID_1 = 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum';
+const PHONE_ENTRY_ID_2 = 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum2';
+const PHONE_ENTRY_ID_3 = 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum3';
 
-  phone1.setAttribute('required', '');
+function requirePhone() {
+  updatePhoneFieldRequirements();
+
+  const phone1 = document.getElementById(PHONE_ENTRY_ID_1);
+  const phone2 = document.getElementById(PHONE_ENTRY_ID_2);
+  const phone3 = document.getElementById(PHONE_ENTRY_ID_3);
+
   phone1.setAttribute('pattern', '\\d{3}');
   phone1.setAttribute('title', i18next.t('citizenship.phoneValidation.digits_three'));
 
-  phone2.setAttribute('required', '');
   phone2.setAttribute('pattern', '\\d{3}');
   phone2.setAttribute('title', i18next.t('citizenship.phoneValidation.digits_three'));
 
-  phone3.setAttribute('required', '');
   phone3.setAttribute('pattern', '\\d{4}');
   phone3.setAttribute('title', i18next.t('citizenship.phoneValidation.digits_four'));
 
@@ -122,6 +125,26 @@ function requirePhone() {
   asterisk.style.color = 'rgb(139, 0, 0)';
   asterisk.textContent = '* ';
   label.parentNode.insertBefore(asterisk, label);
+
+  const container = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen');
+  const observer = new MutationObserver(updatePhoneFieldRequirements);
+  observer.observe(container, { attributes: true });
+}
+
+function updatePhoneFieldRequirements() {
+  const phoneFields = [
+    document.getElementById(PHONE_ENTRY_ID_1),
+    document.getElementById(PHONE_ENTRY_ID_2),
+    document.getElementById(PHONE_ENTRY_ID_3)
+  ];
+
+  phoneFields.forEach((field) => {
+    if (field && field.offsetParent !== null) {
+      field.setAttribute('required', '');
+    } else {
+      field.removeAttribute('required');
+    }
+  });
 }
 
 function adjustQuestions() {
