@@ -88,6 +88,15 @@ describe("Citizenship page", () => {
         });
     });
 
+    it("displays 'Contact Information' title but not legend", () => {
+      cy.get('#pageTitle')
+        .should('be.visible')
+        .and('have.text', 'Contact information');
+
+      cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact > fieldset > legend')
+        .should('not.be.visible');
+    });
+
     it("displays 'Add a representative' title above the representative question", () => {
       cy.get('#add-representative-title')
         .should('be.visible')

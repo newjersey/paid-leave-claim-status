@@ -41,6 +41,7 @@ export function changes() {
   adjustQuestions();
   addRepresentativeTitle();
   removeWhitespaceNodes();
+  removeLegend();
   setNewTitle(i18next.t('citizenship.title'));
 }
 
@@ -59,6 +60,13 @@ function addStyles() {
       }
   `;
   document.head.appendChild(style);
+}
+
+function removeLegend() {
+  const legend = document.querySelector("#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact > fieldset > legend")
+  if (legend) {
+    legend.style.display = 'none';
+  }
 }
 
 function adjustWidths () {
