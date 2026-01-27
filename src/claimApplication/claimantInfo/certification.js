@@ -10,6 +10,7 @@ export const id = "certification";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimantCertification.aspx',
   elementId: 'ContentPlaceHolder1_lblHeader',
   text: 'CLAIMANT CERTIFICATION',
 };

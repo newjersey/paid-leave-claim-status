@@ -51,16 +51,19 @@ const identifyingContents = [
 ];
 
 export function identifyPage() {
-  for (const { id, elementId, text, value } of identifyingContents) {
+  const windowPathname = window.location.mocked_pathname || window.location.pathname;
+  for (const { id, pathname, elementId, text, value } of identifyingContents) {
     const element = document.getElementById(elementId);
 
-    if (element) {
-      const isVisible = element.offsetParent !== null;
-      const hasValue = value ? element.value.includes(value) : false;
+    if (windowPathname === pathname) {
+      if (element) {
+        const isVisible = element.offsetParent !== null;
+        const hasValue = value ? element.value.includes(value) : false;
 
-      if (hasValue || (isVisible && element.textContent.includes(text))) {
-        return id;
-      } 
+        if (hasValue || (isVisible && element.textContent.includes(text))) {
+          return id;
+        } 
+      }
     }
   }
 
