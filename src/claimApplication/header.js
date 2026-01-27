@@ -123,12 +123,6 @@ function resetHeader() {
   fullWidthHeader.id = 'fullWidthHeader';
 
   fullWidthHeader.append(createDolNameHeader());
-
-  const alertBodyDiv = newDesignAlert();
-  if (alertBodyDiv) {
-    fullWidthHeader.append(alertBodyDiv);
-  }
-
   newHeader.append(fullWidthHeader);
 
   const headerWithMargin = document.createElement('div');
@@ -441,48 +435,6 @@ function createTitleHeader() {
   titleHeader.appendChild(logoutButton);
 
   return titleHeader;
-}
-
-function newDesignAlert() {
-  const isAlertDismissed = localStorage.getItem('newLookAlertDismissed');
-  if (isAlertDismissed) {
-    return null;
-  }
-
-  const alertDiv = document.createElement('div');
-  alertDiv.id = 'info-alert';
-  alertDiv.style.marginTop = '0';
-  alertDiv.classList.add('usa-alert', 'usa-alert--info', 'usa-alert--no-icon');
-
-  const alertBodyDiv = document.createElement('div');
-  alertBodyDiv.classList.add('usa-alert__body');
-
-  const alertHeading = document.createElement('p');
-  alertHeading.classList.add('usa-alert__heading');
-  alertHeading.style.fontSize = '16px';
-  alertHeading.style.fontWeight = 'bold';
-  alertHeading.textContent = 'A new look is coming!';
-
-  const alertText = document.createElement('p');
-  alertText.classList.add('usa-alert__text');
-  alertText.style.fontSize = '16px';
-  alertText.style.lineHeight = '1.5';
-  alertText.innerHTML = `
-    You may notice changes to the New Jersey Temporary Disability Insurance application this fall. Our policies and your eligibility have not changed.
-    <br>
-    <a href="#" id="dismiss-alert">Dismiss</a>`;
-
-  alertBodyDiv.append(alertHeading, alertText);
-  alertDiv.append(alertBodyDiv);
-
-  const dismissLink = alertDiv.querySelector('#dismiss-alert');
-  dismissLink.addEventListener('click', (event) => {
-    event.preventDefault();
-    alertDiv.style.display = 'none';
-    localStorage.setItem('newLookAlertDismissed', 'true');
-  });
-  
-  return alertDiv;
 }
 
 function spellCheck(text) {

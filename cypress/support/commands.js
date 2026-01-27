@@ -74,10 +74,6 @@ Cypress.Commands.add("checkHelpButtonBehavior", () => {
 });
 
 Cypress.Commands.add("checkInfoAlertBehavior", () => {
-  cy.get('#info-alert').should('be.visible');
-  cy.get('#dismiss-alert').click();
-  cy.get('#info-alert').should('not.be.visible');
-  cy.reload();
   cy.get('#info-alert').should('not.exist');
 });
 

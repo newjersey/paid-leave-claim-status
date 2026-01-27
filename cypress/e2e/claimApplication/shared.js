@@ -38,7 +38,7 @@ export function globalTestsNew(pageId, url) {
     cy.trackResourcesClick(pageId);
   });
 
-  it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+  it('info alert is not present', () => {
     cy.checkInfoAlertBehavior();
   });
 
