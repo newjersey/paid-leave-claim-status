@@ -1,4 +1,5 @@
 import i18next from 'i18next';
+import { logEvent } from "../../modules/shared.mjs";
 import { removeExtraSpaceBetweenRadioButtons, setNewTitle, styleRadioButton } from '../utils';
 
 export const citizenshipLabels = [
@@ -42,6 +43,7 @@ export function changes() {
   addRepresentativeTitle();
   removeWhitespaceNodes();
   removeLegend();
+  trackPhoneFirstThreeDigits();
   setNewTitle(i18next.t('citizenship.title'));
 }
 
@@ -210,4 +212,14 @@ function removeWhitespaceNodes() {
       }
     }
   });
+}
+
+function trackPhoneFirstThreeDigits() {
+  const submitBtn = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_btnSave');
+  const phoneFirstThreeDigits = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum');
+  if (submitBtn && phoneFirstThreeDigits) {
+    submitBtn.addEventListener('click', function () {
+      logEvent("Personal Phone Submitted", { first3: phoneFirstThreeDigits.value });
+    });
+  }
 }
