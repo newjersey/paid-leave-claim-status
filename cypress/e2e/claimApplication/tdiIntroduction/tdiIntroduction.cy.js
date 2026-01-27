@@ -1,5 +1,3 @@
-import { globalTestsNew, globalTestsOld } from "../shared";
-
 const PAGE_ID = 'tdiIntroduction';
 const URL = 'TDIIntroduction';
 const FIXTURE = "./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html";

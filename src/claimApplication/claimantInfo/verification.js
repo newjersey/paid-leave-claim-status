@@ -5,6 +5,8 @@ import {
   replaceVerificationRadioButtons,
   setNewTitle,
   STORAGE_KEY_PROVIDER_NAME,
+  getSessionData,
+  STORAGE_KEY_REASON_FOR_LEAVE
 } from '../utils';
 
 export const otherBenefitsVerificationLabels = [
@@ -58,6 +60,11 @@ export function changes() {
     '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btncontinueVer'
   );
   renamePages();
+  createReasonForLeaveSection();
+  reorderAndRenameLeaveScheduleFields()
+  restructureWorkRelatedSection()
+  hideDisabilityInfoInMedicalSection();
+  setupEditButtonHandlers();
   setNewTitle(i18next.t('reviewAndSave.title'));
 }
 
@@ -111,7 +118,7 @@ function renamePages() {
     {
       id: "#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btnVerDisab",
       oldName: "Medical Treatment Information",
-      newNameKey: 'reasonForLeave.title'
+      newNameKey: 'medicalInfo.title'
     },
     {
       id: "#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnWREdit",
@@ -140,4 +147,307 @@ function renamePages() {
       });
     }
   });
+}
+
+
+function hideDisabilityInfoInMedicalSection() {
+  const editBtn = document.querySelector(
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btnVerDisab'
+  );
+  const fieldset = editBtn?.closest('fieldset');
+  if (!fieldset) return;
+
+  const descriptionTextarea = fieldset.querySelector(
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDisabDesc'
+  );
+  if (descriptionTextarea) {
+    const descriptionTable = descriptionTextarea.closest('table');
+    if (descriptionTable) {
+      descriptionTable.style.display = 'none';
+    }
+  }
+}
+
+
+function createReasonForLeaveSection() {
+  const descriptionTextarea = document.querySelector(
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDisabDesc'
+  );
+  if (!descriptionTextarea) return;
+
+  let rawValue = descriptionTextarea.value || '';
+
+  // Remove paste signal suffix (e.g., "p120")
+  rawValue = rawValue.replace(/p\d+$/, '').trim();
+
+  if (!rawValue) return;
+
+  const firstPeriodIndex = rawValue.indexOf('. ');
+
+  let reason;
+  let details;
+
+  if (firstPeriodIndex !== -1) {
+    reason = rawValue.substring(0, firstPeriodIndex);
+    details = rawValue.substring(firstPeriodIndex + 2);
+  } else {
+    reason = rawValue;
+    details = '';
+  }
+
+  const reasonLabels = {
+    'pregnancy': i18next.t('reasonForLeave.pregnancy'),
+    'illness': i18next.t('reviewAndSave.reasonForLeave.illness'),
+    'injury': i18next.t('reasonForLeave.injury')
+  };
+
+  const reasonLabel = reasonLabels[reason] || reason;
+
+  // Remove paste signal suffix if present (e.g., "p120")
+  const cleanDetails = details.replace(/p\d+$/, '');
+
+  const displayText = cleanDetails
+    ? `${reasonLabel}: ${cleanDetails}`
+    : reasonLabel;
+
+  const disabilityEditBtn = document.querySelector(
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnDisInfoEdit'
+  );
+  const disabilityFieldset = disabilityEditBtn?.closest('fieldset');
+
+  if (!disabilityFieldset) {
+    return;
+  }
+
+  const reasonSection = document.createElement('fieldset');
+  reasonSection.id = 'reasonForLeaveReviewSection';
+  reasonSection.innerHTML = `
+      <legend>
+      ${i18next.t('reasonForLeave.title')}&nbsp;&nbsp;
+      <input type="button" value="EDIT" id="editReasonForLeave" class="btnEdit usa-button" autocomplete="off">
+      &nbsp;
+      </legend>
+      <p>
+      <span style="font-weight: bold;">${displayText}</span>
+      </p>
+  `;
+
+  // Insert before the Disability Information fieldset
+  const parentTd = disabilityFieldset.parentElement;
+  const newTd = document.createElement('td');
+  newTd.className = 'style2';
+  newTd.appendChild(reasonSection);
+  const parentTr = parentTd.parentElement;
+  const newTr = document.createElement('tr');
+  newTr.appendChild(newTd);
+  parentTr.parentElement.insertBefore(newTr, parentTr);
+}
+
+function reorderAndRenameLeaveScheduleFields() {
+  const fieldset = document.querySelector(
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnDisInfoEdit'
+  )?.closest('fieldset');
+
+  if (!fieldset) return;
+
+  const table = fieldset.querySelector('table');
+  if (!table) return;
+
+  const lastWorkdayInput =
+    document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVetDtLast');
+  const firstDayDisabilityInput =
+    document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDisabDate');
+  const returnedToWorkInput =
+    document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerReturn');
+  const recoveryDateInput =
+    document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerRetWork');
+
+  const lastWorkdayValue = lastWorkdayInput?.value || '';
+  const firstDayDisabilityValue = firstDayDisabilityInput?.value || '';
+  const returnedToWorkValue = returnedToWorkInput?.value || '';
+  const recoveryDateValue = recoveryDateInput?.value || '';
+
+  const savedData = getSessionData();
+  const reasonData = savedData[STORAGE_KEY_REASON_FOR_LEAVE];
+  const reason = reasonData?.reasons;
+
+  const reasonText = {
+    'pregnancy': i18next.t('reviewAndSave.leaveSchedule.pregnancy'),
+    'injury': i18next.t('reviewAndSave.leaveSchedule.injury'),
+    'illness': i18next.t('reviewAndSave.leaveSchedule.illness')
+  }[reason] || 'disability';
+
+  table.style.display = 'none';
+
+  const displayDiv = document.createElement('div');
+  displayDiv.id = 'leaveScheduleDisplay';
+  displayDiv.innerHTML = `
+    <p>
+      <span>${i18next.t('reviewAndSave.leaveSchedule.lastWorkday')}:</span>
+      <strong>${lastWorkdayValue}</strong>
+    </p>
+    <p>
+      <span
+        >${i18next.t('reviewAndSave.leaveSchedule.firstDay')} ${reasonText}:</span
+      >
+      <strong>${firstDayDisabilityValue}</strong>
+    </p>
+    <p>
+      <span>${i18next.t('reviewAndSave.leaveSchedule.returnedWork')}:</span>
+      <strong>${returnedToWorkValue}</strong>
+    </p>
+    <p><span>Recovery date:</span> <strong>${recoveryDateValue}</strong></p>
+`;
+
+  table.parentNode.insertBefore(displayDiv, table.nextSibling);
+}
+
+function setupEditButtonHandlers() {
+  const disabilityEditBtn = document.querySelector(
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnDisInfoEdit'
+  );
+
+  let goingToReasonForLeave = false;
+
+  // Custom edit button for new Reason for Leave section
+  const reasonEditBtn = document.querySelector('#editReasonForLeave');
+  if (reasonEditBtn) {
+    reasonEditBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      goingToReasonForLeave = true;
+      sessionStorage.setItem('disabilityInfoView', 'reasonForLeave');
+      // Click the Disability Information edit but no flag for skipping leave schedule
+      if (disabilityEditBtn) {
+        disabilityEditBtn.click();
+      }
+    });
+  }
+
+  if (disabilityEditBtn) {
+    disabilityEditBtn.addEventListener('click', function () {
+      if (!goingToReasonForLeave) {
+        sessionStorage.setItem('disabilityInfoView', 'leaveSchedule');
+      }
+    });
+  }
+}
+
+function restructureWorkRelatedSection() {
+  const workRelatedEditBtn = document.querySelector(
+    '#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnWREdit'
+  );
+  const fieldset = workRelatedEditBtn?.closest('fieldset');
+  if (!fieldset) return;
+
+  const savedData = getSessionData();
+  const reasonData = savedData[STORAGE_KEY_REASON_FOR_LEAVE];
+  const reason = reasonData?.reasons || i18next.t('reviewAndSave.workInfo.injuryIllness')
+
+  const injuredAtWorkplaceInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_TxtVerInjWk');
+  const empNameInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerInjEmpNm');
+  const empAddr1Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerEmpadd1');
+  const empAddr2Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerEmpadd2');
+  const empCityInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerEmpCity');
+  const empStateInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerEmpState');
+  const empZip1Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerEmpZip1');
+  const empZip2Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerEmpZip2');
+  const empPh1Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerInjEmpPh');
+  const empPh2Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerInjEmpPh2');
+  const empPh3Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerInjEmpPh3');
+  const empPh4Input = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerInjEmpPh4');
+  const injDateInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerInjDt');
+  const wcDeterInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDeter');
+  const wcBenefitsInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerTempWC');
+
+  const filedWorkersComp = injuredAtWorkplaceInput?.value || 'No';
+  const empName = empNameInput?.value || '';
+  const empAddr1 = empAddr1Input?.value || '';
+  const empAddr2 = empAddr2Input?.value || '';
+  const empCity = empCityInput?.value || '';
+  const empState = empStateInput?.value || '';
+  const empZip1 = empZip1Input?.value || '';
+  const empZip2 = empZip2Input?.value || '';
+  const empPhone = formatPhone(empPh1Input?.value, empPh2Input?.value, empPh3Input?.value, empPh4Input?.value);
+  const injDate = injDateInput?.value || '';
+  const wcDetermination = wcDeterInput?.value || '';
+  const wcBenefits = wcBenefitsInput?.value || '';
+
+  let addressParts = [empAddr1];
+  if (empAddr2) addressParts.push(empAddr2);
+  addressParts.push(`${empCity}, ${empState} ${empZip1}${empZip2 ? '-' + empZip2 : ''}`);
+  const fullAddress = addressParts.join('<br>');
+
+  // Hide the existing content
+  const divVerRelatedInfo = document.querySelector('#divVerRelatedInfo');
+  if (divVerRelatedInfo) {
+    divVerRelatedInfo.style.display = 'none';
+  }
+
+  // Hide the "Disability Injury Work Related" row (first row in the table)
+  const firstTable = fieldset.querySelector('table');
+  if (firstTable) {
+    firstTable.style.display = 'none';
+  }
+
+  const displayDiv = document.createElement('div');
+  displayDiv.id = 'workRelatedDisplay';
+
+  if (filedWorkersComp === 'Yes') {
+    displayDiv.innerHTML = `
+    <p class="margin-left-0">
+      <span>${i18next.t('reviewAndSave.workInfo.fileOrIntend')}</span>
+      <strong>${filedWorkersComp}</strong>
+    </p>
+    <p class="margin-left-0">
+      <span>${i18next.t('reviewAndSave.workInfo.employerInfo')} ${reason} ${i18next.t('reviewAndSave.workInfo.happened')}:</span>
+    </p>
+    <div style="margin-left: 10px;">
+      <p class="margin-left-0">
+        <span>Name:</span>
+        <strong>${empName}</strong>
+      </p>
+      <p class="margin-left-0">
+        <span>Address:</span><br>
+        <strong>${fullAddress}</strong>
+      </p>
+      <p class="margin-left-0">
+        <span>Phone:</span>
+        <strong>${empPhone}</strong>
+      </p>
+    </div>
+    <p class="margin-left-0">
+      <span>${i18next.t('reviewAndSave.workInfo.dateOf')} ${reason}:</span>
+      <strong>${injDate}</strong>
+    </p>
+    <p class="margin-left-0">
+      <span>${i18next.t('reviewAndSave.workInfo.approved')}</span>
+      <strong>${wcDetermination}</strong>
+    </p>
+    <p class="margin-left-0">
+      <span>${i18next.t('reviewAndSave.workInfo.receivingBenefits')}</span>
+      <strong>${wcBenefits}</strong>
+    </p>
+  `;
+  } else {
+    displayDiv.innerHTML = `
+    <p class="margin-left-0">
+      <span>${i18next.t('reviewAndSave.workInfo.fileOrIntend')}</span>
+      <strong>${filedWorkersComp}</strong>
+    </p>`;
+  }
+
+  // Insert after the legend
+  const legend = fieldset.querySelector('legend');
+  if (legend) {
+    legend.insertAdjacentElement('afterend', displayDiv);
+  }
+}
+
+function formatPhone(ph1, ph2, ph3, ext) {
+  if (!ph1 && !ph2 && !ph3) return '';
+  let phone = `(${ph1 || ''}) ${ph2 || ''}-${ph3 || ''}`;
+  if (ext) {
+    phone += ` ext. ${ext}`;
+  }
+  return phone;
 }

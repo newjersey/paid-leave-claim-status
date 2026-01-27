@@ -1,11 +1,17 @@
 import i18next from 'i18next';
 
+// remove these keys once DOL has deployed update to get from db
 export const STORAGE_KEY_PROVIDER_NAME = "provider_name";
 export const STORAGE_KEY_USER_DOB = "user_dob";
 export const STORAGE_KEY_USER_NAME = "user_name";
 export const STORAGE_KEY_USER_EMAIL = "user_email";
 export const STORAGE_KEY_USER_PHONE = "user_phone";
 export const STORAGE_KEY_USER_MAIL_ADDRESS = "user_mail_address";
+
+export const STORAGE_KEY_REASON_FOR_LEAVE = "reason_for_leave";
+export const STORAGE_KEY_PROVIDER_TYPE_ACCEPTED = "provider_type_accepted";
+export const STORAGE_KEY_CAUSED_BY_JOB = "caused_by_job";
+export const STORAGE_KEY_WORKERS_COMP = "workers_comp";
 
 export const STORAGE_KEY_SESSION_DATA = "session_data";
 
@@ -37,12 +43,12 @@ export function clearSessionData() {
 }
 
 // Note: this is only a simple XOR to make not plaintext - not encryption
-// Fetching from backend is more robust and is in progress at DOL to replace this
+// Fetching from backend is more robust when possible
 export function encodeDecode(data) {
   return data.split('').map(char => String.fromCharCode(char.charCodeAt(0) ^ 100)).join('');
 }
 
-// TODO: this only styles the buttons.
+// This only styles the buttons.
 // When possible also use USWDS suggested HTML fieldset and legend structure
 export function styleRadioButton(radioButtonId, marginBottom = false) {
   const radioButton = document.getElementById(radioButtonId);
@@ -181,9 +187,64 @@ export function replaceVerificationRadioButtons(
 export function setNewTitle(text) {
   const setText = () => {
     const title = document.querySelector("#pageTitle");
-    title.textContent = text;
-    document.removeEventListener('headerReady', setText);
+    if (title) {
+      title.textContent = text;
+      document.removeEventListener('headerReady', setText);
+    }
   };
-
+  setText();
   document.addEventListener('headerReady', setText);
+}
+
+export const DisabilityType = {
+    UNKNOWN: '',
+    PREGNANCY: 'pregnancy',
+    ILLNESS: 'illness',
+    INJURY: 'injury'
+};
+
+export function elementTextError(element) {
+  element.style.color = 'rgb(139, 0, 0)';
+  element.style.fontWeight = 'bold';
+}
+
+export function resetElementText(element) {
+  element.style.color = '';
+  element.style.fontWeight = '';
+}
+
+export function setRequiredForVisibleLeaveSectionFields(currentSection, reason = null, causedByJob = null) {
+  // Reason for Leave fields
+  const reasonFields = [
+    document.getElementById('reason-pregnancy'),
+    document.getElementById('reason-illness'),
+    document.getElementById('reason-injury')
+  ];
+
+  // Medical info fields
+  const providerYesRadio = document.getElementById('provider-type-accepted-yes');
+  const causedByJobYes = document.getElementById('caused-by-job-yes');
+  const causedByJobNo = document.getElementById('caused-by-job-no');
+
+  // Step 1: First remove required from ALL custom fields first
+  reasonFields.forEach(field => field?.removeAttribute('required'));
+  providerYesRadio?.removeAttribute('required');
+
+  causedByJobYes?.removeAttribute('required');
+  causedByJobNo?.removeAttribute('required');
+
+  // Step 2: Then add required based on current section
+  if (currentSection === 'reasonForLeave') {
+    reasonFields.forEach(field => field?.setAttribute('required', ''));
+  }
+  else if (currentSection === 'medicalTreatment') {
+    providerYesRadio?.setAttribute('required', '');
+
+    // Caused by job only required if NOT pregnancy
+    if (reason !== 'pregnancy') {
+      causedByJobYes?.setAttribute('required', '');
+      causedByJobNo?.setAttribute('required', '');
+        }
+  }
+  // leaveSchedule: nothing required (all removed in step 1)
 }
