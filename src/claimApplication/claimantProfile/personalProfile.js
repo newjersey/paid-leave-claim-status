@@ -17,6 +17,7 @@ export const id = "personalProfile";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimantProfile_IANM.aspx',
   elementId: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_btnCitBtn',
   text: 'The information listed below was obtained from your user logon profile',
 };

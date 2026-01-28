@@ -14,6 +14,7 @@ export const id = "workSchedule";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimentEmployment.aspx',
   elementId: 'ContentPlaceHolder1_TabEmployment_TabPanelWrkSch',
   text: 'Select the days of the week that you work',
 };

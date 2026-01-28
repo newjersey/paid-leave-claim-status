@@ -5,6 +5,7 @@ export const id = "completeExistingIntro";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/TDI_PndClaim_Intro.aspx',
   elementId: 'ContentPlaceHolder1_tblContent',
   text: 'COMPLETING YOUR APPLICATION FOR STATE TEMPORARY DISABILITY BENEITS',
 };

@@ -2,6 +2,7 @@ export const id = "employment";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimentEmployment.aspx',
   elementId: 'ContentPlaceHolder1_TabEmployment_tbpnlEMP_lblFDD',
   text: 'Your First Day of Disability is',
 };

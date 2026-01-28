@@ -5,6 +5,7 @@ export const id = "paymentInfo";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimantDisabililty.aspx',
   elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment',
   text: 'Do you want to have federal income',
 };

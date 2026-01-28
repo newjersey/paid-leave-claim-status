@@ -38,6 +38,7 @@ export const id = "claimantProfileVerification";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimantProfile_IANM.aspx',
   elementId: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification',
   text: 'My personal and contact information is correct.',
 };

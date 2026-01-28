@@ -12,12 +12,14 @@ export const id = "disabilityInformation";
 // this page renders differently than all others, so we need two options for identifying the page
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimantDisabililty.aspx',
   elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_ClientState',
   value: '"TabState":[true,false,false,false,false,false]',
 };
 
 export const alternateIdentifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimantDisabililty.aspx',
   elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD',
   text: 'Select the date your disability',
 };

@@ -16,6 +16,7 @@ export const id = "employmentDetails";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimentEmployment.aspx',
   elementId: 'ContentPlaceHolder1_TabEmployment_TabPanelSpan',
   text: 'My physical work location is',
 };

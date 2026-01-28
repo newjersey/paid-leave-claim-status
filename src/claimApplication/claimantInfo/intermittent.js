@@ -2,6 +2,7 @@ export const id = "intermittent";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimentEmployment.aspx',
   elementId: 'ContentPlaceHolder1_TabEmployment_TabPanelWrkDte',
   text: 'Working Intermittently',
 };

@@ -51,7 +51,7 @@ const identifyingContents = [
 ];
 
 export function identifyPage() {
-  const windowPathname = window.location.mocked_pathname || window.location.pathname;
+  const windowPathname = window.mockPathname || window.location.pathname;
   for (const { id, pathname, elementId, text, value } of identifyingContents) {
     const element = document.getElementById(elementId);
 

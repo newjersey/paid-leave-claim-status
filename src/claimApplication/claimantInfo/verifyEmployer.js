@@ -25,6 +25,7 @@ export const id = "verifyEmployer";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimentEmployment.aspx',
   elementId: 'ContentPlaceHolder1_TabEmployment_TabPanelVerify',
   text: 'The information for this employer is correct',
 };

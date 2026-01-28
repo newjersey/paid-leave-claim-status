@@ -19,6 +19,7 @@ export const id = "citizenship";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimantProfile_IANM.aspx',
   elementId: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact',
   text: 'Provide your telephone number',
 };

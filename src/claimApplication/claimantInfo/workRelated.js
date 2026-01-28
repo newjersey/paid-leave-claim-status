@@ -22,6 +22,7 @@ export const id = "workRelated";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimantDisabililty.aspx',
   elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC',
   text: 'Work Related Information',
 };

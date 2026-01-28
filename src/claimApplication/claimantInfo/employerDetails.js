@@ -18,6 +18,7 @@ export const id = "employerDetails";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimentEmployment.aspx',
   elementId: 'divEmp',
   text: 'Employers Details',
 };

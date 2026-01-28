@@ -4,6 +4,7 @@ export const id = "ptoPension";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimentEmployment.aspx',
   elementId: 'ContentPlaceHolder1_TabEmployment_TabPanelPTO',
   text: 'Paid Time Off',
 };

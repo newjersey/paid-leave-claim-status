@@ -21,6 +21,7 @@ export const id = "medicalTreatment";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimantDisabililty.aspx',
   elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor',
   text: 'Describe your disability.',
 };

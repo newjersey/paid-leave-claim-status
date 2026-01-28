@@ -11,6 +11,7 @@ export const id = "otherBenefits";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimantDisabililty.aspx',
   elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits',
   text: 'Social Security Benefits',
 };

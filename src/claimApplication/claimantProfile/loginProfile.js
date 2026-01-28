@@ -14,6 +14,7 @@ export const id = "loginProfile";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/IAM_Login_Profile.aspx',
   elementId: 'divSSN',
   text: 'Please confirm your profile information to ensure secure access',
 };

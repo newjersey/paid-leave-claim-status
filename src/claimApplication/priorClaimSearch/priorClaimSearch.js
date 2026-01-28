@@ -10,6 +10,7 @@ export const id = "priorClaimSearch";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/TDI_PndClaim_Search.aspx',
   elementId: 'dvIANMYes',
   text: 'Do you know your Claim ID Number?',
 };

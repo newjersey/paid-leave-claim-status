@@ -38,6 +38,7 @@ export const id = "verification";
 
 export const identifyingContent = {
   id,
+  pathname: '/tdi_iam/ClaimantDisabililty.aspx',
   elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification',
   text: 'My disability information is correct',
 };
