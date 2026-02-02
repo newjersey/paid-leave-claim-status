@@ -43,7 +43,7 @@ export function changes() {
   addRepresentativeTitle();
   removeWhitespaceNodes();
   removeLegend();
-  trackPhoneFirstThreeDigits();
+  trackSubmitBtnAndPhone();
   setNewTitle(i18next.t('citizenship.title'));
 }
 
@@ -221,11 +221,12 @@ function removeWhitespaceNodes() {
   });
 }
 
-function trackPhoneFirstThreeDigits() {
+function trackSubmitBtnAndPhone() {
   const submitBtn = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_btnSave');
   const phoneFirstThreeDigits = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum');
   if (submitBtn && phoneFirstThreeDigits) {
     submitBtn.addEventListener('click', function () {
+      logEvent("Contact information submit clicked", {});
       logEvent("Personal Phone Submitted", { first3: phoneFirstThreeDigits.value });
     });
   }
