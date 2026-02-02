@@ -136,6 +136,13 @@ function requirePhone() {
   asterisk.textContent = '* ';
   label.parentNode.insertBefore(asterisk, label);
 
+  const submitBtn = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_btnSave');
+  submitBtn.addEventListener('click', () => {
+    if (phone1.validationMessage || phone2.validationMessage || phone3.validationMessage) {
+      logEvent("Personal Phone Omitted", {});
+    }
+  });
+
   const container = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen');
   const observer = new MutationObserver(updatePhoneFieldRequirements);
   observer.observe(container, { attributes: true });

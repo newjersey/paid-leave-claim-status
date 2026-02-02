@@ -78,6 +78,7 @@ describe("Citizenship page", () => {
     it("user can input info and proceed to next page", () => {
       checkFullInfoEntry();
       cy.checkLogEvent("Personal Phone Submitted", { first3: '111' });
+      cy.confirmEventIsNotTracked("Personal Phone Omitted");
     });
 
     it("user unable to skip phone number entry", () => {
@@ -86,6 +87,7 @@ describe("Citizenship page", () => {
       cy.get('input[name="ctl00$ContentPlaceHolder1$ClaimantProfileTab$tpnlCitizen$txtContactNum"]')
         .then(($input) => {
           expect($input[0].validationMessage).to.exist;
+          cy.checkLogEvent("Personal Phone Omitted", {});
         });
     });
 
