@@ -3,6 +3,7 @@ import { logEvent } from "../../modules/shared.mjs";
 import {
   adjustTableWidths,
   removeExtraSpaceBetweenRadioButtons,
+  setNewTitle,
   styleRadioButton
 } from '../utils';
 
@@ -44,7 +45,7 @@ export function trackWorkersCompYesSubmission(pageId) {
   const form = document.getElementById('form1');
 
   if (form) {
-    form.addEventListener('submit', function() {
+    form.addEventListener('submit', function () {
       const formData = new FormData(form);
       if (
         formFromCorrectPage(formData) &&
@@ -60,7 +61,7 @@ export function changes() {
   adjustTable();
   adjustTextEntries();
   styleRadioButtons();
-  document.addEventListener('headerReady', setNewTitle);
+  setNewTitle(i18next.t('reasonForLeave.title'));
 }
 
 function styleRadioButtons() {
@@ -125,10 +126,4 @@ function adjustTable() {
   }
 
   adjustTableWidths(document);
-}
-
-function setNewTitle() {
-  const title = document.querySelector("#pageTitle");
-  title.textContent = `${i18next.t('reasonForLeave.title')}`;
-  document.removeEventListener('headerReady', setNewTitle);
 }

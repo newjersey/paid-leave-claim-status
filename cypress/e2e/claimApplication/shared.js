@@ -15,6 +15,13 @@ export function globalTestsOld(url) {
 }
 
 export function globalTestsNew(pageId, url) {
+  xit("feedback widget is visible", () => {
+    cy.checkFeedbackWidgetIsRendered();
+    // TODO: determine why cy.checkFeedbackWidgetIsInteractable() 
+    // and cy.checkFeedbackWidgetEmailDisclaimerTextIsOverridden()
+    // fail and test those as well
+  });
+
   it("applies the new font family", () => {
     cy.checkFontFamily();
   });
@@ -31,7 +38,7 @@ export function globalTestsNew(pageId, url) {
     cy.trackResourcesClick(pageId);
   });
 
-  it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+  it('info alert is not present', () => {
     cy.checkInfoAlertBehavior();
   });
 

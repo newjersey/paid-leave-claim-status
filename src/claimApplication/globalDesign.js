@@ -1,6 +1,10 @@
 import { applyFooter } from "./footer.js";
 import { replaceHeader } from "./header.js";
-import { ICON_BASE_URL } from "../modules/shared.mjs";
+import {
+  addFeedbackWidgetScriptToHead,
+  ICON_BASE_URL,
+  overrideFeedbackWidgetEmailDisclaimerText
+} from "../modules/shared.mjs";
 
 export function globalDesignChanges(pageId) {
   addViewportMetaTag();
@@ -8,6 +12,7 @@ export function globalDesignChanges(pageId) {
   applyFooter(pageId);
   injectGlobalStyles();
   styleButtons();
+  // addFeedbackWidget();
 }
 
 function addViewportMetaTag() {
@@ -24,14 +29,34 @@ function injectGlobalStyles() {
       background-color: #FBFCFD;
     }
     h1, h2, h3, h4, p, a {
+      font-family: "Public Sans", sans-serif !important;
+      font-variant: normal; 
+    }
+
+    a.lblClass, span.lblClass, span.lblClass1 {
       font-family: "Public Sans", sans-serif;
       font-variant: normal;
+      font-size: 16px;
     }
+
+    span {
+      font-family: "Public Sans", sans-serif;
+    }
+
+    .usa-checkbox__label, .usa-combo-box__input, .usa-combo-box__list, .usa-fieldset, .usa-hint, .usa-input, .usa-input-group, .usa-radio__label, .usa-range, .usa-select, .usa-textarea, .usa-button, .usa-table, .usa-label, .usa-legend, .usa-alert  {
+      font-family: "Public Sans", sans-serif;
+    }
+
     .ajax__tab_panel {
       font-family: "Public Sans", sans-serif !important;
       font-variant: normal !important;
       font-size: 16px !important;
     }
+
+    .feedback-container {
+      margin: 50px 0 0 0;
+    }
+
     .usa-button {
       padding: 0 1.25rem;
       width: auto;
@@ -56,6 +81,15 @@ function injectGlobalStyles() {
       -webkit-mask: none !important;
       mask: none !important;
       top: auto !important;
+    }
+
+    .usa-alert--warning::before {
+      content: url('${ICON_BASE_URL}/warning.svg');
+      background: none !important;
+      -webkit-mask: none !important;
+      mask: none !important;
+      top: auto !important;
+      margin-top:5px;
     }
 
     .usa-accordion__button[aria-expanded="false"] {
@@ -107,4 +141,20 @@ function styleButtons() {
     button.style.width = null;
     button.style.height = null;
   });
+}
+
+function addFeedbackWidget() {
+  const existingWidget = document.querySelector('feedback-widget');
+  if (!existingWidget) {
+    addFeedbackWidgetScriptToHead();
+    const feedbackWidget = document.createElement('feedback-widget');
+    feedbackWidget.setAttribute('contact-link', 'https://www.nj.gov/labor/myleavebenefits/help/contact/');
+    feedbackWidget.setAttribute('only-save-rating-to-analytics', 'true');
+
+    const footer = document.getElementById('helpSection');
+    if (footer) {
+      footer.parentNode.insertBefore(feedbackWidget, footer);
+      overrideFeedbackWidgetEmailDisclaimerText();
+    }
+  }
 }
