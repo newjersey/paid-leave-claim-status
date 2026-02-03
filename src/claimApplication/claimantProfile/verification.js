@@ -69,6 +69,7 @@ export function changes() {
   );
   saveInfo();
   renamePages();
+  rewordText();
   setNewTitle(i18next.t('reviewAndSave.title'));
 }
 
@@ -155,4 +156,63 @@ function renamePages() {
       });
     }
   });
+}
+
+function rewordText() {
+  rewordPhone();
+  rewordAltPhone();
+  rewordEmail();
+  rewordRepName();
+  rewordRepDOB();
+  rewordRepPhone();
+}
+
+function rewordPhone() {
+  const phoneInput1 = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerTel1');
+  const parentTd = phoneInput1.parentElement;
+  const textElement = parentTd.querySelector('a');
+  if (textElement && textElement.textContent.includes('Telephone Number:')) {
+    textElement.textContent = 'Phone:';
+  }
+}
+
+function rewordAltPhone() {
+  const altPhoneInput1 = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerAltTel1');
+  const parentTd = altPhoneInput1.parentElement;
+  const textElement = parentTd.querySelector('a');
+  if (textElement && textElement.textContent.includes('Cell Phone Number / Alternate Telephone Number:')) {
+    textElement.textContent = 'Alternate phone:';
+  }
+}
+
+function rewordEmail() {
+  const emailInput = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerEmail');
+  const parentTd = emailInput.parentElement;
+  const textElement = parentTd.querySelector('a');
+  if (textElement && textElement.textContent.includes('E-Mail Address:')) {
+    textElement.textContent = 'Email:';
+  }
+}
+
+function rewordRepName() {
+  const repNameLabel = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_Label4');
+  if (repNameLabel && repNameLabel.textContent.includes('Representative:')) {
+    repNameLabel.textContent = "Representative's name:";
+  }
+}
+
+function rewordRepDOB() {
+  const repDOBLabel = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_Label5');
+  if (repDOBLabel && repDOBLabel.textContent.includes('Representative Date of Birth')) {
+    repDOBLabel.textContent = "Representative's date of birth:";
+  }
+}
+
+function rewordRepPhone() {
+  const repPhoneInput1 = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepTel1');
+  const parentTd = repPhoneInput1.parentElement;
+  const textElement = parentTd.querySelector('a');
+  if (textElement && textElement.textContent.includes('Representative Telephone Number:')) {
+    textElement.textContent = "Representative's phone:";
+  }
 }
