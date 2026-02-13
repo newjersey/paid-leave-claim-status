@@ -1,4 +1,5 @@
 import { globalTestsNew, globalTestsOld } from "../shared";
+import { encodeDecode } from '../../../../src/claimApplication/utils';
 
 const PAGE_ID = 'otherBenefits';
 const URL = 'ClaimantDisabililty';
@@ -130,6 +131,9 @@ describe("Other Benefits page", () => {
     });
 
     it('clicks Back', () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify({ disabilityInfoView: 'leaveSchedule' })));
+      });
       cy.get('footer#helpSection').should('exist').and('have.length', 1);
       
       cy.get('#headerWithMargin > button').contains('< Back').click();
