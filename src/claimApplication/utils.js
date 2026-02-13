@@ -244,7 +244,7 @@ export function setRequiredForVisibleLeaveSectionFields(currentSection, reason =
     if (reason !== 'pregnancy') {
       causedByJobYes?.setAttribute('required', '');
       causedByJobNo?.setAttribute('required', '');
-        }
+    }
   }
   // leaveSchedule: nothing required (all removed in step 1)
 }

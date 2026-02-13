@@ -38,8 +38,6 @@ function setupFDD() {
   const fieldset = document.querySelector('#MainDiv > fieldset');
   fieldset.id = "fddFieldset";
   const divElement = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD');
-  const fddDateConfirmYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbConfFDDYes');
-  const fddDateConfirmNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbConfFDDNo');
 
   const maternityTimelineToolHtml = `
     <fieldset id="maternityTimeline">
@@ -69,13 +67,6 @@ function setupFDD() {
     <div class="usa-hint" id="fddHint">${i18next.t('shared.dateFormat')}</div>
   `;
   divElement.insertBefore(fddQuestion, divElement.firstChild);
-  // allow user to continue with flow after selecting Yes/No instead of seeing reason for leave prompt
-  fddDateConfirmYes.addEventListener('click', () => {
-    sessionStorage.setItem('disabilityInfoView', 'leaveSchedule')
-  });
-  fddDateConfirmNo.addEventListener('click', () => {
-    sessionStorage.setItem('disabilityInfoView', 'leaveSchedule')
-  });
 }
 
 function styleFDD(disabilityType) {

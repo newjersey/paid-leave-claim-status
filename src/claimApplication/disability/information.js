@@ -127,8 +127,6 @@ function determineLeaveScheduleScreen() {
     restoreReasonForLeaveData(setDisabilityType);
 
     const disabilityInfoView = sessionStorage.getItem('disabilityInfoView');
-    sessionStorage.removeItem('disabilityInfoView');
-  
     if (disabilityInfoView === 'leaveSchedule') {
       showLeaveSchedulePage();
     } else {
@@ -138,6 +136,7 @@ function determineLeaveScheduleScreen() {
 }
 
 function showReasonForLeavePage() {
+  sessionStorage.setItem('disabilityInfoView', 'reasonForLeave');
   hideBackButton();
   setNewTitle(i18next.t('reasonForLeave.title'));
 
@@ -147,6 +146,7 @@ function showReasonForLeavePage() {
 }
 
 function showLeaveSchedulePage() {
+  sessionStorage.setItem('disabilityInfoView', 'leaveSchedule');
   window.scrollTo(0, 0);
   showBackButton();
   setNewTitle(i18next.t('leaveSchedule.title'));
