@@ -2,7 +2,14 @@ import i18next from 'i18next';
 import { reasonForLeavePage, setupReasonForLeavePage, restoreReasonForLeaveData } from "./reasonForLeave";
 import { setupLeaveSchedulePage, showLeaveScheduleForDisabilityType } from "./leaveSchedule";
 import { logEvent } from "../../modules/shared.mjs";
-import { DisabilityType, setNewTitle, setRequiredForVisibleLeaveSectionFields } from '../utils';
+import {
+  addToSessionData,
+  DisabilityType,
+  getSessionData,
+  setNewTitle,
+  setRequiredForVisibleLeaveSectionFields,
+  STORAGE_KEY_DISABILITY_INFO_VIEW
+} from '../utils';
 
 export const disabilityInformationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt', label: 'Disability Start Date' },
@@ -126,7 +133,8 @@ function determineLeaveScheduleScreen() {
     setupLeaveSchedulePage();
     restoreReasonForLeaveData(setDisabilityType);
 
-    const disabilityInfoView = sessionStorage.getItem('disabilityInfoView');
+    const sessionData = getSessionData();
+    const disabilityInfoView = sessionData[STORAGE_KEY_DISABILITY_INFO_VIEW];
     if (disabilityInfoView === 'leaveSchedule') {
       showLeaveSchedulePage();
     } else {
@@ -136,7 +144,9 @@ function determineLeaveScheduleScreen() {
 }
 
 function showReasonForLeavePage() {
-  sessionStorage.setItem('disabilityInfoView', 'reasonForLeave');
+  addToSessionData({
+    [STORAGE_KEY_DISABILITY_INFO_VIEW]: 'reasonForLeave'
+  });
   hideBackButton();
   setNewTitle(i18next.t('reasonForLeave.title'));
 
@@ -146,7 +156,9 @@ function showReasonForLeavePage() {
 }
 
 function showLeaveSchedulePage() {
-  sessionStorage.setItem('disabilityInfoView', 'leaveSchedule');
+  addToSessionData({
+    [STORAGE_KEY_DISABILITY_INFO_VIEW]: 'leaveSchedule'
+  });
   window.scrollTo(0, 0);
   showBackButton();
   setNewTitle(i18next.t('leaveSchedule.title'));

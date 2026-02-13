@@ -8,6 +8,7 @@ export const STORAGE_KEY_USER_EMAIL = "user_email";
 export const STORAGE_KEY_USER_PHONE = "user_phone";
 export const STORAGE_KEY_USER_MAIL_ADDRESS = "user_mail_address";
 
+export const STORAGE_KEY_DISABILITY_INFO_VIEW = "disabilityInfoView";
 export const STORAGE_KEY_REASON_FOR_LEAVE = "reason_for_leave";
 export const STORAGE_KEY_PROVIDER_TYPE_ACCEPTED = "provider_type_accepted";
 export const STORAGE_KEY_CAUSED_BY_JOB = "caused_by_job";

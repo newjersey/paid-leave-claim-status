@@ -51,6 +51,11 @@ describe("Disability Information page", () => {
     });
 
     function checkLeaveSchedule() {
+      cy.window().then((win) => {
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData));
+        expect(data["disabilityInfoView"]).to.equal('leaveSchedule');
+      });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').type("07/18/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').type("07/17/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes').click({ force: true });
@@ -76,6 +81,11 @@ describe("Disability Information page", () => {
 
     it("user can input info about pregnancy with blank extra text and proceed to next page", () => {
       cy.mockASPX(URL);
+      cy.window().then((win) => {
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData));
+        expect(data["disabilityInfoView"]).to.equal('reasonForLeave');
+      });
       cy.get('#reason-pregnancy').click({ force: true });
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
@@ -377,7 +387,7 @@ describe("Disability Information page", () => {
 
     it("skips to Leave Schedule page when disabilityInfoView flag is set", () => {
       cy.window().then((win) => {
-        win.sessionStorage.setItem('disabilityInfoView', 'leaveSchedule');
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify({ disabilityInfoView: 'leaveSchedule' })));
       });
       cy.visit(FIXTURE);
       cy.wait('@script');
@@ -386,21 +396,9 @@ describe("Disability Information page", () => {
       cy.get('#reasonForLeavePage').should('not.be.visible');
     });
 
-    it("clears disabilityInfoView flag after navigation", () => {
-      cy.window().then((win) => {
-        win.sessionStorage.setItem('disabilityInfoView', 'leaveSchedule');
-      });
-      cy.visit(FIXTURE);
-      cy.wait('@script');
-  
-      cy.window().then((win) => {
-        expect(win.sessionStorage.getItem('disabilityInfoView')).to.be.null;
-      });
-    });
-
     it('displays back button on Leave Schedule page', () => {
       cy.window().then((win) => {
-        win.sessionStorage.setItem('disabilityInfoView', 'leaveSchedule');
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify({ disabilityInfoView: 'leaveSchedule' })));
       });
       cy.visit(FIXTURE);
       cy.wait('@script');
