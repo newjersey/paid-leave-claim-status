@@ -346,6 +346,20 @@ describe("Disability Verification page", () => {
           .should('contain.text', 'injury happened')
           .and('contain.text', 'Date of injury');
       });
+
+      it('hides entire section when reason is pregnancy', () => {
+        cy.window().then((win) => {
+          win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify({ reason_for_leave: { reasons: 'pregnancy' } })));
+        });
+        cy.intercept('GET', '**/tdiOverride.min.js', (req) => {
+          req.continue((res) => {
+            expect([200, 304]).to.include(res.statusCode);
+          });
+        }).as('script');
+        cy.visit(FIXTURE);
+        cy.wait('@script');
+        cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnWREdit').should('not.be.visible');
+      });
     })
 
     globalTestsNew(PAGE_ID, URL);

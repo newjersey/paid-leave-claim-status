@@ -342,6 +342,10 @@ function restructureWorkRelatedSection() {
   const savedData = getSessionData();
   const reasonData = savedData[STORAGE_KEY_REASON_FOR_LEAVE];
   const reason = reasonData?.reasons || i18next.t('reviewAndSave.workInfo.injuryIllness')
+  if (reason == "pregnancy") {
+    fieldset.style.display = 'none';
+    return;
+  }
 
   const injuredAtWorkplaceInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_TxtVerInjWk');
   const empNameInput = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerInjEmpNm');
