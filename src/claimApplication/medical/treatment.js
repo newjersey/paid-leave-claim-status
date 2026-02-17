@@ -243,13 +243,17 @@ function addProviderScreener() {
   });
 
   const form = document.getElementById('form1');
-  form.addEventListener('submit', (event) => {
-    providerYes.removeAttribute('name');
-    providerNo.removeAttribute('name');
-    form.addEventListener('formdata', () => {
-      providerYes.setAttribute('name', 'provider-type-accepted');
-      providerNo.setAttribute('name', 'provider-type-accepted');
-    }, { once: true });
+  form.addEventListener('submit', () => {
+    const formData = new FormData(form);
+    const correctPage = formFromCorrectPage(formData);
+    if (correctPage) {
+      providerYes.removeAttribute('name');
+      providerNo.removeAttribute('name');
+      form.addEventListener('formdata', () => {
+        providerYes.setAttribute('name', 'provider-type-accepted');
+        providerNo.setAttribute('name', 'provider-type-accepted');
+      }, { once: true });
+    }
   });
 }
 
@@ -336,17 +340,21 @@ function addWorkersCompScreener() {
 
   const form = document.getElementById('form1');
   form.addEventListener('submit', (event) => {
-    if (!causedByJobYes.checked && !causedByJobNo.checked) {
-      event.preventDefault();
-      elementTextError(causedByJobLegend);
-      causedByJobYes.focus();
-    } else {
-      causedByJobYes.removeAttribute('name');
-      causedByJobNo.removeAttribute('name');
-      form.addEventListener('formdata', () => {
-        causedByJobYes.setAttribute('name', 'caused-by-job');
-        causedByJobNo.setAttribute('name', 'caused-by-job');
-      }, { once: true });
+    const formData = new FormData(form);
+    const correctPage = formFromCorrectPage(formData);
+    if (correctPage) {
+      if (!causedByJobYes.checked && !causedByJobNo.checked) {
+        event.preventDefault();
+        elementTextError(causedByJobLegend);
+        causedByJobYes.focus();
+      } else {
+        causedByJobYes.removeAttribute('name');
+        causedByJobNo.removeAttribute('name');
+        form.addEventListener('formdata', () => {
+          causedByJobYes.setAttribute('name', 'caused-by-job');
+          causedByJobNo.setAttribute('name', 'caused-by-job');
+        }, { once: true });
+      }
     }
   });
 
