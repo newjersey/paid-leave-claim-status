@@ -165,7 +165,7 @@ describe("Disability Information page", () => {
 
     it("tracks that this page fixture has a validation error", () => {
       const truncatedMessage = "PLEASE ANSWER THE FOLLOWING QUESTION(S). THEY MUST BE COMPLETED TO PROCEED:3a. Select the date you e";
-      cy.checkLogEvent("Validation Error", { contents: truncatedMessage });
+      cy.checkLogEvent("Validation Error", { contents: truncatedMessage, pageId: "disabilityInformation" });
     });
 
     it("has required reason for leave radio fields on Leave Reason page", () => {

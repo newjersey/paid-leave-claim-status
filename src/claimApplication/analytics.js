@@ -9,7 +9,7 @@ export function analyticsChanges(pageId) {
   trackOtherBenefitsYesSubmission(pageId);
   trackWorkersCompYesSubmission(pageId);
   trackPrintClaimSummaryButton();
-  trackValidationErrors();
+  trackValidationErrors(pageId);
 }
 
 function trackHelpClicks(pageId) {
@@ -21,13 +21,13 @@ function trackHelpClicks(pageId) {
   }
 }
 
-function trackValidationErrors() {
+function trackValidationErrors(pageId) {
   const errorElements = document.querySelectorAll('[id*="lblError"], [id*="lblerror"]');
   errorElements.forEach(element => {
     const isVisible = element.offsetParent !== null;
     if (isVisible) {
       const contents = element.textContent.trim().substring(0, 100);
-      logEvent('Validation Error', { contents });
+      logEvent('Validation Error', { contents, pageId });
     }
   });
 }
