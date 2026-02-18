@@ -71,6 +71,7 @@ export function changes() {
   replaceDoctorText();
   addProviderScreener();
   addWorkersCompScreener();
+  matchNewFormDataToExisting();
   adjustTable();
   adjustTextEntries();
   styleRadioButtons();
@@ -221,7 +222,6 @@ function addProviderScreener() {
     providerNo.checked = true;
   }
 
-
   providerYes.addEventListener('change', function () {
     providerAlert.style.display = 'none';
     resetElementText(legend);
@@ -240,16 +240,6 @@ function addProviderScreener() {
 
   providerYes.addEventListener('invalid', function () {
     elementTextError(legend);
-  });
-
-  const form = document.getElementById('form1');
-  form.addEventListener('submit', (event) => {
-    providerYes.removeAttribute('name');
-    providerNo.removeAttribute('name');
-    form.addEventListener('formdata', () => {
-      providerYes.setAttribute('name', 'provider-type-accepted');
-      providerNo.setAttribute('name', 'provider-type-accepted');
-    }, { once: true });
   });
 }
 
@@ -334,24 +324,41 @@ function addWorkersCompScreener() {
     });
   });
 
+  causedByJobYes.addEventListener('invalid', function () {
+    elementTextError(causedByJobLegend);
+  });
+}
+
+function matchNewFormDataToExisting() {
   const form = document.getElementById('form1');
+
+  // frontend-only fields
+  const causedByJobYes = document.getElementById('caused-by-job-yes');
+  const causedByJobNo = document.getElementById('caused-by-job-no');
+  const providerYes = document.getElementById("provider-type-accepted-yes");
+  const providerNo = document.getElementById("provider-type-accepted-no");
+  const causedByJobLegend = document.getElementById('caused-by-job-legend');
+
   form.addEventListener('submit', (event) => {
-    if (!causedByJobYes.checked && !causedByJobNo.checked) {
+    const formData = new FormData(form);
+    const correctPage = formFromCorrectPage(formData);
+
+    if (correctPage && !causedByJobYes.checked && !causedByJobNo.checked) {
       event.preventDefault();
       elementTextError(causedByJobLegend);
       causedByJobYes.focus();
     } else {
+      providerYes.removeAttribute('name');
+      providerNo.removeAttribute('name');
       causedByJobYes.removeAttribute('name');
       causedByJobNo.removeAttribute('name');
       form.addEventListener('formdata', () => {
+        providerYes.setAttribute('name', 'provider-type-accepted');
+        providerNo.setAttribute('name', 'provider-type-accepted');
         causedByJobYes.setAttribute('name', 'caused-by-job');
         causedByJobNo.setAttribute('name', 'caused-by-job');
       }, { once: true });
     }
-  });
-
-  causedByJobYes.addEventListener('invalid', function () {
-    elementTextError(causedByJobLegend);
   });
 }
 
