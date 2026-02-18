@@ -22,7 +22,18 @@ function trackHelpClicks(pageId) {
 }
 
 function trackValidationErrors(pageId) {
-  const errorElements = document.querySelectorAll('[id*="lblError"], [id*="lblerror"]');
+  const errorElements = document.querySelectorAll(`
+    [id*="lblError"],
+    [id*="lblerror"],
+    #lblValEmpDetMsg,
+    #ValEmpSpanMsg,
+    #divClEmpTelVal,
+    #ValEmpWrkSch,
+    #lblValPTO,
+    #lblValWrkInt,
+    #lblNotice
+  `);
+
   errorElements.forEach(element => {
     const isVisible = element.offsetParent !== null;
     if (isVisible) {
