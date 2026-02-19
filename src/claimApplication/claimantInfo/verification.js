@@ -8,6 +8,7 @@ import {
   getSessionData,
   STORAGE_KEY_REASON_FOR_LEAVE,
   STORAGE_KEY_DISABILITY_INFO_VIEW,
+  STORAGE_KEY_EDITING_WORKERS_COMP,
 } from '../utils';
 
 export const otherBenefitsVerificationLabels = [
@@ -446,6 +447,12 @@ function restructureWorkRelatedSection() {
   if (legend) {
     legend.insertAdjacentElement('afterend', displayDiv);
   }
+
+  workRelatedEditBtn.addEventListener('click', function () {
+    addToSessionData({
+      [STORAGE_KEY_EDITING_WORKERS_COMP]: true
+    });
+  });
 }
 
 function formatPhone(ph1, ph2, ph3, ext) {

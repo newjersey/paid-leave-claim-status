@@ -173,6 +173,11 @@ describe("Disability Verification page", () => {
 
     it("allows user to edit work related information", () => {
       checkWorkEdit();
+      cy.window().then((win) => {
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData));
+        expect(data["editing_workers_comp"]).to.equal(true);
+      });
     });
 
     it("allows user to edit other benefits information", () => {
