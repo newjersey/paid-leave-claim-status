@@ -11,7 +11,7 @@ import { encodeDecode } from '../../../../src/claimApplication/utils';
 const PAGE_ID = 'disabilityInformation';
 const URL = 'ClaimantDisabililty';
 const FIXTURE = "./cypress/fixtures/claimApplication/disability/information.html";
-const FIXTURE_WITH_ILLNESS = "./cypress/fixtures/claimApplication/disability/information_with_vendor_illness.html";
+const FIXTURE_WITH_ILLNESS = "./cypress/fixtures/claimApplication/disability/information_with_illness.html";
 
 describe("Disability Information page", () => {
   function checkPostData(interception) {
@@ -361,7 +361,7 @@ describe("Disability Information page", () => {
         .and('have.value', '');  
     });
 
-    it("parses illness with details from vendor field when no session data exists", () => {
+    it("parses illness with details from original field when no session data exists", () => {
       cy.visit(FIXTURE_WITH_ILLNESS);
       cy.wait('@script');
   
@@ -371,7 +371,7 @@ describe("Disability Information page", () => {
         .and('have.value', 'im hurt');
     });
   
-    it("saves parsed vendor data to session storage", () => {
+    it("saves parsed original data to session storage", () => {
       cy.visit(FIXTURE_WITH_ILLNESS);
       cy.wait('@script');
   
