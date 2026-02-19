@@ -187,7 +187,9 @@ describe("Disability Verification page", () => {
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnDisInfoEdit').click();
       cy.window().then((win) => {
-        expect(win.sessionStorage.getItem('disabilityInfoView')).to.equal('leaveSchedule');
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData));
+        expect(data["disabilityInfoView"]).to.equal('leaveSchedule');
       });
     });
 
@@ -203,7 +205,9 @@ describe("Disability Verification page", () => {
         cy.mockASPX(URL);
         cy.get('#editReasonForLeave').click();
         cy.window().then((win) => {
-          expect(win.sessionStorage.getItem('disabilityInfoView')).to.equal('reasonForLeave');
+          const encodedData = win.sessionStorage.getItem('session_data');
+          const data = JSON.parse(encodeDecode(encodedData));
+          expect(data["disabilityInfoView"]).to.equal('reasonForLeave');
         });
       });
 
