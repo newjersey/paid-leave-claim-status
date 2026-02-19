@@ -43,7 +43,7 @@ function setDisabilityType(type) {
 
 export function changes() {
   addStyles();
-  determineLeaveScheduleScreen()
+  determineDisabilityInfoScreen();
 }
 
 function addStyles() {
@@ -124,7 +124,7 @@ function addStyles() {
   document.head.appendChild(style);
 }
 
-function determineLeaveScheduleScreen() {
+function determineDisabilityInfoScreen() {
   const leaveScheduleContainer = document.getElementById(leaveScheduleId); 
   if (leaveScheduleContainer) {
     leaveScheduleContainer.parentNode.insertBefore(reasonForLeavePage(), leaveScheduleContainer);

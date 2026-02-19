@@ -1,5 +1,3 @@
-export const EXAMPLE_PREGNANCY_DETAILS = "hospital birth.";
-
 export const EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY = {
   "reasons": "pregnancy",
   "pregnancy-details": "",

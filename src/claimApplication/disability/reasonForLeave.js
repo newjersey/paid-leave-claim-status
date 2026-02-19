@@ -335,7 +335,7 @@ export function restoreReasonForLeaveData(setDisabilityType) {
 
 function parseReasonFromVendorField() {
   const originalTextarea = document.getElementById(
-    'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDisabDesc'
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury'
   );
 
   if (!originalTextarea || !originalTextarea.value) {

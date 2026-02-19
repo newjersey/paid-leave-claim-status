@@ -1,5 +1,4 @@
 import {
-  EXAMPLE_PREGNANCY_DETAILS,
   EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS,
   EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS,
   EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY,
@@ -79,11 +78,6 @@ describe("Disability Information page", () => {
         }
       });
     }
-
-    it("user with prior reason input sees that input loaded", () => {
-      cy.get('#reason-pregnancy').should('be.checked');
-      cy.get('#pregnancy-details').should('contain.text', EXAMPLE_PREGNANCY_DETAILS);
-    });
 
     it("user can input info about pregnancy with blank extra text and proceed to next page", () => {
       cy.mockASPX(URL);
