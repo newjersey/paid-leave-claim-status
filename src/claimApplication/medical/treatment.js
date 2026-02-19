@@ -12,6 +12,7 @@ import {
   STORAGE_KEY_PROVIDER_TYPE_ACCEPTED,
   STORAGE_KEY_CAUSED_BY_JOB,
   STORAGE_KEY_WORKERS_COMP,
+  STORAGE_KEY_EDITING_WORKERS_COMP,
   setRequiredForVisibleLeaveSectionFields,
   styleRadioButton
 } from '../utils';
@@ -84,7 +85,8 @@ export function changes() {
   const reasonData = sessionData[STORAGE_KEY_REASON_FOR_LEAVE];
   const reason = reasonData?.reasons;
 
-  setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason)
+  setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason);
+  focusOnWorkersCompIfEditing();
 }
 
 function addStyles() {
@@ -524,4 +526,27 @@ function adjustTable() {
   }
 
   adjustTableWidths(document);
+}
+
+function focusOnWorkersCompIfEditing() {
+  const sessionData = getSessionData();
+  const editingWorkersComp = sessionData[STORAGE_KEY_EDITING_WORKERS_COMP];
+
+  if (editingWorkersComp) {
+    const causedByJobQuestion = document.getElementById('causedByJobQuestion');
+    const causedByJobYes = document.getElementById('caused-by-job-yes');
+    const causedByJobNo = document.getElementById('caused-by-job-no');
+
+    if (causedByJobQuestion && causedByJobYes && causedByJobNo) {
+      causedByJobQuestion.scrollIntoView();
+      if (causedByJobYes.checked) {
+        causedByJobYes.focus();
+      } else {
+        causedByJobNo.focus();
+      }
+    }
+    addToSessionData({
+      [STORAGE_KEY_EDITING_WORKERS_COMP]: undefined
+    });
+  }
 }
