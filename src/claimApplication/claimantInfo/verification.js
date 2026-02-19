@@ -6,7 +6,8 @@ import {
   setNewTitle,
   STORAGE_KEY_PROVIDER_NAME,
   getSessionData,
-  STORAGE_KEY_REASON_FOR_LEAVE
+  STORAGE_KEY_REASON_FOR_LEAVE,
+  STORAGE_KEY_DISABILITY_INFO_VIEW,
 } from '../utils';
 
 export const otherBenefitsVerificationLabels = [
@@ -315,7 +316,7 @@ function setupEditButtonHandlers() {
     reasonEditBtn.addEventListener('click', function (e) {
       e.preventDefault();
       goingToReasonForLeave = true;
-      sessionStorage.setItem('disabilityInfoView', 'reasonForLeave');
+      addToSessionData({ [STORAGE_KEY_DISABILITY_INFO_VIEW]: 'reasonForLeave' });
       // Click the Disability Information edit but no flag for skipping leave schedule
       if (disabilityEditBtn) {
         disabilityEditBtn.click();
@@ -326,7 +327,7 @@ function setupEditButtonHandlers() {
   if (disabilityEditBtn) {
     disabilityEditBtn.addEventListener('click', function () {
       if (!goingToReasonForLeave) {
-        sessionStorage.setItem('disabilityInfoView', 'leaveSchedule');
+        addToSessionData({ [STORAGE_KEY_DISABILITY_INFO_VIEW]: 'leaveSchedule' });
       }
     });
   }
