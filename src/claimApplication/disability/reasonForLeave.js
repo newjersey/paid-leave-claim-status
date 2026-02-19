@@ -283,7 +283,7 @@ export function restoreReasonForLeaveData(setDisabilityType) {
   let savedReason = savedData[STORAGE_KEY_REASON_FOR_LEAVE]
 
   if (!savedReason || !savedReason.reasons) {
-    savedReason = parseReasonFromVendorField();
+    savedReason = parseReasonFromOriginalField();
     if (!savedReason) {
       return false;
     }
@@ -333,7 +333,7 @@ export function restoreReasonForLeaveData(setDisabilityType) {
   }
 }
 
-function parseReasonFromVendorField() {
+function parseReasonFromOriginalField() {
   const originalTextarea = document.getElementById(
     'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury'
   );
