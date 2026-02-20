@@ -86,6 +86,7 @@ export function changes() {
   const reason = reasonData?.reasons;
 
   setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason);
+  moveWorkersCompToNewFieldset();
   focusOnWorkersCompIfEditing();
 }
 
@@ -526,6 +527,18 @@ function adjustTable() {
   }
 
   adjustTableWidths(document);
+}
+
+function moveWorkersCompToNewFieldset() {
+  const causedByJobElement = document.getElementById('causedByJobQuestion');
+  const parentFieldset = causedByJobElement.closest('fieldset');
+
+  const newFieldset = document.createElement('fieldset');
+
+  newFieldset.appendChild(causedByJobElement);
+  const workersCompElement = document.getElementById('workersCompContainer');
+  newFieldset.appendChild(workersCompElement);
+  parentFieldset.parentNode.insertBefore(newFieldset, parentFieldset.nextSibling);
 }
 
 function focusOnWorkersCompIfEditing() {
