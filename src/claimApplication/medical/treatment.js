@@ -12,6 +12,7 @@ import {
   STORAGE_KEY_PROVIDER_TYPE_ACCEPTED,
   STORAGE_KEY_CAUSED_BY_JOB,
   STORAGE_KEY_WORKERS_COMP,
+  STORAGE_KEY_EDITING_WORKERS_COMP,
   setRequiredForVisibleLeaveSectionFields,
   styleRadioButton
 } from '../utils';
@@ -84,7 +85,9 @@ export function changes() {
   const reasonData = sessionData[STORAGE_KEY_REASON_FOR_LEAVE];
   const reason = reasonData?.reasons;
 
-  setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason)
+  setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason);
+  moveWorkersCompToNewFieldset();
+  focusOnWorkersCompIfEditing();
 }
 
 function addStyles() {
@@ -524,4 +527,49 @@ function adjustTable() {
   }
 
   adjustTableWidths(document);
+}
+
+function moveWorkersCompToNewFieldset() {
+  const causedByJobElement = document.getElementById('causedByJobQuestion');
+  const workersCompElement = document.getElementById('workersCompContainer');
+  const parentFieldset = causedByJobElement.closest('fieldset');
+
+  const newFieldset = document.createElement('fieldset');
+  newFieldset.appendChild(causedByJobElement);
+  newFieldset.appendChild(workersCompElement);
+
+  const h2 = document.createElement('h2');
+  h2.id = "workersCompensationHeader";
+  h2.textContent = i18next.t('medicalInfo.work.title');
+  h2.style.fontSize = "20px";
+  h2.style.fontWeight = "bold";
+  h2.style.color = "black";
+  h2.style.fontVariant = "none";
+  h2.style.marginTop = "40px";
+
+  parentFieldset.parentNode.insertBefore(h2, parentFieldset.nextSibling);
+  parentFieldset.parentNode.insertBefore(newFieldset, h2.nextSibling);
+}
+
+function focusOnWorkersCompIfEditing() {
+  const sessionData = getSessionData();
+  const editingWorkersComp = sessionData[STORAGE_KEY_EDITING_WORKERS_COMP];
+
+  if (editingWorkersComp) {
+    const workersCompHeader = document.getElementById('workersCompensationHeader');
+    const causedByJobYes = document.getElementById('caused-by-job-yes');
+    const causedByJobNo = document.getElementById('caused-by-job-no');
+
+    if (workersCompHeader && causedByJobYes && causedByJobNo) {
+      workersCompHeader.scrollIntoView();
+      if (causedByJobYes.checked) {
+        causedByJobYes.focus();
+      } else {
+        causedByJobNo.focus();
+      }
+    }
+    addToSessionData({
+      [STORAGE_KEY_EDITING_WORKERS_COMP]: undefined
+    });
+  }
 }

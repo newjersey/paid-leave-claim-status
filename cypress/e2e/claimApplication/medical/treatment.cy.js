@@ -71,6 +71,22 @@ describe("Medical Treatment page", () => {
       cy.wait('@script');
     });
 
+    it("page jumps to Workers Comp if coming from review Edit", () => {
+      cy.window().then((win) => {
+        const data = { editing_workers_comp: true };
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));     
+      });
+
+      cy.visit(FIXTURE);
+
+      cy.get('#caused-by-job-no').should('be.focused');
+      cy.window().then((win) => {
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData));
+        expect(data["editing_workers_comp"]).to.equal(undefined);
+      });
+    });
+
     it("user cannot submit if provider type unanswered", () => {
       cy.get('#provider-type-accepted-yes').should('not.be.checked');
       cy.get('#provider-type-accepted-no').should('not.be.checked');
@@ -80,7 +96,6 @@ describe("Medical Treatment page", () => {
           expect($input[0].validationMessage).to.exist;
         });
     });
-
 
     it("user cannot submit if caused-by-job unanswered", () => {
       cy.get('#provider-type-accepted-yes').click({ force: true });
