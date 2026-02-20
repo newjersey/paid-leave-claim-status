@@ -1,4 +1,11 @@
-import { adjustTableWidths, removeExtraSpaceBetweenRadioButtons, styleRadioButton, getSessionData, STORAGE_KEY_WORKERS_COMP } from '../utils';
+import {
+  adjustTableWidths,
+  removeExtraSpaceBetweenRadioButtons,
+  styleRadioButton,
+  getSessionData,
+  STORAGE_KEY_WORKERS_COMP,
+  setNewTitle,
+} from '../utils';
 import i18next from 'i18next';
 
 export const workRelatedLabels = [
@@ -31,6 +38,7 @@ export function changes() {
   styleRadioButtons();
   updateWorkersCompQuestions();
   updateWorkersCompensationHeader();
+  setNewTitle(i18next.t('workRelated.title'));
 }
 
 function styleRadioButtons() {
@@ -56,8 +64,8 @@ function styleRadioButtons() {
 
 function updateWorkersCompensationHeader() {
   const div = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC');
-  const legend = div.querySelector('legend')
-  legend.textContent = i18next.t('workRelated.title');
+  const legend = div.querySelector('legend');
+  legend.style.display = "none";
 }
 
 function adjustWidths() {
