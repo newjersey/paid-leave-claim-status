@@ -531,14 +531,24 @@ function adjustTable() {
 
 function moveWorkersCompToNewFieldset() {
   const causedByJobElement = document.getElementById('causedByJobQuestion');
+  const workersCompElement = document.getElementById('workersCompContainer');
   const parentFieldset = causedByJobElement.closest('fieldset');
 
   const newFieldset = document.createElement('fieldset');
-
   newFieldset.appendChild(causedByJobElement);
-  const workersCompElement = document.getElementById('workersCompContainer');
   newFieldset.appendChild(workersCompElement);
-  parentFieldset.parentNode.insertBefore(newFieldset, parentFieldset.nextSibling);
+
+  const h2 = document.createElement('h2');
+  h2.id = "workersCompensationHeader";
+  h2.textContent = i18next.t('medicalInfo.work.title');
+  h2.style.fontSize = "20px";
+  h2.style.fontWeight = "bold";
+  h2.style.color = "black";
+  h2.style.fontVariant = "none";
+  h2.style.marginTop = "40px";
+
+  parentFieldset.parentNode.insertBefore(h2, parentFieldset.nextSibling);
+  parentFieldset.parentNode.insertBefore(newFieldset, h2.nextSibling);
 }
 
 function focusOnWorkersCompIfEditing() {
@@ -546,12 +556,12 @@ function focusOnWorkersCompIfEditing() {
   const editingWorkersComp = sessionData[STORAGE_KEY_EDITING_WORKERS_COMP];
 
   if (editingWorkersComp) {
-    const causedByJobQuestion = document.getElementById('causedByJobQuestion');
+    const workersCompHeader = document.getElementById('workersCompensationHeader');
     const causedByJobYes = document.getElementById('caused-by-job-yes');
     const causedByJobNo = document.getElementById('caused-by-job-no');
 
-    if (causedByJobQuestion && causedByJobYes && causedByJobNo) {
-      causedByJobQuestion.scrollIntoView();
+    if (workersCompHeader && causedByJobYes && causedByJobNo) {
+      workersCompHeader.scrollIntoView();
       if (causedByJobYes.checked) {
         causedByJobYes.focus();
       } else {
