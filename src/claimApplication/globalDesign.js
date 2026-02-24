@@ -106,6 +106,7 @@ function injectGlobalStyles() {
 
     .usa-list li {
       list-style-type: disc !important;
+      max-width: 100%;
     } 
 
     @media (max-width: 767px) {
