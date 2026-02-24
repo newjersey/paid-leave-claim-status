@@ -24,12 +24,19 @@ function addStyles() {
       margin-left:5px;
     }
 
+#ContentPlaceHolder1_ClaimantDisabilityTab_body,
+#ContentPlaceHolder1_ClaimantDisabilityTab {
+  background-color: transparent !important;
+}
+
+    #ContentPlaceHolder1_ClaimantDisabilityTab_body {
+  background-color: transparent !important;
+}
+
   /* Calendar popup container */
   #FDDCalendarControl table, #CalendarControl table {
     font-size: 16px;
   }
-
-
   `;
   document.head.appendChild(style);
 }
@@ -40,13 +47,11 @@ function setupFDD() {
   const divElement = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD');
 
   const maternityTimelineToolHtml = `
-    <fieldset id="maternityTimeline">
+    <div id="maternityTimeline" style="margin: 16px 0 8px 0;">
       <svg style="vertical-align:-5px;" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>
       ${i18next.t('leaveSchedule.pregnancy.maternityTimeline')}
-    </fieldset>
+    </div>
   `;
-
-  fieldset.insertAdjacentHTML('beforebegin', maternityTimelineToolHtml);
 
   const notesHtml = `
     <br>
@@ -54,7 +59,9 @@ function setupFDD() {
     <br>
   `;
 
-  fieldset.insertAdjacentHTML('beforebegin', notesHtml);
+  const tabBody = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_body');
+  tabBody.insertAdjacentHTML('beforebegin', maternityTimelineToolHtml);
+  tabBody.insertAdjacentHTML('beforebegin', notesHtml);
 
   removeOldFDDText();
 
@@ -94,8 +101,7 @@ function styleFDD(disabilityType) {
       disabilityTypeString: disabilityType === DisabilityType.ILLNESS
         ? i18next.t('shared.illness')
         : i18next.t('shared.injury')
-    }
-    );
+    });
 }
 
 function removeOldFDDText() {
