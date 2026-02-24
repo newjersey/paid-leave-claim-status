@@ -57,6 +57,10 @@ function injectGlobalStyles() {
       margin: 50px 0 0 0;
     }
 
+    .usa-legend {
+      max-width: 100%;
+    }
+
     .usa-button {
       padding: 0 1.25rem;
       width: auto;
@@ -100,6 +104,10 @@ function injectGlobalStyles() {
       background-image: url('${ICON_BASE_URL}/remove.svg'), linear-gradient(transparent, transparent);
     }
 
+    .usa-list li {
+      list-style-type: disc !important;
+    } 
+
     @media (max-width: 767px) {
       form {
         margin-left: 20px;
@@ -123,8 +131,8 @@ function injectGlobalStyles() {
       table {
         width: 100%;
         table-layout: auto;
-      }
-        
+      } 
+
       input[type="text"], select, textarea {
         width: 100%;
         max-width: 100%;

@@ -50,7 +50,7 @@ function setupFDD() {
 
   const notesHtml = `
     <br>
-    <p id="fddNotes"></p>
+    <div id="fddNotes"></div>
     <br>
   `;
 
