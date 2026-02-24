@@ -148,24 +148,22 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         },
         illnessInjury: {
           fddTitle: "First day of disability leave",
-          fddNotes: `<strong>Heads up:</strong>
-            <br><br>
-            You can apply starting the day your disability begins-- the first day you stop working because of your illness or injury.
-            <br><br>
-            Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.
+         fddNotes: `<strong>Heads up:</strong>
+          <ul class="usa-list">
+            <li>You can apply starting the day your disability begins — the first day you stop working because of your illness or injury.</li>
+            <li>Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.</li>
+          </ul>
           `,
-          fddQuestion: `<strong>What is your first day of disability leave?</strong>
+          fddQuestion: `What is your first day of disability leave?
             <br><br>
             <strong>Hint:</strong> This is when your {{disabilityTypeString}} first prevented you from working. Enter the actual date, even if it was a day you don't usually work (like a weekend or holiday).
           `,
           beforeAfterTitle: "Dates of employment before and after disability",
           lastWorkday: `What was the last day you worked?
             <br><br>
-            <strong>Hint:</strong> This is the last day you actually worked-- not including PTO, vacation, or sick days you used before your leave started.
+            <strong>Hint:</strong> This is the last day you actually worked — not including PTO, vacation, or sick days you used before your leave started.
           `,
-          recovered: `Have you recovered from this condition?
-            <br><br>
-            "Recovered" means you are able to return to work.
+          recovered: `Have you recovered from this condition? "Recovered" means you're able to return to work.
           `,
           recoveryDate: "When did you recover (felt able to return to work)?",
           estRecoveryDate: "When do you anticipate being able to return to work? This can be an estimate.",
@@ -179,7 +177,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
               <li>Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.</li>
             </ul>
 `,
-          fddQuestion: `<strong>What is your first date of disability leave?</strong>
+          fddQuestion: `What is your first date of disability leave?
             <br><br>
             Remember:
             <ul class="usa-list">

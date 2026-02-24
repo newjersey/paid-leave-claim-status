@@ -29,10 +29,6 @@ function addStyles() {
   background-color: transparent !important;
 }
 
-    #ContentPlaceHolder1_ClaimantDisabilityTab_body {
-  background-color: transparent !important;
-}
-
   /* Calendar popup container */
   #FDDCalendarControl table, #CalendarControl table {
     font-size: 16px;
