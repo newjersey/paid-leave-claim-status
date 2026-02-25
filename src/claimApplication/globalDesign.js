@@ -61,6 +61,10 @@ function injectGlobalStyles() {
       max-width: 100%;
     }
 
+    .usa-radio {
+  margin-bottom: 0;
+}
+
     .usa-button {
       padding: 0 1.25rem;
       width: auto;

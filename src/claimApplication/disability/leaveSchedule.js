@@ -214,7 +214,7 @@ function styleLDW(disabilityType) {
 function styleRecoveryRadioButtons() {
   const recoveredYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
   const recoveredYesLabel = `
-    <label class="usa-label" id="recLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes">
+    <label id="recLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes">
       ${i18next.t('shared.yes')}
     </label>
   `;
@@ -222,7 +222,7 @@ function styleRecoveryRadioButtons() {
 
   const recoveredNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo');
   const recoveredNoLabel = `
-    <label class="usa-label" id="recLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo">
+    <label id="recLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo">
       ${i18next.t('shared.no')}
     </label>
   `;
