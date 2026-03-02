@@ -1,4 +1,4 @@
-name: Deploy to Beta
+name: Deploy Prod to Beta
 
 on:
   workflow_dispatch:
@@ -39,5 +39,5 @@ jobs:
         git config user.email "action@github.com"
         latest_commit=$(git --git-dir=../.git rev-parse prod)
         git add .
-        git commit -m "Deploy changes from prod branch. Latest commit: $latest_commit" || echo "No changes to commit"
+        git commit -m "TDI prod. Latest commit: $latest_commit" || echo "No changes to commit"
         git push origin master
