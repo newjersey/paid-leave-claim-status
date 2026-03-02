@@ -30,7 +30,7 @@ jobs:
         ref: master
 
     - name: Run prep-deploy-prod
-      run: npm run prep-deploy-prod prod
+      run: npm run prep-deploy-prod
 
     - name: Commit and push changes to beta repo
       run: |
