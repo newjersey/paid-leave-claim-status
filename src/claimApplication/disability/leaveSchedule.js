@@ -10,7 +10,7 @@ export function setupLeaveSchedulePage() {
 export function showLeaveScheduleForDisabilityType(disabilityType) {
   styleFDD(disabilityType);
   styleLDW(disabilityType);
-  addStyles()
+  addStyles();
 }
 
 function addStyles() {
@@ -24,12 +24,15 @@ function addStyles() {
       margin-left:5px;
     }
 
-  /* Calendar popup container */
-  #FDDCalendarControl table, #CalendarControl table {
-    font-size: 16px;
-  }
+    #ContentPlaceHolder1_ClaimantDisabilityTab_body,
+    #ContentPlaceHolder1_ClaimantDisabilityTab {
+      background-color: transparent !important;
+    }
 
-
+    /* Calendar popup container */
+    #FDDCalendarControl table, #CalendarControl table {
+      font-size: 16px;
+    }
   `;
   document.head.appendChild(style);
 }
@@ -40,21 +43,21 @@ function setupFDD() {
   const divElement = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD');
 
   const maternityTimelineToolHtml = `
-    <fieldset id="maternityTimeline">
+    <div id="maternityTimeline" style="margin: 16px 0 8px 0; width: 100%;">
       <svg style="vertical-align:-5px;" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>
       ${i18next.t('leaveSchedule.pregnancy.maternityTimeline')}
-    </fieldset>
+    </div>
   `;
-
-  fieldset.insertAdjacentHTML('beforebegin', maternityTimelineToolHtml);
 
   const notesHtml = `
     <br>
-    <p id="fddNotes"></p>
+    <div id="fddNotes"></div>
     <br>
   `;
 
-  fieldset.insertAdjacentHTML('beforebegin', notesHtml);
+  const tabBody = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_body');
+  tabBody.insertAdjacentHTML('beforebegin', maternityTimelineToolHtml);
+  tabBody.insertAdjacentHTML('beforebegin', notesHtml);
 
   removeOldFDDText();
 
@@ -94,8 +97,7 @@ function styleFDD(disabilityType) {
       disabilityTypeString: disabilityType === DisabilityType.ILLNESS
         ? i18next.t('shared.illness')
         : i18next.t('shared.injury')
-    }
-    );
+    });
 }
 
 function removeOldFDDText() {
@@ -212,7 +214,7 @@ function styleLDW(disabilityType) {
 function styleRecoveryRadioButtons() {
   const recoveredYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
   const recoveredYesLabel = `
-    <label class="usa-label" id="recLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes">
+    <label id="recLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes">
       ${i18next.t('shared.yes')}
     </label>
   `;
@@ -220,7 +222,7 @@ function styleRecoveryRadioButtons() {
 
   const recoveredNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo');
   const recoveredNoLabel = `
-    <label class="usa-label" id="recLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo">
+    <label id="recLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo">
       ${i18next.t('shared.no')}
     </label>
   `;

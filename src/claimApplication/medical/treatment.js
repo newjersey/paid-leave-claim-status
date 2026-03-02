@@ -97,10 +97,6 @@ function addStyles() {
     .usa-radio__label {
       text-align: left;
     }
-
-    .provider-accepted-list li {
-      list-style-type: disc;
-    }
   
     .required-asterisk {
       color: rgb(139, 0, 0);
