@@ -9,8 +9,8 @@
     "test:open": "npx cypress open --e2e",
     "build": "./build.sh",
     "build-dev": "./build.sh && ./generateLocalDevOverrides.sh",
-    "prep-deploy-dev": "./prepareDeploy.sh dev",
-    "prep-deploy-prod": "./prepareDeploy.sh prod",
+    "prep-deploy-dev": "./build.sh && ./prepareDeploy.sh dev",
+    "prep-deploy-prod": "./build.sh && ./prepareDeploy.sh prod",
     "postinstall": "patch-package"
   },
   "author": "",
