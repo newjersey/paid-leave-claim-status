@@ -62,8 +62,8 @@ function injectGlobalStyles() {
     }
 
     .usa-radio {
-  margin-bottom: 0;
-}
+      margin-bottom: 0;
+    }
 
     .usa-button {
       padding: 0 1.25rem;
@@ -136,7 +136,7 @@ function injectGlobalStyles() {
       table {
         width: 100%;
         table-layout: auto;
-      } 
+      }
 
       input[type="text"], select, textarea {
         width: 100%;
