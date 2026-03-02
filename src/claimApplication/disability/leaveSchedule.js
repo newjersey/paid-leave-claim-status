@@ -10,7 +10,7 @@ export function setupLeaveSchedulePage() {
 export function showLeaveScheduleForDisabilityType(disabilityType) {
   styleFDD(disabilityType);
   styleLDW(disabilityType);
-  addStyles()
+  addStyles();
 }
 
 function addStyles() {
@@ -24,15 +24,15 @@ function addStyles() {
       margin-left:5px;
     }
 
-#ContentPlaceHolder1_ClaimantDisabilityTab_body,
-#ContentPlaceHolder1_ClaimantDisabilityTab {
-  background-color: transparent !important;
-}
+    #ContentPlaceHolder1_ClaimantDisabilityTab_body,
+    #ContentPlaceHolder1_ClaimantDisabilityTab {
+      background-color: transparent !important;
+    }
 
-  /* Calendar popup container */
-  #FDDCalendarControl table, #CalendarControl table {
-    font-size: 16px;
-  }
+    /* Calendar popup container */
+    #FDDCalendarControl table, #CalendarControl table {
+      font-size: 16px;
+    }
   `;
   document.head.appendChild(style);
 }
