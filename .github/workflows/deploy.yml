@@ -23,6 +23,9 @@ jobs:
       with:
         app-id: "2454947"
         private-key: ${{ secrets.OOI_PULL_REQUEST_APP }}
+        owner: newjersey
+        repositories: |
+          beta
 
     - name: Checkout the correct branch
       uses: actions/checkout@v3
@@ -49,13 +52,28 @@ jobs:
     - name: Run prep-deploy script based on environment
       run: npm run prep-deploy-${{ inputs.environment }}
 
-    - name: Commit and push changes to beta repo
+    - name: Create PR in beta repo
+      env:
+        GH_TOKEN: ${{ steps.generate-token.outputs.token }}
       run: |
         cd beta
         git config user.name "GitHub Action"
         git config user.email "action@github.com"
         latest_commit=$(git --git-dir=../.git rev-parse ${{ inputs.environment }})
+        
+        branch_name="tdi-${{ inputs.environment }}-${GITHUB_RUN_ID}"
+        git checkout -b $branch_name
+        
         git add .
-        git commit -m "TDI ${{ inputs.environment }}. Latest commit: $latest_commit" || echo "No changes to commit"
-        git remote set-url origin https://x-access-token:${{ steps.generate-token.outputs.token }}@github.com/newjersey/beta.git
-        git push origin master
+        if git commit -m "TDI ${{ inputs.environment }}. Latest commit: $latest_commit"; then
+          git push origin $branch_name
+          
+          gh pr create \
+            --repo newjersey/beta \
+            --title "Deploy TDI ${{ inputs.environment }}" \
+            --body "Automated deployment for TDI ${{ inputs.environment }} environment. Latest commit: $latest_commit" \
+            --base master \
+            --head $branch_name
+        else
+          echo "No changes to commit, skipping PR creation"
+        fi
