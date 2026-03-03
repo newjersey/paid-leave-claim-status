@@ -374,7 +374,6 @@ function addWorkersCompListeners() {
   });
 }
 
-
 function loadReasonData() {
   const sessionData = getSessionData();
   const reasonData = sessionData[STORAGE_KEY_REASON_FOR_LEAVE];
@@ -458,7 +457,6 @@ function loadReasonData() {
       workersCompNo.checked = false;
     }
   }
-
 }
 
 function styleRadioButtons() {
@@ -531,6 +529,7 @@ function moveWorkersCompToNewFieldset() {
   const parentFieldset = causedByJobElement.closest('fieldset');
 
   const newFieldset = document.createElement('fieldset');
+  newFieldset.id = 'workersCompFieldset';
   newFieldset.appendChild(causedByJobElement);
   newFieldset.appendChild(workersCompElement);
 
