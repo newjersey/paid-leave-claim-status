@@ -34,7 +34,6 @@ jobs:
       with:
         # For workflow_dispatch use input.environment, for PR use GITHUB_REF
         ref: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || github.head_ref }}
-        token: ${{ steps.generate-token.outputs.token }}
 
     - name: Set up Node.js
       uses: actions/setup-node@v3
@@ -57,9 +56,11 @@ jobs:
       run: |
         if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
           echo "deploy_env=${{ inputs.environment }}" >> $GITHUB_OUTPUT
+          echo "Using manually selected environment: ${{ inputs.environment }}"
         else
           # For PR, always use dev environment
           echo "deploy_env=dev" >> $GITHUB_OUTPUT
+          echo "Running in PR - using dev environment"
         fi
 
     - name: Run prep-deploy script based on environment
