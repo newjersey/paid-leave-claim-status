@@ -60,18 +60,19 @@ jobs:
         git config user.name "GitHub Action"
         git config user.email "action@github.com"
         latest_commit=$(git --git-dir=../.git rev-parse ${{ inputs.environment }})
+        latest_commit_url="https://github.com/newjersey/paid-leave-claim-status/commit/${latest_commit}"
         
         branch_name="tdi-${{ inputs.environment }}-${GITHUB_RUN_ID}"
         git checkout -b $branch_name
         
         git add .
-        if git commit -m "TDI ${{ inputs.environment }}. Latest commit: $latest_commit"; then
+        if git commit -m "TDI ${{ inputs.environment }}. Latest commit: $latest_commit_url"; then
           git push origin $branch_name
           
           gh pr create \
             --repo newjersey/beta \
             --title "Deploy TDI ${{ inputs.environment }}" \
-            --body "Automated deployment for TDI ${{ inputs.environment }} environment. Latest commit: $latest_commit" \
+            --body "Automated deployment for TDI ${{ inputs.environment }} environment. Latest commit: $latest_commit_url" \
             --base master \
             --head $branch_name
         else
