@@ -16,6 +16,13 @@ on:
         description: 'Run in test mode (creates PR to test branch)'
         required: false
         default: false
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - dev
+    inputs:
+      environment:
+        default: 'dev'
 
 jobs:
   deploy:
