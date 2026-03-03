@@ -11,25 +11,12 @@ on:
         options:
           - prod
           - dev
-  pull_request:
-    types: [opened, synchronize, reopened]
-    branches:
-      - dev
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set environment variables
-      id: set-env
-      run: |
-        if [ "${{ github.event_name }}" = "pull_request" ]; then
-          echo "environment=dev" >> $GITHUB_OUTPUT
-        else
-          echo "environment=${{ inputs.environment }}" >> $GITHUB_OUTPUT
-        fi
-
     - name: Generate GitHub App Token
       id: generate-token
       uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2.2.1
@@ -63,7 +50,7 @@ jobs:
         ref: master
 
     - name: Run prep-deploy script based on environment
-      run: npm run prep-deploy-dev ## switch back to: ${{ inputs.environment }}
+      run: npm run prep-deploy-${{ inputs.environment }}
 
     - name: Create PR in beta repo
       env:
@@ -72,22 +59,19 @@ jobs:
         cd beta
         git config user.name "GitHub Action"
         git config user.email "action@github.com"
-        latest_commit=$(git --git-dir=../.git rev-parse ${{ steps.set-env.outputs.environment }})
+        latest_commit=$(git --git-dir=../.git rev-parse ${{ inputs.environment }})
         
-        # Create a new branch
-        branch_name="tdi-${{ steps.set-env.outputs.environment }}-${GITHUB_RUN_ID}"
+        branch_name="tdi-${{ inputs.environment }}-${GITHUB_RUN_ID}"
         git checkout -b $branch_name
         
         git add .
-        if git commit -m "TDI ${{ steps.set-env.outputs.environment }}. Latest commit: $latest_commit"; then
-          # Push the branch
+        if git commit -m "TDI ${{ inputs.environment }}. Latest commit: $latest_commit"; then
           git push origin $branch_name
           
-          # Create PR using GitHub CLI
           gh pr create \
             --repo newjersey/beta \
-            --title "Deploy TDI ${{ steps.set-env.outputs.environment }}" \
-            --body "Automated deployment from ${{ steps.set-env.outputs.environment }} environment. Latest commit: $latest_commit" \
+            --title "Deploy TDI ${{ inputs.environment }}" \
+            --body "Automated deployment for TDI ${{ inputs.environment }} environment. Latest commit: $latest_commit" \
             --base master \
             --head $branch_name
         else
