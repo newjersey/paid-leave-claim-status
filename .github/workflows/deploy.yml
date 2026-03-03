@@ -62,13 +62,31 @@ jobs:
     - name: Run prep-deploy script based on environment
       run: npm run prep-deploy-${{ inputs.environment }}
 
-    - name: Commit and push changes to beta repo
+    - name: Create PR in beta repo
+      env:
+        GH_TOKEN: ${{ steps.generate-token.outputs.token }}
       run: |
         cd beta
         git config user.name "GitHub Action"
         git config user.email "action@github.com"
-        latest_commit=$(git --git-dir=../.git rev-parse ${{ inputs.environment }})
+        latest_commit=$(git --git-dir=../.git rev-parse ${{ steps.set-env.outputs.environment }})
+        
+        # Create a new branch
+        branch_name="tdi-${{ steps.set-env.outputs.environment }}-${GITHUB_RUN_ID}"
+        git checkout -b $branch_name
+        
         git add .
-        git commit -m "TDI ${{ inputs.environment }}. Latest commit: $latest_commit" || echo "No changes to commit"
-        git remote set-url origin https://x-access-token:${{ steps.generate-token.outputs.token }}@github.com/newjersey/beta.git
-        git push origin master
+        if git commit -m "TDI ${{ steps.set-env.outputs.environment }}. Latest commit: $latest_commit"; then
+          # Push the branch
+          git push origin $branch_name
+          
+          # Create PR using GitHub CLI
+          gh pr create \
+            --repo newjersey/beta \
+            --title "Deploy TDI ${{ steps.set-env.outputs.environment }}" \
+            --body "Automated deployment from ${{ steps.set-env.outputs.environment }} environment. Latest commit: $latest_commit" \
+            --base master \
+            --head $branch_name
+        else
+          echo "No changes to commit, skipping PR creation"
+        fi
