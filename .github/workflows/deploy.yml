@@ -1,4 +1,4 @@
-name: Deploy to Beta
+name: Deploy to Beta (Testing in PR)
 
 on:
   workflow_dispatch:
@@ -50,12 +50,43 @@ jobs:
       run: npm run prep-deploy-${{ inputs.environment }}
 
     - name: Commit and push changes to beta repo
+      id: commit-push
       run: |
         cd beta
         git config user.name "GitHub Action"
         git config user.email "action@github.com"
         latest_commit=$(git --git-dir=../.git rev-parse ${{ inputs.environment }})
+        # Create a new branch with timestamp
+        branch_name="tdi-${{ inputs.environment }}-$(date +%Y%m%d%H%M%S)"
+        git checkout -b $branch_name
         git add .
-        git commit -m "TDI ${{ inputs.environment }}. Latest commit: $latest_commit" || echo "No changes to commit"
-        git remote set-url origin https://x-access-token:${{ steps.generate-token.outputs.token }}@github.com/newjersey/beta.git
-        git push origin master
+        if git commit -m "TDI ${{ inputs.environment }}. Latest commit: $latest_commit"; then
+          has_changes="true"
+          git remote set-url origin https://x-access-token:${{ steps.generate-token.outputs.token }}@github.com/newjersey/beta.git
+          git push origin $branch_name
+
+          # Store branch name for later use
+          echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
+          echo "has_changes=true" >> $GITHUB_OUTPUT
+        else
+          echo "No changes to commit"
+          echo "has_changes=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Create Pull Request
+      if: steps.commit-push.outputs.has_changes == 'true'
+      run: |
+        cd beta
+        gh auth login --with-token <<< "${{ steps.generate-token.outputs.token }}"
+        gh pr create \
+          --repo newjersey/beta \
+          --title "TDI ${{ inputs.environment }} update $(date +%Y-%m-%d)" \
+          --body "Automated PR for TDI ${{ inputs.environment }} environment update. Created from workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+          --base master \
+          --head ${{ steps.commit-push.outputs.branch_name }}
+      env:
+        GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+
+    - name: No changes detected
+      if: steps.commit-push.outputs.has_changes != 'true'
+      run: echo "No changes detected in the beta repository. Skipping PR creation."
