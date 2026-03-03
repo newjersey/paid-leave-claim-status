@@ -1,6 +1,7 @@
-name: Deploy to Beta (Testing in PR)
+name: Deploy to Beta
 
 on:
+  # Allow manual trigger with environment selection
   workflow_dispatch:
     inputs:
       environment:
@@ -11,18 +12,10 @@ on:
         options:
           - prod
           - dev
-      test_mode:
-        type: boolean
-        description: 'Run in test mode (creates PR to test branch)'
-        required: false
-        default: false
+
+  # Also run on pull requests
   pull_request:
-    types: [opened, synchronize, reopened]
-    branches:
-      - dev
-    inputs:
-      environment:
-        default: 'dev'
+    types: [opened, synchronize]
 
 jobs:
   deploy:
@@ -39,7 +32,8 @@ jobs:
     - name: Checkout the correct branch
       uses: actions/checkout@v3
       with:
-        ref: ${{ inputs.environment }}
+        # For workflow_dispatch use input.environment, for PR use GITHUB_REF
+        ref: ${{ github.event_name == 'workflow_dispatch' && inputs.environment || github.head_ref }}
         token: ${{ steps.generate-token.outputs.token }}
 
     - name: Set up Node.js
@@ -58,8 +52,18 @@ jobs:
         path: beta
         ref: master
 
+    - name: Set environment variable
+      id: set-env
+      run: |
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          echo "deploy_env=${{ inputs.environment }}" >> $GITHUB_OUTPUT
+        else
+          # For PR, always use dev environment
+          echo "deploy_env=dev" >> $GITHUB_OUTPUT
+        fi
+
     - name: Run prep-deploy script based on environment
-      run: npm run prep-deploy-${{ inputs.environment }}
+      run: npm run prep-deploy-${{ steps.set-env.outputs.deploy_env }}
 
     - name: Commit and push changes to beta repo
       id: commit-push
@@ -67,20 +71,20 @@ jobs:
         cd beta
         git config user.name "GitHub Action"
         git config user.email "action@github.com"
-        latest_commit=$(git --git-dir=../.git rev-parse ${{ inputs.environment }})
-
-        # Add test indicator if in test mode
-        test_indicator=""
-        if [[ "${{ inputs.test_mode }}" == "true" ]]; then
-          test_indicator="-test"
-          echo "Running in test mode"
+        # Get ref to use based on event type
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          source_ref="${{ inputs.environment }}"
+        else
+          source_ref="${{ github.head_ref }}"
         fi
 
+        latest_commit=$(git --git-dir=../.git rev-parse HEAD)
+
         # Create a new branch with timestamp
-        branch_name="tdi-${{ inputs.environment }}${test_indicator}-$(date +%Y%m%d%H%M%S)"
+        branch_name="tdi-${{ steps.set-env.outputs.deploy_env }}-$(date +%Y%m%d%H%M%S)"
         git checkout -b $branch_name
         git add .
-        if git commit -m "TDI ${{ inputs.environment }}${test_indicator}. Latest commit: $latest_commit"; then
+        if git commit -m "TDI ${{ steps.set-env.outputs.deploy_env }}. Latest commit: $latest_commit"; then
           has_changes="true"
           git remote set-url origin https://x-access-token:${{ secrets.BETA_REPO_TOKEN }}@github.com/newjersey/beta.git
           git push origin $branch_name
@@ -88,7 +92,6 @@ jobs:
           # Store branch name for later use
           echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
           echo "has_changes=true" >> $GITHUB_OUTPUT
-          echo "test_mode=${{ inputs.test_mode }}" >> $GITHUB_OUTPUT
         else
           echo "No changes to commit"
           echo "has_changes=false" >> $GITHUB_OUTPUT
@@ -100,23 +103,11 @@ jobs:
         cd beta
         gh auth login --with-token <<< "${{ secrets.BETA_REPO_TOKEN }}"
 
-        # Set base branch based on test_mode
-        base_branch="master"
-        title_prefix="TDI ${{ inputs.environment }} update"
-        body_prefix="Automated PR for TDI ${{ inputs.environment }} environment update"
-
-        if [[ "${{ inputs.test_mode }}" == "true" ]]; then
-          # For testing, use master branch but mark PR clearly as test
-          echo "Creating test PR for testing purposes"
-          title_prefix="[TEST PR] $title_prefix"
-          body_prefix="TEST ONLY - DO NOT MERGE - $body_prefix"
-        fi
-
         gh pr create \
           --repo newjersey/beta \
-          --title "$title_prefix $(date +%Y-%m-%d)" \
-          --body "$body_prefix. Created from workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-          --base $base_branch \
+          --title "TDI ${{ steps.set-env.outputs.deploy_env }} update $(date +%Y-%m-%d)" \
+          --body "Automated PR for TDI ${{ steps.set-env.outputs.deploy_env }} environment update. Created from workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+          --base master \
           --head ${{ steps.commit-push.outputs.branch_name }}
       env:
         GITHUB_TOKEN: ${{ secrets.BETA_REPO_TOKEN }}
