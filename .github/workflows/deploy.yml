@@ -11,12 +11,25 @@ on:
         options:
           - prod
           - dev
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - dev
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Set environment variable
+      id: set-env
+      run: |
+        if [ "${{ github.event_name }}" = "pull_request" ]; then
+          echo "environment=dev" >> $GITHUB_OUTPUT
+        else
+          echo "environment=${{ inputs.environment }}" >> $GITHUB_OUTPUT
+        fi
+
     - name: Generate GitHub App Token
       id: generate-token
       uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2.2.1
