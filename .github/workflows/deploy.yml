@@ -11,6 +11,11 @@ on:
         options:
           - prod
           - dev
+      test_mode:
+        type: boolean
+        description: 'Run in test mode (creates PR to test branch)'
+        required: false
+        default: false
 
 jobs:
   deploy:
@@ -56,11 +61,19 @@ jobs:
         git config user.name "GitHub Action"
         git config user.email "action@github.com"
         latest_commit=$(git --git-dir=../.git rev-parse ${{ inputs.environment }})
+
+        # Add test indicator if in test mode
+        test_indicator=""
+        if [[ "${{ inputs.test_mode }}" == "true" ]]; then
+          test_indicator="-test"
+          echo "Running in test mode"
+        fi
+
         # Create a new branch with timestamp
-        branch_name="tdi-${{ inputs.environment }}-$(date +%Y%m%d%H%M%S)"
+        branch_name="tdi-${{ inputs.environment }}${test_indicator}-$(date +%Y%m%d%H%M%S)"
         git checkout -b $branch_name
         git add .
-        if git commit -m "TDI ${{ inputs.environment }}. Latest commit: $latest_commit"; then
+        if git commit -m "TDI ${{ inputs.environment }}${test_indicator}. Latest commit: $latest_commit"; then
           has_changes="true"
           git remote set-url origin https://x-access-token:${{ steps.generate-token.outputs.token }}@github.com/newjersey/beta.git
           git push origin $branch_name
@@ -68,6 +81,7 @@ jobs:
           # Store branch name for later use
           echo "branch_name=$branch_name" >> $GITHUB_OUTPUT
           echo "has_changes=true" >> $GITHUB_OUTPUT
+          echo "test_mode=${{ inputs.test_mode }}" >> $GITHUB_OUTPUT
         else
           echo "No changes to commit"
           echo "has_changes=false" >> $GITHUB_OUTPUT
@@ -78,11 +92,24 @@ jobs:
       run: |
         cd beta
         gh auth login --with-token <<< "${{ steps.generate-token.outputs.token }}"
+
+        # Set base branch based on test_mode
+        base_branch="master"
+        title_prefix="TDI ${{ inputs.environment }} update"
+        body_prefix="Automated PR for TDI ${{ inputs.environment }} environment update"
+
+        if [[ "${{ inputs.test_mode }}" == "true" ]]; then
+          # For testing, use master branch but mark PR clearly as test
+          echo "Creating test PR for testing purposes"
+          title_prefix="[TEST PR] $title_prefix"
+          body_prefix="TEST ONLY - DO NOT MERGE - $body_prefix"
+        fi
+
         gh pr create \
           --repo newjersey/beta \
-          --title "TDI ${{ inputs.environment }} update $(date +%Y-%m-%d)" \
-          --body "Automated PR for TDI ${{ inputs.environment }} environment update. Created from workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
-          --base master \
+          --title "$title_prefix $(date +%Y-%m-%d)" \
+          --body "$body_prefix. Created from workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+          --base $base_branch \
           --head ${{ steps.commit-push.outputs.branch_name }}
       env:
         GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
