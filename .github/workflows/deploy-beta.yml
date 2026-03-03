@@ -47,7 +47,7 @@ jobs:
       uses: actions/checkout@v3
       with:
         repository: newjersey/beta
-        token: ${{ steps.generate-token.outputs.token }}
+        token: ${{ secrets.BETA_REPO_TOKEN }}
         path: beta
         ref: master
 
@@ -75,7 +75,7 @@ jobs:
         git add .
         if git commit -m "TDI ${{ inputs.environment }}${test_indicator}. Latest commit: $latest_commit"; then
           has_changes="true"
-          git remote set-url origin https://x-access-token:${{ steps.generate-token.outputs.token }}@github.com/newjersey/beta.git
+          git remote set-url origin https://x-access-token:${{ secrets.BETA_REPO_TOKEN }}@github.com/newjersey/beta.git
           git push origin $branch_name
 
           # Store branch name for later use
@@ -91,7 +91,7 @@ jobs:
       if: steps.commit-push.outputs.has_changes == 'true'
       run: |
         cd beta
-        gh auth login --with-token <<< "${{ steps.generate-token.outputs.token }}"
+        gh auth login --with-token <<< "${{ secrets.BETA_REPO_TOKEN }}"
 
         # Set base branch based on test_mode
         base_branch="master"
@@ -112,7 +112,7 @@ jobs:
           --base $base_branch \
           --head ${{ steps.commit-push.outputs.branch_name }}
       env:
-        GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+        GITHUB_TOKEN: ${{ secrets.BETA_REPO_TOKEN }}
 
     - name: No changes detected
       if: steps.commit-push.outputs.has_changes != 'true'
