@@ -217,7 +217,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           notAcceptedMessage:"Your application could get delayed or denied if it isn't certified by an approved healthcare provider.",
           theseTypesProviders: "These types of healthcare providers can certify your leave:",
           type: {
-            isAccepted: "Is your healthcare provider one of these?",
+            isAccepted: "Is your healthcare provider one of these? Select one.",
             advancedPracticeNurse: "Advanced Practice Nurse",
             certifiedNurseMidwife: "Certified Nurse Midwife",
             certifiedNursePractitioner: "Certified Nurse Practitioner",

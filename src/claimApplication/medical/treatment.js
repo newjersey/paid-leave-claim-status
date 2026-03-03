@@ -239,6 +239,7 @@ function addProviderScreener() {
 
   providerYes.addEventListener('invalid', function () {
     elementTextError(legend);
+    fieldset.scrollIntoView();
   });
 }
 
