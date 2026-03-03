@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Set environment variable
+    - name: Set environment variables
       id: set-env
       run: |
         if [ "${{ github.event_name }}" = "pull_request" ]; then
