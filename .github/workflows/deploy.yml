@@ -63,7 +63,7 @@ jobs:
         ref: master
 
     - name: Run prep-deploy script based on environment
-      run: npm run prep-deploy-${{ inputs.environment }}
+      run: npm run prep-deploy-dev ## switch back to: ${{ inputs.environment }}
 
     - name: Create PR in beta repo
       env:
