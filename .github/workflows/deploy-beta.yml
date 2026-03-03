@@ -22,12 +22,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Generate GitHub App Token
-      id: generate-token
-      uses: actions/create-github-app-token@29824e69f54612133e76f7eaac726eef6c875baf # v2.2.1
-      with:
-        app-id: "2454947"
-        private-key: ${{ secrets.OOI_PULL_REQUEST_APP }}
+    # Note: BETA_REPO_TOKEN secret must be added to repo settings
+    # This token needs permissions to access the beta repo and create PRs
 
     - name: Checkout the correct branch
       uses: actions/checkout@v3
@@ -60,7 +56,8 @@ jobs:
         else
           # For PR, always use dev environment
           echo "deploy_env=dev" >> $GITHUB_OUTPUT
-          echo "Running in PR - using dev environment"
+          echo "Running in PR #${{ github.event.pull_request.number }} - using dev environment"
+          echo "PR Branch: ${{ github.head_ref }}"
         fi
 
     - name: Run prep-deploy script based on environment
@@ -72,17 +69,17 @@ jobs:
         cd beta
         git config user.name "GitHub Action"
         git config user.email "action@github.com"
-        # Get ref to use based on event type
-        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-          source_ref="${{ inputs.environment }}"
-        else
-          source_ref="${{ github.head_ref }}"
-        fi
-
+        # Get current commit
         latest_commit=$(git --git-dir=../.git rev-parse HEAD)
 
-        # Create a new branch with timestamp
-        branch_name="tdi-${{ steps.set-env.outputs.deploy_env }}-$(date +%Y%m%d%H%M%S)"
+        # Add PR number to branch name if this is a PR
+        pr_suffix=""
+        if [ "${{ github.event_name }}" == "pull_request" ]; then
+          pr_suffix="-pr${{ github.event.pull_request.number }}"
+        fi
+
+        # Create a new branch with timestamp and PR number if applicable
+        branch_name="tdi-${{ steps.set-env.outputs.deploy_env }}${pr_suffix}-$(date +%Y%m%d%H%M%S)"
         git checkout -b $branch_name
         git add .
         if git commit -m "TDI ${{ steps.set-env.outputs.deploy_env }}. Latest commit: $latest_commit"; then
@@ -104,10 +101,19 @@ jobs:
         cd beta
         gh auth login --with-token <<< "${{ secrets.BETA_REPO_TOKEN }}"
 
+        # Add PR info to title and body if this is from a PR
+        title_prefix="TDI ${{ steps.set-env.outputs.deploy_env }}"
+        body_prefix="Automated PR for TDI ${{ steps.set-env.outputs.deploy_env }} environment update"
+
+        if [ "${{ github.event_name }}" == "pull_request" ]; then
+          title_prefix="[PR #${{ github.event.pull_request.number }}] $title_prefix"
+          body_prefix="$body_prefix from PR #${{ github.event.pull_request.number }}: ${{ github.event.pull_request.title }}"
+        fi
+
         gh pr create \
           --repo newjersey/beta \
-          --title "TDI ${{ steps.set-env.outputs.deploy_env }} update $(date +%Y-%m-%d)" \
-          --body "Automated PR for TDI ${{ steps.set-env.outputs.deploy_env }} environment update. Created from workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+          --title "$title_prefix update $(date +%Y-%m-%d)" \
+          --body "$body_prefix. Created from workflow run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
           --base master \
           --head ${{ steps.commit-push.outputs.branch_name }}
       env:
