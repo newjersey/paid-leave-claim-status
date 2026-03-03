@@ -77,6 +77,7 @@ export function changes() {
   adjustTextEntries();
   styleRadioButtons();
   addWorkersCompListeners();
+  moveWorkersCompToNewFieldset();
   loadReasonData();
   setNewTitle(i18next.t('medicalInfo.title'));
   addSubtitleAndExplainer();
@@ -86,7 +87,6 @@ export function changes() {
   const reason = reasonData?.reasons;
 
   setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason);
-  moveWorkersCompToNewFieldset();
   focusOnWorkersCompIfEditing();
 }
 
@@ -405,12 +405,16 @@ function loadReasonData() {
   const causedByJobNo = document.getElementById('caused-by-job-no');
   const workersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
   const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
+  const workersCompensationHeader = document.getElementById('workersCompensationHeader');
+  const workersCompFieldset = document.getElementById('workersCompFieldset');
   const causedByJobQuestion = document.getElementById('causedByJobQuestion');
   const workersCompContainer = document.getElementById('workersCompContainer');
 
   if (reason === 'pregnancy') {
     causedByJobNo.checked = true;
     workersCompNo.checked = true;
+    workersCompensationHeader.style.display = 'none';
+    workersCompFieldset.style.display = 'none';
     causedByJobQuestion.style.display = 'none';
     workersCompContainer.style.display = 'none';
     addToSessionData({
@@ -419,6 +423,8 @@ function loadReasonData() {
     });
   } else {
     // Show the caused-by-job question for illness/injury
+    workersCompensationHeader.style.display = 'block';
+    workersCompFieldset.style.display = 'block';
     causedByJobQuestion.style.display = 'block';
 
     // Restore caused-by-job answer
