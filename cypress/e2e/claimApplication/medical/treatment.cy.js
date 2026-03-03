@@ -320,6 +320,8 @@ describe("Medical Treatment page", () => {
       cy.wait('@script');
     
       cy.get('#caused-by-job-yes').should('be.checked');
+      cy.get('#workersCompensationHeader').should('be.visible');
+      cy.get('#workersCompFieldset').should('be.visible');
       cy.get('#workersCompContainer').should('be.visible');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').should('be.checked');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo').should('not.be.checked');
@@ -352,6 +354,8 @@ describe("Medical Treatment page", () => {
       });
       cy.visit(FIXTURE);
       cy.wait('@script');
+      cy.get('#workersCompensationHeader').should('not.be.visible');
+      cy.get('#workersCompFieldset').should('not.be.visible');
       cy.get('#causedByJobQuestion').should('not.be.visible');
       cy.get('#workersCompContainer').should('not.be.visible');
     });
