@@ -93,7 +93,6 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');
   style.innerHTML = `
-
     .usa-radio__label {
       text-align: left;
     }
@@ -102,6 +101,11 @@ function addStyles() {
       color: rgb(139, 0, 0);
     }
 
+    .form-alert {
+      color: rgb(139, 0, 0);
+      font-weight: bold;
+      margin: 10px 0 0 0;
+    }
   `;
   document.head.appendChild(style);
 }
@@ -140,24 +144,23 @@ function addProviderScreener() {
   const providerType = document.createElement('div');
   providerType.style.margin = "0 0 50px";
   providerType.innerHTML = `
-        <p>${i18next.t('medicalInfo.provider.theseTypesProviders')}</p>
-        <div class="provider-accepted-list margin-bottom-2">
-          <ul class="usa-list margin-top-0">
-            <li>${i18next.t('medicalInfo.provider.type.advancedPracticeNurse')}</li>
-            <li>${i18next.t('medicalInfo.provider.type.certifiedNurseMidwife')}</li>
-            <li>${i18next.t('medicalInfo.provider.type.certifiedNursePractitioner')}</li>
-            <li>${i18next.t('medicalInfo.provider.type.certifiedProfessionalMidwife')}</li>
-            <li>${i18next.t('medicalInfo.provider.type.chiropractor')}</li>
-            <li>${i18next.t('medicalInfo.provider.type.clinicalNurseSpecialist')}</li>
-            <li>${i18next.t('medicalInfo.provider.type.dentist')}</li>
-            <li>${i18next.t('medicalInfo.provider.type.medicalDoctor')}</li>
-            <li>${i18next.t('medicalInfo.provider.type.optometrist')}</li>
-            <li>${i18next.t('medicalInfo.provider.type.physicianAssistant')}</li>
-            <li>${i18next.t('medicalInfo.provider.type.podiatrist')}</li>
-            <li>${i18next.t('medicalInfo.provider.type.psychologist')}</li>
-          </ul>
-        </div>
-
+  <p>${i18next.t('medicalInfo.provider.theseTypesProviders')}</p>
+  <div class="provider-accepted-list margin-bottom-2">
+    <ul class="usa-list margin-top-0">
+      <li>${i18next.t('medicalInfo.provider.type.advancedPracticeNurse')}</li>
+      <li>${i18next.t('medicalInfo.provider.type.certifiedNurseMidwife')}</li>
+      <li>${i18next.t('medicalInfo.provider.type.certifiedNursePractitioner')}</li>
+      <li>${i18next.t('medicalInfo.provider.type.certifiedProfessionalMidwife')}</li>
+      <li>${i18next.t('medicalInfo.provider.type.chiropractor')}</li>
+      <li>${i18next.t('medicalInfo.provider.type.clinicalNurseSpecialist')}</li>
+      <li>${i18next.t('medicalInfo.provider.type.dentist')}</li>
+      <li>${i18next.t('medicalInfo.provider.type.medicalDoctor')}</li>
+      <li>${i18next.t('medicalInfo.provider.type.optometrist')}</li>
+      <li>${i18next.t('medicalInfo.provider.type.physicianAssistant')}</li>
+      <li>${i18next.t('medicalInfo.provider.type.podiatrist')}</li>
+      <li>${i18next.t('medicalInfo.provider.type.psychologist')}</li>
+    </ul>
+  </div>
 
   <fieldset class="usa-fieldset">
     <legend id="provider-type-accepted-legend" class="usa-legend">
@@ -172,7 +175,6 @@ function addProviderScreener() {
         type="radio"
         name="provider-type-accepted"
         value="yes"
-      
       />
       <label class="usa-radio__label" for="provider-type-accepted-yes">
         ${i18next.t('shared.yes')}
@@ -189,28 +191,33 @@ function addProviderScreener() {
       <label class="usa-radio__label" for="provider-type-accepted-no">
         ${i18next.t('shared.no')}
       </label>
-    </div>
-        
+    </div>  
+    
+    <p
+      id="providerError"
+      class="form-alert"
+      style="display: none;"
+      role="alert"
+      aria-live="assertive"
+    >
+      ${i18next.t('shared.makeSelection')}
+    </p>
 
     <div id="provider-type-alert" class="usa-alert usa-alert--warning usa-alert--slim" style="display: none; margin-top: 1rem;">
-    <div class="usa-alert__body">
-      <p class="usa-alert__text">
-        ${i18next.t('medicalInfo.provider.notAcceptedMessage')}
-      </p>
+      <div class="usa-alert__body">
+        <p class="usa-alert__text">
+          ${i18next.t('medicalInfo.provider.notAcceptedMessage')}
+        </p>
+      </div>
     </div>
-  </div>
-
-
   </fieldset>
-
-
-
   `;
   fieldset.insertBefore(providerType, fieldset.firstChild);
 
   const providerYes = document.getElementById("provider-type-accepted-yes");
   const providerNo = document.getElementById("provider-type-accepted-no");
   const legend = document.getElementById("provider-type-accepted-legend");
+  const providerError = document.getElementById('providerError');
   const providerAlert = document.getElementById('provider-type-alert');
 
   const sessionData = getSessionData();
@@ -223,6 +230,7 @@ function addProviderScreener() {
 
   providerYes.addEventListener('change', function () {
     providerAlert.style.display = 'none';
+    providerError.style.display = 'none';
     resetElementText(legend);
     addToSessionData({
       [STORAGE_KEY_PROVIDER_TYPE_ACCEPTED]: true
@@ -231,6 +239,7 @@ function addProviderScreener() {
 
   providerNo.addEventListener('change', function () {
     providerAlert.style.display = 'block';
+    providerError.style.display = 'none';
     resetElementText(legend);
     addToSessionData({
       [STORAGE_KEY_PROVIDER_TYPE_ACCEPTED]: false
@@ -239,6 +248,7 @@ function addProviderScreener() {
 
   providerYes.addEventListener('invalid', function () {
     elementTextError(legend);
+    providerError.style.display = 'block';
     fieldset.scrollIntoView();
   });
 }
