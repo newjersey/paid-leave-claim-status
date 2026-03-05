@@ -306,7 +306,6 @@ function restyleDateEntry() {
   newInput.setAttribute('type', 'date');
   newInput.setAttribute('id', 'txtDisStartDt');
   newInput.setAttribute('class', 'usa-input');
-  newInput.setAttribute('placeholder', 'mm/dd/yyyy');
   newInput.setAttribute('aria-label', 'Disability Start Date');
   newInput.setAttribute('maxlength', '10');
   newInput.setAttribute('onblur', 'EmptyDate();');
