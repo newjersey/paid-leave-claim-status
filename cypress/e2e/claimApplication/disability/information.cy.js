@@ -56,7 +56,7 @@ describe("Disability Information page", () => {
         const data = JSON.parse(encodeDecode(encodedData));
         expect(data["disabilityInfoView"]).to.equal('leaveSchedule');
       });
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').type("07/18/2025");
+      cy.get('#txtDisStartDt').type("2025-07-18");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').type("07/17/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').type("08/17/2025").blur();
@@ -154,11 +154,11 @@ describe("Disability Information page", () => {
       const futureDate = new Date(today);
       futureDate.setDate(today.getDate() + 1); // 1 day in future
 
-      // MM/DD/YYYY
-      const formattedFutureDate = `${(futureDate.getMonth() + 1).toString().padStart(2, '0')}/${
-        futureDate.getDate().toString().padStart(2, '0')}/${futureDate.getFullYear()}`;
+      // YYYY-MM-DD
+      const formattedFutureDate = `${futureDate.getFullYear()}-${(futureDate.getMonth() + 1).toString().padStart(2, '0')}-${
+        futureDate.getDate().toString().padStart(2, '0')}`;
 
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').type(formattedFutureDate);
+      cy.get('#txtDisStartDt').type(formattedFutureDate);
       cy.get('h2').contains("You're a little early").should('be.visible');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_btnSubmitConflictCheck').should('not.be.visible');
     });

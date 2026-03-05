@@ -11,7 +11,7 @@ export function showLeaveScheduleForDisabilityType(disabilityType) {
   styleFDD(disabilityType);
   styleLDW(disabilityType);
   addStyles();
-  replaceCalendarIcons();
+  restyleDateEntry();
 }
 
 function addStyles() {
@@ -293,36 +293,53 @@ function setupFutureDateAlert() {
   });
 }
 
-function replaceCalendarIcons() {
-  const textInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt');
+function restyleDateEntry() {
   const imageInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_Image11');
-
-  if (!textInput || !imageInput) {
-    return;
+  if (imageInput) {
+    imageInput.style.display = 'none';
   }
 
-  // need a new container for alignment
-  const container = document.createElement('div');
-  container.style.display = 'flex';
-  container.style.alignItems = 'center';
+  const originalInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt');
+  originalInput.style.display = 'none';
 
-  textInput.parentNode.insertBefore(container, textInput);
-  container.appendChild(textInput);
+  const newInput = document.createElement('input');
+  newInput.setAttribute('type', 'date');
+  newInput.setAttribute('id', 'txtDisStartDt');
+  newInput.setAttribute('class', 'usa-input');
+  newInput.setAttribute('placeholder', 'mm/dd/yyyy');
+  newInput.setAttribute('aria-label', 'Disability Start Date');
+  newInput.setAttribute('maxlength', '10');
+  newInput.setAttribute('onblur', 'EmptyDate();');
 
-  const svgElement = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-  svgElement.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
-  svgElement.setAttribute('viewBox', '0 0 24 24');
-  svgElement.setAttribute('width', '32');
-  svgElement.setAttribute('height', '32');
-  svgElement.style.cursor = 'pointer';
-  svgElement.style.marginLeft = '8px';
-  svgElement.innerHTML = `
-    <path d="M0 0h24v24H0z" fill="none"/>
-    <path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/>
-  `;
-  svgElement.setAttribute('alt', imageInput.getAttribute('alt'));
-  svgElement.setAttribute('onclick', imageInput.getAttribute('onclick'));
+  originalInput.parentNode.insertBefore(newInput, originalInput);
 
-  container.appendChild(svgElement);
-  imageInput.parentNode.removeChild(imageInput);
+  const updateOriginalInput = function() {
+    const formattedDate = reformatDate(newInput.value);
+    if (formattedDate) {
+      originalInput.value = formattedDate;
+      dateFormatforFDD(originalInput);
+    }
+  };
+
+  newInput.onchange = updateOriginalInput;
+  newInput.onkeyup = updateOriginalInput;
+}
+
+function reformatDate(dateValue) {
+  if (!dateValue) return '';
+
+  const dateParts = dateValue.split('-');
+  if (dateParts.length !== 3) return '';
+
+  const [year, month, day] = dateParts;
+
+  const strippedMonth = month.replace(/^0+/, '');
+  const strippedDay = day.replace(/^0+/, '');
+  const strippedYear = year.replace(/^0+/, '');
+
+  if (strippedMonth.length < 1 || strippedDay.length < 1 || strippedYear.length !== 4) {
+    return '';
+  }
+
+  return `${month}/${day}/${year}`;
 }
