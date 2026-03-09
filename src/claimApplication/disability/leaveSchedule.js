@@ -13,6 +13,7 @@ export function showLeaveScheduleForDisabilityType(disabilityType) {
   addStyles();
   restyleDateEntry();
   restyleLDWDateEntry();
+  restyleReturnedToWorkDateEntry();
 }
 
 function addStyles() {
@@ -375,6 +376,35 @@ function restyleLDWDateEntry() {
     if (formattedDate) {
       originalInput.value = formattedDate;
       priorFDD(originalInput);
+    }
+  };
+  
+  newInput.onblur = updateOriginalInput;
+}
+
+function restyleReturnedToWorkDateEntry() {
+  const imageInput = document.getElementById('Image12');
+  if (imageInput) {
+    imageInput.style.display = 'none';
+  }
+
+  const originalInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk');
+  originalInput.style.display = 'none';
+
+  const newInput = document.createElement('input');
+  newInput.setAttribute('type', 'date');
+  newInput.setAttribute('id', 'txtDtReturnedToWrk');
+  newInput.setAttribute('class', 'usa-input');
+  newInput.setAttribute('aria-label', 'Returned to Work Date');
+  newInput.setAttribute('maxlength', '10');
+
+  originalInput.parentNode.insertBefore(newInput, originalInput);
+
+  const updateOriginalInput = function() {
+    const formattedDate = reformatDate(newInput.value);
+    if (formattedDate) {
+      originalInput.value = formattedDate;
+      AfterFDDnNotFuture(originalInput,'you returned to work');
     }
   };
   

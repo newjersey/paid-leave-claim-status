@@ -59,7 +59,7 @@ describe("Disability Information page", () => {
       cy.get('#txtDisStartDt').type("2025-07-18");
       cy.get('#txtDtLastWorkd').type("2025-07-17");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes').click({ force: true });
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').type("08/17/2025").blur();
+      cy.get('#txtDtReturnedToWrk').type("2025-08-17").blur();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_btnSubmitConflictCheck').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     }
