@@ -407,7 +407,7 @@ function restyleExpectedReturnToWorkDateEntry() {
   const newInput = createDateInput('txtExpectedReturnedDtToWrk', 'Expected Return to Work Date');
 
   const minDate = new Date();
-  minDate.setDate(minDate.getDate() + 1);
+  minDate.setDate(minDate.getDate() + 1); // tomorrow
   const minDateFormatted = reformatDateYYYYMMDD(minDate);
   newInput.setAttribute('min', minDateFormatted);
 
