@@ -57,7 +57,7 @@ describe("Disability Information page", () => {
         expect(data["disabilityInfoView"]).to.equal('leaveSchedule');
       });
       cy.get('#txtDisStartDt').type("2025-07-18");
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').type("07/17/2025");
+      cy.get('#txtDtLastWorkd').type("2025-07-17");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').type("08/17/2025").blur();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_btnSubmitConflictCheck').click();

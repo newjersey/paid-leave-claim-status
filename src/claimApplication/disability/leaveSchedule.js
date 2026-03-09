@@ -12,6 +12,7 @@ export function showLeaveScheduleForDisabilityType(disabilityType) {
   styleLDW(disabilityType);
   addStyles();
   restyleDateEntry();
+  restyleLDWDateEntry();
 }
 
 function addStyles() {
@@ -341,4 +342,33 @@ function reformatDate(dateValue) {
   }
 
   return `${month}/${day}/${year}`;
+}
+
+function restyleLDWDateEntry() {
+  const imageInput = document.getElementById('btnDtLstWorkd');
+  if (imageInput) {
+    imageInput.style.display = 'none';
+  }
+
+  const originalInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd');
+  originalInput.style.display = 'none';
+
+  const newInput = document.createElement('input');
+  newInput.setAttribute('type', 'date');
+  newInput.setAttribute('id', 'txtDtLastWorkd');
+  newInput.setAttribute('class', 'usa-input');
+  newInput.setAttribute('aria-label', 'Last Worked Date');
+  newInput.setAttribute('maxlength', '10');
+
+  originalInput.parentNode.insertBefore(newInput, originalInput);
+
+  const updateOriginalInput = function() {
+    const formattedDate = reformatDate(newInput.value);
+    if (formattedDate) {
+      originalInput.value = formattedDate;
+      priorFDD(originalInput);
+    }
+  };
+  
+  newInput.onblur = updateOriginalInput;
 }
