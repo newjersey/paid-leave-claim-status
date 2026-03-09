@@ -71,7 +71,6 @@ function setupFDD() {
       <span class="required-asterisk">*</span>
       <span id="fddQuestion"></span>
       </label>
-    <div class="usa-hint" id="fddHint">${i18next.t('shared.dateFormat')}</div>
   `;
   divElement.insertBefore(fddQuestion, divElement.firstChild);
 }
@@ -127,7 +126,6 @@ function setupLDW() {
       <span class="required-asterisk">*</span>
       <span id="lastWorkdayQuestion"></span>
     </label>
-    <div class="usa-hint" id="ldwHint">${i18next.t('shared.dateFormat')}</div>
   `;
   ldwDateInput.insertAdjacentHTML('beforebegin', ldwLabel);
 
@@ -152,7 +150,6 @@ function setupLDW() {
       <span class="required-asterisk">*</span>
       <span id="returnDateQuestion"></span>
     </label>
-    <div class="usa-hint" id="returnPregnancyHint">${i18next.t('shared.dateFormat')}</div>
   `;
   returnDateInput.insertAdjacentHTML('beforebegin', returnDateQuestion);
 
@@ -164,7 +161,6 @@ function setupLDW() {
       <span class="required-asterisk">*</span>
       <span id="estReturnDateQuestion"></span>
     </label>
-    <div class="usa-hint" id="estReturnPregnancyHint">${i18next.t('shared.dateFormat')}</div>
   `;
   estReturnDateInput.insertAdjacentHTML('beforebegin', estReturnDateQuestion);
 
