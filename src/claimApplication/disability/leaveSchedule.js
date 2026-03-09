@@ -318,6 +318,14 @@ function restyleDateEntry() {
     if (formattedDate) {
       originalInput.value = formattedDate;
       dateFormatforFDD(originalInput);
+
+      const ldwInput = document.getElementById('txtDtLastWorkd');
+      if (ldwInput) {
+        const selectedDate = new Date(newInput.value);
+        selectedDate.setDate(selectedDate.getDate() - 1);
+        const maxDate = selectedDate.toISOString().split('T')[0];
+        ldwInput.setAttribute('max', maxDate);
+      }
     }
   };
 
