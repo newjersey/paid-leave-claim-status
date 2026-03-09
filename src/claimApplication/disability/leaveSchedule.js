@@ -316,7 +316,7 @@ function restyleDateEntry() {
   originalInput.parentNode.insertBefore(newInput, originalInput);
 
   const updateOriginalInput = function() {
-    const formattedDate = reformatDate(newInput.value);
+    const formattedDate = reformatDateMMDDYYYY(newInput.value);
     if (formattedDate) {
       originalInput.value = formattedDate;
       dateFormatforFDD(originalInput);
@@ -327,7 +327,7 @@ function restyleDateEntry() {
       if (ldwInput) {
         const oneDayEarlier = new Date(selectedDate);
         oneDayEarlier.setDate(selectedDate.getDate() - 1); 
-        const maxDate = oneDayEarlier.toISOString().split('T')[0];
+        const maxDate = reformatDateYYYYMMDD(oneDayEarlier);
         ldwInput.setAttribute('max', maxDate);
       }
 
@@ -335,7 +335,7 @@ function restyleDateEntry() {
       if (returnedToWorkInput) {
         const oneDayLater = new Date(selectedDate);
         oneDayLater.setDate(selectedDate.getDate() + 1);
-        const minDate = oneDayLater.toISOString().split('T')[0];
+        const minDate = reformatDateYYYYMMDD(oneDayLater);
         returnedToWorkInput.setAttribute('min', minDate);
       }
     }
@@ -345,7 +345,11 @@ function restyleDateEntry() {
   newInput.onkeyup = updateOriginalInput;
 }
 
-function reformatDate(dateValue) {
+function reformatDateYYYYMMDD(date) {
+  return date.toISOString().split('T')[0];
+}
+
+function reformatDateMMDDYYYY(dateValue) {
   if (!dateValue) return '';
 
   const dateParts = dateValue.split('-');
@@ -383,7 +387,7 @@ function restyleLDWDateEntry() {
   originalInput.parentNode.insertBefore(newInput, originalInput);
 
   const updateOriginalInput = function() {
-    const formattedDate = reformatDate(newInput.value);
+    const formattedDate = reformatDateMMDDYYYY(newInput.value);
     if (formattedDate) {
       originalInput.value = formattedDate;
       priorFDD(originalInput);
@@ -412,7 +416,7 @@ function restyleReturnedToWorkDateEntry() {
   originalInput.parentNode.insertBefore(newInput, originalInput);
 
   const updateOriginalInput = function() {
-    const formattedDate = reformatDate(newInput.value);
+    const formattedDate = reformatDateMMDDYYYY(newInput.value);
     if (formattedDate) {
       originalInput.value = formattedDate;
       AfterFDDnNotFuture(originalInput,'you returned to work');
@@ -440,13 +444,13 @@ function restyleExpectedReturnToWorkDateEntry() {
 
   const minDate = new Date();
   minDate.setDate(minDate.getDate() + 1);
-  const minDateFormatted = minDate.toISOString().split('T')[0];
+  const minDateFormatted = reformatDateYYYYMMDD(minDate);
   newInput.setAttribute('min', minDateFormatted);
 
   originalInput.parentNode.insertBefore(newInput, originalInput);
 
   const updateOriginalInput = function() {
-    const formattedDate = reformatDate(newInput.value);
+    const formattedDate = reformatDateMMDDYYYY(newInput.value);
     if (formattedDate) {
       originalInput.value = formattedDate;
       totestYearExpectedRTW(originalInput,'you expect to return to work');
