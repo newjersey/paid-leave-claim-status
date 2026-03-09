@@ -24,16 +24,16 @@ When you make a change and want to see if everything is working, do the followin
 
 1. Edit `.js` file in `src/` directory (edit corresponding Cypress test if relevant)
 2. Run `npm run build` to compile files
-3. For TDI Claim Application: You can use `generateLocalDevOverrides.sh` to generate files to use as [Local Overrides](https://developer.chrome.com/docs/devtools/overrides) to test changes that involve multiple screens. Because the underlying pages append the current datetime's minute when fetching the JS override, you need a file for every minute while you are testing. The script above generates 20 minutes' worth of files.
 3. Run `npm test` to ensure tests still pass
 4. Open relevant test file in `cypress/fixtures` in browser to ensure change looks okay (edit or add new test file if your scenario is not covered).
-5. After code review, push changes to `dev` branch.
-6. Deploy the changes to the beta environment. See instructions below for deployment.
+5. You can use [Local Overrides](https://developer.chrome.com/docs/devtools/overrides) while navigating on the live Test environment to test changes that involve multiple screens. (For TDI Claim Application: Because the underlying pages append the current datetime's minute when fetching the JS override, you need a file for every minute while you are testing. You can use `generateLocalDevOverrides.sh` to generate 20 minutes' worth of override files.)
+6. After code review, push changes to `dev` branch.
+7. Deploy the changes to the beta environment. See instructions below for deployment.
 
 ## Deployment
 
 1. If deploying to production, create a PR to squash & merge changes from `dev` into `prod`.
-2. Trigger the `Deploy to Beta` action in the GitHub UI for either `dev` or `prod`. This workflow will refresh the builds on the specified branch, and make a PR in the `beta` repo.
-2. Once the files are merged to `main` branch of `beta` repo, they will be automatically deployed to `beta.nj.gov` to be referenced by the Claim Status/TDI application.
+2. Trigger the `Deploy to Beta` action in the GitHub UI for either `dev` or `prod`. This workflow (defined the same on all branches) will refresh the builds on the specified branch, and make a PR in the `beta` repo.
+3. Once the files are merged to the `main` branch of `beta` repo, they will be automatically deployed to `beta.nj.gov` to be referenced by the Claim Status/TDI application.
 
 _Note_: The following [internal Google Doc](https://docs.google.com/document/d/1XD06eJ9Q6e5z8_fKcQrDs7K6r0lbsqMab_xlikYdqAA/edit?usp=sharing) has URLs and account credentials to test claim status scenarios live in both development and production.
