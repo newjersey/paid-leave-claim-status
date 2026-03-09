@@ -320,12 +320,22 @@ function restyleDateEntry() {
       originalInput.value = formattedDate;
       dateFormatforFDD(originalInput);
 
+      const selectedDate = new Date(newInput.value);
+
       const ldwInput = document.getElementById('txtDtLastWorkd');
       if (ldwInput) {
-        const selectedDate = new Date(newInput.value);
-        selectedDate.setDate(selectedDate.getDate() - 1);
-        const maxDate = selectedDate.toISOString().split('T')[0];
+        const oneDayEarlier = new Date(selectedDate);
+        oneDayEarlier.setDate(selectedDate.getDate() - 1); 
+        const maxDate = oneDayEarlier.toISOString().split('T')[0];
         ldwInput.setAttribute('max', maxDate);
+      }
+
+      const returnedToWorkInput = document.getElementById('txtDtReturnedToWrk');
+      if (returnedToWorkInput) {
+        const oneDayLater = new Date(selectedDate);
+        oneDayLater.setDate(selectedDate.getDate() + 1);
+        const minDate = oneDayLater.toISOString().split('T')[0];
+        returnedToWorkInput.setAttribute('min', minDate);
       }
     }
   };
