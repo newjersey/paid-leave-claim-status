@@ -14,6 +14,7 @@ export function showLeaveScheduleForDisabilityType(disabilityType) {
   restyleDateEntry();
   restyleLDWDateEntry();
   restyleReturnedToWorkDateEntry();
+  restyleExpectedReturnToWorkDateEntry();
 }
 
 function addStyles() {
@@ -415,6 +416,40 @@ function restyleReturnedToWorkDateEntry() {
     if (formattedDate) {
       originalInput.value = formattedDate;
       AfterFDDnNotFuture(originalInput,'you returned to work');
+    }
+  };
+  
+  newInput.onblur = updateOriginalInput;
+}
+
+function restyleExpectedReturnToWorkDateEntry() {
+  const imageInput = document.getElementById('Image13');
+  if (imageInput) {
+    imageInput.style.display = 'none';
+  }
+
+  const originalInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk');
+  originalInput.style.display = 'none';
+
+  const newInput = document.createElement('input');
+  newInput.setAttribute('type', 'date');
+  newInput.setAttribute('id', 'txtExpectedReturnedDtToWrk');
+  newInput.setAttribute('class', 'usa-input');
+  newInput.setAttribute('aria-label', 'Expected Return to Work Date');
+  newInput.setAttribute('maxlength', '10');
+
+  const minDate = new Date();
+  minDate.setDate(minDate.getDate() + 1);
+  const minDateFormatted = minDate.toISOString().split('T')[0];
+  newInput.setAttribute('min', minDateFormatted);
+
+  originalInput.parentNode.insertBefore(newInput, originalInput);
+
+  const updateOriginalInput = function() {
+    const formattedDate = reformatDate(newInput.value);
+    if (formattedDate) {
+      originalInput.value = formattedDate;
+      totestYearExpectedRTW(originalInput,'you expect to return to work');
     }
   };
   
