@@ -11,7 +11,7 @@ export function showLeaveScheduleForDisabilityType(disabilityType) {
   styleFDD(disabilityType);
   styleLDW(disabilityType);
   addStyles();
-  restyleDateEntry();
+  restyleFDDDateEntry();
   restyleLDWDateEntry();
   restyleReturnedToWorkDateEntry();
   restyleExpectedReturnToWorkDateEntry();
@@ -296,7 +296,17 @@ function setupFutureDateAlert() {
   });
 }
 
-function restyleDateEntry() {
+function createDateInput(id, ariaLabel) {
+  const input = document.createElement('input');
+  input.setAttribute('type', 'date');
+  input.setAttribute('id', id);
+  input.setAttribute('class', 'usa-input');
+  input.setAttribute('aria-label', ariaLabel);
+  input.setAttribute('maxlength', '10');
+  return input;
+}
+
+function restyleFDDDateEntry() {
   const imageInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_Image11');
   if (imageInput) {
     imageInput.style.display = 'none';
@@ -305,14 +315,8 @@ function restyleDateEntry() {
   const originalInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt');
   originalInput.style.display = 'none';
 
-  const newInput = document.createElement('input');
-  newInput.setAttribute('type', 'date');
-  newInput.setAttribute('id', 'txtDisStartDt');
-  newInput.setAttribute('class', 'usa-input');
-  newInput.setAttribute('aria-label', 'Disability Start Date');
-  newInput.setAttribute('maxlength', '10');
+  const newInput = createDateInput('txtDisStartDt', 'Disability Start Date');
   newInput.setAttribute('onblur', 'EmptyDate();');
-
   originalInput.parentNode.insertBefore(newInput, originalInput);
 
   const updateOriginalInput = function() {
@@ -345,29 +349,6 @@ function restyleDateEntry() {
   newInput.onkeyup = updateOriginalInput;
 }
 
-function reformatDateYYYYMMDD(date) {
-  return date.toISOString().split('T')[0];
-}
-
-function reformatDateMMDDYYYY(dateValue) {
-  if (!dateValue) return '';
-
-  const dateParts = dateValue.split('-');
-  if (dateParts.length !== 3) return '';
-
-  const [year, month, day] = dateParts;
-
-  const strippedMonth = month.replace(/^0+/, '');
-  const strippedDay = day.replace(/^0+/, '');
-  const strippedYear = year.replace(/^0+/, '');
-
-  if (strippedMonth.length < 1 || strippedDay.length < 1 || strippedYear.length !== 4) {
-    return '';
-  }
-
-  return `${month}/${day}/${year}`;
-}
-
 function restyleLDWDateEntry() {
   const imageInput = document.getElementById('btnDtLstWorkd');
   if (imageInput) {
@@ -377,13 +358,7 @@ function restyleLDWDateEntry() {
   const originalInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd');
   originalInput.style.display = 'none';
 
-  const newInput = document.createElement('input');
-  newInput.setAttribute('type', 'date');
-  newInput.setAttribute('id', 'txtDtLastWorkd');
-  newInput.setAttribute('class', 'usa-input');
-  newInput.setAttribute('aria-label', 'Last Worked Date');
-  newInput.setAttribute('maxlength', '10');
-
+  const newInput = createDateInput('txtDtLastWorkd', 'Last Worked Date');
   originalInput.parentNode.insertBefore(newInput, originalInput);
 
   const updateOriginalInput = function() {
@@ -406,13 +381,7 @@ function restyleReturnedToWorkDateEntry() {
   const originalInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk');
   originalInput.style.display = 'none';
 
-  const newInput = document.createElement('input');
-  newInput.setAttribute('type', 'date');
-  newInput.setAttribute('id', 'txtDtReturnedToWrk');
-  newInput.setAttribute('class', 'usa-input');
-  newInput.setAttribute('aria-label', 'Returned to Work Date');
-  newInput.setAttribute('maxlength', '10');
-
+  const newInput = createDateInput('txtDtReturnedToWrk', 'Returned to Work Date');
   originalInput.parentNode.insertBefore(newInput, originalInput);
 
   const updateOriginalInput = function() {
@@ -435,12 +404,7 @@ function restyleExpectedReturnToWorkDateEntry() {
   const originalInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk');
   originalInput.style.display = 'none';
 
-  const newInput = document.createElement('input');
-  newInput.setAttribute('type', 'date');
-  newInput.setAttribute('id', 'txtExpectedReturnedDtToWrk');
-  newInput.setAttribute('class', 'usa-input');
-  newInput.setAttribute('aria-label', 'Expected Return to Work Date');
-  newInput.setAttribute('maxlength', '10');
+  const newInput = createDateInput('txtExpectedReturnedDtToWrk', 'Expected Return to Work Date');
 
   const minDate = new Date();
   minDate.setDate(minDate.getDate() + 1);
@@ -458,4 +422,27 @@ function restyleExpectedReturnToWorkDateEntry() {
   };
   
   newInput.onblur = updateOriginalInput;
+}
+
+function reformatDateYYYYMMDD(date) {
+  return date.toISOString().split('T')[0];
+}
+
+function reformatDateMMDDYYYY(dateValue) {
+  if (!dateValue) return '';
+
+  const dateParts = dateValue.split('-');
+  if (dateParts.length !== 3) return '';
+
+  const [year, month, day] = dateParts;
+
+  const strippedMonth = month.replace(/^0+/, '');
+  const strippedDay = day.replace(/^0+/, '');
+  const strippedYear = year.replace(/^0+/, '');
+
+  if (strippedMonth.length < 1 || strippedDay.length < 1 || strippedYear.length !== 4) {
+    return '';
+  }
+
+  return `${month}/${day}/${year}`;
 }
