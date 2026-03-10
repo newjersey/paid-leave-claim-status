@@ -93,7 +93,6 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');
   style.innerHTML = `
-
     .usa-radio__label {
       text-align: left;
     }
@@ -102,6 +101,16 @@ function addStyles() {
       color: rgb(139, 0, 0);
     }
 
+    .form-alert {
+      color: rgb(139, 0, 0);
+      font-weight: bold;
+      margin: 10px 0 0 0;
+    }
+
+    .form-alert svg {
+      vertical-align: -5px;
+      margin-right: 2px;
+    }
   `;
   document.head.appendChild(style);
 }
@@ -188,6 +197,18 @@ function addProviderScreener() {
         ${i18next.t('shared.no')}
       </label>
     </div>
+    <div
+      id="providerError"
+      class="form-alert"
+      style="display: none;"
+      role="alert"
+      aria-live="polite"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#B50909"/>
+      </svg>
+      ${i18next.t('shared.makeSelection')}
+    </div>
 
     <div id="provider-type-alert" class="usa-alert usa-alert--warning usa-alert--slim" style="display: none; margin-top: 1rem;">
     <div class="usa-alert__body">
@@ -203,7 +224,7 @@ function addProviderScreener() {
   const providerYes = document.getElementById("provider-type-accepted-yes");
   const providerNo = document.getElementById("provider-type-accepted-no");
   const providerAcceptedFieldset = document.getElementById("provider-type-accepted-fieldset");
-  const legend = document.getElementById("provider-type-accepted-legend");
+  const providerError = document.getElementById('providerError');
   const providerAlert = document.getElementById('provider-type-alert');
 
   const sessionData = getSessionData();
@@ -216,6 +237,7 @@ function addProviderScreener() {
 
   providerYes.addEventListener('change', function () {
     providerAlert.style.display = 'none';
+    providerError.style.display = 'none';
     providerAcceptedFieldset.classList.remove('usa-form-group--error');
     addToSessionData({
       [STORAGE_KEY_PROVIDER_TYPE_ACCEPTED]: true
@@ -224,6 +246,7 @@ function addProviderScreener() {
 
   providerNo.addEventListener('change', function () {
     providerAlert.style.display = 'block';
+    providerError.style.display = 'none';
     providerAcceptedFieldset.classList.remove('usa-form-group--error');
     addToSessionData({
       [STORAGE_KEY_PROVIDER_TYPE_ACCEPTED]: false
@@ -231,6 +254,7 @@ function addProviderScreener() {
   });
 
   providerYes.addEventListener('invalid', function () {
+    providerError.style.display = 'block';
     providerAcceptedFieldset.classList.add('usa-form-group--error');
     fieldset.scrollIntoView();
   });
