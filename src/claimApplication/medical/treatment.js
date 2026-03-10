@@ -158,8 +158,7 @@ function addProviderScreener() {
           </ul>
         </div>
 
-
-  <fieldset class="usa-fieldset">
+  <fieldset id="provider-type-accepted-fieldset" class="usa-fieldset">
     <legend id="provider-type-accepted-legend" class="usa-legend">
       <span class="required-asterisk">*</span>
       <strong id="providerTypeQuestionNumber" style="display:none;">1. </strong>
@@ -172,7 +171,6 @@ function addProviderScreener() {
         type="radio"
         name="provider-type-accepted"
         value="yes"
-      
       />
       <label class="usa-radio__label" for="provider-type-accepted-yes">
         ${i18next.t('shared.yes')}
@@ -190,7 +188,6 @@ function addProviderScreener() {
         ${i18next.t('shared.no')}
       </label>
     </div>
-        
 
     <div id="provider-type-alert" class="usa-alert usa-alert--warning usa-alert--slim" style="display: none; margin-top: 1rem;">
     <div class="usa-alert__body">
@@ -199,17 +196,13 @@ function addProviderScreener() {
       </p>
     </div>
   </div>
-
-
   </fieldset>
-
-
-
   `;
   fieldset.insertBefore(providerType, fieldset.firstChild);
 
   const providerYes = document.getElementById("provider-type-accepted-yes");
   const providerNo = document.getElementById("provider-type-accepted-no");
+  const providerAcceptedFieldset = document.getElementById("provider-type-accepted-fieldset");
   const legend = document.getElementById("provider-type-accepted-legend");
   const providerAlert = document.getElementById('provider-type-alert');
 
@@ -223,7 +216,7 @@ function addProviderScreener() {
 
   providerYes.addEventListener('change', function () {
     providerAlert.style.display = 'none';
-    resetElementText(legend);
+    providerAcceptedFieldset.classList.remove('usa-form-group--error');
     addToSessionData({
       [STORAGE_KEY_PROVIDER_TYPE_ACCEPTED]: true
     });
@@ -231,14 +224,14 @@ function addProviderScreener() {
 
   providerNo.addEventListener('change', function () {
     providerAlert.style.display = 'block';
-    resetElementText(legend);
+    providerAcceptedFieldset.classList.remove('usa-form-group--error');
     addToSessionData({
       [STORAGE_KEY_PROVIDER_TYPE_ACCEPTED]: false
     });
   });
 
   providerYes.addEventListener('invalid', function () {
-    elementTextError(legend);
+    providerAcceptedFieldset.classList.add('usa-form-group--error');
     fieldset.scrollIntoView();
   });
 }
