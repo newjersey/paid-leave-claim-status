@@ -378,6 +378,11 @@ function restyleReturnedToWorkDateEntry() {
   originalInput.style.display = 'none';
 
   const newInput = createDateInput('txtDtReturnedToWrk', 'Returned to Work Date');
+
+  const maxDate = new Date();
+  const maxDateFormatted = reformatDateYYYYMMDD(maxDate);
+  newInput.setAttribute('max', maxDateFormatted);
+
   originalInput.parentNode.insertBefore(newInput, originalInput);
 
   const updateOriginalInput = function() {
