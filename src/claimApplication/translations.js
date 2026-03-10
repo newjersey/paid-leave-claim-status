@@ -9,6 +9,7 @@ const resources = {
         optional: "(optional)",
         saveAndContinue: "Save and continue",
         yes: "Yes",
+        makeSelection: "Make a selection.",
       },
       contact: {
         address: "Address",
@@ -217,7 +218,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           notAcceptedMessage:"Your application could get delayed or denied if it isn't certified by an approved healthcare provider.",
           theseTypesProviders: "These types of healthcare providers can certify your leave:",
           type: {
-            isAccepted: "Is your healthcare provider one of these? Select one.",
+            isAccepted: "Is your healthcare provider one of these?",
             advancedPracticeNurse: "Advanced Practice Nurse",
             certifiedNurseMidwife: "Certified Nurse Midwife",
             certifiedNursePractitioner: "Certified Nurse Practitioner",
