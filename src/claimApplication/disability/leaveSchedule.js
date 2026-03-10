@@ -37,6 +37,14 @@ function addStyles() {
     #FDDCalendarControl table, #CalendarControl table {
       font-size: 16px;
     }
+
+    .legendHeader {
+      font-size: 22px;
+    }
+
+    .usa-label {
+      font-size: 16px;
+    }
   `;
   document.head.appendChild(style);
 }
@@ -89,6 +97,7 @@ function styleFDD(disabilityType) {
     : i18next.t('leaveSchedule.illnessInjury.fddNotes');
 
   const legend = fddFieldset.querySelector('legend');
+  legend.classList.add('legendHeader');
   legend.textContent = disabilityType === DisabilityType.PREGNANCY
     ? i18next.t('leaveSchedule.pregnancy.fddTitle')
     : i18next.t('leaveSchedule.illnessInjury.fddTitle');
@@ -181,6 +190,7 @@ function styleLDW(disabilityType) {
   const ldwFieldset = document.getElementById('ldwFieldset');
 
   const legend = ldwFieldset.querySelector('legend');
+  legend.classList.add('legendHeader');
   legend.textContent = disabilityType === DisabilityType.PREGNANCY
     ? i18next.t('leaveSchedule.pregnancy.beforeAfterTitle')
     : i18next.t('leaveSchedule.illnessInjury.beforeAfterTitle');
