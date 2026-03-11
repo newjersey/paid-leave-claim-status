@@ -9,6 +9,7 @@ export function setupLeaveSchedulePage() {
   restyleLDWDateEntry();
   restyleReturnedToWorkDateEntry();
   restyleExpectedReturnToWorkDateEntry();
+  removeUnwantedBlankLine();
 }
 
 export function showLeaveScheduleForDisabilityType(disabilityType) {
@@ -113,6 +114,17 @@ function styleFDD(disabilityType) {
     });
 }
 
+function removeUnwantedBlankLine() {
+  const parentDiv = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD');
+  if (parentDiv) {
+    Array.from(parentDiv.childNodes).forEach(node => {
+      if (node.nodeType === Node.TEXT_NODE && node.textContent.trim().length === 0) {
+        parentDiv.removeChild(node);
+      }
+    });
+  }
+}
+
 function removeOldFDDText() {
   const divElement = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD');
   divElement.querySelector('a').remove();
@@ -157,11 +169,11 @@ function setupLDW() {
   const returnDateQuestion = `
     <br><br>
     <hr>
-    <label class="usa-label" id="returnPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk">
+    <label class="usa-label" id="returnLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk">
       <span class="required-asterisk">*</span>
       <span id="returnDateQuestion"></span>
     </label>
-    <div class="usa-hint" id="returnPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+    <div class="usa-hint" id="returnHint">${i18next.t('leaveSchedule.recoveryDateHint')}<br>${i18next.t('shared.dateFormat')}</div>
   `;
   returnDateInput.insertAdjacentHTML('beforebegin', returnDateQuestion);
 
@@ -169,11 +181,11 @@ function setupLDW() {
   const estReturnDateQuestion = `
     <br><br>
     <hr>
-    <label class="usa-label" id="estReturnPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk">
+    <label class="usa-label" id="estReturnLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk">
       <span class="required-asterisk">*</span>
       <span id="estReturnDateQuestion"></span>
     </label>
-    <div class="usa-hint" id="estReturnPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+    <div class="usa-hint" id="estReturnHint">${i18next.t('shared.dateFormat')}</div>
   `;
   estReturnDateInput.insertAdjacentHTML('beforebegin', estReturnDateQuestion);
 

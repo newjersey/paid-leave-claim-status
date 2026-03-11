@@ -120,6 +120,10 @@ function addStyles() {
     #reason-for-leave-form {
       margin: 0;
     }
+
+    #reason-legend {
+      margin-top: 0;
+    }
   `;
   document.head.appendChild(style);
 }

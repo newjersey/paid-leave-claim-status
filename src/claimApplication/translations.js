@@ -209,6 +209,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           `
         },
         lastWorkdayHint: "Your last day of work must be before your first day of disability leave.",
+        recoveryDateHint: "The date you returned to work must be after your first day of disability leave.",
       },
       medicalInfo: {
         title: "Medical details",
