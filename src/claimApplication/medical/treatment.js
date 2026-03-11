@@ -136,7 +136,7 @@ function addSubtitleAndExplainer() {
   const subtitleDiv = document.createElement('div');
   subtitleDiv.style.margin = "0 0 0";
   subtitleDiv.innerHTML = `
-  <h2 style="font-size: 20px; font-weight: bold; color: black; font-variant: none" class="margin-bottom-1"> ${i18next.t('medicalInfo.provider.title')}</h2>
+  <h2 style="font-size: 22px; font-weight: bold; color: black; font-variant: none" class="margin-bottom-1"> ${i18next.t('medicalInfo.provider.title')}</h2>
   <p class="margin-bottom-3">${i18next.t('medicalInfo.provider.explanation')}</p>`
 
   questionDiv.prepend(subtitleDiv);
@@ -560,7 +560,7 @@ function moveWorkersCompToNewFieldset() {
   const h2 = document.createElement('h2');
   h2.id = "workersCompensationHeader";
   h2.textContent = i18next.t('medicalInfo.work.title');
-  h2.style.fontSize = "20px";
+  h2.style.fontSize = "22px";
   h2.style.fontWeight = "bold";
   h2.style.color = "black";
   h2.style.fontVariant = "none";
