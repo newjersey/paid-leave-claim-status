@@ -56,7 +56,7 @@ describe("Disability Information page", () => {
         const data = JSON.parse(encodeDecode(encodedData));
         expect(data["disabilityInfoView"]).to.equal('leaveSchedule');
       });
-      cy.get('#txtDisStartDt').type("2025-07-18");
+      cy.get('[id="txtDisStartDt"]').should('have.length', 1).type("2025-07-18");
       cy.get('#txtDtLastWorkd').type("2025-07-17");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes').click({ force: true });
       cy.get('#txtDtReturnedToWrk').type("2025-08-17").blur();
@@ -125,15 +125,6 @@ describe("Disability Information page", () => {
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
       checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS);
-    });
-
-    it("user can input info about injury and proceed to next page", () => {
-      cy.mockASPX(URL);
-      cy.get('#reason-injury').click({ force: true });
-      cy.get('textarea[name="injury-details"]').type("Broken Elbow.");
-      cy.get('#submitReasonForLeave').click();
-      checkLeaveSchedule();
-      checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS);
     });
 
     it("user can input info about injury and proceed to next page", () => {
