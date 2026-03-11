@@ -5,16 +5,16 @@ export function setupLeaveSchedulePage() {
   setupFDD();
   setupLDW();
   setupFutureDateAlert();
+  restyleFDDDateEntry();
+  restyleLDWDateEntry();
+  restyleReturnedToWorkDateEntry();
+  restyleExpectedReturnToWorkDateEntry();
 }
 
 export function showLeaveScheduleForDisabilityType(disabilityType) {
   styleFDD(disabilityType);
   styleLDW(disabilityType);
   addStyles();
-  restyleFDDDateEntry();
-  restyleLDWDateEntry();
-  restyleReturnedToWorkDateEntry();
-  restyleExpectedReturnToWorkDateEntry();
 }
 
 function addStyles() {
