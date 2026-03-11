@@ -198,7 +198,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           `,
           recoveryDate: `When did you recover?`,
           estRecoveryDate: "When do you expect to recover?",
-          whatsNext: "What's Next?",
+          whatsNext: "What's next?",
           howDelivered: `After we approve your claim, we’ll mail you a form. It will ask how you delivered (if you haven't already told us) and whether you need more time to recover. 
             <br><br>
             <ul>

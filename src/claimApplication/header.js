@@ -51,6 +51,7 @@ function addHeaderStyling() {
     }
 
     #pageTitle {
+      font-size: 40px;
       margin-bottom: 20px;
     }
     
