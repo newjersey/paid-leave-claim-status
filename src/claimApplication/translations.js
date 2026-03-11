@@ -149,7 +149,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         },
         illnessInjury: {
           fddTitle: "First day of disability leave",
-         fddNotes: `<strong>Heads up:</strong>
+          fddNotes: `<strong>Heads up:</strong>
           <ul class="usa-list">
             <li>You can apply starting the day your disability begins — the first day you stop working because of your illness or injury.</li>
             <li>Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.</li>
@@ -208,6 +208,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             </ul>
           `
         },
+        lastWorkdayHint: "Your last day of work must be before your first day of disability leave.",
       },
       medicalInfo: {
         title: "Medical details",
