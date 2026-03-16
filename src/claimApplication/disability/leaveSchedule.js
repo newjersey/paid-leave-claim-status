@@ -501,18 +501,15 @@ function restyleLDWDateEntry() {
   wrapper.appendChild(newInput);
   originalInput.parentNode.insertBefore(wrapper, originalInput);
 
-  wrapper.addEventListener('blur', function() {
-    const formattedDate = reformatDateMMDDYYYY(newInput.value);
-    if (formattedDate) {
+  wrapper.addEventListener('change', function(e) {
+    const externalInput = document.getElementById('txtDtLastWorkd');
+    externalInput.setCustomValidity('');
+    if (e.target.classList.contains('usa-date-picker__external-input')) {
+      const formattedDate = reformatDateFromExternal(externalInput.value);
       originalInput.value = formattedDate;
       priorFDD(originalInput);
     }
   }, true);
-
-  wrapper.addEventListener('change', function() {
-    const externalInput = document.getElementById('txtDtLastWorkd');
-    externalInput.setCustomValidity('');
-  });
 }
 
 function restyleReturnedToWorkDateEntry() {
@@ -597,6 +594,24 @@ function reformatDateMMDDYYYY(dateValue) {
   }
 
   return `${month}/${day}/${year}`;
+}
+
+function reformatDateFromExternal(dateValue) {
+  if (!dateValue || !dateValue.trim()) {
+    return '';
+  }
+
+  const parts = dateValue.trim().split('/');
+  if (parts.length !== 3) {
+    return dateValue;
+  }
+
+  const [month, day, year] = parts;
+  
+  const paddedMonth = month.padStart(2, '0');
+  const paddedDay = day.padStart(2, '0');
+  
+  return `${paddedMonth}/${paddedDay}/${year}`;
 }
 
 function preventLetterEntryInDateFields() {
