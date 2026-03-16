@@ -445,6 +445,7 @@ function restyleFDDDateEntry() {
   const wrapper = createDateInputWrapper();
   const newInput = createDateInput('txtDisStartDt', 'Disability Start Date');
   newInput.setAttribute('onblur', 'EmptyDate();');
+  newInput.setAttribute('required', 'true');
   wrapper.appendChild(newInput);
   originalInput.parentNode.insertBefore(wrapper, originalInput);
 
@@ -498,6 +499,7 @@ function restyleLDWDateEntry() {
 
   const wrapper = createDateInputWrapper();
   const newInput = createDateInput('txtDtLastWorkd', 'Last Worked Date');
+  newInput.setAttribute('required', 'true');
   wrapper.appendChild(newInput);
   originalInput.parentNode.insertBefore(wrapper, originalInput);
 
@@ -508,6 +510,9 @@ function restyleLDWDateEntry() {
       const formattedDate = reformatDateFromExternal(externalInput.value);
       originalInput.value = formattedDate;
       priorFDD(originalInput);
+      if (originalInput.value === '') {
+        externalInput.value = '';
+      }
     }
   }, true);
 }
