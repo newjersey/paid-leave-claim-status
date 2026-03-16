@@ -10,6 +10,7 @@ export function setupLeaveSchedulePage() {
   restyleReturnedToWorkDateEntry();
   restyleExpectedReturnToWorkDateEntry();
   removeUnwantedBlankLine();
+  preventLetterEntryInDateFields();
 }
 
 export function showLeaveScheduleForDisabilityType(disabilityType) {
@@ -578,4 +579,12 @@ function reformatDateMMDDYYYY(dateValue) {
   }
 
   return `${month}/${day}/${year}`;
+}
+
+function preventLetterEntryInDateFields() {
+  document.addEventListener('input', function(e) {
+    if (e.target.classList.contains('usa-date-picker__external-input')) {
+      e.target.value = e.target.value.replace(/[^0-9/]/g, '');
+    }
+  });
 }
