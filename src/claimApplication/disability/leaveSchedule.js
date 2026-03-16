@@ -498,15 +498,18 @@ function restyleLDWDateEntry() {
   wrapper.appendChild(newInput);
   originalInput.parentNode.insertBefore(wrapper, originalInput);
 
-  const updateOriginalInput = function() {
+  wrapper.addEventListener('blur', function() {
     const formattedDate = reformatDateMMDDYYYY(newInput.value);
     if (formattedDate) {
       originalInput.value = formattedDate;
       priorFDD(originalInput);
     }
-  };
-  
-  newInput.onblur = updateOriginalInput;
+  }, true);
+
+  wrapper.addEventListener('change', function() {
+    const externalInput = document.getElementById('txtDtLastWorkd');
+    externalInput.setCustomValidity('');
+  });
 }
 
 function restyleReturnedToWorkDateEntry() {
