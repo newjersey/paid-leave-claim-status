@@ -246,7 +246,7 @@ function setupLDW() {
       <span class="required-asterisk">*</span>
       <span id="lastWorkdayQuestion"></span>
     </label>
-    <div class="usa-hint" id="ldwHint">${i18next.t('leaveSchedule.lastWorkdayHint')}<br>${i18next.t('shared.dateFormat')}</div>
+    <div class="usa-hint" id="ldwHint"></div>
   `;
   ldwDateInput.insertAdjacentHTML('beforebegin', ldwLabel);
 
@@ -455,6 +455,9 @@ function restyleFDDDateEntry() {
       dateFormatforFDD(originalInput);
 
       const selectedDate = new Date(newInput.value);
+
+      const ldwHint = document.getElementById('ldwHint');
+      ldwHint.innerHTML = `${i18next.t('leaveSchedule.lastWorkdayHint', { fdd: formattedDate })}<br>${i18next.t('shared.dateFormat')}`;
 
       const ldwInput = document.getElementById('txtDtLastWorkd');
       if (ldwInput) {
