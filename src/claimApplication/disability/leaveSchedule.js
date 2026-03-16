@@ -18,6 +18,47 @@ export function showLeaveScheduleForDisabilityType(disabilityType) {
   addStyles();
 }
 
+const ICONS = {
+  calendar: `
+    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+      <path d="M0 0h24v24H0z" fill="none"/>
+      <path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/>
+    </svg>
+  `,
+  prevMonth: `
+    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+      <path d="M0 0h24v24H0z" fill="none"/>
+      <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+    </svg>
+  `,
+  prevYear: `
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+      <g fill="none" fill-rule="evenodd">
+        <polygon points="0 0 24 0 24 24 0 24"/>
+        <polygon fill="#000" fill-rule="nonzero" points="11.41 7.41 10 6 4 12 10 18 11.41 16.59 6.83 12"/>
+        <polygon fill="#000" fill-rule="nonzero" points="19.41 7.41 18 6 12 12 18 18 19.41 16.59 14.83 12"/>
+      </g>
+    </svg>
+  `,
+  nextMonth: `
+    <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24">
+      <path d="M0 0h24v24H0z" fill="none"/>
+      <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+    </svg>
+  `,
+  nextYear: `
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+      <g fill="none" fill-rule="evenodd">
+        <polygon points="0 0 24 0 24 24 0 24"/>
+        <g fill="#000" fill-rule="nonzero" transform="translate(4.59 6)">
+          <polygon points="9.41 0 8 1.41 12.58 6 8 10.59 9.41 12 15.41 6"/>
+          <polygon points="1.41 0 0 1.41 4.58 6 0 10.59 1.41 12 7.41 6"/>
+        </g>
+      </g>
+    </svg>
+  `
+};
+
 function addStyles() {
   const style = document.createElement('style');
   style.innerHTML = `
@@ -45,6 +86,62 @@ function addStyles() {
 
     .usa-label {
       font-size: 16px;
+    }
+
+    .usa-date-picker__calendar__previous-month:not([disabled]) {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 24 24' width='24'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath d='M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z'/%3E%3C/svg%3E"), linear-gradient(transparent, transparent);
+      background-repeat: no-repeat;
+    }
+
+    .usa-date-picker__calendar__previous-year:not([disabled]) {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpolygon points='0 0 24 0 24 24 0 24'/%3E%3Cpolygon fill='%23000' fill-rule='nonzero' points='11.41 7.41 10 6 4 12 10 18 11.41 16.59 6.83 12'/%3E%3Cpolygon fill='%23000' fill-rule='nonzero' points='19.41 7.41 18 6 12 12 18 18 19.41 16.59 14.83 12'/%3E%3C/g%3E%3C/svg%3E"), linear-gradient(transparent, transparent);
+      background-repeat: no-repeat;
+    }
+
+    .usa-date-picker__calendar__next-month:not([disabled]) {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 24 24' width='24'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath d='M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z'/%3E%3C/svg%3E"), linear-gradient(transparent, transparent);
+      background-repeat: no-repeat;
+    }
+
+    .usa-date-picker__calendar__next-year:not([disabled]) {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpolygon points='0 0 24 0 24 24 0 24'/%3E%3Cg fill='%23000' fill-rule='nonzero' transform='translate(4.59 6)'%3E%3Cpolygon points='9.41 0 8 1.41 12.58 6 8 10.59 9.41 12 15.41 6'/%3E%3Cpolygon points='1.41 0 0 1.41 4.58 6 0 10.59 1.41 12 7.41 6'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"), linear-gradient(transparent, transparent);
+      background-repeat: no-repeat;
+    }
+
+    .usa-date-picker__button:not([disabled]) {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' height='24' viewBox='0 0 24 24' width='24'%3E%3Cpath d='M0 0h24v24H0z' fill='none'/%3E%3Cpath d='M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z'/%3E%3C/svg%3E"), linear-gradient(transparent, transparent);
+      background-repeat: no-repeat;
+    }
+
+    .usa-date-picker__calendar__month-selection,
+    .usa-date-picker__calendar__year-selection {
+      min-width: 80px;
+      max-width: 120px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .usa-date-picker__calendar__row {
+      display: flex;
+      flex-wrap: nowrap;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .usa-date-picker__calendar__cell--center-items {
+      flex-shrink: 0;
+    }
+
+    .usa-date-picker__calendar__month-label {
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .usa-date-picker__calendar__table {
+      margin-top: 8px;
     }
   `;
   document.head.appendChild(style);
@@ -329,6 +426,7 @@ function createDateInput(id, ariaLabel) {
   input.setAttribute('class', 'usa-input');
   input.setAttribute('id', id);
   input.setAttribute('name', id);
+  input.setAttribute('placeholder', i18next.t('shared.dateFormat'));
   input.setAttribute('maxlength', '10');
   input.setAttribute('aria-label', ariaLabel);
   return input;
