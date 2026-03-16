@@ -461,7 +461,10 @@ function restyleFDDDateEntry() {
         const oneDayEarlier = new Date(selectedDate);
         oneDayEarlier.setDate(selectedDate.getDate() - 1); 
         const maxDate = reformatDateYYYYMMDD(oneDayEarlier);
-        ldwInput.setAttribute('max', maxDate);
+        const ldwWrapper = ldwInput.closest('.usa-date-picker');
+        if (ldwWrapper) {
+          ldwWrapper.setAttribute('data-max-date', maxDate);
+        }
       }
 
       const returnedToWorkInput = document.getElementById('txtDtReturnedToWrk');
@@ -469,7 +472,10 @@ function restyleFDDDateEntry() {
         const oneDayLater = new Date(selectedDate);
         oneDayLater.setDate(selectedDate.getDate() + 1);
         const minDate = reformatDateYYYYMMDD(oneDayLater);
-        returnedToWorkInput.setAttribute('min', minDate);
+        const returnedToWorkWrapper = returnedToWorkInput.closest('.usa-date-picker');
+        if (returnedToWorkWrapper) {
+          returnedToWorkWrapper.setAttribute('data-min-date', minDate);
+        }
       }
     }
   };
@@ -487,8 +493,10 @@ function restyleLDWDateEntry() {
   const originalInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd');
   originalInput.style.display = 'none';
 
+  const wrapper = createDateInputWrapper();
   const newInput = createDateInput('txtDtLastWorkd', 'Last Worked Date');
-  originalInput.parentNode.insertBefore(newInput, originalInput);
+  wrapper.appendChild(newInput);
+  originalInput.parentNode.insertBefore(wrapper, originalInput);
 
   const updateOriginalInput = function() {
     const formattedDate = reformatDateMMDDYYYY(newInput.value);
@@ -510,13 +518,15 @@ function restyleReturnedToWorkDateEntry() {
   const originalInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk');
   originalInput.style.display = 'none';
 
+  const wrapper = createDateInputWrapper();
   const newInput = createDateInput('txtDtReturnedToWrk', 'Returned to Work Date');
 
   const maxDate = new Date();
   const maxDateFormatted = reformatDateYYYYMMDD(maxDate);
-  newInput.setAttribute('max', maxDateFormatted);
+  wrapper.setAttribute('data-max-date', maxDateFormatted);
 
-  originalInput.parentNode.insertBefore(newInput, originalInput);
+  wrapper.appendChild(newInput);
+  originalInput.parentNode.insertBefore(wrapper, originalInput);
 
   const updateOriginalInput = function() {
     const formattedDate = reformatDateMMDDYYYY(newInput.value);
@@ -538,14 +548,16 @@ function restyleExpectedReturnToWorkDateEntry() {
   const originalInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk');
   originalInput.style.display = 'none';
 
+  const wrapper = createDateInputWrapper();
   const newInput = createDateInput('txtExpectedReturnedDtToWrk', 'Expected Return to Work Date');
-
+  
   const minDate = new Date();
   minDate.setDate(minDate.getDate() + 1); // tomorrow
   const minDateFormatted = reformatDateYYYYMMDD(minDate);
-  newInput.setAttribute('min', minDateFormatted);
+  wrapper.setAttribute('data-min-date', minDateFormatted);
 
-  originalInput.parentNode.insertBefore(newInput, originalInput);
+  wrapper.appendChild(newInput);
+  originalInput.parentNode.insertBefore(wrapper, originalInput);
 
   const updateOriginalInput = function() {
     const formattedDate = reformatDateMMDDYYYY(newInput.value);
