@@ -318,13 +318,19 @@ function setupFutureDateAlert() {
   });
 }
 
+function createDateInputWrapper() {
+  const wrapper = document.createElement('div');
+  wrapper.setAttribute('class', 'usa-date-picker');
+  return wrapper;
+}
+
 function createDateInput(id, ariaLabel) {
   const input = document.createElement('input');
-  input.setAttribute('type', 'date');
-  input.setAttribute('id', id);
   input.setAttribute('class', 'usa-input');
-  input.setAttribute('aria-label', ariaLabel);
+  input.setAttribute('id', id);
+  input.setAttribute('name', id);
   input.setAttribute('maxlength', '10');
+  input.setAttribute('aria-label', ariaLabel);
   return input;
 }
 
@@ -337,9 +343,11 @@ function restyleFDDDateEntry() {
   const originalInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt');
   originalInput.style.display = 'none';
 
+  const wrapper = createDateInputWrapper();
   const newInput = createDateInput('txtDisStartDt', 'Disability Start Date');
   newInput.setAttribute('onblur', 'EmptyDate();');
-  originalInput.parentNode.insertBefore(newInput, originalInput);
+  wrapper.appendChild(newInput);
+  originalInput.parentNode.insertBefore(wrapper, originalInput);
 
   const updateOriginalInput = function() {
     const formattedDate = reformatDateMMDDYYYY(newInput.value);
