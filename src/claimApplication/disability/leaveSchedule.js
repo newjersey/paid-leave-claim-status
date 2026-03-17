@@ -43,6 +43,20 @@ function addStyles() {
     .usa-label {
       font-size: 16px;
     }
+
+    #CalendarControl td.empty {
+      visibility: hidden !important;
+    }
+
+    #CalendarControl td,
+    #CalendarControl th {
+      width: 36px !important;
+      height: 36px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: 0 !important;
+      box-sizing: border-box !important;
+    }
   `;
   document.head.appendChild(style);
 }
