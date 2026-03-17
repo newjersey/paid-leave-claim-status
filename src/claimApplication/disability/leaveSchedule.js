@@ -271,7 +271,7 @@ function setupLDW() {
       <span class="required-asterisk">*</span>
       <span id="returnDateQuestion"></span>
     </label>
-    <div class="usa-hint" id="returnHint">${i18next.t('leaveSchedule.recoveryDateHint')}<br>${i18next.t('shared.dateFormat')}</div>
+    <div class="usa-hint" id="returnHint"></div>
   `;
   returnDateInput.insertAdjacentHTML('beforebegin', returnDateQuestion);
 
@@ -445,7 +445,6 @@ function restyleFDDDateEntry() {
   const wrapper = createDateInputWrapper();
   const newInput = createDateInput('txtDisStartDt', 'Disability Start Date');
   newInput.setAttribute('onblur', 'EmptyDate();');
-  newInput.setAttribute('required', 'true');
   wrapper.appendChild(newInput);
   originalInput.parentNode.insertBefore(wrapper, originalInput);
 
@@ -470,6 +469,9 @@ function restyleFDDDateEntry() {
           ldwWrapper.setAttribute('data-max-date', maxDate);
         }
       }
+
+      const returnHint = document.getElementById('returnHint');
+      returnHint.innerHTML = `${i18next.t('leaveSchedule.recoveryDateHint', { fdd: formattedDate })}<br>${i18next.t('shared.dateFormat')}`;
 
       const returnedToWorkInput = document.getElementById('txtDtReturnedToWrk');
       if (returnedToWorkInput) {
@@ -499,7 +501,6 @@ function restyleLDWDateEntry() {
 
   const wrapper = createDateInputWrapper();
   const newInput = createDateInput('txtDtLastWorkd', 'Last Worked Date');
-  newInput.setAttribute('required', 'true');
   wrapper.appendChild(newInput);
   originalInput.parentNode.insertBefore(wrapper, originalInput);
 
@@ -536,15 +537,18 @@ function restyleReturnedToWorkDateEntry() {
   wrapper.appendChild(newInput);
   originalInput.parentNode.insertBefore(wrapper, originalInput);
 
-  const updateOriginalInput = function() {
-    const formattedDate = reformatDateMMDDYYYY(newInput.value);
-    if (formattedDate) {
+  wrapper.addEventListener('change', function(e) {
+    const externalInput = document.getElementById('txtDtReturnedToWrk');
+    externalInput.setCustomValidity('');
+    if (e.target.classList.contains('usa-date-picker__external-input')) {
+      const formattedDate = reformatDateFromExternal(externalInput.value);
       originalInput.value = formattedDate;
       AfterFDDnNotFuture(originalInput,'you returned to work');
+      if (originalInput.value === '') {
+        externalInput.value = '';
+      }
     }
-  };
-  
-  newInput.onblur = updateOriginalInput;
+  }, true);
 }
 
 function restyleExpectedReturnToWorkDateEntry() {
@@ -567,15 +571,18 @@ function restyleExpectedReturnToWorkDateEntry() {
   wrapper.appendChild(newInput);
   originalInput.parentNode.insertBefore(wrapper, originalInput);
 
-  const updateOriginalInput = function() {
-    const formattedDate = reformatDateMMDDYYYY(newInput.value);
-    if (formattedDate) {
+  wrapper.addEventListener('change', function(e) {
+    const externalInput = document.getElementById('txtExpectedReturnedDtToWrk');
+    externalInput.setCustomValidity('');
+    if (e.target.classList.contains('usa-date-picker__external-input')) {
+      const formattedDate = reformatDateFromExternal(externalInput.value);
       originalInput.value = formattedDate;
       totestYearExpectedRTW(originalInput,'you expect to return to work');
+      if (originalInput.value === '') {
+        externalInput.value = '';
+      }
     }
-  };
-  
-  newInput.onblur = updateOriginalInput;
+  }, true);
 }
 
 function reformatDateYYYYMMDD(date) {
