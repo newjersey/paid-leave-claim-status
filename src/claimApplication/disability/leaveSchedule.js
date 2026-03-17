@@ -58,6 +58,20 @@ function addStyles() {
       border: 0 !important;
       box-sizing: border-box !important;
     }
+
+    #CalendarControl tr.header,
+    #CalendarControl tr.footer {
+      background-color: #e9ecf1 !important; /* light gray */
+    }
+
+    #CalendarControl tr.header td,
+    #CalendarControl tr.footer td {
+      background-color: #e9ecf1 !important;
+    }
+
+    #CalendarControl th a {
+      color: black;
+    }
   `;
   document.head.appendChild(style);
 }
@@ -353,7 +367,7 @@ function calendarControlEdits() {
   const calendarButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_Image11');
   if (calendarButton) {
     calendarButton.addEventListener('click', function() {
-      fixCalendarHeader();
+      setTimeout(fixCalendarHeader, 10);
     });
   }
 }
@@ -362,17 +376,35 @@ function fixCalendarHeader() {
   const headerRow = document.querySelector('#CalendarControl tr.header');
   if (!headerRow) return;
   
-  const prev = headerRow.querySelector('.previous')?.innerHTML || '';
+  const prevMonth = headerRow.querySelector('a[href*="changeCalendarControlMonth(-1)"]')?.outerHTML || '';
+  const prevYear = headerRow.querySelector('a[href*="changeCalendarControlYear(-1)"]')?.outerHTML || '';
+  const nextMonth = headerRow.querySelector('a[href*="changeCalendarControlMonth(1)"]')?.outerHTML || '';
+  const nextYear = headerRow.querySelector('a[href*="changeCalendarControlYear(1)"]')?.outerHTML || '';
   const title = headerRow.querySelector('.title')?.innerHTML || '';
-  const next = headerRow.querySelector('.next')?.innerHTML || '';
+  
+  const linkStyle = 'font-size: 1.2em; padding: 4px 8px; display: inline-block;';
+  const gapStyle = 'display: flex; gap: 12px; align-items: center;';
   
   headerRow.innerHTML = `
     <td colspan="7" style="padding: 0;">
       <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 4px;">
-        <div style="text-align: left;">${prev}</div>
+        <div style="text-align: left; ${gapStyle}">
+          <span style="${linkStyle}">${prevYear}</span>
+          <span style="${linkStyle}">${prevMonth}</span>
+        </div>
         <div style="text-align: center; flex: 1;">${title}</div>
-        <div style="text-align: right;">${next}</div>
+        <div style="text-align: right; ${gapStyle}">
+          <span style="${linkStyle}">${nextMonth}</span>
+          <span style="${linkStyle}">${nextYear}</span>
+        </div>
       </div>
     </td>
   `;
+
+  const navLinks = headerRow.querySelectorAll('a');
+  navLinks.forEach(link => {
+    link.addEventListener('click', function() {
+      setTimeout(fixCalendarHeader, 10);
+    });
+  });
 }
