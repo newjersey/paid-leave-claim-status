@@ -56,10 +56,10 @@ describe("Disability Information page", () => {
         const data = JSON.parse(encodeDecode(encodedData));
         expect(data["disabilityInfoView"]).to.equal('leaveSchedule');
       });
-      cy.get('[id="txtDisStartDt"]').should('have.length', 1).type("2025-07-18");
-      cy.get('#txtDtLastWorkd').type("2025-07-17");
+      cy.get('[id="txtDisStartDt"]').should('have.length', 1).type("07/18/2025");
+      cy.get('#txtDtLastWorkd').type("07/17/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes').click({ force: true });
-      cy.get('#txtDtReturnedToWrk').type("2025-08-17").blur();
+      cy.get('#txtDtReturnedToWrk').type("08/17/2025").blur();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_btnSubmitConflictCheck').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     }
@@ -145,9 +145,9 @@ describe("Disability Information page", () => {
       const futureDate = new Date(today);
       futureDate.setDate(today.getDate() + 1); // 1 day in future
 
-      // YYYY-MM-DD
-      const formattedFutureDate = `${futureDate.getFullYear()}-${(futureDate.getMonth() + 1).toString().padStart(2, '0')}-${
-        futureDate.getDate().toString().padStart(2, '0')}`;
+      // MM/DD/YYYY
+      const formattedFutureDate = `${(futureDate.getMonth() + 1).toString().padStart(2, '0')}/${
+        futureDate.getDate().toString().padStart(2, '0')}/${futureDate.getFullYear()}`;
 
       cy.get('#txtDisStartDt').type(formattedFutureDate);
       cy.get('h2').contains("You're a little early").should('be.visible');

@@ -426,7 +426,6 @@ function createDateInput(id, ariaLabel) {
   const input = document.createElement('input');
   input.setAttribute('class', 'usa-input');
   input.setAttribute('id', id);
-  input.setAttribute('name', id);
   input.setAttribute('placeholder', i18next.t('shared.dateFormat'));
   input.setAttribute('maxlength', '10');
   input.setAttribute('aria-label', ariaLabel);
