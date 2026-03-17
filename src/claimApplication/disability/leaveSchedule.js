@@ -7,6 +7,7 @@ export function setupLeaveSchedulePage() {
   setupFutureDateAlert();
   removeUnwantedBlankLine();
   replaceCalendarIcons();
+  calendarControlEdits();
 }
 
 export function showLeaveScheduleForDisabilityType(disabilityType) {
@@ -346,4 +347,32 @@ function replaceCalendarIcons() {
       element.src = `data:image/svg+xml;charset=utf-8,${encoded}`;
     }
   });
+}
+
+function calendarControlEdits() {
+  const calendarButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_Image11');
+  if (calendarButton) {
+    calendarButton.addEventListener('click', function() {
+      fixCalendarHeader();
+    });
+  }
+}
+
+function fixCalendarHeader() {
+  const headerRow = document.querySelector('#CalendarControl tr.header');
+  if (!headerRow) return;
+  
+  const prev = headerRow.querySelector('.previous')?.innerHTML || '';
+  const title = headerRow.querySelector('.title')?.innerHTML || '';
+  const next = headerRow.querySelector('.next')?.innerHTML || '';
+  
+  headerRow.innerHTML = `
+    <td colspan="7" style="padding: 0;">
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 4px;">
+        <div style="text-align: left;">${prev}</div>
+        <div style="text-align: center; flex: 1;">${title}</div>
+        <div style="text-align: right;">${next}</div>
+      </div>
+    </td>
+  `;
 }
