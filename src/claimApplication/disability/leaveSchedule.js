@@ -7,7 +7,6 @@ export function setupLeaveSchedulePage() {
   setupFutureDateAlert();
   removeUnwantedBlankLine();
   replaceCalendarIcons();
-  calendarControlEdits();
 }
 
 export function showLeaveScheduleForDisabilityType(disabilityType) {
@@ -45,12 +44,15 @@ function addStyles() {
       font-size: 16px;
     }
 
-    #CalendarControl td.empty {
+    #CalendarControl td.empty,
+    #FDDCalendarControl td.empty {
       visibility: hidden !important;
     }
 
     #CalendarControl td,
-    #CalendarControl th {
+    #CalendarControl th,
+    #FDDCalendarControl td,
+    #FDDCalendarControl th {
       width: 36px !important;
       height: 36px !important;
       padding: 0 !important;
@@ -60,16 +62,28 @@ function addStyles() {
     }
 
     #CalendarControl tr.header,
-    #CalendarControl tr.footer {
+    #CalendarControl tr.footer,
+    #FDDCalendarControl tr.header,
+    #FDDCalendarControl tr.footer {
       background-color: #e9ecf1 !important; /* light gray */
     }
 
     #CalendarControl tr.header td,
-    #CalendarControl tr.footer td {
+    #CalendarControl tr.footer td,
+    #FDDCalendarControl tr.header td,
+    #FDDCalendarControl tr.footer td {
       background-color: #e9ecf1 !important;
     }
 
-    #CalendarControl th a {
+    #CalendarControl th a,
+    #FDDCalendarControl th a,
+    #FDDCalendarControl .previous a,
+    #FDDCalendarControl .next a {
+      color: blue;
+      text-decoration: underline;
+    }
+
+    #FDDCalendarControl .title {
       color: black;
     }
   `;
@@ -345,41 +359,51 @@ function setupFutureDateAlert() {
 }
 
 function replaceCalendarIcons() {
-  const ids = [
-    'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_Image11',
-    'btnDtLstWorkd',
-    'Image12',
-    'Image13'
-  ];
+  const fddCalendarBtnId = 'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_Image11';
+  const ldwCalendarBtnId = 'btnDtLstWorkd';
+  const returnToWorkCalendarBtnId = 'Image12';
+  const estReturnToWorkCalendarBtnId = 'Image13';
 
-  const svgString = `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>`;
-  const encoded = encodeURIComponent(svgString);
+  replaceCalendarIcon(fddCalendarBtnId);
+  replaceCalendarIcon(ldwCalendarBtnId);
+  replaceCalendarIcon(returnToWorkCalendarBtnId);
+  replaceCalendarIcon(estReturnToWorkCalendarBtnId);
 
-  ids.forEach(id => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.src = `data:image/svg+xml;charset=utf-8,${encoded}`;
-    }
-  });
+  const calendarControlId = "CalendarControl";
+  const fddCalendarControlId = "FDDCalendarControl"; // DEPENDENT on FDD, not setting it
+
+  fixCalendarOnClick(fddCalendarBtnId, calendarControlId);
+  fixCalendarOnClick(ldwCalendarBtnId, fddCalendarControlId);
+  fixCalendarOnClick(returnToWorkCalendarBtnId, fddCalendarControlId);
+  fixCalendarOnClick(estReturnToWorkCalendarBtnId, fddCalendarControlId);
 }
 
-function calendarControlEdits() {
-  const calendarButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_Image11');
-  if (calendarButton) {
-    calendarButton.addEventListener('click', function() {
-      setTimeout(fixCalendarHeader, 10);
+function replaceCalendarIcon(id) {
+  const svgString = `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>`;
+  const encoded = encodeURIComponent(svgString);
+  const element = document.getElementById(id);
+  if (element) {
+    element.src = `data:image/svg+xml;charset=utf-8,${encoded}`;
+  }
+}
+
+function fixCalendarOnClick(id, calendarId) {
+  const element = document.getElementById(id);
+  if (element) {
+    element.addEventListener('click', function() {
+      setTimeout(() => fixCalendarHeader(calendarId), 10);
     });
   }
 }
 
-function fixCalendarHeader() {
-  const headerRow = document.querySelector('#CalendarControl tr.header');
+function fixCalendarHeader(calendarId) {
+  const headerRow = document.querySelector(`#${calendarId} tr.header`);
   if (!headerRow) return;
   
-  const prevMonth = headerRow.querySelector('a[href*="changeCalendarControlMonth(-1)"]')?.outerHTML || '';
-  const prevYear = headerRow.querySelector('a[href*="changeCalendarControlYear(-1)"]')?.outerHTML || '';
-  const nextMonth = headerRow.querySelector('a[href*="changeCalendarControlMonth(1)"]')?.outerHTML || '';
-  const nextYear = headerRow.querySelector('a[href*="changeCalendarControlYear(1)"]')?.outerHTML || '';
+  const prevMonth = headerRow.querySelector('a[href*="changeCalendarControlMonth(-1)"], a[href*="changeCalendarControlMonthFDD(-1)"]')?.outerHTML || '';
+  const prevYear = headerRow.querySelector('a[href*="changeCalendarControlYear(-1)"], a[href*="changeCalendarControlYearFDD(-1)"]')?.outerHTML || '';
+  const nextMonth = headerRow.querySelector('a[href*="changeCalendarControlMonth(1)"], a[href*="changeCalendarControlMonthFDD(1)"]')?.outerHTML || '';
+  const nextYear = headerRow.querySelector('a[href*="changeCalendarControlYear(1)"], a[href*="changeCalendarControlYearFDD(1)"]')?.outerHTML || '';
   const title = headerRow.querySelector('.title')?.innerHTML || '';
   
   const linkStyle = 'font-size: 1.2em; padding: 4px 8px; display: inline-block;';
@@ -404,7 +428,7 @@ function fixCalendarHeader() {
   const navLinks = headerRow.querySelectorAll('a');
   navLinks.forEach(link => {
     link.addEventListener('click', function() {
-      setTimeout(fixCalendarHeader, 10);
+      setTimeout(() => fixCalendarHeader(calendarId), 10);
     });
   });
 }
