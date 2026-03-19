@@ -6,7 +6,7 @@ export function setupLeaveSchedulePage() {
   setupLDW();
   setupFutureDateAlert();
   removeUnwantedBlankLine();
-  replaceCalendarIcons();
+  updateAllCalendars();
 }
 
 export function showLeaveScheduleForDisabilityType(disabilityType) {
@@ -358,38 +358,25 @@ function setupFutureDateAlert() {
   });
 }
 
-function replaceCalendarIcons() {
+function updateAllCalendars() {
   const fddCalendarBtnId = 'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_Image11';
   const ldwCalendarBtnId = 'btnDtLstWorkd';
   const returnToWorkCalendarBtnId = 'Image12';
   const estReturnToWorkCalendarBtnId = 'Image13';
 
-  replaceCalendarIcon(fddCalendarBtnId);
-  replaceCalendarIcon(ldwCalendarBtnId);
-  replaceCalendarIcon(returnToWorkCalendarBtnId);
-  replaceCalendarIcon(estReturnToWorkCalendarBtnId);
-
   const calendarControlId = "CalendarControl";
   const fddCalendarControlId = "FDDCalendarControl"; // DEPENDENT on FDD, not setting it
 
-  fixCalendarOnClick(fddCalendarBtnId, calendarControlId);
-  fixCalendarOnClick(ldwCalendarBtnId, fddCalendarControlId);
-  fixCalendarOnClick(returnToWorkCalendarBtnId, fddCalendarControlId);
-  fixCalendarOnClick(estReturnToWorkCalendarBtnId, fddCalendarControlId);
+  updateCalendarUI(fddCalendarBtnId, calendarControlId);
+  updateCalendarUI(ldwCalendarBtnId, fddCalendarControlId);
+  updateCalendarUI(returnToWorkCalendarBtnId, fddCalendarControlId);
+  updateCalendarUI(estReturnToWorkCalendarBtnId, fddCalendarControlId);
 }
 
-function replaceCalendarIcon(id) {
-  const svgString = `<svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><path d="M20 3h-1V1h-2v2H7V1H5v2H4c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 18H4V8h16v13z"/></svg>`;
-  const encoded = encodeURIComponent(svgString);
+function updateCalendarUI(id, calendarId) {
   const element = document.getElementById(id);
   if (element) {
-    element.src = `data:image/svg+xml;charset=utf-8,${encoded}`;
-  }
-}
-
-function fixCalendarOnClick(id, calendarId) {
-  const element = document.getElementById(id);
-  if (element) {
+    element.src = "https://beta.nj.gov/files/tdi-fli-claim-status/assets/calendar_today.svg";
     element.addEventListener('click', function() {
       setTimeout(() => fixCalendarHeader(calendarId), 10);
     });
