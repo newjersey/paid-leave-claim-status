@@ -52,6 +52,7 @@ function addStyles() {
 
     #CalendarControl td.empty,
     #FDDCalendarControl td.empty {
+      height: 0 !important;
       visibility: hidden !important;
     }
 
@@ -102,6 +103,7 @@ function addStyles() {
     #FDDCalendarControl .current {
       background-color: #e9ecf1;
       border: none;
+      line-height: 26px;
     }
 
     #CalendarControl .weekday:hover,
