@@ -1,6 +1,9 @@
 import i18next from 'i18next';
 import { DisabilityType, styleRadioButton } from '../utils';
 
+const CALENDAR_CONTROL_ID = "CalendarControl";
+const FDD_CALENDAR_CONTROL_ID = "FDDCalendarControl"; // DEPENDENT on FDD, not setting it
+
 export function setupLeaveSchedulePage() {
   setupFDD();
   setupLDW();
@@ -406,13 +409,10 @@ function updateAllCalendars() {
   const returnToWorkCalendarBtnId = 'Image12';
   const estReturnToWorkCalendarBtnId = 'Image13';
 
-  const calendarControlId = "CalendarControl";
-  const fddCalendarControlId = "FDDCalendarControl"; // DEPENDENT on FDD, not setting it
-
-  updateCalendarUI(fddCalendarBtnId, calendarControlId);
-  updateCalendarUI(ldwCalendarBtnId, fddCalendarControlId);
-  updateCalendarUI(returnToWorkCalendarBtnId, fddCalendarControlId);
-  updateCalendarUI(estReturnToWorkCalendarBtnId, fddCalendarControlId);
+  updateCalendarUI(fddCalendarBtnId, CALENDAR_CONTROL_ID);
+  updateCalendarUI(ldwCalendarBtnId, FDD_CALENDAR_CONTROL_ID);
+  updateCalendarUI(returnToWorkCalendarBtnId, FDD_CALENDAR_CONTROL_ID);
+  updateCalendarUI(estReturnToWorkCalendarBtnId, FDD_CALENDAR_CONTROL_ID);
 }
 
 function updateCalendarUI(id, calendarId) {
@@ -420,6 +420,7 @@ function updateCalendarUI(id, calendarId) {
   if (element) {
     element.src = "https://beta.nj.gov/files/tdi-fli-claim-status/assets/calendar_today.svg";
     element.addEventListener('click', function() {
+      closeCalendarPopup(calendarId);
       setTimeout(() => fixCalendarPopup(calendarId), 10);
     });
   }
@@ -457,13 +458,37 @@ function fixCalendarPopup(calendarId) {
     </td>
   `;
 
-  const closeLink = footerRow.querySelector('a[href*="hideCalendarControl"]')?.outerHTML || '';
-  footerRow.innerHTML = `<th colspan="7" style="padding: 3px;">${closeLink}</th>`;
-
   const navLinks = navHeaderRow.querySelectorAll('a');
   navLinks.forEach(link => {
     link.addEventListener('click', function() {
       setTimeout(() => fixCalendarPopup(calendarId), 10);
     });
   });
+
+  footerRow.remove();
+}
+
+function closeCalendarPopup(calendarId) {
+  const calendarPopup = document.getElementById(calendarId);
+  
+  if (window.calendarClickOutsideHandler) {
+    document.removeEventListener('click', window.calendarClickOutsideHandler);
+  }
+  
+  window.calendarClickOutsideHandler = function(event) {
+    if (!calendarPopup || !calendarPopup.offsetParent) return;
+    const isClickInside = calendarPopup.contains(event.target);
+    if (!isClickInside) {
+      if (calendarId === CALENDAR_CONTROL_ID) {
+        hideCalendarControl();
+      } else if (calendarId === FDD_CALENDAR_CONTROL_ID) {
+        hideCalendarControlFDD();
+      }
+      document.removeEventListener('click', window.calendarClickOutsideHandler);
+    }
+  };
+  
+  setTimeout(() => {
+    document.addEventListener('click', window.calendarClickOutsideHandler);
+  }, 100);
 }
