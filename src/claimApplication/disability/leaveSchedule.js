@@ -68,7 +68,7 @@ function addStyles() {
     #CalendarControl tr.footer,
     #FDDCalendarControl tr.header,
     #FDDCalendarControl tr.footer {
-      background-color: #e9ecf1 !important; /* light gray */
+      background-color: #e9ecf1 !important;
     }
 
     #CalendarControl tr.header td,
@@ -87,6 +87,44 @@ function addStyles() {
     }
 
     #FDDCalendarControl .title {
+      color: black;
+    }
+
+    #CalendarControl .weekday,
+    #CalendarControl .weekend,
+    #CalendarControl .current,
+    #FDDCalendarControl .weekday,
+    #FDDCalendarControl .weekend,
+    #FDDCalendarControl .current {
+      background-color: #e9ecf1;
+      border: none;
+    }
+
+    #CalendarControl .weekday:hover,
+    #CalendarControl .weekend:hover,
+    #CalendarControl .current:hover,
+    #FDDCalendarControl .weekday:hover,
+    #FDDCalendarControl .weekend:hover,
+    #FDDCalendarControl .current:hover {
+      background-color: #c0c4cc;
+      border: none;
+      color: black;
+    }
+
+    #CalendarControl .weekday:active,
+    #CalendarControl .weekend:active,
+    #CalendarControl .current:active,
+    #FDDCalendarControl .weekday:active,
+    #FDDCalendarControl .weekend:active,
+    #FDDCalendarControl .current:active {
+      background-color: #9ca3af;
+      border: none;
+      color: black;
+    }
+
+    #CalendarControl .current,
+    #FDDCalendarControl .current {
+      border: 5px solid #005ea2;
       color: black;
     }
   `;
