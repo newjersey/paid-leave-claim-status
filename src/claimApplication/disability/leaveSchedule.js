@@ -86,6 +86,7 @@ function addStyles() {
       text-decoration: underline;
     }
 
+    #CalendarControl .title,
     #FDDCalendarControl .title {
       color: black;
     }
@@ -444,7 +445,7 @@ function fixCalendarPopup(calendarId) {
           <span style="${linkStyle}">${prevYear}</span>
           <span style="${linkStyle}">${prevMonth}</span>
         </div>
-        <div style="text-align: center; flex: 1;">${title}</div>
+        <div class="title" style="text-align: center; flex: 1;">${title}</div>
         <div style="text-align: right; ${gapStyle}">
           <span style="${linkStyle}">${nextMonth}</span>
           <span style="${linkStyle}">${nextYear}</span>
