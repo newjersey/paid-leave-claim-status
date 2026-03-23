@@ -33,6 +33,9 @@ function addStyles() {
 
     /* Calendar popup container */
     #FDDCalendarControl table, #CalendarControl table {
+      background-color: #e9ecf1;
+      border-left: 5px solid #e9ecf1;
+      border-right: none;
       font-size: 16px;
     }
 
