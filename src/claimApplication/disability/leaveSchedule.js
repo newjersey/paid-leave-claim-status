@@ -426,19 +426,22 @@ function updateCalendarUI(id, calendarId) {
 }
 
 function fixCalendarPopup(calendarId) {
-  const headerRow = document.querySelector(`#${calendarId} tr.header`);
-  if (!headerRow) return;
+  const headerRows = document.querySelectorAll(`#${calendarId} tr.header`);
+  if (headerRows.length != 2) return;
+
+  const navHeaderRow = headerRows[0];
+  const footerRow = headerRows[1];
   
-  const prevMonth = headerRow.querySelector('a[href*="changeCalendarControlMonth(-1)"], a[href*="changeCalendarControlMonthFDD(-1)"]')?.outerHTML || '';
-  const prevYear = headerRow.querySelector('a[href*="changeCalendarControlYear(-1)"], a[href*="changeCalendarControlYearFDD(-1)"]')?.outerHTML || '';
-  const nextMonth = headerRow.querySelector('a[href*="changeCalendarControlMonth(1)"], a[href*="changeCalendarControlMonthFDD(1)"]')?.outerHTML || '';
-  const nextYear = headerRow.querySelector('a[href*="changeCalendarControlYear(1)"], a[href*="changeCalendarControlYearFDD(1)"]')?.outerHTML || '';
-  const title = headerRow.querySelector('.title')?.innerHTML || '';
+  const prevMonth = navHeaderRow.querySelector('a[href*="changeCalendarControlMonth(-1)"], a[href*="changeCalendarControlMonthFDD(-1)"]')?.outerHTML || '';
+  const prevYear = navHeaderRow.querySelector('a[href*="changeCalendarControlYear(-1)"], a[href*="changeCalendarControlYearFDD(-1)"]')?.outerHTML || '';
+  const nextMonth = navHeaderRow.querySelector('a[href*="changeCalendarControlMonth(1)"], a[href*="changeCalendarControlMonthFDD(1)"]')?.outerHTML || '';
+  const nextYear = navHeaderRow.querySelector('a[href*="changeCalendarControlYear(1)"], a[href*="changeCalendarControlYearFDD(1)"]')?.outerHTML || '';
+  const title = navHeaderRow.querySelector('.title')?.innerHTML || '';
   
   const linkStyle = 'font-size: 1.2em; padding: 4px 8px; display: inline-block;';
   const gapStyle = 'display: flex; gap: 12px; align-items: center;';
   
-  headerRow.innerHTML = `
+  navHeaderRow.innerHTML = `
     <td colspan="7" style="padding: 0;">
       <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 4px;">
         <div style="text-align: left; ${gapStyle}">
@@ -454,7 +457,10 @@ function fixCalendarPopup(calendarId) {
     </td>
   `;
 
-  const navLinks = headerRow.querySelectorAll('a');
+  const closeLink = footerRow.querySelector('a[href*="hideCalendarControl"]')?.outerHTML || '';
+  footerRow.innerHTML = `<th colspan="7" style="padding: 3px;">${closeLink}</th>`;
+
+  const navLinks = navHeaderRow.querySelectorAll('a');
   navLinks.forEach(link => {
     link.addEventListener('click', function() {
       setTimeout(() => fixCalendarPopup(calendarId), 10);
