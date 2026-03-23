@@ -68,14 +68,14 @@ function addStyles() {
     #CalendarControl tr.footer,
     #FDDCalendarControl tr.header,
     #FDDCalendarControl tr.footer {
-      background-color: #e9ecf1 !important;
+      background-color: #e9ecf1
     }
 
     #CalendarControl tr.header td,
     #CalendarControl tr.footer td,
     #FDDCalendarControl tr.header td,
     #FDDCalendarControl tr.footer td {
-      background-color: #e9ecf1 !important;
+      background-color: #e9ecf1
     }
 
     #CalendarControl th a,
