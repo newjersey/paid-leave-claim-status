@@ -36,8 +36,8 @@ function addStyles() {
 
     /* Calendar popup container */
     #FDDCalendarControl table, #CalendarControl table {
-      background-color: #e9ecf1;
-      border-left: 5px solid #e9ecf1;
+      background-color: #EDEFF0;
+      border-left: 5px solid #EDEFF0;
       border-right: none;
       font-size: 16px;
     }
@@ -71,14 +71,14 @@ function addStyles() {
     #CalendarControl tr.footer,
     #FDDCalendarControl tr.header,
     #FDDCalendarControl tr.footer {
-      background-color: #e9ecf1
+      background-color: #EDEFF0
     }
 
     #CalendarControl tr.header td,
     #CalendarControl tr.footer td,
     #FDDCalendarControl tr.header td,
     #FDDCalendarControl tr.footer td {
-      background-color: #e9ecf1
+      background-color: #EDEFF0
     }
 
     #CalendarControl th a,
@@ -100,7 +100,7 @@ function addStyles() {
     #FDDCalendarControl .weekday,
     #FDDCalendarControl .weekend,
     #FDDCalendarControl .current {
-      background-color: #e9ecf1;
+      background-color: #EDEFF0;
       border: none;
       line-height: 26px;
     }
@@ -111,7 +111,7 @@ function addStyles() {
     #FDDCalendarControl .weekday:hover,
     #FDDCalendarControl .weekend:hover,
     #FDDCalendarControl .current:hover {
-      background-color: #c0c4cc;
+      background-color: #dfe1e2;
       border: none;
       color: black;
     }
@@ -122,7 +122,7 @@ function addStyles() {
     #FDDCalendarControl .weekday:active,
     #FDDCalendarControl .weekend:active,
     #FDDCalendarControl .current:active {
-      background-color: #9ca3af;
+      background-color: #c6cace;
       border: none;
       color: black;
     }
