@@ -433,27 +433,32 @@ function fixCalendarPopup(calendarId) {
 
   const navHeaderRow = headerRows[0];
   const footerRow = headerRows[1];
+
+  const functionSuffix = calendarId === FDD_CALENDAR_CONTROL_ID ? 'FDD' : '';
+  const linkStyle = 'font-size: 1.2em; padding: 4px; display: inline-flex; align-items: center; justify-content: center; min-width: 22px; min-height: 22px; text-decoration: none; color: inherit;';
+  const imgStyle = 'width: 20px; height: 20px; display: block;';
   
-  const prevMonth = navHeaderRow.querySelector('a[href*="changeCalendarControlMonth(-1)"], a[href*="changeCalendarControlMonthFDD(-1)"]')?.outerHTML || '';
-  const prevYear = navHeaderRow.querySelector('a[href*="changeCalendarControlYear(-1)"], a[href*="changeCalendarControlYearFDD(-1)"]')?.outerHTML || '';
-  const nextMonth = navHeaderRow.querySelector('a[href*="changeCalendarControlMonth(1)"], a[href*="changeCalendarControlMonthFDD(1)"]')?.outerHTML || '';
-  const nextYear = navHeaderRow.querySelector('a[href*="changeCalendarControlYear(1)"], a[href*="changeCalendarControlYearFDD(1)"]')?.outerHTML || '';
+  const baseUrl = 'https://beta.nj.gov/files/tdi-fli-claim-status/assets/';
+  const prevYear = `<a href="javascript:changeCalendarControlYear${functionSuffix}(-1);" style="${linkStyle}"><img src="${baseUrl}navigate_far_before.svg" alt="Previous year" style="${imgStyle}"></a>`;
+  const prevMonth = `<a href="javascript:changeCalendarControlMonth${functionSuffix}(-1);" style="${linkStyle}"><img src="${baseUrl}navigate_before.svg" alt="Previous month" style="${imgStyle}"></a>`;
+  const nextMonth = `<a href="javascript:changeCalendarControlMonth${functionSuffix}(1);" style="${linkStyle}"><img src="${baseUrl}navigate_next.svg" alt="Next month" style="${imgStyle}"></a>`;
+  const nextYear = `<a href="javascript:changeCalendarControlYear${functionSuffix}(1);" style="${linkStyle}"><img src="${baseUrl}navigate_far_next.svg" alt="Next year" style="${imgStyle}"></a>`;
+  
   const title = navHeaderRow.querySelector('.title')?.innerHTML || '';
   
-  const linkStyle = 'font-size: 1.2em; padding: 4px 8px; display: inline-block;';
   const gapStyle = 'display: flex; gap: 12px; align-items: center;';
   
   navHeaderRow.innerHTML = `
     <td colspan="7" style="padding: 0;">
       <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 4px;">
         <div style="text-align: left; ${gapStyle}">
-          <span style="${linkStyle}">${prevYear}</span>
-          <span style="${linkStyle}">${prevMonth}</span>
+          ${prevYear}
+          ${prevMonth}
         </div>
         <div class="title" style="text-align: center; flex: 1;">${title}</div>
         <div style="text-align: right; ${gapStyle}">
-          <span style="${linkStyle}">${nextMonth}</span>
-          <span style="${linkStyle}">${nextYear}</span>
+          ${nextMonth}
+          ${nextYear}
         </div>
       </div>
     </td>
