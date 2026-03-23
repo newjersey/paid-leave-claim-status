@@ -378,12 +378,12 @@ function updateCalendarUI(id, calendarId) {
   if (element) {
     element.src = "https://beta.nj.gov/files/tdi-fli-claim-status/assets/calendar_today.svg";
     element.addEventListener('click', function() {
-      setTimeout(() => fixCalendarHeader(calendarId), 10);
+      setTimeout(() => fixCalendarPopup(calendarId), 10);
     });
   }
 }
 
-function fixCalendarHeader(calendarId) {
+function fixCalendarPopup(calendarId) {
   const headerRow = document.querySelector(`#${calendarId} tr.header`);
   if (!headerRow) return;
   
@@ -415,7 +415,7 @@ function fixCalendarHeader(calendarId) {
   const navLinks = headerRow.querySelectorAll('a');
   navLinks.forEach(link => {
     link.addEventListener('click', function() {
-      setTimeout(() => fixCalendarHeader(calendarId), 10);
+      setTimeout(() => fixCalendarPopup(calendarId), 10);
     });
   });
 }
