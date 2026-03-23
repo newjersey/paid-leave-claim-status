@@ -132,6 +132,15 @@ function addStyles() {
       border: 5px solid #005ea2;
       color: black;
     }
+
+    @media (max-width: 767px) {
+      #ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt,
+      #ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd,
+      #ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk,
+      #ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk {
+        width: 80%;
+      }
+    }
   `;
   document.head.appendChild(style);
 }
