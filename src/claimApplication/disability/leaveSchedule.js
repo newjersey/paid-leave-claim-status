@@ -52,7 +52,6 @@ function addStyles() {
 
     #CalendarControl td.empty,
     #FDDCalendarControl td.empty {
-      height: 0 !important;
       visibility: hidden !important;
     }
 
@@ -460,6 +459,8 @@ function fixCalendarPopup(calendarId) {
     </td>
   `;
 
+  removeEmptyRows(calendarId);
+
   const navLinks = navHeaderRow.querySelectorAll('a');
   navLinks.forEach(link => {
     link.addEventListener('click', function() {
@@ -493,4 +494,20 @@ function closeCalendarPopup(calendarId) {
   setTimeout(() => {
     document.addEventListener('click', window.calendarClickOutsideHandler);
   }, 100);
+}
+
+function removeEmptyRows(calendarId) {
+  const calendarTable = document.querySelector(`#${calendarId} table`);
+  if (calendarTable) {
+    const allRows = calendarTable.querySelectorAll('tr');
+    allRows.forEach(row => {
+      const cells = row.querySelectorAll('td');
+      if (cells.length > 0) {
+        const allEmpty = Array.from(cells).every(cell => cell.classList.contains('empty'));
+        if (allEmpty) {
+          row.remove();
+        }
+      }
+    });
+  }
 }
