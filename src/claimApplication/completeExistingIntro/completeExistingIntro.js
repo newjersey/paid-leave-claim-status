@@ -1,4 +1,4 @@
-import { clearSessionData } from "../utils";
+import { clearSessionData, removeIntroTextReferencingFuture } from "../utils";
 import { styleBody } from "../../modules/shared.mjs";
 
 export const id = "completeExistingIntro";
@@ -16,22 +16,5 @@ export function changes() {
   }
   clearSessionData();
   styleBody();
-  removeFutureText();
-}
-
-function removeFutureText() {
-  const content = document.getElementById("ContentPlaceHolder1_tblContent");
-
-  const targetText = ` 
-                     If your disability date is in the future, you must 
-also return to certify your claim within fourteen (14) days after your 
-first date of disability or your data will be removed. 
-                     You will then need to restart the application 
-process.`;
-
-  content.querySelectorAll('*').forEach(el => {
-    if (el.textContent.includes(targetText)) {
-      el.innerHTML = el.innerHTML.replace(targetText, '');
-    }
-  });
+  removeIntroTextReferencingFuture();
 }
