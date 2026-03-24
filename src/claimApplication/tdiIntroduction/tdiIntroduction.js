@@ -22,15 +22,15 @@ export function changes() {
 function removeFutureText() {
   const content = document.getElementById("ContentPlaceHolder1_tblContent");
 
-  const targetText = ` If your disability date is in the future, you must 
-also return to certify your claim within fourteen (14) days after your 
-first date of disability or your data will be removed. 
-                    You will then need to restart the application 
-process.`;
-
+  if (!content) return;
+  
+  // rendered text is wonky, so regex with variable whitespace throughout
+  const targetRegex = /\s+If\s+your\s+disability\s+date\s+is\s+in\s+the\s+future,\s+you\s+must\s+also\s+return\s+to\s+certify\s+your\s+claim\s+within\s+fourteen\s+\(14\)\s+days\s+after\s+your\s+first\s+date\s+of\s+disability\s+or\s+your\s+data\s+will\s+be\s+removed\.\s+You\s+will\s+then\s+need\s+to\s+restart\s+the\s+application\s+process./gi;
+  
+  console.log(targetRegex);
   content.querySelectorAll('*').forEach(el => {
-    if (el.textContent.includes(targetText)) {
-      el.innerHTML = el.innerHTML.replace(targetText, '');
+    if (targetRegex.test(el.textContent)) {
+      el.innerHTML = el.innerHTML.replace(targetRegex, '');
     }
   });
 }
