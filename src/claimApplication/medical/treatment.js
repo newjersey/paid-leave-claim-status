@@ -2,8 +2,18 @@ import i18next from 'i18next';
 import { logEvent } from "../../modules/shared.mjs";
 import {
   adjustTableWidths,
+  elementTextError,
+  getSessionData,
   removeExtraSpaceBetweenRadioButtons,
+  resetElementText,
   setNewTitle,
+  STORAGE_KEY_REASON_FOR_LEAVE,
+  addToSessionData,
+  STORAGE_KEY_PROVIDER_TYPE_ACCEPTED,
+  STORAGE_KEY_CAUSED_BY_JOB,
+  STORAGE_KEY_WORKERS_COMP,
+  STORAGE_KEY_EDITING_WORKERS_COMP,
+  setRequiredForVisibleLeaveSectionFields,
   styleRadioButton
 } from '../utils';
 
@@ -58,10 +68,419 @@ export function trackWorkersCompYesSubmission(pageId) {
 }
 
 export function changes() {
+  addStyles();
+  replaceDoctorText();
+  addProviderScreener();
+  addWorkersCompScreener();
+  matchNewFormDataToExisting();
   adjustTable();
   adjustTextEntries();
   styleRadioButtons();
-  setNewTitle(i18next.t('reasonForLeave.title'));
+  addWorkersCompListeners();
+  moveWorkersCompToNewFieldset();
+  loadReasonData();
+  setNewTitle(i18next.t('medicalInfo.title'));
+  addSubtitleAndExplainer();
+
+  const sessionData = getSessionData();
+  const reasonData = sessionData[STORAGE_KEY_REASON_FOR_LEAVE];
+  const reason = reasonData?.reasons;
+
+  setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason);
+  focusOnWorkersCompIfEditing();
+}
+
+function addStyles() {
+  const style = document.createElement('style');
+  style.innerHTML = `
+    .usa-radio__label {
+      text-align: left;
+    }
+  
+    .required-asterisk {
+      color: rgb(139, 0, 0);
+    }
+
+    .form-alert {
+      color: rgb(139, 0, 0);
+      font-weight: bold;
+      margin: 10px 0 0 0;
+    }
+
+    .form-alert svg {
+      vertical-align: -5px;
+      margin-right: 2px;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function replaceDoctorText() {
+  // TODO: do in a translation-compatible way
+  const linkElements = document.querySelectorAll('a');
+
+  linkElements.forEach((element) => {
+    let text = element.textContent;
+    if (text.includes('doctor/hospital')) {
+      text = text.replace('doctor/hospital', 'healthcare provider');
+    }
+    if (text.includes('doctor’s/hospital’s')) {
+      text = text.replace('doctor’s/hospital’s', `healthcare provider's`);
+    }
+    element.textContent = text;
+  });
+}
+
+function addSubtitleAndExplainer() {
+  const questionDiv = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor');
+  const subtitleDiv = document.createElement('div');
+  subtitleDiv.style.margin = "0 0 0";
+  subtitleDiv.innerHTML = `
+  <h2 style="font-size: 22px; font-weight: bold; color: black; font-variant: none" class="margin-bottom-1"> ${i18next.t('medicalInfo.provider.title')}</h2>
+  <p class="margin-bottom-3">${i18next.t('medicalInfo.provider.explanation')}</p>`
+
+  questionDiv.prepend(subtitleDiv);
+}
+
+function addProviderScreener() {
+  const doctorNameInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm');
+  const fieldset = doctorNameInput.closest('fieldset');
+
+  const providerType = document.createElement('div');
+  providerType.style.margin = "0 0 50px";
+  providerType.innerHTML = `
+        <p>${i18next.t('medicalInfo.provider.theseTypesProviders')}</p>
+        <div class="provider-accepted-list margin-bottom-2">
+          <ul class="usa-list margin-top-0">
+            <li>${i18next.t('medicalInfo.provider.type.advancedPracticeNurse')}</li>
+            <li>${i18next.t('medicalInfo.provider.type.certifiedNurseMidwife')}</li>
+            <li>${i18next.t('medicalInfo.provider.type.certifiedNursePractitioner')}</li>
+            <li>${i18next.t('medicalInfo.provider.type.certifiedProfessionalMidwife')}</li>
+            <li>${i18next.t('medicalInfo.provider.type.chiropractor')}</li>
+            <li>${i18next.t('medicalInfo.provider.type.clinicalNurseSpecialist')}</li>
+            <li>${i18next.t('medicalInfo.provider.type.dentist')}</li>
+            <li>${i18next.t('medicalInfo.provider.type.medicalDoctor')}</li>
+            <li>${i18next.t('medicalInfo.provider.type.optometrist')}</li>
+            <li>${i18next.t('medicalInfo.provider.type.physicianAssistant')}</li>
+            <li>${i18next.t('medicalInfo.provider.type.podiatrist')}</li>
+            <li>${i18next.t('medicalInfo.provider.type.psychologist')}</li>
+          </ul>
+        </div>
+
+  <fieldset id="provider-type-accepted-fieldset" class="usa-fieldset">
+    <legend id="provider-type-accepted-legend" class="usa-legend">
+      <span class="required-asterisk">*</span>
+      <strong id="providerTypeQuestionNumber" style="display:none;">1. </strong>
+      ${i18next.t('medicalInfo.provider.type.isAccepted')}
+    </legend>
+    <div class="usa-radio">
+      <input
+        class="usa-radio__input"
+        id="provider-type-accepted-yes"
+        type="radio"
+        name="provider-type-accepted"
+        value="yes"
+      />
+      <label class="usa-radio__label" for="provider-type-accepted-yes">
+        ${i18next.t('shared.yes')}
+      </label>
+    </div>
+    <div class="usa-radio">
+      <input
+        class="usa-radio__input"
+        id="provider-type-accepted-no"
+        type="radio"
+        name="provider-type-accepted"
+        value="no"
+      />
+      <label class="usa-radio__label" for="provider-type-accepted-no">
+        ${i18next.t('shared.no')}
+      </label>
+    </div>
+    <div
+      id="providerError"
+      class="form-alert"
+      style="display: none;"
+      role="alert"
+      aria-live="polite"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#B50909"/>
+      </svg>
+      ${i18next.t('shared.makeSelection')}
+    </div>
+
+    <div id="provider-type-alert" class="usa-alert usa-alert--warning usa-alert--slim" style="display: none; margin-top: 1rem;">
+    <div class="usa-alert__body">
+      <p class="usa-alert__text">
+        ${i18next.t('medicalInfo.provider.notAcceptedMessage')}
+      </p>
+    </div>
+  </div>
+  </fieldset>
+  `;
+  fieldset.insertBefore(providerType, fieldset.firstChild);
+
+  const providerYes = document.getElementById("provider-type-accepted-yes");
+  const providerNo = document.getElementById("provider-type-accepted-no");
+  const providerAcceptedFieldset = document.getElementById("provider-type-accepted-fieldset");
+  const providerError = document.getElementById('providerError');
+  const providerAlert = document.getElementById('provider-type-alert');
+
+  const sessionData = getSessionData();
+  if (sessionData[STORAGE_KEY_PROVIDER_TYPE_ACCEPTED] === true) {
+    providerYes.checked = true;
+  } else if (sessionData[STORAGE_KEY_PROVIDER_TYPE_ACCEPTED] === false) {
+    providerAlert.style.display = 'block';
+    providerNo.checked = true;
+  }
+
+  providerYes.addEventListener('change', function () {
+    providerAlert.style.display = 'none';
+    providerError.style.display = 'none';
+    providerAcceptedFieldset.classList.remove('usa-form-group--error');
+    addToSessionData({
+      [STORAGE_KEY_PROVIDER_TYPE_ACCEPTED]: true
+    });
+  });
+
+  providerNo.addEventListener('change', function () {
+    providerAlert.style.display = 'block';
+    providerError.style.display = 'none';
+    providerAcceptedFieldset.classList.remove('usa-form-group--error');
+    addToSessionData({
+      [STORAGE_KEY_PROVIDER_TYPE_ACCEPTED]: false
+    });
+  });
+
+  providerYes.addEventListener('invalid', function () {
+    providerError.style.display = 'block';
+    providerAcceptedFieldset.classList.add('usa-form-group--error');
+    fieldset.scrollIntoView();
+  });
+}
+
+function addWorkersCompScreener() {
+  const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
+  const workersCompContainer = workersCompNo.closest('div').closest('div');
+  workersCompContainer.id = "workersCompContainer"
+  workersCompContainer.style.display = 'none';
+
+  const linkElements = workersCompContainer.querySelectorAll('a');
+  linkElements.forEach((element) => {
+    let text = element.textContent;
+    if (text.includes('7.')) {
+      text = text.replace('7.', '7a.');
+    }
+    element.textContent = text;
+  });
+
+  const causedByJobQuestion = document.createElement('div');
+  causedByJobQuestion.id = "causedByJobQuestion";
+  causedByJobQuestion.style.margin = "0 0 20px";
+  causedByJobQuestion.innerHTML = `
+    <fieldset class="usa-fieldset">
+      <legend id="caused-by-job-legend" class="usa-legend usa-legend">
+        <span class="required-asterisk">*</span>
+        7. <span id="causedByJobText">${i18next.t('medicalInfo.work.causedByJob')}</span>
+      </legend>
+      <div class="usa-radio">
+        <input
+          class="usa-radio__input"
+          id="caused-by-job-yes"
+          type="radio"
+          name="caused-by-job"
+          value="yes"
+          required
+        />
+        <label class="usa-radio__label" for="caused-by-job-yes">
+          ${i18next.t('shared.yes')}
+        </label>
+      </div>
+      <div class="usa-radio">
+        <input
+          class="usa-radio__input"
+          id="caused-by-job-no"
+          type="radio"
+          name="caused-by-job"
+          value="no"
+          required
+        />
+        <label class="usa-radio__label" for="caused-by-job-no">
+          ${i18next.t('shared.no')}
+        </label>
+      </div>
+    </fieldset>
+  `;
+  workersCompContainer.parentElement.insertBefore(causedByJobQuestion, workersCompContainer);
+
+  const causedByJobYes = document.getElementById('caused-by-job-yes');
+  const causedByJobNo = document.getElementById('caused-by-job-no');
+  const causedByJobLegend = document.getElementById('caused-by-job-legend');
+
+  causedByJobYes.addEventListener('change', function () {
+    const refreshedWorkersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
+    const refreshedWorkersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
+    resetElementText(causedByJobLegend);
+    workersCompContainer.style.display = 'block';
+    refreshedWorkersCompNo.checked = false;
+    refreshedWorkersCompYes.checked = false;
+    addToSessionData({ [STORAGE_KEY_CAUSED_BY_JOB]: 'yes' });
+  });
+
+  causedByJobNo.addEventListener('change', function () {
+    const refreshedWorkersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
+    const refreshedWorkersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
+    resetElementText(causedByJobLegend);
+    workersCompContainer.style.display = 'none';
+    refreshedWorkersCompYes.checked = false;
+    refreshedWorkersCompNo.checked = true;
+    addToSessionData({
+      [STORAGE_KEY_CAUSED_BY_JOB]: 'no',
+      [STORAGE_KEY_WORKERS_COMP]: null
+    });
+  });
+
+  causedByJobYes.addEventListener('invalid', function () {
+    elementTextError(causedByJobLegend);
+  });
+}
+
+function matchNewFormDataToExisting() {
+  const form = document.getElementById('form1');
+
+  // frontend-only fields
+  const causedByJobYes = document.getElementById('caused-by-job-yes');
+  const causedByJobNo = document.getElementById('caused-by-job-no');
+  const providerYes = document.getElementById("provider-type-accepted-yes");
+  const providerNo = document.getElementById("provider-type-accepted-no");
+  const causedByJobLegend = document.getElementById('caused-by-job-legend');
+
+  form.addEventListener('submit', (event) => {
+    const formData = new FormData(form);
+    const correctPage = formFromCorrectPage(formData);
+
+    if (correctPage && !causedByJobYes.checked && !causedByJobNo.checked) {
+      event.preventDefault();
+      elementTextError(causedByJobLegend);
+      causedByJobYes.focus();
+    } else {
+      providerYes.removeAttribute('name');
+      providerNo.removeAttribute('name');
+      causedByJobYes.removeAttribute('name');
+      causedByJobNo.removeAttribute('name');
+      form.addEventListener('formdata', () => {
+        providerYes.setAttribute('name', 'provider-type-accepted');
+        providerNo.setAttribute('name', 'provider-type-accepted');
+        causedByJobYes.setAttribute('name', 'caused-by-job');
+        causedByJobNo.setAttribute('name', 'caused-by-job');
+      }, { once: true });
+    }
+  });
+}
+
+function addWorkersCompListeners() {
+  const workersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
+  const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
+
+  workersCompYes.addEventListener('change', function () {
+    addToSessionData({ [STORAGE_KEY_WORKERS_COMP]: 'yes' });
+  });
+
+  workersCompNo.addEventListener('change', function () {
+    addToSessionData({ [STORAGE_KEY_WORKERS_COMP]: 'no' });
+  });
+}
+
+function loadReasonData() {
+  const sessionData = getSessionData();
+  const reasonData = sessionData[STORAGE_KEY_REASON_FOR_LEAVE];
+
+  if (!reasonData) {
+    return;
+  }
+
+  const reason = reasonData['reasons'];
+  if (!reason) {
+    return;
+  }
+
+  let details;
+  if (reason === 'pregnancy') {
+    details = reasonData['pregnancy-details'];
+  } else if (reason === 'illness') {
+    details = reasonData['illness-details'];
+  } else if (reason === 'injury') {
+    details = reasonData['injury-details'];
+  }
+
+  const textArea = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury');
+  textArea.value = `${reason}${details ? `. ${details}` : ''}`;
+  textArea.closest('fieldset').style.display = 'none';
+  document.getElementById('providerTypeQuestionNumber').style.display = 'inline';
+
+  const causedByJobYes = document.getElementById('caused-by-job-yes');
+  const causedByJobNo = document.getElementById('caused-by-job-no');
+  const workersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
+  const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
+  const workersCompensationHeader = document.getElementById('workersCompensationHeader');
+  const workersCompFieldset = document.getElementById('workersCompFieldset');
+  const causedByJobQuestion = document.getElementById('causedByJobQuestion');
+  const workersCompContainer = document.getElementById('workersCompContainer');
+
+  if (reason === 'pregnancy') {
+    causedByJobNo.checked = true;
+    workersCompNo.checked = true;
+    workersCompensationHeader.style.display = 'none';
+    workersCompFieldset.style.display = 'none';
+    causedByJobQuestion.style.display = 'none';
+    workersCompContainer.style.display = 'none';
+    addToSessionData({
+      [STORAGE_KEY_CAUSED_BY_JOB]: 'no',
+      [STORAGE_KEY_WORKERS_COMP]: null
+    });
+  } else {
+    // Show the caused-by-job question for illness/injury
+    workersCompensationHeader.style.display = 'block';
+    workersCompFieldset.style.display = 'block';
+    causedByJobQuestion.style.display = 'block';
+
+    // Restore caused-by-job answer
+    const savedCausedByJob = sessionData[STORAGE_KEY_CAUSED_BY_JOB];
+
+    if (savedCausedByJob === 'yes') {
+      causedByJobYes.checked = true;
+      causedByJobNo.checked = false;
+      workersCompContainer.style.display = 'block';
+
+      // Restore workers comp answer
+      const savedWorkersComp = sessionData[STORAGE_KEY_WORKERS_COMP];
+      if (savedWorkersComp === 'yes') {
+        workersCompYes.checked = true;
+        workersCompNo.checked = false;
+      } else if (savedWorkersComp === 'no') {
+        workersCompYes.checked = false;
+        workersCompNo.checked = true;
+      } else {
+        // No saved workers comp answer - reset both
+        workersCompYes.checked = false;
+        workersCompNo.checked = false;
+      }
+    } else if (savedCausedByJob === 'no') {
+      causedByJobYes.checked = false;
+      causedByJobNo.checked = true;
+      workersCompContainer.style.display = 'none';
+      workersCompYes.checked = false;
+      workersCompNo.checked = true;
+    } else {
+      // No saved caused-by-job answer - reset both
+      causedByJobYes.checked = false;
+      causedByJobNo.checked = false;
+      workersCompContainer.style.display = 'none';
+      workersCompYes.checked = false;
+      workersCompNo.checked = false;
+    }
+  }
 }
 
 function styleRadioButtons() {
@@ -126,4 +545,50 @@ function adjustTable() {
   }
 
   adjustTableWidths(document);
+}
+
+function moveWorkersCompToNewFieldset() {
+  const causedByJobElement = document.getElementById('causedByJobQuestion');
+  const workersCompElement = document.getElementById('workersCompContainer');
+  const parentFieldset = causedByJobElement.closest('fieldset');
+
+  const newFieldset = document.createElement('fieldset');
+  newFieldset.id = 'workersCompFieldset';
+  newFieldset.appendChild(causedByJobElement);
+  newFieldset.appendChild(workersCompElement);
+
+  const h2 = document.createElement('h2');
+  h2.id = "workersCompensationHeader";
+  h2.textContent = i18next.t('medicalInfo.work.title');
+  h2.style.fontSize = "22px";
+  h2.style.fontWeight = "bold";
+  h2.style.color = "black";
+  h2.style.fontVariant = "none";
+  h2.style.marginTop = "40px";
+
+  parentFieldset.parentNode.insertBefore(h2, parentFieldset.nextSibling);
+  parentFieldset.parentNode.insertBefore(newFieldset, h2.nextSibling);
+}
+
+function focusOnWorkersCompIfEditing() {
+  const sessionData = getSessionData();
+  const editingWorkersComp = sessionData[STORAGE_KEY_EDITING_WORKERS_COMP];
+
+  if (editingWorkersComp) {
+    const workersCompHeader = document.getElementById('workersCompensationHeader');
+    const causedByJobYes = document.getElementById('caused-by-job-yes');
+    const causedByJobNo = document.getElementById('caused-by-job-no');
+
+    if (workersCompHeader && causedByJobYes && causedByJobNo) {
+      workersCompHeader.scrollIntoView();
+      if (causedByJobYes.checked) {
+        causedByJobYes.focus();
+      } else {
+        causedByJobNo.focus();
+      }
+    }
+    addToSessionData({
+      [STORAGE_KEY_EDITING_WORKERS_COMP]: undefined
+    });
+  }
 }

@@ -9,6 +9,7 @@ const resources = {
         optional: "(optional)",
         saveAndContinue: "Save and continue",
         yes: "Yes",
+        makeSelection: "Make a selection.",
       },
       contact: {
         address: "Address",
@@ -149,23 +150,21 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         illnessInjury: {
           fddTitle: "First day of disability leave",
           fddNotes: `<strong>Heads up:</strong>
-            <br><br>
-            You can apply starting the day your disability begins-- the first day you stop working because of your illness or injury.
-            <br><br>
-            Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.
+          <ul class="usa-list">
+            <li>You can apply starting the day your disability begins — the first day you stop working because of your illness or injury.</li>
+            <li>Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.</li>
+          </ul>
           `,
-          fddQuestion: `<strong>What is your first day of disability leave?</strong>
+          fddQuestion: `What is your first day of disability leave?
             <br><br>
             <strong>Hint:</strong> This is when your {{disabilityTypeString}} first prevented you from working. Enter the actual date, even if it was a day you don't usually work (like a weekend or holiday).
           `,
           beforeAfterTitle: "Dates of employment before and after disability",
           lastWorkday: `What was the last day you worked?
             <br><br>
-            <strong>Hint:</strong> This is the last day you actually worked-- not including PTO, vacation, or sick days you used before your leave started.
+            <strong>Hint:</strong> This is the last day you actually worked — not including PTO, vacation, or sick days you used before your leave started.
           `,
-          recovered: `Have you recovered from this condition?
-            <br><br>
-            "Recovered" means you are able to return to work.
+          recovered: `Have you recovered from this condition? "Recovered" means you're able to return to work.
           `,
           recoveryDate: "When did you recover (felt able to return to work)?",
           estRecoveryDate: "When do you anticipate being able to return to work? This can be an estimate.",
@@ -174,17 +173,17 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           fddTitle: "First day of disability leave for pregnancy",
           maternityTimeline: `Use the <a href="https://www.nj.gov/labor/myleavebenefits/labor/myleavebenefits/worker/maternity/timeline-welcome.shtml" target="_blank">Maternity Timeline Coverage Tool</a> to help plan your leave dates.`,
           fddNotes: `<strong>Heads up:</strong>
-            <br><br>
-            You can apply starting the day your leave begins.
-            <br><br>
-            Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.
-          `,
-          fddQuestion: `<strong>What is your first date of disability leave?</strong>
+            <ul class="usa-list">
+              <li>You can apply starting the day your leave begins.</li>
+              <li>Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.</li>
+            </ul>
+`,
+          fddQuestion: `What is your first date of disability leave?
             <br><br>
             Remember:
             <ul class="usa-list">
-              <li>* You can begin your leave up to 4 weeks before your due date (or delivery date), or earlier if you experience complications.</li>
-              <li>* Enter the actual date your leave began, even if it was a day you don't usually work (like a weekend or holiday).</li>
+              <li>You can begin your leave up to 4 weeks before your due date (or delivery date), or earlier if you experience complications.</li>
+              <li>Enter the actual date your leave began, even if it was a day you don't usually work (like a weekend or holiday).</li>
             </ul>
             <br>
           `,
@@ -199,7 +198,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           `,
           recoveryDate: `When did you recover?`,
           estRecoveryDate: "When do you expect to recover?",
-          whatsNext: "What's Next?",
+          whatsNext: "What's next?",
           howDelivered: `After we approve your claim, we’ll mail you a form. It will ask how you delivered (if you haven't already told us) and whether you need more time to recover. 
             <br><br>
             <ul>
@@ -209,6 +208,8 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             </ul>
           `
         },
+        lastWorkdayHint: "Your last day of work must be before your first day of disability leave.",
+        recoveryDateHint: "The date you returned to work must be after your first day of disability leave.",
       },
       medicalInfo: {
         title: "Medical details",
@@ -237,7 +238,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           inUSA: "Is your healthcare provider located in the United States?",
         },
         work: {
-          title: "Worker's Compensation",
+          title: "Workers' Compensation",
           causedByJob: "Was your disability caused by your job? (Could be a specific incident or happened over time)",
           workersCompClaim: `Have you or your employer filed a <a href="https://www.nj.gov/labor/workerscompensation/injured-worker-protections/index.shtml" target="_blank">Workers' Compensation Claim</a>, or do you plan to file one?`,
           workersCompClaimApproved: "Have you been approved for (or awarded, or received) Workers' Compensation benefits?",

@@ -1,9 +1,14 @@
-import { globalTestsNew, globalTestsOld } from "../shared";
+import {
+  globalTestsNew,
+  globalTestsOld,
+  EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS
+} from "../shared";
 import { encodeDecode } from '../../../../src/claimApplication/utils';
 
 const PAGE_ID = 'verification';
 const URL = 'ClaimantDisabililty';
 const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/verification.html";
+const FIXTURE_WITH_WORKERS_COMP_YES = "./cypress/fixtures/claimApplication/claimantInfo/verification_WorkersCompYes.html";
 
 describe("Disability Verification page", () => {
   function checkPostData(interception) {
@@ -150,7 +155,7 @@ describe("Disability Verification page", () => {
 
         cy.contains('Temporary Disability Benefits Received from Employer/Union').then(($target) => {
           const targetTop = $target[0].getBoundingClientRect().top;
-          
+
           expect(childBottom).to.be.lessThan(targetTop);
         });
       });
@@ -158,16 +163,21 @@ describe("Disability Verification page", () => {
       cy.get('#divVerTDI').invoke('css', 'display', 'none');
     });
 
-    it("allows user to edit disability information", () => {
+    it("allows user to edit leave schedule information (formerly disability information)", () => {
       checkDisabilityEdit();
     });
 
-    it("allows user to edit medical treatment information", () => {
+    it("allows user to edit medical information (formerlly medical treatment information)", () => {
       checkMedicalEdit();
     });
 
     it("allows user to edit work related information", () => {
       checkWorkEdit();
+      cy.window().then((win) => {
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData));
+        expect(data["editing_workers_comp"]).to.equal(true);
+      });
     });
 
     it("allows user to edit other benefits information", () => {
@@ -177,6 +187,189 @@ describe("Disability Verification page", () => {
     it("allows user to edit payment information", () => {
       checkPaymentEdit();
     });
+
+    it("Leave Schedule EDIT button sets disabilityInfoView flag to leaveSchedule", () => {
+      cy.mockASPX(URL);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnDisInfoEdit').click();
+      cy.window().then((win) => {
+        const encodedData = win.sessionStorage.getItem('session_data');
+        const data = JSON.parse(encodeDecode(encodedData));
+        expect(data["disabilityInfoView"]).to.equal('leaveSchedule');
+      });
+    });
+
+    describe('Reason For Leave Section', () => {
+      it("Reason for Leave section with reason exists", () => {
+        cy.get('#reasonForLeaveReviewSection').should('exist');
+        cy.get('#reasonForLeaveReviewSection legend').should('contain', 'Reason for leave');
+        cy.get('#editReasonForLeave').should('exist').and('have.value', 'EDIT');
+        cy.get('#reasonForLeaveReviewSection').should('contain', 'Injury');
+      });
+
+      it("Reason for Leave edit button sets disabilityInfoView flag to reasonForLeave", () => {
+        cy.mockASPX(URL);
+        cy.get('#editReasonForLeave').click();
+        cy.window().then((win) => {
+          const encodedData = win.sessionStorage.getItem('session_data');
+          const data = JSON.parse(encodeDecode(encodedData));
+          expect(data["disabilityInfoView"]).to.equal('reasonForLeave');
+        });
+      });
+
+      it("Reason for Leave EDIT button clicks BtnDisInfoEdit and submits form", () => {
+        cy.mockASPX(URL);
+        cy.get('#editReasonForLeave').click();
+        cy.wait('@aspxSubmission').then((interception) => {
+          const formData = interception.request.body;
+          expect(formData).to.include('BtnDisInfoEdit=EDIT');
+        });
+      });
+
+    })
+
+    describe('Leave Schedule section', () => {
+      it("renames Disability Information to Leave Schedule", () => {
+        cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnDisInfoEdit')
+          .closest('fieldset')
+          .find('legend')
+          .should('contain', 'Leave schedule');
+      });
+
+      it("hides the original Leave Schedule table", () => {
+        cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnDisInfoEdit')
+          .closest('fieldset')
+          .find('table')
+          .should('have.css', 'display', 'none');
+      });
+
+      it("creates display div with leaveScheduleDisplay id", () => {
+        cy.get('#leaveScheduleDisplay').should('exist');
+      });
+
+      it("shows Last workday label first", () => {
+        cy.get('#leaveScheduleDisplay p').first().should('contain', 'Last workday:');
+      });
+
+      it("shows First day of disability leave for reason in text based on user's disability reason", () => {
+        cy.window().then((win) => {
+          const data = { reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS };
+          win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
+        });
+        cy.visit(FIXTURE);
+        cy.wait('@script');
+        cy.get('#leaveScheduleDisplay').should('contain', 'First day of disability leave for injury:');
+      });
+
+      it("displays the correct schedule values from the hidden form fields", () => {
+        cy.get('#leaveScheduleDisplay').should('contain', '07/14/2025'); // Last workday
+        cy.get('#leaveScheduleDisplay').should('contain', '07/15/2025'); // First day disability
+        cy.get('#leaveScheduleDisplay').should('contain', 'No');         // Returned to work
+        cy.get('#leaveScheduleDisplay').should('contain', '08/13/2025'); // Recovery date
+      });
+
+      it("Leave Schedule EDIT button submits form with BtnDisInfoEdit", () => {
+        cy.mockASPX(URL);
+        cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnDisInfoEdit').click();
+        cy.wait('@aspxSubmission').then((interception) => {
+          const formData = interception.request.body;
+          expect(formData).to.include('BtnDisInfoEdit=EDIT');
+        });
+      });
+    });
+
+    describe('Medical Details Section', () => {
+      it("renames Medical Treatment Information to Medical Details", () => {
+        cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_btnVerDisab')
+          .closest('fieldset')
+          .find('legend')
+          .should('contain', 'Medical details');
+      });
+
+      it("hides Disability/Injury Description table from Medical section", () => {
+        cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDisabDesc')
+          .closest('table')
+          .should('have.css', 'display', 'none');
+      });
+    })
+
+    describe('Work Related Information Section', () => {
+      it("shows formatted Work related information", () => {
+        cy.window().then((win) => {
+          win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify({ reason_for_leave: { reasons: 'injury' } })));
+        });
+        cy.intercept('GET', '**/tdiOverride.min.js', (req) => {
+          req.continue((res) => {
+            expect([200, 304]).to.include(res.statusCode);
+          });
+        }).as('script');
+        cy.visit(FIXTURE_WITH_WORKERS_COMP_YES);
+        cy.get('#workRelatedDisplay')
+          .should('contain.text', "File or intend to file Workers' Compensation claim:")
+          .and('contain.text', 'Yes');
+        cy.get('#workRelatedDisplay')
+          .should('contain.text', 'Employer information where the injury happened');
+        cy.get('#workRelatedDisplay').should('contain.text', 'Name:');
+        cy.get('#workRelatedDisplay').should('contain.text', 'Address:');
+        cy.get('#workRelatedDisplay')
+          .should('contain.text', 'Phone:')
+          .and('contain.text', 'ext.');
+        cy.get('#workRelatedDisplay').should('contain.text', 'Date of injury:');
+        cy.get('#workRelatedDisplay')
+          .should('contain.text', 'Approved for Workers\' Compensation benefits');
+        cy.get('#workRelatedDisplay')
+          .should('contain.text', 'Receiving benefits same time as TDI:');
+        cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnWREdit')
+          .closest('fieldset')
+          .find('> table')
+          .should('not.be.visible');
+        cy.get('#divVerRelatedInfo').should('not.be.visible');
+      });
+
+      it('formats workers comp phone number as (XXX) XXX-XXXX', () => {
+        cy.window().then((win) => {
+          win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify({ reason_for_leave: { reasons: 'injury' } })));
+        });
+        cy.intercept('GET', '**/tdiOverride.min.js', (req) => {
+          req.continue((res) => {
+            expect([200, 304]).to.include(res.statusCode);
+          });
+        }).as('script');
+        cy.visit(FIXTURE_WITH_WORKERS_COMP_YES);
+        cy.get('#workRelatedDisplay')
+          .invoke('text')
+          .should('match', /\(\d{3}\) \d{3}-\d{4}/);
+      });
+
+      it('displays "injury" in workers comp text when reason is injury', () => {
+        cy.window().then((win) => {
+          win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify({ reason_for_leave: { reasons: 'injury' } })));
+        });
+        cy.intercept('GET', '**/tdiOverride.min.js', (req) => {
+          req.continue((res) => {
+            expect([200, 304]).to.include(res.statusCode);
+          });
+        }).as('script');
+        cy.visit(FIXTURE_WITH_WORKERS_COMP_YES);
+        cy.wait('@script');
+        cy.get('#workRelatedDisplay')
+          .should('contain.text', 'injury happened')
+          .and('contain.text', 'Date of injury');
+      });
+
+      it('hides entire section when reason is pregnancy', () => {
+        cy.window().then((win) => {
+          win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify({ reason_for_leave: { reasons: 'pregnancy' } })));
+        });
+        cy.intercept('GET', '**/tdiOverride.min.js', (req) => {
+          req.continue((res) => {
+            expect([200, 304]).to.include(res.statusCode);
+          });
+        }).as('script');
+        cy.visit(FIXTURE);
+        cy.wait('@script');
+        cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnWREdit').should('not.be.visible');
+      });
+    })
 
     globalTestsNew(PAGE_ID, URL);
   });
