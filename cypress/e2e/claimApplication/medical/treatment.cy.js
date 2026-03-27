@@ -71,6 +71,95 @@ describe("Medical Treatment page", () => {
       cy.wait('@script');
     });
 
+    it('calendar UX allows only valid inputs', () => {
+      cy.clock(new Date(2025, 7, 18)); // 0-indexed; August 18, 2025
+      cy.visit(FIXTURE);
+      cy.window().then((win) => {
+        cy.spy(win, 'alert').as('alertSpy');
+      });
+
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERYes').click({ force: true });
+
+      cy.get('#Image8').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl').should('be.visible');
+
+      cy.get('#pageTitle').click(); // test click-away-to-close
+      cy.get('#FDDCalendarControl').should('not.be.visible');
+
+      cy.get('#Image8').click();
+      cy.tick(200);
+      cy.get('a.weekday').contains('8').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtERStDt').blur();
+      cy.get('@alertSpy').invoke('getCall', 0).should('be.calledWith', 'Emergency room start date should be on or after 07/15/2025');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtERStDt').should('have.value', '');
+
+      cy.get('#Image8').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl img[alt="Next year"]').click(); 
+      cy.tick(200);
+      cy.get('a.weekday').contains('8').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtERStDt').blur();
+      cy.get('@alertSpy').invoke('getCall', 1).should('be.calledWith', "Emergency room start date cannot be after today's date.");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtERStDt').should('have.value', '');
+
+      cy.get('#Image8').click();
+      cy.tick(200);
+      cy.get('a.weekday').contains('16').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtERStDt').blur();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtERStDt').should('have.value', '07/16/2025');
+
+      cy.get('#Image1').click();
+      cy.tick(200);
+      cy.get('a.weekday').contains('15').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtEREndDt').blur();
+      cy.get('@alertSpy').invoke('getCall', 2).should('be.calledWith', "Emergency room end date should be on or after 07/16/2025");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtEREndDt').should('have.value', '');
+
+      cy.get('#Image1').click();
+      cy.tick(200);
+      cy.get('a.weekday').contains('17').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtEREndDt').blur();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtEREndDt').should('have.value', '07/17/2025');
+      
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospYes').click({ force: true });
+
+      cy.get('#Image2').click();
+      cy.tick(200);
+      cy.get('a.weekday').contains('8').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospStDt').blur();
+      cy.get('@alertSpy').invoke('getCall', 3).should('be.calledWith', 'Hospitalization start date should be on or after 07/15/2025');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospStDt').should('have.value', '');
+
+      cy.get('#Image2').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl img[alt="Next year"]').click(); 
+      cy.tick(200);
+      cy.get('a.weekday').contains('8').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospStDt').blur();
+      cy.get('@alertSpy').invoke('getCall', 4).should('be.calledWith', "Hospitalization start date cannot be after today's date.");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospStDt').should('have.value', '');
+
+      cy.get('#Image2').click();
+      cy.tick(200);
+      cy.get('a.weekday').contains('16').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospStDt').blur();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospStDt').should('have.value', '07/16/2025');
+
+      cy.get('#Image3').click();
+      cy.tick(200);
+      cy.get('a.weekday').contains('15').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospEndDt').blur();
+      cy.get('@alertSpy').invoke('getCall', 5).should('be.calledWith', "Hospitalization end date should be on or after 07/16/2025");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospEndDt').should('have.value', '');
+
+      cy.get('#Image3').click();
+      cy.tick(200);
+      cy.get('a.weekday').contains('17').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospEndDt').blur();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospEndDt').should('have.value', '07/17/2025');
+    });
+
     it("page jumps to Workers Comp if coming from review Edit", () => {
       cy.window().then((win) => {
         const data = { editing_workers_comp: true };

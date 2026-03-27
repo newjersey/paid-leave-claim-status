@@ -1,8 +1,9 @@
 import i18next from 'i18next';
-import { DisabilityType, styleRadioButton } from '../utils';
-
-const CALENDAR_CONTROL_ID = "CalendarControl";
-const FDD_CALENDAR_CONTROL_ID = "FDDCalendarControl"; // DEPENDENT on FDD, not setting it
+import {
+  DisabilityType,
+  styleRadioButton,
+  updateCalendarUI,
+} from '../utils';
 
 export function setupLeaveSchedulePage() {
   setupFDD();
@@ -21,116 +22,12 @@ export function showLeaveScheduleForDisabilityType(disabilityType) {
 function addStyles() {
   const style = document.createElement('style');
   style.innerHTML = `
-    input[type="image"][alt="calendar"] {
-      width: 24px;
-      height: 24px;
-      vertical-align: middle;
-      padding-bottom: 2px;
-      margin-left: 5px;
-    }
-
-    #ContentPlaceHolder1_ClaimantDisabilityTab_body,
-    #ContentPlaceHolder1_ClaimantDisabilityTab {
-      background-color: transparent !important;
-    }
-
-    /* Calendar popup container */
-    #FDDCalendarControl table, #CalendarControl table {
-      background-color: #EDEFF0;
-      border-left: 5px solid #EDEFF0;
-      border-right: none;
-      font-size: 16px;
-    }
-
     .legendHeader {
       font-size: 22px;
     }
 
     .usa-label {
       font-size: 16px;
-    }
-
-    #CalendarControl td.empty,
-    #FDDCalendarControl td.empty {
-      visibility: hidden !important;
-    }
-
-    #CalendarControl td,
-    #CalendarControl th,
-    #FDDCalendarControl td,
-    #FDDCalendarControl th {
-      width: 36px !important;
-      height: 36px !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      border: 0 !important;
-      box-sizing: border-box !important;
-    }
-
-    #CalendarControl tr.header,
-    #CalendarControl tr.footer,
-    #FDDCalendarControl tr.header,
-    #FDDCalendarControl tr.footer {
-      background-color: #EDEFF0
-    }
-
-    #CalendarControl tr.header td,
-    #CalendarControl tr.footer td,
-    #FDDCalendarControl tr.header td,
-    #FDDCalendarControl tr.footer td {
-      background-color: #EDEFF0
-    }
-
-    #CalendarControl th a,
-    #FDDCalendarControl th a,
-    #FDDCalendarControl .previous a,
-    #FDDCalendarControl .next a {
-      color: blue;
-      text-decoration: underline;
-    }
-
-    #CalendarControl .title,
-    #FDDCalendarControl .title {
-      color: black;
-    }
-
-    #CalendarControl .weekday,
-    #CalendarControl .weekend,
-    #CalendarControl .current,
-    #FDDCalendarControl .weekday,
-    #FDDCalendarControl .weekend,
-    #FDDCalendarControl .current {
-      background-color: #EDEFF0;
-      border: none;
-      line-height: 26px;
-    }
-
-    #CalendarControl .weekday:hover,
-    #CalendarControl .weekend:hover,
-    #CalendarControl .current:hover,
-    #FDDCalendarControl .weekday:hover,
-    #FDDCalendarControl .weekend:hover,
-    #FDDCalendarControl .current:hover {
-      background-color: #dfe1e2;
-      border: none;
-      color: black;
-    }
-
-    #CalendarControl .weekday:active,
-    #CalendarControl .weekend:active,
-    #CalendarControl .current:active,
-    #FDDCalendarControl .weekday:active,
-    #FDDCalendarControl .weekend:active,
-    #FDDCalendarControl .current:active {
-      background-color: #c6cace;
-      border: none;
-      color: black;
-    }
-
-    #CalendarControl .current,
-    #FDDCalendarControl .current {
-      border: 5px solid #005ea2;
-      color: black;
     }
 
     @media (max-width: 767px) {
@@ -419,109 +316,8 @@ function updateAllCalendars() {
   const returnToWorkCalendarBtnId = 'Image12';
   const estReturnToWorkCalendarBtnId = 'Image13';
 
-  updateCalendarUI(fddCalendarBtnId, CALENDAR_CONTROL_ID);
-  updateCalendarUI(ldwCalendarBtnId, FDD_CALENDAR_CONTROL_ID);
-  updateCalendarUI(returnToWorkCalendarBtnId, FDD_CALENDAR_CONTROL_ID);
-  updateCalendarUI(estReturnToWorkCalendarBtnId, FDD_CALENDAR_CONTROL_ID);
-}
-
-function updateCalendarUI(id, calendarId) {
-  const element = document.getElementById(id);
-  if (element) {
-    element.src = "https://beta.nj.gov/files/tdi-fli-claim-status/assets/calendar_today.svg";
-    element.addEventListener('click', function() {
-      closeCalendarPopup(calendarId);
-      setTimeout(() => fixCalendarPopup(calendarId), 10);
-    });
-  }
-}
-
-function fixCalendarPopup(calendarId) {
-  const headerRows = document.querySelectorAll(`#${calendarId} tr.header`);
-  if (headerRows.length != 2) return;
-
-  const navHeaderRow = headerRows[0];
-  const footerRow = headerRows[1];
-
-  const functionSuffix = calendarId === FDD_CALENDAR_CONTROL_ID ? 'FDD' : '';
-  const linkStyle = 'font-size: 1.2em; padding: 4px; display: inline-flex; align-items: center; justify-content: center; min-width: 22px; min-height: 22px; text-decoration: none; color: inherit;';
-  const imgStyle = 'width: 20px; height: 20px; display: block;';
-  
-  const baseUrl = 'https://beta.nj.gov/files/tdi-fli-claim-status/assets/';
-  const prevYear = `<a href="javascript:changeCalendarControlYear${functionSuffix}(-1);" style="${linkStyle}"><img src="${baseUrl}navigate_far_before.svg" alt="Previous year" style="${imgStyle}"></a>`;
-  const prevMonth = `<a href="javascript:changeCalendarControlMonth${functionSuffix}(-1);" style="${linkStyle}"><img src="${baseUrl}navigate_before.svg" alt="Previous month" style="${imgStyle}"></a>`;
-  const nextMonth = `<a href="javascript:changeCalendarControlMonth${functionSuffix}(1);" style="${linkStyle}"><img src="${baseUrl}navigate_next.svg" alt="Next month" style="${imgStyle}"></a>`;
-  const nextYear = `<a href="javascript:changeCalendarControlYear${functionSuffix}(1);" style="${linkStyle}"><img src="${baseUrl}navigate_far_next.svg" alt="Next year" style="${imgStyle}"></a>`;
-  
-  const title = navHeaderRow.querySelector('.title')?.innerHTML || '';
-  
-  const gapStyle = 'display: flex; gap: 12px; align-items: center;';
-  
-  navHeaderRow.innerHTML = `
-    <td colspan="7" style="padding: 0;">
-      <div style="display: flex; justify-content: space-between; align-items: center; padding: 8px 4px;">
-        <div style="text-align: left; ${gapStyle}">
-          ${prevYear}
-          ${prevMonth}
-        </div>
-        <div class="title" style="text-align: center; flex: 1;">${title}</div>
-        <div style="text-align: right; ${gapStyle}">
-          ${nextMonth}
-          ${nextYear}
-        </div>
-      </div>
-    </td>
-  `;
-
-  removeEmptyRows(calendarId);
-
-  const navLinks = navHeaderRow.querySelectorAll('a');
-  navLinks.forEach(link => {
-    link.addEventListener('click', function() {
-      setTimeout(() => fixCalendarPopup(calendarId), 10);
-    });
-  });
-
-  footerRow.remove();
-}
-
-function closeCalendarPopup(calendarId) {
-  const calendarPopup = document.getElementById(calendarId);
-  
-  if (window.calendarClickOutsideHandler) {
-    document.removeEventListener('click', window.calendarClickOutsideHandler);
-  }
-  
-  window.calendarClickOutsideHandler = function(event) {
-    if (!calendarPopup || !calendarPopup.offsetParent) return;
-    const isClickInside = calendarPopup.contains(event.target);
-    if (!isClickInside) {
-      if (calendarId === CALENDAR_CONTROL_ID) {
-        hideCalendarControl();
-      } else if (calendarId === FDD_CALENDAR_CONTROL_ID) {
-        hideCalendarControlFDD();
-      }
-      document.removeEventListener('click', window.calendarClickOutsideHandler);
-    }
-  };
-  
-  setTimeout(() => {
-    document.addEventListener('click', window.calendarClickOutsideHandler);
-  }, 100);
-}
-
-function removeEmptyRows(calendarId) {
-  const calendarTable = document.querySelector(`#${calendarId} table`);
-  if (calendarTable) {
-    const allRows = calendarTable.querySelectorAll('tr');
-    allRows.forEach(row => {
-      const cells = row.querySelectorAll('td');
-      if (cells.length > 0) {
-        const allEmpty = Array.from(cells).every(cell => cell.classList.contains('empty'));
-        if (allEmpty) {
-          row.remove();
-        }
-      }
-    });
-  }
+  updateCalendarUI(fddCalendarBtnId, false);
+  updateCalendarUI(ldwCalendarBtnId);
+  updateCalendarUI(returnToWorkCalendarBtnId);
+  updateCalendarUI(estReturnToWorkCalendarBtnId);
 }

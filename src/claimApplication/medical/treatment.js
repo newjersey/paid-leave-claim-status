@@ -14,7 +14,8 @@ import {
   STORAGE_KEY_WORKERS_COMP,
   STORAGE_KEY_EDITING_WORKERS_COMP,
   setRequiredForVisibleLeaveSectionFields,
-  styleRadioButton
+  styleRadioButton,
+  updateCalendarUI,
 } from '../utils';
 
 export const medicalTreatmentLabels = [
@@ -88,6 +89,7 @@ export function changes() {
 
   setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason);
   focusOnWorkersCompIfEditing();
+  updateAllCalendars();
 }
 
 function addStyles() {
@@ -591,4 +593,16 @@ function focusOnWorkersCompIfEditing() {
       [STORAGE_KEY_EDITING_WORKERS_COMP]: undefined
     });
   }
+}
+
+function updateAllCalendars() {
+  const ERStartId = 'Image8';
+  const EREndId = 'Image1';
+  const hospitalStartId = 'Image2';
+  const hospitalEndId = 'Image3';
+
+  updateCalendarUI(ERStartId);
+  updateCalendarUI(EREndId);
+  updateCalendarUI(hospitalStartId);
+  updateCalendarUI(hospitalEndId);
 }
