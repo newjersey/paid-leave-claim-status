@@ -35,5 +35,6 @@ When you make a change and want to see if everything is working, do the followin
 1. If deploying to production, create a PR to squash & merge changes from `dev` into `prod`.
 2. Trigger the `Deploy to Beta` action in the GitHub UI for either `dev` or `prod`. This workflow (defined the same on all branches) will refresh the builds on the specified branch, and make a PR in the `beta` repo.
 3. Once the files are merged to the `main` branch of `beta` repo, they will be automatically deployed to `beta.nj.gov` to be referenced by the Claim Status/TDI application.
+4. The host at `beta.nj.gov` caches for several hours, so you may not actually see the new files until that refreshes. To force the new file to be served, the .NET layer of the TDI Claim Application attaches an otherwise-unused query parameter that contains the date and time (down to a 1-hour resolution in production, and 1-minute resolution in development, so you will see the new files at that same rate).
 
 _Note_: The following [internal Google Doc](https://docs.google.com/document/d/1XD06eJ9Q6e5z8_fKcQrDs7K6r0lbsqMab_xlikYdqAA/edit?usp=sharing) has URLs and account credentials to test claim status scenarios live in both development and production.
