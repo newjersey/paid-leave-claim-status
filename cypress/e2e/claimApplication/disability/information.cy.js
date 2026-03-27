@@ -85,6 +85,9 @@ describe("Disability Information page", () => {
       });
       cy.clock(new Date(2025, 7, 18)); // 0-indexed; August 18, 2025
       cy.visit(FIXTURE);
+      cy.window().then((win) => {
+        cy.spy(win, 'alert').as('alertSpy');
+      });
 
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_Image11').click();
       cy.tick(200);
@@ -98,7 +101,15 @@ describe("Disability Information page", () => {
       cy.get('#CalendarControl img[alt="Previous month"]').click(); 
       cy.tick(200);
       cy.get('a.weekday').contains('18').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').should('have.value', '07/18/2025'); // this fails -- console says text is '' but visually the text is there. field is selected/active though...
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').should('have.value', '07/18/2025');
+
+      cy.get('#btnDtLstWorkd').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl a.weekend').contains('19').click();      
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').blur();
+      cy.get('@alertSpy').invoke('getCall', 0).should('be.calledWith', 'Your last day of work cannot be after your first day of disability, 07/18/2025. Please select the last day you worked before your disability began.');
+      
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').should('have.value', '');
 
       cy.get('#btnDtLstWorkd').click();
       cy.tick(200);
@@ -106,6 +117,15 @@ describe("Disability Information page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').should('have.value', '07/17/2025');
 
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes').click({ force: true });
+
+      cy.get('#Image12').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl img[alt="Next month"]').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl a.weekday').contains('19').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').blur();
+      cy.get('@alertSpy').invoke('getCall', 1).should('be.calledWith', "The date you returned to work cannot be after today’s date.");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').should('have.value', '');
 
       cy.get('#Image12').click();
       cy.tick(200);
