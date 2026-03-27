@@ -81,6 +81,48 @@ describe("Employment Details page", () => {
       cy.wait('@aspxSubmission').then(checkCancelData);
     });
 
+    it('calendar UX allows only valid inputs', () => {
+      cy.window().then((win) => {
+        cy.spy(win, 'alert').as('alertSpy');
+      });
+
+      cy.get('#Image2').click();
+      cy.get('#FDDCalendarControl').should('be.visible');
+
+      cy.get('#pageTitle').click(); // test click-away-to-close
+      cy.get('#FDDCalendarControl').should('not.be.visible');
+
+      cy.get('#Image2').click();
+      cy.get('a.weekday').contains('2').click();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').blur();
+      cy.get('@alertSpy').invoke('getCall', 0).should('be.calledWith', 'Employment Start Date cannot be later than First Day Of Disability.');
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').should('have.value', '');
+
+      cy.get('#Image2').click();
+      cy.get('#FDDCalendarControl img[alt="Previous month"]').click();
+      cy.get('a.weekend').contains('30').click();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').blur();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').should('have.value', '06/30/2024');
+
+      cy.get('#Image4').click();
+      cy.get('a.weekday').contains('3').click();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').blur();
+      cy.get('@alertSpy').invoke('getCall', 1).should('be.calledWith', "Employment End Date cannot be later than First Day Of Disability.");
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').should('have.value', '');
+
+      cy.get('#Image4').click();
+      cy.get('#FDDCalendarControl img[alt="Previous month"]').click(); 
+      cy.get('a.weekday').contains('26').click();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').blur();
+      cy.get('@alertSpy').invoke('getCall', 2).should('be.calledWith', "Employment End Date cannot be earlier than Start Date");
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').should('have.value', '');
+
+      cy.get('#Image4').click();
+      cy.get('a.current').contains('1').click();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').blur();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').should('have.value', '07/01/2024');
+    });
+
     globalTestsNew(PAGE_ID, URL);
   });
 });
