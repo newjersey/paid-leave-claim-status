@@ -17,8 +17,8 @@ export const STORAGE_KEY_EDITING_WORKERS_COMP = "editing_workers_comp";
 
 export const STORAGE_KEY_SESSION_DATA = "session_data";
 
-export const CALENDAR_CONTROL_ID = "CalendarControl";
-export const FDD_CALENDAR_CONTROL_ID = "FDDCalendarControl"; // DEPENDENT on FDD, not setting it
+const CALENDAR_CONTROL_ID = "CalendarControl";
+const FDD_CALENDAR_CONTROL_ID = "FDDCalendarControl"; // DEPENDENT on FDD, not setting it
 
 export function getSessionData() {
   try {
@@ -269,7 +269,8 @@ export function removeIntroTextReferencingFuture() {
   });
 }
 
-export function updateCalendarUI(id, calendarId) {
+export function updateCalendarUI(id, isFddCalendar = true) {
+  const calendarId = isFddCalendar ? FDD_CALENDAR_CONTROL_ID : CALENDAR_CONTROL_ID;
   const element = document.getElementById(id);
   if (element) {
     element.src = "https://beta.nj.gov/files/tdi-fli-claim-status/assets/calendar_today.svg";

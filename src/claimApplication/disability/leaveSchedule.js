@@ -1,8 +1,6 @@
 import i18next from 'i18next';
 import {
-  CALENDAR_CONTROL_ID,
   DisabilityType,
-  FDD_CALENDAR_CONTROL_ID,
   styleRadioButton,
   updateCalendarUI,
 } from '../utils';
@@ -24,116 +22,12 @@ export function showLeaveScheduleForDisabilityType(disabilityType) {
 function addStyles() {
   const style = document.createElement('style');
   style.innerHTML = `
-    input[type="image"][alt="calendar"] {
-      width: 24px;
-      height: 24px;
-      vertical-align: middle;
-      padding-bottom: 2px;
-      margin-left: 5px;
-    }
-
-    #ContentPlaceHolder1_ClaimantDisabilityTab_body,
-    #ContentPlaceHolder1_ClaimantDisabilityTab {
-      background-color: transparent !important;
-    }
-
-    /* Calendar popup container */
-    #FDDCalendarControl table, #CalendarControl table {
-      background-color: #EDEFF0;
-      border-left: 5px solid #EDEFF0;
-      border-right: none;
-      font-size: 16px;
-    }
-
     .legendHeader {
       font-size: 22px;
     }
 
     .usa-label {
       font-size: 16px;
-    }
-
-    #CalendarControl td.empty,
-    #FDDCalendarControl td.empty {
-      visibility: hidden !important;
-    }
-
-    #CalendarControl td,
-    #CalendarControl th,
-    #FDDCalendarControl td,
-    #FDDCalendarControl th {
-      width: 36px !important;
-      height: 36px !important;
-      padding: 0 !important;
-      margin: 0 !important;
-      border: 0 !important;
-      box-sizing: border-box !important;
-    }
-
-    #CalendarControl tr.header,
-    #CalendarControl tr.footer,
-    #FDDCalendarControl tr.header,
-    #FDDCalendarControl tr.footer {
-      background-color: #EDEFF0
-    }
-
-    #CalendarControl tr.header td,
-    #CalendarControl tr.footer td,
-    #FDDCalendarControl tr.header td,
-    #FDDCalendarControl tr.footer td {
-      background-color: #EDEFF0
-    }
-
-    #CalendarControl th a,
-    #FDDCalendarControl th a,
-    #FDDCalendarControl .previous a,
-    #FDDCalendarControl .next a {
-      color: blue;
-      text-decoration: underline;
-    }
-
-    #CalendarControl .title,
-    #FDDCalendarControl .title {
-      color: black;
-    }
-
-    #CalendarControl .weekday,
-    #CalendarControl .weekend,
-    #CalendarControl .current,
-    #FDDCalendarControl .weekday,
-    #FDDCalendarControl .weekend,
-    #FDDCalendarControl .current {
-      background-color: #EDEFF0;
-      border: none;
-      line-height: 26px;
-    }
-
-    #CalendarControl .weekday:hover,
-    #CalendarControl .weekend:hover,
-    #CalendarControl .current:hover,
-    #FDDCalendarControl .weekday:hover,
-    #FDDCalendarControl .weekend:hover,
-    #FDDCalendarControl .current:hover {
-      background-color: #dfe1e2;
-      border: none;
-      color: black;
-    }
-
-    #CalendarControl .weekday:active,
-    #CalendarControl .weekend:active,
-    #CalendarControl .current:active,
-    #FDDCalendarControl .weekday:active,
-    #FDDCalendarControl .weekend:active,
-    #FDDCalendarControl .current:active {
-      background-color: #c6cace;
-      border: none;
-      color: black;
-    }
-
-    #CalendarControl .current,
-    #FDDCalendarControl .current {
-      border: 5px solid #005ea2;
-      color: black;
     }
 
     @media (max-width: 767px) {
@@ -422,8 +316,8 @@ function updateAllCalendars() {
   const returnToWorkCalendarBtnId = 'Image12';
   const estReturnToWorkCalendarBtnId = 'Image13';
 
-  updateCalendarUI(fddCalendarBtnId, CALENDAR_CONTROL_ID);
-  updateCalendarUI(ldwCalendarBtnId, FDD_CALENDAR_CONTROL_ID);
-  updateCalendarUI(returnToWorkCalendarBtnId, FDD_CALENDAR_CONTROL_ID);
-  updateCalendarUI(estReturnToWorkCalendarBtnId, FDD_CALENDAR_CONTROL_ID);
+  updateCalendarUI(fddCalendarBtnId, false);
+  updateCalendarUI(ldwCalendarBtnId);
+  updateCalendarUI(returnToWorkCalendarBtnId);
+  updateCalendarUI(estReturnToWorkCalendarBtnId);
 }
