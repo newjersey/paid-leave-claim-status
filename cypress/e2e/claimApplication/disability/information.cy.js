@@ -105,7 +105,7 @@ describe("Disability Information page", () => {
 
       cy.get('#btnDtLstWorkd').click();
       cy.tick(200);
-      cy.get('#FDDCalendarControl a.weekend').contains('19').click();      
+      cy.get('#FDDCalendarControl a.weekend').contains('19').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').blur();
       cy.get('@alertSpy').invoke('getCall', 0).should('be.calledWith', 'Your last day of work cannot be after your first day of disability, 07/18/2025. Please select the last day you worked before your disability began.');
       
@@ -114,6 +114,7 @@ describe("Disability Information page", () => {
       cy.get('#btnDtLstWorkd').click();
       cy.tick(200);
       cy.get('#FDDCalendarControl a.weekday').contains('17').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').blur();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').should('have.value', '07/17/2025');
 
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes').click({ force: true });
@@ -129,10 +130,46 @@ describe("Disability Information page", () => {
 
       cy.get('#Image12').click();
       cy.tick(200);
+      cy.get('#FDDCalendarControl img[alt="Previous month"]').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl a.weekday').contains('17').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').blur();
+      cy.get('@alertSpy').invoke('getCall', 2).should('be.calledWith', "The date you returned to work must be after your first day of disability, 07/18/2025. Please select the date you returned to work.");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').should('have.value', '');
+
+      cy.get('#Image12').click();
+      cy.tick(200);
       cy.get('#FDDCalendarControl img[alt="Next month"]').click();
       cy.tick(200);
       cy.get('#FDDCalendarControl a.weekend').contains('17').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').blur();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').should('have.value', '08/17/2025');
+
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo').click({ force: true });
+
+      cy.get('#Image13').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl img[alt="Previous month"]').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl a.weekday').contains('17').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').blur();
+      cy.get('@alertSpy').invoke('getCall', 3).should('be.calledWith', "The date you expect to return to work must be after your first day of disability, 07/18/2025. Please select the date you expect to return to work.");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').should('have.value', '');
+
+      cy.get('#Image13').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl a.weekend').contains('19').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').blur();
+      cy.get('@alertSpy').invoke('getCall', 4).should('be.calledWith', "The date you expect to return to work must be after today’s date.");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').should('have.value', '');
+
+      cy.get('#Image13').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl img[alt="Next month"]').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl a.weekday').contains('19').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').blur();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').should('have.value', '08/19/2025');
     });
 
     it("user can input info about pregnancy with blank extra text and proceed to next page", () => {
