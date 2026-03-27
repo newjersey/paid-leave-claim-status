@@ -79,6 +79,42 @@ describe("Disability Information page", () => {
       });
     }
 
+    it('calendar UX allows only valid inputs', () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify({ disabilityInfoView: 'leaveSchedule' })));
+      });
+      cy.clock(new Date(2025, 7, 18)); // 0-indexed; August 18, 2025
+      cy.visit(FIXTURE);
+
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_Image11').click();
+      cy.tick(200);
+      cy.get('#CalendarControl').should('be.visible');
+
+      cy.get('#fddHint').click(); // test click-away-to-close
+      cy.get('#CalendarControl').should('not.be.visible');
+
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_Image11').click();
+      cy.tick(200);
+      cy.get('#CalendarControl img[alt="Previous month"]').click(); 
+      cy.tick(200);
+      cy.get('a.weekday').contains('18').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').should('have.value', '07/18/2025'); // this fails -- console says text is '' but visually the text is there. field is selected/active though...
+
+      cy.get('#btnDtLstWorkd').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl a.weekday').contains('17').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').should('have.value', '07/17/2025');
+
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes').click({ force: true });
+
+      cy.get('#Image12').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl img[alt="Next month"]').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl a.weekend').contains('17').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').should('have.value', '08/17/2025');
+    });
+
     it("user can input info about pregnancy with blank extra text and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.window().then((win) => {
@@ -406,6 +442,4 @@ describe("Disability Information page", () => {
     
     globalTestsNew(PAGE_ID, URL);
   });
-
-
 });
