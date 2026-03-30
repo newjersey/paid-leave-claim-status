@@ -89,7 +89,6 @@ function adjustWidths() {
     }
   }
 
-
   const fieldsets = document.querySelectorAll('fieldset');
 
   fieldsets.forEach(fieldset => {
@@ -98,7 +97,6 @@ function adjustWidths() {
     adjustTableWidths(fieldset);
   });
 }
-
 
 function updateWorkersCompQuestions() {
   const workersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes');
@@ -140,7 +138,6 @@ function hideQuestion2a() {
   brTag1.style.display = 'none'
   brTag2.style.display = 'none'
 }
-
 
 function updateQuestion2bAnd2c() {
   // 2b is displayed when a user answers yes to 2a
