@@ -2,6 +2,7 @@ import { identifyingContent as certificationContent } from "./claimantInfo/certi
 import { identifyingContent as confirmationContent } from "./claimantInfo/confirmation.js";
 import { identifyingContent as employerDetailsContent } from "./claimantInfo/employerDetails.js";
 import { identifyingContent as employmentContent } from "./claimantInfo/employment.js";
+import { identifyingContent as incompleteEmployerContent } from "./claimantInfo/incompleteEmployer.js";
 import { identifyingContent as intermittentContent } from "./claimantInfo/intermittent.js";
 import { identifyingContent as otherBenefitsContent } from "./claimantInfo/otherBenefits.js";
 import { identifyingContent as paymentInfoContent } from "./claimantInfo/paymentInfo.js";
@@ -15,7 +16,8 @@ import { identifyingContent as loginProfileContent } from "./claimantProfile/log
 import { identifyingContent as personalProfileContent } from "./claimantProfile/personalProfile.js";
 import { identifyingContent as claimantProfileVerificationContent } from "./claimantProfile/verification.js";
 import { identifyingContent as completeExistingIntroContent } from "./completeExistingIntro/completeExistingIntro.js";
-import { identifyingContent as disabilityInformationContent } from "./disability/information.js";
+import { identifyingContent as disabilityInformationContent,
+  alternateIdentifyingContent as alternateDisabilityInformationContent } from "./disability/information.js";
 import { identifyingContent as employmentDetailsContent } from "./employmentDetails/employmentDetails.js";
 import { identifyingContent as medicalTreatmentContent } from "./medical/treatment.js";
 import { identifyingContent as priorClaimSearchContent } from "./priorClaimSearch/priorClaimSearch.js";
@@ -26,6 +28,7 @@ const identifyingContents = [
   confirmationContent,
   employerDetailsContent,
   employmentContent,
+  incompleteEmployerContent,
   intermittentContent,
   otherBenefitsContent,
   paymentInfoContent,
@@ -41,17 +44,23 @@ const identifyingContents = [
   completeExistingIntroContent,
   employmentDetailsContent,
   disabilityInformationContent,
+  alternateDisabilityInformationContent,
   medicalTreatmentContent,
   priorClaimSearchContent,
   tdiIntroductionContent,
 ];
 
 export function identifyPage() {
-  for (const { id, elementId, text } of identifyingContents) {
+  for (const { id, elementId, text, value } of identifyingContents) {
     const element = document.getElementById(elementId);
-    const isVisible = element && element.offsetParent !== null;
-    if (isVisible && element.textContent.includes(text)) {
-      return id;
+
+    if (element) {
+      const isVisible = element.offsetParent !== null;
+      const hasValue = value ? element.value.includes(value) : false;
+
+      if (hasValue || (isVisible && element.textContent.includes(text))) {
+        return id;
+      } 
     }
   }
 

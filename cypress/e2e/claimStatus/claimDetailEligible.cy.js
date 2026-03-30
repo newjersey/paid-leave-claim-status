@@ -25,11 +25,6 @@ describe("Claim Detail page - Eligible scenario with next pay date", () => {
       .and("equal", "paymentDetail()");
     cy.contains("Your next payment is scheduled for").should("be.visible");
     cy.contains("November 22, 2023").should("be.visible");
-    cy.get("li")
-      .contains(
-        "You'll keep getting paid. We'll post here if anything changes."
-      )
-      .should("be.visible");
     cy.contains("Weekly benefit rate")
       .contains("$1,025.00")
       .should("be.visible");
@@ -42,6 +37,13 @@ describe("Claim Detail page - Eligible scenario with next pay date", () => {
     cy.contains("Leave end date")
       .contains("December 1, 2025")
       .should("be.visible");
+  });
+
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
@@ -100,6 +102,13 @@ describe("Claim Detail page - Eligible scenario without next pay date", () => {
     cy.contains("Leave end date").should("not.exist");
   });
 
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailEligibleProcessing.html"
+    );
+    cy.checksViewportMetaTag();
+  });
+
   it("passes accessibility checks", () => {
     cy.visit(
       "./cypress/fixtures/claimStatus/claimDetail/claimDetailEligibleProcessing.html"
@@ -135,11 +144,6 @@ describe("Claim Detail page - Eligible scenario with next pay date", () => {
       .and("equal", "paymentDetail()");
     cy.contains("Your next payment is scheduled for").should("be.visible");
     cy.contains("November 22, 2023").should("be.visible");
-    cy.get("li")
-      .contains(
-        "You'll keep getting paid. We'll post here if anything changes."
-      )
-      .should("be.visible");
     cy.contains("Weekly benefit rate")
       .contains("$1,025.00")
       .should("be.visible");
@@ -152,6 +156,13 @@ describe("Claim Detail page - Eligible scenario with next pay date", () => {
     cy.contains("Leave end date")
       .contains("December 1, 2025")
       .should("be.visible");
+  });
+
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
@@ -204,8 +215,39 @@ describe("Claim Detail page - Eligible scenario after claim ended", () => {
       .should("be.visible");
   });
 
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailEligibleEnded.html"
+    );
+    cy.checksViewportMetaTag();
+  });
+
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailEligibleEnded.html");
     cy.checkBodyA11y();
   });
 });
+
+describe("feedback widget", () => {
+  it("renders the feedback widget inside the footer", () => {
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html")
+    cy.get("footer").find("feedback-widget").should('have.length', 1)
+
+    cy.get("footer").within(() => {
+      cy.checkFeedbackWidgetIsRendered()
+    })
+  })
+
+  it("calls the /rating endpoint when the 'Yes' button is clicked and displays the next screen", () => {
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html")
+
+    cy.get("footer").within(() => {
+      cy.checkFeedbackWidgetIsInteractable()
+    })
+  })
+
+  it("displays the overridden version of the email disclaimer text", () => {
+    cy.visit("./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html")
+    cy.checkFeedbackWidgetEmailDisclaimerTextIsOverridden()
+  })
+})

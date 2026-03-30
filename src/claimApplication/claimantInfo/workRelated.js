@@ -1,3 +1,11 @@
+import {
+  adjustTableWidths,
+  removeExtraSpaceBetweenRadioButtons,
+  styleRadioButton,
+  setNewTitle,
+} from '../utils';
+import i18next from 'i18next';
+
 export const workRelatedLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpNm', label: 'Employer Name' },
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtEmpadd1', label: 'Employer Address Line 1' },
@@ -22,3 +30,67 @@ export const identifyingContent = {
   elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC',
   text: 'Work Related Information',
 };
+
+export function changes() {
+  adjustWidths();
+  styleRadioButtons();
+  updateWorkersCompensationHeader();
+  setNewTitle(i18next.t('workRelated.title'));
+}
+
+function styleRadioButtons() {
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo', true);
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCInsYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCInsNo', true);
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCBenYes');
+  styleRadioButton('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCBenNo', true);
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCInsYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCInsNo'
+  );
+  removeExtraSpaceBetweenRadioButtons(
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCBenYes',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCBenNo'
+  );
+}
+
+function updateWorkersCompensationHeader() {
+  const div = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC');
+  const legend = div.querySelector('legend');
+  legend.style.display = "none";
+}
+
+function adjustWidths() {
+  const div = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_Panel3');
+  if (div) {
+    div.style.width = 'auto';
+    div.style.maxWidth = '700px';
+  }
+
+  const outerDiv = document.getElementById('divWCNo');
+  if (outerDiv) {
+    const innerDivs = outerDiv.querySelectorAll('div');
+    innerDivs.forEach(div => {
+      div.style.width = '100%';
+      div.style.marginLeft = '0';
+    });
+
+    const textarea = outerDiv.querySelector('textarea');
+    if (textarea) {
+      textarea.style.width = '100%';
+    }
+  }
+
+  const fieldsets = document.querySelectorAll('fieldset');
+
+  fieldsets.forEach(fieldset => {
+    fieldset.style.width = 'auto';
+    fieldset.style.maxWidth = '100%';
+    adjustTableWidths(fieldset);
+  });
+}

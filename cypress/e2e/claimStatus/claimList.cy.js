@@ -26,6 +26,13 @@ describe("Claim List page - with recent and older claims", () => {
       .and("include", "populateMoreDetail('001', 'FLI', 'U')");
   });
 
+    it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimDetail/claimDetailEligible.html"
+    );
+    cy.checksViewportMetaTag();
+  });
+
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimStatus/claimList/claimList.html");
     cy.checkBodyA11y();
@@ -48,6 +55,12 @@ describe("Claim List page - with no older claims", () => {
     // Check that old claim section is hidden
     cy.contains("Temporary Disability Insurance (TDI)").should("not.exist");
     cy.contains("more than 12 months ago").should("not.exist");
+  });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimList/claimListNoOlder.html"
+    );
+    cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
@@ -74,9 +87,39 @@ describe("Claim List page - with no recent claims", () => {
     cy.contains("- August 5, 2021").should("be.visible");
     cy.contains("- March 5, 2020").should("be.visible");
   });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/claimList/claimListNoRecent.html"
+    );
+    cy.checksViewportMetaTag();
+  });
 
   it("passes accessibility checks", () => {
     cy.visit("./cypress/fixtures/claimStatus/claimList/claimListNoRecent.html");
     cy.checkBodyA11y();
   });
 });
+
+describe("feedback widget", () => {
+  it("renders the feedback widget inside the footer", () => {
+    cy.visit("./cypress/fixtures/claimStatus/claimList/claimList.html")
+    
+    cy.get("footer").find("feedback-widget").should('have.length', 1)
+    cy.get("footer").within(() => {
+      cy.checkFeedbackWidgetIsRendered()
+    })
+  })
+
+  it("calls the /rating endpoint when the 'Yes' button is clicked and displays the next screen", () => {
+    cy.visit("./cypress/fixtures/claimStatus/claimList/claimList.html")
+    
+    cy.get("footer").within(() => {
+      cy.checkFeedbackWidgetIsInteractable()
+    })
+  })
+
+  it("displays the overridden version of the email disclaimer text", () => {
+    cy.visit("./cypress/fixtures/claimStatus/claimList/claimList.html")
+    cy.checkFeedbackWidgetEmailDisclaimerTextIsOverridden()
+  })
+}) 

@@ -2,7 +2,6 @@ import {
   logEvent,
   setupAnalytics,
   updateIcon,
-  addFeedbackLink,
   runWhenReady,
   makeMobileFriendly,
   styleBody,
@@ -15,10 +14,10 @@ import {
   getUnstyledButtonHtml,
   getClaimTypeContent,
   RETURN_TO_TOP_LINK,
-  FOOTER_HTML,
   getFormattedDate,
   isFutureDate,
   extractDateFromString,
+  insertFooterAfterElem,
 } from "../modules/shared.mjs";
 import { Accordion } from "../modules/Accordion.mjs";
 
@@ -38,7 +37,6 @@ function executeOverride() {
     addNewHtml(metadata);
 
     styleBody();
-    addFeedbackLink();
     updateIcon();
     updateDocument("Payments");
   } catch (e) {
@@ -277,14 +275,15 @@ function addNewHtml(metadata) {
         : "13px"}; margin-bottom: 8px"
     >
       ${RETURN_TO_TOP_LINK}
-    </div>
-    ${FOOTER_HTML}`;
+    </div>`;
 
   root.append(newContainer);
   const accordions = document.querySelectorAll(".accordion-header");
   accordions.forEach((accordionEl) => {
     new Accordion(accordionEl);
   });
+
+  insertFooterAfterElem(root)
 }
 
 function getParsedStatus(status) {
@@ -372,7 +371,40 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
       break;
     case "P30 sent":
       const mailedDate = extractDateFromString(status);
-      body = html`<div>
+      if (claimType === "FLI") {
+        body = html`
+        <div>
+        <strong>Heads up!</strong><br />
+        Your last scheduled payment is coming up. To request more days, you'll need to mail or fax us 
+        the Family Leave Insurance Continued Claim Certification (FL3 form), showing your updated leave 
+        schedule. We mailed this on ${getFormattedDate(mailedDate)}.
+        <br /><br />
+        <strong>Tip:</strong> Only fill out the part(s) of the form that fits your situation.
+        <br />
+        <ul style="margin-block-start: 0.25em">
+          <li>
+            <strong>Caregiving leave?</strong> Have your loved one's healthcare provider 
+            complete the medical certification.
+          </li>
+          <li>
+            <strong>Splitting your leave into multiple parts? </strong> After taking your leave days, fill out 
+            the schedule on the back of the form.
+          </li>
+        </ul>
+        <strong>Need help?</strong>
+        <br />
+        If you can't find the letter after 2 weeks from the mailing date above, give us a call: 609-292-7060.
+        <br />
+        Learn more about taking family leave in parts <a
+              href="https://www.nj.gov/labor/myleavebenefits/worker/resources/intermittent-leave.shtml"
+              target="_blank"
+              >here</a
+            >.
+       
+      </div>
+        `;
+      } else if (claimType === "TDI") {
+        body = html`<div>
         <strong>Heads up!</strong><br />Your last scheduled payment is coming
         up. We need you to end or extend your claim online. To complete this
         step, you'll need the P30 letter, or Request for Continued Claim
@@ -417,6 +449,7 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
           "
         />
       </div>`;
+      }
       break;
     case "Next pay scheduled":
       const scheduledDate = extractDateFromString(status);

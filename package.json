@@ -4,18 +4,28 @@
   "description": "",
   "scripts": {
     "test": "npx cypress run",
+    "test:claim-status": "npx cypress run --spec './cypress/e2e/claimStatus/**.cy.js'",
+    "test:claim-app": "npx cypress run --spec './cypress/e2e/claimApplication/**/*.cy.js'",
+    "test:open": "npx cypress open --e2e",
     "build": "./build.sh",
-    "prep-deploy-dev": "./prepareDeploy.sh dev",
-    "prep-deploy-prod": "./prepareDeploy.sh prod"
+    "build-dev": "./build.sh && ./generateLocalDevOverrides.sh",
+    "prep-deploy-dev": "./build.sh && ./prepareDeploy.sh dev",
+    "prep-deploy-prod": "./build.sh && ./prepareDeploy.sh prod",
+    "postinstall": "patch-package"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@rollup/plugin-node-resolve": "^16.0.1",
     "@rollup/plugin-terser": "^0.4.4",
     "axe-core": "^4.8.4",
     "cypress": "^13.7.1",
     "cypress-axe": "^1.5.0",
+    "i18next": "^25.5.2",
+    "patch-package": "^8.0.1",
     "rollup": "^4.13.0",
-    "rollup-plugin-html-literals": "^1.1.8"
+    "rollup-plugin-html-literals": "^1.1.8",
+    "rollup-plugin-postcss": "^4.0.2",
+    "uswds": "^2.14.0"
   }
 }

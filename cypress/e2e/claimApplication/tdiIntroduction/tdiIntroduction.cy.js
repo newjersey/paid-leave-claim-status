@@ -1,3 +1,7 @@
+const PAGE_ID = 'tdiIntroduction';
+const URL = 'TDIIntroduction';
+const FIXTURE = "./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html";
+
 describe("Introduction page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
@@ -6,22 +10,20 @@ describe("Introduction page", () => {
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24chkAgree=on');
   }
 
-  function mockASPX() {
-    cy.intercept('POST', '**/TDIIntroduction.aspx',
-      { statusCode: 200, headers: { 'content-type': 'text/html' } }
-    ).as('aspxSubmission');
-  };
-
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
-      cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html");
+      cy.visit(FIXTURE);
     });
 
     it("agrees to terms and checks POST data", () => {
-      mockASPX();
+      cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_chkAgree').check();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it('should open FAQ and post data when the Help link is clicked', () => {
+      cy.checkHelpButtonBehavior();
     });
   });
 
@@ -32,18 +34,63 @@ describe("Introduction page", () => {
           expect([200, 304]).to.include(res.statusCode);
         });
       }).as('script');
-      cy.visit("./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html");
+      cy.visit(FIXTURE);
       cy.wait('@script');
     });
 
     it("agrees to terms and checks POST data", () => {
-      mockASPX();
+      cy.window().then((win) => {
+        win.sessionStorage.setItem('session_data', 'testValue');
+      });
+      cy.visit(FIXTURE);
+      cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_chkAgree').check();
       cy.wait('@aspxSubmission').then(checkPostData);
+      cy.window().then((win) => {
+        expect(win.sessionStorage.length).to.equal(0);
+      });
+    });
+    
+    it("applies the new font family", () => {
+      cy.checkFontFamily();
     });
 
     it("passes accessibility checks", () => {
       cy.checkBodyA11y();
+    });
+
+    it("tracks the page view", () => {
+      cy.trackPageView(PAGE_ID);
+    });
+
+    it('should open Resources and track when clicked', () => {
+      cy.trackResourcesClick(PAGE_ID);
+    });
+
+    it('info alert is not present', () => {
+      cy.checkInfoAlertBehavior();
+    });
+
+    it("feedback widget is visible", () => {
+      cy.checkFeedbackWidgetIsRendered();
+    });
+
+    it("URL submitted with feedback includes pageId", () => {
+      cy.intercept('POST', '**/feedback/dev/comment', {
+        statusCode: 200,
+        body: { success: true }
+      }).as('feedbackSubmission');
+
+      cy.get('#yesButton').click();
+      cy.get('#comment').type('innovation testing');
+      cy.get('#commentSubmit').click();
+      
+      cy.wait('@feedbackSubmission').then((interception) => {
+        const { body } = interception.request;
+        expect(body.comment).to.equal('innovation testing');
+        expect(body.rating).to.be.true;
+        expect(body.pageURL).to.match(/pageId=tdiIntroduction/);
+      });
     });
   });
 });

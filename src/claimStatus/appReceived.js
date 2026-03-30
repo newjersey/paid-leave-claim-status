@@ -3,7 +3,6 @@ import {
   setupAnalytics,
   updateIcon,
   makeMobileFriendly,
-  addFeedbackLink,
 } from "../modules/shared.mjs";
 
 if (document.readyState === "loading") {
@@ -20,7 +19,6 @@ function executeOverride() {
   setupAnalytics();
   logView(status, receiptDate);
   makeMobileFriendly();
-  addFeedbackLink();
 }
 
 function getMetadata() {

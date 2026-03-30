@@ -1,33 +1,6 @@
-// ***********************************************
-// This example commands.js shows you how to
-// create various custom commands and overwrite
-// existing commands.
-//
-// For more comprehensive examples of custom
-// commands please read more here:
-// https://on.cypress.io/custom-commands
-// ***********************************************
-//
-//
-// -- This is a parent command --
-// Cypress.Commands.add('login', (email, password) => { ... })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
-
 Cypress.Commands.add("checkBodyA11y", () => {
   cy.injectAxe();
 
-  // Assert
   cy.checkA11y("body", {
     rules: {
       region: { enabled: false }, // Disable rule because can't control top-level elements easily
@@ -53,3 +26,155 @@ Cypress.Commands.add("checkCommonPostData", (formData) => {
   expect(formData).to.match(/__VIEWSTATEGENERATOR=[^&]+/);
   expect(formData).to.match(/__EVENTVALIDATION=[^&]+/);
 });
+
+Cypress.Commands.add("checkFontFamily", () => {
+  cy.get('p').should('have.css', 'font-family')
+    .then(fontFamily => {
+      expect(fontFamily).to.contain('"Public Sans", sans-serif');
+    });
+});
+
+Cypress.Commands.add("confirmEventIsNotTracked", (name) => {
+  cy.window().then((win) => {
+    const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
+    const loggedEvent = events.find(event => event.name === name);
+    expect(loggedEvent).to.be.undefined;
+  });
+});
+
+Cypress.Commands.add("checkLogEvent", (name, parameters) => {
+  cy.window().then((win) => {
+    const events = JSON.parse(win.localStorage.getItem('loggedEvents')) || [];
+    const loggedEvent = events.find(event => event.name === name);
+    expect(loggedEvent.parameters).to.deep.equal(parameters);
+  });
+});
+
+Cypress.Commands.add("trackPageView", (pageId) => {
+  cy.checkLogEvent(`${pageId} viewed`, {});
+});
+
+Cypress.Commands.add("trackHelpClick", (pageId) => {
+  cy.checkLogEvent(`Help Clicked`, { pageId });
+});
+
+Cypress.Commands.add("trackResourcesClick", (pageId) => {
+  cy.get('#resourcesLink').click();
+  cy.checkLogEvent(`Resources Clicked`, { pageId });
+});
+
+Cypress.Commands.add("checkHelpButtonBehavior", () => {
+  cy.window().then(win => {
+    cy.stub(win, 'openFAQWindow').as('openFAQWindowStub');
+    cy.stub(win, '__doPostBack').as('doPostBackStub');
+  });
+  cy.get('#header_lbtnShowFAQ').click();
+  cy.get('@openFAQWindowStub').should('be.calledWithMatch', 'http://lwd.dol.state.nj.us/labor/tdi/content/webapplicationfaq.html');
+  cy.get('@doPostBackStub').should('be.calledWith', 'ctl00$header$lbtnShowFAQ', '');
+});
+
+Cypress.Commands.add("checkInfoAlertBehavior", () => {
+  cy.get('#info-alert').should('not.exist');
+});
+
+function checkLogoutData(interception) {
+  const formData = interception.request.body;
+  expect(formData).to.include('__EVENTTARGET=ctl00%24header%24lbtnLogout');
+}
+
+Cypress.Commands.add("checkOldLogout", (url) => {
+  cy.mockASPX(url);
+  cy.get('#header_lbtnLogout').click();
+  cy.wait('@aspxSubmission').then(checkLogoutData);
+});
+
+Cypress.Commands.add("checkOldLogoutCancel", (url) => {
+  cy.mockASPX(url);
+  cy.on('window:confirm', () => false);
+  cy.get('#header_lbtnLogout').click();
+  cy.get('@aspxSubmission').should('not.exist');
+});
+
+Cypress.Commands.add("checkNewLogout", (url) => {
+  cy.window().then((win) => {
+    win.sessionStorage.setItem('session_data', 'testValue');
+  });
+
+  cy.mockASPX(url);
+  cy.get('#logoutButton').click();
+  cy.wait('@aspxSubmission').then(checkLogoutData);
+  
+  cy.window().then((win) => {
+    expect(win.sessionStorage.length).to.equal(0);
+  });
+});
+
+Cypress.Commands.add("checkNewLogoutCancel", (url) => {
+  cy.mockASPX(url);
+  cy.on('window:confirm', () => false);
+  cy.get('#logoutButton').click();
+  cy.get('@aspxSubmission').should('not.exist');
+});
+
+Cypress.Commands.add("mockASPX", (url) => {
+  cy.intercept('POST', `**/${url}.aspx`,
+    { statusCode: 200, headers: { 'content-type': 'text/html' } }
+  ).as('aspxSubmission');
+});
+
+Cypress.Commands.add("checkFeedbackWidgetIsRendered", () => {
+    cy.get("feedback-widget").should('have.length', 1)
+    cy.get("feedback-widget").within(() => {
+        cy.contains("Did you find what you were looking for on this page?").should('be.visible');
+    })
+})
+
+Cypress.Commands.add("checkFeedbackWidgetIsInteractable", () => {
+    const commentScreenTextMatcher = /what ideas come to mind/i
+    cy.intercept('POST', '**/rating', { message: "Success", feedbackId: "1"})
+      .as("postRating")
+
+    cy.get("feedback-widget").within(() => {
+      cy.contains(commentScreenTextMatcher).should('not.be.visible')
+    })
+
+    cy.get("feedback-widget")
+      .contains("button", /yes/i)
+      .click()
+
+    cy.wait("@postRating")
+      .its('request.body')
+      .should('have.property', 'rating', true)
+    
+    cy.get("feedback-widget").within(() => {
+      cy.contains(commentScreenTextMatcher).should('be.visible')
+  })
+})
+
+Cypress.Commands.add("checkFeedbackWidgetEmailDisclaimerTextIsOverridden", () => {
+    cy.intercept('POST', '**/rating', { message: "Success", feedbackId: "test"})
+      .as("postRating")
+    cy.intercept('POST', '**/comment', { message: "Success", feedbackId: "test"})
+      .as("postComment")
+
+    
+    cy.get("feedback-widget").within(() => {
+      cy.contains("button", /yes/i)
+        .click()
+      cy.wait("@postRating")
+
+      const commentDisclaimerText = /what ideas come to mind/i
+      cy.contains(commentDisclaimerText).should("be.visible")
+      cy.get("textarea").type("i am a comment")
+      cy.contains("button", /send feedback/i).click()
+      cy.wait("@postComment")
+
+      cy.contains("label", /email address/i).should("be.visible")
+      const expectedEmailDisclaimerText = "To hear about feedback opportunities in the future, join our user testing list."
+      cy.contains(expectedEmailDisclaimerText).should("be.visible")
+  })
+})
+
+Cypress.Commands.add("checksViewportMetaTag", () => {
+  cy.get('head meta[name="viewport"]').should('have.attr', 'content', 'width=device-width, initial-scale=1');
+})

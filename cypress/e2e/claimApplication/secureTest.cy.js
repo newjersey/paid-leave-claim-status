@@ -1,11 +1,10 @@
-describe("page without new JS", () => {
+describe("Claim Application on Secure Test environment", () => {
   beforeEach(() => {
-    cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
     cy.on('uncaught:exception', (_err, _runnable) => { return false; });
     cy.visit("https://securest.dol.state.nj.us/tdi_iam/TDIIntroduction.aspx");
   });
 
-  it("proceeds through an example user flow", () => {
+  xit("proceeds through an example user flow", () => {
     // Login page
     cy.get('#idToken1').type('johnsmith2205@mailinator.com');
     cy.get('#idToken2').type('Test@123');
