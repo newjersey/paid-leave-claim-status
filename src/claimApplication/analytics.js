@@ -11,6 +11,7 @@ export function analyticsChanges(pageId) {
   trackPrintClaimSummaryButton();
   trackValidationErrors(pageId);
   trackSystemAlerts(pageId);
+  addPageIdToURL(pageId);
 }
 
 function trackHelpClicks(pageId) {
@@ -50,4 +51,10 @@ function trackSystemAlerts(pageId) {
     logEvent('System Alert', { contents, pageId });
     return originalAlert.call(window, contents);
   };
+}
+
+function addPageIdToURL(pageId) {
+  const url = new URL(window.location.href);
+  url.searchParams.set('pageId', pageId);
+  history.replaceState(null, '', url.toString());
 }
