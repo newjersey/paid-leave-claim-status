@@ -10,6 +10,7 @@ export function analyticsChanges(pageId) {
   trackWorkersCompYesSubmission(pageId);
   trackPrintClaimSummaryButton();
   trackValidationErrors(pageId);
+  trackSystemAlerts(pageId);
 }
 
 function trackHelpClicks(pageId) {
@@ -41,4 +42,12 @@ function trackValidationErrors(pageId) {
       logEvent('Validation Error', { contents, pageId });
     }
   });
+}
+
+function trackSystemAlerts(pageId) {
+  const originalAlert = window.alert;
+  window.alert = function(contents) {
+    logEvent('System Alert', { contents, pageId });
+    return originalAlert.call(window, contents);
+  };
 }
