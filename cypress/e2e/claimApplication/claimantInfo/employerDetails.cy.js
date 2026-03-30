@@ -73,6 +73,7 @@ describe("Employment Details page", () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('01/01/2022');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_btnNextEmpDet').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+      cy.confirmEventIsNotTracked("System Alert");
     });
 
     it("user can cancel", () => {
@@ -102,6 +103,7 @@ describe("Employment Details page", () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').blur();
       cy.get('@alertSpy').invoke('getCall', 0).should('be.calledWith', 'Employment Start Date cannot be later than First Day Of Disability.');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').should('have.value', '');
+      cy.checkLogEvent(`System Alert`, { contents: "Employment Start Date cannot be later than First Day Of Disability.", pageId: 'employerDetails' });
 
       cy.get('#Image2').click();
       cy.tick(200);

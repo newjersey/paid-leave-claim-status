@@ -205,6 +205,8 @@ describe("Medical Treatment page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc').click();
       cy.wait('@aspxSubmission').then(checkInjuryPostData);
       cy.confirmEventIsNotTracked("WorkersComp Yes Clicked");
+      cy.confirmEventIsNotTracked("Medical Provider Type Warning Shown");
+      cy.confirmEventIsNotTracked("Medical Provider Type No Submitted");
     });
 
     it("user can input info when session contains pregnant reason and proceed to next page", () => {
@@ -233,12 +235,14 @@ describe("Medical Treatment page", () => {
       cy.mockASPX(URL);
 
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury').should('not.be.visible');
-      cy.get('#provider-type-accepted-yes').click({ force: true });
+      cy.get('#provider-type-accepted-no').click({ force: true });
       fillCommonResponses();
       cy.get('#caused-by-job-no').click({ force: true });
       cy.get('#workersCompContainer').should('not.be.visible');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc').click();
       cy.wait('@aspxSubmission').then(checkInjuryPostData);
+      cy.checkLogEvent(`Medical Provider Type Warning Shown`, {});
+      cy.checkLogEvent(`Medical Provider Type No Submitted`, {});
     });
 
     it('tracks when workers comp Yes is submitted', () => {
@@ -453,6 +457,7 @@ describe("Medical Treatment page", () => {
       cy.get('#provider-type-alert').should('not.be.visible');
       cy.get('#provider-type-accepted-no').click({ force: true });
       cy.get('#provider-type-alert').should('be.visible');
+      cy.checkLogEvent(`Medical Provider Type Warning Shown`, {});
     });
 
     it("hides warning alert when Yes is selected for provider type", () => {

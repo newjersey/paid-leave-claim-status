@@ -235,6 +235,7 @@ function addProviderScreener() {
   } else if (sessionData[STORAGE_KEY_PROVIDER_TYPE_ACCEPTED] === false) {
     providerAlert.style.display = 'block';
     providerNo.checked = true;
+    logEvent('Medical Provider Type Warning Shown', {});
   }
 
   providerYes.addEventListener('change', function () {
@@ -253,12 +254,20 @@ function addProviderScreener() {
     addToSessionData({
       [STORAGE_KEY_PROVIDER_TYPE_ACCEPTED]: false
     });
+    logEvent('Medical Provider Type Warning Shown', {});
   });
 
   providerYes.addEventListener('invalid', function () {
     providerError.style.display = 'block';
     providerAcceptedFieldset.classList.add('usa-form-group--error');
     fieldset.scrollIntoView();
+  });
+
+  const submitBtn = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc');
+  submitBtn.addEventListener('click', function() {
+    if(providerNo?.checked) {
+      logEvent('Medical Provider Type No Submitted', {});
+    }
   });
 }
 
