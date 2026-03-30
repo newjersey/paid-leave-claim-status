@@ -48,7 +48,7 @@ function formFromCorrectPage(formData) {
     JSON.stringify(clientState.TabState) === JSON.stringify(correctTabState);
 }
 
-export function trackWorkersCompYesSubmission(pageId) {
+export function trackMedicalSubmission(pageId) {
   if (pageId !== id) {
     return;
   }
@@ -235,6 +235,7 @@ function addProviderScreener() {
   } else if (sessionData[STORAGE_KEY_PROVIDER_TYPE_ACCEPTED] === false) {
     providerAlert.style.display = 'block';
     providerNo.checked = true;
+    logEvent('Medical Provider Type Warning Shown', {});
   }
 
   providerYes.addEventListener('change', function () {
@@ -253,6 +254,7 @@ function addProviderScreener() {
     addToSessionData({
       [STORAGE_KEY_PROVIDER_TYPE_ACCEPTED]: false
     });
+    logEvent('Medical Provider Type Warning Shown', {});
   });
 
   providerYes.addEventListener('invalid', function () {
