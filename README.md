@@ -1,4 +1,4 @@
-# Paid Leave Benefits - Claim Status
+# Paid Leave Benefits - Claim Status and TDI Claim Application
 
 This repository contains the code used to redesign the existing "Claim Status" application used for New Jersey's Temporary Disability Insurance (TDI) and Family Leave Insurance (FLI), managed by the Department of Labor.
 
@@ -25,16 +25,16 @@ When you make a change and want to see if everything is working, do the followin
 1. Edit `.js` file in `src/` directory (edit corresponding Cypress test if relevant)
 2. Run `npm run build` to compile files
 3. Run `npm test` to ensure tests still pass
-4. Open relevant test file in `cypress/fixtures` in browser to ensure change looks okay (edit or add new test file if your scenario is not covered)
-5. After code review, push changes to `dev` branch. This will automatically deploy test files on Github pages under the URL https://newjersey.github.io/paid-leave-claim-status/... These test links can be used to share the view under specific claim scenarios with your team.
-6. After the test links have been reviewed, deploy the changes to the dev site. See instructions below for deployment.
+4. Open relevant test file in `cypress/fixtures` in browser to ensure change looks okay (edit or add new test file if your scenario is not covered).
+5. You can use [Local Overrides](https://developer.chrome.com/docs/devtools/overrides) while navigating on the live Test environment to test changes that involve multiple screens. (For TDI Claim Application: Because the underlying pages append the current datetime's minute when fetching the JS override, you need a file for every minute while you are testing. You can use `generateLocalDevOverrides.sh` to generate 20 minutes' worth of override files.)
+6. After code review, push changes to `dev` branch.
+7. Deploy the changes to the beta environment. See instructions below for deployment.
 
 ## Deployment
 
-1. In `paid-leave-claim-status` repository, create a PR to squash & merge changes from `dev` into `prod`. Note that this change does not directly affect deployment, it is just to keep the change history log up to date.
-2. Clone the `beta` repository in the same local directory where the local files for the `paid-leave-claim-status` repo live.
-3. Use Node 20 and `npm run build` to build latest files into bundle.
-4. Run `npm run prep-deploy-dev` (or `prep-deploy-prod` based on intended stage), which should copy the files into the correct `beta` directory
-5. Push files to `main` branch of `beta` repo, and they will be automatically deployed to `beta.nj.gov` to be referenced by the Claim Status application
+1. If deploying to production, create a PR to squash & merge changes from `dev` into `prod`.
+2. Trigger the `Deploy to Beta` action in the GitHub UI for either `dev` or `prod`. This workflow (defined the same on all branches) will refresh the builds on the specified branch, and make a PR in the `beta` repo.
+3. Once the files are merged to the `main` branch of `beta` repo, they will be automatically deployed to `beta.nj.gov` to be referenced by the Claim Status/TDI application.
+4. The host at `beta.nj.gov` caches for several hours, so you may not actually see the new files until that refreshes. To force the new file to be served, the .NET layer of the TDI Claim Application attaches an otherwise-unused query parameter that contains the date and time (down to a 1-hour resolution in production, and 1-minute resolution in development, so you will see the new files at that same rate).
 
 _Note_: The following [internal Google Doc](https://docs.google.com/document/d/1XD06eJ9Q6e5z8_fKcQrDs7K6r0lbsqMab_xlikYdqAA/edit?usp=sharing) has URLs and account credentials to test claim status scenarios live in both development and production.

@@ -14,7 +14,8 @@ import {
   STORAGE_KEY_WORKERS_COMP,
   STORAGE_KEY_EDITING_WORKERS_COMP,
   setRequiredForVisibleLeaveSectionFields,
-  styleRadioButton
+  styleRadioButton,
+  updateCalendarUI,
 } from '../utils';
 
 export const medicalTreatmentLabels = [
@@ -77,6 +78,7 @@ export function changes() {
   adjustTextEntries();
   styleRadioButtons();
   addWorkersCompListeners();
+  moveWorkersCompToNewFieldset();
   loadReasonData();
   setNewTitle(i18next.t('medicalInfo.title'));
   addSubtitleAndExplainer();
@@ -86,26 +88,31 @@ export function changes() {
   const reason = reasonData?.reasons;
 
   setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason);
-  moveWorkersCompToNewFieldset();
   focusOnWorkersCompIfEditing();
+  updateAllCalendars();
 }
 
 function addStyles() {
   const style = document.createElement('style');
   style.innerHTML = `
-
     .usa-radio__label {
       text-align: left;
-    }
-
-    .provider-accepted-list li {
-      list-style-type: disc;
     }
   
     .required-asterisk {
       color: rgb(139, 0, 0);
     }
 
+    .form-alert {
+      color: rgb(139, 0, 0);
+      font-weight: bold;
+      margin: 10px 0 0 0;
+    }
+
+    .form-alert svg {
+      vertical-align: -5px;
+      margin-right: 2px;
+    }
   `;
   document.head.appendChild(style);
 }
@@ -131,7 +138,7 @@ function addSubtitleAndExplainer() {
   const subtitleDiv = document.createElement('div');
   subtitleDiv.style.margin = "0 0 0";
   subtitleDiv.innerHTML = `
-  <h2 style="font-size: 20px; font-weight: bold; color: black; font-variant: none" class="margin-bottom-1"> ${i18next.t('medicalInfo.provider.title')}</h2>
+  <h2 style="font-size: 22px; font-weight: bold; color: black; font-variant: none" class="margin-bottom-1"> ${i18next.t('medicalInfo.provider.title')}</h2>
   <p class="margin-bottom-3">${i18next.t('medicalInfo.provider.explanation')}</p>`
 
   questionDiv.prepend(subtitleDiv);
@@ -162,8 +169,7 @@ function addProviderScreener() {
           </ul>
         </div>
 
-
-  <fieldset class="usa-fieldset">
+  <fieldset id="provider-type-accepted-fieldset" class="usa-fieldset">
     <legend id="provider-type-accepted-legend" class="usa-legend">
       <span class="required-asterisk">*</span>
       <strong id="providerTypeQuestionNumber" style="display:none;">1. </strong>
@@ -176,7 +182,6 @@ function addProviderScreener() {
         type="radio"
         name="provider-type-accepted"
         value="yes"
-      
       />
       <label class="usa-radio__label" for="provider-type-accepted-yes">
         ${i18next.t('shared.yes')}
@@ -194,7 +199,18 @@ function addProviderScreener() {
         ${i18next.t('shared.no')}
       </label>
     </div>
-        
+    <div
+      id="providerError"
+      class="form-alert"
+      style="display: none;"
+      role="alert"
+      aria-live="polite"
+    >
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#B50909"/>
+      </svg>
+      ${i18next.t('shared.makeSelection')}
+    </div>
 
     <div id="provider-type-alert" class="usa-alert usa-alert--warning usa-alert--slim" style="display: none; margin-top: 1rem;">
     <div class="usa-alert__body">
@@ -203,18 +219,14 @@ function addProviderScreener() {
       </p>
     </div>
   </div>
-
-
   </fieldset>
-
-
-
   `;
   fieldset.insertBefore(providerType, fieldset.firstChild);
 
   const providerYes = document.getElementById("provider-type-accepted-yes");
   const providerNo = document.getElementById("provider-type-accepted-no");
-  const legend = document.getElementById("provider-type-accepted-legend");
+  const providerAcceptedFieldset = document.getElementById("provider-type-accepted-fieldset");
+  const providerError = document.getElementById('providerError');
   const providerAlert = document.getElementById('provider-type-alert');
 
   const sessionData = getSessionData();
@@ -223,11 +235,13 @@ function addProviderScreener() {
   } else if (sessionData[STORAGE_KEY_PROVIDER_TYPE_ACCEPTED] === false) {
     providerAlert.style.display = 'block';
     providerNo.checked = true;
+    logEvent('Medical Provider Type Warning Shown', {});
   }
 
   providerYes.addEventListener('change', function () {
     providerAlert.style.display = 'none';
-    resetElementText(legend);
+    providerError.style.display = 'none';
+    providerAcceptedFieldset.classList.remove('usa-form-group--error');
     addToSessionData({
       [STORAGE_KEY_PROVIDER_TYPE_ACCEPTED]: true
     });
@@ -235,14 +249,25 @@ function addProviderScreener() {
 
   providerNo.addEventListener('change', function () {
     providerAlert.style.display = 'block';
-    resetElementText(legend);
+    providerError.style.display = 'none';
+    providerAcceptedFieldset.classList.remove('usa-form-group--error');
     addToSessionData({
       [STORAGE_KEY_PROVIDER_TYPE_ACCEPTED]: false
     });
+    logEvent('Medical Provider Type Warning Shown', {});
   });
 
   providerYes.addEventListener('invalid', function () {
-    elementTextError(legend);
+    providerError.style.display = 'block';
+    providerAcceptedFieldset.classList.add('usa-form-group--error');
+    fieldset.scrollIntoView();
+  });
+
+  const submitBtn = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc');
+  submitBtn.addEventListener('click', function() {
+    if(providerNo?.checked) {
+      logEvent('Medical Provider Type No Submitted', {});
+    }
   });
 }
 
@@ -378,7 +403,6 @@ function addWorkersCompListeners() {
   });
 }
 
-
 function loadReasonData() {
   const sessionData = getSessionData();
   const reasonData = sessionData[STORAGE_KEY_REASON_FOR_LEAVE];
@@ -410,12 +434,16 @@ function loadReasonData() {
   const causedByJobNo = document.getElementById('caused-by-job-no');
   const workersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
   const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
+  const workersCompensationHeader = document.getElementById('workersCompensationHeader');
+  const workersCompFieldset = document.getElementById('workersCompFieldset');
   const causedByJobQuestion = document.getElementById('causedByJobQuestion');
   const workersCompContainer = document.getElementById('workersCompContainer');
 
   if (reason === 'pregnancy') {
     causedByJobNo.checked = true;
     workersCompNo.checked = true;
+    workersCompensationHeader.style.display = 'none';
+    workersCompFieldset.style.display = 'none';
     causedByJobQuestion.style.display = 'none';
     workersCompContainer.style.display = 'none';
     addToSessionData({
@@ -424,6 +452,8 @@ function loadReasonData() {
     });
   } else {
     // Show the caused-by-job question for illness/injury
+    workersCompensationHeader.style.display = 'block';
+    workersCompFieldset.style.display = 'block';
     causedByJobQuestion.style.display = 'block';
 
     // Restore caused-by-job answer
@@ -462,7 +492,6 @@ function loadReasonData() {
       workersCompNo.checked = false;
     }
   }
-
 }
 
 function styleRadioButtons() {
@@ -535,13 +564,14 @@ function moveWorkersCompToNewFieldset() {
   const parentFieldset = causedByJobElement.closest('fieldset');
 
   const newFieldset = document.createElement('fieldset');
+  newFieldset.id = 'workersCompFieldset';
   newFieldset.appendChild(causedByJobElement);
   newFieldset.appendChild(workersCompElement);
 
   const h2 = document.createElement('h2');
   h2.id = "workersCompensationHeader";
   h2.textContent = i18next.t('medicalInfo.work.title');
-  h2.style.fontSize = "20px";
+  h2.style.fontSize = "22px";
   h2.style.fontWeight = "bold";
   h2.style.color = "black";
   h2.style.fontVariant = "none";
@@ -572,4 +602,16 @@ function focusOnWorkersCompIfEditing() {
       [STORAGE_KEY_EDITING_WORKERS_COMP]: undefined
     });
   }
+}
+
+function updateAllCalendars() {
+  const ERStartId = 'Image8';
+  const EREndId = 'Image1';
+  const hospitalStartId = 'Image2';
+  const hospitalEndId = 'Image3';
+
+  updateCalendarUI(ERStartId);
+  updateCalendarUI(EREndId);
+  updateCalendarUI(hospitalStartId);
+  updateCalendarUI(hospitalEndId);
 }

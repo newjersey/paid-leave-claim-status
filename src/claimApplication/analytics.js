@@ -10,6 +10,8 @@ export function analyticsChanges(pageId) {
   trackWorkersCompYesSubmission(pageId);
   trackPrintClaimSummaryButton();
   trackValidationErrors(pageId);
+  trackSystemAlerts(pageId);
+  addPageIdToURL(pageId);
 }
 
 function trackHelpClicks(pageId) {
@@ -41,4 +43,18 @@ function trackValidationErrors(pageId) {
       logEvent('Validation Error', { contents, pageId });
     }
   });
+}
+
+function trackSystemAlerts(pageId) {
+  const originalAlert = window.alert;
+  window.alert = function(contents) {
+    logEvent('System Alert', { contents, pageId });
+    return originalAlert.call(window, contents);
+  };
+}
+
+function addPageIdToURL(pageId) {
+  const url = new URL(window.location.href);
+  url.searchParams.set('pageId', pageId);
+  history.replaceState(null, '', url.toString());
 }
