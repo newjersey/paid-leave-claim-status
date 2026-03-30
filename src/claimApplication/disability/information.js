@@ -43,7 +43,7 @@ function setDisabilityType(type) {
 
 export function changes() {
   addStyles();
-  determineLeaveScheduleScreen()
+  determineDisabilityInfoScreen();
 }
 
 function addStyles() {
@@ -120,11 +120,15 @@ function addStyles() {
     #reason-for-leave-form {
       margin: 0;
     }
+
+    #reason-legend {
+      margin-top: 0;
+    }
   `;
   document.head.appendChild(style);
 }
 
-function determineLeaveScheduleScreen() {
+function determineDisabilityInfoScreen() {
   const leaveScheduleContainer = document.getElementById(leaveScheduleId); 
   if (leaveScheduleContainer) {
     leaveScheduleContainer.parentNode.insertBefore(reasonForLeavePage(), leaveScheduleContainer);

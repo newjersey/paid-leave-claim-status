@@ -22,6 +22,7 @@ export function changes() {
   removeWhitespace();
   adjustTable();
   adjustNoPendingClaimBox();
+  removeTextReferencingFuture();
 }
 
 function addStyles() {
@@ -104,4 +105,11 @@ function adjustNoPendingClaimBox() {
   if (noPendingClaimsDiv) {
     noPendingClaimsDiv.style.position = 'static';
   }
+}
+
+function removeTextReferencingFuture() {
+  const span = document.querySelector("#ContentPlaceHolder1_lblMesgInfo");
+  if (!span) return;
+  const targetRegex = /\s+Also,\s+claims\s+that\s+were\s+filed\s+for\s+temporary\s+disability\s+dates\s+in\s+the\s+future\s+and\s+have\s+not\s+been\s+certified\s+within\s+14\s+days\s+after\s+the\s+first\s+date\s+of\s+temporary\s+disability\s+have\s+been\s+removed./gi;
+  span.textContent = span.textContent.replace(targetRegex, '');
 }

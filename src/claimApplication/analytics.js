@@ -9,7 +9,9 @@ export function analyticsChanges(pageId) {
   trackOtherBenefitsYesSubmission(pageId);
   trackWorkersCompYesSubmission(pageId);
   trackPrintClaimSummaryButton();
-  trackValidationErrors();
+  trackValidationErrors(pageId);
+  trackSystemAlerts(pageId);
+  addPageIdToURL(pageId);
 }
 
 function trackHelpClicks(pageId) {
@@ -21,13 +23,38 @@ function trackHelpClicks(pageId) {
   }
 }
 
-function trackValidationErrors() {
-  const errorElements = document.querySelectorAll('[id*="lblError"], [id*="lblerror"]');
+function trackValidationErrors(pageId) {
+  const errorElements = document.querySelectorAll(`
+    [id*="lblError"],
+    [id*="lblerror"],
+    #lblValEmpDetMsg,
+    #ValEmpSpanMsg,
+    #divClEmpTelVal,
+    #ValEmpWrkSch,
+    #lblValPTO,
+    #lblValWrkInt,
+    #lblNotice
+  `);
+
   errorElements.forEach(element => {
     const isVisible = element.offsetParent !== null;
     if (isVisible) {
       const contents = element.textContent.trim().substring(0, 100);
-      logEvent('Validation Error', { contents });
+      logEvent('Validation Error', { contents, pageId });
     }
   });
+}
+
+function trackSystemAlerts(pageId) {
+  const originalAlert = window.alert;
+  window.alert = function(contents) {
+    logEvent('System Alert', { contents, pageId });
+    return originalAlert.call(window, contents);
+  };
+}
+
+function addPageIdToURL(pageId) {
+  const url = new URL(window.location.href);
+  url.searchParams.set('pageId', pageId);
+  history.replaceState(null, '', url.toString());
 }
