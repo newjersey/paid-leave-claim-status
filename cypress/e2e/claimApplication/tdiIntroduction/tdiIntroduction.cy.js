@@ -1,5 +1,3 @@
-import { globalTestsNew, globalTestsOld } from "../shared";
-
 const PAGE_ID = 'tdiIntroduction';
 const URL = 'TDIIntroduction';
 const FIXTURE = "./cypress/fixtures/claimApplication/tdiIntroduction/tdiIntroduction.html";
@@ -69,8 +67,30 @@ describe("Introduction page", () => {
       cy.trackResourcesClick(PAGE_ID);
     });
 
-    it('clicks Dismiss on the info alert, alert hides and does not return', () => {
+    it('info alert is not present', () => {
       cy.checkInfoAlertBehavior();
+    });
+
+    it("feedback widget is visible", () => {
+      cy.checkFeedbackWidgetIsRendered();
+    });
+
+    it("URL submitted with feedback includes pageId", () => {
+      cy.intercept('POST', '**/feedback/dev/comment', {
+        statusCode: 200,
+        body: { success: true }
+      }).as('feedbackSubmission');
+
+      cy.get('#yesButton').click();
+      cy.get('#comment').type('innovation testing');
+      cy.get('#commentSubmit').click();
+      
+      cy.wait('@feedbackSubmission').then((interception) => {
+        const { body } = interception.request;
+        expect(body.comment).to.equal('innovation testing');
+        expect(body.rating).to.be.true;
+        expect(body.pageURL).to.match(/pageId=tdiIntroduction/);
+      });
     });
   });
 });

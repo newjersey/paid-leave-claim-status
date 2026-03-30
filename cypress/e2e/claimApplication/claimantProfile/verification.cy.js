@@ -112,6 +112,30 @@ describe("Profile Verification page", () => {
       checkContactEdit();
     });
 
+    it("has reworded data text", () => {
+      cy.get('#divVerRep').then(($div) => {
+        $div.css('display', 'block');
+      });
+
+      cy.contains('Telephone Number:').should('not.exist');
+      cy.contains('Phone:').should('exist');
+
+      cy.contains('Cell Phone Number / Alternate Telephone Number:').should('not.exist');
+      cy.contains('Alternate phone:').should('exist');
+
+      cy.contains('E-Mail Address:').should('not.exist');
+      cy.contains('Email:').should('exist');
+
+      cy.contains('Representative:').should('not.exist');
+      cy.contains("Representative's name:").should('exist');
+
+      cy.contains('Representative Date of Birth').should('not.exist');
+      cy.contains("Representative's date of birth:").should('exist');
+
+      cy.contains('Representative Telephone Number:').should('not.exist');
+      cy.contains("Representative's phone:").should('exist');
+    });
+
     globalTestsNew(PAGE_ID, URL);
   });
 });

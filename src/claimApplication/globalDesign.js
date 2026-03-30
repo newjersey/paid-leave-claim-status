@@ -12,7 +12,7 @@ export function globalDesignChanges(pageId) {
   applyFooter(pageId);
   injectGlobalStyles();
   styleButtons();
-  // addFeedbackWidget();
+  addFeedbackWidget();
 }
 
 function addViewportMetaTag() {
@@ -55,6 +55,14 @@ function injectGlobalStyles() {
 
     .feedback-container {
       margin: 50px 0 0 0;
+    }
+
+    .usa-legend {
+      max-width: 100%;
+    }
+
+    .usa-radio {
+      margin-bottom: 0;
     }
 
     .usa-button {
@@ -100,6 +108,115 @@ function injectGlobalStyles() {
       background-image: url('${ICON_BASE_URL}/remove.svg'), linear-gradient(transparent, transparent);
     }
 
+    .usa-list li {
+      list-style-type: disc !important;
+      max-width: 100%;
+    }
+
+    input[type="image"][alt="calendar"] {
+      width: 24px;
+      height: 24px;
+      vertical-align: middle;
+      padding-bottom: 2px;
+      margin-left: 5px;
+    }
+
+    #ContentPlaceHolder1_ClaimantDisabilityTab_body,
+    #ContentPlaceHolder1_ClaimantDisabilityTab {
+      background-color: transparent !important;
+    }
+
+    /* Calendar popup container */
+    #FDDCalendarControl table, #CalendarControl table {
+      background-color: #EDEFF0;
+      border-left: 5px solid #EDEFF0;
+      border-right: none;
+      font-size: 16px;
+    }
+
+     #CalendarControl td.empty,
+    #FDDCalendarControl td.empty {
+      visibility: hidden !important;
+    }
+
+    #CalendarControl td,
+    #CalendarControl th,
+    #FDDCalendarControl td,
+    #FDDCalendarControl th {
+      width: 36px !important;
+      height: 36px !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: 0 !important;
+      box-sizing: border-box !important;
+    }
+
+    #CalendarControl tr.header,
+    #CalendarControl tr.footer,
+    #FDDCalendarControl tr.header,
+    #FDDCalendarControl tr.footer {
+      background-color: #EDEFF0
+    }
+
+    #CalendarControl tr.header td,
+    #CalendarControl tr.footer td,
+    #FDDCalendarControl tr.header td,
+    #FDDCalendarControl tr.footer td {
+      background-color: #EDEFF0
+    }
+
+    #CalendarControl th a,
+    #FDDCalendarControl th a,
+    #FDDCalendarControl .previous a,
+    #FDDCalendarControl .next a {
+      color: blue;
+      text-decoration: underline;
+    }
+
+    #CalendarControl .title,
+    #FDDCalendarControl .title {
+      color: black;
+    }
+
+    #CalendarControl .weekday,
+    #CalendarControl .weekend,
+    #CalendarControl .current,
+    #FDDCalendarControl .weekday,
+    #FDDCalendarControl .weekend,
+    #FDDCalendarControl .current {
+      background-color: #EDEFF0;
+      border: none;
+      line-height: 26px;
+    }
+
+    #CalendarControl .weekday:hover,
+    #CalendarControl .weekend:hover,
+    #CalendarControl .current:hover,
+    #FDDCalendarControl .weekday:hover,
+    #FDDCalendarControl .weekend:hover,
+    #FDDCalendarControl .current:hover {
+      background-color: #dfe1e2;
+      border: none;
+      color: black;
+    }
+
+    #CalendarControl .weekday:active,
+    #CalendarControl .weekend:active,
+    #CalendarControl .current:active,
+    #FDDCalendarControl .weekday:active,
+    #FDDCalendarControl .weekend:active,
+    #FDDCalendarControl .current:active {
+      background-color: #c6cace;
+      border: none;
+      color: black;
+    }
+
+    #CalendarControl .current,
+    #FDDCalendarControl .current {
+      border: 5px solid #005ea2;
+      color: black;
+    }
+
     @media (max-width: 767px) {
       form {
         margin-left: 20px;
@@ -124,7 +241,7 @@ function injectGlobalStyles() {
         width: 100%;
         table-layout: auto;
       }
-        
+
       input[type="text"], select, textarea {
         width: 100%;
         max-width: 100%;

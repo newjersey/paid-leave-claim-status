@@ -19,6 +19,13 @@ describe("Citizenship page", () => {
     expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24hddRET=01&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24hdnDABSClmntID=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtFName=FirstNameTest+LastNameTest&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtDOB=01%2F01%2F2000&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24IANM=rbtnIAMYes&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24gGender=rbtnMale&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24ddlRace=1&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24ddlEdctn=1&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtoccupation=worker&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24hdnHomeCountry=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24hdnMailCountry=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24hdnClearMailAddrFlg=Y&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24ResUSA=rbnResUSAYes&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtAddress1=123+Main+St&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtAddress2=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtCity=Newark&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24ddlStates=34&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtZipCode1=08111&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtZipCode2=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtOOCHZipCode=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24ddlCounties=55&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24ddlCountry=0&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtOOCHomeAdd1=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtOOCHomeAdd2=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtOOCHomeAdd3=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtOOCHomeAdd4=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24mailing=rbtnMailingYes&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24hDDsEQ=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24ddlCountryCitizen=0&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtAlienNo=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtAuthDate=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtAuthEndDate=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtContactNum=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtContactNum2=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtContactNum3=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtContactNum4=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtContactAltNum=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtContactAltNum2=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtContactAltNum3=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtContactAltNum4=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24TxtEmail=doltest%40mailinator.com&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24TxtConEmail=doltest%40mailinator.com&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24CtznRep=rbnRepNo&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtRepIns=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtRepDOB=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtRepTelephone=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtRepTelephone2=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtRepTelephone3=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtRepTelephone4=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24btnSave=Continue');
   }
 
+  function checkDemographicPostData(interception) {
+    const formData = interception.request.body;
+    cy.checkCommonPostData(formData);
+    expect(formData).to.include('__EVENTTARGET=&__EVENTARGUMENT=&ContentPlaceHolder1_ClaimantProfileTab_ClientState=%7B%22ActiveTabIndex%22%3A0%2C%22TabState%22%3A%5Btrue%2Cfalse%2Cfalse%5D%7D&__VIEWSTATE=');
+    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24hddRET=01&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24hdnDABSClmntID=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtFName=FirstNameTest+LastNameTest&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtDOB=01%2F01%2F2000&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24IANM=rbtnIAMYes&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24gGender=rbtnMale&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24ddlRace=1&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24ddlEdctn=1&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtoccupation=worker&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24hdnHomeCountry=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24hdnMailCountry=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24hdnClearMailAddrFlg=Y&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24ResUSA=rbnResUSAYes&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtAddress1=123+Main+St&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtAddress2=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtCity=Newark&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24ddlStates=34&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtZipCode1=08111&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtZipCode2=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtOOCHZipCode=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24ddlCounties=55&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24ddlCountry=0&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtOOCHomeAdd1=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtOOCHomeAdd2=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtOOCHomeAdd3=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24txtOOCHomeAdd4=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24mailing=rbtnMailingYes&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24btnCitiZen=Continue&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24PERSONNEL%24hDDsEQ=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24ddlCountryCitizen=0&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtAlienNo=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtAuthDate=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtAuthEndDate=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtContactNum=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtContactNum2=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtContactNum3=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtContactNum4=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtContactAltNum=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtContactAltNum2=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtContactAltNum3=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtContactAltNum4=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24TxtEmail=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24TxtConEmail=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtRepIns=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtRepDOB=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtRepTelephone=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtRepTelephone2=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtRepTelephone3=&ctl00%24ContentPlaceHolder1%24ClaimantProfileTab%24tpnlCitizen%24txtRepTelephone4=');
+  }
+
   function checkFullInfoEntry() {
     cy.mockASPX(URL);
     cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum').type('111');
@@ -70,6 +77,9 @@ describe("Citizenship page", () => {
 
     it("user can input info and proceed to next page", () => {
       checkFullInfoEntry();
+      cy.checkLogEvent("Personal Phone Submitted", { first3: '111' });
+      cy.checkLogEvent("Contact information submit clicked", {});
+      cy.confirmEventIsNotTracked("Personal Phone Omitted");
     });
 
     it("user unable to skip phone number entry", () => {
@@ -78,13 +88,35 @@ describe("Citizenship page", () => {
       cy.get('input[name="ctl00$ContentPlaceHolder1$ClaimantProfileTab$tpnlCitizen$txtContactNum"]')
         .then(($input) => {
           expect($input[0].validationMessage).to.exist;
+          cy.checkLogEvent("Contact information submit clicked", {});
+          cy.checkLogEvent("Personal Phone Omitted", {});
         });
+    });
+
+    it("displays 'Contact Information' title but not legend", () => {
+      cy.get('#pageTitle')
+        .should('be.visible')
+        .and('have.text', 'Contact information');
+
+      cy.get('#ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_pnlContact > fieldset > legend')
+        .should('not.be.visible');
     });
 
     it("displays 'Add a representative' title above the representative question", () => {
       cy.get('#add-representative-title')
         .should('be.visible')
         .and('have.text', 'Add a representative');
+    });
+
+    it("only requires phone number entry when actually on contact info page", () => {
+      cy.mockASPX(URL);
+      cy.get('#headerWithMargin > button').contains('< Back').click();
+
+      cy.get('h1').contains('Demographic information').should('be.visible');
+
+      cy.get('#ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_btnCitiZen').click();
+
+      cy.wait('@aspxSubmission').then(checkDemographicPostData);
     });
 
     globalTestsNew(PAGE_ID, URL);
