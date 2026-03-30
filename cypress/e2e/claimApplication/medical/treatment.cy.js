@@ -205,7 +205,7 @@ describe("Medical Treatment page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc').click();
       cy.wait('@aspxSubmission').then(checkInjuryPostData);
       cy.confirmEventIsNotTracked("WorkersComp Yes Clicked");
-      cy.confirmEventIsNotTracked("Medical Provider Type Warming Shown");
+      cy.confirmEventIsNotTracked("Medical Provider Type Warning Shown");
       cy.confirmEventIsNotTracked("Medical Provider Type No Submitted");
     });
 
