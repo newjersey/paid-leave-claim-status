@@ -44,7 +44,7 @@ describe("Introduction page", () => {
       });
       cy.visit(FIXTURE);
       cy.mockASPX(URL);
-      cy.get('#ContentPlaceHolder1_chkAgree').check();
+      cy.get('#btnAgreeContinue').click();
       cy.wait('@aspxSubmission').then(checkPostData);
       cy.window().then((win) => {
         expect(win.sessionStorage.length).to.equal(0);

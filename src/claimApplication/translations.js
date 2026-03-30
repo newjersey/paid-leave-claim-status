@@ -2,6 +2,7 @@ const resources = {
   en: {
     translation: {
       shared: {
+        agreeAndContinue: "Agree and continue",
         dateFormat: "mm/dd/yyyy",
         illness: "illness",
         injury: "injury",

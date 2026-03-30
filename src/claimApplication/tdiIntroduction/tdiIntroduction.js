@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { clearSessionData, removeIntroTextReferencingFuture } from "../utils";
 import { styleBody } from "../../modules/shared.mjs";
 
@@ -10,11 +11,36 @@ export const identifyingContent = {
 };
 
 export function changes() {
-  const checkbox = document.getElementById('ContentPlaceHolder1_chkAgree');
-  if (checkbox) {
-    checkbox.style.margin = '0 5px';
-  }
  clearSessionData();
  styleBody();
  removeIntroTextReferencingFuture();
+ replaceCheckboxWithButton();
+}
+
+function replaceCheckboxWithButton() {
+  const checkboxId = 'ContentPlaceHolder1_chkAgree';
+  const checkbox = document.getElementById(checkboxId);
+  if (!checkbox) return;
+
+  checkbox.style.display = 'none';
+  
+  const label = document.querySelector(`label[for="${checkboxId}"]`);
+  if (label) {
+    label.removeAttribute('for');
+  }
+
+  const button = document.createElement('button');
+  button.id = 'btnAgreeContinue';
+  button.classList.add('usa-button');
+  button.textContent = i18next.t('shared.agreeAndContinue');
+  button.style.display = 'block';
+  button.style.maxWidth = "80%";
+  button.style.margin = '10px';
+  button.style.padding = '10px';
+  
+  checkbox.parentNode.appendChild(button);
+
+  button.addEventListener('click', function () {
+    checkbox?.click();
+  });
 }
