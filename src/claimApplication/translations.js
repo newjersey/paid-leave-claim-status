@@ -9,6 +9,7 @@ const resources = {
         optional: "(optional)",
         saveAndContinue: "Save and continue",
         yes: "Yes",
+        makeSelection: "Make a selection.",
       },
       contact: {
         address: "Address",
@@ -148,7 +149,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         },
         illnessInjury: {
           fddTitle: "First day of disability leave",
-         fddNotes: `<strong>Heads up:</strong>
+          fddNotes: `<strong>Heads up:</strong>
           <ul class="usa-list">
             <li>You can apply starting the day your disability begins — the first day you stop working because of your illness or injury.</li>
             <li>Enter your "first day of disability leave" carefully. If this date changes, you'll need to update us in writing.</li>
@@ -158,7 +159,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             <br><br>
             <strong>Hint:</strong> This is when your {{disabilityTypeString}} first prevented you from working. Enter the actual date, even if it was a day you don't usually work (like a weekend or holiday).
           `,
-          beforeAfterTitle: "Dates of employment before and after disability",
+          beforeAfterTitle: "Before and after your leave",
           lastWorkday: `What was the last day you worked?
             <br><br>
             <strong>Hint:</strong> This is the last day you actually worked — not including PTO, vacation, or sick days you used before your leave started.
@@ -197,7 +198,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           `,
           recoveryDate: `When did you recover?`,
           estRecoveryDate: "When do you expect to recover?",
-          whatsNext: "What's Next?",
+          whatsNext: "What's next?",
           howDelivered: `After we approve your claim, we’ll mail you a form. It will ask how you delivered (if you haven't already told us) and whether you need more time to recover. 
             <br><br>
             <ul>
@@ -207,6 +208,8 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             </ul>
           `
         },
+        lastWorkdayHint: "Your last day of work must be before your first day of disability leave.",
+        recoveryDateHint: "The date you returned to work must be after your first day of disability leave.",
       },
       medicalInfo: {
         title: "Medical details",
@@ -217,7 +220,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           notAcceptedMessage:"Your application could get delayed or denied if it isn't certified by an approved healthcare provider.",
           theseTypesProviders: "These types of healthcare providers can certify your leave:",
           type: {
-            isAccepted: "Is your healthcare provider one of these? Select one.",
+            isAccepted: "Is your healthcare provider one of these?",
             advancedPracticeNurse: "Advanced Practice Nurse",
             certifiedNurseMidwife: "Certified Nurse Midwife",
             certifiedNursePractitioner: "Certified Nurse Practitioner",

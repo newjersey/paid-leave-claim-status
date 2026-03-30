@@ -1,4 +1,4 @@
-import { clearSessionData } from "../utils";
+import { clearSessionData, removeIntroTextReferencingFuture } from "../utils";
 import { styleBody } from "../../modules/shared.mjs";
 
 export const id = "completeExistingIntro";
@@ -16,4 +16,5 @@ export function changes() {
   }
   clearSessionData();
   styleBody();
+  removeIntroTextReferencingFuture();
 }

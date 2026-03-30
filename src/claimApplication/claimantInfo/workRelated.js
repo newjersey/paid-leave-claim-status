@@ -2,8 +2,6 @@ import {
   adjustTableWidths,
   removeExtraSpaceBetweenRadioButtons,
   styleRadioButton,
-  getSessionData,
-  STORAGE_KEY_WORKERS_COMP,
   setNewTitle,
 } from '../utils';
 import i18next from 'i18next';
@@ -36,7 +34,6 @@ export const identifyingContent = {
 export function changes() {
   adjustWidths();
   styleRadioButtons();
-  updateWorkersCompQuestions();
   updateWorkersCompensationHeader();
   setNewTitle(i18next.t('workRelated.title'));
 }
@@ -89,7 +86,6 @@ function adjustWidths() {
     }
   }
 
-
   const fieldsets = document.querySelectorAll('fieldset');
 
   fieldsets.forEach(fieldset => {
@@ -97,66 +93,4 @@ function adjustWidths() {
     fieldset.style.maxWidth = '100%';
     adjustTableWidths(fieldset);
   });
-}
-
-
-function updateWorkersCompQuestions() {
-  const workersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes');
-  const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo');
-
-  if (!workersCompYes || !workersCompNo) return;
-
-  const sessionData = getSessionData();
-  const workersCompAnswer = sessionData[STORAGE_KEY_WORKERS_COMP];
-
-  if (workersCompAnswer === 'yes') {
-    workersCompYes.checked = true;
-    workersCompNo.checked = false;
-  } else {
-    workersCompYes.checked = false;
-    workersCompNo.checked = true;
-  }
-
-  hideQuestion2a();
-  updateQuestion2bAnd2c();
-}
-
-function hideQuestion2a() {
-  const workersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes');
-  const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo');
-  workersCompYes.parentElement.style.display = 'none';
-  workersCompNo.parentElement.style.display = 'none';
-
-  let yesRadioParentElem = workersCompYes.parentElement;
-  let workersCompQuestionElem = yesRadioParentElem.previousElementSibling;
-  let workersCompQuestionNumberElem = workersCompQuestionElem.previousElementSibling;
-  let workersCompQuestionAsteriskElem = workersCompQuestionNumberElem.previousElementSibling;
-  let brTag1 = workersCompQuestionAsteriskElem.previousElementSibling;
-  let brTag2 = brTag1.previousElementSibling;
-
-  workersCompQuestionElem.style.display = 'none'
-  workersCompQuestionNumberElem.style.display = 'none'
-  workersCompQuestionAsteriskElem.style.display = 'none'
-  brTag1.style.display = 'none'
-  brTag2.style.display = 'none'
-}
-
-
-function updateQuestion2bAnd2c() {
-  // 2b is displayed when a user answers yes to 2a
-  // since 2a will be auto-answered, update the display
-  const question2b = document.getElementById('divWCIns')
-  question2b.style.display = 'block'
-
-  const spacesBefore2b = document.querySelector('#divWCIns br').nextSibling;
-  spacesBefore2b.textContent = ""
-
-  const question2bNumberElement = document.querySelector('#divWCIns a strong')
-  question2bNumberElement.textContent = '2a.'
-
-  const spacesBefore2c = document.querySelector('#divWCBen br').nextSibling;
-  spacesBefore2c.textContent = ""
-
-  const question2cNumberElement = document.querySelector('#divWCBen a strong')
-  question2cNumberElement.textContent = '2b.'
 }

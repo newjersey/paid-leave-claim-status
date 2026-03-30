@@ -1,10 +1,16 @@
 import i18next from 'i18next';
-import { DisabilityType, styleRadioButton } from '../utils';
+import {
+  DisabilityType,
+  styleRadioButton,
+  updateCalendarUI,
+} from '../utils';
 
 export function setupLeaveSchedulePage() {
   setupFDD();
   setupLDW();
   setupFutureDateAlert();
+  removeUnwantedBlankLine();
+  updateAllCalendars();
 }
 
 export function showLeaveScheduleForDisabilityType(disabilityType) {
@@ -16,22 +22,21 @@ export function showLeaveScheduleForDisabilityType(disabilityType) {
 function addStyles() {
   const style = document.createElement('style');
   style.innerHTML = `
-    input[type="image"][alt="calendar"] {
-      width: 24px;
-      height: 24px;
-      vertical-align: middle;
-      padding-bottom:2px;
-      margin-left:5px;
+    .legendHeader {
+      font-size: 22px;
     }
 
-    #ContentPlaceHolder1_ClaimantDisabilityTab_body,
-    #ContentPlaceHolder1_ClaimantDisabilityTab {
-      background-color: transparent !important;
-    }
-
-    /* Calendar popup container */
-    #FDDCalendarControl table, #CalendarControl table {
+    .usa-label {
       font-size: 16px;
+    }
+
+    @media (max-width: 767px) {
+      #ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt,
+      #ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd,
+      #ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk,
+      #ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk {
+        width: 80%;
+      }
     }
   `;
   document.head.appendChild(style);
@@ -86,6 +91,7 @@ function styleFDD(disabilityType) {
     : i18next.t('leaveSchedule.illnessInjury.fddNotes');
 
   const legend = fddFieldset.querySelector('legend');
+  legend.classList.add('legendHeader');
   legend.textContent = disabilityType === DisabilityType.PREGNANCY
     ? i18next.t('leaveSchedule.pregnancy.fddTitle')
     : i18next.t('leaveSchedule.illnessInjury.fddTitle');
@@ -98,6 +104,17 @@ function styleFDD(disabilityType) {
         ? i18next.t('shared.illness')
         : i18next.t('shared.injury')
     });
+}
+
+function removeUnwantedBlankLine() {
+  const parentDiv = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_dvShowFDD');
+  if (parentDiv) {
+    Array.from(parentDiv.childNodes).forEach(node => {
+      if (node.nodeType === Node.TEXT_NODE && node.textContent.trim().length === 0) {
+        parentDiv.removeChild(node);
+      }
+    });
+  }
 }
 
 function removeOldFDDText() {
@@ -123,7 +140,7 @@ function setupLDW() {
       <span class="required-asterisk">*</span>
       <span id="lastWorkdayQuestion"></span>
     </label>
-    <div class="usa-hint" id="ldwHint">${i18next.t('shared.dateFormat')}</div>
+    <div class="usa-hint" id="ldwHint">${i18next.t('leaveSchedule.lastWorkdayHint')}<br>${i18next.t('shared.dateFormat')}</div>
   `;
   ldwDateInput.insertAdjacentHTML('beforebegin', ldwLabel);
 
@@ -144,11 +161,11 @@ function setupLDW() {
   const returnDateQuestion = `
     <br><br>
     <hr>
-    <label class="usa-label" id="returnPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk">
+    <label class="usa-label" id="returnLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk">
       <span class="required-asterisk">*</span>
       <span id="returnDateQuestion"></span>
     </label>
-    <div class="usa-hint" id="returnPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+    <div class="usa-hint" id="returnHint">${i18next.t('leaveSchedule.recoveryDateHint')}<br>${i18next.t('shared.dateFormat')}</div>
   `;
   returnDateInput.insertAdjacentHTML('beforebegin', returnDateQuestion);
 
@@ -156,11 +173,11 @@ function setupLDW() {
   const estReturnDateQuestion = `
     <br><br>
     <hr>
-    <label class="usa-label" id="estReturnPregnancyLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk">
+    <label class="usa-label" id="estReturnLabel" for="ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk">
       <span class="required-asterisk">*</span>
       <span id="estReturnDateQuestion"></span>
     </label>
-    <div class="usa-hint" id="estReturnPregnancyHint">${i18next.t('shared.dateFormat')}</div>
+    <div class="usa-hint" id="estReturnHint">${i18next.t('shared.dateFormat')}</div>
   `;
   estReturnDateInput.insertAdjacentHTML('beforebegin', estReturnDateQuestion);
 
@@ -181,6 +198,7 @@ function styleLDW(disabilityType) {
   const ldwFieldset = document.getElementById('ldwFieldset');
 
   const legend = ldwFieldset.querySelector('legend');
+  legend.classList.add('legendHeader');
   legend.textContent = disabilityType === DisabilityType.PREGNANCY
     ? i18next.t('leaveSchedule.pregnancy.beforeAfterTitle')
     : i18next.t('leaveSchedule.illnessInjury.beforeAfterTitle');
@@ -290,4 +308,16 @@ function setupFutureDateAlert() {
     attributes: true,
     attributeFilter: ['style']
   });
+}
+
+function updateAllCalendars() {
+  const fddCalendarBtnId = 'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_Image11';
+  const ldwCalendarBtnId = 'btnDtLstWorkd';
+  const returnToWorkCalendarBtnId = 'Image12';
+  const estReturnToWorkCalendarBtnId = 'Image13';
+
+  updateCalendarUI(fddCalendarBtnId, false);
+  updateCalendarUI(ldwCalendarBtnId);
+  updateCalendarUI(returnToWorkCalendarBtnId);
+  updateCalendarUI(estReturnToWorkCalendarBtnId);
 }

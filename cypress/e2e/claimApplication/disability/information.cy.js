@@ -79,6 +79,99 @@ describe("Disability Information page", () => {
       });
     }
 
+    it('calendar UX allows only valid inputs', () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify({ disabilityInfoView: 'leaveSchedule' })));
+      });
+      cy.clock(new Date(2025, 7, 18)); // 0-indexed; August 18, 2025
+      cy.visit(FIXTURE);
+      cy.window().then((win) => {
+        cy.spy(win, 'alert').as('alertSpy');
+      });
+
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_Image11').click();
+      cy.tick(200);
+      cy.get('#CalendarControl').should('be.visible');
+
+      cy.get('#fddHint').click(); // test click-away-to-close
+      cy.get('#CalendarControl').should('not.be.visible');
+
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_Image11').click();
+      cy.tick(200);
+      cy.get('#CalendarControl img[alt="Previous month"]').click(); 
+      cy.tick(200);
+      cy.get('a.weekday').contains('18').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').should('have.value', '07/18/2025');
+
+      cy.get('#btnDtLstWorkd').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl a.weekend').contains('19').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').blur();
+      cy.get('@alertSpy').invoke('getCall', 0).should('be.calledWith', 'Your last day of work cannot be after your first day of disability, 07/18/2025. Please select the last day you worked before your disability began.');
+      
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').should('have.value', '');
+
+      cy.get('#btnDtLstWorkd').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl a.weekday').contains('17').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').blur();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').should('have.value', '07/17/2025');
+
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes').click({ force: true });
+
+      cy.get('#Image12').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl img[alt="Next month"]').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl a.weekday').contains('19').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').blur();
+      cy.get('@alertSpy').invoke('getCall', 1).should('be.calledWith', "The date you returned to work cannot be after today’s date.");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').should('have.value', '');
+
+      cy.get('#Image12').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl img[alt="Previous month"]').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl a.weekday').contains('17').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').blur();
+      cy.get('@alertSpy').invoke('getCall', 2).should('be.calledWith', "The date you returned to work must be after your first day of disability, 07/18/2025. Please select the date you returned to work.");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').should('have.value', '');
+
+      cy.get('#Image12').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl img[alt="Next month"]').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl a.weekend').contains('17').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').blur();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk').should('have.value', '08/17/2025');
+
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecNo').click({ force: true });
+
+      cy.get('#Image13').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl img[alt="Previous month"]').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl a.weekday').contains('17').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').blur();
+      cy.get('@alertSpy').invoke('getCall', 3).should('be.calledWith', "The date you expect to return to work must be after your first day of disability, 07/18/2025. Please select the date you expect to return to work.");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').should('have.value', '');
+
+      cy.get('#Image13').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl a.weekend').contains('19').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').blur();
+      cy.get('@alertSpy').invoke('getCall', 4).should('be.calledWith', "The date you expect to return to work must be after today’s date.");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').should('have.value', '');
+
+      cy.get('#Image13').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl img[alt="Next month"]').click();
+      cy.tick(200);
+      cy.get('#FDDCalendarControl a.weekday').contains('19').click();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').blur();
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').should('have.value', '08/19/2025');
+    });
+
     it("user can input info about pregnancy with blank extra text and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.window().then((win) => {
@@ -130,15 +223,6 @@ describe("Disability Information page", () => {
     it("user can input info about injury and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#reason-injury').click({ force: true });
-      cy.get('textarea[name="injury-details"]').type("Broken Elbow.");
-      cy.get('#submitReasonForLeave').click();
-      checkLeaveSchedule();
-      checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS);
-    });
-
-    it("user can input info about injury and proceed to next page", () => {
-      cy.mockASPX(URL);
-      cy.get('#reason-injury').click({ force: true });
       cy.get('#injury-details').type("Broken Elbow.");
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
@@ -155,9 +239,11 @@ describe("Disability Information page", () => {
       futureDate.setDate(today.getDate() + 1); // 1 day in future
 
       // MM/DD/YYYY
-      const formattedFutureDate = `${(futureDate.getMonth() + 1).toString().padStart(2, '0')}/${
-        futureDate.getDate().toString().padStart(2, '0')}/${futureDate.getFullYear()}`;
-
+      const month = (futureDate.getMonth() + 1).toString().padStart(2, '0');
+      const day = futureDate.getDate().toString().padStart(2, '0');
+      const year = futureDate.getFullYear();
+      const formattedFutureDate = `${month}/${day}/${year}`;
+      
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').type(formattedFutureDate);
       cy.get('h2').contains("You're a little early").should('be.visible');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_btnSubmitConflictCheck').should('not.be.visible');
@@ -413,6 +499,4 @@ describe("Disability Information page", () => {
     
     globalTestsNew(PAGE_ID, URL);
   });
-
-
 });

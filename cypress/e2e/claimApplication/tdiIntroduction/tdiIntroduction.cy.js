@@ -70,5 +70,27 @@ describe("Introduction page", () => {
     it('info alert is not present', () => {
       cy.checkInfoAlertBehavior();
     });
+
+    it("feedback widget is visible", () => {
+      cy.checkFeedbackWidgetIsRendered();
+    });
+
+    it("URL submitted with feedback includes pageId", () => {
+      cy.intercept('POST', '**/feedback/dev/comment', {
+        statusCode: 200,
+        body: { success: true }
+      }).as('feedbackSubmission');
+
+      cy.get('#yesButton').click();
+      cy.get('#comment').type('innovation testing');
+      cy.get('#commentSubmit').click();
+      
+      cy.wait('@feedbackSubmission').then((interception) => {
+        const { body } = interception.request;
+        expect(body.comment).to.equal('innovation testing');
+        expect(body.rating).to.be.true;
+        expect(body.pageURL).to.match(/pageId=tdiIntroduction/);
+      });
+    });
   });
 });
