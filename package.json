@@ -24,7 +24,7 @@
     "i18next": "^25.5.2",
     "patch-package": "^8.0.1",
     "rollup": "^4.59.0",
-    "rollup-plugin-html-literals": "^1.1.8",
+    "rollup-plugin-html-literals": "^2.0.1",
     "rollup-plugin-postcss": "^4.0.2",
     "uswds": "^2.14.0"
   }
