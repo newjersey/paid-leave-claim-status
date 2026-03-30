@@ -48,7 +48,7 @@ function formFromCorrectPage(formData) {
     JSON.stringify(clientState.TabState) === JSON.stringify(correctTabState);
 }
 
-export function trackMedicalSubmission(pageId) {
+export function trackWorkersCompYesSubmission(pageId) {
   if (pageId !== id) {
     return;
   }
@@ -261,6 +261,13 @@ function addProviderScreener() {
     providerError.style.display = 'block';
     providerAcceptedFieldset.classList.add('usa-form-group--error');
     fieldset.scrollIntoView();
+  });
+
+  const submitBtn = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc');
+  submitBtn.addEventListener('click', function() {
+    if(providerNo?.checked) {
+      logEvent('Medical Provider Type No Submitted', {});
+    }
   });
 }
 

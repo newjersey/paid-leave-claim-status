@@ -1,13 +1,13 @@
 import { logEvent } from "../modules/shared.mjs";
 import { trackOtherBenefitsYesSubmission } from './claimantInfo/otherBenefits.js';
-import { trackMedicalSubmission } from './medical/treatment.js';
+import { trackWorkersCompYesSubmission } from './medical/treatment.js';
 import { trackPrintClaimSummaryButton } from './claimantInfo/confirmation.js';
 
 export function analyticsChanges(pageId) {
   logEvent(`${pageId} viewed`, {});
   trackHelpClicks(pageId);
   trackOtherBenefitsYesSubmission(pageId);
-  trackMedicalSubmission(pageId);
+  trackWorkersCompYesSubmission(pageId);
   trackPrintClaimSummaryButton();
   trackValidationErrors(pageId);
 }
