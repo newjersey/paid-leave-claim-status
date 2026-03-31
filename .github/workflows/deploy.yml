@@ -28,13 +28,13 @@ jobs:
           beta
 
     - name: Checkout the correct branch
-      uses: actions/checkout@v3
+      uses: actions/checkout@v6
       with:
         ref: ${{ inputs.environment }}
         token: ${{ steps.generate-token.outputs.token }}
 
     - name: Set up Node.js
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v6
       with:
         node-version: '24'
 
@@ -42,7 +42,7 @@ jobs:
       run: npm install
 
     - name: Checkout beta repo
-      uses: actions/checkout@v3
+      uses: actions/checkout@v6
       with:
         repository: newjersey/beta
         token: ${{ steps.generate-token.outputs.token }}
