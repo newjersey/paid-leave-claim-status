@@ -105,5 +105,5 @@ function styleCalendars() {
   updateCalendarUI("ImgFromPTODt5");
   updateCalendarUI("ImgToPTODt5");
 
-  updateCalendarUI("Image1"); // check
+  updateCalendarUI("Image1", false); // date of check
 }
