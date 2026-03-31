@@ -3,6 +3,7 @@ import {
   removeExtraSpaceBetweenRadioButtons,
   styleRadioButton,
   setNewTitle,
+  updateCalendarUI,
 } from '../utils';
 import i18next from 'i18next';
 
@@ -36,6 +37,7 @@ export function changes() {
   styleRadioButtons();
   updateWorkersCompensationHeader();
   setNewTitle(i18next.t('workRelated.title'));
+  updateCalendarUI("Image4");
 }
 
 function styleRadioButtons() {
