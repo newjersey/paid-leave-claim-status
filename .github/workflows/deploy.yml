@@ -19,7 +19,7 @@ jobs:
     steps:
     - name: Generate GitHub App Token
       id: generate-token
-      uses: actions/create-github-app-token@3
+      uses: actions/create-github-app-token@v3
       with:
         app-id: "2454947"
         private-key: ${{ secrets.OOI_PULL_REQUEST_APP }}
