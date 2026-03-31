@@ -4,7 +4,8 @@ import {
   adjustTableWidths,
   removeExtraSpaceBetweenRadioButtons,
   setNewTitle,
-  styleRadioButton
+  styleRadioButton,
+  updateCalendarUI,
 } from '../utils';
 
 export const id = "otherBenefits";
@@ -72,6 +73,7 @@ export function changes() {
   styleRadioButtons();
   adjustWidths();
   setNewTitle(i18next.t('otherBenefits.title'));
+  updateCalendars();
 }
 
 function addStyles() {
@@ -127,4 +129,14 @@ function adjustWidths() {
   if (parentDiv) {
     adjustTableWidths(parentDiv);
   }
+}
+
+function updateCalendars() {
+  updateCalendarUI("Image5");
+  updateCalendarUI("Image6");
+  updateCalendarUI("Image7");
+  updateCalendarUI("Image9");
+  updateCalendarUI("Image10", false, true);
+  updateCalendarUI("Image14");
+  updateCalendarUI("Image15");
 }
