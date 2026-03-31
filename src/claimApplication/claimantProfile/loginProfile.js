@@ -1,4 +1,7 @@
-import { styleRadioButton } from '../utils';
+import {
+  styleRadioButton,
+  updateCalendarUI
+} from '../utils';
 
 export const loginProfileLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtClmntSSN1', label: 'First 3 digits of Social Security Number' },
@@ -22,6 +25,7 @@ export function changes() {
   styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnPersYes');
   styleRadioButton('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_rbtnPersNo', true);
   removeWhitespaceInPrompt();
+  updateCalendarUI("Image12", false);
 }
 
 function removeWhitespaceInPrompt() {

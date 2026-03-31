@@ -1,4 +1,8 @@
-import { removeExtraSpaceBetweenRadioButtons, styleRadioButton } from '../utils';
+import {
+  removeExtraSpaceBetweenRadioButtons,
+  styleRadioButton,
+  updateCalendarUI,
+ } from '../utils';
 
 export const id = "ptoPension";
 
@@ -11,6 +15,7 @@ export const identifyingContent = {
 export function changes() {
   adjustTable();
   styleRadioButtons();
+  styleCalendars();
 }
 
 function adjustTable() {
@@ -82,4 +87,23 @@ function styleRadioButtons() {
     'ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoLPenYes',
     'ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoLPenNo'
   );
+}
+
+function styleCalendars() {
+  updateCalendarUI("ImgFromPTODt1");
+  updateCalendarUI("ImgToPTODt1");
+
+  updateCalendarUI("ImgFromPTODt2");
+  updateCalendarUI("ImgToPTODt2");
+
+  updateCalendarUI("ImgFromPTODt3");
+  updateCalendarUI("ImgToPTODt3");
+
+  updateCalendarUI("ImgFromPTODt4");
+  updateCalendarUI("ImgToPTODt4");
+
+  updateCalendarUI("ImgFromPTODt5");
+  updateCalendarUI("ImgToPTODt5");
+
+  updateCalendarUI("Image1", false); // date of check
 }

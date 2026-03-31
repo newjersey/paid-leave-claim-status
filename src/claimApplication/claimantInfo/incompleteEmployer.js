@@ -1,3 +1,5 @@
+import { updateCalendarUI } from '../utils';
+
 export const id = "incompleteEmployer";
 
 export const identifyingContent = {
@@ -8,6 +10,7 @@ export const identifyingContent = {
 
 export function changes() {
   rearrangeQuestion();
+  updateCalendars();
 }
 
 function rearrangeQuestion() {
@@ -47,4 +50,9 @@ function rearrangeQuestion() {
 
   divWorkedEmployer.innerHTML = '';
   divWorkedEmployer.appendChild(fieldset);
+}
+
+function updateCalendars() {
+  updateCalendarUI("Image2");
+  updateCalendarUI("Image4");
 }

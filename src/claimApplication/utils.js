@@ -269,19 +269,19 @@ export function removeIntroTextReferencingFuture() {
   });
 }
 
-export function updateCalendarUI(id, isFddCalendar = true) {
+export function updateCalendarUI(id, isFddCalendar = true, onlyShowYearControls = false) {
   const calendarId = isFddCalendar ? FDD_CALENDAR_CONTROL_ID : CALENDAR_CONTROL_ID;
   const element = document.getElementById(id);
   if (element) {
     element.src = "https://beta.nj.gov/files/tdi-fli-claim-status/assets/calendar_today.svg";
     element.addEventListener('click', function() {
       closeCalendarPopup(calendarId);
-      setTimeout(() => fixCalendarPopup(calendarId), 10);
+      setTimeout(() => fixCalendarPopup(calendarId, onlyShowYearControls), 10);
     });
   }
 }
 
-function fixCalendarPopup(calendarId) {
+function fixCalendarPopup(calendarId, onlyShowYearControls) {
   const headerRows = document.querySelectorAll(`#${calendarId} tr.header`);
   if (headerRows.length != 2) return;
 
@@ -294,8 +294,8 @@ function fixCalendarPopup(calendarId) {
   
   const baseUrl = 'https://beta.nj.gov/files/tdi-fli-claim-status/assets/';
   const prevYear = `<a href="javascript:changeCalendarControlYear${functionSuffix}(-1);" style="${linkStyle}"><img src="${baseUrl}navigate_far_before.svg" alt="Previous year" style="${imgStyle}"></a>`;
-  const prevMonth = `<a href="javascript:changeCalendarControlMonth${functionSuffix}(-1);" style="${linkStyle}"><img src="${baseUrl}navigate_before.svg" alt="Previous month" style="${imgStyle}"></a>`;
-  const nextMonth = `<a href="javascript:changeCalendarControlMonth${functionSuffix}(1);" style="${linkStyle}"><img src="${baseUrl}navigate_next.svg" alt="Next month" style="${imgStyle}"></a>`;
+  const prevMonth = onlyShowYearControls ? "" : `<a href="javascript:changeCalendarControlMonth${functionSuffix}(-1);" style="${linkStyle}"><img src="${baseUrl}navigate_before.svg" alt="Previous month" style="${imgStyle}"></a>`;
+  const nextMonth = onlyShowYearControls ? "" : `<a href="javascript:changeCalendarControlMonth${functionSuffix}(1);" style="${linkStyle}"><img src="${baseUrl}navigate_next.svg" alt="Next month" style="${imgStyle}"></a>`;
   const nextYear = `<a href="javascript:changeCalendarControlYear${functionSuffix}(1);" style="${linkStyle}"><img src="${baseUrl}navigate_far_next.svg" alt="Next year" style="${imgStyle}"></a>`;
   
   const title = navHeaderRow.querySelector('.title')?.innerHTML || '';
@@ -323,7 +323,7 @@ function fixCalendarPopup(calendarId) {
   const navLinks = navHeaderRow.querySelectorAll('a');
   navLinks.forEach(link => {
     link.addEventListener('click', function() {
-      setTimeout(() => fixCalendarPopup(calendarId), 10);
+      setTimeout(() => fixCalendarPopup(calendarId, onlyShowYearControls), 10);
     });
   });
 
