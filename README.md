@@ -13,7 +13,7 @@ The same approach is taken for the TDI Claim Application, which is built on an u
 ## Setup
 
 1. Clone this `paid-leave-claim-status` repository
-2. Use Node 20
+2. Use Node 24
 3. Run `npm install` to install dependencies
 4. Run `npm run build` to build bundled files
 5. Run `npm test` to run Cypress tests

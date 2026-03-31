@@ -5,6 +5,7 @@ import {
   getSessionData,
   STORAGE_KEY_WORKERS_COMP,
   setNewTitle,
+  updateCalendarUI,
 } from '../utils';
 import i18next from 'i18next';
 
@@ -39,6 +40,7 @@ export function changes() {
   updateWorkersCompQuestions();
   updateWorkersCompensationHeader();
   setNewTitle(i18next.t('workRelated.title'));
+  updateCalendarUI("Image4");
 }
 
 function styleRadioButtons() {
