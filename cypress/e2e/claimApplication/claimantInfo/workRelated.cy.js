@@ -1,4 +1,8 @@
-import { globalTestsNew, globalTestsOld } from "../shared";
+import {
+  EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS,
+  globalTestsNew,
+  globalTestsOld,
+} from "../shared";
 import { encodeDecode } from '../../../../src/claimApplication/utils';
 
 const PAGE_ID = 'workRelated';
@@ -133,6 +137,15 @@ describe("Work Related page", () => {
         const formData = interception.request.body;
         expect(formData).to.include('rbtnFWCYes');
       });
+    });
+
+    it('fills in illness or injury text when known from storage', () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem('session_data', encodeDecode(JSON.stringify({ reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS })));
+      });
+      cy.visit(FIXTURE);
+      cy.contains('List the employer where this illness occurred').should('exist');
+      cy.contains('Enter date of the work related illness.').should('exist');
     });
 
     globalTestsNew(PAGE_ID, URL);

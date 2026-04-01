@@ -3,6 +3,7 @@ import {
   removeExtraSpaceBetweenRadioButtons,
   styleRadioButton,
   getSessionData,
+  STORAGE_KEY_REASON_FOR_LEAVE,
   STORAGE_KEY_WORKERS_COMP,
   setNewTitle,
   updateCalendarUI,
@@ -37,6 +38,7 @@ export const identifyingContent = {
 export function changes() {
   adjustWidths();
   styleRadioButtons();
+  updateInjuryIllnessText();
   updateWorkersCompQuestions();
   updateWorkersCompensationHeader();
   setNewTitle(i18next.t('workRelated.title'));
@@ -62,6 +64,35 @@ function styleRadioButtons() {
     'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCBenYes',
     'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCBenNo'
   );
+}
+
+function updateInjuryIllnessText() {
+  const reason = getSessionData()?.[STORAGE_KEY_REASON_FOR_LEAVE]?.reasons;
+  const newText = reason === 'illness' ? i18next.t('shared.illness')
+    : reason === 'injury' ? i18next.t('shared.injury')
+    : null;
+
+  if (!newText) {
+    return;
+  }
+
+  const container = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC');
+  if (!container) {
+    return;
+  }
+
+  const walker = document.createTreeWalker(
+    container,
+    NodeFilter.SHOW_TEXT,
+    null,
+    false
+  );
+
+  while (walker.nextNode()) {
+    if (walker.currentNode.nodeValue.includes('illness/injury')) {
+      walker.currentNode.nodeValue = walker.currentNode.nodeValue.replace(/illness\/injury/g, newText);
+    }
+  }
 }
 
 function updateWorkersCompensationHeader() {
