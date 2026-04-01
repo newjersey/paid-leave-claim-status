@@ -69,12 +69,7 @@ describe("Work Related page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
-    it('hides question 2a and renames 2b and 2c when workers_comp is session storage', () => {
-      cy.window().then((win) => {
-        win.sessionStorage.setItem('session_data', encodeDecode(JSON.stringify({ workers_comp: 'yes' })));
-      });
-      cy.visit(FIXTURE);
-      cy.mockASPX(URL);
+    it('hides question 2a and renames 2b and 2c', () => {
       //2a
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes')
         .should('not.be.visible');
@@ -91,37 +86,15 @@ describe("Work Related page", () => {
       cy.get('#divWCBen a strong').should('have.text', '2b.');
     });
 
-    it('autofills 2a workers comp question with yes when workers_comp is "yes" in session storage', () => {
-      cy.window().then((win) => {
-        win.sessionStorage.setItem('session_data', encodeDecode(JSON.stringify({ workers_comp: 'yes' })));
-      });
-      cy.visit(FIXTURE);
-      cy.mockASPX(URL);
+    it('autofills 2a workers comp question with yes', () => {
       // autofills and hides 2a
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes')
         .should('be.checked');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo')
         .should('not.be.checked');
-    });
-
-    it('autofills and hides 2a workers comp question with no when workers_comp is "no" in session storage', () => {
-      cy.window().then((win) => {
-        win.sessionStorage.setItem('session_data', encodeDecode(JSON.stringify({ workers_comp: 'no' })));
-      });
-      cy.visit(FIXTURE);
-      cy.mockASPX(URL);
-      // autofills and hides 2a
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes')
-        .should('not.be.checked');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo')
-        .should('be.checked');
     });
 
     it('still submits the 2a Yes value with the form', () => {
-      cy.window().then((win) => {
-        win.sessionStorage.setItem('session_data', encodeDecode(JSON.stringify({ workers_comp: 'yes' })));
-      });
-      cy.visit(FIXTURE);
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpNm').type('Test Employer');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtEmpadd1').type('123 Main St');

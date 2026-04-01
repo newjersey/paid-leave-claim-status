@@ -4,7 +4,6 @@ import {
   styleRadioButton,
   getSessionData,
   STORAGE_KEY_REASON_FOR_LEAVE,
-  STORAGE_KEY_WORKERS_COMP,
   setNewTitle,
   updateCalendarUI,
 } from '../utils';
@@ -133,21 +132,9 @@ function adjustWidths() {
 
 function updateWorkersCompQuestions() {
   const workersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes');
-  const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo');
+  if (!workersCompYes) return;
 
-  if (!workersCompYes || !workersCompNo) return;
-
-  const sessionData = getSessionData();
-  const workersCompAnswer = sessionData[STORAGE_KEY_WORKERS_COMP];
-
-  if (workersCompAnswer === 'yes') {
-    workersCompYes.checked = true;
-    workersCompNo.checked = false;
-  } else {
-    workersCompYes.checked = false;
-    workersCompNo.checked = true;
-  }
-
+  workersCompYes.checked = true;
   hideQuestion2a();
   updateQuestion2bAnd2c();
 }
