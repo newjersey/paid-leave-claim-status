@@ -2,6 +2,8 @@ import {
   adjustTableWidths,
   removeExtraSpaceBetweenRadioButtons,
   styleRadioButton,
+  getSessionData,
+  STORAGE_KEY_REASON_FOR_LEAVE,
   setNewTitle,
   updateCalendarUI,
 } from '../utils';
@@ -35,6 +37,8 @@ export const identifyingContent = {
 export function changes() {
   adjustWidths();
   styleRadioButtons();
+  updateInjuryIllnessText();
+  updateWorkersCompQuestions();
   updateWorkersCompensationHeader();
   setNewTitle(i18next.t('workRelated.title'));
   updateCalendarUI("Image4");
@@ -59,6 +63,35 @@ function styleRadioButtons() {
     'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCBenYes',
     'ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCBenNo'
   );
+}
+
+function updateInjuryIllnessText() {
+  const reason = getSessionData()?.[STORAGE_KEY_REASON_FOR_LEAVE]?.reasons;
+  const newText = reason === 'illness' ? i18next.t('shared.illness')
+    : reason === 'injury' ? i18next.t('shared.injury')
+    : null;
+
+  if (!newText) {
+    return;
+  }
+
+  const container = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC');
+  if (!container) {
+    return;
+  }
+
+  const walker = document.createTreeWalker(
+    container,
+    NodeFilter.SHOW_TEXT,
+    null,
+    false
+  );
+
+  while (walker.nextNode()) {
+    if (walker.currentNode.nodeValue.includes('illness/injury')) {
+      walker.currentNode.nodeValue = walker.currentNode.nodeValue.replace(/illness\/injury/g, newText);
+    }
+  }
 }
 
 function updateWorkersCompensationHeader() {
@@ -95,4 +128,51 @@ function adjustWidths() {
     fieldset.style.maxWidth = '100%';
     adjustTableWidths(fieldset);
   });
+}
+
+function updateWorkersCompQuestions() {
+  answerAndhideUnneededQuestions();
+  updateQuestion2bAnd2c();
+}
+
+function answerAndhideUnneededQuestions() {
+  const workersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes');
+  const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo');
+  const explainWhyNoClaim = document.getElementById('divWCNo');
+  workersCompYes.checked = true;
+  workersCompYes.parentElement.style.display = 'none';
+  workersCompNo.parentElement.style.display = 'none';
+  explainWhyNoClaim.style.display = 'none';
+
+  let yesRadioParentElem = workersCompYes.parentElement;
+  let workersCompQuestionElem = yesRadioParentElem.previousElementSibling;
+  let workersCompQuestionNumberElem = workersCompQuestionElem.previousElementSibling;
+  let workersCompQuestionAsteriskElem = workersCompQuestionNumberElem.previousElementSibling;
+  let brTag1 = workersCompQuestionAsteriskElem.previousElementSibling;
+  let brTag2 = brTag1.previousElementSibling;
+
+  workersCompQuestionElem.style.display = 'none'
+  workersCompQuestionNumberElem.style.display = 'none'
+  workersCompQuestionAsteriskElem.style.display = 'none'
+  brTag1.style.display = 'none'
+  brTag2.style.display = 'none'
+}
+
+function updateQuestion2bAnd2c() {
+  // 2b is displayed when a user answers yes to 2a
+  // since 2a will be auto-answered, update the display
+  const question2b = document.getElementById('divWCIns')
+  question2b.style.display = 'block'
+
+  const spacesBefore2b = document.querySelector('#divWCIns br').nextSibling;
+  spacesBefore2b.textContent = ""
+
+  const question2bNumberElement = document.querySelector('#divWCIns a strong')
+  question2bNumberElement.textContent = '2a.'
+
+  const spacesBefore2c = document.querySelector('#divWCBen br').nextSibling;
+  spacesBefore2c.textContent = ""
+
+  const question2cNumberElement = document.querySelector('#divWCBen a strong')
+  question2cNumberElement.textContent = '2b.'
 }

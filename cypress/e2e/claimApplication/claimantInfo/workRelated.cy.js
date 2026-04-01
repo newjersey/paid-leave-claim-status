@@ -1,4 +1,9 @@
-import { globalTestsNew, globalTestsOld } from "../shared";
+import {
+  EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS,
+  globalTestsNew,
+  globalTestsOld,
+} from "../shared";
+import { encodeDecode } from '../../../../src/claimApplication/utils';
 
 const PAGE_ID = 'workRelated';
 const URL = 'ClaimantDisabililty';
@@ -62,6 +67,49 @@ describe("Work Related page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbWCInsNo').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_btnWC').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+    });
+
+    it('hides question 2a and renames 2b and 2c', () => {
+      //2a
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes')
+        .should('not.be.visible');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo')
+        .should('not.be.visible');
+      cy.get('label[for="ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes"]')
+        .should('not.be.visible');
+      cy.get('label[for="ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo"]')
+        .should('not.be.visible');
+      //2b is made visible and renamed to 2a
+      cy.get('#divWCIns').should('be.visible');
+      cy.get('#divWCIns a strong').should('have.text', '2a.');
+      //2c is renamed to 2b
+      cy.get('#divWCBen a strong').should('have.text', '2b.');
+    });
+
+    it('autofills 2a workers comp question with yes', () => {
+      // autofills and hides 2a
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes')
+        .should('be.checked');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo')
+        .should('not.be.checked');
+    });
+
+    it('still submits the 2a Yes value with the form', () => {
+      cy.mockASPX(URL);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_btnWC').click();
+      cy.wait('@aspxSubmission').then((interception) => {
+        const formData = interception.request.body;
+        expect(formData).to.include('rbtnFWCYes');
+      });
+    });
+
+    it('fills in illness or injury text when known from storage', () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem('session_data', encodeDecode(JSON.stringify({ reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS })));
+      });
+      cy.visit(FIXTURE);
+      cy.contains('List the employer where this illness occurred').should('exist');
+      cy.contains('Enter date of the work related illness.').should('exist');
     });
 
     globalTestsNew(PAGE_ID, URL);
