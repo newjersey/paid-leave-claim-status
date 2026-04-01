@@ -103,7 +103,6 @@ describe("Employment Details page", () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').blur();
       cy.get('@alertSpy').invoke('getCall', 0).should('be.calledWith', 'Employment Start Date cannot be later than First Day Of Disability.');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').should('have.value', '');
-      cy.checkLogEvent(`System Alert`, { contents: "Employment Start Date cannot be later than First Day Of Disability.", pageId: 'employerDetails' });
 
       cy.get('#Image2').click();
       cy.tick(200);
@@ -133,6 +132,17 @@ describe("Employment Details page", () => {
       cy.get('a.current').contains('1').click();
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').blur();
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').should('have.value', '07/01/2024');
+    });
+
+    it('system alert shows on invalid date', () => {
+      cy.window().then((win) => {
+        cy.spy(win, 'alert').as('alertSpy');
+      });
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').type('09/02/2025');
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').blur();
+      cy.get('@alertSpy').invoke('getCall', 0).should('be.calledWith', 'Employment Start Date cannot be later than First Day Of Disability.');
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').should('have.value', '');
+      cy.checkLogEvent(`System Alert`, { contents: "Employment Start Date cannot be later than First Day Of Disability.", pageId: 'employerDetails' });
     });
 
     globalTestsNew(PAGE_ID, URL);
