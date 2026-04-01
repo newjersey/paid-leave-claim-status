@@ -96,15 +96,6 @@ describe("Work Related page", () => {
 
     it('still submits the 2a Yes value with the form', () => {
       cy.mockASPX(URL);
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpNm').type('Test Employer');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtEmpadd1').type('123 Main St');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtCity').type('Newark');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_ddlEmpStates').select('NJ');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtEmpZip1').type('07101');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpPh').type('973');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpPh2').type('555');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjEmpPh3').type('1234');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_txtInjDt').type('06/01/2024');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_btnWC').click();
       cy.wait('@aspxSubmission').then((interception) => {
         const formData = interception.request.body;

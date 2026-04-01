@@ -131,19 +131,18 @@ function adjustWidths() {
 }
 
 function updateWorkersCompQuestions() {
-  const workersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes');
-  if (!workersCompYes) return;
-
-  workersCompYes.checked = true;
-  hideQuestion2a();
+  answerAndhideUnneededQuestions();
   updateQuestion2bAnd2c();
 }
 
-function hideQuestion2a() {
+function answerAndhideUnneededQuestions() {
   const workersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes');
   const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo');
+  const explainWhyNoClaim = document.getElementById('divWCNo');
+  workersCompYes.checked = true;
   workersCompYes.parentElement.style.display = 'none';
   workersCompNo.parentElement.style.display = 'none';
+  explainWhyNoClaim.style.display = 'none';
 
   let yesRadioParentElem = workersCompYes.parentElement;
   let workersCompQuestionElem = yesRadioParentElem.previousElementSibling;
