@@ -50,6 +50,13 @@ function makeDateEntriesThinner() {
             }
         }
     });
+
+    const dollarInputs = document.querySelectorAll('#divYesWorkInter input[type="text"][id*="GrossAmt"]');
+    dollarInputs.forEach(input => {
+        input.style.width = '80px';
+    });
+
+    
 }
 
 function addStyles() {
@@ -69,7 +76,8 @@ function addStyles() {
         //   width: 10% !important;
         // }
 
-        #divYesWorkInter table:last-child td {
+        #divYesWorkInter table:last-child td:nth-child(1),
+        #divYesWorkInter table:last-child td:nth-child(2) {
           // width: 30% !important;
           white-space: nowrap;
         }
@@ -79,7 +87,7 @@ function addStyles() {
         }
         
         /* Mobile responsive fixes */
-        @media (max-width: 768px) {
+        @media (max-width: 531px) {
             /* Let the first table (instructions) wrap normally */
             #divYesWorkInter table:first-child td {
                 white-space: normal !important;
