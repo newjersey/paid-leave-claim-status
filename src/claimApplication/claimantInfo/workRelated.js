@@ -138,11 +138,9 @@ function updateWorkersCompQuestions() {
 function answerAndhideUnneededQuestions() {
   const workersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes');
   const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo');
-  const explainWhyNoClaim = document.getElementById('divWCNo');
-  workersCompYes.checked = true;
+  workersCompYes.click();
   workersCompYes.parentElement.style.display = 'none';
   workersCompNo.parentElement.style.display = 'none';
-  explainWhyNoClaim.style.display = 'none';
 
   let yesRadioParentElem = workersCompYes.parentElement;
   let workersCompQuestionElem = yesRadioParentElem.previousElementSibling;
