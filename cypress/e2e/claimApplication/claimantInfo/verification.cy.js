@@ -9,6 +9,7 @@ const PAGE_ID = 'verification';
 const URL = 'ClaimantDisabililty';
 const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/verification.html";
 const FIXTURE_WITH_WORKERS_COMP_YES = "./cypress/fixtures/claimApplication/claimantInfo/verification_WorkersCompYes.html";
+const FIXTURE_WITH_NOT_APPROVED_BUT_RECEIVED_WC = "./cypress/fixtures/claimApplication/claimantInfo/verification_NotApprovedButReceived.html";
 
 describe("Disability Verification page", () => {
   function checkPostData(interception) {
@@ -354,6 +355,9 @@ describe("Disability Verification page", () => {
         cy.get('#workRelatedDisplay')
           .should('contain.text', 'injury happened')
           .and('contain.text', 'Date of injury');
+        
+        cy.contains("Approved for Workers' Compensation benefits: Yes").should('be.visible');
+        cy.contains("Receiving benefits same time as TDI: No").should('be.visible');
       });
 
       it('hides entire section when reason is pregnancy', () => {
@@ -369,7 +373,19 @@ describe("Disability Verification page", () => {
         cy.wait('@script');
         cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_BtnWREdit').should('not.be.visible');
       });
-    })
+
+      it('hides "received benefits" when not approved for benefits', () => {
+        cy.intercept('GET', '**/tdiOverride.min.js', (req) => {
+          req.continue((res) => {
+            expect([200, 304]).to.include(res.statusCode);
+          });
+        }).as('script');
+        cy.visit(FIXTURE_WITH_NOT_APPROVED_BUT_RECEIVED_WC);
+        cy.wait('@script');
+        cy.contains("Approved for Workers' Compensation benefits: No").should('be.visible');
+        cy.contains("Receiving benefits same time as TDI: Yes").should('not.exist');
+      });
+    });
 
     globalTestsNew(PAGE_ID, URL);
   });
