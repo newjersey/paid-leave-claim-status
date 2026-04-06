@@ -250,6 +250,9 @@ describe("Medical Treatment page", () => {
       cy.get('#provider-type-accepted-yes').click({ force: true });
       fillCommonResponses();
       cy.get('#caused-by-job-yes').click({ force: true });
+      cy.get('#workersCompContainer a[href*="workerscompensation"]')
+        .should('be.visible')
+        .and('have.text', "Workers' Compensation Claim");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc').click();
       cy.checkLogEvent("WorkersComp Yes Clicked", {});

@@ -69,12 +69,33 @@ describe("Work Related page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
-    it('hides question 2a and renames 2b and 2c', () => {
+    it('hides question 2a and "no" path 2b, and renames "yes" path 2b and 2c', () => {
+      // mock case where loaded data checks "did you file" as "no" and shows "explain why no claim"
+      cy.intercept('GET', '**/workRelated.html', (req) => {
+        req.continue((res) => {
+          let modifiedHtml = res.body;
+          
+          modifiedHtml = modifiedHtml.replace(
+            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo" type="radio"',
+            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo" type="radio" checked'
+          );
+          
+          modifiedHtml = modifiedHtml.replace(
+            '<div id="divWCNo" style="display: none">',
+            '<div id="divWCNo">'
+          );
+          
+          res.body = modifiedHtml;
+        });
+      });
+      cy.visit(FIXTURE);
+
       //2a
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes')
         .should('not.be.visible');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo')
         .should('not.be.visible');
+      cy.get('#divWCNo').should('not.be.visible');
       cy.get('label[for="ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCYes"]')
         .should('not.be.visible');
       cy.get('label[for="ContentPlaceHolder1_ClaimantDisabilityTab_TabWC_rbtnFWCNo"]')
