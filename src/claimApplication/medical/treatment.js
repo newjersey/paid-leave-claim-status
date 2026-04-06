@@ -285,7 +285,7 @@ function addWorkersCompScreener() {
     <fieldset class="usa-fieldset">
       <legend id="caused-by-job-legend" class="usa-legend usa-legend">
         <span class="required-asterisk">*</span>
-        7. <span id="causedByJobText">${i18next.t('medicalInfo.work.causedByJob')}</span>
+        7. <span id="causedByJobText">${i18next.t('medicalInfo.work.causedByJob', { disabilityTypeString: i18next.t('shared.disability') })}</span>
       </legend>
       <div class="usa-radio">
         <input
@@ -447,6 +447,10 @@ function loadReasonData() {
     workersCompensationHeader.style.display = 'block';
     workersCompFieldset.style.display = 'block';
     causedByJobQuestion.style.display = 'block';
+
+    const causedByJobText = document.getElementById('causedByJobText');
+    const disabilityTypeString = reason === 'illness' ? i18next.t('shared.illness') : i18next.t('shared.injury');
+    causedByJobText.textContent = i18next.t('medicalInfo.work.causedByJob', { disabilityTypeString });
 
     // Restore caused-by-job answer
     const savedCausedByJob = sessionData[STORAGE_KEY_CAUSED_BY_JOB];

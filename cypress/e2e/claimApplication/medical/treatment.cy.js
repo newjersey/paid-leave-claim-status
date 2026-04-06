@@ -1,4 +1,5 @@
 import {
+  EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS,
   EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY,
   EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY_DETAILS,
   globalTestsNew,
@@ -478,6 +479,22 @@ describe("Medical Treatment page", () => {
       cy.visit(FIXTURE);
       cy.wait('@script');
       cy.get('#provider-type-alert').should('be.visible');
+    });
+
+    it('fills in illness text when known from storage', () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem('session_data', encodeDecode(JSON.stringify({ reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS })));
+      });
+      cy.visit(FIXTURE);
+      cy.contains('Was your illness caused by your job?').should('exist');
+    });
+
+    it('fills in injury text when known from storage', () => {
+      cy.window().then((win) => {
+        win.sessionStorage.setItem('session_data', encodeDecode(JSON.stringify({ reason_for_leave: EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY })));
+      });
+      cy.visit(FIXTURE);
+      cy.contains('Was your injury caused by your job?').should('exist');
     });
 
     globalTestsNew(PAGE_ID, URL);
