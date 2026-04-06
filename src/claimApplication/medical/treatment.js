@@ -79,6 +79,7 @@ export function changes() {
   styleRadioButtons();
   addWorkersCompListeners();
   moveWorkersCompToNewFieldset();
+  addLinkToWorkerCompQuestion();
   loadReasonData();
   setNewTitle(i18next.t('medicalInfo.title'));
   addSubtitleAndExplainer();
@@ -276,15 +277,6 @@ function addWorkersCompScreener() {
   const workersCompContainer = workersCompNo.closest('div').closest('div');
   workersCompContainer.id = "workersCompContainer"
   workersCompContainer.style.display = 'none';
-
-  const linkElements = workersCompContainer.querySelectorAll('a');
-  linkElements.forEach((element) => {
-    let text = element.textContent;
-    if (text.includes('7.')) {
-      text = text.replace('7.', '7a.');
-    }
-    element.textContent = text;
-  });
 
   const causedByJobQuestion = document.createElement('div');
   causedByJobQuestion.id = "causedByJobQuestion";
@@ -614,4 +606,16 @@ function updateAllCalendars() {
   updateCalendarUI(EREndId);
   updateCalendarUI(hospitalStartId);
   updateCalendarUI(hospitalEndId);
+}
+
+function addLinkToWorkerCompQuestion() {
+  const workersCompQuestionContainer = document.querySelector("#workersCompContainer");
+  if (workersCompQuestionContainer) {
+    const questionLink = workersCompQuestionContainer.querySelector('a:not([style*="color"])');
+    if (questionLink) {
+      const span = document.createElement('span');
+      span.innerHTML = `7a. ${i18next.t('medicalInfo.work.workersCompClaim')}`;
+      questionLink.replaceWith(span);
+    }
+  }
 }
