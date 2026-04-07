@@ -1,10 +1,7 @@
 import i18next from 'i18next';
 import { logEvent } from "../../modules/shared.mjs";
 import {
-  adjustTableWidths,
-  removeExtraSpaceBetweenRadioButtons,
   setNewTitle,
-  styleRadioButton,
   updateCalendarUI,
 } from '../utils';
 
@@ -70,8 +67,7 @@ export function trackOtherBenefitsYesSubmission(pageId) {
 
 export function changes() {
   addStyles();
-  styleRadioButtons();
-  adjustWidths();
+  replaceRadioButtonsWithCheckboxes();
   setNewTitle(i18next.t('otherBenefits.title'));
   updateCalendars();
 }
@@ -82,53 +78,73 @@ function addStyles() {
     .usa-radio {
       padding: 0;
     }
+
+    #ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits fieldset {
+      display: none !important;
+    }
   `;
   document.head.appendChild(style);
 }
 
-function styleRadioButtons() {
-  const radioButtonIds = [
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes',
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo',
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpYes',
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo',
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes',
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo',
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes',
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo'
-  ];
+function replaceRadioButtonsWithCheckboxes() {
+  const existingForm = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits');
+  const newForm = document.createElement('div');
+  newForm.id = "newOtherBenefitsForm";
 
-  radioButtonIds.forEach((radioButtonId) => styleRadioButton(radioButtonId));
+  newForm.innerHTML = `
+    <form id="new-other-benefits-form" novalidate>
+      <div class="bordered-set">
+        <fieldset class="usa-fieldset">
+          <legend class="usa-legend">
+            <span class="required-asterisk">*</span>
+            ${i18next.t('otherBenefits.areYouReceivingOrApplied')}
+          </legend>
+          <div class="usa-checkbox">
+            <input
+              class="usa-checkbox__input"
+              id="check-ssdi"
+              type="checkbox"
+              name="other-benefits"
+              value="ssdi"
+            />
+            <label class="usa-checkbox__label" for="check-ssdi">${i18next.t('otherBenefits.ssdi')}</label>
+          </div>
+          <div class="usa-checkbox">
+            <input
+              class="usa-checkbox__input"
+              id="check-ui"
+              type="checkbox"
+              name="other-benefits"
+              value="ui"
+            />
+            <label class="usa-checkbox__label" for="check-ui">${i18next.t('otherBenefits.ui')}</label>
+          </div>
+          <div class="usa-checkbox">
+            <input
+              class="usa-checkbox__input"
+              id="check-tdi"
+              type="checkbox"
+              name="other-benefits"
+              value="tdi"
+            />
+            <label class="usa-checkbox__label" for="check-tdi">${i18next.t('otherBenefits.tdi')}</label>
+          </div>
+          <div class="usa-checkbox">
+            <input
+              class="usa-checkbox__input"
+              id="check-none"
+              type="checkbox"
+              name="other-benefits"
+              value="none"
+            />
+            <label class="usa-checkbox__label" for="check-none">${i18next.t('shared.noneOfTheAbove')}</label>
+          </div>
+        </fieldset>
+      </div>
+    </form>
+  `;
 
-  removeExtraSpaceBetweenRadioButtons(
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes',
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo'
-  );
-  removeExtraSpaceBetweenRadioButtons(
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpYes',
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo'
-  );
-  removeExtraSpaceBetweenRadioButtons(
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes',
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo'
-  );
-  removeExtraSpaceBetweenRadioButtons(
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes',
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo'
-  );
-}
-
-function adjustWidths() {
-  const employerDiv = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_pnlEmpUnionadd");
-  if (employerDiv) {
-    employerDiv.style.marginLeft = '0';
-    employerDiv.style.width = '100%';
-  }
-
-  const parentDiv = document.getElementById("divEmp");
-  if (parentDiv) {
-    adjustTableWidths(parentDiv);
-  }
+  existingForm.parentNode.insertBefore(newForm, existingForm);
 }
 
 function updateCalendars() {

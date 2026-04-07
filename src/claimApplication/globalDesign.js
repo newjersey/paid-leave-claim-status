@@ -108,6 +108,10 @@ function injectGlobalStyles() {
       background-image: url('${ICON_BASE_URL}/remove.svg'), linear-gradient(transparent, transparent);
     }
 
+    .usa-checkbox__input:checked+[class*=__label]:before, .usa-checkbox__input:checked:disabled+[class*=__label]:before {
+      background-image: url('${ICON_BASE_URL}/correct8.svg'), linear-gradient(transparent, transparent);
+    }
+
     .usa-list li {
       list-style-type: disc !important;
       max-width: 100%;
