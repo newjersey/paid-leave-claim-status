@@ -146,6 +146,9 @@ function replaceRadioButtonsWithCheckboxes() {
 
   existingForm.parentNode.insertBefore(newForm, existingForm);
 
+  const tdiFromEmployerNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo");
+  tdiFromEmployerNo.click();
+
   const checkSsdi = document.getElementById("check-ssdi");
   checkSsdi.addEventListener('click', function () {
     if (checkSsdi.checked) {
