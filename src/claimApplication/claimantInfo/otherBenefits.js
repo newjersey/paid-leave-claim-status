@@ -156,6 +156,28 @@ function replaceRadioButtonsWithCheckboxes() {
       originalSsdiNo.click();
     }
   });
+
+  const checkUi = document.getElementById("check-ui");
+  checkUi.addEventListener('click', function () {
+    if (checkUi.checked) {
+      const originalUiYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes");
+      originalUiYes.click();
+    } else {
+      const originalUiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo");
+      originalUiNo.click();
+    }
+  });
+
+  const checkTdi = document.getElementById("check-tdi");
+  checkTdi.addEventListener('click', function () {
+    if (checkTdi.checked) {
+      const originalTdiYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes");
+      originalTdiYes.click();
+    } else {
+      const originalTdiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo");
+      originalTdiNo.click();
+    }
+  });
 }
 
 function updateCalendars() {
