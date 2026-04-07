@@ -129,7 +129,7 @@ function replaceRadioButtonsWithCheckboxes() {
             />
             <label class="usa-checkbox__label" for="check-tdi">${i18next.t('otherBenefits.tdi')}</label>
           </div>
-          <div class="usa-checkbox">
+          <div class="usa-checkbox" style="display: none;">
             <input
               class="usa-checkbox__input"
               id="check-none"
@@ -145,6 +145,17 @@ function replaceRadioButtonsWithCheckboxes() {
   `;
 
   existingForm.parentNode.insertBefore(newForm, existingForm);
+
+  const checkSsdi = document.getElementById("check-ssdi");
+  checkSsdi.addEventListener('click', function () {
+    if (checkSsdi.checked) {
+      const originalSsdiYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes");
+      originalSsdiYes.click();
+    } else {
+      const originalSsdiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo");
+      originalSsdiNo.click();
+    }
+  });
 }
 
 function updateCalendars() {
