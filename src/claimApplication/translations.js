@@ -259,11 +259,9 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           areYouSure: `Are you sure? Keep in mind, Social Security Disability benefits are different from <a href="https://www.ssa.gov/retirement" target="_blank">Social Security Retirement benefits</a> you receive at age 62 or older.`,
           followup: {
             title: "You answered yes to Social Security Disability",
-            dateLegend: `
-              <strong>Social Security Disability</strong>
-              <br>
-              Month your Social Security Disability (SSDI) benefits start:`,
-            hint: 'mm/yyyy',
+            subtitle: "Social Security Disability",
+            dateLegend: "Month your Social Security Disability (SSDI) benefits start:",
+            hint: 'mm/01/yyyy',
             pendingLegend: "My application is still pending",
           },
         },

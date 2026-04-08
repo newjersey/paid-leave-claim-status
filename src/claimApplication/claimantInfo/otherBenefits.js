@@ -83,6 +83,15 @@ function addStyles() {
       display: none !important;
     }
 
+    #divSS h3 {
+      font-weight: bold;
+      color: black;
+    }
+
+    #divSS p {
+      font-size: 16px;
+    }
+
     #warning-ssdi .usa-alert__body {
       padding-left: 40px;
     }
@@ -101,7 +110,7 @@ function addStyles() {
       padding-bottom: 0;
     }
 
-    #divSSBenDt {
+    #dateInputContainer {
       display: flex;
       align-items: center;
     }
@@ -265,28 +274,43 @@ function restyleSSDIFollowup() {
   const container = document.createElement('div');
   container.classList.add("bordered-set");
   newTitle.insertAdjacentElement('afterend', container);
-  
+
+  const subtitle = document.createElement('h3');
+  subtitle.textContent = i18next.t('otherBenefits.ssdi.followup.subtitle');
+  container.append(subtitle);
+
+  const divSSBenDt = document.getElementById('divSSBenDt'); 
   const dateLegend = document.createElement('p');
-  dateLegend.innerHTML = i18next.t('otherBenefits.ssdi.followup.dateLegend');
-  container.insertAdjacentElement('afterbegin', dateLegend);
+  dateLegend.textContent = i18next.t('otherBenefits.ssdi.followup.dateLegend');
+  divSSBenDt.prepend(dateLegend);
 
   const hint = document.createElement('div');
   hint.classList.add("usa-hint");
   hint.textContent = i18next.t('otherBenefits.ssdi.followup.hint');
   dateLegend.insertAdjacentElement('afterend', hint);
 
-  const divSSBenDt = document.getElementById('divSSBenDt');
+  const dateInputContainer = document.createElement('div');
+  dateInputContainer.id = 'dateInputContainer';
+
   const dateInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtSSDate');
   dateInput.classList.add("usa-input");
-  hint.insertAdjacentElement('afterend', divSSBenDt);
+  const calendarInput = document.getElementById('Image10');
 
-  // replace this with usa-checkbox div, etc
+  dateInputContainer.append(dateInput);
+  dateInputContainer.append(calendarInput);
+  divSSBenDt.append(dateInputContainer);
+  container.append(divSSBenDt);
+
   const checkboxPending = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkSSDtStat');
-  divSSBenDt.insertAdjacentElement('afterend', checkboxPending);
-
   const labelPending = document.querySelector("#divSS > label");
+  const pendingWrapper = document.createElement('div');
+  pendingWrapper.className = 'usa-checkbox';
+  checkboxPending.classList.add('usa-checkbox__input');
+  labelPending.classList.add('usa-checkbox__label');
   labelPending.textContent = i18next.t('otherBenefits.ssdi.followup.pendingLegend');
-  checkboxPending.insertAdjacentElement('afterend', labelPending);
+  pendingWrapper.appendChild(checkboxPending);
+  pendingWrapper.appendChild(labelPending);
+  container.append(pendingWrapper);
 }
 
 function clearTextNodes(node) {
