@@ -30,7 +30,7 @@ function injectGlobalStyles() {
     }
     h1, h2, h3, h4, p, a {
       font-family: "Public Sans", sans-serif !important;
-      font-variant: normal; 
+      font-variant: normal !important; 
     }
 
     a.lblClass, span.lblClass, span.lblClass1 {

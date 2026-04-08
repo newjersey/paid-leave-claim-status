@@ -90,6 +90,12 @@ function addStyles() {
     #new-other-benefits-form label {
       text-align: left;
     }
+
+    #ContentPlaceHolder1_ClaimantDisabilityTab_body h2 {
+      color: black;
+      font-weight: bold;
+      margin: 40px 0 20px;
+    }
   `;
   document.head.appendChild(style);
 }
@@ -97,10 +103,10 @@ function addStyles() {
 function replaceRadioButtonsWithCheckboxes() {
   const existingForm = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits');
   const newForm = document.createElement('div');
-  newForm.id = "newOtherBenefitsForm";
+  newForm.id = "new-other-benefits-form";
 
   newForm.innerHTML = `
-    <form id="new-other-benefits-form" novalidate>
+    <form novalidate>
       <div class="bordered-set">
         <fieldset class="usa-fieldset">
           <legend class="usa-legend">
@@ -132,7 +138,7 @@ function replaceRadioButtonsWithCheckboxes() {
             />
             <label class="usa-checkbox__label" for="check-ui">${i18next.t('otherBenefits.ui')}</label>
           </div>
-          <div class="usa-checkbox">
+          <div id="checkbox-tdi" class="usa-checkbox">
             <input
               class="usa-checkbox__input"
               id="check-tdi"
@@ -159,9 +165,47 @@ function replaceRadioButtonsWithCheckboxes() {
 
   existingForm.parentNode.insertBefore(newForm, existingForm);
 
+  addEmployerBenefitsIfNeeded(); // remove once underlying question removed
+  restyleSSDIFollowup();
+  addCheckboxListeners();
+}
+
+// remove once underlying question removed
+function addEmployerBenefitsIfNeeded() {
   const tdiFromEmployerNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo");
+  if (tdiFromEmployerNo) {
+    const tdiCheckbox = document.getElementById('checkbox-tdi');
+    const employerCheckbox = document.createElement('div');
+    employerCheckbox.className = "usa-checkbox";
+    employerCheckbox.innerHTML = `
+      <input
+        class="usa-checkbox__input"
+        id="check-employer"
+        type="checkbox"
+        name="other-benefits"
+        value="employer"
+      />
+      <label class="usa-checkbox__label" for="check-employer">${i18next.t('otherBenefits.employer.title')}</label>
+    `;
+
+    tdiCheckbox.insertAdjacentElement('afterend', employerCheckbox);
+  }
+}
+
+function restyleSSDIFollowup() {
+  const newForm = document.getElementById('new-other-benefits-form');
+  const divSS = document.getElementById('divSS');
+  if (divSS) {
+    newForm.parentNode.insertBefore(divSS, newForm.nextSibling);
+  }
+
+  const newTitle = document.createElement('h2');
+  newTitle.textContent = i18next.t('otherBenefits.ssdi.followupTitle');
+  divSS.prepend(newTitle);
+}
+
+function addCheckboxListeners() {
   const ssdiWarning = document.getElementById("warning-ssdi");
-  tdiFromEmployerNo.click();
 
   const checkSsdi = document.getElementById("check-ssdi");
   checkSsdi.addEventListener('click', function () {
