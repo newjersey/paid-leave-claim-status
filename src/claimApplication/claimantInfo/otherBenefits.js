@@ -166,6 +166,7 @@ function replaceRadioButtonsWithCheckboxes() {
   existingForm.parentNode.insertBefore(newForm, existingForm);
 
   addEmployerBenefitsIfNeeded(); // remove once underlying question removed
+  rearrangeFollowups();
   restyleSSDIFollowup();
   addCheckboxListeners();
 }
@@ -189,16 +190,58 @@ function addEmployerBenefitsIfNeeded() {
     `;
 
     tdiCheckbox.insertAdjacentElement('afterend', employerCheckbox);
+
+    rearrangeEmployerFollowup();
+    restyleEmployerFollowup();
+    addEmployerListener();
   }
 }
 
-function restyleSSDIFollowup() {
+function addEmployerListener() {
+  const checkEmployer = document.getElementById("check-employer");
+  checkEmployer.addEventListener('click', function () {
+    if (checkEmployer.checked) {
+      const originalEmployerYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpYes");
+      originalEmployerYes.click();
+    } else {
+      const originalEmployerNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo");
+      originalEmployerNo.click();
+    }
+  });
+}
+
+function rearrangeEmployerFollowup() {
+  const divEmp = document.getElementById('divEmp');
+  const submitBtn = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI');
+  if (divEmp) {
+    submitBtn.parentNode.insertBefore(divEmp, submitBtn);
+  }
+}
+
+function rearrangeFollowups() {
   const newForm = document.getElementById('new-other-benefits-form');
   const divSS = document.getElementById('divSS');
+  const divUI = document.getElementById('divUI');
+  const divTDI = document.getElementById('divTDI');
+  
+  if (divTDI) {
+    newForm.parentNode.insertBefore(divTDI, newForm.nextSibling);
+  }
+  if (divUI) {
+    newForm.parentNode.insertBefore(divUI, newForm.nextSibling);
+  }
   if (divSS) {
     newForm.parentNode.insertBefore(divSS, newForm.nextSibling);
   }
+}
 
+function restyleEmployerFollowup() {
+  const divEmp = document.getElementById('divEmp');
+
+  // restyle
+}
+
+function restyleSSDIFollowup() {
   const newTitle = document.createElement('h2');
   newTitle.textContent = i18next.t('otherBenefits.ssdi.followupTitle');
   divSS.prepend(newTitle);
