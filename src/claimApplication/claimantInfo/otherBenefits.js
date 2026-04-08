@@ -247,12 +247,50 @@ function restyleFollowups() {
 
 function restyleSSDIFollowup() {
   const divSS = document.getElementById('divSS');
-  divSS.classList.add("bordered-set");
+  clearTextNodes(divSS);
 
   const newTitle = document.createElement('h2');
-  newTitle.textContent = i18next.t('otherBenefits.ssdi.followupTitle');
-  divSS.prepend(newTitle);
+  newTitle.textContent = i18next.t('otherBenefits.ssdi.followup.title');
+  divSS.insertAdjacentElement('afterbegin', newTitle);
 
+  const container = document.createElement('div');
+  container.classList.add("bordered-set");
+  newTitle.insertAdjacentElement('afterend', container);
+  
+  const dateLegend = document.createElement('p');
+  dateLegend.textContent = i18next.t('otherBenefits.ssdi.followup.dateLegend');
+  container.insertAdjacentElement('afterbegin', dateLegend);
+
+  const hint = document.createElement('div');
+  hint.textContent = i18next.t('otherBenefits.ssdi.followup.hint');
+  dateLegend.insertAdjacentElement('afterend', hint);
+
+  const divSSBenDt = document.getElementById('divSSBenDt');
+  hint.insertAdjacentElement('afterend', divSSBenDt);
+
+  const checkboxPending = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkSSDtStat');
+  divSSBenDt.insertAdjacentElement('afterend', checkboxPending);
+
+  const labelPending = document.querySelector("#divSS > label");
+  labelPending.textContent = i18next.t('otherBenefits.ssdi.followup.pendingLegend');
+  checkboxPending.insertAdjacentElement('afterend', labelPending);
+}
+
+function clearTextNodes(node) {
+  if (node.nodeType === Node.TEXT_NODE) {
+    const text = node.textContent;
+    if (/^\s*$/.test(text)) {
+      node.remove(); 
+    } else {
+      node.textContent = ''; 
+    }
+  } else if (node.nodeType === Node.ELEMENT_NODE) {
+    Array.from(node.childNodes).forEach(clearTextNodes);
+    const tagName = node.tagName.toLowerCase();
+    if ((tagName === 'a' || tagName === 'strong' || tagName === 'br')) {
+      node.remove();
+    }
+  }
 }
 
 function restyleUIFollowup() {
