@@ -52,14 +52,6 @@ function addStyles() {
     .bold-text {
       font-weight: bold;
     }
-
-    .bordered-set {
-      background: white;
-      border: 1px solid #b2b2b2;
-      border-radius: 5px;
-      margin: 10px 0;
-      padding: 10px;
-    }
     
     .optional-text {
       color: #757575;

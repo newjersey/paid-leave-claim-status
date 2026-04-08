@@ -102,73 +102,72 @@ function addStyles() {
 
 function replaceRadioButtonsWithCheckboxes() {
   const existingForm = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits');
-  const newForm = document.createElement('div');
+  const newForm = document.createElement('form');
   newForm.id = "new-other-benefits-form";
-
+  newForm.noValidate = true;
   newForm.innerHTML = `
-    <form novalidate>
-      <div class="bordered-set">
-        <fieldset class="usa-fieldset">
-          <legend class="usa-legend">
-            <span class="required-asterisk">*</span>
-            ${i18next.t('otherBenefits.areYouReceivingOrApplied')}
-          </legend>
-          <div class="usa-checkbox">
-            <input
-              class="usa-checkbox__input"
-              id="check-ssdi"
-              type="checkbox"
-              name="other-benefits"
-              value="ssdi"
-            />
-            <label class="usa-checkbox__label" for="check-ssdi">${i18next.t('otherBenefits.ssdi.title')}</label>
+    <div class="bordered-set">
+      <fieldset class="usa-fieldset">
+        <legend class="usa-legend">
+          <span class="required-asterisk">*</span>
+          ${i18next.t('otherBenefits.areYouReceivingOrApplied')}
+        </legend>
+        <div class="usa-checkbox">
+          <input
+            class="usa-checkbox__input"
+            id="check-ssdi"
+            type="checkbox"
+            name="other-benefits"
+            value="ssdi"
+          />
+          <label class="usa-checkbox__label" for="check-ssdi">${i18next.t('otherBenefits.ssdi.title')}</label>
+        </div>
+        <div id="warning-ssdi" class="usa-alert usa-alert--warning" style="display: none;">
+          <div class="usa-alert__body">
+            <p class="usa-alert__text">${i18next.t('otherBenefits.ssdi.areYouSure')}</p>
           </div>
-          <div id="warning-ssdi" class="usa-alert usa-alert--warning" style="display: none;">
-            <div class="usa-alert__body">
-              <p class="usa-alert__text">${i18next.t('otherBenefits.ssdi.areYouSure')}</p>
-            </div>
-          </div>
-          <div class="usa-checkbox">
-            <input
-              class="usa-checkbox__input"
-              id="check-ui"
-              type="checkbox"
-              name="other-benefits"
-              value="ui"
-            />
-            <label class="usa-checkbox__label" for="check-ui">${i18next.t('otherBenefits.ui')}</label>
-          </div>
-          <div id="checkbox-tdi" class="usa-checkbox">
-            <input
-              class="usa-checkbox__input"
-              id="check-tdi"
-              type="checkbox"
-              name="other-benefits"
-              value="tdi"
-            />
-            <label class="usa-checkbox__label" for="check-tdi">${i18next.t('otherBenefits.tdi')}</label>
-          </div>
-          <div class="usa-checkbox" style="display: none;">
-            <input
-              class="usa-checkbox__input"
-              id="check-none"
-              type="checkbox"
-              name="other-benefits"
-              value="none"
-            />
-            <label class="usa-checkbox__label" for="check-none">${i18next.t('shared.noneOfTheAbove')}</label>
-          </div>
-        </fieldset>
-      </div>
-    </form>
+        </div>
+        <div class="usa-checkbox">
+          <input
+            class="usa-checkbox__input"
+            id="check-ui"
+            type="checkbox"
+            name="other-benefits"
+            value="ui"
+          />
+          <label class="usa-checkbox__label" for="check-ui">${i18next.t('otherBenefits.ui')}</label>
+        </div>
+        <div id="checkbox-tdi" class="usa-checkbox">
+          <input
+            class="usa-checkbox__input"
+            id="check-tdi"
+            type="checkbox"
+            name="other-benefits"
+            value="tdi"
+          />
+          <label class="usa-checkbox__label" for="check-tdi">${i18next.t('otherBenefits.tdi')}</label>
+        </div>
+        <div class="usa-checkbox" style="display: none;">
+          <input
+            class="usa-checkbox__input"
+            id="check-none"
+            type="checkbox"
+            name="other-benefits"
+            value="none"
+          />
+          <label class="usa-checkbox__label" for="check-none">${i18next.t('shared.noneOfTheAbove')}</label>
+        </div>
+      </fieldset>
+    </div>
   `;
 
   existingForm.parentNode.insertBefore(newForm, existingForm);
 
-  addEmployerBenefitsIfNeeded(); // remove once underlying question removed
   rearrangeFollowups();
-  restyleSSDIFollowup();
+  restyleFollowups();
   addCheckboxListeners();
+
+  addEmployerBenefitsIfNeeded(); // remove once underlying question removed
 }
 
 // remove once underlying question removed
@@ -211,10 +210,10 @@ function addEmployerListener() {
 }
 
 function rearrangeEmployerFollowup() {
+  const newForm = document.getElementById('new-other-benefits-form');
   const divEmp = document.getElementById('divEmp');
-  const submitBtn = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI');
   if (divEmp) {
-    submitBtn.parentNode.insertBefore(divEmp, submitBtn);
+    newForm.insertAdjacentElement('beforeend', divEmp);
   }
 }
 
@@ -224,27 +223,46 @@ function rearrangeFollowups() {
   const divUI = document.getElementById('divUI');
   const divTDI = document.getElementById('divTDI');
   
-  if (divTDI) {
-    newForm.parentNode.insertBefore(divTDI, newForm.nextSibling);
+  if (divSS) {
+    newForm.insertAdjacentElement('beforeend', divSS);
   }
   if (divUI) {
-    newForm.parentNode.insertBefore(divUI, newForm.nextSibling);
+    newForm.insertAdjacentElement('beforeend', divUI);
   }
-  if (divSS) {
-    newForm.parentNode.insertBefore(divSS, newForm.nextSibling);
+  if (divTDI) {
+    newForm.insertAdjacentElement('beforeend', divTDI);
   }
 }
 
 function restyleEmployerFollowup() {
   const divEmp = document.getElementById('divEmp');
+  divEmp.classList.add("bordered-set");
+}
 
-  // restyle
+function restyleFollowups() {
+  restyleSSDIFollowup();
+  restyleUIFollowup();
+  restyleTDIFollowup();
 }
 
 function restyleSSDIFollowup() {
+  const divSS = document.getElementById('divSS');
+  divSS.classList.add("bordered-set");
+
   const newTitle = document.createElement('h2');
   newTitle.textContent = i18next.t('otherBenefits.ssdi.followupTitle');
   divSS.prepend(newTitle);
+
+}
+
+function restyleUIFollowup() {
+  const divUI = document.getElementById('divUI');
+  divUI.classList.add("bordered-set");
+}
+
+function restyleTDIFollowup() {
+  const divTDI = document.getElementById('divTDI');
+  divTDI.classList.add("bordered-set");
 }
 
 function addCheckboxListeners() {

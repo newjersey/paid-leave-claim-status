@@ -43,6 +43,14 @@ function injectGlobalStyles() {
       font-family: "Public Sans", sans-serif;
     }
 
+    .bordered-set {
+      background: white;
+      border: 1px solid #b2b2b2;
+      border-radius: 5px;
+      margin: 10px 0;
+      padding: 10px;
+    }
+
     .usa-checkbox__label, .usa-combo-box__input, .usa-combo-box__list, .usa-fieldset, .usa-hint, .usa-input, .usa-input-group, .usa-radio__label, .usa-range, .usa-select, .usa-textarea, .usa-button, .usa-table, .usa-label, .usa-legend, .usa-alert  {
       font-family: "Public Sans", sans-serif;
     }
