@@ -96,6 +96,15 @@ function addStyles() {
       font-weight: bold;
       margin: 40px 0 20px;
     }
+
+    #Image10 {
+      padding-bottom: 0;
+    }
+
+    #divSSBenDt {
+      display: flex;
+      align-items: center;
+    }
   `;
   document.head.appendChild(style);
 }
@@ -258,16 +267,20 @@ function restyleSSDIFollowup() {
   newTitle.insertAdjacentElement('afterend', container);
   
   const dateLegend = document.createElement('p');
-  dateLegend.textContent = i18next.t('otherBenefits.ssdi.followup.dateLegend');
+  dateLegend.innerHTML = i18next.t('otherBenefits.ssdi.followup.dateLegend');
   container.insertAdjacentElement('afterbegin', dateLegend);
 
   const hint = document.createElement('div');
+  hint.classList.add("usa-hint");
   hint.textContent = i18next.t('otherBenefits.ssdi.followup.hint');
   dateLegend.insertAdjacentElement('afterend', hint);
 
   const divSSBenDt = document.getElementById('divSSBenDt');
+  const dateInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtSSDate');
+  dateInput.classList.add("usa-input");
   hint.insertAdjacentElement('afterend', divSSBenDt);
 
+  // replace this with usa-checkbox div, etc
   const checkboxPending = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkSSDtStat');
   divSSBenDt.insertAdjacentElement('afterend', checkboxPending);
 
