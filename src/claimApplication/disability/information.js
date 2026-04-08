@@ -49,14 +49,6 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
-    h2.usa-alert__heading {
-      font-size: 24px;
-      margin: 0 0 10px;
-      color: black;
-      font-variant: normal;
-      font-weight: bold;
-    }
-
     .bold-text {
       font-weight: bold;
     }

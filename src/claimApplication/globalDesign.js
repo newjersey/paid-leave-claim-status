@@ -100,6 +100,14 @@ function injectGlobalStyles() {
       margin-top:5px;
     }
 
+    .usa-alert__heading {
+      font-size: 24px;
+      margin: 0 0 10px;
+      color: black;
+      font-variant: normal;
+      font-weight: bold;
+    }
+
     .usa-accordion__button[aria-expanded="false"] {
       background-image: url('${ICON_BASE_URL}/add.svg'), linear-gradient(transparent, transparent);
     }

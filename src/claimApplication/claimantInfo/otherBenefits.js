@@ -82,6 +82,14 @@ function addStyles() {
     #ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits fieldset {
       display: none !important;
     }
+
+    #warning-ssdi .usa-alert__body {
+      padding-left: 40px;
+    }
+
+    #new-other-benefits-form label {
+      text-align: left;
+    }
   `;
   document.head.appendChild(style);
 }
@@ -107,7 +115,12 @@ function replaceRadioButtonsWithCheckboxes() {
               name="other-benefits"
               value="ssdi"
             />
-            <label class="usa-checkbox__label" for="check-ssdi">${i18next.t('otherBenefits.ssdi')}</label>
+            <label class="usa-checkbox__label" for="check-ssdi">${i18next.t('otherBenefits.ssdi.title')}</label>
+          </div>
+          <div id="warning-ssdi" class="usa-alert usa-alert--warning" style="display: none;">
+            <div class="usa-alert__body">
+              <p class="usa-alert__text">${i18next.t('otherBenefits.ssdi.areYouSure')}</p>
+            </div>
           </div>
           <div class="usa-checkbox">
             <input
@@ -147,14 +160,17 @@ function replaceRadioButtonsWithCheckboxes() {
   existingForm.parentNode.insertBefore(newForm, existingForm);
 
   const tdiFromEmployerNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo");
+  const ssdiWarning = document.getElementById("warning-ssdi");
   tdiFromEmployerNo.click();
 
   const checkSsdi = document.getElementById("check-ssdi");
   checkSsdi.addEventListener('click', function () {
     if (checkSsdi.checked) {
+      ssdiWarning.style.display = "block";
       const originalSsdiYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes");
       originalSsdiYes.click();
     } else {
+      ssdiWarning.style.display = "none";
       const originalSsdiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo");
       originalSsdiNo.click();
     }

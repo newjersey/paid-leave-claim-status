@@ -254,7 +254,10 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       otherBenefits: {
         title: "Other benefits",
         areYouReceivingOrApplied: "Are you currently receiving or have you applied for:",
-        ssdi: `<strong>Social Security Disability</strong> (Also called "SSDI." These are handled by the federal <a href="https://www.ssa.gov/disability" target="_blank">Social Security Administration</a>).`,
+        ssdi: {
+          title: `<strong>Social Security Disability</strong> (Also called "SSDI." These are handled by the federal <a href="https://www.ssa.gov/disability" target="_blank">Social Security Administration</a>).`,
+          areYouSure: `Are you sure? Keep in mind, Social Security Disability benefits are different from <a href="https://www.ssa.gov/retirement" target="_blank">Social Security Retirement benefits</a> you receive at age 62 or older.`,
+        },
         ui: "<strong>Unemployment Insurance</strong>",
         tdi: "<strong>Family/Medical Leave</strong> from another state or U.S. territory",
       },

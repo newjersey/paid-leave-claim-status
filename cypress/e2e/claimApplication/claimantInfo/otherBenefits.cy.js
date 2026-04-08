@@ -59,6 +59,10 @@ describe("Other Benefits page", () => {
       cy.confirmEventIsNotTracked("Other Benefits Yes Clicked");
     });
 
+    xit("user can input info when the employer benefits question is removed and proceed to next page", () => {
+      // todo
+    });
+
     xit('tracks when page submitted with Yes for Another State', () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenSt').select("CA");
