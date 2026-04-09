@@ -83,12 +83,17 @@ function addStyles() {
       display: none !important;
     }
 
-    #divSS h3 {
+    #ContentPlaceHolder1_ClaimantDisabilityTab_body h2,
+    #ContentPlaceHolder1_ClaimantDisabilityTab_body h3 {
       font-weight: bold;
       color: black;
     }
 
-    #divSS p {
+    #ContentPlaceHolder1_ClaimantDisabilityTab_body h2 {
+      margin: 40px 0 20px;
+    }
+
+    #ContentPlaceHolder1_ClaimantDisabilityTab_body p {
       font-size: 16px;
     }
 
@@ -100,11 +105,7 @@ function addStyles() {
       text-align: left;
     }
 
-    #ContentPlaceHolder1_ClaimantDisabilityTab_body h2 {
-      color: black;
-      font-weight: bold;
-      margin: 40px 0 20px;
-    }
+
 
     #Image10 {
       padding-bottom: 0;
@@ -152,7 +153,7 @@ function replaceRadioButtonsWithCheckboxes() {
             name="other-benefits"
             value="ui"
           />
-          <label class="usa-checkbox__label" for="check-ui">${i18next.t('otherBenefits.ui')}</label>
+          <label class="usa-checkbox__label" for="check-ui">${i18next.t('otherBenefits.ui.title')}</label>
         </div>
         <div id="checkbox-tdi" class="usa-checkbox">
           <input
@@ -306,7 +307,7 @@ function restyleSSDIFollowup() {
   pendingWrapper.className = 'usa-checkbox';
   checkboxPending.classList.add('usa-checkbox__input');
   labelPending.classList.add('usa-checkbox__label');
-  labelPending.textContent = i18next.t('otherBenefits.ssdi.followup.pendingLegend');
+  labelPending.textContent = i18next.t('otherBenefits.pendingLegend');
   pendingWrapper.appendChild(checkboxPending);
   pendingWrapper.appendChild(labelPending);
   container.append(pendingWrapper);
@@ -331,7 +332,21 @@ function clearTextNodes(node) {
 
 function restyleUIFollowup() {
   const divUI = document.getElementById('divUI');
-  divUI.classList.add("bordered-set");
+  clearTextNodes(divUI);
+
+  const newTitle = document.createElement('h2');
+  newTitle.textContent = i18next.t('otherBenefits.ui.followup.title');
+  divUI.insertAdjacentElement('afterbegin', newTitle);
+
+  const container = document.createElement('div');
+  container.classList.add("bordered-set");
+  newTitle.insertAdjacentElement('afterend', container);
+
+  const subtitle = document.createElement('h3');
+  subtitle.textContent = i18next.t('otherBenefits.ui.followup.subtitle');
+  container.append(subtitle);
+
+
 }
 
 function restyleTDIFollowup() {
