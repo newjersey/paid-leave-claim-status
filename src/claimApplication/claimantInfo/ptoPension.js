@@ -14,6 +14,7 @@ export const identifyingContent = {
 
 export function changes() {
   adjustTable();
+  additionalTableAdjustments();
   styleRadioButtons();
   styleCalendars();
 }
@@ -60,6 +61,38 @@ function adjustTable() {
       });
     });
   }
+}
+
+function additionalTableAdjustments() {
+  const table = document.querySelector('.usa-table');
+  
+  table.style.width = '100%';
+  table.style.minWidth = '100%';
+  table.style.tableLayout = 'fixed';
+  
+  const columns = table.querySelectorAll('th, td');
+  const colCount = 4;
+  const widths = ['20%', '20%', '35%', '25%']; // From Date, To Date, Type, Amount
+  
+  columns.forEach((cell, index) => {
+      const colIndex = index % colCount;
+      cell.style.width = widths[colIndex];
+      cell.style.maxWidth = widths[colIndex];
+  });
+  
+  const selects = table.querySelectorAll('select');
+  selects.forEach(select => {
+      select.style.width = '100%';
+      select.style.maxWidth = '100%';
+      select.style.boxSizing = 'border-box';
+  });
+  
+  const inputs = table.querySelectorAll('input[type="text"]');
+  inputs.forEach(input => {
+      input.style.width = '100%';
+      input.style.maxWidth = '100%';
+      input.style.boxSizing = 'border-box';
+  });
 }
 
 function styleRadioButtons() {
