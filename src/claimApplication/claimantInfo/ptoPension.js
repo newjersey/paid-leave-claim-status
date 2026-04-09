@@ -90,7 +90,7 @@ function applyTableWidthFixes() {
     const inputs = table.querySelectorAll('input[type="text"]');
     inputs.forEach(input => {
       input.style.width = '';
-      input.style.maxWidth = '';
+      input.style.maxWidth = '120px';
       input.style.boxSizing = '';
     });
     
@@ -122,7 +122,7 @@ function applyTableWidthFixes() {
     const inputs = table.querySelectorAll('input[type="text"]');
     inputs.forEach(input => {
       input.style.width = '100%';
-      input.style.maxWidth = '100%';
+      input.style.maxWidth = '120px';
       input.style.boxSizing = 'border-box';
     });
   }
