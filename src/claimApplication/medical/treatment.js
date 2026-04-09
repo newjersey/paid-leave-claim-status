@@ -14,7 +14,8 @@ import {
   STORAGE_KEY_WORKERS_COMP,
   STORAGE_KEY_EDITING_WORKERS_COMP,
   setRequiredForVisibleLeaveSectionFields,
-  styleRadioButton
+  styleRadioButton,
+  updateCalendarUI,
 } from '../utils';
 
 export const medicalTreatmentLabels = [
@@ -78,6 +79,7 @@ export function changes() {
   styleRadioButtons();
   addWorkersCompListeners();
   moveWorkersCompToNewFieldset();
+  addLinkToWorkerCompQuestion();
   loadReasonData();
   setNewTitle(i18next.t('medicalInfo.title'));
   addSubtitleAndExplainer();
@@ -88,6 +90,7 @@ export function changes() {
 
   setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason);
   focusOnWorkersCompIfEditing();
+  updateAllCalendars();
 }
 
 function addStyles() {
@@ -275,15 +278,6 @@ function addWorkersCompScreener() {
   workersCompContainer.id = "workersCompContainer"
   workersCompContainer.style.display = 'none';
 
-  const linkElements = workersCompContainer.querySelectorAll('a');
-  linkElements.forEach((element) => {
-    let text = element.textContent;
-    if (text.includes('7.')) {
-      text = text.replace('7.', '7a.');
-    }
-    element.textContent = text;
-  });
-
   const causedByJobQuestion = document.createElement('div');
   causedByJobQuestion.id = "causedByJobQuestion";
   causedByJobQuestion.style.margin = "0 0 20px";
@@ -291,7 +285,7 @@ function addWorkersCompScreener() {
     <fieldset class="usa-fieldset">
       <legend id="caused-by-job-legend" class="usa-legend usa-legend">
         <span class="required-asterisk">*</span>
-        7. <span id="causedByJobText">${i18next.t('medicalInfo.work.causedByJob')}</span>
+        7. <span id="causedByJobText">${i18next.t('medicalInfo.work.causedByJob', { disabilityTypeString: i18next.t('shared.disability') })}</span>
       </legend>
       <div class="usa-radio">
         <input
@@ -454,6 +448,10 @@ function loadReasonData() {
     workersCompFieldset.style.display = 'block';
     causedByJobQuestion.style.display = 'block';
 
+    const causedByJobText = document.getElementById('causedByJobText');
+    const disabilityTypeString = reason === 'illness' ? i18next.t('shared.illness') : i18next.t('shared.injury');
+    causedByJobText.textContent = i18next.t('medicalInfo.work.causedByJob', { disabilityTypeString });
+
     // Restore caused-by-job answer
     const savedCausedByJob = sessionData[STORAGE_KEY_CAUSED_BY_JOB];
 
@@ -599,5 +597,29 @@ function focusOnWorkersCompIfEditing() {
     addToSessionData({
       [STORAGE_KEY_EDITING_WORKERS_COMP]: undefined
     });
+  }
+}
+
+function updateAllCalendars() {
+  const ERStartId = 'Image8';
+  const EREndId = 'Image1';
+  const hospitalStartId = 'Image2';
+  const hospitalEndId = 'Image3';
+
+  updateCalendarUI(ERStartId);
+  updateCalendarUI(EREndId);
+  updateCalendarUI(hospitalStartId);
+  updateCalendarUI(hospitalEndId);
+}
+
+function addLinkToWorkerCompQuestion() {
+  const workersCompQuestionContainer = document.querySelector("#workersCompContainer");
+  if (workersCompQuestionContainer) {
+    const questionLink = workersCompQuestionContainer.querySelector('a:not([style*="color"])');
+    if (questionLink) {
+      const span = document.createElement('span');
+      span.innerHTML = `7a. ${i18next.t('medicalInfo.work.workersCompClaim')}`;
+      questionLink.replaceWith(span);
+    }
   }
 }

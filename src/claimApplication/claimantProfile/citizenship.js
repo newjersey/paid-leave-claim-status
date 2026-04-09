@@ -1,6 +1,11 @@
 import i18next from 'i18next';
 import { logEvent } from "../../modules/shared.mjs";
-import { removeExtraSpaceBetweenRadioButtons, setNewTitle, styleRadioButton } from '../utils';
+import {
+  removeExtraSpaceBetweenRadioButtons,
+  setNewTitle,
+  styleRadioButton,
+  updateCalendarUI,
+} from '../utils';
 
 export const citizenshipLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlCitizen_txtContactNum', label: 'First 3 digits of Phone Number' },
@@ -45,6 +50,7 @@ export function changes() {
   removeLegend();
   trackSubmitBtnAndPhone();
   setNewTitle(i18next.t('citizenship.title'));
+  updateCalendarUI("imgRepDob", false);
 }
 
 function addStyles() {

@@ -426,13 +426,15 @@ function restructureWorkRelatedSection() {
       <strong>${injDate}</strong>
     </p>
     <p class="margin-left-0">
-      <span>${i18next.t('reviewAndSave.workInfo.approved')}</span>
+      <span>${i18next.t('reviewAndSave.workInfo.approved')}:</span>
       <strong>${wcDetermination}</strong>
     </p>
-    <p class="margin-left-0">
-      <span>${i18next.t('reviewAndSave.workInfo.receivingBenefits')}</span>
-      <strong>${wcBenefits}</strong>
-    </p>
+    ${wcDetermination === 'Yes' ? `
+      <p class="margin-left-0">
+        <span>${i18next.t('reviewAndSave.workInfo.receivingBenefits')}</span>
+        <strong>${wcBenefits}</strong>
+      </p>
+    ` : ''}
   `;
   } else {
     displayDiv.innerHTML = `
