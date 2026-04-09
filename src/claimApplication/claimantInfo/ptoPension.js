@@ -13,13 +13,13 @@ export const identifyingContent = {
 };
 
 export function changes() {
+  arrangeTableIntoUSWDS();
   adjustTable();
-  additionalTableAdjustments();
   styleRadioButtons();
   styleCalendars();
 }
 
-function adjustTable() {
+function arrangeTableIntoUSWDS() {
   const table = document.querySelector("#divYesPTO > table:nth-child(3)");
 
   if (table) {
@@ -31,18 +31,12 @@ function adjustTable() {
     table.insertBefore(thead, table.firstChild);
 
     const headerCells = headerRow.querySelectorAll("td");
-    headerCells.forEach(cell => {
-      cell.removeAttribute("width");
-      cell.style.width = "";
-    });
-
     const tbody = table.querySelector("tbody");
     const rows = tbody.querySelectorAll("tr");
 
     rows.forEach((row) => {
       const cells = row.querySelectorAll("td");
       cells.forEach((cell, cellIndex) => {
-        cell.style.width = "";
         cell.setAttribute("data-label", headerCells[cellIndex].innerText.trim());
 
         if (cellIndex === 0) {
@@ -52,24 +46,18 @@ function adjustTable() {
           th.setAttribute("data-label", headerCells[cellIndex].innerText.trim());
           row.replaceChild(th, cell);
         }
-
-        const childElements = cell.querySelectorAll('*');
-        childElements.forEach(child => {
-          child.style.width = "";
-          child.removeAttribute("width");
-        });
       });
     });
   }
 }
 
-function additionalTableAdjustments() {
-  applyTableFixes();
+function adjustTable() {
+  applyTableWidthFixes();
     
   let resizeTimeout;
   window.addEventListener('resize', function() {
       clearTimeout(resizeTimeout);
-      resizeTimeout = setTimeout(applyTableFixes, 100); // 100ms to debounce many resize events
+      resizeTimeout = setTimeout(applyTableWidthFixes, 100); // 100ms to debounce many resize events
   });
 }
 
@@ -82,8 +70,7 @@ function isTableStacked() {
   return style.display === 'block'; // USWDS stacked mode sets display: block on cells
 }
 
-
-function applyTableFixes() {
+function applyTableWidthFixes() {
   const table = document.querySelector('.usa-table');
 
   if (isTableStacked()) {
