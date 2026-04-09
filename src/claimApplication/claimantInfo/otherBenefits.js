@@ -120,9 +120,8 @@ function addStyles() {
 
 function replaceRadioButtonsWithCheckboxes() {
   const existingForm = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits');
-  const newForm = document.createElement('form');
+  const newForm = document.createElement('div');
   newForm.id = "new-other-benefits-form";
-  newForm.noValidate = true;
   newForm.innerHTML = `
     <div class="bordered-set">
       <fieldset class="usa-fieldset">
