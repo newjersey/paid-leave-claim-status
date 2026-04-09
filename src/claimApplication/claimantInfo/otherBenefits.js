@@ -348,7 +348,16 @@ function restyleUIFollowup() {
   subtitle.textContent = i18next.t('otherBenefits.ui.followup.subtitle');
   container.append(subtitle);
 
+  const stateLegend = document.createElement('label');
+  stateLegend.classList.add('usa-label');
+  stateLegend.htmlFor = 'ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$ddlUISt';
+  stateLegend.textContent = i18next.t('otherBenefits.ui.followup.stateLegend');
+  container.append(stateLegend);
 
+  const stateSelect = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlUISt');
+  stateSelect.classList.add('usa-select');
+  stateSelect.style.height = 'auto';
+  container.append(stateSelect);
 }
 
 function restyleTDIFollowup() {
