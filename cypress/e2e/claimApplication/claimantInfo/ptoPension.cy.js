@@ -48,6 +48,11 @@ describe("PTO and Pension page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
+    it("user can access all fields on all screen widths", () => {
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoPTOYes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelPTO_txtGPTOAmt1').type("123");
+    });
+
     globalTestsNew(PAGE_ID, URL);
   });
 });
