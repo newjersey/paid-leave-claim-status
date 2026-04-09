@@ -64,35 +64,81 @@ function adjustTable() {
 }
 
 function additionalTableAdjustments() {
+  applyTableFixes();
+    
+  let resizeTimeout;
+  window.addEventListener('resize', function() {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(applyTableFixes, 100); // 100ms to debounce many resize events
+  });
+}
+
+function isTableStacked() {
   const table = document.querySelector('.usa-table');
+  const firstCell = table.querySelector('th, td');
+  if (!firstCell) return false;
   
-  table.style.width = '100%';
-  table.style.minWidth = '100%';
-  table.style.tableLayout = 'fixed';
-  
-  const columns = table.querySelectorAll('th, td');
-  const colCount = 4;
-  const widths = ['20%', '20%', '35%', '25%']; // From Date, To Date, Type, Amount
-  
-  columns.forEach((cell, index) => {
+  const style = window.getComputedStyle(firstCell);
+  return style.display === 'block'; // USWDS stacked mode sets display: block on cells
+}
+
+
+function applyTableFixes() {
+  const table = document.querySelector('.usa-table');
+
+  if (isTableStacked()) {
+    const cells = table.querySelectorAll('th, td');
+    cells.forEach(cell => {
+      cell.style.width = '';
+      cell.style.maxWidth = '';
+    });
+    
+    const selects = table.querySelectorAll('select');
+    selects.forEach(select => {
+      select.style.width = '';
+      select.style.maxWidth = '';
+      select.style.boxSizing = '';
+    });
+    
+    const inputs = table.querySelectorAll('input[type="text"]');
+    inputs.forEach(input => {
+      input.style.width = '';
+      input.style.maxWidth = '';
+      input.style.boxSizing = '';
+    });
+    
+    table.style.width = '';
+    table.style.minWidth = '';
+    table.style.tableLayout = '';
+  } else {
+    table.style.width = '100%';
+    table.style.minWidth = '100%';
+    table.style.tableLayout = 'fixed';
+    
+    const columns = table.querySelectorAll('th, td');
+    const colCount = 4;
+    const widths = ['20%', '20%', '35%', '25%'];
+    
+    columns.forEach((cell, index) => {
       const colIndex = index % colCount;
       cell.style.width = widths[colIndex];
       cell.style.maxWidth = widths[colIndex];
-  });
-  
-  const selects = table.querySelectorAll('select');
-  selects.forEach(select => {
+    });
+    
+    const selects = table.querySelectorAll('select');
+    selects.forEach(select => {
       select.style.width = '100%';
       select.style.maxWidth = '100%';
       select.style.boxSizing = 'border-box';
-  });
-  
-  const inputs = table.querySelectorAll('input[type="text"]');
-  inputs.forEach(input => {
+    });
+    
+    const inputs = table.querySelectorAll('input[type="text"]');
+    inputs.forEach(input => {
       input.style.width = '100%';
       input.style.maxWidth = '100%';
       input.style.boxSizing = 'border-box';
-  });
+    });
+  }
 }
 
 function styleRadioButtons() {
