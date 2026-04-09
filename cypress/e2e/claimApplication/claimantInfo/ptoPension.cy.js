@@ -48,6 +48,16 @@ describe("PTO and Pension page", () => {
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
+    it("user can access all fields in smaller window", () => {
+      cy.viewport(800, 600);
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelPTO_rdoPTOYes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelPTO_txtGPTOAmt1').then($el => {
+        const rect = $el[0].getBoundingClientRect();
+        expect(rect.left, 'Element left edge should be visible').to.be.at.least(0);
+        expect(rect.right, 'Element right edge should be within viewport').to.be.at.most(800);
+      });
+    });
+
     globalTestsNew(PAGE_ID, URL);
   });
 });

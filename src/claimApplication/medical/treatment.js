@@ -542,6 +542,22 @@ function adjustTextEntries() {
   if (workersCompDiv) {
     workersCompDiv.style.width = '100%';
   }
+
+  const phone1 = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh");
+  const phone2 = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh2");
+  const phone3 = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh3");
+  const phone4 = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh4");
+  phone1.insertAdjacentHTML('beforebegin', '<br>');
+  phone1.style.width = '50px';
+  phone2.style.width = '50px';
+  phone3.style.width = '50px';
+  phone4.style.width = '60px';
+
+  // whitespace before doctor phone question
+  const divDocOCCAdd = document.getElementById('divDocOCCAdd');
+  divDocOCCAdd.nextSibling.remove();
+  divDocOCCAdd.nextSibling.remove();
+  divDocOCCAdd.nextSibling.remove();
 }
 
 function adjustTable() {
