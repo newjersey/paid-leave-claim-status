@@ -105,8 +105,6 @@ function addStyles() {
       text-align: left;
     }
 
-
-
     #Image10 {
       padding-bottom: 0;
     }
@@ -314,6 +312,10 @@ function restyleSSDIFollowup() {
 }
 
 function clearTextNodes(node) {
+  if (node.parentElement?.tagName.toLowerCase() === 'option') {
+    return;
+  }
+
   if (node.nodeType === Node.TEXT_NODE) {
     const text = node.textContent;
     if (/^\s*$/.test(text)) {
