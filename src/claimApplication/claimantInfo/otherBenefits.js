@@ -336,6 +336,7 @@ function restyleEmployerFollowup() {
   fieldset.append(zipLabel);
 
   const zipContainer = document.createElement('div');
+  zipContainer.id = 'zipContainer';
   zipContainer.style.display = 'flex';
   zipContainer.style.alignItems = 'center';
   zipContainer.style.fontSize = '16px';
@@ -353,6 +354,29 @@ function restyleEmployerFollowup() {
   zip2Input.style.width = '100px';
   zip2Input.style.marginLeft = '5px';
   zipContainer.append(zip2Input);
+
+  const intlContainer = document.createElement('div');
+  intlContainer.id = 'intlContainer';
+  intlContainer.style.display = 'none';
+  fieldset.append(intlContainer);
+
+  const intlZip = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpOutCtryZip');
+  intlZip.classList.add('usa-input');
+  intlZip.style.width = '200px';
+  intlContainer.append(intlZip);
+
+  const countryLabel = document.createElement('label');
+  countryLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenEmpCountry';
+  countryLabel.textContent = i18next.t('otherBenefits.employer.followup.country');
+  countryLabel.style.marginTop = '20px';
+  countryLabel.style.fontFamily = '"Public Sans", sans-serif';
+  intlContainer.append(countryLabel);
+
+  const selectCountry = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenEmpCountry');
+  selectCountry.classList.add('usa-select');
+  selectCountry.style.height = 'auto';
+  selectCountry.style.width = '400px';
+  intlContainer.append(selectCountry);
 
   const phoneLabel = document.createElement('label');
   phoneLabel.classList.add('usa-label');
@@ -406,6 +430,19 @@ function restyleEmployerFollowup() {
 
   const oldEmployerAddBox = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_pnlEmpUnionadd');
   oldEmployerAddBox.style.display = 'none';
+
+  stateSelect.addEventListener('change', function () {
+    console.log(stateSelect.value);
+    if (stateSelect.value == 0) {
+      zipLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpOutCtryZip';
+      zipContainer.style.display = 'none';
+      intlContainer.style.display = 'block';
+    } else {
+      zipLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpZip1';
+      zipContainer.style.display = 'flex';
+      intlContainer.style.display = 'none';
+    }
+  });
 }
 
 function restyleSSDIFollowup() {

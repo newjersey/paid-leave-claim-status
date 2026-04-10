@@ -285,11 +285,12 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           },
         },
         employer: {
-          title: "<strong>Temporary disability benefits</strong> from your employer or union?",
+          title: "<strong>Temporary disability benefits</strong> from your employer or union",
           followup: {
             title: "You answered yes to Temporary disability benefits from your employer",
             subtitle: "Disability from your employer",
             employerLabel: "Enter the employer or union that is paying you disability benefits.",
+            country: "Country",
           },
         },
       },
