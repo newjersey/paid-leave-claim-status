@@ -332,6 +332,8 @@ function restyleEmployerFollowup() {
 
   const zipContainer = document.createElement('div');
   zipContainer.style.display = 'flex';
+  zipContainer.style.alignItems = 'center';
+  zipContainer.style.fontSize = '16px';
   fieldset.append(zipContainer);
 
   const zip1Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpZip1');
@@ -339,10 +341,12 @@ function restyleEmployerFollowup() {
   zip1Input.style.width = '120px';
   zip1Input.style.marginRight = '5px';
   zipContainer.append(zip1Input);
+  zip1Input.insertAdjacentHTML('afterend', '-');
 
   const zip2Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpZip2');
   zip2Input.classList.add('usa-input');
   zip2Input.style.width = '100px';
+  zip2Input.style.marginLeft = '5px';
   zipContainer.append(zip2Input);
 
   const phoneLabel = document.createElement('label');
@@ -353,29 +357,36 @@ function restyleEmployerFollowup() {
 
   const phoneContainer = document.createElement('div');
   phoneContainer.style.display = 'flex';
+  phoneContainer.style.alignItems = 'center';
+  phoneContainer.style.fontSize = '16px';
   fieldset.append(phoneContainer);
 
   const phone1Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh');
   phone1Input.classList.add('usa-input');
   phone1Input.style.width = '70px';
-  phone1Input.style.marginRight = '5px';
+  phone1Input.style.margin = '0';
   phoneContainer.append(phone1Input);
+  phone1Input.insertAdjacentHTML('beforebegin', '(');
+  phone1Input.insertAdjacentHTML('afterend', ')');
 
   const phone2Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh2');
   phone2Input.classList.add('usa-input');
   phone2Input.style.width = '50px';
-  phone2Input.style.marginRight = '5px';
+  phone2Input.style.margin = '0 5px';
   phoneContainer.append(phone2Input);
+  phone2Input.insertAdjacentHTML('afterend', '-');
 
   const phone3Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh3');
   phone3Input.classList.add('usa-input');
   phone3Input.style.width = '90px';
-  phone3Input.style.marginRight = '5px';
+  phone3Input.style.margin = '0 10px 0 5px';
   phoneContainer.append(phone3Input);
+  phone3Input.insertAdjacentHTML('afterend', 'Ext.');
   
   const phone4Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh4');
   phone4Input.classList.add('usa-input');
   phone4Input.style.width = '100px';
+  phone4Input.style.margin = '0 5px';
   phoneContainer.append(phone4Input);
 }
 
