@@ -116,6 +116,10 @@ function addStyles() {
       display: flex;
       align-items: center;
     }
+
+    #warning-ssdi p {
+      margin-left: 10px;
+    }
   `;
   document.head.appendChild(style);
 }
@@ -268,6 +272,7 @@ function restyleEmployerFollowup() {
 
   const employerLabel = document.createElement('p');
   employerLabel.textContent = i18next.t('otherBenefits.employer.followup.employerLabel');
+  employerLabel.style.marginTop = '20px';
   fieldset.append(employerLabel);
 
   const nameLabel = document.createElement('label');
@@ -512,17 +517,18 @@ function fieldsetWithTitleAndSubtitle(containerId, titleKey, subtitleKey) {
 
 function appendDateRangeFields(fieldset, dateContainerId, startInputId, endInputId, calendarId) {
   const dateContainer = document.getElementById(dateContainerId);
+  dateContainer.style.marginTop = '30px';
   fieldset.append(dateContainer);
 
   const dateLabel = document.createElement('p');
   dateLabel.textContent = i18next.t('otherBenefits.dateLabel');
+  dateLabel.style.fontWeight = 'bold';
   dateContainer.prepend(dateLabel);
 
   const startLabel = document.createElement('label');
   startLabel.textContent = i18next.t('otherBenefits.startLabel');
   startLabel.htmlFor = startInputId;
-  dateLabel.insertAdjacentHTML('afterend', '<br>');
-  dateLabel.nextSibling.insertAdjacentElement('afterend', startLabel);
+  dateLabel.insertAdjacentElement('afterend', startLabel);
 
   const startHint = document.createElement('div');
   startHint.classList.add("usa-hint");
