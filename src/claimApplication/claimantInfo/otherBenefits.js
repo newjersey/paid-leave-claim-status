@@ -164,7 +164,7 @@ function replaceRadioButtonsWithCheckboxes() {
             name="other-benefits"
             value="tdi"
           />
-          <label class="usa-checkbox__label" for="check-tdi">${i18next.t('otherBenefits.tdi')}</label>
+          <label class="usa-checkbox__label" for="check-tdi">${i18next.t('otherBenefits.tdi.title')}</label>
         </div>
         <div class="usa-checkbox" style="display: none;">
           <input
@@ -334,7 +334,7 @@ function restyleUIFollowup() {
   const stateLabel = document.createElement('label');
   stateLabel.classList.add('usa-label');
   stateLabel.htmlFor = 'ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$ddlUISt';
-  stateLabel.textContent = i18next.t('otherBenefits.ui.followup.stateLabel');
+  stateLabel.textContent = i18next.t('otherBenefits.stateLabel');
   fieldset.append(stateLabel);
 
   const stateSelect = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlUISt');
@@ -346,11 +346,11 @@ function restyleUIFollowup() {
   fieldset.append(divUIDates);
 
   const dateLabel = document.createElement('p');
-  dateLabel.textContent = i18next.t('otherBenefits.ui.followup.dateLabel');
+  dateLabel.textContent = i18next.t('otherBenefits.dateLabel');
   divUIDates.prepend(dateLabel);
 
   const startLabel = document.createElement('label');
-  startLabel.textContent = i18next.t('otherBenefits.ui.followup.startLabel');
+  startLabel.textContent = i18next.t('otherBenefits.startLabel');
   startLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtUIBenStDt';
   dateLabel.insertAdjacentHTML('afterend', '<br>');
   dateLabel.nextSibling.insertAdjacentElement('afterend', startLabel);
@@ -362,7 +362,7 @@ function restyleUIFollowup() {
 
   const startCalendar = document.getElementById('Image14');
   const endLabel = document.createElement('label');
-  endLabel.textContent = i18next.t('otherBenefits.ui.followup.endLabel');
+  endLabel.textContent = i18next.t('otherBenefits.endLabel');
   endLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtUIBenEndDt';
   startCalendar.insertAdjacentHTML('afterend', '<br>');
   startCalendar.nextSibling.insertAdjacentElement('afterend', endLabel);
@@ -386,7 +386,71 @@ function restyleUIFollowup() {
 
 function restyleTDIFollowup() {
   const divTDI = document.getElementById('divTDI');
-  divTDI.classList.add("bordered-set");
+  clearTextNodes(divTDI);
+
+  const newTitle = document.createElement('h2');
+  newTitle.textContent = i18next.t('otherBenefits.tdi.followup.title');
+  divTDI.insertAdjacentElement('afterbegin', newTitle);
+
+  const fieldset = document.createElement('fieldset');
+  fieldset.classList.add("bordered-set");
+  newTitle.insertAdjacentElement('afterend', fieldset);
+
+  const subtitle = document.createElement('h3');
+  subtitle.textContent = i18next.t('otherBenefits.tdi.followup.subtitle');
+  fieldset.append(subtitle);
+
+  const stateLabel = document.createElement('label');
+  stateLabel.classList.add('usa-label');
+  stateLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenSt';
+  stateLabel.textContent = i18next.t('otherBenefits.stateLabel');
+  fieldset.append(stateLabel);
+
+  const stateSelect = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenSt');
+  stateSelect.classList.add('usa-select');
+  stateSelect.style.height = 'auto';
+  fieldset.append(stateSelect);
+
+  const divBenDt = document.getElementById('divBenDt');
+  fieldset.append(divBenDt);
+
+  const dateLabel = document.createElement('p');
+  dateLabel.textContent = i18next.t('otherBenefits.dateLabel');
+  divBenDt.prepend(dateLabel);
+
+  const startLabel = document.createElement('label');
+  startLabel.textContent = i18next.t('otherBenefits.startLabel');
+  startLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenStDt';
+  dateLabel.insertAdjacentHTML('afterend', '<br>');
+  dateLabel.nextSibling.insertAdjacentElement('afterend', startLabel);
+
+  const startHint = document.createElement('div');
+  startHint.classList.add("usa-hint");
+  startHint.textContent = i18next.t('shared.dateFormat');
+  startLabel.insertAdjacentElement('afterend', startHint);
+
+  const startCalendar = document.getElementById('Image5');
+  const endLabel = document.createElement('label');
+  endLabel.textContent = i18next.t('otherBenefits.endLabel');
+  endLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEndDt';
+  startCalendar.insertAdjacentHTML('afterend', '<br>');
+  startCalendar.nextSibling.insertAdjacentElement('afterend', endLabel);
+
+  const endHint = document.createElement('div');
+  endHint.classList.add("usa-hint");
+  endHint.textContent = i18next.t('shared.dateFormat');
+  endLabel.insertAdjacentElement('afterend', endHint);
+
+  const pendingCheckbox = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkBenDtStat');
+  const pendingLabel = document.querySelector("#divTDI > label");
+  const pendingWrapper = document.createElement('div');
+  pendingWrapper.className = 'usa-checkbox';
+  pendingCheckbox.classList.add('usa-checkbox__input');
+  pendingLabel.classList.add('usa-checkbox__label');
+  pendingLabel.textContent = i18next.t('otherBenefits.pendingLabel');
+  pendingWrapper.appendChild(pendingCheckbox);
+  pendingWrapper.appendChild(pendingLabel);
+  fieldset.append(pendingWrapper);
 }
 
 function addCheckboxListeners() {

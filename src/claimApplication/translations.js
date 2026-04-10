@@ -255,6 +255,10 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         title: "Other benefits",
         areYouReceivingOrApplied: "Are you currently receiving or have you applied for:",
         pendingLabel: "My application is still pending",
+        stateLabel: "State where you filed",
+        dateLabel: "What time period do your benefits cover?",
+        startLabel: "Start",
+        endLabel: "End",
         ssdi: {
           title: `<strong>Social Security Disability</strong> (Also called "SSDI." These are handled by the federal <a href="https://www.ssa.gov/disability" target="_blank">Social Security Administration</a>).`,
           areYouSure: `Are you sure? Keep in mind, Social Security Disability benefits are different from <a href="https://www.ssa.gov/retirement" target="_blank">Social Security Retirement benefits</a> you receive at age 62 or older.`,
@@ -270,13 +274,15 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           followup: {
             title: "You answered yes to Unemployment Insurance",
             subtitle: "Unemployment Insurance",
-            stateLabel: "State where you filed",
-            dateLabel: "What time period do your benefits cover?",
-            startLabel: "Start",
-            endLabel: "End",
           },
         },
-        tdi: "<strong>Family/Medical Leave</strong> from another state or U.S. territory",
+        tdi: {
+          title: "<strong>Family/Medical Leave</strong> from another state or U.S. territory",
+          followup: {
+            title: "You answered yes to Family/Medical leave from another state",
+            subtitle: "Disability from another state",
+          },
+        },
         employer: {
           title: "<strong>Temporary disability benefits</strong> from your employer or union?",
         },
