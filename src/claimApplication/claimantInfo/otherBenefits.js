@@ -325,6 +325,7 @@ function restyleEmployerFollowup() {
 
   const stateSelect = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenEmpSt');
   stateSelect.classList.add('usa-select');
+  stateSelect.style.width = '170px';
   stateSelect.style.height = 'auto';
   fieldset.append(stateSelect);
 
