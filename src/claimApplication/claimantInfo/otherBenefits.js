@@ -388,6 +388,50 @@ function restyleEmployerFollowup() {
   phone4Input.style.width = '100px';
   phone4Input.style.margin = '0 5px';
   phoneContainer.append(phone4Input);
+
+  const divEmpBenDt = document.getElementById('divEmpBenDt');
+  fieldset.append(divEmpBenDt);
+
+  const dateLabel = document.createElement('p');
+  dateLabel.textContent = i18next.t('otherBenefits.dateLabel');
+  divEmpBenDt.prepend(dateLabel);
+
+  const startLabel = document.createElement('label');
+  startLabel.textContent = i18next.t('otherBenefits.startLabel');
+  startLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtEmpBenStDt';
+  dateLabel.insertAdjacentHTML('afterend', '<br>');
+  dateLabel.nextSibling.insertAdjacentElement('afterend', startLabel);
+
+  const startHint = document.createElement('div');
+  startHint.classList.add("usa-hint");
+  startHint.textContent = i18next.t('shared.dateFormat');
+  startLabel.insertAdjacentElement('afterend', startHint);
+
+  const startCalendar = document.getElementById('Image7');
+  const endLabel = document.createElement('label');
+  endLabel.textContent = i18next.t('otherBenefits.endLabel');
+  endLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtEmpBenEndDt';
+  startCalendar.insertAdjacentHTML('afterend', '<br>');
+  startCalendar.nextSibling.insertAdjacentElement('afterend', endLabel);
+
+  const endHint = document.createElement('div');
+  endHint.classList.add("usa-hint");
+  endHint.textContent = i18next.t('shared.dateFormat');
+  endLabel.insertAdjacentElement('afterend', endHint);
+
+  const pendingCheckbox = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkEmpBenDtStat');
+  const pendingLabel = document.querySelector("#divEmp > label");
+  const pendingWrapper = document.createElement('div');
+  pendingWrapper.className = 'usa-checkbox';
+  pendingCheckbox.classList.add('usa-checkbox__input');
+  pendingLabel.classList.add('usa-checkbox__label');
+  pendingLabel.textContent = i18next.t('otherBenefits.pendingLabel');
+  pendingWrapper.appendChild(pendingCheckbox);
+  pendingWrapper.appendChild(pendingLabel);
+  fieldset.append(pendingWrapper);
+
+  const oldEmployerAddBox = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_pnlEmpUnionadd');
+  oldEmployerAddBox.style.display = 'none';
 }
 
 function restyleFollowups() {
