@@ -395,35 +395,13 @@ function restyleEmployerFollowup() {
   phone4Input.style.margin = '0 5px';
   phoneContainer.append(phone4Input);
 
-  const divEmpBenDt = document.getElementById('divEmpBenDt');
-  fieldset.append(divEmpBenDt);
-
-  const dateLabel = document.createElement('p');
-  dateLabel.textContent = i18next.t('otherBenefits.dateLabel');
-  divEmpBenDt.prepend(dateLabel);
-
-  const startLabel = document.createElement('label');
-  startLabel.textContent = i18next.t('otherBenefits.startLabel');
-  startLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtEmpBenStDt';
-  dateLabel.insertAdjacentHTML('afterend', '<br>');
-  dateLabel.nextSibling.insertAdjacentElement('afterend', startLabel);
-
-  const startHint = document.createElement('div');
-  startHint.classList.add("usa-hint");
-  startHint.textContent = i18next.t('shared.dateFormat');
-  startLabel.insertAdjacentElement('afterend', startHint);
-
-  const startCalendar = document.getElementById('Image7');
-  const endLabel = document.createElement('label');
-  endLabel.textContent = i18next.t('otherBenefits.endLabel');
-  endLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtEmpBenEndDt';
-  startCalendar.insertAdjacentHTML('afterend', '<br>');
-  startCalendar.nextSibling.insertAdjacentElement('afterend', endLabel);
-
-  const endHint = document.createElement('div');
-  endHint.classList.add("usa-hint");
-  endHint.textContent = i18next.t('shared.dateFormat');
-  endLabel.insertAdjacentElement('afterend', endHint);
+  appendDateRangeFields(
+    fieldset,
+    'divEmpBenDt',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtEmpBenStDt',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtEmpBenEndDt',
+    'Image7'
+  );
 
   appendPendingCheckbox(fieldset, 'divEmp', 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkEmpBenDtStat');
 
@@ -499,36 +477,14 @@ function restyleUIFollowup() {
   stateSelect.classList.add('usa-select');
   stateSelect.style.height = 'auto';
   fieldset.append(stateSelect);
-
-  const divUIDates = document.getElementById('divUI_Dates');
-  fieldset.append(divUIDates);
-
-  const dateLabel = document.createElement('p');
-  dateLabel.textContent = i18next.t('otherBenefits.dateLabel');
-  divUIDates.prepend(dateLabel);
-
-  const startLabel = document.createElement('label');
-  startLabel.textContent = i18next.t('otherBenefits.startLabel');
-  startLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtUIBenStDt';
-  dateLabel.insertAdjacentHTML('afterend', '<br>');
-  dateLabel.nextSibling.insertAdjacentElement('afterend', startLabel);
-
-  const startHint = document.createElement('div');
-  startHint.classList.add("usa-hint");
-  startHint.textContent = i18next.t('shared.dateFormat');
-  startLabel.insertAdjacentElement('afterend', startHint);
-
-  const startCalendar = document.getElementById('Image14');
-  const endLabel = document.createElement('label');
-  endLabel.textContent = i18next.t('otherBenefits.endLabel');
-  endLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtUIBenEndDt';
-  startCalendar.insertAdjacentHTML('afterend', '<br>');
-  startCalendar.nextSibling.insertAdjacentElement('afterend', endLabel);
-
-  const endHint = document.createElement('div');
-  endHint.classList.add("usa-hint");
-  endHint.textContent = i18next.t('shared.dateFormat');
-  endLabel.insertAdjacentElement('afterend', endHint);
+  
+  appendDateRangeFields(
+    fieldset,
+    'divUI_Dates',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtUIBenStDt',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtUIBenEndDt',
+    'Image14'
+  );
 
   appendPendingCheckbox(fieldset, 'divUI', 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkUIStatusPend');
 }
@@ -560,16 +516,28 @@ function restyleTDIFollowup() {
   stateSelect.style.height = 'auto';
   fieldset.append(stateSelect);
 
-  const divBenDt = document.getElementById('divBenDt');
-  fieldset.append(divBenDt);
+  appendDateRangeFields(
+    fieldset,
+    'divBenDt',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenStDt',
+    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEndDt',
+    'Image5'
+  );
+
+  appendPendingCheckbox(fieldset, 'divTDI', 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkBenDtStat');
+}
+
+function appendDateRangeFields(fieldset, dateContainerId, startInputId, endInputId, calendarId) {
+  const dateContainer = document.getElementById(dateContainerId);
+  fieldset.append(dateContainer);
 
   const dateLabel = document.createElement('p');
   dateLabel.textContent = i18next.t('otherBenefits.dateLabel');
-  divBenDt.prepend(dateLabel);
+  dateContainer.prepend(dateLabel);
 
   const startLabel = document.createElement('label');
   startLabel.textContent = i18next.t('otherBenefits.startLabel');
-  startLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenStDt';
+  startLabel.htmlFor = startInputId;
   dateLabel.insertAdjacentHTML('afterend', '<br>');
   dateLabel.nextSibling.insertAdjacentElement('afterend', startLabel);
 
@@ -578,10 +546,10 @@ function restyleTDIFollowup() {
   startHint.textContent = i18next.t('shared.dateFormat');
   startLabel.insertAdjacentElement('afterend', startHint);
 
-  const startCalendar = document.getElementById('Image5');
+  const startCalendar = document.getElementById(calendarId);
   const endLabel = document.createElement('label');
   endLabel.textContent = i18next.t('otherBenefits.endLabel');
-  endLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEndDt';
+  endLabel.htmlFor = endInputId;
   startCalendar.insertAdjacentHTML('afterend', '<br>');
   startCalendar.nextSibling.insertAdjacentElement('afterend', endLabel);
 
@@ -589,8 +557,6 @@ function restyleTDIFollowup() {
   endHint.classList.add("usa-hint");
   endHint.textContent = i18next.t('shared.dateFormat');
   endLabel.insertAdjacentElement('afterend', endHint);
-
-  appendPendingCheckbox(fieldset, 'divTDI', 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkBenDtStat');
 }
 
 function appendPendingCheckbox(fieldset, containerId, checkboxId) {
