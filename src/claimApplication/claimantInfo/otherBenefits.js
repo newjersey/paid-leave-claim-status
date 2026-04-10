@@ -253,6 +253,12 @@ function rearrangeFollowups() {
   }
 }
 
+function restyleFollowups() {
+  restyleSSDIFollowup();
+  restyleUIFollowup();
+  restyleTDIFollowup();
+}
+
 function restyleEmployerFollowup() {
   const divEmp = document.getElementById('divEmp');
   clearTextNodes(divEmp);
@@ -419,25 +425,10 @@ function restyleEmployerFollowup() {
   endHint.textContent = i18next.t('shared.dateFormat');
   endLabel.insertAdjacentElement('afterend', endHint);
 
-  const pendingCheckbox = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkEmpBenDtStat');
-  const pendingLabel = document.querySelector("#divEmp > label");
-  const pendingWrapper = document.createElement('div');
-  pendingWrapper.className = 'usa-checkbox';
-  pendingCheckbox.classList.add('usa-checkbox__input');
-  pendingLabel.classList.add('usa-checkbox__label');
-  pendingLabel.textContent = i18next.t('otherBenefits.pendingLabel');
-  pendingWrapper.appendChild(pendingCheckbox);
-  pendingWrapper.appendChild(pendingLabel);
-  fieldset.append(pendingWrapper);
+  appendPendingCheckbox(fieldset, 'divEmp', 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkEmpBenDtStat');
 
   const oldEmployerAddBox = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_pnlEmpUnionadd');
   oldEmployerAddBox.style.display = 'none';
-}
-
-function restyleFollowups() {
-  restyleSSDIFollowup();
-  restyleUIFollowup();
-  restyleTDIFollowup();
 }
 
 function restyleSSDIFollowup() {
@@ -479,16 +470,7 @@ function restyleSSDIFollowup() {
   divSSBenDt.append(dateInputContainer);
   fieldset.append(divSSBenDt);
 
-  const checkboxPending = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkSSDtStat');
-  const labelPending = document.querySelector("#divSS > label");
-  const pendingWrapper = document.createElement('div');
-  pendingWrapper.className = 'usa-checkbox';
-  checkboxPending.classList.add('usa-checkbox__input');
-  labelPending.classList.add('usa-checkbox__label');
-  labelPending.textContent = i18next.t('otherBenefits.pendingLabel');
-  pendingWrapper.appendChild(checkboxPending);
-  pendingWrapper.appendChild(labelPending);
-  fieldset.append(pendingWrapper);
+  appendPendingCheckbox(fieldset, 'divSS', 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkSSDtStat');
 }
 
 function restyleUIFollowup() {
@@ -548,16 +530,7 @@ function restyleUIFollowup() {
   endHint.textContent = i18next.t('shared.dateFormat');
   endLabel.insertAdjacentElement('afterend', endHint);
 
-  const pendingCheckbox = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkUIStatusPend');
-  const pendingLabel = document.querySelector("#divUI > label");
-  const pendingWrapper = document.createElement('div');
-  pendingWrapper.className = 'usa-checkbox';
-  pendingCheckbox.classList.add('usa-checkbox__input');
-  pendingLabel.classList.add('usa-checkbox__label');
-  pendingLabel.textContent = i18next.t('otherBenefits.pendingLabel');
-  pendingWrapper.appendChild(pendingCheckbox);
-  pendingWrapper.appendChild(pendingLabel);
-  fieldset.append(pendingWrapper);
+  appendPendingCheckbox(fieldset, 'divUI', 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkUIStatusPend');
 }
 
 function restyleTDIFollowup() {
@@ -617,16 +590,20 @@ function restyleTDIFollowup() {
   endHint.textContent = i18next.t('shared.dateFormat');
   endLabel.insertAdjacentElement('afterend', endHint);
 
-  const pendingCheckbox = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkBenDtStat');
-  const pendingLabel = document.querySelector("#divTDI > label");
-  const pendingWrapper = document.createElement('div');
-  pendingWrapper.className = 'usa-checkbox';
-  pendingCheckbox.classList.add('usa-checkbox__input');
-  pendingLabel.classList.add('usa-checkbox__label');
-  pendingLabel.textContent = i18next.t('otherBenefits.pendingLabel');
-  pendingWrapper.appendChild(pendingCheckbox);
-  pendingWrapper.appendChild(pendingLabel);
-  fieldset.append(pendingWrapper);
+  appendPendingCheckbox(fieldset, 'divTDI', 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkBenDtStat');
+}
+
+function appendPendingCheckbox(fieldset, containerId, checkboxId) {
+  const checkbox = document.getElementById(checkboxId);
+  const label = document.querySelector(`#${containerId} > label`);
+  const wrapper = document.createElement('div');
+  wrapper.className = 'usa-checkbox';
+  checkbox.classList.add('usa-checkbox__input');
+  label.classList.add('usa-checkbox__label');
+  label.textContent = i18next.t('otherBenefits.pendingLabel');
+  wrapper.appendChild(checkbox);
+  wrapper.appendChild(label);
+  fieldset.append(wrapper);
 }
 
 function addCheckboxListeners() {
