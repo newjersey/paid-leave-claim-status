@@ -255,7 +255,110 @@ function rearrangeFollowups() {
 
 function restyleEmployerFollowup() {
   const divEmp = document.getElementById('divEmp');
-  divEmp.classList.add("bordered-set");
+  clearTextNodes(divEmp);
+  
+  const newTitle = document.createElement('h2');
+  newTitle.textContent = i18next.t('otherBenefits.employer.followup.title');
+  divEmp.insertAdjacentElement('afterbegin', newTitle);
+
+  const fieldset = document.createElement('fieldset');
+  fieldset.classList.add("bordered-set");
+  newTitle.insertAdjacentElement('afterend', fieldset);
+
+  const subtitle = document.createElement('h3');
+  subtitle.textContent = i18next.t('otherBenefits.employer.followup.subtitle');
+  fieldset.append(subtitle);
+
+  const employerLabel = document.createElement('p');
+  employerLabel.textContent = i18next.t('otherBenefits.employer.followup.employerLabel');
+  fieldset.append(employerLabel);
+
+  const nameLabel = document.createElement('label');
+  nameLabel.classList.add('usa-label');
+  nameLabel.textContent = i18next.t('contact.name');
+  nameLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpNm';
+  fieldset.append(nameLabel);
+
+  const nameInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpNm');
+  nameInput.classList.add('usa-input');
+  fieldset.append(nameInput);
+
+  const address1Label = document.createElement('label');
+  address1Label.classList.add('usa-label');
+  address1Label.textContent = i18next.t('contact.street1');
+  address1Label.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpAdd1';
+  fieldset.append(address1Label);
+
+  const address1Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpAdd1');
+  address1Input.classList.add('usa-input');
+  fieldset.append(address1Input);
+
+  const address2Label = document.createElement('label');
+  address2Label.classList.add('usa-label');
+  address2Label.textContent = i18next.t('contact.street2');
+  address2Label.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpAdd2';
+  fieldset.append(address2Label);
+
+  const address2Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpAdd2');
+  address2Input.classList.add('usa-input');
+  fieldset.append(address2Input);
+
+  const cityLabel = document.createElement('label');
+  cityLabel.classList.add('usa-label');
+  cityLabel.textContent = i18next.t('contact.city');
+  cityLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpCity';
+  fieldset.append(cityLabel);
+
+  const cityInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpCity');
+  cityInput.classList.add('usa-input');
+  fieldset.append(cityInput);
+
+  const stateLabel = document.createElement('label');
+  stateLabel.classList.add('usa-label');
+  stateLabel.textContent = i18next.t('contact.state');
+  stateLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenEmpSt';
+  fieldset.append(stateLabel);
+
+  const stateSelect = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenEmpSt');
+  stateSelect.classList.add('usa-select');
+  stateSelect.style.height = 'auto';
+  fieldset.append(stateSelect);
+
+  const zipLabel = document.createElement('label');
+  zipLabel.classList.add('usa-label');
+  zipLabel.textContent = i18next.t('contact.zipcode');
+  zipLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpZip1';
+  fieldset.append(zipLabel);
+
+  const zip1Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpZip1');
+  zip1Input.classList.add('usa-input');
+  fieldset.append(zip1Input);
+
+  const zip2Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpZip2');
+  zip2Input.classList.add('usa-input');
+  fieldset.append(zip2Input);
+
+  const phoneLabel = document.createElement('label');
+  phoneLabel.classList.add('usa-label');
+  phoneLabel.textContent = i18next.t('contact.phone');
+  phoneLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpZip1';
+  fieldset.append(phoneLabel);
+
+  const phone1Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh');
+  phone1Input.classList.add('usa-input');
+  fieldset.append(phone1Input);
+
+  const phone2Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh2');
+  phone2Input.classList.add('usa-input');
+  fieldset.append(phone2Input);
+
+  const phone3Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh3');
+  phone3Input.classList.add('usa-input');
+  fieldset.append(phone3Input);
+  
+  const phone4Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh4');
+  phone4Input.classList.add('usa-input');
+  fieldset.append(phone4Input);
 }
 
 function restyleFollowups() {
