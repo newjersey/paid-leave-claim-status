@@ -38,6 +38,36 @@ describe("Other Benefits page", () => {
     ).as('aspxSubmission');
   };
 
+  function checkDetailedInput() {
+    cy.mockASPX(URL);
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes').click({ force: true });
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenSt').select('CA');
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenStDt').type('07/16/2025');
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEndDt').type('07/17/2025');
+
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpYes').click({ force: true });
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpNm').type('Vandelay');
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpAdd1').type('123 Main Street');
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpCity').type('Newark');
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpZip1').type('08111');
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh').type('234');
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh2').type('25');
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh3').type('2678');
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtEmpBenStDt').type('07/18/2025').blur();
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtEmpBenEndDt').type('07/19/2025');
+
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes').click({ force: true });
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtSSDate').type('08/01/2025');
+
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes').click({ force: true });
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlUISt').select('NJ');
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtUIBenStDt').type('07/20/2025');
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtUIBenEndDt').type('07/21/2025');
+
+    cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
+    cy.wait('@aspxSubmission').then(checkDetailedPostData);
+  }
+
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
@@ -55,33 +85,7 @@ describe("Other Benefits page", () => {
     });
 
     it("user can input yes to everything with details and proceed to next page", () => {
-      cy.mockASPX(URL);
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenSt').select('CA');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenStDt').type('07/16/2025');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEndDt').type('07/17/2025');
-
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpYes').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpNm').type('Vandelay');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpAdd1').type('123 Main Street');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpCity').type('Newark');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpZip1').type('08111');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh').type('234');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh2').type('25');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh3').type('2678');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtEmpBenStDt').type('07/18/2025').blur();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtEmpBenEndDt').type('07/19/2025');
-
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtSSDate').type('08/01/2025');
-
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes').click();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlUISt').select('NJ');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtUIBenStDt').type('07/20/2025');
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtUIBenEndDt').type('07/21/2025');
-
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
-      cy.wait('@aspxSubmission').then(checkDetailedPostData);
+      checkDetailedInput();
     });
 
     xit("user can input info when the employer benefits question is removed and proceed to next page", () => {
@@ -111,6 +115,10 @@ describe("Other Benefits page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
       cy.wait('@aspxSubmission').then(checkNoPostData);
       cy.confirmEventIsNotTracked("Other Benefits Yes Clicked");
+    });
+
+    it("user can input yes to everything with details and proceed to next page", () => {
+      checkDetailedInput();
     });
 
     xit("user can input info when the employer benefits question is removed and proceed to next page", () => {
