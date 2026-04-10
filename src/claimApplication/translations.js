@@ -273,7 +273,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             stateLabel: "State where you filed",
             dateLabel: "What time period do your benefits cover?",
             startLabel: "Start",
-            endLegend: "End",
+            endLabel: "End",
           },
         },
         tdi: "<strong>Family/Medical Leave</strong> from another state or U.S. territory",

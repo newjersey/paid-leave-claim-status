@@ -101,8 +101,10 @@ function addStyles() {
       padding: 5px 0;
     }
 
-    #new-other-benefits-form label {
-    font-size: 16px;
+    #new-other-benefits-form label,
+    #new-other-benefits-form p {
+      font-size: 16px;
+      margin-left: 0;
       text-align: left;
     }
 
@@ -344,8 +346,42 @@ function restyleUIFollowup() {
   fieldset.append(divUIDates);
 
   const dateLabel = document.createElement('p');
-  dateLabel.textContent = i18next.t('otherBenefits.udi.followup.dateLabel');
+  dateLabel.textContent = i18next.t('otherBenefits.ui.followup.dateLabel');
   divUIDates.prepend(dateLabel);
+
+  const startLabel = document.createElement('label');
+  startLabel.textContent = i18next.t('otherBenefits.ui.followup.startLabel');
+  startLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtUIBenStDt';
+  dateLabel.insertAdjacentHTML('afterend', '<br>');
+  dateLabel.nextSibling.insertAdjacentElement('afterend', startLabel);
+
+  const startHint = document.createElement('div');
+  startHint.classList.add("usa-hint");
+  startHint.textContent = i18next.t('shared.dateFormat');
+  startLabel.insertAdjacentElement('afterend', startHint);
+
+  const startCalendar = document.getElementById('Image14');
+  const endLabel = document.createElement('label');
+  endLabel.textContent = i18next.t('otherBenefits.ui.followup.endLabel');
+  endLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtUIBenEndDt';
+  startCalendar.insertAdjacentHTML('afterend', '<br>');
+  startCalendar.nextSibling.insertAdjacentElement('afterend', endLabel);
+
+  const endHint = document.createElement('div');
+  endHint.classList.add("usa-hint");
+  endHint.textContent = i18next.t('shared.dateFormat');
+  endLabel.insertAdjacentElement('afterend', endHint);
+
+  const pendingCheckbox = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkUIStatusPend');
+  const pendingLabel = document.querySelector("#divUI > label");
+  const pendingWrapper = document.createElement('div');
+  pendingWrapper.className = 'usa-checkbox';
+  pendingCheckbox.classList.add('usa-checkbox__input');
+  pendingLabel.classList.add('usa-checkbox__label');
+  pendingLabel.textContent = i18next.t('otherBenefits.pendingLabel');
+  pendingWrapper.appendChild(pendingCheckbox);
+  pendingWrapper.appendChild(pendingLabel);
+  fieldset.append(pendingWrapper);
 }
 
 function restyleTDIFollowup() {
