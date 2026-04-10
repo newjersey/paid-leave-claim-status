@@ -281,7 +281,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           title: "<strong>Family/Medical Leave</strong> from another state or U.S. territory",
           followup: {
             title: "You answered yes to Family/Medical leave from another state",
-            subtitle: "Family/Medical benefits from another state",
+            subtitle: "Family/Medical Leave benefits from another state",
           },
         },
         employer: {

@@ -221,12 +221,14 @@ function addEmployerBenefitsIfNeeded() {
 
 function addEmployerListener() {
   const checkEmployer = document.getElementById("check-employer");
+  const originalEmployerYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpYes");
+  const originalEmployerNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo");
+  loadRadioButtonsIntoCheckbox(originalEmployerYes, originalEmployerNo, checkEmployer);
+
   checkEmployer.addEventListener('click', function () {
     if (checkEmployer.checked) {
-      const originalEmployerYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpYes");
       originalEmployerYes.click();
     } else {
-      const originalEmployerNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo");
       originalEmployerNo.click();
     }
   });
@@ -563,38 +565,43 @@ function appendPendingCheckbox(fieldset, containerId, checkboxId) {
 
 function addCheckboxListeners() {
   const ssdiWarning = document.getElementById("warning-ssdi");
-
   const checkSsdi = document.getElementById("check-ssdi");
+  const originalSsdiYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes");
+  const originalSsdiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo");
+  loadRadioButtonsIntoCheckbox(originalSsdiYes, originalSsdiNo, checkSsdi);
+
   checkSsdi.addEventListener('click', function () {
     if (checkSsdi.checked) {
       ssdiWarning.style.display = "block";
-      const originalSsdiYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes");
       originalSsdiYes.click();
     } else {
       ssdiWarning.style.display = "none";
-      const originalSsdiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo");
       originalSsdiNo.click();
     }
   });
 
   const checkUi = document.getElementById("check-ui");
+  const originalUiYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes");
+  const originalUiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo");
+  loadRadioButtonsIntoCheckbox(originalUiYes, originalUiNo, checkUi);
+
   checkUi.addEventListener('click', function () {
     if (checkUi.checked) {
-      const originalUiYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes");
       originalUiYes.click();
     } else {
-      const originalUiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo");
       originalUiNo.click();
     }
   });
 
   const checkTdi = document.getElementById("check-tdi");
+  const originalTdiYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes");
+  const originalTdiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo");
+  loadRadioButtonsIntoCheckbox(originalTdiYes, originalTdiNo, checkTdi);
+
   checkTdi.addEventListener('click', function () {
     if (checkTdi.checked) {
-      const originalTdiYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes");
       originalTdiYes.click();
     } else {
-      const originalTdiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo");
       originalTdiNo.click();
     }
   });
@@ -628,5 +635,13 @@ function clearTextNodes(node) {
     if ((tagName === 'a' || tagName === 'strong' || tagName === 'br')) {
       node.remove();
     }
+  }
+}
+
+function loadRadioButtonsIntoCheckbox(originalYes, originalNo, checkbox) {
+  if (originalYes.checked) {
+    checkbox.checked = true;
+  } else {
+    originalNo.click();
   }
 }
