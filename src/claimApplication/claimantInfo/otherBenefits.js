@@ -131,7 +131,7 @@ function replaceRadioButtonsWithCheckboxes() {
   newForm.innerHTML = `
     <div class="bordered-set">
       <fieldset class="usa-fieldset">
-        <legend class="usa-legend">
+        <legend class="usa-legend" style="margin-top: 0;">
           <span class="required-asterisk">*</span>
           ${i18next.t('otherBenefits.areYouReceivingOrApplied')}
         </legend>
