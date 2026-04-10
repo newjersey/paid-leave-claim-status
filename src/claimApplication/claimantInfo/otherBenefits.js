@@ -93,15 +93,16 @@ function addStyles() {
       margin: 40px 0 20px;
     }
 
-    #ContentPlaceHolder1_ClaimantDisabilityTab_body p {
-      font-size: 16px;
-    }
-
     #warning-ssdi .usa-alert__body {
       padding-left: 40px;
     }
 
+    #new-other-benefits-form fieldset div {
+      padding: 5px 0;
+    }
+
     #new-other-benefits-form label {
+    font-size: 16px;
       text-align: left;
     }
 
@@ -269,23 +270,24 @@ function restyleSSDIFollowup() {
   newTitle.textContent = i18next.t('otherBenefits.ssdi.followup.title');
   divSS.insertAdjacentElement('afterbegin', newTitle);
 
-  const container = document.createElement('div');
-  container.classList.add("bordered-set");
-  newTitle.insertAdjacentElement('afterend', container);
+  const fieldset = document.createElement('fieldset');
+  fieldset.classList.add("bordered-set");
+  newTitle.insertAdjacentElement('afterend', fieldset);
 
   const subtitle = document.createElement('h3');
   subtitle.textContent = i18next.t('otherBenefits.ssdi.followup.subtitle');
-  container.append(subtitle);
+  fieldset.append(subtitle);
 
   const divSSBenDt = document.getElementById('divSSBenDt'); 
-  const dateLegend = document.createElement('p');
-  dateLegend.textContent = i18next.t('otherBenefits.ssdi.followup.dateLegend');
-  divSSBenDt.prepend(dateLegend);
+  const dateLabel = document.createElement('label');
+  dateLabel.textContent = i18next.t('otherBenefits.ssdi.followup.dateLabel');
+  dateLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtSSDate';
+  divSSBenDt.prepend(dateLabel);
 
   const hint = document.createElement('div');
   hint.classList.add("usa-hint");
   hint.textContent = i18next.t('otherBenefits.ssdi.followup.hint');
-  dateLegend.insertAdjacentElement('afterend', hint);
+  dateLabel.insertAdjacentElement('afterend', hint);
 
   const dateInputContainer = document.createElement('div');
   dateInputContainer.id = 'dateInputContainer';
@@ -297,7 +299,7 @@ function restyleSSDIFollowup() {
   dateInputContainer.append(dateInput);
   dateInputContainer.append(calendarInput);
   divSSBenDt.append(dateInputContainer);
-  container.append(divSSBenDt);
+  fieldset.append(divSSBenDt);
 
   const checkboxPending = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkSSDtStat');
   const labelPending = document.querySelector("#divSS > label");
@@ -305,31 +307,10 @@ function restyleSSDIFollowup() {
   pendingWrapper.className = 'usa-checkbox';
   checkboxPending.classList.add('usa-checkbox__input');
   labelPending.classList.add('usa-checkbox__label');
-  labelPending.textContent = i18next.t('otherBenefits.pendingLegend');
+  labelPending.textContent = i18next.t('otherBenefits.pendingLabel');
   pendingWrapper.appendChild(checkboxPending);
   pendingWrapper.appendChild(labelPending);
-  container.append(pendingWrapper);
-}
-
-function clearTextNodes(node) {
-  if (node.parentElement?.tagName.toLowerCase() === 'option') {
-    return;
-  }
-
-  if (node.nodeType === Node.TEXT_NODE) {
-    const text = node.textContent;
-    if (/^\s*$/.test(text)) {
-      node.remove(); 
-    } else {
-      node.textContent = ''; 
-    }
-  } else if (node.nodeType === Node.ELEMENT_NODE) {
-    Array.from(node.childNodes).forEach(clearTextNodes);
-    const tagName = node.tagName.toLowerCase();
-    if ((tagName === 'a' || tagName === 'strong' || tagName === 'br')) {
-      node.remove();
-    }
-  }
+  fieldset.append(pendingWrapper);
 }
 
 function restyleUIFollowup() {
@@ -340,24 +321,31 @@ function restyleUIFollowup() {
   newTitle.textContent = i18next.t('otherBenefits.ui.followup.title');
   divUI.insertAdjacentElement('afterbegin', newTitle);
 
-  const container = document.createElement('div');
-  container.classList.add("bordered-set");
-  newTitle.insertAdjacentElement('afterend', container);
+  const fieldset = document.createElement('fieldset');
+  fieldset.classList.add("bordered-set");
+  newTitle.insertAdjacentElement('afterend', fieldset);
 
   const subtitle = document.createElement('h3');
   subtitle.textContent = i18next.t('otherBenefits.ui.followup.subtitle');
-  container.append(subtitle);
+  fieldset.append(subtitle);
 
-  const stateLegend = document.createElement('label');
-  stateLegend.classList.add('usa-label');
-  stateLegend.htmlFor = 'ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$ddlUISt';
-  stateLegend.textContent = i18next.t('otherBenefits.ui.followup.stateLegend');
-  container.append(stateLegend);
+  const stateLabel = document.createElement('label');
+  stateLabel.classList.add('usa-label');
+  stateLabel.htmlFor = 'ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$ddlUISt';
+  stateLabel.textContent = i18next.t('otherBenefits.ui.followup.stateLabel');
+  fieldset.append(stateLabel);
 
   const stateSelect = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlUISt');
   stateSelect.classList.add('usa-select');
   stateSelect.style.height = 'auto';
-  container.append(stateSelect);
+  fieldset.append(stateSelect);
+
+  const divUIDates = document.getElementById('divUI_Dates');
+  fieldset.append(divUIDates);
+
+  const dateLabel = document.createElement('p');
+  dateLabel.textContent = i18next.t('otherBenefits.udi.followup.dateLabel');
+  divUIDates.prepend(dateLabel);
 }
 
 function restyleTDIFollowup() {
@@ -412,4 +400,25 @@ function updateCalendars() {
   updateCalendarUI("Image10", false, true);
   updateCalendarUI("Image14");
   updateCalendarUI("Image15");
+}
+
+function clearTextNodes(node) {
+  if (node.parentElement?.tagName.toLowerCase() === 'option') {
+    return;
+  }
+
+  if (node.nodeType === Node.TEXT_NODE) {
+    const text = node.textContent;
+    if (/^\s*$/.test(text)) {
+      node.remove(); 
+    } else {
+      node.textContent = ''; 
+    }
+  } else if (node.nodeType === Node.ELEMENT_NODE) {
+    Array.from(node.childNodes).forEach(clearTextNodes);
+    const tagName = node.tagName.toLowerCase();
+    if ((tagName === 'a' || tagName === 'strong' || tagName === 'br')) {
+      node.remove();
+    }
+  }
 }
