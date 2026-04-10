@@ -133,6 +133,10 @@ function injectGlobalStyles() {
       max-width: 100%;
     }
 
+    .usa-select {
+      background-image: url('${ICON_BASE_URL}/unfold_more.svg'), linear-gradient(transparent, transparent);
+    }
+
     input[type="image"][alt="calendar"] {
       width: 24px;
       height: 24px;
