@@ -260,20 +260,11 @@ function restyleFollowups() {
 }
 
 function restyleEmployerFollowup() {
-  const divEmp = document.getElementById('divEmp');
-  clearTextNodes(divEmp);
-  
-  const newTitle = document.createElement('h2');
-  newTitle.textContent = i18next.t('otherBenefits.employer.followup.title');
-  divEmp.insertAdjacentElement('afterbegin', newTitle);
-
-  const fieldset = document.createElement('fieldset');
-  fieldset.classList.add("bordered-set");
-  newTitle.insertAdjacentElement('afterend', fieldset);
-
-  const subtitle = document.createElement('h3');
-  subtitle.textContent = i18next.t('otherBenefits.employer.followup.subtitle');
-  fieldset.append(subtitle);
+  const fieldset = fieldsetWithTitleAndSubtitle(
+    'divEmp',
+    'otherBenefits.employer.followup.title',
+    'otherBenefits.employer.followup.subtitle'
+  );
 
   const employerLabel = document.createElement('p');
   employerLabel.textContent = i18next.t('otherBenefits.employer.followup.employerLabel');
@@ -410,20 +401,11 @@ function restyleEmployerFollowup() {
 }
 
 function restyleSSDIFollowup() {
-  const divSS = document.getElementById('divSS');
-  clearTextNodes(divSS);
-
-  const newTitle = document.createElement('h2');
-  newTitle.textContent = i18next.t('otherBenefits.ssdi.followup.title');
-  divSS.insertAdjacentElement('afterbegin', newTitle);
-
-  const fieldset = document.createElement('fieldset');
-  fieldset.classList.add("bordered-set");
-  newTitle.insertAdjacentElement('afterend', fieldset);
-
-  const subtitle = document.createElement('h3');
-  subtitle.textContent = i18next.t('otherBenefits.ssdi.followup.subtitle');
-  fieldset.append(subtitle);
+  const fieldset = fieldsetWithTitleAndSubtitle(
+    'divSS',
+    'otherBenefits.ssdi.followup.title',
+    'otherBenefits.ssdi.followup.subtitle'
+  );
 
   const divSSBenDt = document.getElementById('divSSBenDt'); 
   const dateLabel = document.createElement('label');
@@ -452,20 +434,11 @@ function restyleSSDIFollowup() {
 }
 
 function restyleUIFollowup() {
-  const divUI = document.getElementById('divUI');
-  clearTextNodes(divUI);
-
-  const newTitle = document.createElement('h2');
-  newTitle.textContent = i18next.t('otherBenefits.ui.followup.title');
-  divUI.insertAdjacentElement('afterbegin', newTitle);
-
-  const fieldset = document.createElement('fieldset');
-  fieldset.classList.add("bordered-set");
-  newTitle.insertAdjacentElement('afterend', fieldset);
-
-  const subtitle = document.createElement('h3');
-  subtitle.textContent = i18next.t('otherBenefits.ui.followup.subtitle');
-  fieldset.append(subtitle);
+  const fieldset = fieldsetWithTitleAndSubtitle(
+    'divUI',
+    'otherBenefits.ui.followup.title',
+    'otherBenefits.ui.followup.subtitle'
+  );
 
   const stateLabel = document.createElement('label');
   stateLabel.classList.add('usa-label');
@@ -490,20 +463,11 @@ function restyleUIFollowup() {
 }
 
 function restyleTDIFollowup() {
-  const divTDI = document.getElementById('divTDI');
-  clearTextNodes(divTDI);
-
-  const newTitle = document.createElement('h2');
-  newTitle.textContent = i18next.t('otherBenefits.tdi.followup.title');
-  divTDI.insertAdjacentElement('afterbegin', newTitle);
-
-  const fieldset = document.createElement('fieldset');
-  fieldset.classList.add("bordered-set");
-  newTitle.insertAdjacentElement('afterend', fieldset);
-
-  const subtitle = document.createElement('h3');
-  subtitle.textContent = i18next.t('otherBenefits.tdi.followup.subtitle');
-  fieldset.append(subtitle);
+  const fieldset = fieldsetWithTitleAndSubtitle(
+    'divTDI',
+    'otherBenefits.tdi.followup.title',
+    'otherBenefits.tdi.followup.subtitle'
+  );
 
   const stateLabel = document.createElement('label');
   stateLabel.classList.add('usa-label');
@@ -525,6 +489,25 @@ function restyleTDIFollowup() {
   );
 
   appendPendingCheckbox(fieldset, 'divTDI', 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkBenDtStat');
+}
+
+function fieldsetWithTitleAndSubtitle(containerId, titleKey, subtitleKey) {
+  const container = document.getElementById(containerId);
+  clearTextNodes(container);
+
+  const title = document.createElement('h2');
+  title.textContent = i18next.t(titleKey);
+  container.insertAdjacentElement('afterbegin', title);
+
+  const fieldset = document.createElement('fieldset');
+  fieldset.classList.add("bordered-set");
+  title.insertAdjacentElement('afterend', fieldset);
+
+  const subtitle = document.createElement('h3');
+  subtitle.textContent = i18next.t(subtitleKey);
+  fieldset.append(subtitle);
+
+  return fieldset;
 }
 
 function appendDateRangeFields(fieldset, dateContainerId, startInputId, endInputId, calendarId) {
