@@ -30,7 +30,7 @@ function injectGlobalStyles() {
     }
     h1, h2, h3, h4, p, a {
       font-family: "Public Sans", sans-serif !important;
-      font-variant: normal; 
+      font-variant: normal !important; 
     }
 
     a.lblClass, span.lblClass, span.lblClass1 {
@@ -41,6 +41,19 @@ function injectGlobalStyles() {
 
     span {
       font-family: "Public Sans", sans-serif;
+    }
+
+    .bordered-set {
+      background: white;
+      border: 1px solid #b2b2b2;
+      border-radius: 5px;
+      margin: 10px 0;
+      padding: 10px;
+    }
+
+    .required-asterisk {
+      color: rgb(139, 0, 0);
+      font-weight: bold;
     }
 
     .usa-checkbox__label, .usa-combo-box__input, .usa-combo-box__list, .usa-fieldset, .usa-hint, .usa-input, .usa-input-group, .usa-radio__label, .usa-range, .usa-select, .usa-textarea, .usa-button, .usa-table, .usa-label, .usa-legend, .usa-alert  {
@@ -100,6 +113,14 @@ function injectGlobalStyles() {
       margin-top:5px;
     }
 
+    .usa-alert__heading {
+      font-size: 24px;
+      margin: 0 0 10px;
+      color: black;
+      font-variant: normal;
+      font-weight: bold;
+    }
+
     .usa-accordion__button[aria-expanded="false"] {
       background-image: url('${ICON_BASE_URL}/add.svg'), linear-gradient(transparent, transparent);
     }
@@ -108,9 +129,17 @@ function injectGlobalStyles() {
       background-image: url('${ICON_BASE_URL}/remove.svg'), linear-gradient(transparent, transparent);
     }
 
+    .usa-checkbox__input:checked+[class*=__label]:before, .usa-checkbox__input:checked:disabled+[class*=__label]:before {
+      background-image: url('${ICON_BASE_URL}/correct8.svg'), linear-gradient(transparent, transparent);
+    }
+
     .usa-list li {
       list-style-type: disc !important;
       max-width: 100%;
+    }
+
+    .usa-select {
+      background-image: url('${ICON_BASE_URL}/unfold_more.svg'), linear-gradient(transparent, transparent);
     }
 
     input[type="image"][alt="calendar"] {

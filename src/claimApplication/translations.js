@@ -7,12 +7,14 @@ const resources = {
         illness: "illness",
         injury: "injury",
         no: "No",
+        noneOfTheAbove: "None of the above",
         optional: "(optional)",
         saveAndContinue: "Save and continue",
         yes: "Yes",
         makeSelection: "Make a selection.",
       },
       contact: {
+        name: "Name",
         address: "Address",
         street1: "Street address",
         street2: "Street address line 2 (optional)",
@@ -252,6 +254,46 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       otherBenefits: {
         title: "Other benefits",
+        areYouReceivingOrApplied: "Since {{firstDayOfDisability}}, have you applied for or received any of the following?",
+        areYouReceivingOrApplied_returned: "For the period from {{firstDayOfDisability}} to {{returnedToWorkDay}}, have you applied for or received any of the following?",
+        pendingLabel: "My application is still pending",
+        stateLabel: "State or territory where you filed:",
+        dateLabel: "What time period do your benefits cover?",
+        startLabel: "Start",
+        endLabel: "End",
+        ssdi: {
+          title: `<strong>Social Security Disability</strong> (Also called "SSDI." These are long term disability benefits handled by the federal <a href="https://www.ssa.gov/disability" target="_blank">Social Security Administration</a>).`,
+          areYouSure: `Are you sure? Keep in mind, Social Security Disability benefits are different from <a href="https://www.ssa.gov/retirement" target="_blank">Social Security Retirement benefits</a> you receive at age 62 or older.`,
+          followup: {
+            title: "You answered yes to Social Security Disability",
+            subtitle: "Social Security Disability",
+            dateLabel: "Month your Social Security Disability (SSDI) benefits start:",
+            hint: 'mm/01/yyyy',
+          },
+        },
+        ui: {
+          title: "<strong>Unemployment Insurance</strong>",
+          followup: {
+            title: "You answered yes to Unemployment Insurance",
+            subtitle: "Unemployment Insurance",
+          },
+        },
+        tdi: {
+          title: "<strong>Family/Medical Leave</strong> from another state or U.S. territory",
+          followup: {
+            title: "You answered yes to Family/Medical leave from another state",
+            subtitle: "Family/Medical Leave benefits from another state",
+          },
+        },
+        employer: {
+          title: "<strong>Temporary disability benefits</strong> from your employer or union",
+          followup: {
+            title: "You answered yes to Temporary disability benefits from your employer",
+            subtitle: "Disability from your employer",
+            employerLabel: "Enter the employer or union that is paying you disability benefits.",
+            country: "Country",
+          },
+        },
       },
       paymentInfo: {
         title: "Federal taxes",

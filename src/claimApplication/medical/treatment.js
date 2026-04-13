@@ -99,10 +99,6 @@ function addStyles() {
     .usa-radio__label {
       text-align: left;
     }
-  
-    .required-asterisk {
-      color: rgb(139, 0, 0);
-    }
 
     .form-alert {
       color: rgb(139, 0, 0);

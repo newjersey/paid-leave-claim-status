@@ -49,24 +49,8 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
-    h2.usa-alert__heading {
-      font-size: 24px;
-      margin: 0 0 10px;
-      color: black;
-      font-variant: normal;
-      font-weight: bold;
-    }
-
     .bold-text {
       font-weight: bold;
-    }
-
-    .bordered-set {
-      background: white;
-      border: 1px solid #b2b2b2;
-      border-radius: 5px;
-      margin: 10px 0;
-      padding: 10px;
     }
     
     .optional-text {
@@ -87,11 +71,6 @@ function addStyles() {
 
     .usa-label.no-margin-top {
       margin-top: 0;
-    }
-
-    .required-asterisk {
-      color: rgb(139, 0, 0);
-      font-weight: bold;
     }
 
     .usa-button {

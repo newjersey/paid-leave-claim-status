@@ -22,7 +22,7 @@ export function reasonForLeavePage() {
     <form id="reason-for-leave-form" novalidate>
       <div class="bordered-set">
         <fieldset class="usa-fieldset">
-          <legend id="reason-legend" class="usa-legend usa-legend">
+          <legend id="reason-legend" class="usa-legend">
             <span class="required-asterisk">*</span>
             ${i18next.t('reasonForLeave.chooseReason')}
           </legend>
