@@ -246,7 +246,8 @@ describe("Other Benefits page", () => {
       cy.wait('@aspxSubmission');
     });
 
-    it("user can input a state not originally listed for TDI", () => {
+    // needs more testing
+    xit("user can input a state not originally listed for TDI", () => {
       cy.mockASPX(URL);
       cy.get('#check-tdi').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenSt').select('IL');

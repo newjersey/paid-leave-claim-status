@@ -71,7 +71,7 @@ export function changes() {
   rearrangeFollowups();
   restyleFollowups();
   addCheckboxListeners();
-  addOptionsToTDIStates();
+  // addOptionsToTDIStates(); // needs more testing before can be turned on, if ever
   replaceQuestionNumbersInErrors();
 
   addEmployerBenefitsIfNeeded(); // remove once underlying question removed
