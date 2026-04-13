@@ -148,10 +148,6 @@ describe("Other Benefits page", () => {
       cy.visit(FIXTURE);
     });
 
-    xit("fills in existing values when known", () => {
-      // todo with new fixture with values there
-    });
-
     it("user can input no to everything and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo').click();
@@ -188,8 +184,40 @@ describe("Other Benefits page", () => {
       cy.wait('@script');
     });
 
-    xit("fills in existing values when known", () => {
-      // todo with new fixture with values there
+    it("fills in existing values when known", () => {
+      cy.intercept('GET', '**/otherBenefits.html', (req) => {
+        req.continue((res) => {
+          let html = res.body;
+          
+          html = html.replace(
+            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo"',
+            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo" checked'
+          );
+          
+          html = html.replace(
+            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo"',
+            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo" checked'
+          );
+          
+          html = html.replace(
+            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes"',
+            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes" checked'
+          );
+          
+          html = html.replace(
+            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes"',
+            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes" checked'
+          );
+          
+          res.body = html;
+        });
+      });
+      cy.visit(FIXTURE);
+
+      cy.get('#check-employer').should('not.be.checked');
+      cy.get('#check-ssdi').should('not.be.checked');
+      cy.get('#check-ui').should('be.checked');
+      cy.get('#check-tdi').should('be.checked');
     });
 
     it("user can input no to everything and proceed to next page", () => {
