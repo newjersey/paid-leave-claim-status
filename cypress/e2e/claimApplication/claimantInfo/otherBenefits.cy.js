@@ -5,6 +5,7 @@ const PAGE_ID = 'otherBenefits';
 const URL = 'ClaimantDisabililty';
 const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/otherBenefits.html";
 const FIXTURE_WITHOUT_EMPLOYER = "./cypress/fixtures/claimApplication/claimantInfo/otherBenefitsWithoutEmp.html";
+const FIXTURE_WITH_ERROR = "./cypress/fixtures/claimApplication/claimantInfo/otherBenefitsError.html";
 
 describe("Other Benefits page", () => {
   function checkNoPostData(interception) {
@@ -197,39 +198,16 @@ describe("Other Benefits page", () => {
     });
 
     it("fills in existing values when known", () => {
-      cy.intercept('GET', '**/otherBenefits.html', (req) => {
-        req.continue((res) => {
-          let html = res.body;
-          
-          html = html.replace(
-            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo"',
-            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo" checked'
-          );
-          
-          html = html.replace(
-            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo"',
-            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo" checked'
-          );
-          
-          html = html.replace(
-            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes"',
-            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes" checked'
-          );
-          
-          html = html.replace(
-            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes"',
-            'id="ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes" checked'
-          );
-          
-          res.body = html;
-        });
-      });
-      cy.visit(FIXTURE);
-
+      cy.visit(FIXTURE_WITH_ERROR);
       cy.get('#check-employer').should('not.be.checked');
-      cy.get('#check-ssdi').should('not.be.checked');
+      cy.get('#check-ssdi').should('be.checked');
       cy.get('#check-ui').should('be.checked');
       cy.get('#check-tdi').should('be.checked');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtSSDate').should('have.value', '08/01/2026');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlUISt').should('have.value', '1');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtUIBenEndDt').should('have.value', '04/22/2026');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenSt').should('have.value', '15');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkBenDtStat').should('be.checked');
     });
 
     it("user can input no to everything and proceed to next page", () => {
