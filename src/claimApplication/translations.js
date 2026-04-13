@@ -257,7 +257,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         areYouReceivingOrApplied: "Since {{firstDayOfDisability}}, have you applied for or received any of the following?",
         areYouReceivingOrApplied_returned: "For the period from {{firstDayOfDisability}} to {{returnedToWorkDay}}, have you applied for or received any of the following?",
         pendingLabel: "My application is still pending",
-        stateLabel: "State where you filed:",
+        stateLabel: "State or territory where you filed:",
         dateLabel: "What time period do your benefits cover?",
         startLabel: "Start",
         endLabel: "End",
