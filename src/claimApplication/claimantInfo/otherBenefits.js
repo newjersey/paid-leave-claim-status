@@ -659,7 +659,6 @@ function addCheckboxListeners() {
   const checkSsdi = document.getElementById("check-ssdi");
   const originalSsdiYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes");
   const originalSsdiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo");
-  loadRadioButtonsIntoCheckbox(originalSsdiYes, originalSsdiNo, checkSsdi);
 
   checkSsdi.addEventListener('click', function () {
     if (checkSsdi.checked) {
@@ -674,7 +673,6 @@ function addCheckboxListeners() {
   const checkUi = document.getElementById("check-ui");
   const originalUiYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes");
   const originalUiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo");
-  loadRadioButtonsIntoCheckbox(originalUiYes, originalUiNo, checkUi);
 
   checkUi.addEventListener('click', function () {
     if (checkUi.checked) {
@@ -687,7 +685,6 @@ function addCheckboxListeners() {
   const checkTdi = document.getElementById("check-tdi");
   const originalTdiYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes");
   const originalTdiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo");
-  loadRadioButtonsIntoCheckbox(originalTdiYes, originalTdiNo, checkTdi);
 
   checkTdi.addEventListener('click', function () {
     if (checkTdi.checked) {
@@ -696,6 +693,10 @@ function addCheckboxListeners() {
       originalTdiNo.click();
     }
   });
+
+  loadRadioButtonsIntoCheckbox(originalSsdiYes, originalSsdiNo, checkSsdi);
+  loadRadioButtonsIntoCheckbox(originalUiYes, originalUiNo, checkUi);
+  loadRadioButtonsIntoCheckbox(originalTdiYes, originalTdiNo, checkTdi);
 }
 
 function addOptionsToTDIStates() {
@@ -799,7 +800,7 @@ function clearTextNodes(node) {
 
 function loadRadioButtonsIntoCheckbox(originalYes, originalNo, checkbox) {
   if (originalYes.checked) {
-    checkbox.checked = true;
+    checkbox.click();
   } else {
     originalNo.click();
   }

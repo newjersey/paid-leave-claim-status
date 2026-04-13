@@ -261,7 +261,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         startLabel: "Start",
         endLabel: "End",
         ssdi: {
-          title: `<strong>Social Security Disability</strong> (Also called "SSDI." These are handled by the federal <a href="https://www.ssa.gov/disability" target="_blank">Social Security Administration</a>).`,
+          title: `<strong>Social Security Disability</strong> (Also called "SSDI." These are long term disability benefits handled by the federal <a href="https://www.ssa.gov/disability" target="_blank">Social Security Administration</a>).`,
           areYouSure: `Are you sure? Keep in mind, Social Security Disability benefits are different from <a href="https://www.ssa.gov/retirement" target="_blank">Social Security Retirement benefits</a> you receive at age 62 or older.`,
           followup: {
             title: "You answered yes to Social Security Disability",

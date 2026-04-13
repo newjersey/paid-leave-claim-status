@@ -201,6 +201,7 @@ describe("Other Benefits page", () => {
       cy.visit(FIXTURE_WITH_ERROR);
       cy.get('#check-employer').should('not.be.checked');
       cy.get('#check-ssdi').should('be.checked');
+      cy.get('#warning-ssdi').should('be.visible');
       cy.get('#check-ui').should('be.checked');
       cy.get('#check-tdi').should('be.checked');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtSSDate').should('have.value', '08/01/2026');
