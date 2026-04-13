@@ -73,11 +73,6 @@ function addStyles() {
       margin-top: 0;
     }
 
-    .required-asterisk {
-      color: rgb(139, 0, 0);
-      font-weight: bold;
-    }
-
     .usa-button {
       margin: 5px 0;
       max-width: 400px;

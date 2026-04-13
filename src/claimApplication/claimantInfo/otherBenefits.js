@@ -82,6 +82,10 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
+    .required-asterisk-inline {
+      margin-right: 3px;
+    }
+
     .usa-radio {
       padding: 0;
     }
@@ -293,6 +297,7 @@ function restyleEmployerFollowup() {
   nameLabel.textContent = i18next.t('contact.name');
   nameLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpNm';
   fieldset.append(nameLabel);
+  nameLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const nameInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpNm');
   nameInput.classList.add('usa-input');
@@ -303,6 +308,7 @@ function restyleEmployerFollowup() {
   address1Label.textContent = i18next.t('contact.street1');
   address1Label.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpAdd1';
   fieldset.append(address1Label);
+  address1Label.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const address1Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpAdd1');
   address1Input.classList.add('usa-input');
@@ -323,6 +329,7 @@ function restyleEmployerFollowup() {
   cityLabel.textContent = i18next.t('contact.city');
   cityLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpCity';
   fieldset.append(cityLabel);
+  cityLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const cityInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpCity');
   cityInput.classList.add('usa-input');
@@ -333,6 +340,7 @@ function restyleEmployerFollowup() {
   stateLabel.textContent = i18next.t('contact.state');
   stateLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenEmpSt';
   fieldset.append(stateLabel);
+  stateLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const stateSelect = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenEmpSt');
   stateSelect.classList.add('usa-select');
@@ -345,6 +353,7 @@ function restyleEmployerFollowup() {
   zipLabel.textContent = i18next.t('contact.zipcode');
   zipLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpZip1';
   fieldset.append(zipLabel);
+  zipLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const zipContainer = document.createElement('div');
   zipContainer.id = 'zipContainer';
@@ -382,6 +391,7 @@ function restyleEmployerFollowup() {
   countryLabel.style.marginTop = '20px';
   countryLabel.style.fontFamily = '"Public Sans", sans-serif';
   intlContainer.append(countryLabel);
+  countryLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const selectCountry = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenEmpCountry');
   selectCountry.classList.add('usa-select');
@@ -394,6 +404,7 @@ function restyleEmployerFollowup() {
   phoneLabel.textContent = i18next.t('contact.phone');
   phoneLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpZip1';
   fieldset.append(phoneLabel);
+  phoneLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const phoneContainer = document.createElement('div');
   phoneContainer.style.display = 'flex';
@@ -469,6 +480,7 @@ function restyleSSDIFollowup() {
   dateLabel.textContent = i18next.t('otherBenefits.ssdi.followup.dateLabel');
   dateLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtSSDate';
   divSSBenDt.prepend(dateLabel);
+  dateLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const hint = document.createElement('div');
   hint.classList.add("usa-hint");
@@ -502,6 +514,7 @@ function restyleUIFollowup() {
   stateLabel.htmlFor = 'ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$ddlUISt';
   stateLabel.textContent = i18next.t('otherBenefits.stateLabel');
   fieldset.append(stateLabel);
+  stateLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const stateSelect = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlUISt');
   stateSelect.classList.add('usa-select');
@@ -532,6 +545,7 @@ function restyleTDIFollowup() {
   stateLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenSt';
   stateLabel.textContent = i18next.t('otherBenefits.stateLabel');
   fieldset.append(stateLabel);
+  stateLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const stateSelect = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenSt');
   stateSelect.classList.add('usa-select');
@@ -578,11 +592,13 @@ function appendDateRangeFields(fieldset, dateContainerId, startInputId, endInput
   dateLabel.textContent = i18next.t('otherBenefits.dateLabel');
   dateLabel.style.fontWeight = 'bold';
   dateContainer.prepend(dateLabel);
+  dateLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const startLabel = document.createElement('label');
   startLabel.textContent = i18next.t('otherBenefits.startLabel');
   startLabel.htmlFor = startInputId;
   dateLabel.insertAdjacentElement('afterend', startLabel);
+  startLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const startHint = document.createElement('div');
   startHint.classList.add("usa-hint");
@@ -605,6 +621,7 @@ function appendDateRangeFields(fieldset, dateContainerId, startInputId, endInput
   endLabel.htmlFor = endInputId;
   startDateInputContainer.insertAdjacentHTML('afterend', '<br>');
   startDateInputContainer.nextSibling.insertAdjacentElement('afterend', endLabel);
+  endLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const endHint = document.createElement('div');
   endHint.classList.add("usa-hint");

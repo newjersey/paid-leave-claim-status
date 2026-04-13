@@ -51,6 +51,11 @@ function injectGlobalStyles() {
       padding: 10px;
     }
 
+    .required-asterisk {
+      color: rgb(139, 0, 0);
+      font-weight: bold;
+    }
+
     .usa-checkbox__label, .usa-combo-box__input, .usa-combo-box__list, .usa-fieldset, .usa-hint, .usa-input, .usa-input-group, .usa-radio__label, .usa-range, .usa-select, .usa-textarea, .usa-button, .usa-table, .usa-label, .usa-legend, .usa-alert  {
       font-family: "Public Sans", sans-serif;
     }
