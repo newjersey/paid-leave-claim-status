@@ -4,6 +4,7 @@ import { encodeDecode } from '../../../../src/claimApplication/utils';
 const PAGE_ID = 'otherBenefits';
 const URL = 'ClaimantDisabililty';
 const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/otherBenefits.html";
+const FIXTURE_WITHOUT_EMPLOYER = "./cypress/fixtures/claimApplication/claimantInfo/otherBenefitsWithoutEmp.html";
 
 describe("Other Benefits page", () => {
   function checkNoPostData(interception) {
@@ -166,8 +167,19 @@ describe("Other Benefits page", () => {
       checkIntlInput(false);
     });
 
-    xit("user can input info when the employer benefits question is removed and proceed to next page", () => {
-      // todo: use fixture with question removed
+    it("user can input info when the employer benefits question is removed", () => {
+      cy.mockASPX(URL);
+      cy.visit(FIXTURE_WITHOUT_EMPLOYER);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenSt').select("CA");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkBenDtStat').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkSSDtStat').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlUISt').select('AK');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkUIStatusPend').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
+      cy.wait('@aspxSubmission');
     });
 
     globalTestsOld(URL);
@@ -235,8 +247,19 @@ describe("Other Benefits page", () => {
       checkIntlInput(true);
     });
 
-    xit("user can input info when the employer benefits question is removed and proceed to next page", () => {
-      // todo use fixture with question removed
+    it("user can input info when the employer benefits question is removed", () => {
+      cy.mockASPX(URL);
+      cy.visit(FIXTURE_WITHOUT_EMPLOYER);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDIYes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenSt').select("CA");
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkBenDtStat').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSYes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkSSDtStat').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUIYes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlUISt').select('AK');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkUIStatusPend').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
+      cy.wait('@aspxSubmission');
     });
 
     it("user can input a state not originally listed for TDI", () => {
