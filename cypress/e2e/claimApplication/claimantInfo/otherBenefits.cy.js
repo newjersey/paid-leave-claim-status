@@ -210,6 +210,11 @@ describe("Other Benefits page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkBenDtStat').should('be.checked');
     });
 
+    it("shows error without question number", () => {
+      cy.visit(FIXTURE_WITH_ERROR);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_lblUIerror').contains('Unemployment Insurance Benefits start date.');
+    });
+
     it("user can input no to everything and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();

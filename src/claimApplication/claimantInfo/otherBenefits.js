@@ -72,6 +72,7 @@ export function changes() {
   restyleFollowups();
   addCheckboxListeners();
   addOptionsToTDIStates();
+  replaceQuestionNumbersInErrors();
 
   addEmployerBenefitsIfNeeded(); // remove once underlying question removed
 
@@ -801,5 +802,31 @@ function loadRadioButtonsIntoCheckbox(originalYes, originalNo, checkbox) {
     checkbox.checked = true;
   } else {
     originalNo.click();
+  }
+}
+
+function replaceQuestionNumbersInErrors() {
+  const errorSpan = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_lblUIerror');
+  if (errorSpan) {
+    const questionMap = {
+      '1a.': 'otherBenefits.tdi.followup.subtitle',
+      '1b.': 'otherBenefits.tdi.followup.subtitle',
+      '2a.': 'otherBenefits.employer.followup.subtitle',
+      '2b.': 'otherBenefits.employer.followup.subtitle',
+      '3a.': 'otherBenefits.ssdi.followup.subtitle',
+      '4a.': 'otherBenefits.ui.followup.subtitle',
+      '4b.': 'otherBenefits.ui.followup.subtitle',
+    };
+
+    const newForm = document.getElementById('new-other-benefits-form');
+    let text = errorSpan.innerHTML;
+    
+    Object.keys(questionMap).forEach(questionNum => {
+      text = text.replace(questionNum, i18next.t(questionMap[questionNum]) + " ");
+    });
+    
+    errorSpan.innerHTML = text;
+    errorSpan.style.fontSize = '20px';
+    newForm.insertAdjacentElement('beforebegin', errorSpan);
   }
 }
