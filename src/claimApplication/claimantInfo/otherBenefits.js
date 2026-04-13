@@ -131,6 +131,16 @@ function addStyles() {
   document.head.appendChild(style);
 }
 
+function getFDD() {
+  const fddField = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt');
+  const date = new Date(fddField.value);
+  return date.toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+}
+
 function replaceRadioButtonsWithCheckboxes() {
   const existingForm = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits');
   const newForm = document.createElement('div');
@@ -140,7 +150,7 @@ function replaceRadioButtonsWithCheckboxes() {
       <fieldset class="usa-fieldset">
         <legend class="usa-legend" style="margin-top: 0;">
           <span class="required-asterisk">*</span>
-          ${i18next.t('otherBenefits.areYouReceivingOrApplied')}
+          ${i18next.t('otherBenefits.areYouReceivingOrApplied', { firstDayOfDisability: getFDD() })}
         </legend>
         <div class="usa-checkbox">
           <input

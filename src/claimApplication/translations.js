@@ -254,7 +254,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       otherBenefits: {
         title: "Other benefits",
-        areYouReceivingOrApplied: "Are you currently receiving or have you applied for:",
+        areYouReceivingOrApplied: "Since {{firstDayOfDisability}}, have you received or applied for:",
         pendingLabel: "My application is still pending",
         stateLabel: "State where you filed:",
         dateLabel: "What time period do your benefits cover?",
