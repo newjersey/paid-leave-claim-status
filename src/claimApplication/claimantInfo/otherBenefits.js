@@ -677,251 +677,58 @@ function addOptionsToTDIStates() {
   const nyOption = stateSelect.options[3];
   const riOption = stateSelect.options[4];
   const prOption = stateSelect.options[5];
-  
-  const option1 = document.createElement('option');
-  option1.value = '1';
-  option1.textContent = 'AL';
-  stateSelect.appendChild(option1);
-  
-  const option2 = document.createElement('option');
-  option2.value = '2';
-  option2.textContent = 'AK';
-  stateSelect.appendChild(option2);
-  
-  const option4 = document.createElement('option');
-  option4.value = '4';
-  option4.textContent = 'AZ';
-  stateSelect.appendChild(option4);
-  
-  const option5 = document.createElement('option');
-  option5.value = '5';
-  option5.textContent = 'AR';
-  stateSelect.appendChild(option5);
 
+  createAndAppendOption(stateSelect, '2', 'AK');
+  createAndAppendOption(stateSelect, '1', 'AL');
+  createAndAppendOption(stateSelect, '5', 'AR');
+  createAndAppendOption(stateSelect, '4', 'AZ');
   stateSelect.appendChild(caOption);
-  
-  const option8 = document.createElement('option');
-  option8.value = '8';
-  option8.textContent = 'CO';
-  stateSelect.appendChild(option8);
-  
-  const option9 = document.createElement('option');
-  option9.value = '9';
-  option9.textContent = 'CT';
-  stateSelect.appendChild(option9);
-  
-  const option10 = document.createElement('option');
-  option10.value = '10';
-  option10.textContent = 'DE';
-  stateSelect.appendChild(option10);
-  
-  const option11 = document.createElement('option');
-  option11.value = '11';
-  option11.textContent = 'DC';
-  stateSelect.appendChild(option11);
-  
-  const option12 = document.createElement('option');
-  option12.value = '12';
-  option12.textContent = 'FL';
-  stateSelect.appendChild(option12);
-  
-  const option13 = document.createElement('option');
-  option13.value = '13';
-  option13.textContent = 'GA';
-  stateSelect.appendChild(option13);
-
+  createAndAppendOption(stateSelect, '8', 'CO');
+  createAndAppendOption(stateSelect, '9', 'CT');
+  createAndAppendOption(stateSelect, '11', 'DC');
+  createAndAppendOption(stateSelect, '10', 'DE');
+  createAndAppendOption(stateSelect, '12', 'FL'); 
+  createAndAppendOption(stateSelect, '13', 'GA');
   stateSelect.appendChild(hiOption);
-  
-  const option16 = document.createElement('option');
-  option16.value = '16';
-  option16.textContent = 'ID';
-  stateSelect.appendChild(option16);
-  
-  const option17 = document.createElement('option');
-  option17.value = '17';
-  option17.textContent = 'IL';
-  stateSelect.appendChild(option17);
-  
-  const option18 = document.createElement('option');
-  option18.value = '18';
-  option18.textContent = 'IN';
-  stateSelect.appendChild(option18);
-  
-  const option19 = document.createElement('option');
-  option19.value = '19';
-  option19.textContent = 'IA';
-  stateSelect.appendChild(option19);
-  
-  const option20 = document.createElement('option');
-  option20.value = '20';
-  option20.textContent = 'KS';
-  stateSelect.appendChild(option20);
-  
-  const option21 = document.createElement('option');
-  option21.value = '21';
-  option21.textContent = 'KY';
-  stateSelect.appendChild(option21);
-  
-  const option22 = document.createElement('option');
-  option22.value = '22';
-  option22.textContent = 'LA';
-  stateSelect.appendChild(option22);
-  
-  const option23 = document.createElement('option');
-  option23.value = '23';
-  option23.textContent = 'ME';
-  stateSelect.appendChild(option23);
-  
-  const option24 = document.createElement('option');
-  option24.value = '24';
-  option24.textContent = 'MD';
-  stateSelect.appendChild(option24);
-  
-  const option25 = document.createElement('option');
-  option25.value = '25';
-  option25.textContent = 'MA';
-  stateSelect.appendChild(option25);
-  
-  const option26 = document.createElement('option');
-  option26.value = '26';
-  option26.textContent = 'MI';
-  stateSelect.appendChild(option26);
-  
-  const option27 = document.createElement('option');
-  option27.value = '27';
-  option27.textContent = 'MN';
-  stateSelect.appendChild(option27);
-  
-  const option28 = document.createElement('option');
-  option28.value = '28';
-  option28.textContent = 'MS';
-  stateSelect.appendChild(option28);
-  
-  const option29 = document.createElement('option');
-  option29.value = '29';
-  option29.textContent = 'MO';
-  stateSelect.appendChild(option29);
-  
-  const option30 = document.createElement('option');
-  option30.value = '30';
-  option30.textContent = 'MT';
-  stateSelect.appendChild(option30);
-  
-  const option31 = document.createElement('option');
-  option31.value = '31';
-  option31.textContent = 'NE';
-  stateSelect.appendChild(option31);
-  
-  const option32 = document.createElement('option');
-  option32.value = '32';
-  option32.textContent = 'NV';
-  stateSelect.appendChild(option32);
-  
-  const option33 = document.createElement('option');
-  option33.value = '33';
-  option33.textContent = 'NH';
-  stateSelect.appendChild(option33);
-  
-  const option34 = document.createElement('option');
-  option34.value = '34';
-  option34.textContent = 'NJ';
-  stateSelect.appendChild(option34);
-  
-  const option35 = document.createElement('option');
-  option35.value = '35';
-  option35.textContent = 'NM';
-  stateSelect.appendChild(option35);
-  
-  const option37 = document.createElement('option');
-  option37.value = '37';
-  option37.textContent = 'NC';
-  stateSelect.appendChild(option37);
-  
-  const option38 = document.createElement('option');
-  option38.value = '38';
-  option38.textContent = 'ND';
-  stateSelect.appendChild(option38);
-
+  createAndAppendOption(stateSelect, '19', 'IA');
+  createAndAppendOption(stateSelect, '16', 'ID');
+  createAndAppendOption(stateSelect, '17', 'IL');
+  createAndAppendOption(stateSelect, '18', 'IN');
+  createAndAppendOption(stateSelect, '20', 'KS');
+  createAndAppendOption(stateSelect, '21', 'KY');
+  createAndAppendOption(stateSelect, '22', 'LA');
+  createAndAppendOption(stateSelect, '25', 'MA');
+  createAndAppendOption(stateSelect, '24', 'MD');
+  createAndAppendOption(stateSelect, '23', 'ME');
+  createAndAppendOption(stateSelect, '26', 'MI');
+  createAndAppendOption(stateSelect, '27', 'MN');
+  createAndAppendOption(stateSelect, '29', 'MO');
+  createAndAppendOption(stateSelect, '28', 'MS');
+  createAndAppendOption(stateSelect, '30', 'MT');
+  createAndAppendOption(stateSelect, '37', 'NC');
+  createAndAppendOption(stateSelect, '38', 'ND');
+  createAndAppendOption(stateSelect, '31', 'NE');
+  createAndAppendOption(stateSelect, '33', 'NH');
+  createAndAppendOption(stateSelect, '35', 'NM');
+  createAndAppendOption(stateSelect, '32', 'NV');
   stateSelect.appendChild(nyOption);
-  
-  const option39 = document.createElement('option');
-  option39.value = '39';
-  option39.textContent = 'OH';
-  stateSelect.appendChild(option39);
-  
-  const option40 = document.createElement('option');
-  option40.value = '40';
-  option40.textContent = 'OK';
-  stateSelect.appendChild(option40);
-  
-  const option41 = document.createElement('option');
-  option41.value = '41';
-  option41.textContent = 'OR';
-  stateSelect.appendChild(option41);
-  
-  const option42 = document.createElement('option');
-  option42.value = '42';
-  option42.textContent = 'PA';
-  stateSelect.appendChild(option42);
-
+  createAndAppendOption(stateSelect, '39', 'OH');
+  createAndAppendOption(stateSelect, '40', 'OK');
+  createAndAppendOption(stateSelect, '41', 'OR');
+  createAndAppendOption(stateSelect, '42', 'PA');
   stateSelect.appendChild(prOption);
-
   stateSelect.appendChild(riOption);
-  
-  const option45 = document.createElement('option');
-  option45.value = '45';
-  option45.textContent = 'SC';
-  stateSelect.appendChild(option45);
-  
-  const option46 = document.createElement('option');
-  option46.value = '46';
-  option46.textContent = 'SD';
-  stateSelect.appendChild(option46);
-  
-  const option47 = document.createElement('option');
-  option47.value = '47';
-  option47.textContent = 'TN';
-  stateSelect.appendChild(option47);
-  
-  const option48 = document.createElement('option');
-  option48.value = '48';
-  option48.textContent = 'TX';
-  stateSelect.appendChild(option48);
-  
-  const option49 = document.createElement('option');
-  option49.value = '49';
-  option49.textContent = 'UT';
-  stateSelect.appendChild(option49);
-  
-  const option50 = document.createElement('option');
-  option50.value = '50';
-  option50.textContent = 'VT';
-  stateSelect.appendChild(option50);
-  
-  const option51 = document.createElement('option');
-  option51.value = '51';
-  option51.textContent = 'VA';
-  stateSelect.appendChild(option51);
-  
-  const option53 = document.createElement('option');
-  option53.value = '53';
-  option53.textContent = 'WA';
-  stateSelect.appendChild(option53);
-  
-  const option54 = document.createElement('option');
-  option54.value = '54';
-  option54.textContent = 'WV';
-  stateSelect.appendChild(option54);
-  
-  const option55 = document.createElement('option');
-  option55.value = '55';
-  option55.textContent = 'WI';
-  stateSelect.appendChild(option55);
-  
-  const option56 = document.createElement('option');
-  option56.value = '56';
-  option56.textContent = 'WY';
-  stateSelect.appendChild(option56);
+  createAndAppendOption(stateSelect, '45', 'SC');
+  createAndAppendOption(stateSelect, '46', 'SD');
+  createAndAppendOption(stateSelect, '47', 'TN');
+  createAndAppendOption(stateSelect, '48', 'TX');
+  createAndAppendOption(stateSelect, '49', 'UT');
+  createAndAppendOption(stateSelect, '51', 'VA');
+  createAndAppendOption(stateSelect, '50', 'VT');
+  createAndAppendOption(stateSelect, '53', 'WA');
+  createAndAppendOption(stateSelect, '55', 'WI');
+  createAndAppendOption(stateSelect, '54', 'WV');
+  createAndAppendOption(stateSelect, '56', 'WY');
 }
 
 function updateCalendars() {
@@ -932,6 +739,13 @@ function updateCalendars() {
   updateCalendarUI("Image10", false, true);
   updateCalendarUI("Image14");
   updateCalendarUI("Image15");
+}
+
+function createAndAppendOption(selectElement, valueString, stateString) {
+  const option = document.createElement('option');
+  option.value = valueString;
+  option.textContent = stateString;
+  selectElement.appendChild(option);
 }
 
 function clearTextNodes(node) {
