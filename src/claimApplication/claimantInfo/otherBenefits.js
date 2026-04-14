@@ -467,7 +467,6 @@ function restyleEmployerFollowup() {
   oldEmployerAddBox.style.display = 'none';
 
   stateSelect.addEventListener('change', function () {
-    console.log(stateSelect.value);
     if (stateSelect.value == 0) {
       zipLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpOutCtryZip';
       zipContainer.style.display = 'none';
