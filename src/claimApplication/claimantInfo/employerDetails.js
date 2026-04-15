@@ -1,6 +1,8 @@
 import i18next from 'i18next';
 import {
   clearTextNodes,
+  elementTextError,
+  resetElementText,
   updateCalendarUI,
 } from '../utils';
 
@@ -35,6 +37,7 @@ export function changes() {
   dateRangeFieldset();
   hideUnusedElements();
   updateAllCalendars();
+  stillWorkHereListeners();
 }
 
 function addStyles() {
@@ -251,7 +254,7 @@ function stillWorkHereFieldset() {
   stillWorkHereContainer.classList.add('bordered-set');
   stillWorkHereContainer.innerHTML = `
     <fieldset class="usa-fieldset">
-      <legend class="usa-legend">
+      <legend id="still-work-here-legend" class="usa-legend">
         <span class="required-asterisk">*</span> ${i18next.t('employerDetails.stillWorkHere')}
       </legend>
       <div class="usa-radio">
@@ -261,6 +264,7 @@ function stillWorkHereFieldset() {
           type="radio"
           name="still-work-here"
           value="yes"
+          required
         />
         <label class="usa-radio__label" for="still-work-here-yes">${i18next.t('shared.yes')}</label>
       </div>
@@ -283,9 +287,12 @@ function stillWorkHereFieldset() {
 function dateRangeFieldset() {
   const stillWorkHereContainer = document.getElementById('stillWorkHereContainer');
   const dateRangeFieldset = document.createElement('fieldset');
+  dateRangeFieldset.id = 'dateRangeFieldset';
   dateRangeFieldset.classList.add('bordered-set', 'usa-fieldset');
+  dateRangeFieldset.style.display = 'none';
 
   const startLabel = document.createElement('label');
+  startLabel.id = 'employment-start-label';
   startLabel.classList.add('usa-label');
   startLabel.style.marginTop = '0';
   startLabel.textContent = i18next.t('employerDetails.startLabel');
@@ -309,6 +316,7 @@ function dateRangeFieldset() {
   dateRangeFieldset.append(startDateInputContainer);
 
   const endLabel = document.createElement('label');
+  endLabel.id = 'employment-end-label';
   endLabel.classList.add('usa-label');
   endLabel.textContent = i18next.t('employerDetails.endLabel');
   endLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt';
@@ -349,4 +357,25 @@ function updateAllCalendars() {
 
   updateCalendarUI(employedFromId);
   updateCalendarUI(employedToId);
+}
+
+function stillWorkHereListeners() {
+  const stillWorkHereLegend = document.getElementById('still-work-here-legend');
+  const stillWorkHereYes = document.getElementById('still-work-here-yes');
+  const stillWorkHereNo = document.getElementById('still-work-here-no');
+  const dateRangeFieldset = document.getElementById('dateRangeFieldset');
+
+  stillWorkHereYes.addEventListener('change', function () {
+    resetElementText(stillWorkHereLegend);
+    dateRangeFieldset.style.display = 'block';
+  });
+
+  stillWorkHereNo.addEventListener('change', function () {
+    resetElementText(stillWorkHereLegend);
+    dateRangeFieldset.style.display = 'block';
+  });
+
+  stillWorkHereYes.addEventListener('invalid', function () {
+    elementTextError(stillWorkHereLegend);
+  });
 }
