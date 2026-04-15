@@ -1,8 +1,7 @@
 import i18next from 'i18next';
 import {
   clearTextNodes,
-  elementTextError,
-  resetElementText,
+  formattedDateFromField,
   updateCalendarUI,
 } from '../utils';
 
@@ -50,6 +49,10 @@ function addStyles() {
 
     .usa-form-group--error {
       margin-top: 0;
+    }
+
+    .usa-hint {
+      margin-top: 0.5rem;
     }
   `;
   document.head.appendChild(style);
@@ -308,7 +311,6 @@ function dateRangeFieldset() {
   dateRangeFieldset.style.display = 'none';
 
   const startLabel = document.createElement('label');
-  startLabel.id = 'employment-start-label';
   startLabel.classList.add('usa-label');
   startLabel.style.marginTop = '0';
   startLabel.textContent = i18next.t('employerDetails.startLabel');
@@ -317,12 +319,20 @@ function dateRangeFieldset() {
   startLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const startHint = document.createElement('div');
+  startHint.id = 'employment-start-hint';
   startHint.classList.add("usa-hint");
-  startHint.textContent = i18next.t('shared.dateFormat');
+  startHint.textContent = i18next.t('employerDetails.startHint');
   dateRangeFieldset.append(startHint);
+
+  const startFormatHint = document.createElement('div');
+  startFormatHint.id = 'employment-start-format-hint';
+  startFormatHint.classList.add("usa-hint");
+  startFormatHint.textContent = i18next.t('shared.dateFormat');
+  dateRangeFieldset.append(startFormatHint);
 
   const startInput = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt');
   startInput.classList.add('dateInput');
+  startInput.setAttribute('aria-describedby', 'employment-start-hint employment-start-format-hint');
   const startCalendar = document.getElementById('Image2');
 
   const startDateInputContainer = document.createElement('div');
@@ -334,18 +344,24 @@ function dateRangeFieldset() {
   const endLabel = document.createElement('label');
   endLabel.id = 'employment-end-label';
   endLabel.classList.add('usa-label');
-  endLabel.textContent = i18next.t('employerDetails.endLabel');
   endLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt';
   dateRangeFieldset.append(endLabel);
   endLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const endHint = document.createElement('div');
+  endHint.id = 'employment-end-hint';
   endHint.classList.add("usa-hint");
-  endHint.textContent = i18next.t('shared.dateFormat');
   dateRangeFieldset.append(endHint);
+
+  const endFormatHint = document.createElement('div');
+  endFormatHint.id = 'employment-end-format-hint';
+  endFormatHint.classList.add("usa-hint");
+  endFormatHint.textContent = i18next.t('shared.dateFormat');
+  dateRangeFieldset.append(endFormatHint);
 
   const endInput = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt');
   endInput.classList.add('dateInput');
+  endInput.setAttribute('aria-describedby', 'employment-end-hint employment-end-format-hint');
   const endCalendar = document.getElementById('Image4');
 
   const endDateInputContainer = document.createElement('div');
@@ -353,6 +369,9 @@ function dateRangeFieldset() {
   endDateInputContainer.append(endInput);
   endDateInputContainer.append(endCalendar);
   dateRangeFieldset.append(endDateInputContainer);
+
+  const lastDayOfWork = formattedDateFromField('ContentPlaceHolder1_TabEmployment_tbpnlEMP_hdnClmtLWD');
+  const endInfo = document.createElement('div');
 
   stillWorkHereContainer.insertAdjacentElement('afterend', dateRangeFieldset);
 }
@@ -381,17 +400,25 @@ function stillWorkHereListeners() {
   const stillWorkHereYes = document.getElementById('still-work-here-yes');
   const stillWorkHereNo = document.getElementById('still-work-here-no');
   const dateRangeFieldset = document.getElementById('dateRangeFieldset');
+  const employmentEndLabel = document.getElementById('employment-end-label');
+  const employmentEndHint = document.getElementById('employment-end-hint');
+
+  const firstDayOfDisability = formattedDateFromField('ContentPlaceHolder1_TabEmployment_tbpnlEMP_hdnFDDate');
 
   stillWorkHereYes.addEventListener('change', function () {
     stillWorkHereError.style.display = 'none';
     stillWorkHereFieldset.classList.remove('usa-form-group--error');
     dateRangeFieldset.style.display = 'block';
+    employmentEndLabel.textContent = i18next.t('employerDetails.endLabel', { context: 'current', firstDayOfDisability });
+    employmentEndHint.textContent = i18next.t('employerDetails.endHint');
   });
 
   stillWorkHereNo.addEventListener('change', function () {
     stillWorkHereError.style.display = 'none';
     stillWorkHereFieldset.classList.remove('usa-form-group--error');
     dateRangeFieldset.style.display = 'block';
+    employmentEndLabel.textContent = i18next.t('employerDetails.endLabel');
+    employmentEndHint.textContent = '';
   });
 
   stillWorkHereYes.addEventListener('invalid', function () {

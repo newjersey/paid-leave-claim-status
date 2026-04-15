@@ -391,3 +391,13 @@ export function clearTextNodes(node) {
     }
   }
 }
+
+export function formattedDateFromField(id) {
+  const field = document.getElementById(id);
+  const date = new Date(field.value);
+  return date.toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
+}

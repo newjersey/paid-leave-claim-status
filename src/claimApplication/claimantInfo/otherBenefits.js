@@ -2,6 +2,7 @@ import i18next from 'i18next';
 import { logEvent } from "../../modules/shared.mjs";
 import {
   clearTextNodes,
+  formattedDateFromField,
   setNewTitle,
   updateCalendarUI,
 } from '../utils';
@@ -126,16 +127,6 @@ function addStyles() {
     }
   `;
   document.head.appendChild(style);
-}
-
-function formattedDateFromField(id) {
-  const field = document.getElementById(id);
-  const date = new Date(field.value);
-  return date.toLocaleDateString('en-US', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
-  });
 }
 
 function getPromptText() {

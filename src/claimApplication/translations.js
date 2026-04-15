@@ -140,7 +140,18 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         name: "Employer name",
         stillWorkHere: "Do you still work here?",
         startLabel: "When did you start working for this employer?",
+        startHint: "If you don't remember the exact date, provide your best guess.",
         endLabel: "What was the last day you worked for this employer?",
+        endHint: "Hint: Don't count any PTO, vacation, or sick days—just the last day you actually performed work.",
+        endLabel_current: "What was the last day you did any work for this employer before your leave started on {{firstDayOfDisability}}?",
+        endInfo: "Heads up: Earlier you marked {{lastDayOfWork}} as your last day of work. At least one employer should end on this date to match.",
+        endWarning: `
+        Heads up! The date you entered is after the last day of work you gave earlier {{lastDayOfWork}}. You can either:
+        <ul>
+          <li>Choose a date on or before {{lastDayOfWork}}, OR</li>
+          <li>Go back and update your last day of work (your progress will be saved)</li>
+        </ul>
+        `,
       },
       header: {
         personal_information: "Personal information",
