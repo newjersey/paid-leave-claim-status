@@ -47,6 +47,10 @@ function addStyles() {
       background-color: #FBFCFD !important;
       padding: 0 !important;
     }
+
+    .usa-form-group--error {
+      margin-top: 0;
+    }
   `;
   document.head.appendChild(style);
 }
@@ -253,8 +257,8 @@ function stillWorkHereFieldset() {
   stillWorkHereContainer.id = 'stillWorkHereContainer';
   stillWorkHereContainer.classList.add('bordered-set');
   stillWorkHereContainer.innerHTML = `
-    <fieldset class="usa-fieldset">
-      <legend id="still-work-here-legend" class="usa-legend">
+    <fieldset id="still-work-here-fieldset" class="usa-fieldset">
+      <legend class="usa-legend">
         <span class="required-asterisk">*</span> ${i18next.t('employerDetails.stillWorkHere')}
       </legend>
       <div class="usa-radio">
@@ -277,6 +281,18 @@ function stillWorkHereFieldset() {
           value="no"
         />
         <label class="usa-radio__label" for="still-work-here-no">${i18next.t('shared.no')}</label>
+      </div>
+      <div
+        id="still-work-here-error"
+        class="form-alert"
+        style="display: none;"
+        role="alert"
+        aria-live="polite"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#B50909"/>
+        </svg>
+        ${i18next.t('shared.makeSelection')}
       </div>
     </fieldset>
   `;
@@ -360,22 +376,26 @@ function updateAllCalendars() {
 }
 
 function stillWorkHereListeners() {
-  const stillWorkHereLegend = document.getElementById('still-work-here-legend');
+  const stillWorkHereError = document.getElementById('still-work-here-error');
+  const stillWorkHereFieldset = document.getElementById('still-work-here-fieldset');
   const stillWorkHereYes = document.getElementById('still-work-here-yes');
   const stillWorkHereNo = document.getElementById('still-work-here-no');
   const dateRangeFieldset = document.getElementById('dateRangeFieldset');
 
   stillWorkHereYes.addEventListener('change', function () {
-    resetElementText(stillWorkHereLegend);
+    stillWorkHereError.style.display = 'none';
+    stillWorkHereFieldset.classList.remove('usa-form-group--error');
     dateRangeFieldset.style.display = 'block';
   });
 
   stillWorkHereNo.addEventListener('change', function () {
-    resetElementText(stillWorkHereLegend);
+    stillWorkHereError.style.display = 'none';
+    stillWorkHereFieldset.classList.remove('usa-form-group--error');
     dateRangeFieldset.style.display = 'block';
   });
 
   stillWorkHereYes.addEventListener('invalid', function () {
-    elementTextError(stillWorkHereLegend);
+    stillWorkHereError.style.display = 'block';
+    stillWorkHereFieldset.classList.add('usa-form-group--error');
   });
 }
