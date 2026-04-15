@@ -25,22 +25,57 @@ export const identifyingContent = {
 };
 
 export function changes() {
+  addStyles();
   adjustInputs();
   updateAllCalendars();
+}
+
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    @media (max-width: 767px) {
+      #divClEmpDet table,
+      #divClEmpDet tbody,
+      #divClEmpDet tr,
+      #divClEmpDet td {
+        display: block !important;
+        width: 100% !important;
+      }
+      
+      #divClEmpDet tr {
+        margin-bottom: 1rem;
+      }
+      
+      #divClEmpDet td {
+        margin-bottom: 0.5rem;
+      }
+      
+      #divClEmpDet td input[type="text"],
+      #divClEmpDet td select {
+        width: 100% !important;
+        max-width: 400px;
+      }
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 function adjustInputs() {
   const nameInput = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpNm");
   nameInput.classList.add('usa-input');
+  nameInput.style.width = '100%';
 
   const address1Input = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpAdd1");
   address1Input.classList.add('usa-input');
+  address1Input.style.width = '100%';
 
   const address2Input = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpAdd2");
   address2Input.classList.add('usa-input');
+  address2Input.style.width = '100%';
 
   const cityInput = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpCity");
   cityInput.classList.add('usa-input');
+  cityInput.style.width = '100%';
 
   const stateSelect = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_ddlEmpStates");
   stateSelect.classList.add('usa-select');
