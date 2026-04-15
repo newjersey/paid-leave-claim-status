@@ -372,6 +372,16 @@ function dateRangeFieldset() {
 
   const lastDayOfWork = formattedDateFromField('ContentPlaceHolder1_TabEmployment_tbpnlEMP_hdnClmtLWD');
   const endInfo = document.createElement('div');
+  endInfo.id = 'employment-end-info';
+  endInfo.classList.add("usa-alert", "usa-alert--info", "usa-alert--slim");
+  endInfo.innerHTML = `
+    <div class="usa-alert__body">
+      <p class="usa-alert__text">
+        ${i18next.t('employerDetails.endInfo', { lastDayOfWork })}
+      </p>
+    </div>
+  `;
+  dateRangeFieldset.append(endInfo);
 
   stillWorkHereContainer.insertAdjacentElement('afterend', dateRangeFieldset);
 }
@@ -402,6 +412,7 @@ function stillWorkHereListeners() {
   const dateRangeFieldset = document.getElementById('dateRangeFieldset');
   const employmentEndLabel = document.getElementById('employment-end-label');
   const employmentEndHint = document.getElementById('employment-end-hint');
+  const employmentEndInfo = document.getElementById('employment-end-info');
 
   const firstDayOfDisability = formattedDateFromField('ContentPlaceHolder1_TabEmployment_tbpnlEMP_hdnFDDate');
 
@@ -411,6 +422,7 @@ function stillWorkHereListeners() {
     dateRangeFieldset.style.display = 'block';
     employmentEndLabel.textContent = i18next.t('employerDetails.endLabel', { context: 'current', firstDayOfDisability });
     employmentEndHint.textContent = i18next.t('employerDetails.endHint');
+    employmentEndInfo.style.display = 'block';
   });
 
   stillWorkHereNo.addEventListener('change', function () {
@@ -419,6 +431,7 @@ function stillWorkHereListeners() {
     dateRangeFieldset.style.display = 'block';
     employmentEndLabel.textContent = i18next.t('employerDetails.endLabel');
     employmentEndHint.textContent = '';
+    employmentEndInfo.style.display = 'none';
   });
 
   stillWorkHereYes.addEventListener('invalid', function () {
