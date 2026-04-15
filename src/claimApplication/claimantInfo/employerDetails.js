@@ -33,6 +33,7 @@ export function changes() {
   rearrangeAddressFieldset();
   stillWorkHereFieldset();
   dateRangeFieldset();
+  hideUnusedElements();
   updateAllCalendars();
 }
 
@@ -330,6 +331,16 @@ function dateRangeFieldset() {
   dateRangeFieldset.append(endDateInputContainer);
 
   stillWorkHereContainer.insertAdjacentElement('afterend', dateRangeFieldset);
+}
+
+function hideUnusedElements() {
+  const oldPhoneDiv = document.getElementById('divClEmpTelVal');
+  oldPhoneDiv.previousElementSibling.style.display = 'none';
+
+  const table = document.getElementById('divAddEmplyrName').closest('table');
+  table.style.display = 'none';
+  table.nextElementSibling.style.display = 'none';
+  table.nextElementSibling.nextElementSibling.style.display = 'none';
 }
 
 function updateAllCalendars() {
