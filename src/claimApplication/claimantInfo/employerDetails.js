@@ -30,7 +30,8 @@ export const identifyingContent = {
 
 export function changes() {
   addStyles();
-  adjustInputs();
+  rearrangeAddressFieldset();
+  stillWorkHereFieldset();
   updateAllCalendars();
 }
 
@@ -45,8 +46,9 @@ function addStyles() {
   document.head.appendChild(style);
 }
 
-function adjustInputs() {
+function rearrangeAddressFieldset() {
   const addressFieldset = document.querySelector("#divEmp > fieldset");
+  addressFieldset.id = 'address-fieldset';
   addressFieldset.classList.add('usa-fieldset', 'bordered-set');
 
   const addressLegend = document.querySelector("#divEmp > fieldset > legend");
@@ -238,6 +240,41 @@ function adjustInputs() {
       countrySelect.style.display = 'none';
     }
   });
+}
+
+function stillWorkHereFieldset() {
+  const addressFieldset = document.getElementById('address-fieldset');
+  const stillWorkHereContainer = document.createElement('div');
+  stillWorkHereContainer.classList.add('bordered-set');
+  stillWorkHereContainer.innerHTML = `
+    <fieldset class="usa-fieldset">
+      <legend class="usa-legend">
+        <span class="required-asterisk">*</span> ${i18next.t('employerDetails.stillWorkHere')}
+      </legend>
+      <div class="usa-radio">
+        <input
+          class="usa-radio__input"
+          id="still-work-here-yes"
+          type="radio"
+          name="still-work-here"
+          value="yes"
+        />
+        <label class="usa-radio__label" for="still-work-here-yes">${i18next.t('shared.yes')}</label>
+      </div>
+      <div class="usa-radio">
+        <input
+          class="usa-radio__input"
+          id="still-work-here-no"
+          type="radio"
+          name="still-work-here"
+          value="no"
+        />
+        <label class="usa-radio__label" for="still-work-here-no">${i18next.t('shared.no')}</label>
+      </div>
+    </fieldset>
+  `;
+
+  addressFieldset.insertAdjacentElement('afterend', stillWorkHereContainer);
 }
 
 function updateAllCalendars() {

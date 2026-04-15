@@ -138,6 +138,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       employerDetails: {
         name: "Employer name",
+        stillWorkHere: "Do you still work here?",
       },
       header: {
         personal_information: "Personal information",
