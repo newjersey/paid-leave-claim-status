@@ -32,6 +32,7 @@ export function changes() {
   addStyles();
   rearrangeAddressFieldset();
   stillWorkHereFieldset();
+  dateRangeFieldset();
   updateAllCalendars();
 }
 
@@ -245,6 +246,7 @@ function rearrangeAddressFieldset() {
 function stillWorkHereFieldset() {
   const addressFieldset = document.getElementById('address-fieldset');
   const stillWorkHereContainer = document.createElement('div');
+  stillWorkHereContainer.id = 'stillWorkHereContainer';
   stillWorkHereContainer.classList.add('bordered-set');
   stillWorkHereContainer.innerHTML = `
     <fieldset class="usa-fieldset">
@@ -275,6 +277,59 @@ function stillWorkHereFieldset() {
   `;
 
   addressFieldset.insertAdjacentElement('afterend', stillWorkHereContainer);
+}
+
+function dateRangeFieldset() {
+  const stillWorkHereContainer = document.getElementById('stillWorkHereContainer');
+  const dateRangeFieldset = document.createElement('fieldset');
+  dateRangeFieldset.classList.add('bordered-set', 'usa-fieldset');
+
+  const startLabel = document.createElement('label');
+  startLabel.classList.add('usa-label');
+  startLabel.style.marginTop = '0';
+  startLabel.textContent = i18next.t('employerDetails.startLabel');
+  startLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt';
+  dateRangeFieldset.append(startLabel);
+  startLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const startHint = document.createElement('div');
+  startHint.classList.add("usa-hint");
+  startHint.textContent = i18next.t('shared.dateFormat');
+  dateRangeFieldset.append(startHint);
+
+  const startInput = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt');
+  startInput.classList.add('dateInput');
+  const startCalendar = document.getElementById('Image2');
+
+  const startDateInputContainer = document.createElement('div');
+  startDateInputContainer.classList.add('dateInputContainer');
+  startDateInputContainer.append(startInput);
+  startDateInputContainer.append(startCalendar);
+  dateRangeFieldset.append(startDateInputContainer);
+
+  const endLabel = document.createElement('label');
+  endLabel.classList.add('usa-label');
+  endLabel.textContent = i18next.t('employerDetails.endLabel');
+  endLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt';
+  dateRangeFieldset.append(endLabel);
+  endLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const endHint = document.createElement('div');
+  endHint.classList.add("usa-hint");
+  endHint.textContent = i18next.t('shared.dateFormat');
+  dateRangeFieldset.append(endHint);
+
+  const endInput = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt');
+  endInput.classList.add('dateInput');
+  const endCalendar = document.getElementById('Image4');
+
+  const endDateInputContainer = document.createElement('div');
+  endDateInputContainer.classList.add('dateInputContainer');
+  endDateInputContainer.append(endInput);
+  endDateInputContainer.append(endCalendar);
+  dateRangeFieldset.append(endDateInputContainer);
+
+  stillWorkHereContainer.insertAdjacentElement('afterend', dateRangeFieldset);
 }
 
 function updateAllCalendars() {

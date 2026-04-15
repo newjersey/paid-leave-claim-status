@@ -139,6 +139,8 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       employerDetails: {
         name: "Employer name",
         stillWorkHere: "Do you still work here?",
+        startLabel: "When did you start working for this employer?",
+        endLabel: "What was the last day you worked for this employer?",
       },
       header: {
         personal_information: "Personal information",

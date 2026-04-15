@@ -52,6 +52,16 @@ function injectGlobalStyles() {
       padding: 10px;
     }
 
+    .dateInput {
+      margin-top: 0;
+    }
+
+    .dateInputContainer {
+      display: flex;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+
     .required-asterisk {
       color: rgb(139, 0, 0);
       font-weight: bold;

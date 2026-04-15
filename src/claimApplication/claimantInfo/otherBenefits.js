@@ -121,11 +121,6 @@ function addStyles() {
       padding-bottom: 0;
     }
 
-    .dateInputContainer {
-      display: flex;
-      align-items: center;
-    }
-
     #warning-ssdi p {
       margin-left: 10px;
     }
@@ -499,7 +494,7 @@ function restyleSSDIFollowup() {
   dateInputContainer.classList.add('dateInputContainer');
 
   const dateInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtSSDate');
-  dateInput.classList.add("usa-input");
+  dateInput.classList.add("usa-input", "dateInput");
   const calendarInput = document.getElementById('Image10');
 
   dateInputContainer.append(dateInput);
@@ -617,8 +612,8 @@ function appendDateRangeFields(fieldset, dateContainerId, startInputId, endInput
   startDateInputContainer.classList.add('dateInputContainer');
 
   const startInput = document.getElementById(startInputId);
+  startInput.classList.add("usa-input", "dateInput");
   const startCalendar = document.getElementById(startCalendarId);
-  startInput.classList.add("usa-input");
 
   startDateInputContainer.append(startInput);
   startDateInputContainer.append(startCalendar);
@@ -640,8 +635,8 @@ function appendDateRangeFields(fieldset, dateContainerId, startInputId, endInput
   endDateInputContainer.classList.add('dateInputContainer');
 
   const endInput = document.getElementById(endInputId);
+  endInput.classList.add("usa-input", "dateInput");
   const endCalendar = document.getElementById(endCalendarId);
-  endInput.classList.add("usa-input");
 
   endDateInputContainer.append(endInput);
   endDateInputContainer.append(endCalendar);
