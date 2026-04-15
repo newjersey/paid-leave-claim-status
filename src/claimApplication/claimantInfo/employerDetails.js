@@ -54,6 +54,10 @@ function addStyles() {
     .usa-hint {
       margin-top: 0.5rem;
     }
+
+    .usa-label {
+      max-width: 100%;
+    }
   `;
   document.head.appendChild(style);
 }
@@ -346,7 +350,6 @@ function dateRangeFieldset() {
   endLabel.classList.add('usa-label');
   endLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt';
   dateRangeFieldset.append(endLabel);
-  endLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const endHint = document.createElement('div');
   endHint.id = 'employment-end-hint';
@@ -421,6 +424,7 @@ function stillWorkHereListeners() {
     stillWorkHereFieldset.classList.remove('usa-form-group--error');
     dateRangeFieldset.style.display = 'block';
     employmentEndLabel.textContent = i18next.t('employerDetails.endLabel', { context: 'current', firstDayOfDisability });
+    employmentEndLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
     employmentEndHint.textContent = i18next.t('employerDetails.endHint');
     employmentEndInfo.style.display = 'block';
   });
@@ -430,6 +434,7 @@ function stillWorkHereListeners() {
     stillWorkHereFieldset.classList.remove('usa-form-group--error');
     dateRangeFieldset.style.display = 'block';
     employmentEndLabel.textContent = i18next.t('employerDetails.endLabel');
+    employmentEndLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
     employmentEndHint.textContent = '';
     employmentEndInfo.style.display = 'none';
   });
