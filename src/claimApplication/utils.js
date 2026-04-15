@@ -370,3 +370,24 @@ function removeEmptyRows(calendarId) {
     });
   }
 }
+
+export function clearTextNodes(node) {
+  if (node.parentElement?.tagName.toLowerCase() === 'option') {
+    return;
+  }
+
+  if (node.nodeType === Node.TEXT_NODE) {
+    const text = node.textContent;
+    if (/^\s*$/.test(text)) {
+      node.remove(); 
+    } else {
+      node.textContent = ''; 
+    }
+  } else if (node.nodeType === Node.ELEMENT_NODE) {
+    Array.from(node.childNodes).forEach(clearTextNodes);
+    const tagName = node.tagName.toLowerCase();
+    if ((tagName === 'a' || tagName === 'strong' || tagName === 'br')) {
+      node.remove();
+    }
+  }
+}

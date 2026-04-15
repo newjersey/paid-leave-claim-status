@@ -28,6 +28,7 @@ function injectGlobalStyles() {
     body {
       background-color: #FBFCFD;
     }
+
     h1, h2, h3, h4, p, a {
       font-family: "Public Sans", sans-serif !important;
       font-variant: normal !important; 
@@ -54,6 +55,10 @@ function injectGlobalStyles() {
     .required-asterisk {
       color: rgb(139, 0, 0);
       font-weight: bold;
+    }
+
+    .required-asterisk-inline {
+      margin-right: 3px;
     }
 
     .usa-checkbox__label, .usa-combo-box__input, .usa-combo-box__list, .usa-fieldset, .usa-hint, .usa-input, .usa-input-group, .usa-radio__label, .usa-range, .usa-select, .usa-textarea, .usa-button, .usa-table, .usa-label, .usa-legend, .usa-alert  {

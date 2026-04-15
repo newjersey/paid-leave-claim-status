@@ -1,4 +1,8 @@
-import { updateCalendarUI } from '../utils';
+import i18next from 'i18next';
+import {
+  clearTextNodes,
+  updateCalendarUI,
+} from '../utils';
 
 export const employerDetailsLabels = [
   { id: 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpNm', label: 'Employer Name' },
@@ -33,65 +37,108 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
-    @media (max-width: 767px) {
-      #divClEmpDet table,
-      #divClEmpDet tbody,
-      #divClEmpDet tr,
-      #divClEmpDet td {
-        display: block !important;
-        width: 100% !important;
-      }
-      
-      #divClEmpDet tr {
-        margin-bottom: 1rem;
-      }
-      
-      #divClEmpDet td {
-        margin-bottom: 0.5rem;
-      }
-      
-      #divClEmpDet td input[type="text"],
-      #divClEmpDet td select {
-        width: 100% !important;
-        max-width: 400px;
-      }
+    #ContentPlaceHolder1_TabEmployment, #ContentPlaceHolder1_TabEmployment_body {
+      background-color: #FBFCFD !important;
+      padding: 0 !important;
     }
   `;
   document.head.appendChild(style);
 }
 
 function adjustInputs() {
+  const addressFieldset = document.querySelector("#divEmp > fieldset");
+  addressFieldset.classList.add('usa-fieldset', 'bordered-set');
+
+  const addressLegend = document.querySelector("#divEmp > fieldset > legend");
+  addressLegend.nextSibling.nextSibling.remove();
+  addressLegend.remove();
+
+  const addressContainer = document.getElementById('divClEmpDet');
+  clearTextNodes(addressContainer);
+  
+  const nameLabel = document.createElement('label');
+  nameLabel.classList.add('usa-label');
+  nameLabel.textContent = i18next.t('employerDetails.name');
+  nameLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpNm';
+  nameLabel.style.marginTop = '0';
+  addressContainer.prepend(nameLabel);
+  nameLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
   const nameInput = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpNm");
   nameInput.classList.add('usa-input');
   nameInput.style.width = '100%';
+  nameLabel.insertAdjacentElement('afterend', nameInput);
+
+  const address1Label = document.createElement('label');
+  address1Label.classList.add('usa-label');
+  address1Label.textContent = i18next.t('contact.street1');
+  address1Label.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpAdd1';
+  nameInput.insertAdjacentElement('afterend', address1Label);
+  address1Label.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const address1Input = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpAdd1");
   address1Input.classList.add('usa-input');
   address1Input.style.width = '100%';
+  address1Label.insertAdjacentElement('afterend', address1Input);
+
+  const address2Label = document.createElement('label');
+  address2Label.classList.add('usa-label');
+  address2Label.textContent = i18next.t('contact.street2');
+  address2Label.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpAdd2';
+  address1Input.insertAdjacentElement('afterend', address2Label);
 
   const address2Input = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpAdd2");
   address2Input.classList.add('usa-input');
   address2Input.style.width = '100%';
+  address2Label.insertAdjacentElement('afterend', address2Input);
+
+  const cityLabel = document.createElement('label');
+  cityLabel.classList.add('usa-label');
+  cityLabel.textContent = i18next.t('contact.city');
+  cityLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpCity';
+  address2Input.insertAdjacentElement('afterend', cityLabel);
+  cityLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const cityInput = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpCity");
   cityInput.classList.add('usa-input');
   cityInput.style.width = '100%';
+  cityLabel.insertAdjacentElement('afterend', cityInput);
+
+  const stateLabel = document.createElement('label');
+  stateLabel.classList.add('usa-label');
+  stateLabel.textContent = i18next.t('contact.stateOrTerritory');
+  stateLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_ddlEmpStates';
+  cityInput.insertAdjacentElement('afterend', stateLabel);
+  stateLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const stateSelect = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_ddlEmpStates");
   stateSelect.classList.add('usa-select');
   stateSelect.style.height = 'auto';
   stateSelect.style.width = '160px';
+  stateLabel.insertAdjacentElement('afterend', stateSelect);
+
+  const oldZipLabel = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblAddEmpZip');
+  oldZipLabel.remove();
+
+  const zipLabel = document.createElement('label');
+  zipLabel.classList.add('usa-label');
+  zipLabel.textContent = i18next.t('contact.zipcode');
+  zipLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpZip1';
+  stateSelect.insertAdjacentElement('afterend', zipLabel);
+  zipLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const zipContainer = document.getElementById('divAddEmpZip');
   zipContainer.style.display = 'flex';
   zipContainer.style.alignItems = 'center';
   zipContainer.style.marginTop = '0.5rem';
+  zipLabel.insertAdjacentElement('afterend', zipContainer);
 
   const zip1Input = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpZip1");
   zip1Input.classList.add('usa-input');
   zip1Input.style.width = '80px';
   zip1Input.style.marginTop = '0';
   zip1Input.style.marginRight = '5px';
+  zip1Input.insertAdjacentHTML('afterend', '-');
 
   const zip2Input = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpZip2");
   zip2Input.classList.add('usa-input');
@@ -101,12 +148,31 @@ function adjustInputs() {
 
   const intlZipInput = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpZipOOC');
   intlZipInput.classList.add('usa-input');
+  intlZipInput.style.display = 'none';
   intlZipInput.style.width = '140px';
+  zipLabel.insertAdjacentElement('afterend', intlZipInput);
+
+  const countryLabel = document.createElement('label');
+  countryLabel.classList.add('usa-label');
+  countryLabel.style.display = 'none';
+  countryLabel.textContent = i18next.t('contact.country');
+  countryLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_ddlAddEmpCtry';
+  intlZipInput.insertAdjacentElement('afterend', countryLabel);
+  countryLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const countrySelect = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_ddlAddEmpCtry');
   countrySelect.classList.add('usa-select');
+  countrySelect.style.display = 'none';
   countrySelect.style.height = 'auto';
   countrySelect.style.width = '400px';
+  countryLabel.insertAdjacentElement('afterend', countrySelect);
+
+  const phoneLabel = document.createElement('label');
+  phoneLabel.classList.add('usa-label');
+  phoneLabel.textContent = i18next.t('contact.phone');
+  phoneLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNoA';
+  zipContainer.insertAdjacentElement('afterend', phoneLabel);
+  phoneLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const phone1Input = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNoA");
   phone1Input.classList.add('usa-input');
@@ -137,6 +203,7 @@ function adjustInputs() {
   const phoneContainer = document.createElement('div');
   phoneContainer.style.display = 'flex';
   phoneContainer.style.alignItems = 'center';
+  phoneContainer.style.marginTop = '0.5rem';
   phone1Input.insertAdjacentElement('beforebegin', phoneContainer);
   phoneContainer.append(phone1Input);
   phone1Input.insertAdjacentHTML('afterend', '-');
@@ -148,6 +215,7 @@ function adjustInputs() {
   phoneContainer.nextSibling.remove();
   phoneContainer.nextSibling.remove();
   phoneContainer.nextSibling.remove();
+  phoneLabel.insertAdjacentElement('afterend', phoneContainer);
 
   const startDateInput = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt");
   startDateInput.classList.add('usa-input');
@@ -156,8 +224,18 @@ function adjustInputs() {
   endDateInput.classList.add('usa-input');
 
   stateSelect.addEventListener('change', function () {
-    if (stateSelect.value != 0) {
+    if (stateSelect.value == 0) {
+      zipLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpZipOOC';
+      intlZipInput.style.display = 'block';
+      countryLabel.style.display = 'block';
+      countrySelect.style.display = 'block';
+      zipContainer.style.display = 'none';
+    } else {
+      zipLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpZip1';
       zipContainer.style.display = 'flex';
+      intlZipInput.style.display = 'none';
+      countryLabel.style.display = 'none';
+      countrySelect.style.display = 'none';
     }
   });
 }

@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import { logEvent } from "../../modules/shared.mjs";
 import {
+  clearTextNodes,
   setNewTitle,
   updateCalendarUI,
 } from '../utils';
@@ -83,10 +84,6 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
-    .required-asterisk-inline {
-      margin-right: 3px;
-    }
-
     .usa-radio {
       padding: 0;
     }
@@ -399,7 +396,7 @@ function restyleEmployerFollowup() {
 
   const countryLabel = document.createElement('label');
   countryLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenEmpCountry';
-  countryLabel.textContent = i18next.t('otherBenefits.employer.followup.country');
+  countryLabel.textContent = i18next.t('contact.country');
   countryLabel.style.marginTop = '20px';
   countryLabel.style.fontFamily = '"Public Sans", sans-serif';
   intlContainer.append(countryLabel);
@@ -785,27 +782,6 @@ function createAndAppendOption(selectElement, valueString, stateString) {
   option.value = valueString;
   option.textContent = stateString;
   selectElement.appendChild(option);
-}
-
-function clearTextNodes(node) {
-  if (node.parentElement?.tagName.toLowerCase() === 'option') {
-    return;
-  }
-
-  if (node.nodeType === Node.TEXT_NODE) {
-    const text = node.textContent;
-    if (/^\s*$/.test(text)) {
-      node.remove(); 
-    } else {
-      node.textContent = ''; 
-    }
-  } else if (node.nodeType === Node.ELEMENT_NODE) {
-    Array.from(node.childNodes).forEach(clearTextNodes);
-    const tagName = node.tagName.toLowerCase();
-    if ((tagName === 'a' || tagName === 'strong' || tagName === 'br')) {
-      node.remove();
-    }
-  }
 }
 
 function loadRadioButtonsIntoCheckbox(originalYes, originalNo, checkbox) {

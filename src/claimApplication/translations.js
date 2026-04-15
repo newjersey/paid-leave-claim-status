@@ -20,7 +20,9 @@ const resources = {
         street2: "Street address line 2 (optional)",
         city: "City",
         state: "State",
+        stateOrTerritory: "State or territory",
         zipcode: "ZIP code",
+        country: "Country",
         phone: "Phone number",
         phoneHint: "10-digit, U.S. only, for example 999-999-9999",
       },
@@ -133,6 +135,9 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             check_status: `<a href="/DOL_DABI/" target="_blank">Check your claim status</a> (note: it takes several days for your first status update)`,
           },
         },
+      },
+      employerDetails: {
+        name: "Employer name",
       },
       header: {
         personal_information: "Personal information",
@@ -291,7 +296,6 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             title: "You answered yes to Temporary disability benefits from your employer",
             subtitle: "Disability from your employer",
             employerLabel: "Enter the employer or union that is paying you disability benefits.",
-            country: "Country",
           },
         },
       },
