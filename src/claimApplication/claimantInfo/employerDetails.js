@@ -473,6 +473,7 @@ function stillWorkHereListeners() {
 }
 
 function endDateListener() {
+  const employmentEndInfo = document.getElementById('employment-end-info');
   const employmentEndWarning = document.getElementById('employment-end-warning');
   const employmentEndWarningTextBeforeFDD = document.getElementById('employment-end-warning-text-before-fdd');
   const employmentEndWarningTextOnFDD = document.getElementById('employment-end-warning-text-on-fdd');
@@ -486,11 +487,13 @@ function endDateListener() {
 
   endInput.addEventListener('blur', function() {
     if (!this.value) {
+      employmentEndInfo.style.display = 'block';
       employmentEndWarning.style.display = 'none';
       return;
     }
 
     const endDate = new Date(this.value).getTime();
+    employmentEndInfo.style.display = 'none';
 
     if (endDate === firstDayOfDisabilityDate) {
       employmentEndWarning.style.display = 'block';

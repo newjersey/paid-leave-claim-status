@@ -175,6 +175,16 @@ describe("Employment Details page", () => {
       cy.checkLogEvent(`System Alert`, { contents: "Employment Start Date cannot be later than First Day Of Disability.", pageId: 'employerDetails' });
     });
 
+    it('warning shows on conflicts', () => {
+      cy.get('#still-work-here-yes').click({ force: true });
+      cy.get('#employment-end-info').should('be.visible');
+      cy.get('#employment-end-warning').should('not.be.visible');
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('06/30/2024');
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').blur();
+      cy.get('#employment-end-info').should('not.be.visible');
+      cy.get('#employment-end-warning').should('be.visible');
+    });
+
     globalTestsNew(PAGE_ID, URL);
   });
 });
