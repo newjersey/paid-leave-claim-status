@@ -39,6 +39,7 @@ export function changes() {
   updateAllCalendars();
   stillWorkHereListeners();
   endDateListener();
+  cancelButtonDoesNotRequireRadioButtons();
 }
 
 function addStyles() {
@@ -502,5 +503,14 @@ function endDateListener() {
     } else {
       employmentEndWarning.style.display = 'none';
     }
+  });
+}
+
+function cancelButtonDoesNotRequireRadioButtons() {
+  const cancelButton = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_btnCancelEmp1');
+  const stillWorkHereYes = document.getElementById('still-work-here-yes');
+
+  cancelButton.addEventListener('click', function() {
+    stillWorkHereYes.removeAttribute('required');
   });
 }
