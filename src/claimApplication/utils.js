@@ -53,6 +53,13 @@ export function encodeDecode(data) {
   return data.split('').map(char => String.fromCharCode(char.charCodeAt(0) ^ 100)).join('');
 }
 
+export function logout(skipConfirmation = false) {
+  if (skipConfirmation || confirmLogout()) { // confirmLogout is an existing JS function from .NET
+    __doPostBack('ctl00$header$lbtnLogout', ''); // existing JS function from .NET
+    clearSessionData();
+  }
+}
+
 // This only styles the buttons.
 // When possible also use USWDS suggested HTML fieldset and legend structure
 export function styleRadioButton(radioButtonId, marginBottom = false) {

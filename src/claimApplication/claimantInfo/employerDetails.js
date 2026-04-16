@@ -2,6 +2,7 @@ import i18next from 'i18next';
 import {
   clearTextNodes,
   formattedDateFromField,
+  logout,
   updateCalendarUI,
 } from '../utils';
 
@@ -37,6 +38,7 @@ export function changes() {
   hideUnusedElements();
   updateAllCalendars();
   stillWorkHereListeners();
+  endDateListener();
 }
 
 function addStyles() {
@@ -385,6 +387,26 @@ function dateRangeFieldset() {
     </div>
   `;
   dateRangeFieldset.append(endInfo);
+
+  const endWarning = document.createElement('div');
+  endWarning.id = 'employment-end-warning';
+  endWarning.classList.add("usa-alert", "usa-alert--warning", "usa-alert--slim");
+  endWarning.innerHTML = `
+    <div class="usa-alert__body">
+      <p class="usa-alert__text">
+        ${i18next.t('employerDetails.endWarning', { lastDayOfWork })}
+      </p>
+    </div>
+  `;
+  dateRangeFieldset.append(endWarning);
+
+  const updateLink = dateRangeFieldset.querySelector('#update-last-day-link');
+  if (updateLink) {
+    updateLink.addEventListener('click', function (event) {
+      event.preventDefault();
+      logout(true);
+    });
+  }
 
   stillWorkHereContainer.insertAdjacentElement('afterend', dateRangeFieldset);
 }
