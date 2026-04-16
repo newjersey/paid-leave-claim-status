@@ -390,11 +390,15 @@ function dateRangeFieldset() {
 
   const endWarning = document.createElement('div');
   endWarning.id = 'employment-end-warning';
+  endWarning.style.display = 'none';
   endWarning.classList.add("usa-alert", "usa-alert--warning", "usa-alert--slim");
   endWarning.innerHTML = `
     <div class="usa-alert__body">
-      <p class="usa-alert__text">
+      <p class="usa-alert__text" id="employment-end-warning-text-before-fdd">
         ${i18next.t('employerDetails.endWarning', { lastDayOfWork })}
+      </p>
+      <p class="usa-alert__text" id="employment-end-warning-text-on-fdd">
+        ${i18next.t('employerDetails.endWarningOnFDD', { lastDayOfWork })}
       </p>
     </div>
   `;
@@ -464,5 +468,39 @@ function stillWorkHereListeners() {
   stillWorkHereYes.addEventListener('invalid', function () {
     stillWorkHereError.style.display = 'block';
     stillWorkHereFieldset.classList.add('usa-form-group--error');
+  });
+}
+
+function endDateListener() {
+  const employmentEndWarning = document.getElementById('employment-end-warning');
+  const employmentEndWarningTextBeforeFDD = document.getElementById('employment-end-warning-text-before-fdd');
+  const employmentEndWarningTextOnFDD = document.getElementById('employment-end-warning-text-on-fdd');
+
+  const endInput = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt');
+
+  const firstDayOfDisability = document.getElementById('ContentPlaceHolder1_TabEmployment_tbpnlEMP_hdnFDDate').value;
+  const firstDayOfDisabilityDate = new Date(firstDayOfDisability).getTime();
+  const lastDayOfWork = document.getElementById('ContentPlaceHolder1_TabEmployment_tbpnlEMP_hdnClmtLWD').value;
+  const lastDayOfWorkDate = new Date(lastDayOfWork).getTime();
+
+  endInput.addEventListener('blur', function() {
+    if (!this.value) {
+      employmentEndWarning.style.display = 'none';
+      return;
+    }
+
+    const endDate = new Date(this.value).getTime();
+
+    if (endDate === firstDayOfDisabilityDate) {
+      employmentEndWarning.style.display = 'block';
+      employmentEndWarningTextBeforeFDD.style.display = 'none';
+      employmentEndWarningTextOnFDD.style.display = 'block';
+    } else if (endDate > lastDayOfWorkDate) {
+      employmentEndWarning.style.display = 'block';
+      employmentEndWarningTextBeforeFDD.style.display = 'block';
+      employmentEndWarningTextOnFDD.style.display = 'none';
+    } else {
+      employmentEndWarning.style.display = 'none';
+    }
   });
 }
