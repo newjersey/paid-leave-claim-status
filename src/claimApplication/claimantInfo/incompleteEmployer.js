@@ -79,4 +79,58 @@ function rearrangeAddressFieldset() {
 
   const addressLegend = document.querySelector("#divEmp > fieldset > legend");
   addressLegend.remove();
+
+  const addressDetails = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblEmpDet');
+
+  const phoneLabel = document.createElement('label');
+  phoneLabel.classList.add('usa-label');
+  phoneLabel.textContent = i18next.t('contact.phone');
+  phoneLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNoA';
+  addressDetails.insertAdjacentElement('afterend', phoneLabel);
+  phoneLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const phone1Input = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNoA");
+  phone1Input.classList.add('usa-input');
+  phone1Input.style.marginRight = '2px';
+  phone1Input.style.marginTop = '0';
+  phone1Input.style.width = '50px';
+
+  const phone2Input = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNo1");
+  phone2Input.classList.add('usa-input');
+  phone2Input.style.marginLeft = '2px';
+  phone2Input.style.marginRight = '2px';
+  phone2Input.style.marginTop = '0';
+  phone2Input.style.width = '50px';
+
+  const phone3Input = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNo2");
+  phone3Input.classList.add('usa-input');
+  phone3Input.style.marginLeft = '2px';
+  phone3Input.style.marginRight = '10px';
+  phone3Input.style.marginTop = '0';
+  phone3Input.style.width = '60px';
+
+  const phone4Input = document.getElementById("ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNoX");
+  phone4Input.classList.add('usa-input');
+  phone4Input.style.marginLeft = '2px';
+  phone4Input.style.marginTop = '0';
+  phone4Input.style.width = '70px';
+
+  const phoneContainer = document.createElement('div');
+  phoneContainer.style.display = 'flex';
+  phoneContainer.style.alignItems = 'center';
+  phoneContainer.style.marginTop = '0.5rem';
+  phone1Input.insertAdjacentElement('beforebegin', phoneContainer);
+  phoneContainer.append(phone1Input);
+  phone1Input.insertAdjacentHTML('afterend', '-');
+  phoneContainer.append(phone2Input);
+  phone2Input.insertAdjacentHTML('afterend', '-');
+  phoneContainer.append(phone3Input);
+  phone3Input.insertAdjacentHTML('afterend', 'Ext.');
+  phoneContainer.append(phone4Input);
+  phoneContainer.nextSibling.remove();
+  phoneContainer.nextSibling.remove();
+  phoneContainer.nextSibling.remove();
+  phoneLabel.insertAdjacentElement('afterend', phoneContainer);
+
+  phoneContainer.nextElementSibling.remove();
 }
