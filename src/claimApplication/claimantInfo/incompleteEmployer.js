@@ -13,6 +13,8 @@ export function changes() {
   addStyles();
   rearrangeDidYouWorkQuestion();
   rearrangeAddressFieldset();
+  stillWorkHereFieldset();
+  hideUnusedElements();
   updateCalendars();
 }
 
@@ -134,3 +136,58 @@ function rearrangeAddressFieldset() {
 
   phoneContainer.nextElementSibling.remove();
 }
+
+function stillWorkHereFieldset() {
+  const addressFieldset = document.getElementById('address-fieldset');
+  const stillWorkHereContainer = document.createElement('div');
+  stillWorkHereContainer.id = 'stillWorkHereContainer';
+  stillWorkHereContainer.classList.add('bordered-set');
+  stillWorkHereContainer.innerHTML = `
+    <fieldset id="still-work-here-fieldset" class="usa-fieldset">
+      <legend class="usa-legend">
+        <span class="required-asterisk">*</span> ${i18next.t('employerDetails.stillWorkHere')}
+      </legend>
+      <div class="usa-radio">
+        <input
+          class="usa-radio__input"
+          id="still-work-here-yes"
+          type="radio"
+          name="still-work-here"
+          value="yes"
+          required
+        />
+        <label class="usa-radio__label" for="still-work-here-yes">${i18next.t('shared.yes')}</label>
+      </div>
+      <div class="usa-radio">
+        <input
+          class="usa-radio__input"
+          id="still-work-here-no"
+          type="radio"
+          name="still-work-here"
+          value="no"
+        />
+        <label class="usa-radio__label" for="still-work-here-no">${i18next.t('shared.no')}</label>
+      </div>
+      <div
+        id="still-work-here-error"
+        class="form-alert"
+        style="display: none;"
+        role="alert"
+        aria-live="polite"
+      >
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#B50909"/>
+        </svg>
+        ${i18next.t('shared.makeSelection')}
+      </div>
+    </fieldset>
+  `;
+
+  addressFieldset.insertAdjacentElement('afterend', stillWorkHereContainer);
+}
+
+function hideUnusedElements() {
+  const oldPhoneInput = document.getElementById("divExtEmplPhone");
+  oldPhoneInput.style.display = 'none';
+}
+
