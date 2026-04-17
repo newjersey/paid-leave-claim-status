@@ -421,9 +421,13 @@ function endDateListener() {
 
 function cancelButtonDoesNotRequireRadioButtons() {
   const cancelButton = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_btnCancelEmp1');
+  const didNotWorkHereButton = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_BtnDelete');
   const stillWorkHereYes = document.getElementById('still-work-here-yes');
 
-  cancelButton.addEventListener('click', function() {
+  const removeRequired = function() {
     stillWorkHereYes.removeAttribute('required');
-  });
+  };
+
+  cancelButton.addEventListener('click', removeRequired);
+  didNotWorkHereButton.addEventListener('click', removeRequired);
 }
