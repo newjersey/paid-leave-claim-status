@@ -286,6 +286,28 @@ export function updateCalendarUI(id, isFddCalendar = true, onlyShowYearControls 
       setTimeout(() => fixCalendarPopup(calendarId, onlyShowYearControls), 10);
     });
   }
+  dispatchEventsOnCalendarChoices();
+}
+
+function dispatchEventsOnCalendarChoices() {
+  const originalSetCalendarControlDate = window.setCalendarControlDate;
+  const originalSetCalendarControlDateFDD = window.setCalendarControlDateFDD;
+
+  window.setCalendarControlDate = function(year, month, day) {
+    const dateFieldId = calendarControl.visible();
+    originalSetCalendarControlDate(year, month, day);
+    document.dispatchEvent(new CustomEvent('calendarDateSelected', {
+      detail: { dateFieldId }
+    }));
+  };
+
+  window.setCalendarControlDateFDD = function(year, month, day) {
+    const dateFieldId = FDDCalendarControl.visibleFDD();
+    originalSetCalendarControlDateFDD(year, month, day);
+    document.dispatchEvent(new CustomEvent('calendarDateSelected', {
+      detail: { dateFieldId }
+    }));
+  };
 }
 
 function fixCalendarPopup(calendarId, onlyShowYearControls) {

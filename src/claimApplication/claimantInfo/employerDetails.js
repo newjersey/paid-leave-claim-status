@@ -443,6 +443,7 @@ function stillWorkHereListeners() {
   const employmentEndLabel = document.getElementById('employment-end-label');
   const employmentEndHint = document.getElementById('employment-end-hint');
   const employmentEndInfo = document.getElementById('employment-end-info');
+  const employmentEndWarning= document.getElementById('employment-end-warning');
 
   const firstDayOfDisability = formattedDateFromField('ContentPlaceHolder1_TabEmployment_tbpnlEMP_hdnFDDate');
 
@@ -453,7 +454,7 @@ function stillWorkHereListeners() {
     employmentEndLabel.textContent = i18next.t('employerDetails.endLabel', { context: 'current', firstDayOfDisability });
     employmentEndLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
     employmentEndHint.textContent = i18next.t('employerDetails.endHint');
-    employmentEndInfo.style.display = 'block';
+    employmentEndInfo.style.display = employmentEndWarning.style.display == 'none' ? 'block' : 'none';
   });
 
   stillWorkHereNo.addEventListener('change', function () {
@@ -473,6 +474,8 @@ function stillWorkHereListeners() {
 }
 
 function endDateListener() {
+  const stillWorkHereNo = document.getElementById('still-work-here-no');
+
   const employmentEndInfo = document.getElementById('employment-end-info');
   const employmentEndWarning = document.getElementById('employment-end-warning');
   const employmentEndWarningTextBeforeFDD = document.getElementById('employment-end-warning-text-before-fdd');
@@ -485,14 +488,18 @@ function endDateListener() {
   const lastDayOfWork = document.getElementById('ContentPlaceHolder1_TabEmployment_tbpnlEMP_hdnClmtLWD').value;
   const lastDayOfWorkDate = new Date(lastDayOfWork).getTime();
 
-  endInput.addEventListener('blur', function() {
-    if (!this.value) {
-      employmentEndInfo.style.display = 'block';
+  const validateEndDate = function(dateField) {
+    if (dateField.id != endInput.id) {
+      return;
+    }
+
+    if (!endInput.value) {
+      employmentEndInfo.style.display = stillWorkHereNo.checked ? 'none' : 'block';
       employmentEndWarning.style.display = 'none';
       return;
     }
 
-    const endDate = new Date(this.value).getTime();
+    const endDate = new Date(endInput.value).getTime();
     employmentEndInfo.style.display = 'none';
 
     if (endDate === firstDayOfDisabilityDate) {
@@ -506,7 +513,12 @@ function endDateListener() {
     } else {
       employmentEndWarning.style.display = 'none';
     }
-  });
+  };
+
+  document.addEventListener('calendarDateSelected', (event) => {validateEndDate(document.getElementById(event.detail.dateFieldId))});
+  endInput.addEventListener('input', (event) => {validateEndDate(event.target)});
+  endInput.addEventListener('change', (event) => {validateEndDate(event.target)});
+  endInput.addEventListener('focus', (event) => {validateEndDate(event.target)});
 }
 
 function cancelButtonDoesNotRequireRadioButtons() {
