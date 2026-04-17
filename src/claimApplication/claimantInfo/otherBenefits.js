@@ -80,6 +80,7 @@ export function changes() {
 
   setNewTitle(i18next.t('otherBenefits.title'));
   updateCalendars();
+  noneOfTheAboveLogic();
 }
 
 function addStyles() {
@@ -87,6 +88,10 @@ function addStyles() {
   style.innerHTML = `
     .usa-radio {
       padding: 0;
+    }
+
+    .usa-form-group--error {
+      margin-top: 0;
     }
 
     #ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits fieldset {
@@ -135,7 +140,7 @@ function replaceRadioButtonsWithCheckboxes() {
   newForm.id = "new-other-benefits-form";
   newForm.innerHTML = `
     <div class="bordered-set">
-      <fieldset class="usa-fieldset">
+      <fieldset id="other-benefits-fieldset" class="usa-fieldset">
         <legend class="usa-legend" style="margin-top: 0;">
           <span class="required-asterisk">*</span>
           ${i18next.t(
@@ -179,7 +184,7 @@ function replaceRadioButtonsWithCheckboxes() {
           />
           <label class="usa-checkbox__label" for="check-tdi">${i18next.t('otherBenefits.tdi.title')}</label>
         </div>
-        <div class="usa-checkbox" style="display: none;">
+        <div class="usa-checkbox">
           <input
             class="usa-checkbox__input"
             id="check-none"
@@ -188,6 +193,18 @@ function replaceRadioButtonsWithCheckboxes() {
             value="none"
           />
           <label class="usa-checkbox__label" for="check-none">${i18next.t('shared.noneOfTheAbove')}</label>
+        </div>
+        <div
+          id="checkbox-error"
+          class="form-alert"
+          style="display: none;"
+          role="alert"
+          aria-live="polite"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#B50909"/>
+          </svg>
+          ${i18next.t('shared.makeSelection')}
         </div>
       </fieldset>
     </div>
@@ -794,5 +811,74 @@ function replaceQuestionNumbersInErrors() {
     errorSpan.innerHTML = text;
     errorSpan.style.fontSize = '20px';
     newForm.insertAdjacentElement('beforebegin', errorSpan);
+  }
+}
+
+function noneOfTheAboveLogic() {
+  const submitButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI');
+  const fieldset = document.getElementById('other-benefits-fieldset');
+  const allCheckboxes = fieldset.querySelectorAll('input[type="checkbox"]');
+
+  const checkSsdi = document.getElementById("check-ssdi");
+  const checkUi = document.getElementById("check-ui");
+  const checkTdi = document.getElementById("check-tdi");
+  const checkEmployer = document.getElementById("check-employer"); // may be removed
+  const noneOfTheAbove = document.getElementById('check-none');
+
+  const error = document.getElementById('checkbox-error');
+
+  submitButton.addEventListener('click', function(e) {
+    const anyChecked = Array.from(allCheckboxes).some(cb => cb.checked);
+
+    if (!anyChecked) {
+      e.preventDefault();
+      e.stopPropagation();
+      error.style.display = 'block';
+      fieldset.classList.add('usa-form-group--error');
+      checkSsdi.focus();
+    } else {
+      error.style.display = 'none';
+      fieldset.classList.remove('usa-form-group--error');
+    }
+  });
+
+  noneOfTheAbove.addEventListener('invalid', function() {
+    error.style.display = 'block';
+    fieldset.classList.add('usa-form-group--error');
+  });
+
+  noneOfTheAbove.addEventListener('click', function () {
+    if (checkSsdi.checked) {
+      checkSsdi.click();
+    }
+
+    if (checkUi.checked) {
+      checkUi.click();
+    }
+
+    if (checkTdi.checked) {
+      checkTdi.click();
+    }
+
+    if (checkEmployer && checkEmployer.checked) {
+      checkEmployer.click();
+    }
+    
+    error.style.display = 'none';
+    fieldset.classList.remove('usa-form-group--error');
+  });
+
+  const refreshNoneAndError = function() {
+    const otherBenefitChecked = checkSsdi.checked || checkUi.checked || checkTdi.checked || checkEmployer?.checked;
+    noneOfTheAbove.checked = !otherBenefitChecked;
+    error.style.display = 'none';
+    fieldset.classList.remove('usa-form-group--error');
+  };
+
+  checkSsdi.addEventListener('click', refreshNoneAndError);
+  checkUi.addEventListener('click', refreshNoneAndError);
+  checkTdi.addEventListener('click', refreshNoneAndError);
+  if (checkEmployer) {
+    checkEmployer.addEventListener('click', refreshNoneAndError);
   }
 }
