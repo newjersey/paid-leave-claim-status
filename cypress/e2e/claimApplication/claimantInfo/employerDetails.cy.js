@@ -185,6 +185,11 @@ describe("Employment Details page", () => {
       cy.get('#employment-end-info').should('not.be.visible');
       cy.get('#employment-end-warning').should('not.be.visible');
 
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('12345');
+      cy.get('#employment-end-info').should('not.be.visible');
+      cy.get('#employment-end-warning').should('not.be.visible');
+
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').clear();
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('06/30/2024');
       cy.get('#employment-end-info').should('not.be.visible');
       cy.get('#employment-end-warning').should('be.visible');

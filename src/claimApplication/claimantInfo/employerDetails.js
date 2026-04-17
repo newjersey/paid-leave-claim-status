@@ -493,7 +493,7 @@ function endDateListener() {
       return;
     }
 
-    if (!endInput.value) {
+    if (!endInput.value || endInput.value.length < 10) {
       employmentEndInfo.style.display = stillWorkHereNo.checked ? 'none' : 'block';
       employmentEndWarning.style.display = 'none';
       return;
