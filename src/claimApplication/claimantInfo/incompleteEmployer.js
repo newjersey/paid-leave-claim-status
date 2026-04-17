@@ -8,7 +8,7 @@ export const id = "incompleteEmployer";
 
 export const identifyingContent = {
   id,
-  elementId: 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblWrkEmployerName',
+  elementId: 'divWorkedEmployer',
   text: 'Did you work for',
 };
 
@@ -39,7 +39,8 @@ function addStyles() {
 function rearrangeDidYouWorkQuestion() {
   const divWorkedEmployer = document.getElementById('divWorkedEmployer');
   divWorkedEmployer.classList.add('bordered-set');
-  const existingQuestion = document.querySelector('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblWrkEmployerName');
+  const existingQuestion = document.querySelector('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblWrkEmployerName')
+    || document.querySelector("#divWorkedEmployer > fieldset > legend");
   const yesRadio = document.querySelector('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerYes');
   const yesLabel = document.querySelector('label[for="ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerYes"]');
   const noRadio = document.querySelector('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerNo');
