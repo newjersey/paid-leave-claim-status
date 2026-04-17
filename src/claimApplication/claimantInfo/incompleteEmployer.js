@@ -8,7 +8,7 @@ export const id = "incompleteEmployer";
 
 export const identifyingContent = {
   id,
-  elementId: 'divWorkedEmployer',
+  elementId: 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblWrkEmployerName',
   text: 'Did you work for',
 };
 
@@ -23,6 +23,7 @@ export function changes() {
   updateCalendars();
   endDateListener();
   cancelButtonDoesNotRequireRadioButtons();
+  removeQuestionNumbersFromError();
 }
 
 function addStyles() {
@@ -440,4 +441,11 @@ function cancelButtonDoesNotRequireRadioButtons() {
 
   cancelButton.addEventListener('click', removeRequired);
   didNotWorkHereButton.addEventListener('click', removeRequired);
+}
+
+function removeQuestionNumbersFromError() {
+  const error = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblValEmpDetMsg');
+  if (error) {
+    error.innerHTML = error.innerHTML.replace(/(\d+\.\s+)/g, '');
+  }
 }

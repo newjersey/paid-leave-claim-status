@@ -40,6 +40,7 @@ export function changes() {
   stillWorkHereListeners();
   endDateListener();
   cancelButtonDoesNotRequireRadioButtons();
+  removeQuestionNumbersFromError();
 }
 
 function addStyles() {
@@ -551,4 +552,11 @@ function cancelButtonDoesNotRequireRadioButtons() {
   cancelButton.addEventListener('click', function() {
     stillWorkHereYes.removeAttribute('required');
   });
+}
+
+function removeQuestionNumbersFromError() {
+  const error = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblValEmpDetMsg');
+  if (error) {
+    error.innerHTML = error.innerHTML.replace(/(\d+\.\s+)/g, '');
+  }
 }
