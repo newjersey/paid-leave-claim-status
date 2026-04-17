@@ -148,6 +148,11 @@ function rearrangeAddressFieldset() {
   phoneContainer.nextElementSibling.remove();
 }
 
+function getEmployerName() {
+  const employerDetails = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblEmpDet');
+  return employerDetails.childNodes[0].textContent.trim();
+}
+
 function stillWorkHereFieldset() {
   const addressFieldset = document.getElementById('address-fieldset');
   const stillWorkHereContainer = document.createElement('div');
@@ -156,7 +161,7 @@ function stillWorkHereFieldset() {
   stillWorkHereContainer.innerHTML = `
     <fieldset id="still-work-here-fieldset" class="usa-fieldset">
       <legend class="usa-legend">
-        <span class="required-asterisk">*</span> ${i18next.t('employerDetails.stillWorkHere')}
+        <span class="required-asterisk">*</span> ${i18next.t('employerDetails.stillWorkHereEmployer', { employerName: getEmployerName() })}
       </legend>
       <div class="usa-radio">
         <input
@@ -207,7 +212,7 @@ function dateRangeFieldset() {
   const startLabel = document.createElement('label');
   startLabel.classList.add('usa-label');
   startLabel.style.marginTop = '0';
-  startLabel.textContent = i18next.t('employerDetails.startLabel');
+  startLabel.textContent = i18next.t('employerDetails.startLabelEmployer', { employerName: getEmployerName() });
   startLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt';
   dateRangeFieldset.append(startLabel);
   startLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
@@ -340,12 +345,13 @@ function stillWorkHereListeners() {
   const employmentEndWarning= document.getElementById('employment-end-warning');
 
   const firstDayOfDisability = formattedDateFromField('ContentPlaceHolder1_TabEmployment_tbpnlEMP_hdnFDDate');
+  const employerName = getEmployerName();
 
   stillWorkHereYes.addEventListener('change', function () {
     stillWorkHereError.style.display = 'none';
     stillWorkHereFieldset.classList.remove('usa-form-group--error');
     dateRangeFieldset.style.display = 'block';
-    employmentEndLabel.textContent = i18next.t('employerDetails.endLabel', { context: 'current', firstDayOfDisability });
+    employmentEndLabel.textContent = i18next.t('employerDetails.endLabelCurrentEmployer', { employerName, firstDayOfDisability });
     employmentEndLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
     employmentEndHint.textContent = i18next.t('employerDetails.endHint');
     employmentEndInfo.style.display = employmentEndWarning.style.display == 'none' ? 'block' : 'none';
@@ -355,7 +361,7 @@ function stillWorkHereListeners() {
     stillWorkHereError.style.display = 'none';
     stillWorkHereFieldset.classList.remove('usa-form-group--error');
     dateRangeFieldset.style.display = 'block';
-    employmentEndLabel.textContent = i18next.t('employerDetails.endLabel');
+    employmentEndLabel.textContent = i18next.t('employerDetails.endLabelEmployer', { employerName });
     employmentEndLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
     employmentEndHint.textContent = '';
     employmentEndInfo.style.display = 'none';

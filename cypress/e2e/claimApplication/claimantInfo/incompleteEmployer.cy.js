@@ -110,6 +110,11 @@ describe("Incomplete Employer page", () => {
       cy.wait('@aspxSubmission').then(checkPostDataNo);
     });
 
+    it("updates employer name into labels", () => {
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerYes').click({ force: true });
+      cy.contains('Are you currently employed by Test?').should('be.visible');
+    });
+
     it("user cannot submit if still-work-here unanswered", () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerYes').click({ force: true });
       cy.get('#still-work-here-yes').should('not.be.checked');
@@ -143,7 +148,7 @@ describe("Incomplete Employer page", () => {
 
     it('shows info and warning alerts properly', () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerYes').click({ force: true });
-      
+
       cy.get('#still-work-here-no').click({ force: true });
       cy.get('#employment-end-info').should('not.be.visible');
       cy.get('#employment-end-warning').should('not.be.visible');

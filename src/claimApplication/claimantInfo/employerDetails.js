@@ -466,7 +466,7 @@ function stillWorkHereListeners() {
     stillWorkHereError.style.display = 'none';
     stillWorkHereFieldset.classList.remove('usa-form-group--error');
     dateRangeFieldset.style.display = 'block';
-    employmentEndLabel.textContent = i18next.t('employerDetails.endLabel', { context: 'current', firstDayOfDisability });
+    employmentEndLabel.textContent = i18next.t('employerDetails.endLabelCurrent', { firstDayOfDisability });
     employmentEndLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
     employmentEndHint.textContent = i18next.t('employerDetails.endHint');
     employmentEndInfo.style.display = employmentEndWarning.style.display == 'none' ? 'block' : 'none';
