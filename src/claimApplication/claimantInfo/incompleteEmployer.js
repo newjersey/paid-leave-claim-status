@@ -1,5 +1,8 @@
 import i18next from 'i18next';
-import { updateCalendarUI } from '../utils';
+import {
+  formattedDateFromField,
+  updateCalendarUI,
+} from '../utils';
 
 export const id = "incompleteEmployer";
 
@@ -14,8 +17,12 @@ export function changes() {
   rearrangeDidYouWorkQuestion();
   rearrangeAddressFieldset();
   stillWorkHereFieldset();
+  dateRangeFieldset();
   hideUnusedElements();
+  stillWorkHereListeners();
   updateCalendars();
+  endDateListener();
+  cancelButtonDoesNotRequireRadioButtons();
 }
 
 function addStyles() {
@@ -186,8 +193,237 @@ function stillWorkHereFieldset() {
   addressFieldset.insertAdjacentElement('afterend', stillWorkHereContainer);
 }
 
+function dateRangeFieldset() {
+  const stillWorkHereContainer = document.getElementById('stillWorkHereContainer');
+  const dateRangeFieldset = document.createElement('fieldset');
+  dateRangeFieldset.id = 'dateRangeFieldset';
+  dateRangeFieldset.classList.add('bordered-set', 'usa-fieldset');
+  dateRangeFieldset.style.display = 'none';
+
+  const startLabel = document.createElement('label');
+  startLabel.classList.add('usa-label');
+  startLabel.style.marginTop = '0';
+  startLabel.textContent = i18next.t('employerDetails.startLabel');
+  startLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt';
+  dateRangeFieldset.append(startLabel);
+  startLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const startHint = document.createElement('div');
+  startHint.id = 'employment-start-hint';
+  startHint.classList.add("usa-hint");
+  startHint.textContent = i18next.t('employerDetails.startHint');
+  dateRangeFieldset.append(startHint);
+
+  const startFormatHint = document.createElement('div');
+  startFormatHint.id = 'employment-start-format-hint';
+  startFormatHint.classList.add("usa-hint");
+  startFormatHint.textContent = i18next.t('shared.dateFormat');
+  dateRangeFieldset.append(startFormatHint);
+
+  const startInput = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt');
+  startInput.classList.add('dateInput');
+  startInput.setAttribute('aria-describedby', 'employment-start-hint employment-start-format-hint');
+  const startCalendar = document.getElementById('Image2');
+
+  const startDateInputContainer = document.createElement('div');
+  startDateInputContainer.classList.add('dateInputContainer');
+  startDateInputContainer.append(startInput);
+  startDateInputContainer.append(startCalendar);
+  dateRangeFieldset.append(startDateInputContainer);
+
+  const endLabel = document.createElement('label');
+  endLabel.id = 'employment-end-label';
+  endLabel.classList.add('usa-label');
+  endLabel.htmlFor = 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt';
+  dateRangeFieldset.append(endLabel);
+
+  const endHint = document.createElement('div');
+  endHint.id = 'employment-end-hint';
+  endHint.classList.add("usa-hint");
+  dateRangeFieldset.append(endHint);
+
+  const endFormatHint = document.createElement('div');
+  endFormatHint.id = 'employment-end-format-hint';
+  endFormatHint.classList.add("usa-hint");
+  endFormatHint.textContent = i18next.t('shared.dateFormat');
+  dateRangeFieldset.append(endFormatHint);
+
+  const endInput = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt');
+  endInput.classList.add('dateInput');
+  endInput.setAttribute('aria-describedby', 'employment-end-hint employment-end-format-hint');
+  const endCalendar = document.getElementById('Image4');
+
+  const endDateInputContainer = document.createElement('div');
+  endDateInputContainer.classList.add('dateInputContainer');
+  endDateInputContainer.append(endInput);
+  endDateInputContainer.append(endCalendar);
+  dateRangeFieldset.append(endDateInputContainer);
+
+  const lastDayOfWork = formattedDateFromField('ContentPlaceHolder1_TabEmployment_tbpnlEMP_hdnClmtLWD');
+  const endInfo = document.createElement('div');
+  endInfo.id = 'employment-end-info';
+  endInfo.classList.add("usa-alert", "usa-alert--info", "usa-alert--slim");
+  endInfo.innerHTML = `
+    <div class="usa-alert__body">
+      <p class="usa-alert__text">
+        ${i18next.t('employerDetails.endInfo', { lastDayOfWork })}
+      </p>
+    </div>
+  `;
+  dateRangeFieldset.append(endInfo);
+
+  const endWarning = document.createElement('div');
+  endWarning.id = 'employment-end-warning';
+  endWarning.style.display = 'none';
+  endWarning.classList.add("usa-alert", "usa-alert--warning", "usa-alert--slim");
+  endWarning.innerHTML = `
+    <div class="usa-alert__body">
+      <p class="usa-alert__text" id="employment-end-warning-text-before-fdd">
+        ${i18next.t('employerDetails.endWarning', { lastDayOfWork })}
+      </p>
+      <p class="usa-alert__text" id="employment-end-warning-text-on-fdd">
+        ${i18next.t('employerDetails.endWarningOnFDD', { lastDayOfWork })}
+      </p>
+    </div>
+  `;
+  dateRangeFieldset.append(endWarning);
+
+  const firstDayOfDisability = formattedDateFromField('ContentPlaceHolder1_TabEmployment_tbpnlEMP_hdnFDDate');
+
+  const endError = document.createElement('div');
+  endError.id = 'employment-end-error';
+  endError.style.display = 'none';
+  endError.classList.add("usa-alert", "usa-alert--error", "usa-alert--slim");
+  endError.innerHTML = `
+    <div class="usa-alert__body">
+      <p class="usa-alert__text" id="employment-end-error-text">
+        ${i18next.t('employerDetails.endError', { firstDayOfDisability })}
+      </p>
+    </div>
+  `;
+  dateRangeFieldset.append(endError);
+
+  const updateLink = dateRangeFieldset.querySelector('#update-last-day-link');
+  if (updateLink) {
+    updateLink.addEventListener('click', function (event) {
+      event.preventDefault();
+      logout(true);
+    });
+  }
+
+  stillWorkHereContainer.insertAdjacentElement('afterend', dateRangeFieldset);
+}
+
 function hideUnusedElements() {
   const oldPhoneInput = document.getElementById("divExtEmplPhone");
   oldPhoneInput.style.display = 'none';
+
+  const table = document.getElementById('divAddEmplyrName').closest('table');
+  table.style.display = 'none';
+  table.nextElementSibling.style.display = 'none';
+  table.nextElementSibling.nextElementSibling.style.display = 'none';
 }
 
+function stillWorkHereListeners() {
+  const stillWorkHereError = document.getElementById('still-work-here-error');
+  const stillWorkHereFieldset = document.getElementById('still-work-here-fieldset');
+  const stillWorkHereYes = document.getElementById('still-work-here-yes');
+  const stillWorkHereNo = document.getElementById('still-work-here-no');
+  const dateRangeFieldset = document.getElementById('dateRangeFieldset');
+  const employmentEndLabel = document.getElementById('employment-end-label');
+  const employmentEndHint = document.getElementById('employment-end-hint');
+  const employmentEndInfo = document.getElementById('employment-end-info');
+  const employmentEndWarning= document.getElementById('employment-end-warning');
+
+  const firstDayOfDisability = formattedDateFromField('ContentPlaceHolder1_TabEmployment_tbpnlEMP_hdnFDDate');
+
+  stillWorkHereYes.addEventListener('change', function () {
+    stillWorkHereError.style.display = 'none';
+    stillWorkHereFieldset.classList.remove('usa-form-group--error');
+    dateRangeFieldset.style.display = 'block';
+    employmentEndLabel.textContent = i18next.t('employerDetails.endLabel', { context: 'current', firstDayOfDisability });
+    employmentEndLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+    employmentEndHint.textContent = i18next.t('employerDetails.endHint');
+    employmentEndInfo.style.display = employmentEndWarning.style.display == 'none' ? 'block' : 'none';
+  });
+
+  stillWorkHereNo.addEventListener('change', function () {
+    stillWorkHereError.style.display = 'none';
+    stillWorkHereFieldset.classList.remove('usa-form-group--error');
+    dateRangeFieldset.style.display = 'block';
+    employmentEndLabel.textContent = i18next.t('employerDetails.endLabel');
+    employmentEndLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+    employmentEndHint.textContent = '';
+    employmentEndInfo.style.display = 'none';
+  });
+
+  stillWorkHereYes.addEventListener('invalid', function () {
+    stillWorkHereError.style.display = 'block';
+    stillWorkHereFieldset.classList.add('usa-form-group--error');
+  });
+}
+
+function endDateListener() {
+  const stillWorkHereNo = document.getElementById('still-work-here-no');
+
+  const employmentEndInfo = document.getElementById('employment-end-info');
+  const employmentEndWarning = document.getElementById('employment-end-warning');
+  const employmentEndWarningTextBeforeFDD = document.getElementById('employment-end-warning-text-before-fdd');
+  const employmentEndWarningTextOnFDD = document.getElementById('employment-end-warning-text-on-fdd');
+  const employmentEndError = document.getElementById('employment-end-error');
+
+  const endInput = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt');
+
+  const firstDayOfDisability = document.getElementById('ContentPlaceHolder1_TabEmployment_tbpnlEMP_hdnFDDate').value;
+  const firstDayOfDisabilityDate = new Date(firstDayOfDisability).getTime();
+  const lastDayOfWork = document.getElementById('ContentPlaceHolder1_TabEmployment_tbpnlEMP_hdnClmtLWD').value;
+  const lastDayOfWorkDate = new Date(lastDayOfWork).getTime();
+
+  const validateEndDate = function(dateField) {
+    if (dateField.id != endInput.id) {
+      return;
+    }
+
+    if (!endInput.value || endInput.value.length < 10) {
+      employmentEndInfo.style.display = stillWorkHereNo.checked ? 'none' : 'block';
+      employmentEndWarning.style.display = 'none';
+      employmentEndError.style.display = 'none';
+      return;
+    }
+
+    const endDate = new Date(endInput.value).getTime();
+    employmentEndInfo.style.display = 'none';
+
+    if (endDate > firstDayOfDisabilityDate) {
+      employmentEndError.style.display = 'block';
+      employmentEndWarning.style.display = 'none';
+    } else if (endDate === firstDayOfDisabilityDate) {
+      employmentEndError.style.display = 'none';
+      employmentEndWarning.style.display = 'block';
+      employmentEndWarningTextBeforeFDD.style.display = 'none';
+      employmentEndWarningTextOnFDD.style.display = 'block';
+    } else if (endDate > lastDayOfWorkDate) {
+      employmentEndError.style.display = 'none';
+      employmentEndWarning.style.display = 'block';
+      employmentEndWarningTextBeforeFDD.style.display = 'block';
+      employmentEndWarningTextOnFDD.style.display = 'none';
+    } else {
+      employmentEndError.style.display = 'none';
+      employmentEndWarning.style.display = 'none';
+    }
+  };
+
+  document.addEventListener('calendarDateSelected', (event) => {validateEndDate(document.getElementById(event.detail.dateFieldId))});
+  endInput.addEventListener('input', (event) => {validateEndDate(event.target)});
+  endInput.addEventListener('change', (event) => {validateEndDate(event.target)});
+  endInput.addEventListener('focus', (event) => {validateEndDate(event.target)});
+}
+
+function cancelButtonDoesNotRequireRadioButtons() {
+  const cancelButton = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_btnCancelEmp1');
+  const stillWorkHereYes = document.getElementById('still-work-here-yes');
+
+  cancelButton.addEventListener('click', function() {
+    stillWorkHereYes.removeAttribute('required');
+  });
+}
