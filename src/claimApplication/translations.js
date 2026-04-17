@@ -138,7 +138,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       employerDetails: {
         name: "Employer name",
-        stillWorkHere: "Do you still work here?",
+        stillWorkHere: "Are you currently employed by this employer?",
         startLabel: "When did you start working for this employer?",
         startHint: "If you don't remember the exact date, provide your best guess.",
         endLabel: "What was the last day you worked for this employer?",
