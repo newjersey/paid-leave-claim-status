@@ -32,6 +32,10 @@ function addStyles() {
       background-color: #FBFCFD !important;
       padding: 0 !important;
     }
+
+    .usa-form-group--error {
+      margin-top: 0;
+    }
   `;
   document.head.appendChild(style);
 }

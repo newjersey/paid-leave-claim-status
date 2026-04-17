@@ -88,6 +88,17 @@ describe("Incomplete Employer page", () => {
       cy.wait('@aspxSubmission').then(checkPostDataNo);
     });
 
+    it("user cannot submit if still-work-here unanswered", () => {
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerYes').click({ force: true });
+      cy.get('#still-work-here-yes').should('not.be.checked');
+      cy.get('#still-work-here-no').should('not.be.checked');
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_btnNextEmpDet').click();
+      cy.get('#still-work-here-yes')
+        .then(($input) => {
+          expect($input[0].validationMessage).to.exist;
+        });
+    });
+
     globalTestsNew(PAGE_ID, URL);
   });
 });
