@@ -99,17 +99,6 @@ function addStyles() {
     .usa-radio__label {
       text-align: left;
     }
-
-    .form-alert {
-      color: rgb(139, 0, 0);
-      font-weight: bold;
-      margin: 10px 0 0 0;
-    }
-
-    .form-alert svg {
-      vertical-align: -5px;
-      margin-right: 2px;
-    }
   `;
   document.head.appendChild(style);
 }

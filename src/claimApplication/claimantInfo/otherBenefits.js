@@ -1,6 +1,8 @@
 import i18next from 'i18next';
 import { logEvent } from "../../modules/shared.mjs";
 import {
+  clearTextNodes,
+  formattedDateFromField,
   setNewTitle,
   updateCalendarUI,
 } from '../utils';
@@ -78,17 +80,18 @@ export function changes() {
 
   setNewTitle(i18next.t('otherBenefits.title'));
   updateCalendars();
+  noneOfTheAboveLogic();
 }
 
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
-    .required-asterisk-inline {
-      margin-right: 3px;
-    }
-
     .usa-radio {
       padding: 0;
+    }
+
+    .usa-form-group--error {
+      margin-top: 0;
     }
 
     #ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits fieldset {
@@ -124,37 +127,11 @@ function addStyles() {
       padding-bottom: 0;
     }
 
-    .dateInputContainer {
-      display: flex;
-      align-items: center;
-    }
-
     #warning-ssdi p {
       margin-left: 10px;
     }
   `;
   document.head.appendChild(style);
-}
-
-function formattedDateFromField(id) {
-  const field = document.getElementById(id);
-  const date = new Date(field.value);
-  return date.toLocaleDateString('en-US', { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric' 
-  });
-}
-
-function getPromptText() {
-  const firstDayOfDisability = formattedDateFromField('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt');
-  const returnedYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
-  if (returnedYes && returnedYes.checked) {
-    const returnedToWorkDay = formattedDateFromField('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk');
-    return i18next.t('otherBenefits.areYouReceivingOrApplied', { context: 'returned', firstDayOfDisability, returnedToWorkDay });
-  } else {
-    return i18next.t('otherBenefits.areYouReceivingOrApplied', { firstDayOfDisability });
-  }
 }
 
 function replaceRadioButtonsWithCheckboxes() {
@@ -163,10 +140,14 @@ function replaceRadioButtonsWithCheckboxes() {
   newForm.id = "new-other-benefits-form";
   newForm.innerHTML = `
     <div class="bordered-set">
-      <fieldset class="usa-fieldset">
+      <fieldset id="other-benefits-fieldset" class="usa-fieldset">
         <legend class="usa-legend" style="margin-top: 0;">
           <span class="required-asterisk">*</span>
-          ${getPromptText()}
+          ${i18next.t(
+              'otherBenefits.areYouReceivingOrApplied',
+              { firstDayOfDisability: formattedDateFromField('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt') }
+            )
+          }
         </legend>
         <div class="usa-checkbox">
           <input
@@ -203,7 +184,7 @@ function replaceRadioButtonsWithCheckboxes() {
           />
           <label class="usa-checkbox__label" for="check-tdi">${i18next.t('otherBenefits.tdi.title')}</label>
         </div>
-        <div class="usa-checkbox" style="display: none;">
+        <div class="usa-checkbox">
           <input
             class="usa-checkbox__input"
             id="check-none"
@@ -212,6 +193,18 @@ function replaceRadioButtonsWithCheckboxes() {
             value="none"
           />
           <label class="usa-checkbox__label" for="check-none">${i18next.t('shared.noneOfTheAbove')}</label>
+        </div>
+        <div
+          id="checkbox-error"
+          class="form-alert"
+          style="display: none;"
+          role="alert"
+          aria-live="polite"
+        >
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#B50909"/>
+          </svg>
+          ${i18next.t('shared.makeSelection')}
         </div>
       </fieldset>
     </div>
@@ -399,7 +392,7 @@ function restyleEmployerFollowup() {
 
   const countryLabel = document.createElement('label');
   countryLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenEmpCountry';
-  countryLabel.textContent = i18next.t('otherBenefits.employer.followup.country');
+  countryLabel.textContent = i18next.t('contact.country');
   countryLabel.style.marginTop = '20px';
   countryLabel.style.fontFamily = '"Public Sans", sans-serif';
   intlContainer.append(countryLabel);
@@ -467,7 +460,6 @@ function restyleEmployerFollowup() {
   oldEmployerAddBox.style.display = 'none';
 
   stateSelect.addEventListener('change', function () {
-    console.log(stateSelect.value);
     if (stateSelect.value == 0) {
       zipLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpOutCtryZip';
       zipContainer.style.display = 'none';
@@ -503,7 +495,7 @@ function restyleSSDIFollowup() {
   dateInputContainer.classList.add('dateInputContainer');
 
   const dateInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtSSDate');
-  dateInput.classList.add("usa-input");
+  dateInput.classList.add("usa-input", "dateInput");
   const calendarInput = document.getElementById('Image10');
 
   dateInputContainer.append(dateInput);
@@ -621,8 +613,8 @@ function appendDateRangeFields(fieldset, dateContainerId, startInputId, endInput
   startDateInputContainer.classList.add('dateInputContainer');
 
   const startInput = document.getElementById(startInputId);
+  startInput.classList.add("usa-input", "dateInput");
   const startCalendar = document.getElementById(startCalendarId);
-  startInput.classList.add("usa-input");
 
   startDateInputContainer.append(startInput);
   startDateInputContainer.append(startCalendar);
@@ -644,8 +636,8 @@ function appendDateRangeFields(fieldset, dateContainerId, startInputId, endInput
   endDateInputContainer.classList.add('dateInputContainer');
 
   const endInput = document.getElementById(endInputId);
+  endInput.classList.add("usa-input", "dateInput");
   const endCalendar = document.getElementById(endCalendarId);
-  endInput.classList.add("usa-input");
 
   endDateInputContainer.append(endInput);
   endDateInputContainer.append(endCalendar);
@@ -788,27 +780,6 @@ function createAndAppendOption(selectElement, valueString, stateString) {
   selectElement.appendChild(option);
 }
 
-function clearTextNodes(node) {
-  if (node.parentElement?.tagName.toLowerCase() === 'option') {
-    return;
-  }
-
-  if (node.nodeType === Node.TEXT_NODE) {
-    const text = node.textContent;
-    if (/^\s*$/.test(text)) {
-      node.remove(); 
-    } else {
-      node.textContent = ''; 
-    }
-  } else if (node.nodeType === Node.ELEMENT_NODE) {
-    Array.from(node.childNodes).forEach(clearTextNodes);
-    const tagName = node.tagName.toLowerCase();
-    if ((tagName === 'a' || tagName === 'strong' || tagName === 'br')) {
-      node.remove();
-    }
-  }
-}
-
 function loadRadioButtonsIntoCheckbox(originalYes, originalNo, checkbox) {
   if (originalYes.checked) {
     checkbox.click();
@@ -840,5 +811,74 @@ function replaceQuestionNumbersInErrors() {
     errorSpan.innerHTML = text;
     errorSpan.style.fontSize = '20px';
     newForm.insertAdjacentElement('beforebegin', errorSpan);
+  }
+}
+
+function noneOfTheAboveLogic() {
+  const submitButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI');
+  const fieldset = document.getElementById('other-benefits-fieldset');
+  const allCheckboxes = fieldset.querySelectorAll('input[type="checkbox"]');
+
+  const checkSsdi = document.getElementById("check-ssdi");
+  const checkUi = document.getElementById("check-ui");
+  const checkTdi = document.getElementById("check-tdi");
+  const checkEmployer = document.getElementById("check-employer"); // may be removed
+  const noneOfTheAbove = document.getElementById('check-none');
+
+  const error = document.getElementById('checkbox-error');
+
+  submitButton.addEventListener('click', function(e) {
+    const anyChecked = Array.from(allCheckboxes).some(cb => cb.checked);
+
+    if (!anyChecked) {
+      e.preventDefault();
+      e.stopPropagation();
+      error.style.display = 'block';
+      fieldset.classList.add('usa-form-group--error');
+      checkSsdi.focus();
+    } else {
+      error.style.display = 'none';
+      fieldset.classList.remove('usa-form-group--error');
+    }
+  });
+
+  noneOfTheAbove.addEventListener('invalid', function() {
+    error.style.display = 'block';
+    fieldset.classList.add('usa-form-group--error');
+  });
+
+  noneOfTheAbove.addEventListener('click', function () {
+    if (checkSsdi.checked) {
+      checkSsdi.click();
+    }
+
+    if (checkUi.checked) {
+      checkUi.click();
+    }
+
+    if (checkTdi.checked) {
+      checkTdi.click();
+    }
+
+    if (checkEmployer && checkEmployer.checked) {
+      checkEmployer.click();
+    }
+    
+    error.style.display = 'none';
+    fieldset.classList.remove('usa-form-group--error');
+  });
+
+  const refreshNoneAndError = function() {
+    const otherBenefitChecked = checkSsdi.checked || checkUi.checked || checkTdi.checked || checkEmployer?.checked;
+    noneOfTheAbove.checked = !otherBenefitChecked;
+    error.style.display = 'none';
+    fieldset.classList.remove('usa-form-group--error');
+  };
+
+  checkSsdi.addEventListener('click', refreshNoneAndError);
+  checkUi.addEventListener('click', refreshNoneAndError);
+  checkTdi.addEventListener('click', refreshNoneAndError);
+  if (checkEmployer) {
+    checkEmployer.addEventListener('click', refreshNoneAndError);
   }
 }

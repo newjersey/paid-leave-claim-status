@@ -26,9 +26,9 @@ import { identifyingContent as tdiIntroductionContent } from "./tdiIntroduction/
 const identifyingContents = [
   certificationContent,
   confirmationContent,
+  incompleteEmployerContent,
   employerDetailsContent,
   employmentContent,
-  incompleteEmployerContent,
   intermittentContent,
   otherBenefitsContent,
   paymentInfoContent,

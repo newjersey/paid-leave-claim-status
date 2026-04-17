@@ -28,6 +28,7 @@ function injectGlobalStyles() {
     body {
       background-color: #FBFCFD;
     }
+
     h1, h2, h3, h4, p, a {
       font-family: "Public Sans", sans-serif !important;
       font-variant: normal !important; 
@@ -51,9 +52,34 @@ function injectGlobalStyles() {
       padding: 10px;
     }
 
+    .dateInput {
+      margin-top: 0;
+    }
+
+    .dateInputContainer {
+      display: flex;
+      align-items: center;
+      margin-top: 0.5rem;
+    }
+
+    .form-alert {
+      color: rgb(139, 0, 0);
+      font-weight: bold;
+      margin: 10px 0 0 0;
+    }
+
+    .form-alert svg {
+      vertical-align: -5px;
+      margin-right: 2px;
+    }
+
     .required-asterisk {
       color: rgb(139, 0, 0);
       font-weight: bold;
+    }
+
+    .required-asterisk-inline {
+      margin-right: 3px;
     }
 
     .usa-checkbox__label, .usa-combo-box__input, .usa-combo-box__list, .usa-fieldset, .usa-hint, .usa-input, .usa-input-group, .usa-radio__label, .usa-range, .usa-select, .usa-textarea, .usa-button, .usa-table, .usa-label, .usa-legend, .usa-alert  {
@@ -94,6 +120,14 @@ function injectGlobalStyles() {
       color: black;
       margin-left: 142px;
       margin-right: 142px;
+    }
+
+    .usa-alert--error::before {
+      content: url('${ICON_BASE_URL}/error.svg');
+      background: none !important;
+      -webkit-mask: none !important;
+      mask: none !important;
+      top: auto !important;
     }
 
     .usa-alert--info::before {

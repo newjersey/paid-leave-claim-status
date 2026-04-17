@@ -53,6 +53,13 @@ export function encodeDecode(data) {
   return data.split('').map(char => String.fromCharCode(char.charCodeAt(0) ^ 100)).join('');
 }
 
+export function logout(skipConfirmation = false) {
+  if (skipConfirmation || confirmLogout()) { // confirmLogout is an existing JS function from .NET
+    __doPostBack('ctl00$header$lbtnLogout', ''); // existing JS function from .NET
+    clearSessionData();
+  }
+}
+
 // This only styles the buttons.
 // When possible also use USWDS suggested HTML fieldset and legend structure
 export function styleRadioButton(radioButtonId, marginBottom = false) {
@@ -279,6 +286,28 @@ export function updateCalendarUI(id, isFddCalendar = true, onlyShowYearControls 
       setTimeout(() => fixCalendarPopup(calendarId, onlyShowYearControls), 10);
     });
   }
+  dispatchEventsOnCalendarChoices();
+}
+
+function dispatchEventsOnCalendarChoices() {
+  const originalSetCalendarControlDate = window.setCalendarControlDate;
+  const originalSetCalendarControlDateFDD = window.setCalendarControlDateFDD;
+
+  window.setCalendarControlDate = function(year, month, day) {
+    const dateFieldId = calendarControl.visible();
+    originalSetCalendarControlDate(year, month, day);
+    document.dispatchEvent(new CustomEvent('calendarDateSelected', {
+      detail: { dateFieldId }
+    }));
+  };
+
+  window.setCalendarControlDateFDD = function(year, month, day) {
+    const dateFieldId = FDDCalendarControl.visibleFDD();
+    originalSetCalendarControlDateFDD(year, month, day);
+    document.dispatchEvent(new CustomEvent('calendarDateSelected', {
+      detail: { dateFieldId }
+    }));
+  };
 }
 
 function fixCalendarPopup(calendarId, onlyShowYearControls) {
@@ -369,4 +398,35 @@ function removeEmptyRows(calendarId) {
       }
     });
   }
+}
+
+export function clearTextNodes(node) {
+  if (node.parentElement?.tagName.toLowerCase() === 'option') {
+    return;
+  }
+
+  if (node.nodeType === Node.TEXT_NODE) {
+    const text = node.textContent;
+    if (/^\s*$/.test(text)) {
+      node.remove(); 
+    } else {
+      node.textContent = ''; 
+    }
+  } else if (node.nodeType === Node.ELEMENT_NODE) {
+    Array.from(node.childNodes).forEach(clearTextNodes);
+    const tagName = node.tagName.toLowerCase();
+    if ((tagName === 'a' || tagName === 'strong' || tagName === 'br')) {
+      node.remove();
+    }
+  }
+}
+
+export function formattedDateFromField(id) {
+  const field = document.getElementById(id);
+  const date = new Date(field.value);
+  return date.toLocaleDateString('en-US', { 
+    year: 'numeric', 
+    month: 'long', 
+    day: 'numeric' 
+  });
 }
