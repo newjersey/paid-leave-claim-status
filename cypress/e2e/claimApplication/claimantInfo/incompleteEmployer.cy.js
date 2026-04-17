@@ -2,7 +2,7 @@ import { globalTestsNew, globalTestsOld } from "../shared";
 
 const PAGE_ID = 'incompleteEmployer';
 const URL = 'ClaimentEmployment';
-const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/incompleteEmployer.html";
+const FIXTURE = "./cypress/fixtures/claimApplication/incompleteEmployer/incompleteEmployer.html";
 
 describe("Incomplete Employer page", () => {
   function checkPostDataYes(interception) {
