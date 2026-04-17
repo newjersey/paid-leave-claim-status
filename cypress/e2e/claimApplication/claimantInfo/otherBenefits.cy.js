@@ -330,7 +330,20 @@ describe("Other Benefits page", () => {
     });
 
     it('user can choose none of the above but must choose something', () => {
+      cy.get('#checkbox-error').should('not.be.visible');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
+      cy.get('#checkbox-error').should('be.visible');
 
+      cy.get('#check-none').click({ force: true });
+      cy.get('#checkbox-error').should('not.be.visible');
+
+      cy.get('#check-ui').click({ force: true });
+      cy.get('#check-ui').should('be.checked');
+      cy.get('#check-none').should('not.be.checked');
+
+      cy.get('#check-none').click({ force: true });
+      cy.get('#check-none').should('be.checked');
+      cy.get('#check-ui').should('not.be.checked');
     });
 
     it('clicks Back', () => {
