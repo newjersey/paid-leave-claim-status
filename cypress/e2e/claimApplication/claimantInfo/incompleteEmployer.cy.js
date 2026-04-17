@@ -128,6 +128,19 @@ describe("Incomplete Employer page", () => {
       cy.wait('@aspxSubmission').then(checkCancelData);
     });
 
+    it('system alert shows on invalid date', () => {
+      cy.window().then((win) => {
+        cy.spy(win, 'alert').as('alertSpy');
+      });
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerYes').click({ force: true });
+      cy.get('#still-work-here-no').click({ force: true });
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').type('04/13/2026');
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').blur();
+      cy.get('@alertSpy').invoke('getCall', 0).should('be.calledWith', 'Employment Start Date cannot be later than First Day Of Disability.');
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').should('have.value', '');
+      cy.checkLogEvent(`System Alert`, { contents: "Employment Start Date cannot be later than First Day Of Disability.", pageId: 'incompleteEmployer' });
+    });
+
     globalTestsNew(PAGE_ID, URL);
   });
 });
