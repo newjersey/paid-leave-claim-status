@@ -1,3 +1,4 @@
+import i18next from 'i18next';
 import { updateCalendarUI } from '../utils';
 
 export const id = "incompleteEmployer";
@@ -9,12 +10,26 @@ export const identifyingContent = {
 };
 
 export function changes() {
-  rearrangeQuestion();
+  addStyles();
+  rearrangeDidYouWorkQuestion();
+  rearrangeAddressFieldset();
   updateCalendars();
 }
 
-function rearrangeQuestion() {
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    #ContentPlaceHolder1_TabEmployment, #ContentPlaceHolder1_TabEmployment_body {
+      background-color: #FBFCFD !important;
+      padding: 0 !important;
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+function rearrangeDidYouWorkQuestion() {
   const divWorkedEmployer = document.getElementById('divWorkedEmployer');
+  divWorkedEmployer.classList.add('bordered-set');
   const existingQuestion = document.querySelector('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblWrkEmployerName');
   const yesRadio = document.querySelector('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerYes');
   const yesLabel = document.querySelector('label[for="ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerYes"]');
@@ -55,4 +70,13 @@ function rearrangeQuestion() {
 function updateCalendars() {
   updateCalendarUI("Image2");
   updateCalendarUI("Image4");
+}
+
+function rearrangeAddressFieldset() {
+  const addressFieldset = document.querySelector("#divEmp > fieldset");
+  addressFieldset.id = 'address-fieldset';
+  addressFieldset.classList.add('usa-fieldset', 'bordered-set');
+
+  const addressLegend = document.querySelector("#divEmp > fieldset > legend");
+  addressLegend.remove();
 }
