@@ -179,40 +179,51 @@ describe("Employment Details page", () => {
       cy.get('#still-work-here-no').click({ force: true });
       cy.get('#employment-end-info').should('not.be.visible');
       cy.get('#employment-end-warning').should('not.be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
 
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').type('09/02/2025');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').blur();
       cy.get('#employment-end-info').should('not.be.visible');
       cy.get('#employment-end-warning').should('not.be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
 
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('12345');
       cy.get('#employment-end-info').should('not.be.visible');
       cy.get('#employment-end-warning').should('not.be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
 
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').clear();
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('06/30/2024');
       cy.get('#employment-end-info').should('not.be.visible');
       cy.get('#employment-end-warning').should('be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
 
       cy.get('#still-work-here-yes').click({ force: true });
       cy.get('#employment-end-info').should('not.be.visible');
       cy.get('#employment-end-warning').should('be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
 
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').clear();
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('09/02/2025');
+      cy.get('#employment-end-info').should('not.be.visible');
+      cy.get('#employment-end-warning').should('not.be.visible');
+      cy.get('#employment-end-error').should('be.visible');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').blur();
       cy.get('#employment-end-info').should('be.visible');
       cy.get('#employment-end-warning').should('not.be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
 
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').clear();
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('06/30/2024');
       cy.get('#employment-end-info').should('not.be.visible');
       cy.get('#employment-end-warning').should('be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
 
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').clear();
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('06/20/2024');
       cy.get('#employment-end-info').should('not.be.visible');
       cy.get('#employment-end-warning').should('not.be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
     });
 
     globalTestsNew(PAGE_ID, URL);

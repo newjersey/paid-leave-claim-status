@@ -405,6 +405,21 @@ function dateRangeFieldset() {
   `;
   dateRangeFieldset.append(endWarning);
 
+  const firstDayOfDisability = formattedDateFromField('ContentPlaceHolder1_TabEmployment_tbpnlEMP_hdnFDDate');
+
+  const endError = document.createElement('div');
+  endError.id = 'employment-end-error';
+  endError.style.display = 'none';
+  endError.classList.add("usa-alert", "usa-alert--error", "usa-alert--slim");
+  endError.innerHTML = `
+    <div class="usa-alert__body">
+      <p class="usa-alert__text" id="employment-end-error-text">
+        ${i18next.t('employerDetails.endError', { firstDayOfDisability })}
+      </p>
+    </div>
+  `;
+  dateRangeFieldset.append(endError);
+
   const updateLink = dateRangeFieldset.querySelector('#update-last-day-link');
   if (updateLink) {
     updateLink.addEventListener('click', function (event) {
@@ -480,6 +495,7 @@ function endDateListener() {
   const employmentEndWarning = document.getElementById('employment-end-warning');
   const employmentEndWarningTextBeforeFDD = document.getElementById('employment-end-warning-text-before-fdd');
   const employmentEndWarningTextOnFDD = document.getElementById('employment-end-warning-text-on-fdd');
+  const employmentEndError = document.getElementById('employment-end-error');
 
   const endInput = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt');
 
@@ -496,21 +512,28 @@ function endDateListener() {
     if (!endInput.value || endInput.value.length < 10) {
       employmentEndInfo.style.display = stillWorkHereNo.checked ? 'none' : 'block';
       employmentEndWarning.style.display = 'none';
+      employmentEndError.style.display = 'none';
       return;
     }
 
     const endDate = new Date(endInput.value).getTime();
     employmentEndInfo.style.display = 'none';
 
-    if (endDate === firstDayOfDisabilityDate) {
+    if (endDate > firstDayOfDisabilityDate) {
+      employmentEndError.style.display = 'block';
+      employmentEndWarning.style.display = 'none';
+    } else if (endDate === firstDayOfDisabilityDate) {
+      employmentEndError.style.display = 'none';
       employmentEndWarning.style.display = 'block';
       employmentEndWarningTextBeforeFDD.style.display = 'none';
       employmentEndWarningTextOnFDD.style.display = 'block';
     } else if (endDate > lastDayOfWorkDate) {
+      employmentEndError.style.display = 'none';
       employmentEndWarning.style.display = 'block';
       employmentEndWarningTextBeforeFDD.style.display = 'block';
       employmentEndWarningTextOnFDD.style.display = 'none';
     } else {
+      employmentEndError.style.display = 'none';
       employmentEndWarning.style.display = 'none';
     }
   };

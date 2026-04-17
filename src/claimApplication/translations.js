@@ -153,6 +153,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         * <a id="update-last-day-link" class="usa-link" href="#">Go back and update your last day of work</a> (your progress will be saved)
         `,
         endWarningOnFDD: "Heads up! The date you entered is after the last day of work you gave earlier, {{lastDayOfWork}}. Please choose a date on or before {{lastDayOfWork}}.",
+        endError: "The date you entered is after the first day of disability leave, {{firstDayOfDisability}}. Please choose an earlier date.",
       },
       header: {
         personal_information: "Personal information",

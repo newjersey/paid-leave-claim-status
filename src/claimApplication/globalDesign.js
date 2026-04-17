@@ -122,6 +122,14 @@ function injectGlobalStyles() {
       margin-right: 142px;
     }
 
+    .usa-alert--error::before {
+      content: url('${ICON_BASE_URL}/error.svg');
+      background: none !important;
+      -webkit-mask: none !important;
+      mask: none !important;
+      top: auto !important;
+    }
+
     .usa-alert--info::before {
       content: url('${ICON_BASE_URL}/info.svg');
       background: none !important;
