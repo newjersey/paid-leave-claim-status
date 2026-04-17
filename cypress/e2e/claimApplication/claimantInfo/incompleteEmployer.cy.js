@@ -3,6 +3,7 @@ import { globalTestsNew, globalTestsOld } from "../shared";
 const PAGE_ID = 'incompleteEmployer';
 const URL = 'ClaimentEmployment';
 const FIXTURE = "./cypress/fixtures/claimApplication/incompleteEmployer/incompleteEmployer.html";
+const FIXTURE_WITH_ERROR = "./cypress/fixtures/claimApplication/incompleteEmployer/incompleteEmployerError.html";
 
 describe("Incomplete Employer page", () => {
   function checkPostDataYes(interception) {
@@ -108,6 +109,11 @@ describe("Incomplete Employer page", () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerNo').click({ force: true });
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_BtnDelete').click();
       cy.wait('@aspxSubmission').then(checkPostDataNo);
+    });
+
+    it("shows error without question number", () => {
+      cy.visit(FIXTURE_WITH_ERROR);
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblValEmpDetMsg').invoke('text').should('not.match', /\d/);
     });
 
     it("updates employer name into labels", () => {

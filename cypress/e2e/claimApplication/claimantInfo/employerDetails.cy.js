@@ -3,6 +3,7 @@ import { globalTestsNew, globalTestsOld } from "../shared";
 const PAGE_ID = 'employerDetails';
 const URL = 'ClaimentEmployment';
 const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/employerDetails.html";
+const FIXTURE_WITH_ERROR = "./cypress/fixtures/claimApplication/incompleteEmployer/employerDetailsError.html";
 
 describe("Employment Details page", () => {
   function checkPostData(interception) {
@@ -107,6 +108,11 @@ describe("Employment Details page", () => {
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_btnCancelEmp1').click();
       cy.wait('@aspxSubmission').then(checkCancelData);
+    });
+
+    it("shows error without question number", () => {
+      cy.visit(FIXTURE_WITH_ERROR);
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblValEmpDetMsg').invoke('text').should('not.match', /\d/);
     });
 
     it('calendar UX allows only valid inputs', () => {
