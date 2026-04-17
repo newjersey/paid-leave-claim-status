@@ -35,6 +35,21 @@ describe("Incomplete Employer page", () => {
     }
   }
 
+  function checkCancelData(interception) {
+    const formData = interception.request.body;
+    cy.checkCommonPostData(formData);
+    expect(formData).to.include('__EVENTTARGET=&__EVENTARGUMENT=&ContentPlaceHolder1_TabEmployment_ClientState=%7B%22ActiveTabIndex%22%3A1%2C%22TabState%22%3A%5Btrue%2Ctrue%2Cfalse%2Cfalse%2Cfalse%2Cfalse%2Cfalse%5D%7D&__LASTFOCUS=&');
+    
+    const expectedParamsString = 'ctl00%24ContentPlaceHolder1%24TabEmployment%24tbpnlEMP%24hdnClmtLWD=04%2F11%2F2026&ctl00%24ContentPlaceHolder1%24TabEmployment%24tbpnlEMP%24hdnDispOtherTabs=&ctl00%24ContentPlaceHolder1%24TabEmployment%24tbpnlEMP%24hdnBaseYearStart=1%2F1%2F2025&ctl00%24ContentPlaceHolder1%24TabEmployment%24tbpnlEMP%24hdnBaseYearEnd=4%2F11%2F2026&ctl00%24ContentPlaceHolder1%24TabEmployment%24tbpnlEMP%24gvEmployers%24ctl03%24chkEmployer=on&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24rdoWrkEmp=Y&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24txtEmpPhNoA=222&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24txtEmpPhNo1=222&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24txtEmpPhNo2=2222&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24txtEmpPhNoX=&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24hdnPersTabCnt=00000&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24hdnExtEmplSel=1&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24txtCEmpNm=&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24txtCEmpAdd1=&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24txtCEmpAdd2=&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24txtCEmpCity=&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24ddlEmpStates=34&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24txtCEmpZip1=&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24txtCEmpZip2=&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24txtCEmpZipOOC=&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24ddlAddEmpCtry=0&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24txtEmploymentStartDt=&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24txtEmploymentEndDt=&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabEmpDetails%24btnCancelEmp1=Cancel&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabPanelSpan%24hdnDeptUnitSOE=&ctl00%24ContentPlaceHolder1%24TabEmployment%24TabPanelWrkDte%24hdnInterMtFlgs=';
+
+    const actual = new URLSearchParams(formData);
+    const expected = new URLSearchParams(expectedParamsString);
+  
+    for (const [key, value] of expected.entries()) {
+      expect(actual.get(key), `${key} should match`).to.equal(value);
+    }
+  }
+
   describe("page without new JS", () => {
     beforeEach(() => {
       cy.intercept('**/tdiOverride.min.js', { body: '', disableCache: true }).as('scriptIntercept');
@@ -55,6 +70,13 @@ describe("Incomplete Employer page", () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerNo').click({ force: true });
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_BtnDelete').click();
       cy.wait('@aspxSubmission').then(checkPostDataNo);
+    });
+
+    it("user can cancel", () => {
+      cy.mockASPX(URL);
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerYes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_btnCancelEmp1').click();
+      cy.wait('@aspxSubmission').then(checkCancelData);
     });
 
     globalTestsOld(URL);
@@ -97,6 +119,13 @@ describe("Incomplete Employer page", () => {
         .then(($input) => {
           expect($input[0].validationMessage).to.exist;
         });
+    });
+
+    it("user can cancel", () => {
+      cy.mockASPX(URL);
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerYes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_btnCancelEmp1').click();
+      cy.wait('@aspxSubmission').then(checkCancelData);
     });
 
     globalTestsNew(PAGE_ID, URL);
