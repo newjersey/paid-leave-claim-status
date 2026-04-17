@@ -45,7 +45,7 @@
         }
     </style>
 
-    <script type="text/javascript" src="TDI_files/CharacterCheck.js"></script>
+    <!-- <script type="text/javascript" src="TDI_files/CharacterCheck.js"></script> -->
 
 <link href="TDI_files/WebResource.css" type="text/css" rel="stylesheet">
 
@@ -231,7 +231,7 @@ Sys.WebForms.PageRequestManager._initialize('ctl00$ScriptManager1', 'form1', [],
             main = new Test.Checker();
             main.initialize();
 
-            hideCalendarInPage();
+            // hideCalendarInPage();
         }
 
 
@@ -529,21 +529,21 @@ Sys.WebForms.PageRequestManager._initialize('ctl00$ScriptManager1', 'form1', [],
             cntrlToSet.value = "";
         }
 
-        $(document).ready(function () {
-            WireAutoTab('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpZip1',
-            'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpZip2', 5);
+        // $(document).ready(function () {
+        //     WireAutoTab('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpZip1',
+        //     'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpZip2', 5);
 
-            WireAutoTab('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNoA',
-            'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNo1', 3);
-            WireAutoTab('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNo1',
-            'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNo2', 3);
-            WireAutoTab('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNo2',
-            'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNoX', 4);
+        //     WireAutoTab('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNoA',
+        //     'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNo1', 3);
+        //     WireAutoTab('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNo1',
+        //     'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNo2', 3);
+        //     WireAutoTab('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNo2',
+        //     'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNoX', 4);
 
-            WireAutoTab('ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtZipSOE1',
-            'ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtZipSOE2', 5);
+        //     WireAutoTab('ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtZipSOE1',
+        //     'ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtZipSOE2', 5);
 
-        });
+        // });
 
         function checkDateFormat(textbox, objFlg) {
             var textboxVal;
@@ -1303,9 +1303,9 @@ finished providing your employment information, click the “confirmation”
                                     </td>
                                     <td style="width: 70%;">
                                         <div id="divAddEmpZip" style="display: block;">
-                                            <input name="ctl00$ContentPlaceHolder1$TabEmployment$TabEmpDetails$txtCEmpZip1" type="text" maxlength="5" id="ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpZip1" onkeypress="return onlyNumbers(event);" class="numbersonly" style="width:45px;" autocomplete="off">
+                                            <input name="ctl00$ContentPlaceHolder1$TabEmployment$TabEmpDetails$txtCEmpZip1" type="text" maxlength="5" id="ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpZip1" class="numbersonly" style="width:45px;" autocomplete="off">
                                             <a>-</a>
-                                            <input name="ctl00$ContentPlaceHolder1$TabEmployment$TabEmpDetails$txtCEmpZip2" type="text" maxlength="4" id="ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpZip2" onkeypress="return onlyNumbers(event);" class="numbersonly" style="width:40px;" autocomplete="off">
+                                            <input name="ctl00$ContentPlaceHolder1$TabEmployment$TabEmpDetails$txtCEmpZip2" type="text" maxlength="4" id="ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpZip2" class="numbersonly" style="width:40px;" autocomplete="off">
                                         </div>
                                         <div id="divAddEmpZipOOC" style="display: none;">
                                             <input name="ctl00$ContentPlaceHolder1$TabEmployment$TabEmpDetails$txtCEmpZipOOC" type="text" maxlength="11" id="ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpZipOOC" style="width:100px;" autocomplete="off">
@@ -1594,7 +1594,7 @@ finished providing your employment information, click the “confirmation”
                                     number?&nbsp;</div>
                             </td>
                             <td>
-                                <input name="ctl00$ContentPlaceHolder1$TabEmployment$TabEmpDetails$txtEmpPhNoA" type="text" value="666" maxlength="3" id="ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNoA" onkeypress="return onlyNumbers(event);" class="numbersonly" style="width:39px;" autocomplete="off">-<input name="ctl00$ContentPlaceHolder1$TabEmployment$TabEmpDetails$txtEmpPhNo1" type="text" value="555" maxlength="3" id="ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNo1" onkeypress="return onlyNumbers(event);" class="numbersonly" style="width:39px;" autocomplete="off">-<input name="ctl00$ContentPlaceHolder1$TabEmployment$TabEmpDetails$txtEmpPhNo2" type="text" value="6666" maxlength="4" id="ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNo2" onkeypress="return onlyNumbers(event);" class="numbersonly" style="width:51px;" autocomplete="off">&nbsp;Ext &nbsp;<input name="ctl00$ContentPlaceHolder1$TabEmployment$TabEmpDetails$txtEmpPhNoX" type="text" maxlength="5" id="ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNoX" onkeypress="return AlphaNumeric(event);" style="width:70px;" autocomplete="off">
+                                <input name="ctl00$ContentPlaceHolder1$TabEmployment$TabEmpDetails$txtEmpPhNoA" type="text" value="666" maxlength="3" id="ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNoA" class="numbersonly" style="width:39px;" autocomplete="off">-<input name="ctl00$ContentPlaceHolder1$TabEmployment$TabEmpDetails$txtEmpPhNo1" type="text" value="555" maxlength="3" id="ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNo1" class="numbersonly" style="width:39px;" autocomplete="off">-<input name="ctl00$ContentPlaceHolder1$TabEmployment$TabEmpDetails$txtEmpPhNo2" type="text" value="6666" maxlength="4" id="ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNo2" class="numbersonly" style="width:51px;" autocomplete="off">&nbsp;Ext &nbsp;<input name="ctl00$ContentPlaceHolder1$TabEmployment$TabEmpDetails$txtEmpPhNoX" type="text" maxlength="5" id="ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNoX" onkeypress="return AlphaNumeric(event);" style="width:70px;" autocomplete="off">
                             </td>
                         </tr>
                         <tr>
@@ -1803,9 +1803,9 @@ finished providing your employment information, click the “confirmation”
                                 </td>
                                 <td style="width: 60%;">
                                     <div id="divZipSOE" style="margin-left: 0px; padding-left: 0px; display: block;">
-                                        <input name="ctl00$ContentPlaceHolder1$TabEmployment$TabPanelSpan$txtZipSOE1" type="text" maxlength="5" disabled="disabled" id="ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtZipSOE1" onkeypress="return onlyNumbers(event);" class="numbersonly" style="width:45px;" autocomplete="off">
+                                        <input name="ctl00$ContentPlaceHolder1$TabEmployment$TabPanelSpan$txtZipSOE1" type="text" maxlength="5" disabled="disabled" id="ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtZipSOE1" class="numbersonly" style="width:45px;" autocomplete="off">
                                         <a>-</a>
-                                        <input name="ctl00$ContentPlaceHolder1$TabEmployment$TabPanelSpan$txtZipSOE2" type="text" maxlength="4" disabled="disabled" id="ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtZipSOE2" onkeypress="return onlyNumbers(event);" class="numbersonly" style="width:40px;" autocomplete="off">
+                                        <input name="ctl00$ContentPlaceHolder1$TabEmployment$TabPanelSpan$txtZipSOE2" type="text" maxlength="4" disabled="disabled" id="ContentPlaceHolder1_TabEmployment_TabPanelSpan_txtZipSOE2" class="numbersonly" style="width:40px;" autocomplete="off">
                                     </div>
                                     <div id="divOutCtryZipSOE" style="display: none; margin-left: 0; padding-left: 0;">
                                         <input name="ctl00$ContentPlaceHolder1$TabEmployment$TabPanelSpan$TxtEmpOutCtryZip" type="text" maxlength="11" disabled="disabled" id="ContentPlaceHolder1_TabEmployment_TabPanelSpan_TxtEmpOutCtryZip" style="width:100px;" autocomplete="off">
@@ -3163,7 +3163,7 @@ Newark, NJ 08111</textarea>
 
 <script type="text/javascript">
 //<![CDATA[
-SessionExpireAlert(1800000,'Clmt');//]]>
+// SessionExpireAlert(1800000,'Clmt');//]]>
 </script>
 <script type="text/javascript">$get('divUnionData').style.display = 'none';</script><script type="text/javascript">$get('divRecvPen').style.display = 'none';</script><script type="text/javascript">$get('divEmpPen').style.display = 'none';</script><script type="text/javascript">$get('divPenLSYes').style.display = 'none';</script><script type="text/javascript">$get('divPenLSNo').style.display = 'none';</script><script type="text/javascript">$get('divWorkedEmployer').style.display = 'block';</script><script type="text/javascript">dispDivEmplPhone('none', 'block');</script><script type="text/javascript">$get('divEmp').style.display = 'none';</script><script type="text/javascript">$get('divClEmpDet').style.display = 'none';</script>
 <script type="text/javascript">
