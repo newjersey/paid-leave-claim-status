@@ -141,6 +141,59 @@ describe("Incomplete Employer page", () => {
       cy.checkLogEvent(`System Alert`, { contents: "Employment Start Date cannot be later than First Day Of Disability.", pageId: 'incompleteEmployer' });
     });
 
+    it('shows info and warning alerts properly', () => {
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerYes').click({ force: true });
+      
+      cy.get('#still-work-here-no').click({ force: true });
+      cy.get('#employment-end-info').should('not.be.visible');
+      cy.get('#employment-end-warning').should('not.be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
+
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').type('04/13/2026');
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').blur();
+      cy.get('#employment-end-info').should('not.be.visible');
+      cy.get('#employment-end-warning').should('not.be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
+
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('12345');
+      cy.get('#employment-end-info').should('not.be.visible');
+      cy.get('#employment-end-warning').should('not.be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
+
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').clear();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('04/12/2026');
+      cy.get('#employment-end-info').should('not.be.visible');
+      cy.get('#employment-end-warning').should('be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
+
+      cy.get('#still-work-here-yes').click({ force: true });
+      cy.get('#employment-end-info').should('not.be.visible');
+      cy.get('#employment-end-warning').should('be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
+
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').clear();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('04/13/2026');
+      cy.get('#employment-end-info').should('not.be.visible');
+      cy.get('#employment-end-warning').should('not.be.visible');
+      cy.get('#employment-end-error').should('be.visible');
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').blur();
+      cy.get('#employment-end-info').should('be.visible');
+      cy.get('#employment-end-warning').should('not.be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
+
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').clear();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('04/12/2026');
+      cy.get('#employment-end-info').should('not.be.visible');
+      cy.get('#employment-end-warning').should('be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
+
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').clear();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('04/10/2026');
+      cy.get('#employment-end-info').should('not.be.visible');
+      cy.get('#employment-end-warning').should('not.be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
+    });
+
     globalTestsNew(PAGE_ID, URL);
   });
 });
