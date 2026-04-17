@@ -279,7 +279,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       otherBenefits: {
         title: "Other benefits",
-        areYouReceivingOrApplied: "Since {{firstDayOfDisability}}, have you applied for or received any of the following?",
+        areYouReceivingOrApplied: "Are you receiving or have you applied for any of the following benefits as of {{firstDayOfDisability}}?",
         areYouReceivingOrApplied_returned: "For the period from {{firstDayOfDisability}} to {{returnedToWorkDay}}, have you applied for or received any of the following?",
         pendingLabel: "My application is still pending",
         stateLabel: "State or territory where you filed:",
@@ -304,14 +304,14 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           },
         },
         tdi: {
-          title: "<strong>Family/Medical Leave</strong> from another state or U.S. territory",
+          title: "Family/Medical Leave from <strong>another state or U.S. territory</strong>",
           followup: {
             title: "You answered yes to Family/Medical leave from another state",
             subtitle: "Family/Medical Leave benefits from another state",
           },
         },
         employer: {
-          title: "<strong>Temporary disability benefits</strong> from your employer or union",
+          title: "<strong>Employer or union-provided</strong> temporary disability benefits",
           followup: {
             title: "You answered yes to Temporary disability benefits from your employer",
             subtitle: "Disability from your employer",

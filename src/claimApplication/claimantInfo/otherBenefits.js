@@ -129,17 +129,6 @@ function addStyles() {
   document.head.appendChild(style);
 }
 
-function getPromptText() {
-  const firstDayOfDisability = formattedDateFromField('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt');
-  const returnedYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes');
-  if (returnedYes && returnedYes.checked) {
-    const returnedToWorkDay = formattedDateFromField('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtReturnedToWrk');
-    return i18next.t('otherBenefits.areYouReceivingOrApplied', { context: 'returned', firstDayOfDisability, returnedToWorkDay });
-  } else {
-    return i18next.t('otherBenefits.areYouReceivingOrApplied', { firstDayOfDisability });
-  }
-}
-
 function replaceRadioButtonsWithCheckboxes() {
   const existingForm = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits');
   const newForm = document.createElement('div');
@@ -149,7 +138,11 @@ function replaceRadioButtonsWithCheckboxes() {
       <fieldset class="usa-fieldset">
         <legend class="usa-legend" style="margin-top: 0;">
           <span class="required-asterisk">*</span>
-          ${getPromptText()}
+          ${i18next.t(
+              'otherBenefits.areYouReceivingOrApplied',
+              { firstDayOfDisability: formattedDateFromField('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt') }
+            )
+          }
         </legend>
         <div class="usa-checkbox">
           <input
