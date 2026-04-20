@@ -1,7 +1,6 @@
 import i18next from 'i18next';
 import { logEvent } from "../../modules/shared.mjs";
 import {
-  adjustTableWidths,
   elementTextError,
   getSessionData,
   removeExtraSpaceBetweenRadioButtons,
@@ -70,12 +69,9 @@ export function trackWorkersCompYesSubmission(pageId) {
 
 export function changes() {
   addStyles();
-  replaceDoctorText();
   addProviderScreener();
   addWorkersCompScreener();
   matchNewFormDataToExisting();
-  adjustTable();
-  adjustTextEntries();
   styleRadioButtons();
   addWorkersCompListeners();
   moveWorkersCompToNewFieldset();
@@ -91,8 +87,6 @@ export function changes() {
   setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason);
   focusOnWorkersCompIfEditing();
   updateAllCalendars();
-
-  styleFieldsets();
 }
 
 function addStyles() {
@@ -103,22 +97,6 @@ function addStyles() {
     }
   `;
   document.head.appendChild(style);
-}
-
-function replaceDoctorText() {
-  // TODO: do in a translation-compatible way
-  const linkElements = document.querySelectorAll('a');
-
-  linkElements.forEach((element) => {
-    let text = element.textContent;
-    if (text.includes('doctor/hospital')) {
-      text = text.replace('doctor/hospital', 'healthcare provider');
-    }
-    if (text.includes('doctor’s/hospital’s')) {
-      text = text.replace('doctor’s/hospital’s', `healthcare provider's`);
-    }
-    element.textContent = text;
-  });
 }
 
 function addSubtitleAndExplainer() {
@@ -504,59 +482,6 @@ function styleRadioButtons() {
   );
 }
 
-function adjustTextEntries() {
-  const disabilityEntry = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury");
-  if (disabilityEntry) {
-    disabilityEntry.style.width = '100%';
-  }
-
-  const injuryDiv = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury').closest('div');
-  if (injuryDiv) {
-    injuryDiv.style.marginLeft = '0';
-  }
-
-  const doctorEntry = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm");
-  if (doctorEntry) {
-    doctorEntry.style.width = '100%';
-  }
-
-  const doctorAddressEntry = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_Panel1");
-  if (doctorAddressEntry) {
-    doctorAddressEntry.style.width = '100%';
-  }
-
-  const workersCompDiv = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').closest('div');
-  if (workersCompDiv) {
-    workersCompDiv.style.width = '100%';
-  }
-
-  const phone1 = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh");
-  const phone2 = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh2");
-  const phone3 = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh3");
-  const phone4 = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh4");
-  phone1.insertAdjacentHTML('beforebegin', '<br>');
-  phone1.style.width = '50px';
-  phone2.style.width = '50px';
-  phone3.style.width = '50px';
-  phone4.style.width = '60px';
-
-  // whitespace before doctor phone question
-  const divDocOCCAdd = document.getElementById('divDocOCCAdd');
-  divDocOCCAdd.nextSibling.remove();
-  divDocOCCAdd.nextSibling.remove();
-  divDocOCCAdd.nextSibling.remove();
-}
-
-function adjustTable() {
-  const doctorAddress = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_pnlDocOCCAdd');
-  if (doctorAddress) {
-    doctorAddress.style.width = 'auto';
-    doctorAddress.style.maxWidth = '100%';
-  }
-
-  adjustTableWidths(document);
-}
-
 function moveWorkersCompToNewFieldset() {
   const causedByJobElement = document.getElementById('causedByJobQuestion');
   const workersCompElement = document.getElementById('workersCompContainer');
@@ -625,16 +550,4 @@ function addLinkToWorkerCompQuestion() {
       questionLink.replaceWith(span);
     }
   }
-}
-
-function styleFieldsets() {
-  const providerFieldset = document.getElementById('provider-type-accepted-fieldset');
-  const containerFieldset = providerFieldset.parentElement.closest('fieldset');
-  containerFieldset.classList.add('bordered-set');
-
-  const workersCompFieldset = document.getElementById('workersCompFieldset');
-  workersCompFieldset.classList.add('bordered-set');
-
-  const providerName = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm');
-  providerName.classList.add('usa-input');
 }
