@@ -5,6 +5,7 @@ import {
   logout,
   updateCalendarUI,
 } from '../utils';
+import { logEvent } from '../../modules/shared.mjs';
 
 export const employerDetailsLabels = [
   { id: 'ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpNm', label: 'Employer Name' },
@@ -41,6 +42,7 @@ export function changes() {
   endDateListener();
   cancelButtonDoesNotRequireRadioButtons();
   removeQuestionNumbersFromError();
+  trackSubmissionDetails();
 }
 
 function addStyles() {
@@ -532,11 +534,13 @@ function endDateListener() {
       employmentEndWarning.style.display = 'block';
       employmentEndWarningTextBeforeFDD.style.display = 'none';
       employmentEndWarningTextOnFDD.style.display = 'block';
+      logEvent("TDI Employer End Date Warning", { pageId: id });
     } else if (endDate > lastDayOfWorkDate) {
       employmentEndError.style.display = 'none';
       employmentEndWarning.style.display = 'block';
       employmentEndWarningTextBeforeFDD.style.display = 'block';
       employmentEndWarningTextOnFDD.style.display = 'none';
+      logEvent("TDI Employer End Date Warning", { pageId: id });
     } else {
       employmentEndError.style.display = 'none';
       employmentEndWarning.style.display = 'none';
@@ -563,4 +567,30 @@ function removeQuestionNumbersFromError() {
   if (error) {
     error.innerHTML = error.innerHTML.replace(/(\d+\.\s+)/g, '');
   }
+}
+
+function trackSubmissionDetails() {
+  const submitButton = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_btnNextEmpDet');
+  const stillWorkHereYes = document.getElementById('still-work-here-yes');
+  const stillWorkHereNo = document.getElementById('still-work-here-no');
+  const employmentEndWarning = document.getElementById('employment-end-warning');
+
+  submitButton.addEventListener('click', function () {
+    let stillWorkHere;
+    if (stillWorkHereYes.checked) {
+      stillWorkHere = "yes";
+    } else if (stillWorkHereNo.checked) {
+      stillWorkHere = "no";
+    }
+    if (stillWorkHere) {
+      logEvent("TDI Employer Still Work Here Submitted", {
+        contents: stillWorkHere,
+        pageId: id,
+      });
+
+      if (employmentEndWarning.style.display == 'block') {
+        logEvent("TDI Employer Submitted With End Date Warning", { pageId: id });
+      }
+    }
+  });
 }
