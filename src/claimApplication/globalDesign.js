@@ -187,6 +187,7 @@ function injectGlobalStyles() {
     #ContentPlaceHolder1_ClaimantDisabilityTab_body,
     #ContentPlaceHolder1_ClaimantDisabilityTab {
       background-color: transparent !important;
+      padding: 0;
     }
 
     /* Calendar popup container */

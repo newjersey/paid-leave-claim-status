@@ -86,7 +86,9 @@ describe("Employment Details page", () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNoA').type('111');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNo1').type('555');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmpPhNo2').type('1111');
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').should('not.be.visible');
       cy.get('#still-work-here-no').click({ force: true });
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').should('not.be.visible');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').type('01/01/2021');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('01/01/2022');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_btnNextEmpDet').click();
