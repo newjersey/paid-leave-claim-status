@@ -91,6 +91,8 @@ export function changes() {
   setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason);
   focusOnWorkersCompIfEditing();
   updateAllCalendars();
+
+  styleFieldsets();
 }
 
 function addStyles() {
@@ -623,4 +625,13 @@ function addLinkToWorkerCompQuestion() {
       questionLink.replaceWith(span);
     }
   }
+}
+
+function styleFieldsets() {
+  const providerFieldset = document.getElementById('provider-type-accepted-fieldset');
+  const containerFieldset = providerFieldset.parentElement.closest('fieldset');
+  containerFieldset.classList.add('bordered-set');
+
+  const workersCompFieldset = document.getElementById('workersCompFieldset');
+  workersCompFieldset.classList.add('bordered-set');
 }
