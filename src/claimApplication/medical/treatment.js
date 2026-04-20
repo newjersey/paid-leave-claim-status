@@ -634,4 +634,7 @@ function styleFieldsets() {
 
   const workersCompFieldset = document.getElementById('workersCompFieldset');
   workersCompFieldset.classList.add('bordered-set');
+
+  const providerName = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm');
+  providerName.classList.add('usa-input');
 }
