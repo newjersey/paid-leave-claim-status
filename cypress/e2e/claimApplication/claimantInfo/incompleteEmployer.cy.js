@@ -102,6 +102,7 @@ describe("Incomplete Employer page", () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type("05/05/2024");
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_btnNextEmpDet').click();
       cy.wait('@aspxSubmission').then(checkPostDataYes);
+      cy.checkLogEvent(`TDI Employer Still Work Here Submitted`, { contents: "no", pageId: 'incompleteEmployer' });
     });
 
     it("user can say they did not work for employer", () => {
@@ -130,6 +131,7 @@ describe("Incomplete Employer page", () => {
         .then(($input) => {
           expect($input[0].validationMessage).to.exist;
         });
+      cy.confirmEventIsNotTracked("TDI Employer Still Work Here Submitted");
     });
 
     it("user can cancel", () => {
@@ -176,6 +178,7 @@ describe("Incomplete Employer page", () => {
       cy.get('#employment-end-info').should('not.be.visible');
       cy.get('#employment-end-warning').should('be.visible');
       cy.get('#employment-end-error').should('not.be.visible');
+      cy.checkLogEvent(`TDI Employer End Date Warning`, { pageId: 'incompleteEmployer' });
 
       cy.get('#still-work-here-yes').click({ force: true });
       cy.get('#employment-end-info').should('not.be.visible');
@@ -193,16 +196,19 @@ describe("Incomplete Employer page", () => {
       cy.get('#employment-end-error').should('not.be.visible');
 
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').clear();
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('04/10/2026');
+      cy.get('#employment-end-info').should('not.be.visible');
+      cy.get('#employment-end-warning').should('not.be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
+
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').clear();
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('04/12/2026');
       cy.get('#employment-end-info').should('not.be.visible');
       cy.get('#employment-end-warning').should('be.visible');
       cy.get('#employment-end-error').should('not.be.visible');
 
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').clear();
-      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('04/10/2026');
-      cy.get('#employment-end-info').should('not.be.visible');
-      cy.get('#employment-end-warning').should('not.be.visible');
-      cy.get('#employment-end-error').should('not.be.visible');
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_btnNextEmpDet').click();
+      cy.checkLogEvent(`TDI Employer Submitted With End Date Warning`, { pageId: 'incompleteEmployer' });
     });
 
     globalTestsNew(PAGE_ID, URL);
