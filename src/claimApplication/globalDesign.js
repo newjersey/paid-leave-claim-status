@@ -44,6 +44,10 @@ function injectGlobalStyles() {
       font-family: "Public Sans", sans-serif;
     }
 
+    form fieldset fieldset label {
+      width: auto;
+    }
+
     .bordered-set {
       background: white;
       border: 1px solid #b2b2b2;
