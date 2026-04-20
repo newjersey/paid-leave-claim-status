@@ -7,7 +7,6 @@ const resources = {
         illness: "illness",
         injury: "injury",
         no: "No",
-        noneOfTheAbove: "None of the above",
         optional: "(optional)",
         saveAndContinue: "Save and continue",
         yes: "Yes",
@@ -279,8 +278,10 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       otherBenefits: {
         title: "Other benefits",
+        checkingForOverlaps: "Some government benefits can't overlap with Temporary Disability, so we need to check if that applies to you.",
         areYouReceivingOrApplied: "Are you receiving or have you applied for any of the following benefits as of {{firstDayOfDisability}}?",
         areYouReceivingOrApplied_returned: "For the period from {{firstDayOfDisability}} to {{returnedToWorkDay}}, have you applied for or received any of the following?",
+        noneOfTheAbove: "None of the above (most people choose this)",
         pendingLabel: "My application is still pending",
         stateLabel: "State or territory where you filed:",
         dateLabel: "What time period do your benefits cover?",

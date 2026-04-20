@@ -192,7 +192,7 @@ function replaceRadioButtonsWithCheckboxes() {
             name="other-benefits"
             value="none"
           />
-          <label class="usa-checkbox__label" for="check-none">${i18next.t('shared.noneOfTheAbove')}</label>
+          <label class="usa-checkbox__label" for="check-none">${i18next.t('otherBenefits.noneOfTheAbove')}</label>
         </div>
         <div
           id="checkbox-error"
@@ -211,6 +211,13 @@ function replaceRadioButtonsWithCheckboxes() {
   `;
 
   existingForm.parentNode.insertBefore(newForm, existingForm);
+
+  const contextualIntroduction = document.createElement('p');
+  contextualIntroduction.style.fontSize = '16px';
+  contextualIntroduction.style.marginTop = '10px';
+  contextualIntroduction.style.marginBottom = '30px';
+  contextualIntroduction.textContent = i18next.t('otherBenefits.checkingForOverlaps');
+  newForm.insertAdjacentElement('beforebegin', contextualIntroduction);
 }
 
 // remove once underlying question removed
