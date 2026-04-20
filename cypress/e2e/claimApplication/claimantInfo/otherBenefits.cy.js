@@ -222,6 +222,7 @@ describe("Other Benefits page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
       cy.wait('@aspxSubmission').then(checkNoPostData);
       cy.confirmEventIsNotTracked("Other Benefits Yes Clicked");
+      cy.confirmEventIsNotTracked("TDI Other Benefits Checkboxes Empty");
     });
 
     it("user can input yes to everything with details and proceed to next page", () => {
