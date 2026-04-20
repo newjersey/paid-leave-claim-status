@@ -333,6 +333,7 @@ describe("Other Benefits page", () => {
       cy.get('#checkbox-error').should('not.be.visible');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
       cy.get('#checkbox-error').should('be.visible');
+      cy.checkLogEvent(`TDI Other Benefits Checkboxes Empty`, {});
 
       cy.get('#check-none').click({ force: true });
       cy.get('#checkbox-error').should('not.be.visible');

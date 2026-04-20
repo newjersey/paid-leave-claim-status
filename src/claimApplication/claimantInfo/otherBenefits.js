@@ -836,15 +836,11 @@ function noneOfTheAboveLogic() {
       error.style.display = 'block';
       fieldset.classList.add('usa-form-group--error');
       checkSsdi.focus();
+      logEvent('TDI Other Benefits Checkboxes Empty', {});
     } else {
       error.style.display = 'none';
       fieldset.classList.remove('usa-form-group--error');
     }
-  });
-
-  noneOfTheAbove.addEventListener('invalid', function() {
-    error.style.display = 'block';
-    fieldset.classList.add('usa-form-group--error');
   });
 
   noneOfTheAbove.addEventListener('click', function () {
