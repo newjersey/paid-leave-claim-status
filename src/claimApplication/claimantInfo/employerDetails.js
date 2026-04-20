@@ -51,6 +51,10 @@ function addStyles() {
       padding: 0 !important;
     }
 
+    .usa-legend {
+      margin-top: 0;
+    }
+
     .usa-form-group--error {
       margin-top: 0;
     }

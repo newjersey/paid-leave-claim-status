@@ -863,7 +863,7 @@ function noneOfTheAboveLogic() {
     if (checkEmployer && checkEmployer.checked) {
       checkEmployer.click();
     }
-    
+
     error.style.display = 'none';
     fieldset.classList.remove('usa-form-group--error');
   });
