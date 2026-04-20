@@ -69,10 +69,11 @@ export function trackWorkersCompYesSubmission(pageId) {
 
 export function changes() {
   addStyles();
+  styleRadioButtons();
   addProviderScreener();
+  moveUSAQuestionToNewFieldset();
   addWorkersCompScreener();
   matchNewFormDataToExisting();
-  styleRadioButtons();
   addWorkersCompListeners();
   moveWorkersCompToNewFieldset();
   addLinkToWorkerCompQuestion();
@@ -113,9 +114,12 @@ function addSubtitleAndExplainer() {
 function addProviderScreener() {
   const doctorNameInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm');
   const fieldset = doctorNameInput.closest('fieldset');
+  fieldset.id = 'providerTypeFieldset';
+  fieldset.classList.add('bordered-set');
 
   const providerType = document.createElement('div');
-  providerType.style.margin = "0 0 50px";
+  providerType.style.margin = "0";
+  providerType.style.padding = "0";
   providerType.innerHTML = `
         <p>${i18next.t('medicalInfo.provider.theseTypesProviders')}</p>
         <div class="provider-accepted-list margin-bottom-2">
@@ -235,6 +239,34 @@ function addProviderScreener() {
       logEvent('Medical Provider Type No Submitted', {});
     }
   });
+}
+
+function moveUSAQuestionToNewFieldset() {
+  const usaContainer = document.createElement('div');
+  usaContainer.classList.add('bordered-set');
+
+  const usaFieldset = document.createElement('fieldset');
+  usaFieldset.classList.add('usa-fieldset');
+  usaContainer.append(usaFieldset);
+
+  const usaLegend = document.createElement('legend');
+  usaLegend.classList.add('usa-legend');
+  usaLegend.textContent = i18next.t('medicalInfo.provider.inUSA');
+  usaFieldset.append(usaLegend);
+  usaLegend.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const yesButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddYes');
+  usaFieldset.append(yesButton.closest('div'));
+    
+  const noButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddNo');
+  usaFieldset.append(noButton.closest('div'));
+
+  const oldQuestion = Array.from(document.querySelectorAll('a'))
+    .find(a => a.textContent.includes('Is your doctor/hospital located in the United States?'));
+  oldQuestion.style.display = 'none';
+
+  const providerTypeFieldset = document.getElementById('providerTypeFieldset');
+  providerTypeFieldset.insertAdjacentElement('afterend', usaContainer);
 }
 
 function addWorkersCompScreener() {
@@ -489,6 +521,7 @@ function moveWorkersCompToNewFieldset() {
 
   const newFieldset = document.createElement('fieldset');
   newFieldset.id = 'workersCompFieldset';
+  newFieldset.classList.add('bordered-set');
   newFieldset.appendChild(causedByJobElement);
   newFieldset.appendChild(workersCompElement);
 
