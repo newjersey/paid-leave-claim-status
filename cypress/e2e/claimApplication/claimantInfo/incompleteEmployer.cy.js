@@ -173,18 +173,25 @@ describe("Incomplete Employer page", () => {
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerYes').click({ force: true });
 
       cy.get('#still-work-here-no').click({ force: true });
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').should('not.be.visible');
       cy.get('#employment-end-info').should('not.be.visible');
       cy.get('#employment-end-warning').should('not.be.visible');
       cy.get('#employment-end-error').should('not.be.visible');
 
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').type('04/13/2026');
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').blur();
-      cy.get('#employment-end-info').should('not.be.visible');
+      cy.get('#employment-end-info').should('be.visible');
       cy.get('#employment-end-warning').should('not.be.visible');
       cy.get('#employment-end-error').should('not.be.visible');
 
+      cy.get('#still-work-here-yes').click({ force: true });
+      cy.get('#employment-end-info').should('be.visible');
+      cy.get('#employment-end-warning').should('not.be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
+
+      cy.get('#still-work-here-no').click({ force: true });
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('12345');
-      cy.get('#employment-end-info').should('not.be.visible');
+      cy.get('#employment-end-info').should('be.visible');
       cy.get('#employment-end-warning').should('not.be.visible');
       cy.get('#employment-end-error').should('not.be.visible');
 
@@ -212,6 +219,11 @@ describe("Incomplete Employer page", () => {
 
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').clear();
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').type('04/10/2026');
+      cy.get('#employment-end-info').should('not.be.visible');
+      cy.get('#employment-end-warning').should('not.be.visible');
+      cy.get('#employment-end-error').should('not.be.visible');
+
+      cy.get('#still-work-here-no').click({ force: true });
       cy.get('#employment-end-info').should('not.be.visible');
       cy.get('#employment-end-warning').should('not.be.visible');
       cy.get('#employment-end-error').should('not.be.visible');
