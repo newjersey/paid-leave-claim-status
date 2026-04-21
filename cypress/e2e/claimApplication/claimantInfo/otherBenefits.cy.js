@@ -233,6 +233,13 @@ describe("Other Benefits page", () => {
       checkIntlInput(true);
     });
 
+    it("ssdi calendar control navigates to year of fdd", () => {
+      cy.get('#check-ssdi').click({ force: true });
+      cy.get('#Image10').click();
+      // fdd in fixture is 07/15/2025
+      cy.get('#CalendarControl > table > tbody > tr.header > td > div > div.title').should('contain.text', '2025');
+    });
+
     it("user can input info when the employer benefits question is removed", () => {
       cy.mockASPX(URL);
       cy.visit(FIXTURE_WITHOUT_EMPLOYER);

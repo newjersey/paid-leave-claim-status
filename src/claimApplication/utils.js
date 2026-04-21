@@ -322,10 +322,10 @@ function fixCalendarPopup(calendarId, onlyShowYearControls) {
   const imgStyle = 'width: 20px; height: 20px; display: block;';
   
   const baseUrl = 'https://beta.nj.gov/files/tdi-fli-claim-status/assets/';
-  const prevYear = `<a href="javascript:changeCalendarControlYear${functionSuffix}(-1);" style="${linkStyle}"><img src="${baseUrl}navigate_far_before.svg" alt="Previous year" style="${imgStyle}"></a>`;
+  const prevYear = `<a id="${functionSuffix}prevYearLink" href="javascript:changeCalendarControlYear${functionSuffix}(-1);" style="${linkStyle}"><img src="${baseUrl}navigate_far_before.svg" alt="Previous year" style="${imgStyle}"></a>`;
   const prevMonth = onlyShowYearControls ? "" : `<a href="javascript:changeCalendarControlMonth${functionSuffix}(-1);" style="${linkStyle}"><img src="${baseUrl}navigate_before.svg" alt="Previous month" style="${imgStyle}"></a>`;
   const nextMonth = onlyShowYearControls ? "" : `<a href="javascript:changeCalendarControlMonth${functionSuffix}(1);" style="${linkStyle}"><img src="${baseUrl}navigate_next.svg" alt="Next month" style="${imgStyle}"></a>`;
-  const nextYear = `<a href="javascript:changeCalendarControlYear${functionSuffix}(1);" style="${linkStyle}"><img src="${baseUrl}navigate_far_next.svg" alt="Next year" style="${imgStyle}"></a>`;
+  const nextYear = `<a id="${functionSuffix}nextYearLink" href="javascript:changeCalendarControlYear${functionSuffix}(1);" style="${linkStyle}"><img src="${baseUrl}navigate_far_next.svg" alt="Next year" style="${imgStyle}"></a>`;
   
   const title = navHeaderRow.querySelector('.title')?.innerHTML || '';
   
