@@ -341,11 +341,18 @@ describe("Other Benefits page", () => {
 
       cy.get('#check-ui').click({ force: true });
       cy.get('#check-ui').should('be.checked');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlUISt').should('be.visible');
       cy.get('#check-none').should('not.be.checked');
 
+      cy.get('#check-ui').click({ force: true });
+      cy.get('#check-ui').should('not.be.checked');
+      cy.get('#check-none').should('not.be.checked');
+
+      cy.get('#check-ui').click({ force: true });
       cy.get('#check-none').click({ force: true });
       cy.get('#check-none').should('be.checked');
       cy.get('#check-ui').should('not.be.checked');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlUISt').should('not.be.visible');
     });
 
     it('clicks Back', () => {

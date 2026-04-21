@@ -871,9 +871,10 @@ function noneOfTheAboveLogic() {
     fieldset.classList.remove('usa-form-group--error');
   });
 
-  const refreshNoneAndError = function() {
-    const otherBenefitChecked = checkSsdi.checked || checkUi.checked || checkTdi.checked || checkEmployer?.checked;
-    noneOfTheAbove.checked = !otherBenefitChecked;
+  const refreshNoneAndError = (event) => {
+    if (event.target.checked) {
+      noneOfTheAbove.checked = false;
+    }
     error.style.display = 'none';
     fieldset.classList.remove('usa-form-group--error');
   };
