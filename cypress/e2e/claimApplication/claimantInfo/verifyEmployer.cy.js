@@ -62,6 +62,11 @@ describe("Verify Employer page", () => {
       .should('contain', 'No');
   }
 
+  function checkAddressVisible() {
+    cy.contains('10 Main').should('be.visible');
+    cy.contains('New Brunswick, NJ 08111').should('be.visible');
+  }
+
   function checkInfoEntry(newSubmitButton = false) {
     cy.mockASPX(URL);
     if (newSubmitButton) {
@@ -109,6 +114,10 @@ describe("Verify Employer page", () => {
       cy.visit(FIXTURE);
     });
 
+    it("user sees employer address", () => {
+      checkAddressVisible();
+    });
+
     it("user can input info and proceed to next page", () => {
       checkInfoEntry();
     });
@@ -149,6 +158,10 @@ describe("Verify Employer page", () => {
       }).as('script');
       cy.visit(FIXTURE);
       cy.wait('@script');
+    });
+
+    it("user sees employer address", () => {
+      checkAddressVisible();
     });
 
     it("user can input info and proceed to next page", () => {

@@ -44,6 +44,10 @@ function injectGlobalStyles() {
       font-family: "Public Sans", sans-serif;
     }
 
+    textarea {
+      resize: none;
+    }
+
     .bordered-set {
       background: white;
       border: 1px solid #b2b2b2;
