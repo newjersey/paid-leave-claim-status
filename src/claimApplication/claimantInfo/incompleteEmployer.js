@@ -40,6 +40,10 @@ function addStyles() {
     .usa-form-group--error {
       margin-top: 0;
     }
+
+    .usa-label {
+      max-width: 100%;
+    }
   `;
   document.head.appendChild(style);
 }
