@@ -4,6 +4,7 @@ const PAGE_ID = 'incompleteEmployer';
 const URL = 'ClaimentEmployment';
 const FIXTURE = "./cypress/fixtures/claimApplication/incompleteEmployer/incompleteEmployer.html";
 const FIXTURE_WITH_ERROR = "./cypress/fixtures/claimApplication/incompleteEmployer/incompleteEmployerError.html";
+const FIXTURE_FILLED = "./cypress/fixtures/claimApplication/incompleteEmployer/incompleteEmployerFilled.html";
 
 describe("Incomplete Employer page", () => {
   function checkPostDataYes(interception) {
@@ -117,6 +118,18 @@ describe("Incomplete Employer page", () => {
     it("shows error without question number", () => {
       cy.visit(FIXTURE_WITH_ERROR);
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblValEmpDetMsg').invoke('text').should('not.match', /\d/);
+    });
+
+    it("shows all fields when data is filled", () => {
+      cy.visit(FIXTURE_FILLED);
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerYes').should('be.checked');
+      cy.get('#still-work-here-yes').should('be.visible');
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').should('not.be.visible');
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').should('not.be.visible');
+      cy.get('#still-work-here-yes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt').should('have.value', '04/01/2025');
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').should('be.visible');
+      cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').should('have.value', '04/02/2026');
     });
 
     it("updates employer name into labels", () => {

@@ -363,10 +363,15 @@ function stillWorkHereListeners() {
   const firstDayOfDisability = formattedDateFromField('ContentPlaceHolder1_TabEmployment_tbpnlEMP_hdnFDDate');
   const employerName = getEmployerName();
 
-  stillWorkHereYes.addEventListener('change', function () {
+  const hideErrorAndShowStartDate = () => {
     stillWorkHereError.style.display = 'none';
     stillWorkHereFieldset.classList.remove('usa-form-group--error');
     startDateFieldset.style.display = 'block';
+    showEndDateWhenStartEntered();
+  };
+
+  stillWorkHereYes.addEventListener('change', function () {
+    hideErrorAndShowStartDate();
     employmentEndLabel.textContent = i18next.t('employerDetails.endLabelCurrentEmployer', { employerName, firstDayOfDisability });
     employmentEndLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
     employmentEndHint.textContent = i18next.t('employerDetails.endHint');
@@ -374,9 +379,7 @@ function stillWorkHereListeners() {
   });
 
   stillWorkHereNo.addEventListener('change', function () {
-    stillWorkHereError.style.display = 'none';
-    stillWorkHereFieldset.classList.remove('usa-form-group--error');
-    startDateFieldset.style.display = 'block';
+    hideErrorAndShowStartDate();
     employmentEndLabel.textContent = i18next.t('employerDetails.endLabelEmployer', { employerName });
     employmentEndLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
     employmentEndHint.textContent = '';
@@ -389,22 +392,23 @@ function stillWorkHereListeners() {
   });
 }
 
-function startDateListener() {
+function showEndDateWhenStartEntered() {
   const startInput = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt');
   const endDateFieldset = document.getElementById('endDateFieldset');
+  if (startInput.value && startInput.value.length === 10) {
+    endDateFieldset.style.display = 'block';
+  }
+}
 
-  const showEndDateWhenStartEntered = function(dateField) {
-    if (dateField.id != startInput.id) {
-      return;
-    }
-
-    if (startInput.value && startInput.value.length === 10) {
-      endDateFieldset.style.display = 'block';
+function startDateListener() {
+  const startInput = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentStartDt');
+  const startInputCallback = function(dateField) {
+    if (dateField.id === startInput.id) {
+      showEndDateWhenStartEntered();
     }
   };
-
-  startInput.addEventListener('input', (event) => {showEndDateWhenStartEntered(event.target)});
-  document.addEventListener('calendarDateSelected', (event) => {showEndDateWhenStartEntered(document.getElementById(event.detail.dateFieldId))});
+  startInput.addEventListener('input', (event) => {startInputCallback(event.target)});
+  document.addEventListener('calendarDateSelected', (event) => {startInputCallback(document.getElementById(event.detail.dateFieldId))});
 }
 
 function endDateListener() {
