@@ -58,6 +58,9 @@ function adjustTables() {
     const cells = table.querySelectorAll('td, th');
     cells.forEach(cell => {
       cell.style.width = '100%';
+      if (window.getComputedStyle(cell).display === 'table-cell') {
+        cell.style.display = 'block';
+      }
     });
 
     const inputsAndTextareas = table.querySelectorAll('input[type="text"], textarea');

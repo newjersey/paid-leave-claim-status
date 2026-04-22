@@ -81,6 +81,7 @@ export function changes() {
   setNewTitle(i18next.t('otherBenefits.title'));
   updateCalendars();
   noneOfTheAboveLogic();
+  ssdiCalendarOpensToFDDYear();
 }
 
 function addStyles() {
@@ -871,9 +872,10 @@ function noneOfTheAboveLogic() {
     fieldset.classList.remove('usa-form-group--error');
   });
 
-  const refreshNoneAndError = function() {
-    const otherBenefitChecked = checkSsdi.checked || checkUi.checked || checkTdi.checked || checkEmployer?.checked;
-    noneOfTheAbove.checked = !otherBenefitChecked;
+  const refreshNoneAndError = (event) => {
+    if (event.target.checked) {
+      noneOfTheAbove.checked = false;
+    }
     error.style.display = 'none';
     fieldset.classList.remove('usa-form-group--error');
   };
@@ -883,5 +885,30 @@ function noneOfTheAboveLogic() {
   checkTdi.addEventListener('click', refreshNoneAndError);
   if (checkEmployer) {
     checkEmployer.addEventListener('click', refreshNoneAndError);
+  }
+}
+
+function ssdiCalendarOpensToFDDYear() {
+  const fddInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt');
+  const fddDate = new Date(fddInput.value);
+  const fddYear = fddDate.getFullYear();
+
+  const currentYear = new Date().getFullYear();
+  const fddYearsEarlier = currentYear - fddYear;
+
+  if (fddYearsEarlier > 0) {
+    const ssdiCalendarButton = document.getElementById('Image10');
+    ssdiCalendarButton.addEventListener('click', function() {
+      setTimeout(() => {
+        const prevYearLink = document.getElementById('prevYearLink');
+        if (prevYearLink) {
+          for (let i = 0; i < fddYearsEarlier; i++) {
+            setTimeout(() => {
+              prevYearLink.click();
+            }, i * 20);
+          }
+        }
+      }, 20);
+    });
   }
 }

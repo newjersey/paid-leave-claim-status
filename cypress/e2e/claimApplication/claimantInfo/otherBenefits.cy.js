@@ -222,6 +222,7 @@ describe("Other Benefits page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
       cy.wait('@aspxSubmission').then(checkNoPostData);
       cy.confirmEventIsNotTracked("Other Benefits Yes Clicked");
+      cy.confirmEventIsNotTracked("TDI Other Benefits Checkboxes Empty");
     });
 
     it("user can input yes to everything with details and proceed to next page", () => {
@@ -230,6 +231,13 @@ describe("Other Benefits page", () => {
 
     it("user can input employer details that are international", () => {
       checkIntlInput(true);
+    });
+
+    it("ssdi calendar control navigates to year of fdd", () => {
+      cy.get('#check-ssdi').click({ force: true });
+      cy.get('#Image10').click();
+      // fdd in fixture is 07/15/2025
+      cy.get('#CalendarControl > table > tbody > tr.header > td > div > div.title').should('contain.text', '2025');
     });
 
     it("user can input info when the employer benefits question is removed", () => {
@@ -340,11 +348,18 @@ describe("Other Benefits page", () => {
 
       cy.get('#check-ui').click({ force: true });
       cy.get('#check-ui').should('be.checked');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlUISt').should('be.visible');
       cy.get('#check-none').should('not.be.checked');
 
+      cy.get('#check-ui').click({ force: true });
+      cy.get('#check-ui').should('not.be.checked');
+      cy.get('#check-none').should('not.be.checked');
+
+      cy.get('#check-ui').click({ force: true });
       cy.get('#check-none').click({ force: true });
       cy.get('#check-none').should('be.checked');
       cy.get('#check-ui').should('not.be.checked');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlUISt').should('not.be.visible');
     });
 
     it('clicks Back', () => {
