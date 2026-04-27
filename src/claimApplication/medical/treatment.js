@@ -74,11 +74,9 @@ export function changes() {
   moveUSAQuestionToNewFieldset();
   moveProviderContactToNewFieldset();
   moveERHospitalToNewFieldset();
-  addWorkersCompScreener();
+  addWorkersCompFieldset();
   matchNewFormDataToExisting();
   addWorkersCompListeners();
-  moveWorkersCompToNewFieldset();
-  addLinkToWorkerCompQuestion();
   loadReasonData();
   setNewTitle(i18next.t('medicalInfo.title'));
   addSubtitleAndExplainer();
@@ -639,11 +637,23 @@ function moveERHospitalToNewFieldset() {
   });
 }
 
-function addWorkersCompScreener() {
-  const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
-  const workersCompContainer = workersCompNo.closest('div').closest('div');
-  workersCompContainer.id = "workersCompContainer"
-  workersCompContainer.style.display = 'none';
+function addWorkersCompFieldset() {
+  const workersCompFieldset = document.createElement('fieldset');
+  workersCompFieldset.id = 'workersCompFieldset';
+  workersCompFieldset.classList.add('usa-fieldset', 'bordered-set');
+
+  const providerContactContainer = document.getElementById('providerContactContainer');
+  providerContactContainer.insertAdjacentElement('afterend', workersCompFieldset);
+
+  const h2 = document.createElement('h2');
+  h2.id = "workersCompensationHeader";
+  h2.textContent = i18next.t('medicalInfo.work.title');
+  h2.style.fontSize = "22px";
+  h2.style.fontWeight = "bold";
+  h2.style.color = "black";
+  h2.style.fontVariant = "none";
+  h2.style.marginTop = "40px";
+  workersCompFieldset.insertAdjacentElement('beforebegin', h2);
 
   const causedByJobQuestion = document.createElement('div');
   causedByJobQuestion.id = "causedByJobQuestion";
@@ -652,7 +662,7 @@ function addWorkersCompScreener() {
     <fieldset class="usa-fieldset">
       <legend id="caused-by-job-legend" class="usa-legend usa-legend">
         <span class="required-asterisk">*</span>
-        7. <span id="causedByJobText">${i18next.t('medicalInfo.work.causedByJob', { disabilityTypeString: i18next.t('shared.disability') })}</span>
+        <span id="causedByJobText">${i18next.t('medicalInfo.work.causedByJob', { disabilityTypeString: i18next.t('shared.disability') })}</span>
       </legend>
       <div class="usa-radio">
         <input
@@ -682,7 +692,25 @@ function addWorkersCompScreener() {
       </div>
     </fieldset>
   `;
-  workersCompContainer.parentElement.insertBefore(causedByJobQuestion, workersCompContainer);
+
+  workersCompFieldset.append(causedByJobQuestion);
+
+  const workersCompClaimContainer = document.createElement('fieldset');
+  workersCompClaimContainer.classList.add('usa-fieldset');
+  workersCompClaimContainer.style.display = 'none';
+  workersCompFieldset.append(workersCompClaimContainer);
+
+  const workersCompClaimLegend = document.createElement('legend');
+  workersCompClaimLegend.classList.add('usa-legend');
+  workersCompClaimLegend.innerHTML = i18next.t('medicalInfo.work.workersCompClaim');
+  workersCompClaimContainer.append(workersCompClaimLegend);
+  workersCompClaimLegend.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const workersCompClaimYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').closest('div');
+  workersCompClaimContainer.append(workersCompClaimYes);
+
+  const workersCompClaimNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo').closest('div');
+  workersCompClaimContainer.append(workersCompClaimNo);
 
   const causedByJobYes = document.getElementById('caused-by-job-yes');
   const causedByJobNo = document.getElementById('caused-by-job-no');
@@ -692,7 +720,7 @@ function addWorkersCompScreener() {
     const refreshedWorkersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
     const refreshedWorkersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
     resetElementText(causedByJobLegend);
-    workersCompContainer.style.display = 'block';
+    workersCompClaimContainer.style.display = 'block';
     refreshedWorkersCompNo.checked = false;
     refreshedWorkersCompYes.checked = false;
     addToSessionData({ [STORAGE_KEY_CAUSED_BY_JOB]: 'yes' });
@@ -702,7 +730,7 @@ function addWorkersCompScreener() {
     const refreshedWorkersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
     const refreshedWorkersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
     resetElementText(causedByJobLegend);
-    workersCompContainer.style.display = 'none';
+    workersCompClaimContainer.style.display = 'none';
     refreshedWorkersCompYes.checked = false;
     refreshedWorkersCompNo.checked = true;
     addToSessionData({
@@ -884,30 +912,6 @@ function styleRadioButtons() {
   );
 }
 
-function moveWorkersCompToNewFieldset() {
-  const causedByJobElement = document.getElementById('causedByJobQuestion');
-  const workersCompElement = document.getElementById('workersCompContainer');
-  const parentFieldset = causedByJobElement.closest('fieldset');
-
-  const newFieldset = document.createElement('fieldset');
-  newFieldset.id = 'workersCompFieldset';
-  newFieldset.classList.add('bordered-set');
-  newFieldset.appendChild(causedByJobElement);
-  newFieldset.appendChild(workersCompElement);
-
-  const h2 = document.createElement('h2');
-  h2.id = "workersCompensationHeader";
-  h2.textContent = i18next.t('medicalInfo.work.title');
-  h2.style.fontSize = "22px";
-  h2.style.fontWeight = "bold";
-  h2.style.color = "black";
-  h2.style.fontVariant = "none";
-  h2.style.marginTop = "40px";
-
-  parentFieldset.parentNode.insertBefore(h2, parentFieldset.nextSibling);
-  parentFieldset.parentNode.insertBefore(newFieldset, h2.nextSibling);
-}
-
 function focusOnWorkersCompIfEditing() {
   const sessionData = getSessionData();
   const editingWorkersComp = sessionData[STORAGE_KEY_EDITING_WORKERS_COMP];
@@ -942,16 +946,4 @@ function updateAllCalendars() {
   updateCalendarUI(EREndId);
   updateCalendarUI(hospitalStartId);
   updateCalendarUI(hospitalEndId);
-}
-
-function addLinkToWorkerCompQuestion() {
-  const workersCompQuestionContainer = document.querySelector("#workersCompContainer");
-  if (workersCompQuestionContainer) {
-    const questionLink = workersCompQuestionContainer.querySelector('a:not([style*="color"])');
-    if (questionLink) {
-      const span = document.createElement('span');
-      span.innerHTML = `7a. ${i18next.t('medicalInfo.work.workersCompClaim')}`;
-      questionLink.replaceWith(span);
-    }
-  }
 }
