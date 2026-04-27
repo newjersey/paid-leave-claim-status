@@ -72,6 +72,7 @@ export function changes() {
   styleRadioButtons();
   addProviderScreener();
   moveUSAQuestionToNewFieldset();
+  moveProviderContactToNewFieldset();
   addWorkersCompScreener();
   matchNewFormDataToExisting();
   addWorkersCompListeners();
@@ -95,6 +96,10 @@ function addStyles() {
   style.innerHTML = `
     .usa-radio__label {
       text-align: left;
+    }
+
+    #divDocHosAdd, #divDocOCCAdd {
+      display: none !important;
     }
   `;
   document.head.appendChild(style);
@@ -243,6 +248,7 @@ function addProviderScreener() {
 
 function moveUSAQuestionToNewFieldset() {
   const usaContainer = document.createElement('div');
+  usaContainer.id = 'usaContainer';
   usaContainer.classList.add('bordered-set');
 
   const usaFieldset = document.createElement('fieldset');
@@ -267,6 +273,162 @@ function moveUSAQuestionToNewFieldset() {
 
   const providerTypeFieldset = document.getElementById('providerTypeFieldset');
   providerTypeFieldset.insertAdjacentElement('afterend', usaContainer);
+
+  yesButton.addEventListener('click', function () {
+    const providerContactContainer = document.getElementById('providerContactContainer');
+    const usaAddressContainer = document.getElementById('usaAddressContainer');
+    const intlAddressContainer = document.getElementById('intlAddressContainer');
+    providerContactContainer.style.display = 'block';
+    usaAddressContainer.style.display = 'block';
+    intlAddressContainer.style.display = 'none';
+  });
+
+  noButton.addEventListener('click', function () {
+    const providerContactContainer = document.getElementById('providerContactContainer');
+    const usaAddressContainer = document.getElementById('usaAddressContainer');
+    const intlAddressContainer = document.getElementById('intlAddressContainer');
+    providerContactContainer.style.display = 'block';
+    usaAddressContainer.style.display = 'none';
+    intlAddressContainer.style.display = 'block';
+  });
+}
+
+function moveProviderContactToNewFieldset() {
+  const providerContactContainer = document.createElement('div');
+  providerContactContainer.id = 'providerContactContainer';
+  providerContactContainer.classList.add('bordered-set', 'usa-fieldset');
+  providerContactContainer.style.display = 'none';
+
+  const providerContactLegend = document.createElement('legend');
+  providerContactLegend.classList.add('usa-legend');
+  providerContactLegend.textContent = i18next.t('medicalInfo.provider.info');
+  providerContactContainer.append(providerContactLegend);
+
+  const nameLabel = document.createElement('label');
+  nameLabel.classList.add('usa-label');
+  nameLabel.textContent = i18next.t('medicalInfo.provider.name');
+  nameLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm';
+  providerContactContainer.append(nameLabel);
+
+  const nameInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm');
+  nameInput.classList.add('usa-input');
+  nameInput.style.width = '100%';
+  providerContactContainer.append(nameInput);
+
+  const usaAddressContainer = document.createElement('div');
+  usaAddressContainer.id = 'usaAddressContainer';
+  usaAddressContainer.style.display = 'block';
+  providerContactContainer.append(usaAddressContainer);
+
+  const usaAddress1Label = document.createElement('label');
+  usaAddress1Label.classList.add('usa-label');
+  usaAddress1Label.textContent = i18next.t('contact.street1');
+  usaAddress1Label.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocAdd1';
+  usaAddressContainer.append(usaAddress1Label);
+  usaAddress1Label.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const usaAddress1Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocAdd1');
+  usaAddress1Input.classList.add('usa-input');
+  usaAddress1Input.style.width = '100%';
+  usaAddressContainer.append(usaAddress1Input);
+
+  const usaAddress2Label = document.createElement('label');
+  usaAddress2Label.classList.add('usa-label');
+  usaAddress2Label.textContent = i18next.t('contact.street2');
+  usaAddress2Label.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocAdd2';
+  usaAddressContainer.append(usaAddress2Label);
+
+  const usaAddress2Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocAdd2');
+  usaAddress2Input.classList.add('usa-input');
+  usaAddress2Input.style.width = '100%';
+  usaAddressContainer.append(usaAddress2Input);
+
+  const usaCityLabel = document.createElement('label');
+  usaCityLabel.classList.add('usa-label');
+  usaCityLabel.textContent = i18next.t('contact.city');
+  usaCityLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocCity';
+  usaAddressContainer.append(usaCityLabel);
+  usaCityLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const usaCityInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocCity');
+  usaCityInput.classList.add('usa-input');
+  usaCityInput.style.width = '100%';
+  usaAddressContainer.append(usaCityInput);
+
+  const usaStateLabel = document.createElement('label');
+  usaStateLabel.classList.add('usa-label');
+  usaStateLabel.textContent = i18next.t('contact.stateOrTerritory');
+  usaStateLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_ddlDocStates';
+  usaAddressContainer.append(usaStateLabel);
+  usaStateLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const usaStateSelect = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_ddlDocStates');
+  usaStateSelect.classList.add('usa-select');
+  usaAddressContainer.append(usaStateSelect);
+
+  const zipLabel = document.createElement('label');
+  zipLabel.classList.add('usa-label');
+  zipLabel.textContent = i18next.t('contact.zipcode');
+  zipLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocZip1';
+  usaAddressContainer.append(zipLabel);
+  zipLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const zipContainer = document.createElement('div');
+  zipContainer.style.display = 'flex';
+  zipContainer.style.alignItems = 'center';
+  zipContainer.style.marginTop = '0.5rem';
+  usaAddressContainer.append(zipContainer);
+
+  const usaZip1Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocZip1');
+  usaZip1Input.classList.add('usa-input');
+  usaZip1Input.style.width = '80px';
+  usaZip1Input.style.marginTop = '0';
+  usaZip1Input.style.marginRight = '5px';
+  zipContainer.append(usaZip1Input);
+  usaZip1Input.insertAdjacentHTML('afterend', '-');
+
+  const usaZip2Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocZip2');
+  usaZip2Input.classList.add('usa-input');
+  usaZip2Input.classList.add('usa-input');
+  usaZip2Input.style.width = '60px';
+  usaZip2Input.style.marginTop = '0';
+  usaZip2Input.style.marginLeft = '5px';
+  zipContainer.append(usaZip2Input);
+
+  const intlAddressContainer = document.createElement('div');
+  intlAddressContainer.id = 'intlAddressContainer';
+  intlAddressContainer.style.display = 'none';
+  providerContactContainer.append(intlAddressContainer);
+
+  const intlAddressLabel = document.createElement('label');
+  intlAddressLabel.classList.add('usa-label');
+  intlAddressLabel.textContent = i18next.t('contact.address');
+  intlAddressLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtOOCDocAdd1';
+  intlAddressContainer.append(intlAddressLabel);
+  intlAddressLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const intlAddress1Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtOOCDocAdd1');
+  intlAddress1Input.classList.add('usa-input');
+  intlAddress1Input.style.width = '100%';
+  intlAddressContainer.append(intlAddress1Input);
+
+  const intlAddress2Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtOOCDocAdd2');
+  intlAddress2Input.classList.add('usa-input');
+  intlAddress2Input.style.width = '100%';
+  intlAddressContainer.append(intlAddress2Input);
+
+  const intlAddress3Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtOOCDocAdd3');
+  intlAddress3Input.classList.add('usa-input');
+  intlAddress3Input.style.width = '100%';
+  intlAddressContainer.append(intlAddress3Input);
+
+  const intlAddress4Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtOOCDocAdd4');
+  intlAddress4Input.classList.add('usa-input');
+  intlAddress4Input.style.width = '100%';
+  intlAddressContainer.append(intlAddress4Input);
+
+  const usaContainer = document.getElementById('usaContainer');
+  usaContainer.insertAdjacentElement('afterend', providerContactContainer);
 }
 
 function addWorkersCompScreener() {
