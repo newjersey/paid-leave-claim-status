@@ -73,6 +73,7 @@ export function changes() {
   addProviderScreener();
   moveUSAQuestionToNewFieldset();
   moveProviderContactToNewFieldset();
+  moveERHospitalToNewFieldset();
   addWorkersCompScreener();
   matchNewFormDataToExisting();
   addWorkersCompListeners();
@@ -96,6 +97,7 @@ function addStyles() {
   style.innerHTML = `
     .usa-legend {
       margin-top: 0;
+      padding: 0;
     }
 
     .usa-radio__label {
@@ -127,6 +129,7 @@ function addProviderScreener() {
   fieldset.classList.add('bordered-set');
 
   const providerType = document.createElement('div');
+  providerType.id = 'providerTypeQuestion';
   providerType.style.margin = "0";
   providerType.style.padding = "0";
   providerType.innerHTML = `
@@ -483,6 +486,159 @@ function moveProviderContactToNewFieldset() {
   usaContainer.insertAdjacentElement('afterend', providerContactContainer);
 }
 
+function moveERHospitalToNewFieldset() {
+  const erYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERYes');
+  const erNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERNO');
+
+  const hospitalYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospYes');
+  const hospitalNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospNo');
+
+  // nothing to do once questions removed
+  if (!erYes || !hospitalYes) {
+    return;
+  }
+
+  const erHospitalContainer = document.createElement('div');
+  erHospitalContainer.id = 'erHospitalContainer';
+  erHospitalContainer.classList.add('bordered-set', 'usa-fieldset');
+
+  const erLegend = document.createElement('legend');
+  erLegend.classList.add('usa-legend');
+  erLegend.textContent = 'Were you treated in the emergency room?';
+  erHospitalContainer.append(erLegend);
+
+  erHospitalContainer.append(erYes.closest('div'));
+  erHospitalContainer.append(erNo.closest('div'));
+
+  const erDatesContainer = document.createElement('div');
+  erDatesContainer.style.display = 'none';
+  erHospitalContainer.append(erDatesContainer);
+
+  const erStartLabel = document.createElement('label');
+  erStartLabel.classList.add('usa-label');
+  erStartLabel.textContent = 'Emergency room start date';
+  erStartLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtERStDt';
+  erDatesContainer.append(erStartLabel);
+
+  const erStartHint = document.createElement('div');
+  erStartHint.id = 'erStartHint';
+  erStartHint.classList.add("usa-hint");
+  erStartHint.textContent = i18next.t('shared.dateFormat');
+  erDatesContainer.append(erStartHint);
+
+  const erStartInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtERStDt');
+  erStartInput.classList.add('usa-input', 'dateInput');
+  erStartInput.setAttribute('aria-describedby', 'erStartHint');
+  const erStartCalendar = document.getElementById('Image8');
+
+  const erStartDateInputContainer = document.createElement('div');
+  erStartDateInputContainer.classList.add('dateInputContainer');
+  erStartDateInputContainer.append(erStartInput);
+  erStartDateInputContainer.append(erStartCalendar);
+  erDatesContainer.append(erStartDateInputContainer);
+
+  const erEndLabel = document.createElement('label');
+  erEndLabel.classList.add('usa-label');
+  erEndLabel.textContent = 'Emergency room end date';
+  erEndLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtEREndDt';
+  erDatesContainer.append(erEndLabel);
+
+  const erEndHint = document.createElement('div');
+  erEndHint.id = 'erEndHint';
+  erEndHint.classList.add("usa-hint");
+  erEndHint.textContent = i18next.t('shared.dateFormat');
+  erDatesContainer.append(erEndHint);
+
+  const erEndInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtEREndDt');
+  erEndInput.classList.add('usa-input', 'dateInput');
+  erEndInput.setAttribute('aria-describedby', 'erEndHint');
+  const erEndCalendar = document.getElementById('Image1');
+
+  const erEndDateInputContainer = document.createElement('div');
+  erEndDateInputContainer.classList.add('dateInputContainer');
+  erEndDateInputContainer.append(erEndInput);
+  erEndDateInputContainer.append(erEndCalendar);
+  erDatesContainer.append(erEndDateInputContainer);
+
+  const hospitalLegend = document.createElement('legend');
+  hospitalLegend.classList.add('usa-legend');
+  hospitalLegend.style.marginTop = '40px';
+  hospitalLegend.textContent = 'Were you hospitalized for this disability?';
+  erHospitalContainer.append(hospitalLegend);
+
+  erHospitalContainer.append(hospitalYes.closest('div'));
+  erHospitalContainer.append(hospitalNo.closest('div'));
+
+  const hospitalDatesContainer = document.createElement('div');
+  hospitalDatesContainer.style.display = 'none';
+  erHospitalContainer.append(hospitalDatesContainer);
+
+  const hospitalStartLabel = document.createElement('label');
+  hospitalStartLabel.classList.add('usa-label');
+  hospitalStartLabel.textContent = 'Hospitalization start date';
+  hospitalStartLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospStDt';
+  hospitalDatesContainer.append(hospitalStartLabel);
+
+  const hospitalStartHint = document.createElement('div');
+  hospitalStartHint.id = 'hospitalStartHint';
+  hospitalStartHint.classList.add("usa-hint");
+  hospitalStartHint.textContent = i18next.t('shared.dateFormat');
+  hospitalDatesContainer.append(hospitalStartHint);
+
+  const hospitalStartInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospStDt');
+  hospitalStartInput.classList.add('usa-input', 'dateInput');
+  hospitalStartInput.setAttribute('aria-describedby', 'hospitalStartHint');
+  const hospitalStartCalendar = document.getElementById('Image2');
+
+  const hospitalStartDateInputContainer = document.createElement('div');
+  hospitalStartDateInputContainer.classList.add('dateInputContainer');
+  hospitalStartDateInputContainer.append(hospitalStartInput);
+  hospitalStartDateInputContainer.append(hospitalStartCalendar);
+  hospitalDatesContainer.append(hospitalStartDateInputContainer);
+
+  const hospitalEndLabel = document.createElement('label');
+  hospitalEndLabel.classList.add('usa-label');
+  hospitalEndLabel.textContent = 'Hospitalization end date';
+  hospitalEndLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospEndDt';
+  hospitalDatesContainer.append(hospitalEndLabel);
+
+  const hospitalEndHint = document.createElement('div');
+  hospitalEndHint.id = 'hospitalEndHint';
+  hospitalEndHint.classList.add("usa-hint");
+  hospitalEndHint.textContent = i18next.t('shared.dateFormat');
+  hospitalDatesContainer.append(hospitalEndHint);
+
+  const hospitalEndInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospEndDt');
+  hospitalEndInput.classList.add('usa-input', 'dateInput');
+  hospitalEndInput.setAttribute('aria-describedby', 'hospitalEndHint');
+  const hospitalEndCalendar = document.getElementById('Image3');
+
+  const hospitalEndDateInputContainer = document.createElement('div');
+  hospitalEndDateInputContainer.classList.add('dateInputContainer');
+  hospitalEndDateInputContainer.append(hospitalEndInput);
+  hospitalEndDateInputContainer.append(hospitalEndCalendar);
+  hospitalDatesContainer.append(hospitalEndDateInputContainer);
+  
+  const providerContactContainer = document.getElementById('providerContactContainer');
+  providerContactContainer.insertAdjacentElement('afterend', erHospitalContainer);
+
+  erYes.addEventListener('click', function () {
+    erDatesContainer.style.display = 'block';
+  });
+
+  erNo.addEventListener('click', function () {
+    erDatesContainer.style.display = 'none';
+  });
+  
+  hospitalYes.addEventListener('click', function () {
+    hospitalDatesContainer.style.display = 'block';
+  });
+
+  hospitalNo.addEventListener('click', function () {
+    hospitalDatesContainer.style.display = 'none';
+  });
+}
+
 function addWorkersCompScreener() {
   const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
   const workersCompContainer = workersCompNo.closest('div').closest('div');
@@ -775,6 +931,7 @@ function focusOnWorkersCompIfEditing() {
   }
 }
 
+// not needed once questions removed at .NET layer
 function updateAllCalendars() {
   const ERStartId = 'Image8';
   const EREndId = 'Image1';
