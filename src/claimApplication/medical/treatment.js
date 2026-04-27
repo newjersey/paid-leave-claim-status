@@ -74,8 +74,8 @@ export function changes() {
   addProviderScreener();
   moveUSAQuestionToNewFieldset();
   moveProviderContactToNewFieldset();
-  moveERHospitalToNewFieldset();
   addWorkersCompFieldset();
+  moveERHospitalToNewFieldset();
   matchNewFormDataToExisting();
   addWorkersCompListeners();
   loadReasonData();
@@ -508,6 +508,7 @@ function moveERHospitalToNewFieldset() {
   erLegend.classList.add('usa-legend');
   erLegend.textContent = 'Were you treated in the emergency room?';
   erHospitalContainer.append(erLegend);
+  erLegend.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   erHospitalContainer.append(erYes.closest('div'));
   erHospitalContainer.append(erNo.closest('div'));
@@ -567,6 +568,7 @@ function moveERHospitalToNewFieldset() {
   hospitalLegend.style.marginTop = '40px';
   hospitalLegend.textContent = 'Were you hospitalized for this disability?';
   erHospitalContainer.append(hospitalLegend);
+  hospitalLegend.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   erHospitalContainer.append(hospitalYes.closest('div'));
   erHospitalContainer.append(hospitalNo.closest('div'));
