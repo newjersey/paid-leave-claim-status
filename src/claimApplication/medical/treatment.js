@@ -94,6 +94,10 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');
   style.innerHTML = `
+    .usa-legend {
+      margin-top: 0;
+    }
+
     .usa-radio__label {
       text-align: left;
     }
@@ -302,6 +306,7 @@ function moveProviderContactToNewFieldset() {
   const providerContactLegend = document.createElement('legend');
   providerContactLegend.classList.add('usa-legend');
   providerContactLegend.textContent = i18next.t('medicalInfo.provider.info');
+  providerContactLegend.style.fontWeight = 'bold';
   providerContactContainer.append(providerContactLegend);
 
   const nameLabel = document.createElement('label');
@@ -309,6 +314,7 @@ function moveProviderContactToNewFieldset() {
   nameLabel.textContent = i18next.t('medicalInfo.provider.name');
   nameLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm';
   providerContactContainer.append(nameLabel);
+  nameLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const nameInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm');
   nameInput.classList.add('usa-input');
@@ -426,6 +432,52 @@ function moveProviderContactToNewFieldset() {
   intlAddress4Input.classList.add('usa-input');
   intlAddress4Input.style.width = '100%';
   intlAddressContainer.append(intlAddress4Input);
+
+  const phoneLabel = document.createElement('label');
+  phoneLabel.classList.add('usa-label');
+  phoneLabel.textContent = i18next.t('contact.phone');
+  phoneLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh';
+  providerContactContainer.append(phoneLabel);
+
+  const phone1Input = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh");
+  phone1Input.classList.add('usa-input');
+  phone1Input.style.marginRight = '2px';
+  phone1Input.style.marginTop = '0';
+  phone1Input.style.width = '50px';
+
+  const phone2Input = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh2");
+  phone2Input.classList.add('usa-input');
+  phone2Input.style.marginLeft = '2px';
+  phone2Input.style.marginRight = '2px';
+  phone2Input.style.marginTop = '0';
+  phone2Input.style.width = '50px';
+
+  const phone3Input = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh3");
+  phone3Input.classList.add('usa-input');
+  phone3Input.style.marginLeft = '2px';
+  phone3Input.style.marginRight = '10px';
+  phone3Input.style.marginTop = '0';
+  phone3Input.style.width = '60px';
+
+  const phone4Input = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh4");
+  phone4Input.classList.add('usa-input');
+  phone4Input.style.marginLeft = '2px';
+  phone4Input.style.marginTop = '0';
+  phone4Input.style.width = '70px';
+
+  const phoneContainer = document.createElement('div');
+  phoneContainer.style.display = 'flex';
+  phoneContainer.style.alignItems = 'center';
+  phoneContainer.style.marginTop = '0.5rem';
+  phone1Input.insertAdjacentElement('beforebegin', phoneContainer);
+  phoneContainer.append(phone1Input);
+  phone1Input.insertAdjacentHTML('afterend', '-');
+  phoneContainer.append(phone2Input);
+  phone2Input.insertAdjacentHTML('afterend', '-');
+  phoneContainer.append(phone3Input);
+  phone3Input.insertAdjacentHTML('afterend', 'Ext.');
+  phoneContainer.append(phone4Input);
+  providerContactContainer.append(phoneContainer);
 
   const usaContainer = document.getElementById('usaContainer');
   usaContainer.insertAdjacentElement('afterend', providerContactContainer);
