@@ -70,6 +70,7 @@ export function trackWorkersCompYesSubmission(pageId) {
 export function changes() {
   addStyles();
   styleRadioButtons();
+  hideOldFieldset();
   addProviderScreener();
   moveUSAQuestionToNewFieldset();
   moveProviderContactToNewFieldset();
@@ -101,10 +102,6 @@ function addStyles() {
     .usa-radio__label {
       text-align: left;
     }
-
-    #divDocHosAdd, #divDocOCCAdd {
-      display: none !important;
-    }
   `;
   document.head.appendChild(style);
 }
@@ -120,11 +117,19 @@ function addSubtitleAndExplainer() {
   questionDiv.prepend(subtitleDiv);
 }
 
+function hideOldFieldset() {
+  const oldFieldset = document.getElementById('divDocHosAdd').closest('fieldset');
+  oldFieldset.style.display = 'none';
+}
+
 function addProviderScreener() {
-  const doctorNameInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm');
-  const fieldset = doctorNameInput.closest('fieldset');
+  const submitBtn = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc');
+  const submitBtnContainer = submitBtn.closest('table');
+
+  const fieldset = document.createElement('fieldset');
   fieldset.id = 'providerTypeFieldset';
   fieldset.classList.add('bordered-set');
+  submitBtnContainer.insertAdjacentElement('beforebegin', fieldset);
 
   const providerType = document.createElement('div');
   providerType.id = 'providerTypeQuestion';
@@ -243,7 +248,6 @@ function addProviderScreener() {
     fieldset.scrollIntoView();
   });
 
-  const submitBtn = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc');
   submitBtn.addEventListener('click', function() {
     if(providerNo?.checked) {
       logEvent('Medical Provider Type No Submitted', {});
