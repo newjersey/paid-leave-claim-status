@@ -430,3 +430,10 @@ export function formattedDateFromField(id) {
     day: 'numeric' 
   });
 }
+
+export function removeQuestionNumbersFromError(id) {
+  const error = document.getElementById(id);
+  if (error) {
+    error.innerHTML = error.innerHTML.replace(/(\d+\.\s+)/g, '');
+  }
+}

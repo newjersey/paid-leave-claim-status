@@ -8,6 +8,7 @@ import {
   setNewTitle,
   STORAGE_KEY_REASON_FOR_LEAVE,
   addToSessionData,
+  removeQuestionNumbersFromError,
   STORAGE_KEY_PROVIDER_TYPE_ACCEPTED,
   STORAGE_KEY_CAUSED_BY_JOB,
   STORAGE_KEY_WORKERS_COMP,
@@ -88,7 +89,7 @@ export function changes() {
   setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason);
   focusOnWorkersCompIfEditing();
   updateAllCalendars();
-  removeQuestionNumbersFromError();
+  removeQuestionNumbersFromError('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_lblDocError');
 }
 
 function addStyles() {
@@ -913,11 +914,4 @@ function updateAllCalendars() {
   updateCalendarUI(EREndId);
   updateCalendarUI(hospitalStartId);
   updateCalendarUI(hospitalEndId);
-}
-
-function removeQuestionNumbersFromError() {
-  const error = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_lblDocError');
-  if (error) {
-    error.innerHTML = error.innerHTML.replace(/(\d+\.\s+)/g, '');
-  }
 }
