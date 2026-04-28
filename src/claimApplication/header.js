@@ -3,7 +3,7 @@ import { HEADER_HTML } from "../modules/shared.mjs";
 import { id as priorClaimSearchId } from "./priorClaimSearch/priorClaimSearch";
 import { id as tdiIntroductionId } from "./tdiIntroduction/tdiIntroduction";
 import { id as completeExistingIntroId } from "./completeExistingIntro/completeExistingIntro";
-import { clearSessionData } from "./utils";
+import { logout } from "./utils";
 
 export function replaceHeader(pageId) {
   const screensWithoutTabs = [priorClaimSearchId, tdiIntroductionId, completeExistingIntroId];
@@ -433,10 +433,7 @@ function createTitleHeader() {
 
   logoutButton.addEventListener('click', function (event) {
     event.preventDefault();
-    if (confirmLogout()) {
-      __doPostBack('ctl00$header$lbtnLogout', '');
-      clearSessionData();
-    }
+    logout();
   });
 
   titleHeader.appendChild(logoutButton);

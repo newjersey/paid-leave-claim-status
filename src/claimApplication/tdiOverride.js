@@ -12,7 +12,13 @@ import { pageSpecificChanges } from './pageSpecificChanges.js';
 i18next.init({
   lng: 'en',
   fallbackLng: 'en',
-  resources
+  resources,
+  ...(window.Cypress && {
+    saveMissing: true,
+    missingKeyHandler: (_lng, _ns, key) => {
+      throw new Error(`Missing i18n key: ${key}`);
+    }
+  })
 }).then(() => {
   if (document.readyState === "loading") {
     window.addEventListener("DOMContentLoaded", () => {

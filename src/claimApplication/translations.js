@@ -13,12 +13,15 @@ const resources = {
         makeSelection: "Make a selection.",
       },
       contact: {
+        name: "Name",
         address: "Address",
         street1: "Street address",
         street2: "Street address line 2 (optional)",
         city: "City",
         state: "State",
+        stateOrTerritory: "State or territory",
         zipcode: "ZIP code",
+        country: "Country",
         phone: "Phone number",
         phoneHint: "10-digit, U.S. only, for example 999-999-9999",
       },
@@ -131,6 +134,29 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
             check_status: `<a href="/DOL_DABI/" target="_blank">Check your claim status</a> (note: it takes several days for your first status update)`,
           },
         },
+      },
+      employerDetails: {
+        name: "Employer name",
+        stillWorkHere: "Are you currently employed by this employer?",
+        stillWorkHereEmployer: "Are you currently employed by {{employerName}}?",
+        startLabel: "When did you start working for this employer?",
+        startLabelEmployer: "When did you start working for {{employerName}}?",
+        startHint: "If you don't remember the exact date, provide your best guess.",
+        endLabel: "What was the last day you worked for this employer?",
+        endLabelEmployer: "What was the last day you worked for {{employerName}}?",
+        endHint: "Hint: Don't count any PTO, vacation, or sick days—just the last day you actually performed work.",
+        endLabelCurrent: "What was the last day you did any work for this employer before your leave started on {{firstDayOfDisability}}?",
+        endLabelCurrentEmployer: "What was the last day you did any work for {{employerName}} before your leave started on {{firstDayOfDisability}}?",
+        endInfo: "Heads up: Earlier you marked {{lastDayOfWork}} as your last day of work. At least one employer should end on this date to match.",
+        endWarning: `
+        Heads up! The date you entered is after the last day of work you gave earlier, {{lastDayOfWork}}. You can either:
+        <br>
+        * Choose a date on or before {{lastDayOfWork}}, OR
+        <br>
+        * <a id="update-last-day-link" class="usa-link" href="#">Go back and update your last day of work</a> (your progress will be saved)
+        `,
+        endWarningOnFDD: "Heads up! The date you entered is after the last day of work you gave earlier, {{lastDayOfWork}}. Please choose a date on or before {{lastDayOfWork}}.",
+        endError: "The date you entered is after the first day of disability leave, {{firstDayOfDisability}}. Please choose an earlier date.",
       },
       header: {
         personal_information: "Personal information",
@@ -252,6 +278,47 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       otherBenefits: {
         title: "Other benefits",
+        checkingForOverlaps: "Some benefit programs can't overlap with Temporary Disability, so we need to check if that applies to you.",
+        areYouReceivingOrApplied: "Are you receiving or have you applied for any of the following benefits as of {{firstDayOfDisability}}?",
+        areYouReceivingOrApplied_returned: "For the period from {{firstDayOfDisability}} to {{returnedToWorkDay}}, have you applied for or received any of the following?",
+        noneOfTheAbove: "None of the above (most people choose this)",
+        pendingLabel: "My application is still pending",
+        stateLabel: "State or territory where you filed:",
+        dateLabel: "What time period do your benefits cover?",
+        startLabel: "Start",
+        endLabel: "End",
+        ssdi: {
+          title: `Social Security Disability (Also called "SSDI." These are long term disability benefits handled by the federal <a href="https://www.ssa.gov/disability" target="_blank">Social Security Administration</a>).`,
+          areYouSure: `Are you sure? Keep in mind, Social Security Disability benefits are different from <a href="https://www.ssa.gov/retirement" target="_blank">Social Security Retirement benefits</a> you receive at age 62 or older.`,
+          followup: {
+            title: "You answered yes to Social Security Disability",
+            subtitle: "Social Security Disability",
+            dateLabel: "Month your Social Security Disability (SSDI) benefits start:",
+            hint: 'mm/01/yyyy',
+          },
+        },
+        ui: {
+          title: "Unemployment Insurance",
+          followup: {
+            title: "You answered yes to Unemployment Insurance",
+            subtitle: "Unemployment Insurance",
+          },
+        },
+        tdi: {
+          title: "Family/Medical Leave from <strong>another state or U.S. territory</strong>",
+          followup: {
+            title: "You answered yes to Family/Medical leave from another state",
+            subtitle: "Family/Medical Leave benefits from another state",
+          },
+        },
+        employer: {
+          title: "<strong>Employer or union-provided</strong> temporary disability benefits",
+          followup: {
+            title: "You answered yes to Temporary disability benefits from your employer",
+            subtitle: "Disability from your employer",
+            employerLabel: "Enter the employer or union that is paying you disability benefits.",
+          },
+        },
       },
       paymentInfo: {
         title: "Federal taxes",

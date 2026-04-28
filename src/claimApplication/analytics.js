@@ -33,7 +33,8 @@ function trackValidationErrors(pageId) {
     #ValEmpWrkSch,
     #lblValPTO,
     #lblValWrkInt,
-    #lblNotice
+    #lblNotice,
+    #ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblValEmpDetMsg
   `);
 
   errorElements.forEach(element => {
