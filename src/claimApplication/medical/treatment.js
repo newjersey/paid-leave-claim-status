@@ -522,6 +522,7 @@ function moveERHospitalToNewFieldset() {
   erStartLabel.textContent = 'Emergency room start date';
   erStartLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtERStDt';
   erDatesContainer.append(erStartLabel);
+  erStartLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const erStartHint = document.createElement('div');
   erStartHint.id = 'erStartHint';
@@ -545,6 +546,7 @@ function moveERHospitalToNewFieldset() {
   erEndLabel.textContent = 'Emergency room end date';
   erEndLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtEREndDt';
   erDatesContainer.append(erEndLabel);
+  erEndLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const erEndHint = document.createElement('div');
   erEndHint.id = 'erEndHint';
@@ -582,6 +584,7 @@ function moveERHospitalToNewFieldset() {
   hospitalStartLabel.textContent = 'Hospitalization start date';
   hospitalStartLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospStDt';
   hospitalDatesContainer.append(hospitalStartLabel);
+  hospitalStartLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const hospitalStartHint = document.createElement('div');
   hospitalStartHint.id = 'hospitalStartHint';
@@ -605,6 +608,7 @@ function moveERHospitalToNewFieldset() {
   hospitalEndLabel.textContent = 'Hospitalization end date';
   hospitalEndLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospEndDt';
   hospitalDatesContainer.append(hospitalEndLabel);
+  hospitalEndLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
 
   const hospitalEndHint = document.createElement('div');
   hospitalEndHint.id = 'hospitalEndHint';
