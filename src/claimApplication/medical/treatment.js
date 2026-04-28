@@ -88,6 +88,7 @@ export function changes() {
   setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason);
   focusOnWorkersCompIfEditing();
   updateAllCalendars();
+  removeQuestionNumbersFromError();
 }
 
 function addStyles() {
@@ -912,4 +913,11 @@ function updateAllCalendars() {
   updateCalendarUI(EREndId);
   updateCalendarUI(hospitalStartId);
   updateCalendarUI(hospitalEndId);
+}
+
+function removeQuestionNumbersFromError() {
+  const error = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_lblDocError');
+  if (error) {
+    error.innerHTML = error.innerHTML.replace(/(\d+\.\s+)/g, '');
+  }
 }

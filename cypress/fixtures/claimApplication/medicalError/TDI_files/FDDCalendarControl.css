@@ -1,0 +1,109 @@
+#CalendarControlIFrame {
+  display: none;
+  left: 0px;
+  position: absolute;
+  top: 0px;
+  height: 250px;
+  width: 250px;
+  z-index: 99;
+}
+
+#FDDCalendarControl {
+  position:absolute;
+  background-color:#FFF;
+  margin:0;
+  padding:0;
+  display:none;
+  z-index: 100;
+}
+
+#FDDCalendarControl table {
+  font-family: arial, verdana, helvetica, sans-serif;
+  font-size: 8pt;
+  border-left: 1px solid #336;
+  border-right: 1px solid #336;
+}
+
+#FDDCalendarControl th {
+  font-weight: normal;
+}
+
+#FDDCalendarControl th a {
+  font-weight: normal;
+  text-decoration: none;
+  color: #FFF;
+  padding: 1px;
+}
+
+#FDDCalendarControl td {
+  text-align: center;
+}
+
+#FDDCalendarControl .header {
+  background-color: #336;
+}
+
+#FDDCalendarControl .weekday {
+  background-color: #DDD;
+  color: #000;
+}
+
+#FDDCalendarControl .weekend {
+  background-color: #FFC;
+  color: #000;
+}
+
+#FDDCalendarControl .current {
+  border: 1px solid #339;
+  background-color: #336;
+  color: #FFF;
+}
+
+#FDDCalendarControl .weekday,
+#FDDCalendarControl .weekend,
+#FDDCalendarControl .current {
+  display: block;
+  text-decoration: none;
+  border: 1px solid #FFF;
+  width: 2em;
+}
+
+#FDDCalendarControl .weekday:hover,
+#FDDCalendarControl .weekend:hover,
+#FDDCalendarControl .current:hover {
+  color: #FFF;
+  background-color: #336;
+  border: 1px solid #999;
+}
+
+#FDDCalendarControl .previous {
+  text-align: left;
+}
+
+#FDDCalendarControl .next {
+  text-align: right;
+}
+
+#FDDCalendarControl .previous,
+#FDDCalendarControl .next {
+  padding: 1px 3px 1px 3px;
+  font-size: 1.4em;
+}
+
+#FDDCalendarControl .previous a,
+#FDDCalendarControl .next a {
+  color: #FFF;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+#FDDCalendarControl .title {
+  text-align: center;
+  font-weight: bold;
+  color: #FFF;
+}
+
+#FDDCalendarControl .empty {
+  background-color: #CCC;
+  border: 1px solid #FFF;
+}

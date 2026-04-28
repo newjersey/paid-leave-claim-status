@@ -10,6 +10,7 @@ import { encodeDecode } from '../../../../src/claimApplication/utils';
 const PAGE_ID = 'medicalTreatment';
 const URL = 'ClaimantDisabililty';
 const FIXTURE = "./cypress/fixtures/claimApplication/medical/treatment.html";
+const FIXTURE_WITH_ERROR = "./cypress/fixtures/claimApplication/medicalError/medicalError.html";
 
 describe("Medical Treatment page", () => {
   function checkInjuryPostData(interception) {
@@ -507,6 +508,14 @@ describe("Medical Treatment page", () => {
       });
       cy.visit(FIXTURE);
       cy.contains('Was your injury caused by your job?').should('exist');
+    });
+
+    it("shows error without question number", () => {
+      cy.visit(FIXTURE_WITH_ERROR);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_lblDocError').invoke('text').should('not.match', /\d/);
+      // analytics event still contains the number because event fires before visible text is changed
+      const contents = "PLEASE ANSWER THE FOLLOWING QUESTION(S). THEY MUST BE COMPLETED TO PROCEED:2. Enter name of the doct";
+      cy.checkLogEvent(`Validation Error`, { contents, pageId: PAGE_ID });
     });
 
     globalTestsNew(PAGE_ID, URL);
