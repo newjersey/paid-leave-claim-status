@@ -393,7 +393,6 @@ describe("Medical Treatment page", () => {
           caused_by_job: 'yes'
         };
         win.sessionStorage.setItem("session_data", encodeDecode(JSON.stringify(data)));
-        console.log(encodeDecode(JSON.stringify(data)));
       });
       cy.visit(FIXTURE);
       cy.wait('@script');
