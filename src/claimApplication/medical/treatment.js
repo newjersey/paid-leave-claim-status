@@ -834,7 +834,6 @@ function loadReasonData() {
   const workersCompensationHeader = document.getElementById('workersCompensationHeader');
   const workersCompFieldset = document.getElementById('workersCompFieldset');
   const causedByJobQuestion = document.getElementById('causedByJobQuestion');
-  const workersCompContainer = document.getElementById('workersCompContainer');
 
   if (reason === 'pregnancy') {
     causedByJobNo.checked = true;
@@ -842,7 +841,6 @@ function loadReasonData() {
     workersCompensationHeader.style.display = 'none';
     workersCompFieldset.style.display = 'none';
     causedByJobQuestion.style.display = 'none';
-    workersCompContainer.style.display = 'none';
     addToSessionData({
       [STORAGE_KEY_CAUSED_BY_JOB]: 'no',
       [STORAGE_KEY_WORKERS_COMP]: null
@@ -861,34 +859,26 @@ function loadReasonData() {
     const savedCausedByJob = sessionData[STORAGE_KEY_CAUSED_BY_JOB];
 
     if (savedCausedByJob === 'yes') {
-      causedByJobYes.checked = true;
+      causedByJobYes.click();
       causedByJobNo.checked = false;
-      workersCompContainer.style.display = 'block';
 
       // Restore workers comp answer
       const savedWorkersComp = sessionData[STORAGE_KEY_WORKERS_COMP];
       if (savedWorkersComp === 'yes') {
-        workersCompYes.checked = true;
-        workersCompNo.checked = false;
+        workersCompYes.click();
       } else if (savedWorkersComp === 'no') {
-        workersCompYes.checked = false;
-        workersCompNo.checked = true;
+        workersCompNo.click();
       } else {
         // No saved workers comp answer - reset both
         workersCompYes.checked = false;
         workersCompNo.checked = false;
       }
     } else if (savedCausedByJob === 'no') {
-      causedByJobYes.checked = false;
-      causedByJobNo.checked = true;
-      workersCompContainer.style.display = 'none';
-      workersCompYes.checked = false;
-      workersCompNo.checked = true;
+      causedByJobNo.click();
     } else {
       // No saved caused-by-job answer - reset both
       causedByJobYes.checked = false;
       causedByJobNo.checked = false;
-      workersCompContainer.style.display = 'none';
       workersCompYes.checked = false;
       workersCompNo.checked = false;
     }
