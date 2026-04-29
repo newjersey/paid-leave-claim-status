@@ -44,10 +44,6 @@ function injectGlobalStyles() {
       font-family: "Public Sans", sans-serif;
     }
 
-    form fieldset fieldset label {
-      width: auto;
-    }
-
     textarea {
       resize: none;
     }
