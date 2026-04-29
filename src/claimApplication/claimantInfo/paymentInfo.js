@@ -24,6 +24,7 @@ export function changes() {
   moveWithholdQuestion();
   moveAmountQuestion();
   moveReasonQuestion();
+  moveSubmitButton();
   setNewTitle(i18next.t('paymentInfo.title'));
 }
 
@@ -167,4 +168,15 @@ function moveReasonQuestion() {
   reasonHint.classList.add('usa-hint');
   reasonHint.textContent = i18next.t('paymentInfo.reasonHint');
   divReason.append(reasonHint);
+}
+
+function moveSubmitButton() {
+  const container = document.getElementById(CONTAINER_ID);
+
+  const submitButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_btnNextVer');
+  submitButton.style.display = 'block';
+  submitButton.style.marginTop = '20px';
+  submitButton.style.marginLeft = 'auto';
+  submitButton.style.marginRight = 'auto';
+  container.append(submitButton);
 }
