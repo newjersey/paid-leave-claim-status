@@ -326,6 +326,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           * This amount will be withheld each week
         `,
         lateReason: "Your disability began more than 30 days ago, on {{firstDayOfDisability}}. Please share why you're filing your claim later than expected.",
+        reasonHint: "300 character limit",
       },
       personalProfile: {
         title: "Demographic information",

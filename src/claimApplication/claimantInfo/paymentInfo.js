@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import {
   clearTextNodes,
+  formattedDateFromField,
   setNewTitle,
   styleRadioButton,
 } from '../utils';
@@ -22,6 +23,7 @@ export function changes() {
   moveErrorMessage();
   moveWithholdQuestion();
   moveAmountQuestion();
+  moveReasonQuestion();
   setNewTitle(i18next.t('paymentInfo.title'));
 }
 
@@ -38,6 +40,7 @@ function addStyles() {
 
     .usa-label {
       margin-top: 0;
+      max-width: fit-content;
     }
   `;
   document.head.appendChild(style);
@@ -134,4 +137,34 @@ function moveAmountQuestion() {
   const currencyIcon = document.createElement('img');
   currencyIcon.src = `${ICON_BASE_URL}/attach_money.svg`;
   amountInputContainer.append(currencyIcon);
+}
+
+function moveReasonQuestion() {
+  const container = document.getElementById(CONTAINER_ID);
+
+  const divReason = document.getElementById('divReason');
+  divReason.classList.add('bordered-set');
+  container.append(divReason);
+
+  clearTextNodes(divReason);
+  const characterCounter = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_text_num_lpayreason');
+  characterCounter.style.display = 'none';
+
+  const reasonLabel = document.createElement('label');
+  reasonLabel.classList.add('usa-label');
+  reasonLabel.textContent = i18next.t('paymentInfo.lateReason', {
+    firstDayOfDisability: formattedDateFromField('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt')
+  });
+  reasonLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_lpayReason';
+  divReason.append(reasonLabel);
+
+  const reasonTextarea = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_lpayReason');
+  reasonTextarea.classList.add('usa-textarea');
+  reasonTextarea.style.width = '100%';
+  divReason.append(reasonTextarea);
+
+  const reasonHint = document.createElement('div');
+  reasonHint.classList.add('usa-hint');
+  reasonHint.textContent = i18next.t('paymentInfo.reasonHint');
+  divReason.append(reasonHint);
 }
