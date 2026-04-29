@@ -316,6 +316,17 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       },
       paymentInfo: {
         title: "Federal taxes",
+        withholdTaxes: "Do you want to withhold federal income tax from your Temporary Disability benefits?",
+        withholdTaxesHint: "Hint: Temporary Disability benefits count as income for federal taxes, so you may owe taxes when you file your return. You can choose to have money taken out of your benefits now to help cover those taxes later. If you're unsure how much to withhold, check your paystub for how much federal tax is usually taken out.",
+        socSecAndMedicareWithheld: "Note: Social Security and Medicare taxes are already taken out of your payments.",
+        withholdAmount: "How much would you like to have withheld?",
+        withholdAmountHint: `
+          * Minimum amount you can withhold is $20
+          * Enter a whole dollar amount — no cents
+          * This amount will be withheld each week
+        `,
+        lateReason: "Your disability began more than 30 days ago, on {{firstDayOfDisability}}. Please share why you're filing your claim later than expected.",
+        reasonHint: "300 character limit",
       },
       personalProfile: {
         title: "Demographic information",

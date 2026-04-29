@@ -1,19 +1,33 @@
 import i18next from 'i18next';
-import { setNewTitle } from '../utils';
+import {
+  clearTextNodes,
+  formattedDateFromField,
+  removeQuestionNumbersFromError,
+  setNewTitle,
+  styleRadioButton,
+} from '../utils';
+import { ICON_BASE_URL } from "../../modules/shared.mjs";
 
 export const id = "paymentInfo";
 
+const CONTAINER_ID = 'ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment';
+
 export const identifyingContent = {
   id,
-  elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment',
+  elementId: CONTAINER_ID,
   text: 'Do you want to have federal income',
 };
 
 export function changes() {
   addStyles();
-  rearrangeTable();
-  updateRadioButtons();
+  hideExistingDiv();
+  moveErrorMessage();
+  moveWithholdQuestion();
+  moveAmountQuestion();
+  moveReasonQuestion();
+  moveSubmitButton();
   setNewTitle(i18next.t('paymentInfo.title'));
+  removeQuestionNumbersFromError('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_lblLatePayerr');
 }
 
 function addStyles() {
@@ -22,75 +36,150 @@ function addStyles() {
     .usa-legend {
       max-width: fit-content;
     }
+
+    .usa-alert__body {
+      padding-top: 0;
+    }
+
+    .usa-label {
+      margin-top: 0;
+      max-width: fit-content;
+    }
   `;
   document.head.appendChild(style);
 }
 
-function rearrangeTable() {
-  const divReason = document.getElementById("divReason");
-
-  if (divReason) {
-    const table = divReason.querySelector("table");
-    const rows = table.querySelectorAll("tr");
-
-    const cells = rows[0].querySelectorAll("td");
-
-    const questionDiv = document.createElement("div");
-    questionDiv.innerHTML = cells[0].innerHTML;
-
-    const textAreaDiv = document.createElement("div");
-    textAreaDiv.innerHTML = cells[1].innerHTML;
-    textAreaDiv.style.marginTop = '20px';
-
-    divReason.innerHTML = "";
-    divReason.appendChild(questionDiv);
-    divReason.appendChild(textAreaDiv);
-  }
+function hideExistingDiv() {
+  const radioButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisYes');
+  const container = radioButton.closest('div').parentElement;
+  container.style.display = 'none';
 }
 
-function updateRadioButtons() {
-  const radioButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisYes');
-  const container = radioButton ? radioButton.closest('div') : null;
+function moveErrorMessage() {
+  const container = document.getElementById(CONTAINER_ID);
+  const errorMessage = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_lblLatePayerr');
+  container.append(errorMessage);
+}
 
-  if (container) {
-    const questionText = "Do you want to have federal income tax withheld from your temporary disability benefits?";
+function moveWithholdQuestion() {
+  const container = document.getElementById(CONTAINER_ID);
 
-    const fieldset = document.createElement('fieldset');
-    fieldset.classList.add('usa-fieldset');
+  const withholdContainer = document.createElement('div');
+  withholdContainer.classList.add('bordered-set');
+  container.append(withholdContainer);
 
-    const legend = document.createElement('legend');
-    legend.classList.add('usa-legend');
-    legend.textContent = questionText;
-    fieldset.appendChild(legend);
+  const withholdFieldset = document.createElement('fieldset');
+  withholdFieldset.classList.add('usa-fieldset');
+  withholdContainer.append(withholdFieldset);
 
-    const radioButtonIds = [
-      'ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisYes',
-      'ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisNo'
-    ];
+  const withholdLegend = document.createElement('legend');
+  withholdLegend.classList.add('usa-legend');
+  withholdLegend.textContent = i18next.t('paymentInfo.withholdTaxes');
+  withholdLegend.style.marginTop = '0';
+  withholdLegend.style.paddingLeft = '0';
+  withholdFieldset.append(withholdLegend);
 
-    radioButtonIds.forEach(id => {
-      const radioButton = document.getElementById(id);
-      const label = document.querySelector(`label[for="${id}"]`);
+  const withholdHint = document.createElement('div');
+  withholdHint.classList.add('usa-hint');
+  withholdHint.textContent = i18next.t('paymentInfo.withholdTaxesHint');
+  withholdFieldset.append(withholdHint);
 
-      if (radioButton && label) {
-        const radioDiv = document.createElement('div');
-        radioDiv.classList.add('usa-radio');
+  const radioButtonYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisYes');
+  withholdFieldset.append(radioButtonYes);
+  styleRadioButton(radioButtonYes.id);
 
-        radioButton.classList.add('usa-radio__input');
-        label.classList.add('usa-radio__label');
-        label.style.textAlign = 'left';
+  const radioButtonNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisNo');
+  withholdFieldset.append(radioButtonNo);
+  styleRadioButton(radioButtonNo.id);
 
-        radioDiv.appendChild(radioButton.cloneNode(true));
-        radioDiv.appendChild(label.cloneNode(true));
+  const withholdInfo = document.createElement('div');
+  withholdInfo.id = 'withholdInfo';
+  withholdInfo.classList.add("usa-alert", "usa-alert--info", "usa-alert--slim");
+  withholdInfo.innerHTML = `
+    <div class="usa-alert__body">
+      <p class="usa-alert__text">
+        ${i18next.t('paymentInfo.socSecAndMedicareWithheld')}
+      </p>
+    </div>
+  `;
+  withholdFieldset.append(withholdInfo);
+}
 
-        fieldset.appendChild(radioDiv);
+function moveAmountQuestion() {
+  const container = document.getElementById(CONTAINER_ID);
 
-        radioButton.remove();
-        label.remove();
-      }
-    });
+  const divTax = document.getElementById('divTax');
+  divTax.classList.add('bordered-set');
+  container.append(divTax);
 
-    container.innerHTML = '';
-    container.appendChild(fieldset);
-  }
+  clearTextNodes(divTax);
+
+  const amountLabel = document.createElement('label');
+  amountLabel.classList.add('usa-label');
+  amountLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_txtWeeklyAmt';
+  amountLabel.textContent = i18next.t('paymentInfo.withholdAmount')
+  divTax.append(amountLabel);
+
+  const amountHint = document.createElement('div');
+  amountHint.textContent = i18next.t('paymentInfo.withholdAmountHint');
+  amountHint.classList.add('usa-hint');
+  amountHint.style.whiteSpace = 'pre-line';
+  divTax.append(amountHint);
+
+  const amountInputContainer = document.createElement('div');
+  amountInputContainer.style.display = 'flex';
+  amountInputContainer.style.alignItems = 'center';
+  amountInputContainer.style.marginTop = '0.5rem';
+  divTax.append(amountInputContainer);
+
+  const amountInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_txtWeeklyAmt');
+  amountInput.classList.add('usa-input');
+  amountInput.style.width = '100px';
+  amountInput.style.marginTop = '0';
+  amountInputContainer.append(amountInput);
+
+  const currencyIcon = document.createElement('img');
+  currencyIcon.src = `${ICON_BASE_URL}/attach_money.svg`;
+  amountInputContainer.append(currencyIcon);
+}
+
+function moveReasonQuestion() {
+  const container = document.getElementById(CONTAINER_ID);
+
+  const divReason = document.getElementById('divReason');
+  divReason.classList.add('bordered-set');
+  container.append(divReason);
+
+  clearTextNodes(divReason);
+  const characterCounter = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_text_num_lpayreason');
+  characterCounter.style.display = 'none';
+
+  const reasonLabel = document.createElement('label');
+  reasonLabel.classList.add('usa-label');
+  reasonLabel.textContent = i18next.t('paymentInfo.lateReason', {
+    firstDayOfDisability: formattedDateFromField('ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt')
+  });
+  reasonLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_lpayReason';
+  divReason.append(reasonLabel);
+
+  const reasonTextarea = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_lpayReason');
+  reasonTextarea.classList.add('usa-textarea');
+  reasonTextarea.style.width = '100%';
+  divReason.append(reasonTextarea);
+
+  const reasonHint = document.createElement('div');
+  reasonHint.classList.add('usa-hint');
+  reasonHint.textContent = i18next.t('paymentInfo.reasonHint');
+  divReason.append(reasonHint);
+}
+
+function moveSubmitButton() {
+  const container = document.getElementById(CONTAINER_ID);
+
+  const submitButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_btnNextVer');
+  submitButton.style.display = 'block';
+  submitButton.style.marginTop = '20px';
+  submitButton.style.marginLeft = 'auto';
+  submitButton.style.marginRight = 'auto';
+  container.append(submitButton);
 }
