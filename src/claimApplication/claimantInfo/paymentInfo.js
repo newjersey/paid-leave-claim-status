@@ -132,15 +132,15 @@ function moveAmountQuestion() {
   amountInputContainer.style.marginTop = '0.5rem';
   divTax.append(amountInputContainer);
 
+  const currencyIcon = document.createElement('img');
+  currencyIcon.src = `${ICON_BASE_URL}/attach_money.svg`;
+  amountInputContainer.append(currencyIcon);
+
   const amountInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_txtWeeklyAmt');
   amountInput.classList.add('usa-input');
   amountInput.style.width = '100px';
   amountInput.style.marginTop = '0';
   amountInputContainer.append(amountInput);
-
-  const currencyIcon = document.createElement('img');
-  currencyIcon.src = `${ICON_BASE_URL}/attach_money.svg`;
-  amountInputContainer.append(currencyIcon);
 }
 
 function moveReasonQuestion() {
