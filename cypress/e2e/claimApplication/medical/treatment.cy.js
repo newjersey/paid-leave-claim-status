@@ -203,6 +203,7 @@ describe("Medical Treatment page", () => {
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury').type('injury');
       cy.get('#provider-type-accepted-yes').click({ force: true });
+      cy.get('label[for="ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm"]').should('have.css', 'text-align', 'left');
       fillCommonResponses();
       cy.get('#caused-by-job-no').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').should('not.be.visible');

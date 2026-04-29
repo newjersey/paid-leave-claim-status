@@ -95,6 +95,10 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');
   style.innerHTML = `
+    .usa-label {
+      text-align: left;
+    }
+
     .usa-legend {
       margin-top: 0;
       padding: 0;
