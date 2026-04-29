@@ -1,18 +1,24 @@
 import i18next from 'i18next';
-import { setNewTitle } from '../utils';
+import {
+  setNewTitle,
+  styleRadioButton,
+} from '../utils';
 
 export const id = "paymentInfo";
 
+const CONTAINER_ID = 'ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment';
+
 export const identifyingContent = {
   id,
-  elementId: 'ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment',
+  elementId: CONTAINER_ID,
   text: 'Do you want to have federal income',
 };
 
 export function changes() {
   addStyles();
-  rearrangeTable();
-  updateRadioButtons();
+  hideExistingDiv();
+  moveErrorMessage();
+  moveWithholdQuestion();
   setNewTitle(i18next.t('paymentInfo.title'));
 }
 
@@ -26,71 +32,40 @@ function addStyles() {
   document.head.appendChild(style);
 }
 
-function rearrangeTable() {
-  const divReason = document.getElementById("divReason");
-
-  if (divReason) {
-    const table = divReason.querySelector("table");
-    const rows = table.querySelectorAll("tr");
-
-    const cells = rows[0].querySelectorAll("td");
-
-    const questionDiv = document.createElement("div");
-    questionDiv.innerHTML = cells[0].innerHTML;
-
-    const textAreaDiv = document.createElement("div");
-    textAreaDiv.innerHTML = cells[1].innerHTML;
-    textAreaDiv.style.marginTop = '20px';
-
-    divReason.innerHTML = "";
-    divReason.appendChild(questionDiv);
-    divReason.appendChild(textAreaDiv);
-  }
+function hideExistingDiv() {
+  const radioButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisYes');
+  const container = radioButton.closest('div').parentElement;
+  container.style.display = 'none';
 }
 
-function updateRadioButtons() {
-  const radioButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisYes');
-  const container = radioButton ? radioButton.closest('div') : null;
+// does error appearance track in analytics??
+function moveErrorMessage() {
+  const container = document.getElementById(CONTAINER_ID);
+  const errorMessage = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_lblLatePayerr');
+  container.append(errorMessage);
+}
 
-  if (container) {
-    const questionText = "Do you want to have federal income tax withheld from your temporary disability benefits?";
+function moveWithholdQuestion() {
+  const container = document.getElementById(CONTAINER_ID);
 
-    const fieldset = document.createElement('fieldset');
-    fieldset.classList.add('usa-fieldset');
+  const withholdContainer = document.createElement('div');
+  withholdContainer.classList.add('bordered-set');
+  container.append(withholdContainer);
 
-    const legend = document.createElement('legend');
-    legend.classList.add('usa-legend');
-    legend.textContent = questionText;
-    fieldset.appendChild(legend);
+  const withholdFieldset = document.createElement('fieldset');
+  withholdFieldset.classList.add('usa-fieldset');
+  withholdContainer.append(withholdFieldset);
 
-    const radioButtonIds = [
-      'ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisYes',
-      'ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisNo'
-    ];
+  const withholdLabel = document.createElement('legend');
+  withholdLabel.classList.add('usa-legend');
+  withholdLabel.textContent = i18next.t('paymentInfo.withholdTaxes');
+  withholdFieldset.append(withholdLabel);
 
-    radioButtonIds.forEach(id => {
-      const radioButton = document.getElementById(id);
-      const label = document.querySelector(`label[for="${id}"]`);
+  const radioButtonYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisYes');
+  withholdFieldset.append(radioButtonYes);
+  styleRadioButton(radioButtonYes.id);
 
-      if (radioButton && label) {
-        const radioDiv = document.createElement('div');
-        radioDiv.classList.add('usa-radio');
-
-        radioButton.classList.add('usa-radio__input');
-        label.classList.add('usa-radio__label');
-        label.style.textAlign = 'left';
-
-        radioDiv.appendChild(radioButton.cloneNode(true));
-        radioDiv.appendChild(label.cloneNode(true));
-
-        fieldset.appendChild(radioDiv);
-
-        radioButton.remove();
-        label.remove();
-      }
-    });
-
-    container.innerHTML = '';
-    container.appendChild(fieldset);
-  }
+  const radioButtonNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisNo');
+  withholdFieldset.append(radioButtonNo);
+  styleRadioButton(radioButtonNo.id);
 }
