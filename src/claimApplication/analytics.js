@@ -34,7 +34,8 @@ function trackValidationErrors(pageId) {
     #lblValPTO,
     #lblValWrkInt,
     #lblNotice,
-    #ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblValEmpDetMsg
+    #ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblValEmpDetMsg,
+    #ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_lblDocError
   `);
 
   errorElements.forEach(element => {

@@ -1,6 +1,7 @@
 import i18next from 'i18next';
 import {
   formattedDateFromField,
+  removeQuestionNumbersFromError,
   updateCalendarUI,
 } from '../utils';
 import { logEvent } from '../../modules/shared.mjs';
@@ -25,7 +26,7 @@ export function changes() {
   startDateListener();
   endDateListener();
   cancelButtonDoesNotRequireRadioButtons();
-  removeQuestionNumbersFromError();
+  removeQuestionNumbersFromError('ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblValEmpDetMsg');
   trackSubmissionDetails();
 }
 
@@ -478,13 +479,6 @@ function cancelButtonDoesNotRequireRadioButtons() {
 
   cancelButton.addEventListener('click', removeRequired);
   didNotWorkHereButton.addEventListener('click', removeRequired);
-}
-
-function removeQuestionNumbersFromError() {
-  const error = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblValEmpDetMsg');
-  if (error) {
-    error.innerHTML = error.innerHTML.replace(/(\d+\.\s+)/g, '');
-  }
 }
 
 function trackSubmissionDetails() {

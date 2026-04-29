@@ -1,7 +1,6 @@
 import i18next from 'i18next';
 import { logEvent } from "../../modules/shared.mjs";
 import {
-  adjustTableWidths,
   elementTextError,
   getSessionData,
   removeExtraSpaceBetweenRadioButtons,
@@ -9,6 +8,7 @@ import {
   setNewTitle,
   STORAGE_KEY_REASON_FOR_LEAVE,
   addToSessionData,
+  removeQuestionNumbersFromError,
   STORAGE_KEY_PROVIDER_TYPE_ACCEPTED,
   STORAGE_KEY_CAUSED_BY_JOB,
   STORAGE_KEY_WORKERS_COMP,
@@ -70,16 +70,14 @@ export function trackWorkersCompYesSubmission(pageId) {
 
 export function changes() {
   addStyles();
-  replaceDoctorText();
-  addProviderScreener();
-  addWorkersCompScreener();
-  matchNewFormDataToExisting();
-  adjustTable();
-  adjustTextEntries();
   styleRadioButtons();
+  hideOldFieldset();
+  addProviderScreener();
+  moveUSAQuestionToNewFieldset();
+  moveProviderContactToNewFieldset();
+  addWorkersCompFieldset();
+  moveERHospitalToNewFieldset();
   addWorkersCompListeners();
-  moveWorkersCompToNewFieldset();
-  addLinkToWorkerCompQuestion();
   loadReasonData();
   setNewTitle(i18next.t('medicalInfo.title'));
   addSubtitleAndExplainer();
@@ -91,32 +89,22 @@ export function changes() {
   setRequiredForVisibleLeaveSectionFields('medicalTreatment', reason);
   focusOnWorkersCompIfEditing();
   updateAllCalendars();
+  removeQuestionNumbersFromError('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_lblDocError');
 }
 
 function addStyles() {
   const style = document.createElement('style');
   style.innerHTML = `
+    .usa-legend {
+      margin-top: 0;
+      padding: 0;
+    }
+
     .usa-radio__label {
       text-align: left;
     }
   `;
   document.head.appendChild(style);
-}
-
-function replaceDoctorText() {
-  // TODO: do in a translation-compatible way
-  const linkElements = document.querySelectorAll('a');
-
-  linkElements.forEach((element) => {
-    let text = element.textContent;
-    if (text.includes('doctor/hospital')) {
-      text = text.replace('doctor/hospital', 'healthcare provider');
-    }
-    if (text.includes('doctor’s/hospital’s')) {
-      text = text.replace('doctor’s/hospital’s', `healthcare provider's`);
-    }
-    element.textContent = text;
-  });
 }
 
 function addSubtitleAndExplainer() {
@@ -130,12 +118,24 @@ function addSubtitleAndExplainer() {
   questionDiv.prepend(subtitleDiv);
 }
 
+function hideOldFieldset() {
+  const oldFieldset = document.getElementById('divDocHosAdd').closest('fieldset');
+  oldFieldset.style.display = 'none';
+}
+
 function addProviderScreener() {
-  const doctorNameInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm');
-  const fieldset = doctorNameInput.closest('fieldset');
+  const submitBtn = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc');
+  const submitBtnContainer = submitBtn.closest('table');
+
+  const fieldset = document.createElement('fieldset');
+  fieldset.id = 'providerTypeFieldset';
+  fieldset.classList.add('bordered-set');
+  submitBtnContainer.insertAdjacentElement('beforebegin', fieldset);
 
   const providerType = document.createElement('div');
-  providerType.style.margin = "0 0 50px";
+  providerType.id = 'providerTypeQuestion';
+  providerType.style.margin = "0";
+  providerType.style.padding = "0";
   providerType.innerHTML = `
         <p>${i18next.t('medicalInfo.provider.theseTypesProviders')}</p>
         <div class="provider-accepted-list margin-bottom-2">
@@ -249,7 +249,6 @@ function addProviderScreener() {
     fieldset.scrollIntoView();
   });
 
-  const submitBtn = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_btnDoc');
   submitBtn.addEventListener('click', function() {
     if(providerNo?.checked) {
       logEvent('Medical Provider Type No Submitted', {});
@@ -257,11 +256,415 @@ function addProviderScreener() {
   });
 }
 
-function addWorkersCompScreener() {
-  const workersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
-  const workersCompContainer = workersCompNo.closest('div').closest('div');
-  workersCompContainer.id = "workersCompContainer"
-  workersCompContainer.style.display = 'none';
+function moveUSAQuestionToNewFieldset() {
+  const usaContainer = document.createElement('div');
+  usaContainer.id = 'usaContainer';
+  usaContainer.classList.add('bordered-set');
+
+  const usaFieldset = document.createElement('fieldset');
+  usaFieldset.classList.add('usa-fieldset');
+  usaContainer.append(usaFieldset);
+
+  const usaLegend = document.createElement('legend');
+  usaLegend.classList.add('usa-legend');
+  usaLegend.textContent = i18next.t('medicalInfo.provider.inUSA');
+  usaFieldset.append(usaLegend);
+  usaLegend.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const yesButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddYes');
+  usaFieldset.append(yesButton.closest('div'));
+    
+  const noButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddNo');
+  usaFieldset.append(noButton.closest('div'));
+
+  const oldQuestion = Array.from(document.querySelectorAll('a'))
+    .find(a => a.textContent.includes('Is your doctor/hospital located in the United States?'));
+  oldQuestion.style.display = 'none';
+
+  const providerTypeFieldset = document.getElementById('providerTypeFieldset');
+  providerTypeFieldset.insertAdjacentElement('afterend', usaContainer);
+
+  yesButton.addEventListener('click', function () {
+    const providerContactContainer = document.getElementById('providerContactContainer');
+    const usaAddressContainer = document.getElementById('usaAddressContainer');
+    const intlAddressContainer = document.getElementById('intlAddressContainer');
+    providerContactContainer.style.display = 'block';
+    usaAddressContainer.style.display = 'block';
+    intlAddressContainer.style.display = 'none';
+  });
+
+  noButton.addEventListener('click', function () {
+    const providerContactContainer = document.getElementById('providerContactContainer');
+    const usaAddressContainer = document.getElementById('usaAddressContainer');
+    const intlAddressContainer = document.getElementById('intlAddressContainer');
+    providerContactContainer.style.display = 'block';
+    usaAddressContainer.style.display = 'none';
+    intlAddressContainer.style.display = 'block';
+  });
+}
+
+function moveProviderContactToNewFieldset() {
+  const providerContactContainer = document.createElement('div');
+  providerContactContainer.id = 'providerContactContainer';
+  providerContactContainer.classList.add('bordered-set', 'usa-fieldset');
+  providerContactContainer.style.display = 'none';
+
+  const providerContactLegend = document.createElement('legend');
+  providerContactLegend.classList.add('usa-legend');
+  providerContactLegend.textContent = i18next.t('medicalInfo.provider.info');
+  providerContactLegend.style.fontWeight = 'bold';
+  providerContactContainer.append(providerContactLegend);
+
+  const nameLabel = document.createElement('label');
+  nameLabel.classList.add('usa-label');
+  nameLabel.textContent = i18next.t('medicalInfo.provider.name');
+  nameLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm';
+  providerContactContainer.append(nameLabel);
+  nameLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const nameInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm');
+  nameInput.classList.add('usa-input');
+  nameInput.style.width = '100%';
+  providerContactContainer.append(nameInput);
+
+  const usaAddressContainer = document.createElement('div');
+  usaAddressContainer.id = 'usaAddressContainer';
+  usaAddressContainer.style.display = 'block';
+  providerContactContainer.append(usaAddressContainer);
+
+  const usaAddress1Label = document.createElement('label');
+  usaAddress1Label.classList.add('usa-label');
+  usaAddress1Label.textContent = i18next.t('contact.street1');
+  usaAddress1Label.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocAdd1';
+  usaAddressContainer.append(usaAddress1Label);
+  usaAddress1Label.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const usaAddress1Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocAdd1');
+  usaAddress1Input.classList.add('usa-input');
+  usaAddress1Input.style.width = '100%';
+  usaAddressContainer.append(usaAddress1Input);
+
+  const usaAddress2Label = document.createElement('label');
+  usaAddress2Label.classList.add('usa-label');
+  usaAddress2Label.textContent = i18next.t('contact.street2');
+  usaAddress2Label.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocAdd2';
+  usaAddressContainer.append(usaAddress2Label);
+
+  const usaAddress2Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocAdd2');
+  usaAddress2Input.classList.add('usa-input');
+  usaAddress2Input.style.width = '100%';
+  usaAddressContainer.append(usaAddress2Input);
+
+  const usaCityLabel = document.createElement('label');
+  usaCityLabel.classList.add('usa-label');
+  usaCityLabel.textContent = i18next.t('contact.city');
+  usaCityLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocCity';
+  usaAddressContainer.append(usaCityLabel);
+  usaCityLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const usaCityInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocCity');
+  usaCityInput.classList.add('usa-input');
+  usaCityInput.style.width = '100%';
+  usaAddressContainer.append(usaCityInput);
+
+  const usaStateLabel = document.createElement('label');
+  usaStateLabel.classList.add('usa-label');
+  usaStateLabel.textContent = i18next.t('contact.stateOrTerritory');
+  usaStateLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_ddlDocStates';
+  usaAddressContainer.append(usaStateLabel);
+  usaStateLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const usaStateSelect = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_ddlDocStates');
+  usaStateSelect.classList.add('usa-select');
+  usaAddressContainer.append(usaStateSelect);
+
+  const zipLabel = document.createElement('label');
+  zipLabel.classList.add('usa-label');
+  zipLabel.textContent = i18next.t('contact.zipcode');
+  zipLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocZip1';
+  usaAddressContainer.append(zipLabel);
+  zipLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const zipContainer = document.createElement('div');
+  zipContainer.style.display = 'flex';
+  zipContainer.style.alignItems = 'center';
+  zipContainer.style.marginTop = '0.5rem';
+  usaAddressContainer.append(zipContainer);
+
+  const usaZip1Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocZip1');
+  usaZip1Input.classList.add('usa-input');
+  usaZip1Input.style.width = '80px';
+  usaZip1Input.style.marginTop = '0';
+  usaZip1Input.style.marginRight = '5px';
+  zipContainer.append(usaZip1Input);
+  usaZip1Input.insertAdjacentHTML('afterend', '-');
+
+  const usaZip2Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocZip2');
+  usaZip2Input.classList.add('usa-input');
+  usaZip2Input.classList.add('usa-input');
+  usaZip2Input.style.width = '60px';
+  usaZip2Input.style.marginTop = '0';
+  usaZip2Input.style.marginLeft = '5px';
+  zipContainer.append(usaZip2Input);
+
+  const intlAddressContainer = document.createElement('div');
+  intlAddressContainer.id = 'intlAddressContainer';
+  intlAddressContainer.style.display = 'none';
+  providerContactContainer.append(intlAddressContainer);
+
+  const intlAddressLabel = document.createElement('label');
+  intlAddressLabel.classList.add('usa-label');
+  intlAddressLabel.textContent = i18next.t('contact.address');
+  intlAddressLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtOOCDocAdd1';
+  intlAddressContainer.append(intlAddressLabel);
+  intlAddressLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const intlAddress1Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtOOCDocAdd1');
+  intlAddress1Input.classList.add('usa-input');
+  intlAddress1Input.style.width = '100%';
+  intlAddressContainer.append(intlAddress1Input);
+
+  const intlAddress2Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtOOCDocAdd2');
+  intlAddress2Input.classList.add('usa-input');
+  intlAddress2Input.style.width = '100%';
+  intlAddressContainer.append(intlAddress2Input);
+
+  const intlAddress3Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtOOCDocAdd3');
+  intlAddress3Input.classList.add('usa-input');
+  intlAddress3Input.style.width = '100%';
+  intlAddressContainer.append(intlAddress3Input);
+
+  const intlAddress4Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtOOCDocAdd4');
+  intlAddress4Input.classList.add('usa-input');
+  intlAddress4Input.style.width = '100%';
+  intlAddressContainer.append(intlAddress4Input);
+
+  const phoneLabel = document.createElement('label');
+  phoneLabel.classList.add('usa-label');
+  phoneLabel.textContent = i18next.t('contact.phone');
+  phoneLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh';
+  providerContactContainer.append(phoneLabel);
+
+  const phone1Input = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh");
+  phone1Input.classList.add('usa-input');
+  phone1Input.style.marginRight = '2px';
+  phone1Input.style.marginTop = '0';
+  phone1Input.style.width = '50px';
+
+  const phone2Input = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh2");
+  phone2Input.classList.add('usa-input');
+  phone2Input.style.marginLeft = '2px';
+  phone2Input.style.marginRight = '2px';
+  phone2Input.style.marginTop = '0';
+  phone2Input.style.width = '50px';
+
+  const phone3Input = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh3");
+  phone3Input.classList.add('usa-input');
+  phone3Input.style.marginLeft = '2px';
+  phone3Input.style.marginRight = '10px';
+  phone3Input.style.marginTop = '0';
+  phone3Input.style.width = '60px';
+
+  const phone4Input = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh4");
+  phone4Input.classList.add('usa-input');
+  phone4Input.style.marginLeft = '2px';
+  phone4Input.style.marginTop = '0';
+  phone4Input.style.width = '70px';
+
+  const phoneContainer = document.createElement('div');
+  phoneContainer.style.display = 'flex';
+  phoneContainer.style.alignItems = 'center';
+  phoneContainer.style.marginTop = '0.5rem';
+  phone1Input.insertAdjacentElement('beforebegin', phoneContainer);
+  phoneContainer.append(phone1Input);
+  phone1Input.insertAdjacentHTML('afterend', '-');
+  phoneContainer.append(phone2Input);
+  phone2Input.insertAdjacentHTML('afterend', '-');
+  phoneContainer.append(phone3Input);
+  phone3Input.insertAdjacentHTML('afterend', 'Ext.');
+  phoneContainer.append(phone4Input);
+  providerContactContainer.append(phoneContainer);
+
+  const usaContainer = document.getElementById('usaContainer');
+  usaContainer.insertAdjacentElement('afterend', providerContactContainer);
+}
+
+function moveERHospitalToNewFieldset() {
+  const erYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERYes');
+  const erNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERNO');
+
+  const hospitalYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospYes');
+  const hospitalNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospNo');
+
+  // nothing to do once questions removed
+  if (!erYes || !hospitalYes) {
+    return;
+  }
+
+  const erHospitalContainer = document.createElement('div');
+  erHospitalContainer.id = 'erHospitalContainer';
+  erHospitalContainer.classList.add('bordered-set', 'usa-fieldset');
+
+  const erLegend = document.createElement('legend');
+  erLegend.classList.add('usa-legend');
+  erLegend.textContent = 'Were you treated in the emergency room?';
+  erHospitalContainer.append(erLegend);
+  erLegend.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  erHospitalContainer.append(erYes.closest('div'));
+  erHospitalContainer.append(erNo.closest('div'));
+
+  const erDatesContainer = document.createElement('div');
+  erDatesContainer.style.display = 'none';
+  erHospitalContainer.append(erDatesContainer);
+
+  const erStartLabel = document.createElement('label');
+  erStartLabel.classList.add('usa-label');
+  erStartLabel.textContent = 'Emergency room start date';
+  erStartLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtERStDt';
+  erDatesContainer.append(erStartLabel);
+  erStartLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const erStartHint = document.createElement('div');
+  erStartHint.id = 'erStartHint';
+  erStartHint.classList.add("usa-hint");
+  erStartHint.textContent = i18next.t('shared.dateFormat');
+  erDatesContainer.append(erStartHint);
+
+  const erStartInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtERStDt');
+  erStartInput.classList.add('usa-input', 'dateInput');
+  erStartInput.setAttribute('aria-describedby', 'erStartHint');
+  const erStartCalendar = document.getElementById('Image8');
+
+  const erStartDateInputContainer = document.createElement('div');
+  erStartDateInputContainer.classList.add('dateInputContainer');
+  erStartDateInputContainer.append(erStartInput);
+  erStartDateInputContainer.append(erStartCalendar);
+  erDatesContainer.append(erStartDateInputContainer);
+
+  const erEndLabel = document.createElement('label');
+  erEndLabel.classList.add('usa-label');
+  erEndLabel.textContent = 'Emergency room end date';
+  erEndLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtEREndDt';
+  erDatesContainer.append(erEndLabel);
+  erEndLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const erEndHint = document.createElement('div');
+  erEndHint.id = 'erEndHint';
+  erEndHint.classList.add("usa-hint");
+  erEndHint.textContent = i18next.t('shared.dateFormat');
+  erDatesContainer.append(erEndHint);
+
+  const erEndInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtEREndDt');
+  erEndInput.classList.add('usa-input', 'dateInput');
+  erEndInput.setAttribute('aria-describedby', 'erEndHint');
+  const erEndCalendar = document.getElementById('Image1');
+
+  const erEndDateInputContainer = document.createElement('div');
+  erEndDateInputContainer.classList.add('dateInputContainer');
+  erEndDateInputContainer.append(erEndInput);
+  erEndDateInputContainer.append(erEndCalendar);
+  erDatesContainer.append(erEndDateInputContainer);
+
+  const hospitalLegend = document.createElement('legend');
+  hospitalLegend.classList.add('usa-legend');
+  hospitalLegend.style.marginTop = '40px';
+  hospitalLegend.textContent = 'Were you hospitalized for this disability?';
+  erHospitalContainer.append(hospitalLegend);
+  hospitalLegend.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  erHospitalContainer.append(hospitalYes.closest('div'));
+  erHospitalContainer.append(hospitalNo.closest('div'));
+
+  const hospitalDatesContainer = document.createElement('div');
+  hospitalDatesContainer.style.display = 'none';
+  erHospitalContainer.append(hospitalDatesContainer);
+
+  const hospitalStartLabel = document.createElement('label');
+  hospitalStartLabel.classList.add('usa-label');
+  hospitalStartLabel.textContent = 'Hospitalization start date';
+  hospitalStartLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospStDt';
+  hospitalDatesContainer.append(hospitalStartLabel);
+  hospitalStartLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const hospitalStartHint = document.createElement('div');
+  hospitalStartHint.id = 'hospitalStartHint';
+  hospitalStartHint.classList.add("usa-hint");
+  hospitalStartHint.textContent = i18next.t('shared.dateFormat');
+  hospitalDatesContainer.append(hospitalStartHint);
+
+  const hospitalStartInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospStDt');
+  hospitalStartInput.classList.add('usa-input', 'dateInput');
+  hospitalStartInput.setAttribute('aria-describedby', 'hospitalStartHint');
+  const hospitalStartCalendar = document.getElementById('Image2');
+
+  const hospitalStartDateInputContainer = document.createElement('div');
+  hospitalStartDateInputContainer.classList.add('dateInputContainer');
+  hospitalStartDateInputContainer.append(hospitalStartInput);
+  hospitalStartDateInputContainer.append(hospitalStartCalendar);
+  hospitalDatesContainer.append(hospitalStartDateInputContainer);
+
+  const hospitalEndLabel = document.createElement('label');
+  hospitalEndLabel.classList.add('usa-label');
+  hospitalEndLabel.textContent = 'Hospitalization end date';
+  hospitalEndLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospEndDt';
+  hospitalDatesContainer.append(hospitalEndLabel);
+  hospitalEndLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const hospitalEndHint = document.createElement('div');
+  hospitalEndHint.id = 'hospitalEndHint';
+  hospitalEndHint.classList.add("usa-hint");
+  hospitalEndHint.textContent = i18next.t('shared.dateFormat');
+  hospitalDatesContainer.append(hospitalEndHint);
+
+  const hospitalEndInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospEndDt');
+  hospitalEndInput.classList.add('usa-input', 'dateInput');
+  hospitalEndInput.setAttribute('aria-describedby', 'hospitalEndHint');
+  const hospitalEndCalendar = document.getElementById('Image3');
+
+  const hospitalEndDateInputContainer = document.createElement('div');
+  hospitalEndDateInputContainer.classList.add('dateInputContainer');
+  hospitalEndDateInputContainer.append(hospitalEndInput);
+  hospitalEndDateInputContainer.append(hospitalEndCalendar);
+  hospitalDatesContainer.append(hospitalEndDateInputContainer);
+  
+  const providerContactContainer = document.getElementById('providerContactContainer');
+  providerContactContainer.insertAdjacentElement('afterend', erHospitalContainer);
+
+  erYes.addEventListener('click', function () {
+    erDatesContainer.style.display = 'block';
+  });
+
+  erNo.addEventListener('click', function () {
+    erDatesContainer.style.display = 'none';
+  });
+  
+  hospitalYes.addEventListener('click', function () {
+    hospitalDatesContainer.style.display = 'block';
+  });
+
+  hospitalNo.addEventListener('click', function () {
+    hospitalDatesContainer.style.display = 'none';
+  });
+}
+
+function addWorkersCompFieldset() {
+  const workersCompFieldset = document.createElement('fieldset');
+  workersCompFieldset.id = 'workersCompFieldset';
+  workersCompFieldset.classList.add('usa-fieldset', 'bordered-set');
+
+  const providerContactContainer = document.getElementById('providerContactContainer');
+  providerContactContainer.insertAdjacentElement('afterend', workersCompFieldset);
+
+  const h2 = document.createElement('h2');
+  h2.id = "workersCompensationHeader";
+  h2.textContent = i18next.t('medicalInfo.work.title');
+  h2.style.fontSize = "22px";
+  h2.style.fontWeight = "bold";
+  h2.style.color = "black";
+  h2.style.fontVariant = "none";
+  h2.style.marginTop = "40px";
+  workersCompFieldset.insertAdjacentElement('beforebegin', h2);
 
   const causedByJobQuestion = document.createElement('div');
   causedByJobQuestion.id = "causedByJobQuestion";
@@ -270,7 +673,7 @@ function addWorkersCompScreener() {
     <fieldset class="usa-fieldset">
       <legend id="caused-by-job-legend" class="usa-legend usa-legend">
         <span class="required-asterisk">*</span>
-        7. <span id="causedByJobText">${i18next.t('medicalInfo.work.causedByJob', { disabilityTypeString: i18next.t('shared.disability') })}</span>
+        <span id="causedByJobText">${i18next.t('medicalInfo.work.causedByJob', { disabilityTypeString: i18next.t('shared.disability') })}</span>
       </legend>
       <div class="usa-radio">
         <input
@@ -300,7 +703,25 @@ function addWorkersCompScreener() {
       </div>
     </fieldset>
   `;
-  workersCompContainer.parentElement.insertBefore(causedByJobQuestion, workersCompContainer);
+
+  workersCompFieldset.append(causedByJobQuestion);
+
+  const workersCompClaimContainer = document.createElement('fieldset');
+  workersCompClaimContainer.classList.add('usa-fieldset');
+  workersCompClaimContainer.style.display = 'none';
+  workersCompFieldset.append(workersCompClaimContainer);
+
+  const workersCompClaimLegend = document.createElement('legend');
+  workersCompClaimLegend.classList.add('usa-legend');
+  workersCompClaimLegend.innerHTML = i18next.t('medicalInfo.work.workersCompClaim');
+  workersCompClaimContainer.append(workersCompClaimLegend);
+  workersCompClaimLegend.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
+
+  const workersCompClaimYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').closest('div');
+  workersCompClaimContainer.append(workersCompClaimYes);
+
+  const workersCompClaimNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo').closest('div');
+  workersCompClaimContainer.append(workersCompClaimNo);
 
   const causedByJobYes = document.getElementById('caused-by-job-yes');
   const causedByJobNo = document.getElementById('caused-by-job-no');
@@ -310,7 +731,7 @@ function addWorkersCompScreener() {
     const refreshedWorkersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
     const refreshedWorkersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
     resetElementText(causedByJobLegend);
-    workersCompContainer.style.display = 'block';
+    workersCompClaimContainer.style.display = 'block';
     refreshedWorkersCompNo.checked = false;
     refreshedWorkersCompYes.checked = false;
     addToSessionData({ [STORAGE_KEY_CAUSED_BY_JOB]: 'yes' });
@@ -320,7 +741,7 @@ function addWorkersCompScreener() {
     const refreshedWorkersCompNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjNo');
     const refreshedWorkersCompYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes');
     resetElementText(causedByJobLegend);
-    workersCompContainer.style.display = 'none';
+    workersCompClaimContainer.style.display = 'none';
     refreshedWorkersCompYes.checked = false;
     refreshedWorkersCompNo.checked = true;
     addToSessionData({
@@ -331,39 +752,6 @@ function addWorkersCompScreener() {
 
   causedByJobYes.addEventListener('invalid', function () {
     elementTextError(causedByJobLegend);
-  });
-}
-
-function matchNewFormDataToExisting() {
-  const form = document.getElementById('form1');
-
-  // frontend-only fields
-  const causedByJobYes = document.getElementById('caused-by-job-yes');
-  const causedByJobNo = document.getElementById('caused-by-job-no');
-  const providerYes = document.getElementById("provider-type-accepted-yes");
-  const providerNo = document.getElementById("provider-type-accepted-no");
-  const causedByJobLegend = document.getElementById('caused-by-job-legend');
-
-  form.addEventListener('submit', (event) => {
-    const formData = new FormData(form);
-    const correctPage = formFromCorrectPage(formData);
-
-    if (correctPage && !causedByJobYes.checked && !causedByJobNo.checked) {
-      event.preventDefault();
-      elementTextError(causedByJobLegend);
-      causedByJobYes.focus();
-    } else {
-      providerYes.removeAttribute('name');
-      providerNo.removeAttribute('name');
-      causedByJobYes.removeAttribute('name');
-      causedByJobNo.removeAttribute('name');
-      form.addEventListener('formdata', () => {
-        providerYes.setAttribute('name', 'provider-type-accepted');
-        providerNo.setAttribute('name', 'provider-type-accepted');
-        causedByJobYes.setAttribute('name', 'caused-by-job');
-        causedByJobNo.setAttribute('name', 'caused-by-job');
-      }, { once: true });
-    }
   });
 }
 
@@ -414,7 +802,6 @@ function loadReasonData() {
   const workersCompensationHeader = document.getElementById('workersCompensationHeader');
   const workersCompFieldset = document.getElementById('workersCompFieldset');
   const causedByJobQuestion = document.getElementById('causedByJobQuestion');
-  const workersCompContainer = document.getElementById('workersCompContainer');
 
   if (reason === 'pregnancy') {
     causedByJobNo.checked = true;
@@ -422,7 +809,6 @@ function loadReasonData() {
     workersCompensationHeader.style.display = 'none';
     workersCompFieldset.style.display = 'none';
     causedByJobQuestion.style.display = 'none';
-    workersCompContainer.style.display = 'none';
     addToSessionData({
       [STORAGE_KEY_CAUSED_BY_JOB]: 'no',
       [STORAGE_KEY_WORKERS_COMP]: null
@@ -441,34 +827,26 @@ function loadReasonData() {
     const savedCausedByJob = sessionData[STORAGE_KEY_CAUSED_BY_JOB];
 
     if (savedCausedByJob === 'yes') {
-      causedByJobYes.checked = true;
+      causedByJobYes.click();
       causedByJobNo.checked = false;
-      workersCompContainer.style.display = 'block';
 
       // Restore workers comp answer
       const savedWorkersComp = sessionData[STORAGE_KEY_WORKERS_COMP];
       if (savedWorkersComp === 'yes') {
-        workersCompYes.checked = true;
-        workersCompNo.checked = false;
+        workersCompYes.click();
       } else if (savedWorkersComp === 'no') {
-        workersCompYes.checked = false;
-        workersCompNo.checked = true;
+        workersCompNo.click();
       } else {
         // No saved workers comp answer - reset both
         workersCompYes.checked = false;
         workersCompNo.checked = false;
       }
     } else if (savedCausedByJob === 'no') {
-      causedByJobYes.checked = false;
-      causedByJobNo.checked = true;
-      workersCompContainer.style.display = 'none';
-      workersCompYes.checked = false;
-      workersCompNo.checked = true;
+      causedByJobNo.click();
     } else {
       // No saved caused-by-job answer - reset both
       causedByJobYes.checked = false;
       causedByJobNo.checked = false;
-      workersCompContainer.style.display = 'none';
       workersCompYes.checked = false;
       workersCompNo.checked = false;
     }
@@ -502,82 +880,6 @@ function styleRadioButtons() {
   );
 }
 
-function adjustTextEntries() {
-  const disabilityEntry = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury");
-  if (disabilityEntry) {
-    disabilityEntry.style.width = '100%';
-  }
-
-  const injuryDiv = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury').closest('div');
-  if (injuryDiv) {
-    injuryDiv.style.marginLeft = '0';
-  }
-
-  const doctorEntry = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm");
-  if (doctorEntry) {
-    doctorEntry.style.width = '100%';
-  }
-
-  const doctorAddressEntry = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_Panel1");
-  if (doctorAddressEntry) {
-    doctorAddressEntry.style.width = '100%';
-  }
-
-  const workersCompDiv = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').closest('div');
-  if (workersCompDiv) {
-    workersCompDiv.style.width = '100%';
-  }
-
-  const phone1 = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh");
-  const phone2 = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh2");
-  const phone3 = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh3");
-  const phone4 = document.querySelector("#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh4");
-  phone1.insertAdjacentHTML('beforebegin', '<br>');
-  phone1.style.width = '50px';
-  phone2.style.width = '50px';
-  phone3.style.width = '50px';
-  phone4.style.width = '60px';
-
-  // whitespace before doctor phone question
-  const divDocOCCAdd = document.getElementById('divDocOCCAdd');
-  divDocOCCAdd.nextSibling.remove();
-  divDocOCCAdd.nextSibling.remove();
-  divDocOCCAdd.nextSibling.remove();
-}
-
-function adjustTable() {
-  const doctorAddress = document.querySelector('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_pnlDocOCCAdd');
-  if (doctorAddress) {
-    doctorAddress.style.width = 'auto';
-    doctorAddress.style.maxWidth = '100%';
-  }
-
-  adjustTableWidths(document);
-}
-
-function moveWorkersCompToNewFieldset() {
-  const causedByJobElement = document.getElementById('causedByJobQuestion');
-  const workersCompElement = document.getElementById('workersCompContainer');
-  const parentFieldset = causedByJobElement.closest('fieldset');
-
-  const newFieldset = document.createElement('fieldset');
-  newFieldset.id = 'workersCompFieldset';
-  newFieldset.appendChild(causedByJobElement);
-  newFieldset.appendChild(workersCompElement);
-
-  const h2 = document.createElement('h2');
-  h2.id = "workersCompensationHeader";
-  h2.textContent = i18next.t('medicalInfo.work.title');
-  h2.style.fontSize = "22px";
-  h2.style.fontWeight = "bold";
-  h2.style.color = "black";
-  h2.style.fontVariant = "none";
-  h2.style.marginTop = "40px";
-
-  parentFieldset.parentNode.insertBefore(h2, parentFieldset.nextSibling);
-  parentFieldset.parentNode.insertBefore(newFieldset, h2.nextSibling);
-}
-
 function focusOnWorkersCompIfEditing() {
   const sessionData = getSessionData();
   const editingWorkersComp = sessionData[STORAGE_KEY_EDITING_WORKERS_COMP];
@@ -601,6 +903,7 @@ function focusOnWorkersCompIfEditing() {
   }
 }
 
+// not needed once questions removed at .NET layer
 function updateAllCalendars() {
   const ERStartId = 'Image8';
   const EREndId = 'Image1';
@@ -611,16 +914,4 @@ function updateAllCalendars() {
   updateCalendarUI(EREndId);
   updateCalendarUI(hospitalStartId);
   updateCalendarUI(hospitalEndId);
-}
-
-function addLinkToWorkerCompQuestion() {
-  const workersCompQuestionContainer = document.querySelector("#workersCompContainer");
-  if (workersCompQuestionContainer) {
-    const questionLink = workersCompQuestionContainer.querySelector('a:not([style*="color"])');
-    if (questionLink) {
-      const span = document.createElement('span');
-      span.innerHTML = `7a. ${i18next.t('medicalInfo.work.workersCompClaim')}`;
-      questionLink.replaceWith(span);
-    }
-  }
 }
