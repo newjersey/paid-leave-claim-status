@@ -2,6 +2,7 @@ import i18next from 'i18next';
 import {
   clearTextNodes,
   formattedDateFromField,
+  removeQuestionNumbersFromError,
   setNewTitle,
   styleRadioButton,
 } from '../utils';
@@ -26,6 +27,7 @@ export function changes() {
   moveReasonQuestion();
   moveSubmitButton();
   setNewTitle(i18next.t('paymentInfo.title'));
+  removeQuestionNumbersFromError('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_lblLatePayerr');
 }
 
 function addStyles() {

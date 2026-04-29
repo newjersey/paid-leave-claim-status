@@ -3,6 +3,7 @@ import { globalTestsNew, globalTestsOld } from "../shared";
 const PAGE_ID = 'paymentInfo';
 const URL = 'ClaimantDisabililty';
 const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/paymentInfo.html";
+const FIXTURE_WITH_ERROR = "./cypress/fixtures/claimApplication/paymentError/paymentError.html";
 
 describe("Payment Info page", () => {
   function checkPostData(interception) {
@@ -52,6 +53,15 @@ describe("Payment Info page", () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisNo').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_btnNextVer').click();
       cy.wait('@aspxSubmission').then(checkPostData);
+      cy.confirmEventIsNotTracked(`Validation Error`);
+    });
+
+    it("shows error without question number", () => {
+      cy.visit(FIXTURE_WITH_ERROR);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_lblLatePayerr').invoke('text').should('not.match', /\d/);
+      // analytics event still contains the number because event fires before visible text is changed
+      const contents = "PLEASE ANSWER THE FOLLOWING QUESTION(S). THEY MUST BE COMPLETED TO PROCEED:1. Do you want to have fe";
+      cy.checkLogEvent(`Validation Error`, { contents, pageId: PAGE_ID });
     });
 
     globalTestsNew(PAGE_ID, URL);
