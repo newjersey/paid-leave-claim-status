@@ -55,7 +55,6 @@ function hideExistingDiv() {
   container.style.display = 'none';
 }
 
-// does error appearance track in analytics??
 function moveErrorMessage() {
   const container = document.getElementById(CONTAINER_ID);
   const errorMessage = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_lblLatePayerr');
