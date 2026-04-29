@@ -1,8 +1,10 @@
 import i18next from 'i18next';
 import {
+  clearTextNodes,
   setNewTitle,
   styleRadioButton,
 } from '../utils';
+import { ICON_BASE_URL } from "../../modules/shared.mjs";
 
 export const id = "paymentInfo";
 
@@ -19,6 +21,7 @@ export function changes() {
   hideExistingDiv();
   moveErrorMessage();
   moveWithholdQuestion();
+  moveAmountQuestion();
   setNewTitle(i18next.t('paymentInfo.title'));
 }
 
@@ -31,6 +34,10 @@ function addStyles() {
 
     .usa-alert__body {
       padding-top: 0;
+    }
+
+    .usa-label {
+      margin-top: 0;
     }
   `;
   document.head.appendChild(style);
@@ -67,7 +74,7 @@ function moveWithholdQuestion() {
 
   const withholdHint = document.createElement('div');
   withholdHint.classList.add('usa-hint');
-  withholdHint.innerHTML = i18next.t('paymentInfo.withholdTaxesHint');
+  withholdHint.textContent = i18next.t('paymentInfo.withholdTaxesHint');
   withholdFieldset.append(withholdHint);
 
   const radioButtonYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisYes');
@@ -89,4 +96,42 @@ function moveWithholdQuestion() {
     </div>
   `;
   withholdFieldset.append(withholdInfo);
+}
+
+function moveAmountQuestion() {
+  const container = document.getElementById(CONTAINER_ID);
+
+  const divTax = document.getElementById('divTax');
+  divTax.classList.add('bordered-set');
+  container.append(divTax);
+
+  clearTextNodes(divTax);
+
+  const amountLabel = document.createElement('label');
+  amountLabel.classList.add('usa-label');
+  amountLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_txtWeeklyAmt';
+  amountLabel.textContent = i18next.t('paymentInfo.withholdAmount')
+  divTax.append(amountLabel);
+
+  const amountHint = document.createElement('div');
+  amountHint.textContent = i18next.t('paymentInfo.withholdAmountHint');
+  amountHint.classList.add('usa-hint');
+  amountHint.style.whiteSpace = 'pre-line';
+  divTax.append(amountHint);
+
+  const amountInputContainer = document.createElement('div');
+  amountInputContainer.style.display = 'flex';
+  amountInputContainer.style.alignItems = 'center';
+  amountInputContainer.style.marginTop = '0.5rem';
+  divTax.append(amountInputContainer);
+
+  const amountInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_txtWeeklyAmt');
+  amountInput.classList.add('usa-input');
+  amountInput.style.width = '100px';
+  amountInput.style.marginTop = '0';
+  amountInputContainer.append(amountInput);
+
+  const currencyIcon = document.createElement('img');
+  currencyIcon.src = `${ICON_BASE_URL}/attach_money.svg`;
+  amountInputContainer.append(currencyIcon);
 }

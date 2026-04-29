@@ -321,11 +321,9 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         socSecAndMedicareWithheld: "Note: Social Security and Medicare taxes are already taken out of your payments.",
         withholdAmount: "How much would you like to have withheld?",
         withholdAmountHint: `
-          <ul>
-          <li>Minimum amount you can withhold is $20</li>
-          <li>Enter a whole dollar amount — no cents</li>
-          <li>This amount will be withheld each week</li>
-          </ul>
+          * Minimum amount you can withhold is $20
+          * Enter a whole dollar amount — no cents
+          * This amount will be withheld each week
         `,
         lateReason: "Your disability began more than 30 days ago, on {{firstDayOfDisability}}. Please share why you're filing your claim later than expected.",
       },
