@@ -73,10 +73,12 @@ function moveWithholdQuestion() {
   withholdFieldset.classList.add('usa-fieldset');
   withholdContainer.append(withholdFieldset);
 
-  const withholdLabel = document.createElement('legend');
-  withholdLabel.classList.add('usa-legend');
-  withholdLabel.textContent = i18next.t('paymentInfo.withholdTaxes');
-  withholdFieldset.append(withholdLabel);
+  const withholdLegend = document.createElement('legend');
+  withholdLegend.classList.add('usa-legend');
+  withholdLegend.textContent = i18next.t('paymentInfo.withholdTaxes');
+  withholdLegend.style.marginTop = '0';
+  withholdLegend.style.paddingLeft = '0';
+  withholdFieldset.append(withholdLegend);
 
   const withholdHint = document.createElement('div');
   withholdHint.classList.add('usa-hint');
