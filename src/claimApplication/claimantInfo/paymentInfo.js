@@ -28,6 +28,10 @@ function addStyles() {
     .usa-legend {
       max-width: fit-content;
     }
+
+    .usa-alert__body {
+      padding-top: 0;
+    }
   `;
   document.head.appendChild(style);
 }
@@ -61,6 +65,11 @@ function moveWithholdQuestion() {
   withholdLabel.textContent = i18next.t('paymentInfo.withholdTaxes');
   withholdFieldset.append(withholdLabel);
 
+  const withholdHint = document.createElement('div');
+  withholdHint.classList.add('usa-hint');
+  withholdHint.innerHTML = i18next.t('paymentInfo.withholdTaxesHint');
+  withholdFieldset.append(withholdHint);
+
   const radioButtonYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisYes');
   withholdFieldset.append(radioButtonYes);
   styleRadioButton(radioButtonYes.id);
@@ -68,4 +77,16 @@ function moveWithholdQuestion() {
   const radioButtonNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_rbtnDisNo');
   withholdFieldset.append(radioButtonNo);
   styleRadioButton(radioButtonNo.id);
+
+  const withholdInfo = document.createElement('div');
+  withholdInfo.id = 'withholdInfo';
+  withholdInfo.classList.add("usa-alert", "usa-alert--info", "usa-alert--slim");
+  withholdInfo.innerHTML = `
+    <div class="usa-alert__body">
+      <p class="usa-alert__text">
+        ${i18next.t('paymentInfo.socSecAndMedicareWithheld')}
+      </p>
+    </div>
+  `;
+  withholdFieldset.append(withholdInfo);
 }
