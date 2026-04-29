@@ -58,7 +58,7 @@ function trackSystemAlerts(pageId) {
   };
 }
 
-function addPageIdToURL(pageId) {
+export function addPageIdToURL(pageId) {
   const url = new URL(window.location.href);
   url.searchParams.set('pageId', pageId);
   history.replaceState(null, '', url.toString());
