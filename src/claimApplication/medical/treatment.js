@@ -296,6 +296,7 @@ function moveUSAQuestionToNewFieldset() {
     providerContactContainer.style.display = 'block';
     usaAddressContainer.style.display = 'block';
     intlAddressContainer.style.display = 'none';
+    clearNameAndPhone();
   });
 
   noButton.addEventListener('click', function () {
@@ -305,7 +306,22 @@ function moveUSAQuestionToNewFieldset() {
     providerContactContainer.style.display = 'block';
     usaAddressContainer.style.display = 'none';
     intlAddressContainer.style.display = 'block';
+    clearNameAndPhone();
   });
+}
+
+function clearNameAndPhone() {
+  const nameInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm');
+  const phone1Input = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh");
+  const phone2Input = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh2");
+  const phone3Input = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh3");
+  const phone4Input = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh4");
+
+  nameInput.value = '';
+  phone1Input.value = '';
+  phone2Input.value = '';
+  phone3Input.value = '';
+  phone4Input.value = '';
 }
 
 function moveProviderContactToNewFieldset() {
