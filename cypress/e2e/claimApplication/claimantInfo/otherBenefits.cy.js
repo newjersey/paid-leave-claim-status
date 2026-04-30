@@ -6,6 +6,7 @@ const URL = 'ClaimantDisabililty';
 const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/otherBenefits.html";
 const FIXTURE_WITHOUT_EMPLOYER = "./cypress/fixtures/claimApplication/claimantInfo/otherBenefitsWithoutEmp.html";
 const FIXTURE_WITH_ERROR = "./cypress/fixtures/claimApplication/claimantInfo/otherBenefitsError.html";
+const FIXTURE_FILLED_ALL_NO = "./cypress/fixtures/claimApplication/otherBenefitsFilled/otherBenefitsFilled.html";
 
 describe("Other Benefits page", () => {
   function checkNoPostData(interception) {
@@ -159,6 +160,17 @@ describe("Other Benefits page", () => {
       cy.wait('@aspxSubmission');
     });
 
+    it("user sees all no answers when loaded and can proceed", () => {
+      cy.mockASPX(URL);
+      cy.visit(FIXTURE_FILLED_ALL_NO);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo').should('be.checked');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo').should('be.checked');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo').should('be.checked');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo').should('be.checked');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
+      cy.wait('@aspxSubmission');
+    });
+
     globalTestsOld(URL);
   });
 
@@ -190,6 +202,14 @@ describe("Other Benefits page", () => {
     it("shows error without question number", () => {
       cy.visit(FIXTURE_WITH_ERROR);
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_lblUIerror').contains('Unemployment Insurance Benefits start date.');
+    });
+
+    it("user sees all no answers when loaded and can proceed", () => {
+      cy.mockASPX(URL);
+      cy.visit(FIXTURE_FILLED_ALL_NO);
+      cy.get('#check-none').should('be.checked');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_btnUI').click();
+      cy.wait('@aspxSubmission');
     });
 
     it("user can input no to everything and proceed to next page", () => {
