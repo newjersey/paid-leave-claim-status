@@ -78,6 +78,7 @@ export function changes() {
   addWorkersCompFieldset();
   moveERHospitalToNewFieldset();
   addWorkersCompListeners();
+  loadFilledData();
   loadReasonData();
   setNewTitle(i18next.t('medicalInfo.title'));
   addSubtitleAndExplainer();
@@ -770,6 +771,38 @@ function addWorkersCompListeners() {
   workersCompNo.addEventListener('change', function () {
     addToSessionData({ [STORAGE_KEY_WORKERS_COMP]: 'no' });
   });
+}
+
+function loadFilledData() {
+  const yesButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddYes');
+  if (yesButton?.checked) {
+    yesButton.click();
+  }
+    
+  const noButton = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddNo');
+  if (noButton?.checked) {
+    noButton.click();
+  }
+
+  const erYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERYes');
+  if (erYes?.checked) {
+    erYes.click();
+  }
+
+  const erNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnERNO');
+  if (erNo?.checked) {
+    erNo.click();
+  }
+
+  const hospitalYes = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospYes');
+  if (hospitalYes?.checked) {
+    hospitalYes.click();
+  }
+
+  const hospitalNo = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnHospNo');
+  if (hospitalNo?.checked) {
+    hospitalNo.click();
+  }
 }
 
 function loadReasonData() {

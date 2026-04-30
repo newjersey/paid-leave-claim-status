@@ -10,7 +10,8 @@ import { encodeDecode } from '../../../../src/claimApplication/utils';
 const PAGE_ID = 'medicalTreatment';
 const URL = 'ClaimantDisabililty';
 const FIXTURE = "./cypress/fixtures/claimApplication/medical/treatment.html";
-const FIXTURE_WITH_ERROR = "./cypress/fixtures/claimApplication/medicalError/medicalError.html";
+const FIXTURE_FILLED = "./cypress/fixtures/claimApplication/medicalVariants/medicalFilled.html";
+const FIXTURE_WITH_ERROR = "./cypress/fixtures/claimApplication/medicalVariants/medicalError.html";
 
 describe("Medical Treatment page", () => {
   function checkInjuryPostData(interception) {
@@ -504,6 +505,13 @@ describe("Medical Treatment page", () => {
       // analytics event still contains the number because event fires before visible text is changed
       const contents = "PLEASE ANSWER THE FOLLOWING QUESTION(S). THEY MUST BE COMPLETED TO PROCEED:2. Enter name of the doct";
       cy.checkLogEvent(`Validation Error`, { contents, pageId: PAGE_ID });
+    });
+
+    it("shows filled data", () => {
+      cy.visit(FIXTURE_FILLED);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm').should('be.visible').and('have.value', 'Doctor');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtERStDt').should('be.visible').and('have.value', '04/27/2026');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospStDt').should('be.visible').and('have.value', '04/30/2026');
     });
 
     globalTestsNew(PAGE_ID, URL);
