@@ -10,6 +10,7 @@ const URL = 'ClaimantDisabililty';
 const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/verification.html";
 const FIXTURE_WITH_WORKERS_COMP_YES = "./cypress/fixtures/claimApplication/claimantInfo/verification_WorkersCompYes.html";
 const FIXTURE_WITH_NOT_APPROVED_BUT_RECEIVED_WC = "./cypress/fixtures/claimApplication/claimantInfo/verification_NotApprovedButReceived.html";
+const FIXTURE_WITH_INTL_DOCTOR = "./cypress/fixtures/claimApplication/disabilityVerificationIntl/disabilityVerificationIntl.html";
 
 describe("Disability Verification page", () => {
   function checkPostData(interception) {
@@ -137,6 +138,12 @@ describe("Disability Verification page", () => {
       }).as('script');
       cy.visit(FIXTURE);
       cy.wait('@script');
+    });
+
+    it('intl doctor names appear', () => {
+      cy.visit(FIXTURE_WITH_INTL_DOCTOR);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocName')
+        .should('be.visible').and('have.value', 'My Intl Doctor');
     });
 
     it("user can input info and proceed to next page", () => {
