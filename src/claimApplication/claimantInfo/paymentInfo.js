@@ -28,6 +28,7 @@ export function changes() {
   moveSubmitButton();
   setNewTitle(i18next.t('paymentInfo.title'));
   removeQuestionNumbersFromError('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_lblLatePayerr');
+  removeStrayNull();
 }
 
 function addStyles() {
@@ -44,6 +45,11 @@ function addStyles() {
     .usa-label {
       margin-top: 0;
       max-width: fit-content;
+      text-align: left;
+    }
+
+    fieldset div {
+      padding: 0;
     }
   `;
   document.head.appendChild(style);
@@ -156,9 +162,8 @@ function moveReasonQuestion() {
   divReason.classList.add('bordered-set');
   container.append(divReason);
 
-  clearTextNodes(divReason);
-  const characterCounter = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_text_num_lpayreason');
-  characterCounter.style.display = 'none';
+  const oldTable = divReason.querySelector('table');
+  oldTable.style.display = 'none';
 
   const reasonLabel = document.createElement('label');
   reasonLabel.classList.add('usa-label');
@@ -188,4 +193,13 @@ function moveSubmitButton() {
   submitButton.style.marginLeft = 'auto';
   submitButton.style.marginRight = 'auto';
   container.append(submitButton);
+}
+
+function removeStrayNull() {
+  const container = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment');
+  container.childNodes.forEach(child => {
+    if (child.nodeType === Node.TEXT_NODE && child.textContent.trim() === 'null') {
+      child.remove();
+    }
+  });
 }

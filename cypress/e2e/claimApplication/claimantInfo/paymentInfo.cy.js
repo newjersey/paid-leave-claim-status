@@ -3,6 +3,7 @@ import { globalTestsNew, globalTestsOld } from "../shared";
 const PAGE_ID = 'paymentInfo';
 const URL = 'ClaimantDisabililty';
 const FIXTURE = "./cypress/fixtures/claimApplication/claimantInfo/paymentInfo.html";
+const FIXTURE_FILLED = "./cypress/fixtures/claimApplication/paymentEditing/paymentEditing.html";
 const FIXTURE_WITH_ERROR = "./cypress/fixtures/claimApplication/paymentError/paymentError.html";
 
 describe("Payment Info page", () => {
@@ -45,6 +46,13 @@ describe("Payment Info page", () => {
       cy.wait('@aspxSubmission').then(checkWithholdPostData);
     });
 
+    it("user can load filled page for editing and see proper data", () => {
+      cy.visit(FIXTURE_FILLED);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment').should('not.contain', 'null');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_lpayReason')
+        .should('have.value', 'I want this text to be saved');
+    });
+
     globalTestsOld(URL);
   });
 
@@ -57,6 +65,13 @@ describe("Payment Info page", () => {
       }).as('script');
       cy.visit(FIXTURE);
       cy.wait('@script');
+    });
+
+    it("user can load filled page for editing and see proper data", () => {
+      cy.visit(FIXTURE_FILLED);
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment').should('not.contain', 'null');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_lpayReason')
+        .should('have.value', 'I want this text to be saved');
     });
 
     it("user can decline withholding and proceed to next page", () => {
