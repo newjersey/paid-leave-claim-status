@@ -117,7 +117,7 @@ function moveAmountQuestion() {
   const amountLabel = document.createElement('label');
   amountLabel.classList.add('usa-label');
   amountLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_txtWeeklyAmt';
-  amountLabel.textContent = i18next.t('paymentInfo.withholdAmount')
+  amountLabel.textContent = i18next.t('paymentInfo.withholdAmount');
   divTax.append(amountLabel);
 
   const amountHint = document.createElement('div');
@@ -141,6 +141,12 @@ function moveAmountQuestion() {
   amountInput.style.width = '100px';
   amountInput.style.marginTop = '0';
   amountInputContainer.append(amountInput);
+
+  const everyWeekHint = document.createElement('p');
+  everyWeekHint.textContent = i18next.t('paymentInfo.everyWeek');
+  everyWeekHint.style.marginLeft = '5px';
+  everyWeekHint.style.marginBottom = '0';
+  amountInputContainer.append(everyWeekHint);
 }
 
 function moveReasonQuestion() {
