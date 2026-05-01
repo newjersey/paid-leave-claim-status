@@ -315,12 +315,14 @@ function clearNameAndPhone() {
   const phone2Input = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh2");
   const phone3Input = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh3");
   const phone4Input = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh4");
+  const intlPhoneInput = document.getElementById("intlPhoneInput");
 
   nameInput.value = '';
   phone1Input.value = '';
   phone2Input.value = '';
   phone3Input.value = '';
   phone4Input.value = '';
+  intlPhoneInput.value = '';
 }
 
 function moveProviderContactToNewFieldset() {

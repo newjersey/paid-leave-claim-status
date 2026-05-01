@@ -114,6 +114,36 @@ describe("Medical Treatment page", () => {
       cy.wait('@aspxSubmission').then(checkIntlDoctorPostData);
     });
 
+    it("toggling usa and intl address clears name and phone", () => {
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddNo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm').should('be.visible').and('have.value', '');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh').should('not.be.visible');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh2').should('not.be.visible');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh3').should('not.be.visible');
+      cy.get('#intlPhoneInput').should('be.visible').and('have.value', '');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm').type('Dr. Spaceman');
+      cy.get('#intlPhoneInput').type('1234567890');
+
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddYes').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm').should('be.visible').and('have.value', '');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh').should('be.visible').and('have.value', '');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh2').should('be.visible').and('have.value', '');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh3').should('be.visible').and('have.value', '');
+      cy.get('#intlPhoneInput').should('not.be.visible');
+
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm').type('Dr. Spaceman');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh').type('123');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh2').type('456');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh3').type('7890');
+
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddNo').click({ force: true });
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm').should('be.visible').and('have.value', '');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh').should('not.be.visible');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh2').should('not.be.visible');
+      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh3').should('not.be.visible');
+      cy.get('#intlPhoneInput').should('be.visible').and('have.value', '');
+    });
+
     it('calendar UX allows only valid inputs', () => {
       cy.clock(new Date(2025, 7, 18)); // 0-indexed; August 18, 2025
       cy.visit(FIXTURE);
@@ -292,9 +322,6 @@ describe("Medical Treatment page", () => {
     it('tracks when workers comp Yes is submitted', () => {
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtInjury').type('Injury');
       cy.get('#provider-type-accepted-yes').click({ force: true });
-      fillCommonResponses();
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbnDocAddNo').click({ force: true });
-      cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocNm').should('have.value', '');
       fillCommonResponses();
       cy.get('#caused-by-job-yes').click({ force: true });
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_rbtnInjYes').click({ force: true });
