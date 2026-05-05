@@ -47,6 +47,7 @@ export const identifyingContent = {
 };
 
 export function changes() {
+  addStyles();
   adjustTable();
   fixOverflowingText();
   fixPhoneNumberText(
@@ -68,6 +69,18 @@ export function changes() {
   hideDisabilityInfoInMedicalSection();
   setupEditButtonHandlers();
   setNewTitle(i18next.t('reviewAndSave.title'));
+  moveDoctorNameIfIntl();
+}
+
+
+function addStyles() {
+  const style = document.createElement('style');  
+  style.innerHTML = `
+    .usa-label {
+      text-align: left;
+    }
+  `;
+  document.head.appendChild(style);
 }
 
 function adjustTable() {
@@ -464,4 +477,19 @@ function formatPhone(ph1, ph2, ph3, ext) {
     phone += ` ext. ${ext}`;
   }
   return phone;
+}
+
+function moveDoctorNameIfIntl() {
+  const intlDoctorAddress = document.getElementById('VerDocOOCAdd');
+  if (intlDoctorAddress.style.display == 'block') {
+    const doctorName = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocName');
+
+    const intlDoctorLabel = document.createElement('label');
+    intlDoctorLabel.classList.add('usa-label');
+    intlDoctorLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocName';
+    intlDoctorLabel.textContent = `${i18next.t('contact.name')}:`;
+
+    intlDoctorAddress.insertAdjacentElement('afterbegin', intlDoctorLabel);
+    intlDoctorLabel.insertAdjacentElement('afterend', doctorName);
+  }
 }

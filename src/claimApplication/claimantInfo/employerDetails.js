@@ -3,6 +3,7 @@ import {
   clearTextNodes,
   formattedDateFromField,
   logout,
+  removeQuestionNumbersFromError,
   updateCalendarUI,
 } from '../utils';
 import { logEvent } from '../../modules/shared.mjs';
@@ -42,7 +43,7 @@ export function changes() {
   startDateListener();
   endDateListener();
   cancelButtonDoesNotRequireRadioButtons();
-  removeQuestionNumbersFromError();
+  removeQuestionNumbersFromError('ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblValEmpDetMsg');
   trackSubmissionDetails();
 }
 
@@ -589,13 +590,6 @@ function cancelButtonDoesNotRequireRadioButtons() {
   cancelButton.addEventListener('click', function() {
     stillWorkHereYes.removeAttribute('required');
   });
-}
-
-function removeQuestionNumbersFromError() {
-  const error = document.getElementById('ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblValEmpDetMsg');
-  if (error) {
-    error.innerHTML = error.innerHTML.replace(/(\d+\.\s+)/g, '');
-  }
 }
 
 function trackSubmissionDetails() {

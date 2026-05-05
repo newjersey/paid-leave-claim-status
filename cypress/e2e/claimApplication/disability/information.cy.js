@@ -56,6 +56,7 @@ describe("Disability Information page", () => {
         const data = JSON.parse(encodeDecode(encodedData));
         expect(data["disabilityInfoView"]).to.equal('leaveSchedule');
       });
+      cy.url().should('include', 'pageId=leaveSchedule');
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt').type("07/18/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDtLastWorkd').type("07/17/2025");
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_rbtnRecYes').click({ force: true });
@@ -179,6 +180,7 @@ describe("Disability Information page", () => {
         const data = JSON.parse(encodeDecode(encodedData));
         expect(data["disabilityInfoView"]).to.equal('reasonForLeave');
       });
+      cy.url().should('include', 'pageId=reasonForLeave');
       cy.get('#reason-pregnancy').click({ force: true });
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();

@@ -70,6 +70,7 @@ export function trackOtherBenefitsYesSubmission(pageId) {
 export function changes() {
   addStyles();
   replaceRadioButtonsWithCheckboxes();
+  checkNoneWhenAllNo();
   rearrangeFollowups();
   restyleFollowups();
   addCheckboxListeners();
@@ -910,5 +911,17 @@ function ssdiCalendarOpensToFDDYear() {
         }
       }, 20);
     });
+  }
+}
+
+function checkNoneWhenAllNo() {
+  const originalSsdiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo");
+  const originalEmployerNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo");  
+  const originalTdiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo");
+  const originalUiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo");
+  const noneOfTheAbove = document.getElementById('check-none');
+
+  if (originalSsdiNo?.checked && originalEmployerNo?.checked && originalTdiNo?.checked && originalUiNo?.checked) {
+    noneOfTheAbove.checked = true;
   }
 }

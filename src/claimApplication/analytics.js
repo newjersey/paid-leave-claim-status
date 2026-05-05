@@ -34,14 +34,18 @@ function trackValidationErrors(pageId) {
     #lblValPTO,
     #lblValWrkInt,
     #lblNotice,
-    #ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblValEmpDetMsg
+    #ContentPlaceHolder1_TabEmployment_TabEmpDetails_lblValEmpDetMsg,
+    #ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_lblDocError,
+    #ContentPlaceHolder1_ClaimantDisabilityTab_tbpnlLatePayment_lblLatePayerr
   `);
 
   errorElements.forEach(element => {
     const isVisible = element.offsetParent !== null;
     if (isVisible) {
       const contents = element.textContent.trim().substring(0, 100);
-      logEvent('Validation Error', { contents, pageId });
+      if (contents) {
+        logEvent('Validation Error', { contents, pageId });
+      }
     }
   });
 }
@@ -54,7 +58,7 @@ function trackSystemAlerts(pageId) {
   };
 }
 
-function addPageIdToURL(pageId) {
+export function addPageIdToURL(pageId) {
   const url = new URL(window.location.href);
   url.searchParams.set('pageId', pageId);
   history.replaceState(null, '', url.toString());

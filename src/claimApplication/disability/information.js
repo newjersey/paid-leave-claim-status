@@ -10,6 +10,7 @@ import {
   setRequiredForVisibleLeaveSectionFields,
   STORAGE_KEY_DISABILITY_INFO_VIEW
 } from '../utils';
+import { addPageIdToURL } from '../analytics';
 
 export const disabilityInformationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtDisStartDt', label: 'Disability Start Date' },
@@ -131,6 +132,7 @@ function showReasonForLeavePage() {
     [STORAGE_KEY_DISABILITY_INFO_VIEW]: 'reasonForLeave'
   });
   hideBackButton();
+  addPageIdToURL('reasonForLeave');
   setNewTitle(i18next.t('reasonForLeave.title'));
 
   document.getElementById(reasonForLeaveId).style.display = 'block';
@@ -144,6 +146,7 @@ function showLeaveSchedulePage() {
   });
   window.scrollTo(0, 0);
   showBackButton();
+  addPageIdToURL('leaveSchedule');
   setNewTitle(i18next.t('leaveSchedule.title'));
 
   document.getElementById(reasonForLeaveId).style.display = 'none';

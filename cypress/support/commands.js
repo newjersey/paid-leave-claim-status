@@ -27,6 +27,15 @@ Cypress.Commands.add("checkCommonPostData", (formData) => {
   expect(formData).to.match(/__EVENTVALIDATION=[^&]+/);
 });
 
+Cypress.Commands.add("checkPostData", (formData, expectedString) => {
+  const actual = new URLSearchParams(formData);
+  const expected = new URLSearchParams(expectedString);
+
+  for (const [key, value] of expected.entries()) {
+    expect(actual.get(key), `${key} should match`).to.equal(value);
+  }
+});
+
 Cypress.Commands.add("checkFontFamily", () => {
   cy.get('p').should('have.css', 'font-family')
     .then(fontFamily => {
