@@ -96,10 +96,6 @@ function addStyles() {
       margin-top: 0;
     }
 
-    #ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits fieldset {
-      display: none !important;
-    }
-
     #ContentPlaceHolder1_ClaimantDisabilityTab_body h2,
     #ContentPlaceHolder1_ClaimantDisabilityTab_body h3 {
       font-weight: bold;
@@ -138,6 +134,10 @@ function addStyles() {
 
 function replaceRadioButtonsWithCheckboxes() {
   const existingForm = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits');
+  existingForm.querySelectorAll('fieldset').forEach(fieldset => {
+    fieldset.style.display = 'none';
+  });
+
   const newForm = document.createElement('div');
   newForm.id = "new-other-benefits-form";
   newForm.innerHTML = `
@@ -212,7 +212,7 @@ function replaceRadioButtonsWithCheckboxes() {
     </div>
   `;
 
-  existingForm.parentNode.insertBefore(newForm, existingForm);
+  existingForm.insertAdjacentElement('afterbegin', newForm);
 
   const contextualIntroduction = document.createElement('p');
   contextualIntroduction.style.fontSize = '16px';
