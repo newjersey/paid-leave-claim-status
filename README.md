@@ -10,6 +10,14 @@ The script files are hosted on the `beta.nj.gov` domain and automatically pushed
 
 The same approach is taken for the TDI Claim Application, which is built on an underlying codebase of .NET 4.0. Thus it is the `.NET Analytics, Modernization, and Accessibility for New Jersey (NAMAN)` approach.
 
+```mermaid
+sequenceDiagram
+    User->>.NET Application: Opens TDI Claim Application
+    .NET Application->>User: Serves original page
+    .NET Application->>Allowed host (currently beta.nj.gov): Fetches JS file
+    Allowed host (currently beta.nj.gov)->>User: JS file manipulates page to new look
+```
+
 ## Setup
 
 1. Clone this `paid-leave-claim-status` repository
