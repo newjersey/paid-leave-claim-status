@@ -38,6 +38,10 @@ describe("Introduction page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("agrees to terms and checks POST data", () => {
       cy.window().then((win) => {
         win.sessionStorage.setItem('session_data', 'testValue');

@@ -40,6 +40,10 @@ describe("Prior Claim Search page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("user can input info and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_rbtnClmYes').click({ force: true });
