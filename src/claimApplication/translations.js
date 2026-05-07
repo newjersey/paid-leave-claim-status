@@ -11,6 +11,8 @@ const resources = {
         saveAndContinue: "Save and continue",
         yes: "Yes",
         makeSelection: "Make a selection.",
+        ssn: "Social Security Number",
+        dob: "Birthdate",
       },
       contact: {
         name: "Name",
@@ -168,6 +170,13 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
       introduction: {
         title: "How to apply for Temporary Disability benefits",
         contact: `<a href="https://www.nj.gov/labor/myleavebenefits/help/contact/" target="_blank">Contact us</a> if you need help filing your claim.`,
+        infoReady: {
+          title: "Get your information ready",
+          personalInfo: "Personal information",
+          contact: "Contact information (phone, email, address)",
+          representativeTitle: "Optional: Choose a representative to help with your claim",
+          representativeDetails: "You can name someone you trust to check your claim information for you. We will only share your claim details with you and this person. We'll ask for their name and birthdate.",
+        },
       },
       leaveSchedule: {
         title: "Leave schedule",
