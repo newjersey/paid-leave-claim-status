@@ -1,11 +1,17 @@
-Cypress.Commands.add("checkBodyA11y", () => {
+Cypress.Commands.add("checkBodyA11y", (criticalOnly = false) => {
   cy.injectAxe();
 
-  cy.checkA11y("body", {
+  const options = {
     rules: {
       region: { enabled: false }, // Disable rule because can't control top-level elements easily
     },
-  });
+  };
+  
+  if (criticalOnly) {
+    options.includedImpacts = ["critical"];
+  }
+
+  cy.checkA11y("body", options);
 });
 
 Cypress.Commands.add("checkIneligibleCore", () => {
