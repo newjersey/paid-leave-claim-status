@@ -27,7 +27,7 @@ function addStyles() {
 
     .usa-process-list__item ul {
       margin-bottom: 20px;
-      padding-left: 50px;
+      padding-left: 40px;
     }
   `;
   document.head.appendChild(style);
@@ -44,14 +44,39 @@ function replaceTableWithNewContent() {
     <ol class="usa-process-list">
       <li class="usa-process-list__item">
         <h2 class="usa-process-list__heading">${i18next.t('introduction.infoReady.title')}</h2>
-          <h3>${i18next.t('introduction.infoReady.personalInfo')}</h3>
-          <ul>
-            <li>${i18next.t('shared.ssn')}</li>
-            <li>${i18next.t('shared.dob')}</li>
-            <li>${i18next.t('introduction.infoReady.contact')}</li>
-          </ul>
-        <strong>${i18next.t('introduction.infoReady.representativeTitle')}</strong>
-        <p>${i18next.t('introduction.infoReady.representativeDetails')}</p>
+        <h3>${i18next.t('introduction.infoReady.personalInfo')}</h3>
+        <ul>
+          <li>${i18next.t('shared.ssn')}</li>
+          <li>${i18next.t('shared.dob')}</li>
+          <li>${i18next.t('introduction.infoReady.contact')}</li>
+        </ul>
+        <div style="margin-left: 20px;">
+          <strong>${i18next.t('introduction.infoReady.representativeTitle')}</strong>
+          <p>${i18next.t('introduction.infoReady.representativeDetails')}</p>
+        </div>
+        <h3>${i18next.t('introduction.infoReady.leaveInfo')}</h3>
+        <ul>
+          <li>${i18next.t('introduction.infoReady.reasonForLeave')}</li>
+          <li>${i18next.t('introduction.infoReady.leaveDates')}</li>
+          <li>${i18next.t('introduction.infoReady.recovery')}</li>
+          <li>${i18next.t('introduction.infoReady.providerInfo')}</li>
+        </ul>
+        <h3>${i18next.t('introduction.infoReady.otherBenefits')}</h3>
+        <p style="margin-left: 20px;">${i18next.t('introduction.infoReady.otherBenefitsDetail')}</p>
+        <ul>
+          <li>${i18next.t('introduction.infoReady.workersComp')}</li>
+          <li>${i18next.t('introduction.infoReady.ssdi')}</li>
+          <li>${i18next.t('introduction.infoReady.ui')}</li>
+          <li>${i18next.t('introduction.infoReady.outOfState')}</li>
+        </ul>
+        <h3>${i18next.t('introduction.infoReady.employment')}</h3>
+        <p style="margin-left: 20px;">${i18next.t('introduction.infoReady.employmentDetail')}</p>
+        <ul>
+          <li>${i18next.t('introduction.infoReady.employerName')}</li>
+          <li>${i18next.t('introduction.infoReady.ein')}</li>
+          <li>${i18next.t('introduction.infoReady.employmentDates')}</li>
+          <li>${i18next.t('introduction.infoReady.currentEmployer')}</li>
+        </ul>
       </li>
       <li class="usa-process-list__item">
         <h4 class="usa-process-list__heading">Proceed to the second step</h4>
