@@ -99,6 +99,10 @@ describe("Medical Treatment page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("user can input intl doctor and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#provider-type-accepted-yes').click({ force: true });
@@ -231,6 +235,8 @@ describe("Medical Treatment page", () => {
       cy.get('a.weekday').contains('17').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospEndDt').blur();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtHospEndDt').should('have.value', '07/17/2025');
+      
+      cy.clock().invoke('restore');
     });
 
     it("page jumps to Workers Comp if coming from review Edit", () => {
