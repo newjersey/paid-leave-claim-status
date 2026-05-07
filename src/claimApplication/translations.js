@@ -165,6 +165,10 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         agree_and_finish: "Agree and finish",
         summary_and_next_steps: "Summary and next steps",
       },
+      introduction: {
+        title: "How to apply for Temporary Disability benefits",
+        contact: `<a href="https://www.nj.gov/labor/myleavebenefits/help/contact/" target="_blank">Contact us</a> if you need help filing your claim.`,
+      },
       leaveSchedule: {
         title: "Leave schedule",
         futureDate: {
