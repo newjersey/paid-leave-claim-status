@@ -39,6 +39,10 @@ describe("Certification page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("shows button to agree and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#agreeAndSubmit').click();
