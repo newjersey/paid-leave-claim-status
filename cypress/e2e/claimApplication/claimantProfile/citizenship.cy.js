@@ -75,6 +75,10 @@ describe("Citizenship page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("user can input info and proceed to next page", () => {
       checkFullInfoEntry();
       cy.checkLogEvent("Personal Phone Submitted", { first3: '111' });

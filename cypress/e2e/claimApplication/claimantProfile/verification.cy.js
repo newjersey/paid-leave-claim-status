@@ -81,6 +81,10 @@ describe("Profile Verification page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("user can confirm info is correct and proceed to next page", () => {
       checkConfirmInfo(true);
       cy.window().then((win) => {

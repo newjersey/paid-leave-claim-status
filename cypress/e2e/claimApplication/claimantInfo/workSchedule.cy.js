@@ -44,6 +44,10 @@ describe("Work Schedule page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("user can input info and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_TabEmployment_TabPanelWrkSch_rdoWrkSchTyp_0').click({ force: true });
