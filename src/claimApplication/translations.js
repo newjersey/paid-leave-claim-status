@@ -193,8 +193,21 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           ein: "Employer identification number (find this on your W2 or paystub, or ask your employer)",
           employmentDates: "When you started and ended each job",
           currentEmployer: "For your current job(s)— your usual work schedule and any other payments you receive (like paid time off or pension payments)",
-          
         },
+        fillOut: {
+          title: "Fill out and submit your application",
+          time: "Plan for 15-20 minutes to complete the application",
+          saved: "If you need to stop, we'll save your work for 14 days so you can come back and finish",
+          deadline: "<strong>Important deadline:</strong> Apply within 30 days after your medical leave starts. If you miss this deadline, your benefits may be reduced or be denied.",
+        },
+        nextSteps: {
+          title: "Contact your healthcare provider",
+          claimNumber: "Write down your claim number—you'll see it after you submit. Keep it somewhere safe",
+          m01: "Ask your healthcare provider to fill out form M01—- provider instructions at the end",
+          otherTasks: "Check for other tasks you need to do. You may need to print 🖨️ and mail or fax some forms back to us",
+        },
+        privacy: "Your application information is private. It will be shared with other agencies if legally permitted, if required by court order, or with your consent. We take steps to protect your data by using a secure connection and encryption.",
+        getStarted: "Get started",
       },
       leaveSchedule: {
         title: "Leave schedule",

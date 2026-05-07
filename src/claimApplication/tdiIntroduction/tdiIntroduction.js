@@ -19,15 +19,38 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
+    #getStartedButton {
+      display: block;
+      max-width: 80%;
+      margin: 30px auto 0;
+      padding: 15px;
+    }
+
+    #infoReadyItem ul {
+      padding-left: 40px;
+    }
+
+    #newIntroContent .usa-process-list__item {
+      max-width: 100%;
+      width: 100%;
+    }
+
+    .usa-alert {
+      margin-top: 0;
+    }
+
+    .usa-process-list__heading {
+      margin-bottom: 30px;
+    }
+
     .usa-process-list__item h3 {
       color: black;
       font-weight: bold;
-      margin-top: 30px;
     }
 
     .usa-process-list__item ul {
       margin-bottom: 20px;
-      padding-left: 40px;
+      padding-left: 20px;
     }
   `;
   document.head.appendChild(style);
@@ -42,7 +65,7 @@ function replaceTableWithNewContent() {
   newIntroContent.innerHTML = `
     <p style="margin-top: 30px;">${i18next.t('introduction.contact')}</p>
     <ol class="usa-process-list">
-      <li class="usa-process-list__item">
+      <li class="usa-process-list__item" id="infoReadyItem">
         <h2 class="usa-process-list__heading">${i18next.t('introduction.infoReady.title')}</h2>
         <h3>${i18next.t('introduction.infoReady.personalInfo')}</h3>
         <ul>
@@ -79,25 +102,37 @@ function replaceTableWithNewContent() {
         </ul>
       </li>
       <li class="usa-process-list__item">
-        <h4 class="usa-process-list__heading">Proceed to the second step</h4>
-        <p>
-          Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Morbi commodo,
-          ipsum sed pharetra gravida, orci magna rhoncus neque, id pulvinar odio
-          lorem non turpis. Nullam sit amet enim. Suspendisse id velit vitae ligula
-          volutpat condimentum. Aliquam erat volutpat. Sed quis velit. Nulla
-          facilisi. Nulla libero. Vivamus pharetra posuere sapien.
-        </p>
+        <h2 class="usa-process-list__heading">${i18next.t('introduction.fillOut.title')}</h2>
+        <ul>
+          <li>${i18next.t('introduction.fillOut.time')}</li>
+          <li>${i18next.t('introduction.fillOut.saved')}</li>
+          <li>${i18next.t('introduction.fillOut.deadline')}</li>
+        </ul>
       </li>
       <li class="usa-process-list__item">
-        <h4 class="usa-process-list__heading">Complete the step-by-step process</h4>
-        <p>
-          Nullam sit amet enim. Suspendisse id velit vitae ligula volutpat
-          condimentum. Aliquam erat volutpat. Sed quis velit. Nulla facilisi. Nulla
-          libero. Vivamus pharetra posuere sapien.
-        </p>
+        <h2 class="usa-process-list__heading">${i18next.t('introduction.nextSteps.title')}</h2>
+        <ul>
+          <li>${i18next.t('introduction.nextSteps.claimNumber')}</li>
+          <li>${i18next.t('introduction.nextSteps.m01')}</li>
+          <li>${i18next.t('introduction.nextSteps.otherTasks')}</li>
+        </ul>
       </li>
     </ol>
+    <div class="usa-alert usa-alert--info usa-alert--no-icon">
+      <div class="usa-alert__body">
+        <p class="usa-alert__text">
+          ${i18next.t('introduction.privacy')}
+        </p>
+      </div>
+    </div>
+    <button class="usa-button" type="button" id="getStartedButton">${i18next.t('introduction.getStarted')}</button>
   `;
 
   oldTable.insertAdjacentElement('beforebegin', newIntroContent);
+
+  const getStartedButton = document.getElementById('getStartedButton');
+  const checkbox = document.getElementById('ContentPlaceHolder1_chkAgree');
+  getStartedButton.addEventListener('click', function () {
+    checkbox.click();
+  });
 }
