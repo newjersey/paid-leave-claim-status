@@ -77,6 +77,10 @@ describe("Incomplete Employer page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("user can input employer info and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_rdBtnWorkedEmployerYes').click({ force: true });

@@ -53,6 +53,10 @@ describe("Employment Info page", () => {
       cy.visit(FIXTURE);
       cy.wait('@script');
     });
+    
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
 
     it("user can input info and proceed to next page", () => {
       checkConfirm();

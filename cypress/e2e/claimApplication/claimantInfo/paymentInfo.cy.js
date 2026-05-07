@@ -66,6 +66,10 @@ describe("Payment Info page", () => {
       cy.visit(FIXTURE);
       cy.wait('@script');
     });
+    
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
 
     it("user can load filled page for editing and see proper data", () => {
       cy.visit(FIXTURE_FILLED);
