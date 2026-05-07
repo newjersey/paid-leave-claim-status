@@ -47,6 +47,7 @@ export function reasonForLeavePage() {
                 class="usa-textarea"
                 id="pregnancy-details"
                 maxlength="250"
+                aria-label="Pregnancy Details"
                 name="pregnancy-details"></textarea>
               <p class="optional-text">${i18next.t('reasonForLeave.characterLimit', { limit: 250 })}</p>
             </div>
@@ -72,6 +73,7 @@ export function reasonForLeavePage() {
                 class="usa-textarea"
                 id="illness-details"
                 maxlength="250"
+                aria-label="Illness Details"
                 name="illness-details"></textarea>
               <p class="optional-text">${i18next.t('reasonForLeave.characterLimit', { limit: 250 })}</p>
             </div>
@@ -97,6 +99,7 @@ export function reasonForLeavePage() {
                 class="usa-textarea"
                 id="injury-details"
                 maxlength="250"
+                aria-label="Injury Details"
                 name="injury-details"></textarea>
               <p class="optional-text">${i18next.t('reasonForLeave.characterLimit', { limit: 250 })}</p>
             </div>

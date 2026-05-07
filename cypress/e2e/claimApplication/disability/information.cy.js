@@ -50,6 +50,10 @@ describe("Disability Information page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     function checkLeaveSchedule() {
       cy.window().then((win) => {
         const encodedData = win.sessionStorage.getItem('session_data');
@@ -171,6 +175,8 @@ describe("Disability Information page", () => {
       cy.get('#FDDCalendarControl a.weekday').contains('19').click();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').blur();
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_Dis1_txtExpectedReturnedDtToWrk').should('have.value', '08/19/2025');
+      
+      cy.clock().invoke('restore');
     });
 
     it("user can input info about pregnancy with blank extra text and proceed to next page", () => {
