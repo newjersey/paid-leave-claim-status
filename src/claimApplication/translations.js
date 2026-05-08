@@ -207,7 +207,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           title: "Fill out and submit your application",
           time: "Plan for 15-20 minutes to complete the application",
           saved: "If you need to stop, we'll save your work for 14 days so you can come back and finish",
-          deadline: "<strong>Important deadline:</strong> Apply within 30 days after your medical leave starts. If you miss this deadline, your benefits may be reduced or be denied.",
+          deadline: "<strong>Important deadline:</strong> Apply within 30 days after your medical leave starts. If you miss this deadline, your benefits may be reduced or denied.",
         },
         nextSteps: {
           title: "Contact your healthcare provider",
