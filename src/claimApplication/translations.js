@@ -11,6 +11,8 @@ const resources = {
         saveAndContinue: "Save and continue",
         yes: "Yes",
         makeSelection: "Make a selection.",
+        ssn: "Social Security Number",
+        dob: "Birthdate",
       },
       contact: {
         name: "Name",
@@ -49,6 +51,15 @@ const resources = {
         representative_name: "Representative's name",
         representative_dob: "Representative's date of birth",
         representative_phone: "Representative's phone number",
+      },
+      completeExistingIntro: {
+        title: "Complete your Temporary Disability application",
+        continue: `<h2>Welcome back!</h2>
+        <br>
+        If you started an application but didn't finish, you can pick up where you left off— we save your progress for 14 days from when you started. If it's been longer than that, you'll need to start over.
+        <br><br>
+        We'll show you any application drafts you've started. You'll be able to review each answer you gave earlier and make any edits you need before submitting. <a href="https://www.nj.gov/labor/myleavebenefits/help/contact/" target="_blank">Contact us</a> if you need help filing your claim.`,
+        button: "Continue your application",
       },
       confirmation: {
         title: "Action required; final step!",
@@ -164,6 +175,48 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         work_information: "Work information",
         agree_and_finish: "Agree and finish",
         summary_and_next_steps: "Summary and next steps",
+      },
+      introduction: {
+        title: "How to apply for Temporary Disability benefits",
+        contact: `<a href="https://www.nj.gov/labor/myleavebenefits/help/contact/" target="_blank">Contact us</a> if you need help filing your claim.`,
+        infoReady: {
+          title: "Get your information ready",
+          personalInfo: "Personal information",
+          contact: "Contact information (phone, email, address)",
+          representativeTitle: "Optional: Choose a representative to help with your claim",
+          representativeDetails: "We'll need their name and birthdate. We'll only share your claim details with you and this person.",
+          leaveInfo: "Your leave information",
+          reasonForLeave: "Why you need to take leave",
+          leaveDates: "The last day you worked and your first day of medical leave",
+          recovery: "When you recovered or expect to recover",
+          providerInfo: "Your healthcare provider's name and contact information",
+          otherBenefits: "Other benefits you may be getting",
+          otherBenefitsDetail: "Tell us if you've applied for or are getting:",
+          workersComp: "Workers' Compensation",
+          ssdi: "Social Security Disability (SSDI or long term disability benefits)",
+          ui: "Unemployment Insurance",
+          outOfState: "Family/Medical Leave from another state",
+          employment: "Your jobs in the last 18 months",
+          employmentDetail: "For each employer, you'll need:",
+          employerName: "Employer name and contact information",
+          ein: "Employer identification number (find this on your W2 or paystub, or ask your employer)",
+          employmentDates: "When you started and ended each job",
+          currentEmployer: "For your current job(s)— your usual work schedule and any other payments you receive (like paid time off or pension payments)",
+        },
+        fillOut: {
+          title: "Fill out and submit your application",
+          time: "Plan for 15-20 minutes to complete the application",
+          saved: "If you need to stop, we'll save your work for 14 days so you can come back and finish",
+          deadline: "<strong>Important deadline:</strong> Apply within 30 days after your medical leave starts. If you miss this deadline, your benefits may be reduced or be denied.",
+        },
+        nextSteps: {
+          title: "Contact your healthcare provider",
+          claimNumber: "Write down your claim number— you'll see it after you submit. Keep it somewhere safe",
+          m01: "Ask your healthcare provider to fill out form M01— provider instructions at the end",
+          otherTasks: "Check for other tasks you need to do. You may need to print 🖨️ and mail or fax some forms back to us",
+        },
+        privacy: "Your application information is private. It will be shared with other agencies if legally permitted, if required by court order, or with your consent. We take steps to protect your data by using a secure connection and encryption.",
+        getStarted: "Get started",
       },
       leaveSchedule: {
         title: "Leave schedule",

@@ -29,6 +29,10 @@ function injectGlobalStyles() {
       background-color: #FBFCFD;
     }
 
+    h1 {
+      line-height: 1.2;
+    }
+
     h1, h2, h3, h4, p, a {
       font-family: "Public Sans", sans-serif !important;
       font-variant: normal !important; 
