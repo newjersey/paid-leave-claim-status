@@ -91,7 +91,6 @@ function replaceTableWithNewContent() {
             <li>${i18next.t('introduction.infoReady.providerInfo')}</li>
           </ul>
           <h3>${i18next.t('introduction.infoReady.otherBenefits')}</h3>
-          <p style="margin-left: 20px;">${i18next.t('introduction.infoReady.otherBenefitsDetail')}</p>
           <ul>
             <li>${i18next.t('introduction.infoReady.workersComp')}</li>
             <li>${i18next.t('introduction.infoReady.ssdi')}</li>
@@ -99,7 +98,6 @@ function replaceTableWithNewContent() {
             <li>${i18next.t('introduction.infoReady.outOfState')}</li>
           </ul>
           <h3>${i18next.t('introduction.infoReady.employment')}</h3>
-          <p style="margin-left: 20px;">${i18next.t('introduction.infoReady.employmentDetail')}</p>
           <ul>
             <li>${i18next.t('introduction.infoReady.employerName')}</li>
             <li>${i18next.t('introduction.infoReady.ein')}</li>
