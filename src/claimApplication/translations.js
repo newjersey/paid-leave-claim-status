@@ -175,7 +175,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           personalInfo: "Personal information",
           contact: "Contact information (phone, email, address)",
           representativeTitle: "Optional: Choose a representative to help with your claim",
-          representativeDetails: "You can name someone you trust to check your claim information for you. We will only share your claim details with you and this person. We'll ask for their name and birthdate.",
+          representativeDetails: "We'll need their name and birthdate. We'll only share your claim details with you and this person.",
           leaveInfo: "Your leave information",
           reasonForLeave: "Why you need to take leave",
           leaveDates: "The last day you worked and your first day of medical leave",
