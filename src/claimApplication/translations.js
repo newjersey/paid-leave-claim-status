@@ -58,7 +58,7 @@ const resources = {
         <br>
         If you started an application but didn't finish, you can pick up where you left off— we save your progress for 14 days from when you started. If it's been longer than that, you'll need to start over.
         <br><br>
-        We'll ask for your Claim ID Number. If you don't know it, just select "No" and we'll show you any application drafts you've started. You'll be able to review each answer you gave earlier and make any edits you need before submitting. <a href="https://www.nj.gov/labor/myleavebenefits/help/contact/" target="_blank">Contact us</a> if you need help filing your claim.`,
+        You'll be able to review each answer you gave earlier and make any edits you need before submitting. <a href="https://www.nj.gov/labor/myleavebenefits/help/contact/" target="_blank">Contact us</a> if you need help filing your claim.`,
         button: "Continue your application",
       },
       confirmation: {

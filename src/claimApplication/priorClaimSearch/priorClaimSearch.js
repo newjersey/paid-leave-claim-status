@@ -1,5 +1,3 @@
-import { styleRadioButton } from '../utils';
-
 export const priorClaimSearchLabels = [
   { id: 'ContentPlaceHolder1_txtFName', label: 'Full Name' },
   { id: 'ContentPlaceHolder1_txtDOB', label: 'Date of Birth' },
@@ -16,18 +14,19 @@ export const identifyingContent = {
 
 export function changes() {
   addStyles();
-  adjustTextEntry();
-  styleRadioButton('ContentPlaceHolder1_rbtnClmYes');
-  styleRadioButton('ContentPlaceHolder1_rbtnClmNo');
-  removeWhitespace();
   adjustTable();
   adjustNoPendingClaimBox();
   removeTextReferencingFuture();
+  autoAnswerNo();
 }
 
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
+    .hidden-question {
+      display: none !important;
+    }
+
     @media (max-width: 767px) {
       #ContentPlaceHolder1_lblMesgInfo {
         display: block;
@@ -36,25 +35,6 @@ function addStyles() {
     }
   `;
   document.head.appendChild(style);
-}
-
-function adjustTextEntry() {
-  const name = document.querySelector("#ContentPlaceHolder1_txtFName");
-  if (name) {
-    name.style.width = '100%';
-  }
-}
-
-function removeWhitespace() {
-  const radioButtonYes = document.getElementById('ContentPlaceHolder1_rbtnClmYes');
-  const tdElement = radioButtonYes.closest('td');
-  const childNodes = tdElement.childNodes;
-
-  childNodes.forEach(node => {
-    if (node.nodeType === Node.TEXT_NODE && node.nodeValue.trim() === '') {
-      tdElement.removeChild(node);
-    }
-  });
 }
 
 function adjustTable() {
@@ -112,4 +92,13 @@ function removeTextReferencingFuture() {
   if (!span) return;
   const targetRegex = /\s+Also,\s+claims\s+that\s+were\s+filed\s+for\s+temporary\s+disability\s+dates\s+in\s+the\s+future\s+and\s+have\s+not\s+been\s+certified\s+within\s+14\s+days\s+after\s+the\s+first\s+date\s+of\s+temporary\s+disability\s+have\s+been\s+removed./gi;
   span.textContent = span.textContent.replace(targetRegex, '');
+}
+
+function autoAnswerNo() {
+  const questionContainer = document.getElementById('dvIANMYes');
+  if (questionContainer.offsetParent !== null) {
+    const noButton = document.getElementById('ContentPlaceHolder1_rbtnClmNo');
+    noButton.click();
+    questionContainer.classList.add('hidden-question');
+  }
 }
