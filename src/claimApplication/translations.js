@@ -52,6 +52,10 @@ const resources = {
         representative_dob: "Representative's date of birth",
         representative_phone: "Representative's phone number",
       },
+      completeExistingIntro: {
+        title: "Complete your Temporary Disability application",
+        button: "Continue your application",
+      },
       confirmation: {
         title: "Action required; final step!",
         tasks_one: "You have the below task to complete.",
