@@ -61,7 +61,9 @@ function adjustContainers() {
   claimListContainer.style.width = '100%';
 
   const claimList = document.getElementById('ContentPlaceHolder1_dvPndClaims');
-  claimList.style.width = '100%';
+  if (claimList) {
+    claimList.style.width = '100%';
+  } 
 }
 
 function adjustTextEntry() {
