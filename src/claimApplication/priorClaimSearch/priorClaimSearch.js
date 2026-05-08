@@ -14,6 +14,7 @@ export const identifyingContent = {
 
 export function changes() {
   addStyles();
+  adjustContainers();
   adjustTextEntry();
   adjustTable();
   adjustNoPendingClaimBox();
@@ -24,6 +25,10 @@ export function changes() {
 function addStyles() {
   const style = document.createElement('style');  
   style.innerHTML = `
+    hr {
+      display: none;
+    }
+
     .hidden-question {
       display: none !important;
     }
@@ -36,6 +41,28 @@ function addStyles() {
     }
   `;
   document.head.appendChild(style);
+}
+
+function adjustContainers() {
+  const table = document.getElementById('ContentPlaceHolder1_tblContent');
+  table.style.width = '100%';
+
+  const nameContainer = document.getElementById('dvMain');
+  nameContainer.classList.add('bordered-set');
+  nameContainer.style.margin = '10px 0';
+
+  const errorContainer = document.getElementById('divErrorMessage');
+  errorContainer.classList.add('bordered-set');
+  errorContainer.style.margin = '10px 0';
+
+  const messageContainer = document.getElementById('divMessageInfo');
+  messageContainer.classList.add('bordered-set');
+  messageContainer.style.margin = '10px 0';
+
+  const claimListContainer = document.getElementById('dvClmNo');
+  claimListContainer.classList.add('bordered-set');
+  claimListContainer.style.margin = '10px 0';
+  claimListContainer.style.width = '100%';
 }
 
 function adjustTextEntry() {
