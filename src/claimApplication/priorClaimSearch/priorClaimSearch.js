@@ -14,6 +14,7 @@ export const identifyingContent = {
 
 export function changes() {
   addStyles();
+  adjustTextEntry();
   adjustTable();
   adjustNoPendingClaimBox();
   removeTextReferencingFuture();
@@ -35,6 +36,13 @@ function addStyles() {
     }
   `;
   document.head.appendChild(style);
+}
+
+function adjustTextEntry() {
+  const name = document.querySelector("#ContentPlaceHolder1_txtFName");
+  if (name) {
+    name.style.width = '100%';
+  }
 }
 
 function adjustTable() {
