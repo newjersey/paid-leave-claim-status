@@ -31,6 +31,15 @@ function addStyles() {
       padding-left: 40px;
     }
 
+    #newIntroContent {
+      line-height: 1.5;
+    }
+
+    #newIntroContent h2, #newIntroContent h3 {
+      color: black;
+      font-weight: bold;
+    }
+
     #newIntroContent .usa-process-list {
       padding-top: 10px;
     }
@@ -48,11 +57,6 @@ function addStyles() {
       margin-bottom: 10px;
     }
 
-    .usa-process-list__item h3 {
-      color: black;
-      font-weight: bold;
-    }
-
     .usa-process-list__item ul {
       margin-bottom: 20px;
       padding-left: 20px;
@@ -68,7 +72,7 @@ function replaceTableWithNewContent() {
   const newIntroContent = document.createElement('div');
   newIntroContent.id = 'newIntroContent';
   newIntroContent.innerHTML = `
-    <p style="margin-top: 30px;">${i18next.t('introduction.contact')}</p>
+    <div class="bordered-set" style="margin-top: 30px;">${i18next.t('completeExistingIntro.continue')}</div>
     <div class="bordered-set">
       <ol class="usa-process-list">
         <li class="usa-process-list__item" id="infoReadyItem">

@@ -54,6 +54,11 @@ const resources = {
       },
       completeExistingIntro: {
         title: "Complete your Temporary Disability application",
+        continue: `<h2>Welcome back!</h2>
+        <br>
+        If you started an application but didn't finish, you can pick up where you left off— we save your progress for 14 days from when you started. If it's been longer than that, you'll need to start over.
+        <br><br>
+        We'll ask for your Claim ID Number. If you don't know it, just select "No" and we'll show you any application drafts you've started. You'll be able to review each answer you gave earlier and make any edits you need before submitting. <a href="https://www.nj.gov/labor/myleavebenefits/help/contact/" target="_blank">Contact us</a> if you need help filing your claim.`,
         button: "Continue your application",
       },
       confirmation: {
@@ -206,8 +211,8 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
         },
         nextSteps: {
           title: "Contact your healthcare provider",
-          claimNumber: "Write down your claim number—you'll see it after you submit. Keep it somewhere safe",
-          m01: "Ask your healthcare provider to fill out form M01—- provider instructions at the end",
+          claimNumber: "Write down your claim number— you'll see it after you submit. Keep it somewhere safe",
+          m01: "Ask your healthcare provider to fill out form M01— provider instructions at the end",
           otherTasks: "Check for other tasks you need to do. You may need to print 🖨️ and mail or fax some forms back to us",
         },
         privacy: "Your application information is private. It will be shared with other agencies if legally permitted, if required by court order, or with your consent. We take steps to protect your data by using a secure connection and encryption.",
