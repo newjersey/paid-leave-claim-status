@@ -23,6 +23,7 @@ function addStyles() {
       display: block;
       max-width: 80%;
       margin: 30px auto 0;
+      min-width: 200px;
       padding: 15px;
     }
 
