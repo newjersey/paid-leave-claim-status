@@ -211,7 +211,7 @@ Please submit the form by {{est_deadline_date}} to avoid delays on my claim. Ple
           title: "Contact your healthcare provider",
           claimNumber: "Write down your claim number— you'll see it after you submit. Keep it somewhere safe",
           m01: "Ask your healthcare provider to fill out form M01— provider instructions at the end",
-          otherTasks: "Check for other tasks you need to do. You may need to print 🖨️ and mail or fax some forms back to us",
+          otherTasks: "Check for other tasks you need to do. You may need to print and mail or fax some forms back to us",
         },
         privacy: "Your application information is private. It will be shared with other agencies if legally permitted, if required by court order, or with your consent. We take steps to protect your data by using a secure connection and encryption.",
         getStarted: "Get started",
