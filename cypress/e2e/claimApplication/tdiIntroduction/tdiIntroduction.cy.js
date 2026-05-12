@@ -76,7 +76,7 @@ describe("Introduction page", () => {
     });
 
     it("feedback widget is visible", () => {
-      cy.checkFeedbackWidgetIsRendered();
+      cy.checkWrappedFeedbackWidgetIsRendered();
     });
 
     it("URL submitted with feedback includes pageId", () => {
@@ -85,6 +85,7 @@ describe("Introduction page", () => {
         body: { success: true }
       }).as('feedbackSubmission');
 
+      cy.get('#btnGiveFeedback').click();
       cy.get('#yesButton').click();
       cy.get('#comment').type('innovation testing');
       cy.get('#commentSubmit').click();

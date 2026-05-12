@@ -137,6 +137,14 @@ Cypress.Commands.add("mockASPX", (url) => {
   ).as('aspxSubmission');
 });
 
+Cypress.Commands.add("checkWrappedFeedbackWidgetIsRendered", () => {
+    cy.get("feedback-widget").should('have.length', 1);
+    cy.get('#btnGiveFeedback').click();
+    cy.get("feedback-widget").within(() => {
+        cy.contains("Did you find what you were looking for on this page?").should('be.visible');
+    })
+})
+
 Cypress.Commands.add("checkFeedbackWidgetIsRendered", () => {
     cy.get("feedback-widget").should('have.length', 1)
     cy.get("feedback-widget").within(() => {
