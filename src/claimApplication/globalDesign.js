@@ -26,6 +26,10 @@ function addViewportMetaTag() {
 function injectGlobalStyles() {
   const style = document.createElement('style');
   style.innerHTML = `
+    a:not([href]):hover {
+      color: inherit;
+    }
+
     body {
       background-color: #FBFCFD;
     }
