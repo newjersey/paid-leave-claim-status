@@ -4,7 +4,8 @@ import { replaceHeader } from "./header.js";
 import {
   addFeedbackWidgetScriptToHead,
   ICON_BASE_URL,
-  overrideFeedbackWidgetEmailDisclaimerText
+  overrideFeedbackWidgetEmailDisclaimerText,
+  waitForElement,
 } from "../modules/shared.mjs";
 
 export function globalDesignChanges(pageId) {
@@ -198,9 +199,10 @@ function injectGlobalStyles() {
     }
 
     #btnGiveFeedback {
+      background-color: white;
       display: block;
       max-width: 250px;
-      margin: 80px 142px 30px auto;
+      margin-left: auto;
       min-width: 200px;
       padding: 15px;
     }
@@ -338,7 +340,6 @@ function injectGlobalStyles() {
       }
 
       #btnGiveFeedback {
-        margin-left: auto;
         margin-right: auto;
       }
     }
@@ -354,7 +355,7 @@ function styleButtons() {
   });
 }
 
-function addFeedbackWidget() {
+async function addFeedbackWidget() {
   const existingWidget = document.querySelector('feedback-widget');
   if (!existingWidget) {
     addFeedbackWidgetScriptToHead();
@@ -367,7 +368,12 @@ function addFeedbackWidget() {
       footer.parentNode.insertBefore(feedbackWidget, footer);
       overrideFeedbackWidgetEmailDisclaimerText();
 
-      feedbackWidget.style.display = 'none';
+      await waitForElement(".feedback-container");
+      await waitForElement("#ratingPrompt");
+
+      const feedbackContainer = document.querySelector('.feedback-container');
+      const ratingPrompt = document.getElementById('ratingPrompt');
+      ratingPrompt.style.display = 'none';
 
       const btnGiveFeedback = document.createElement('button');
       btnGiveFeedback.id = 'btnGiveFeedback';
@@ -376,10 +382,10 @@ function addFeedbackWidget() {
         ${campaignIcon()}
         ${i18next.t('shared.giveFeedback')}
       `;
-      feedbackWidget.insertAdjacentElement('beforebegin', btnGiveFeedback);
+      feedbackContainer.prepend(btnGiveFeedback);
 
       btnGiveFeedback.addEventListener('click', function () {
-        feedbackWidget.style.display = 'block';
+        ratingPrompt.style.display = 'flex';
         btnGiveFeedback.style.display = 'none';
       });
     }
