@@ -32,6 +32,12 @@ export const claimantProfileVerificationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerAltTel3', label: 'Last 4 digits of Alternate Phone Number' },
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerAltTelExt', label: 'Alternate Phone Number Extension' },
   { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerEmail', label: 'Email' },
+  { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepName', label: 'Name of Representative' },
+  { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepDOB', label: 'Date of Birth of Representative' },
+  { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepTel1', label: 'Representative Phone 1' },
+  { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepTel2', label: 'Representative Phone 2' },
+  { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepTel3', label: 'Representative Phone 3' },
+  { id: 'ContentPlaceHolder1_ClaimantProfileTab_tpnlVerification_txtVerRepTelExt', label: 'Representative Phone Extension' },
 ];
 
 export const id = "claimantProfileVerification";

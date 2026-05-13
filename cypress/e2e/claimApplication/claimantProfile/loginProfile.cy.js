@@ -43,6 +43,10 @@ describe("Login Profile page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("hides old tabs and shows new title", () => {
       cy.get('.ajax__tab_header').should('not.exist');
       cy.wait(1000);
@@ -61,6 +65,10 @@ describe("Login Profile page", () => {
       }).as('script');
       cy.visit(FIXTURE);
       cy.wait('@script');
+    });
+
+    afterEach(() => {
+      cy.checkBodyA11y(true);
     });
 
     it("user can confirm info is correct and proceed to next page", () => {

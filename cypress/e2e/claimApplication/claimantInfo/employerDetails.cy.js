@@ -65,6 +65,10 @@ describe("Employment Details page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("user can input info and proceed to next page", () => {
       cy.mockASPX(URL);
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtCEmpNm').type('Murch');
@@ -159,6 +163,8 @@ describe("Employment Details page", () => {
       cy.get('a.current').contains('1').click();
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').blur();
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').should('have.value', '07/01/2024');
+      
+      cy.clock().invoke('restore');
     });
 
     it('system alert shows on invalid date', () => {
@@ -174,6 +180,7 @@ describe("Employment Details page", () => {
     });
 
     it('shows info and warning alerts properly', () => {
+      cy.mockASPX(URL);
       cy.get('#still-work-here-no').click({ force: true });
       cy.get('#ContentPlaceHolder1_TabEmployment_TabEmpDetails_txtEmploymentEndDt').should('not.be.visible');
       cy.get('#employment-end-info').should('not.be.visible');

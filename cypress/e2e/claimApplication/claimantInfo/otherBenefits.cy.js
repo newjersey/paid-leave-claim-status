@@ -185,6 +185,10 @@ describe("Other Benefits page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("fills in existing values when known", () => {
       cy.visit(FIXTURE_WITH_ERROR);
       cy.get('#check-employer').should('not.be.checked');

@@ -26,6 +26,10 @@ export const medicalTreatmentLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh2', label: 'Fourth, fifth, and sixth digits of Doctor/Hospital Phone Number' },
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh3', label: 'Last 4 digits of Doctor/Hospital Phone Number' },
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocPh4', label: 'Doctor/Hospital Phone Number Extension' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtOOCDocAdd2', label: 'International Provider Address 2' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtOOCDocAdd3', label: 'International Provider Address 3' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtOOCDocAdd4', label: 'International Provider Address 4' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_TabDoctor_txtDocZip2', label: 'Provider Zipcode Last 4 Digits' },
 ];
 
 export const id = "medicalTreatment";

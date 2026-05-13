@@ -56,6 +56,10 @@ describe("Claimant Personal Profile page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("user can fill in info and proceed to next page", () => {
       checkForm();
       cy.confirmEventIsNotTracked("Long Personal Address Submitted");

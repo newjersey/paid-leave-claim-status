@@ -17,6 +17,7 @@ export function changes() {
   adjustTable();
   styleRadioButtons();
   styleCalendars();
+  applyAccessibilityLabels();
 }
 
 function arrangeTableIntoUSWDS() {
@@ -172,4 +173,26 @@ function styleCalendars() {
   updateCalendarUI("ImgToPTODt5");
 
   updateCalendarUI("Image1", false); // date of check
+}
+
+function applyAccessibilityLabels() {
+  const rows = document.querySelectorAll('table.usa-table tbody tr');
+  
+  const columnNames = ['From Date', 'To Date', 'Type', 'Gross Amount'];
+  
+  rows.forEach((row, rowIndex) => {
+    const rowNumber = rowIndex + 1; // 1-based user-facing indexing
+  
+    const cells = row.querySelectorAll('th, td');  
+    cells.forEach((cell, cellIndex) => {
+      const inputs = cell.querySelectorAll('input:not([type="image"]), select');
+      
+      inputs.forEach(input => {
+        const columnName = columnNames[cellIndex];
+        const ariaLabel = `${columnName}, Row ${rowNumber}`;
+        
+        input.setAttribute('aria-label', ariaLabel);
+      });
+    });
+  });
 }

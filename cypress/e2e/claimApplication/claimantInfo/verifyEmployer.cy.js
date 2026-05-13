@@ -160,6 +160,10 @@ describe("Verify Employer page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("user sees employer address", () => {
       checkAddressVisible();
     });

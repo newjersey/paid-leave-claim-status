@@ -14,6 +14,10 @@ describe("Prior Claim Search page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("does not overlap footer and info for no pending claims", () => {
       cy.get('#ContentPlaceHolder1_rbtnClmNo').click({ force: true});
 

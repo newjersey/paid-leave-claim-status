@@ -40,13 +40,17 @@ describe("Complete Existing Intro page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("user can input info and proceed to next page", () => {
       cy.window().then((win) => {
         win.sessionStorage.setItem('session_data', 'testValue');
       });
       cy.visit(FIXTURE);
       cy.mockASPX(URL);
-      cy.get('#ContentPlaceHolder1_chkAgree').check();
+      cy.get('#getStartedButton').click();
       cy.wait('@aspxSubmission').then(checkPostData);
       cy.window().then((win) => {
         expect(win.sessionStorage.length).to.equal(0);

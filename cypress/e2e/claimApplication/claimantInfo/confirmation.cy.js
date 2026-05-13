@@ -127,6 +127,10 @@ describe("Confirmation page with First Day of Disability in the past", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("displays the mailing address when present", () => {
       cy.window().then((win) => {
         const data = {
@@ -187,6 +191,8 @@ describe("Confirmation page with First Day of Disability in the past", () => {
       }).then((clipboardText) => {
         expect(normalizeWhitespace(clipboardText)).to.eq(normalizeWhitespace(expectedText));
       });
+
+      cy.clock().invoke('restore');
     });
 
     it("shows button to copy sample M01 text when session does not have data", () => {
@@ -215,6 +221,8 @@ describe("Confirmation page with First Day of Disability in the past", () => {
         expect(normalizeWhitespace(clipboardText)).to.eq(normalizeWhitespace(expectedText));
         cy.checkLogEvent(`TDI Confirmation - Copy M01 Sample Clicked`, {});
       });
+
+      cy.clock().invoke('restore');
     });
 
     it("shows button to download M01 instructions", () => {
@@ -306,6 +314,10 @@ describe("Confirmation page with First Day of Disability in the future", () => {
       }).as('script');
       cy.visit(FIXTURE);
       cy.wait('@script');
+    });
+
+    afterEach(() => {
+      cy.checkBodyA11y(true);
     });
 
     it("shows link to open PDF of claim summary", () => {

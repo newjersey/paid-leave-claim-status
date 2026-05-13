@@ -38,13 +38,17 @@ describe("Introduction page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("agrees to terms and checks POST data", () => {
       cy.window().then((win) => {
         win.sessionStorage.setItem('session_data', 'testValue');
       });
       cy.visit(FIXTURE);
       cy.mockASPX(URL);
-      cy.get('#ContentPlaceHolder1_chkAgree').check();
+      cy.get('#getStartedButton').click();
       cy.wait('@aspxSubmission').then(checkPostData);
       cy.window().then((win) => {
         expect(win.sessionStorage.length).to.equal(0);

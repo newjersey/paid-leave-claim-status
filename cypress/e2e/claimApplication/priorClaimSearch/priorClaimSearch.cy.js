@@ -6,8 +6,8 @@ describe("Prior Claim Search page", () => {
   function checkPostData(interception) {
     const formData = interception.request.body;
     cy.checkCommonPostData(formData);
-    expect(formData).to.include('__EVENTTARGET=&__EVENTARGUMENT=&__LASTFOCUS=&');
-    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24txtFName=FirstNameTest+LastNameTest&ctl00%24ContentPlaceHolder1%24txtDOB=01%2F01%2F2000&ctl00%24ContentPlaceHolder1%24IANM=rbtnIAMYes&ctl00%24ContentPlaceHolder1%24CheckClm=rbtnClmYes&ctl00%24ContentPlaceHolder1%24hdnNumAttempt=0&ctl00%24ContentPlaceHolder1%24hdnNoData=0&ctl00%24ContentPlaceHolder1%24hdnCheck=&ctl00%24ContentPlaceHolder1%24txtClmID=11111&ctl00%24ContentPlaceHolder1%24btnRetrieve=Proceed+to+Complete+Claim&ctl00%24ContentPlaceHolder1%24gvPndClaims%24ctl02%24FlgCertifyClaim=&ctl00%24ContentPlaceHolder1%24gvPndClaims%24ctl02%24ClmtID=13600&ctl00%24ContentPlaceHolder1%24gvPndClaims%24ctl02%24RSASTATUS=');
+    expect(formData).to.include('__EVENTTARGET=ctl00%24ContentPlaceHolder1%24gvPndClaims%24ctl02%24chkClaimID&__EVENTARGUMENT=&__LASTFOCUS=&');
+    expect(formData).to.include('ctl00%24ContentPlaceHolder1%24txtFName=FirstNameTest+LastNameTest&ctl00%24ContentPlaceHolder1%24txtDOB=01%2F01%2F2000&ctl00%24ContentPlaceHolder1%24IANM=rbtnIAMYes&ctl00%24ContentPlaceHolder1%24CheckClm=rbtnClmNo&ctl00%24ContentPlaceHolder1%24hdnNumAttempt=0&ctl00%24ContentPlaceHolder1%24hdnNoData=0&ctl00%24ContentPlaceHolder1%24hdnCheck=&ctl00%24ContentPlaceHolder1%24txtClmID=&ctl00%24ContentPlaceHolder1%24gvPndClaims%24ctl02%24chkClaimID=on&ctl00%24ContentPlaceHolder1%24gvPndClaims%24ctl02%24FlgCertifyClaim=&ctl00%24ContentPlaceHolder1%24gvPndClaims%24ctl02%24ClmtID=13600&ctl00%24ContentPlaceHolder1%24gvPndClaims%24ctl02%24RSASTATUS=');
   }
 
   describe("page without new JS", () => {
@@ -18,9 +18,8 @@ describe("Prior Claim Search page", () => {
 
     it("user can input info and proceed to next page", () => {
       cy.mockASPX(URL);
-      cy.get('#ContentPlaceHolder1_rbtnClmYes').click();
-      cy.get('#ContentPlaceHolder1_txtClmID').type('11111');
-      cy.get('#ContentPlaceHolder1_btnRetrieve').click();
+      cy.get('#ContentPlaceHolder1_rbtnClmNo').click();
+      cy.get('#ContentPlaceHolder1_gvPndClaims_chkClaimID_0').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 
@@ -40,11 +39,13 @@ describe("Prior Claim Search page", () => {
       cy.wait('@script');
     });
 
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
+
     it("user can input info and proceed to next page", () => {
       cy.mockASPX(URL);
-      cy.get('#ContentPlaceHolder1_rbtnClmYes').click({ force: true });
-      cy.get('#ContentPlaceHolder1_txtClmID').type('11111');
-      cy.get('#ContentPlaceHolder1_btnRetrieve').click();
+      cy.get('#ContentPlaceHolder1_gvPndClaims_chkClaimID_0').click();
       cy.wait('@aspxSubmission').then(checkPostData);
     });
 

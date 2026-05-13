@@ -524,7 +524,7 @@ function restyleUIFollowup() {
 
   const stateLabel = document.createElement('label');
   stateLabel.classList.add('usa-label');
-  stateLabel.htmlFor = 'ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$ddlUISt';
+  stateLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlUISt';
   stateLabel.textContent = i18next.t('otherBenefits.stateLabel');
   fieldset.append(stateLabel);
   stateLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);

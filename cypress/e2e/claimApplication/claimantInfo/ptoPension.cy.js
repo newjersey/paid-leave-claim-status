@@ -39,6 +39,10 @@ describe("PTO and Pension page", () => {
       cy.visit(FIXTURE);
       cy.wait('@script');
     });
+    
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
 
     it("user can input info and proceed to next page", () => {
       cy.mockASPX(URL);

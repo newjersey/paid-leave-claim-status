@@ -139,6 +139,10 @@ describe("Disability Verification page", () => {
       cy.visit(FIXTURE);
       cy.wait('@script');
     });
+    
+    afterEach(() => {
+      cy.checkBodyA11y(true);
+    });
 
     it('intl doctor names appear', () => {
       cy.visit(FIXTURE_WITH_INTL_DOCTOR);

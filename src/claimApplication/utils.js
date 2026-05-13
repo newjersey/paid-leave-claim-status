@@ -261,21 +261,6 @@ export function setRequiredForVisibleLeaveSectionFields(currentSection, reason =
   // leaveSchedule: nothing required (all removed in step 1)
 }
 
-export function removeIntroTextReferencingFuture() {
-  const content = document.getElementById("ContentPlaceHolder1_tblContent");
-
-  if (!content) return;
-  
-  // rendered text is wonky, so regex with variable whitespace throughout
-  const targetRegex = /\s+If\s+your\s+disability\s+date\s+is\s+in\s+the\s+future,\s+you\s+must\s+also\s+return\s+to\s+certify\s+your\s+claim\s+within\s+fourteen\s+\(14\)\s+days\s+after\s+your\s+first\s+date\s+of\s+disability\s+or\s+your\s+data\s+will\s+be\s+removed\.\s+You\s+will\s+then\s+need\s+to\s+restart\s+the\s+application\s+process./gi;
-  
-  content.querySelectorAll('*').forEach(el => {
-    if (targetRegex.test(el.textContent)) {
-      el.innerHTML = el.innerHTML.replace(targetRegex, '');
-    }
-  });
-}
-
 export function updateCalendarUI(id, isFddCalendar = true, onlyShowYearControls = false) {
   const calendarId = isFddCalendar ? FDD_CALENDAR_CONTROL_ID : CALENDAR_CONTROL_ID;
   const element = document.getElementById(id);
