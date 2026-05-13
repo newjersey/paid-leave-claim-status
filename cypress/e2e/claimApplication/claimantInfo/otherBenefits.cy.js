@@ -380,7 +380,7 @@ describe("Other Benefits page", () => {
       cy.get('footer#helpSection').should('exist').and('have.length', 1);
       cy.get('#headerWithMargin > button').should('exist');
 
-      cy.checkFeedbackWidgetIsRendered();
+      cy.checkWrappedFeedbackWidgetIsRendered();
     });
 
     globalTestsNew(PAGE_ID, URL);

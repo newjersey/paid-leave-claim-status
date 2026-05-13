@@ -13,6 +13,7 @@ const resources = {
         makeSelection: "Make a selection.",
         ssn: "Social Security Number",
         dob: "Birthdate",
+        giveFeedback: "Give Feedback",
       },
       contact: {
         name: "Name",
