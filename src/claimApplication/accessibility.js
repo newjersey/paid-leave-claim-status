@@ -1,7 +1,6 @@
 import { confirmationAltTexts } from './claimantInfo/confirmation.js'
 import { citizenshipLabels } from './claimantProfile/citizenship.js';
 import { claimantProfileVerificationLabels } from './claimantProfile/verification.js';
-import { disabilityInformationLabels } from './disability/information.js';
 import { employerDetailsLabels } from './claimantInfo/employerDetails.js';
 import { employmentDetailsLabels } from './employmentDetails/employmentDetails.js';
 import { loginProfileLabels } from './claimantProfile/loginProfile.js';
@@ -43,7 +42,6 @@ function accessibilityLabels() {
   const labels = [
     ...citizenshipLabels,
     ...claimantProfileVerificationLabels,
-    ...disabilityInformationLabels,
     ...employerDetailsLabels,
     ...employmentDetailsLabels,
     ...loginProfileLabels,
