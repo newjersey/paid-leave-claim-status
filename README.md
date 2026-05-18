@@ -79,9 +79,20 @@ You can open the HTML fixture files from `cypress/fixtures` directly in your bro
 
 New fixture files are needed for specific scenarios. To save new fixture files, navigate to the page in the browser, use the Network debug tab to disable any existing override script from this project, then save the complete page.
 
+Once the complete page has been saved and added to the project, comment out this script (which otherwise throws an error) 
+
+```
+<!-- <script src="TDI_files/t-Greafer-she-vs-inuish-We-wailes-a-With-his-to-.js" async=""></script> -->
+```
+
+and change the location of the tdiOverride script to the local one within this repo, like this:
+```
+<script src="../tdiOverride.min.js" defer></script>
+```
+
 ### Testing in the Test environment
 
-The following [internal Google Doc](https://docs.google.com/document/d/1XD06eJ9Q6e5z8_fKcQrDs7K6r0lbsqMab_xlikYdqAA/edit?usp=sharing) has URLs and account credentials to test claim status scenarios live in both development and production.
+The following [internal document](https://sonj-my.sharepoint.com/:w:/g/personal/matthew_luedke_oit_nj_gov/IQDXSf7OXcpCSb2_BJ9VWDVBAT__lJbkLTI6HW_C6NxHkzs?e=FXpJSB) has URLs and account credentials to test claim status scenarios live in both development and production. When creating new claims, you have to avoid date overlaps (so unless otherwise needed, make test claims for short periods of time).
 
 You can use [Local Overrides](https://developer.chrome.com/docs/devtools/overrides) while navigating on the live Test environment to test changes that involve multiple screens. (For TDI Claim Application: Because the underlying pages append the current datetime's minute when fetching the JS override, you need a file for every minute while you are testing. You can use `generateLocalDevOverrides.sh` to generate 20 minutes' worth of override files.)
 
