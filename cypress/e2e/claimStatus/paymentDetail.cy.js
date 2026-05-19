@@ -135,7 +135,7 @@ describe("Payment Detail page - Max Entitlement", () => {
     cy.clock(fixedDate.getTime());
 
     cy.visit(
-      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlement.html"
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlementTDI.html"
     );
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
@@ -162,14 +162,14 @@ describe("Payment Detail page - Max Entitlement", () => {
   });
   it("ensures viewport meta tag exists", () => {
     cy.visit(
-      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlement.html"
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlementTDI.html"
     );
     cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
     cy.visit(
-      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlement.html"
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlementTDI.html"
     );
     cy.checkBodyA11y();
   });

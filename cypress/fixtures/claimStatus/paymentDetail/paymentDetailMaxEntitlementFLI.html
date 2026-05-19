@@ -1,0 +1,504 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0062)https://secure.dol.state.nj.us/DOL_DABI/DOL_DABI_PAYMENTDETAIL -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+<title>payment page</title>
+<!-- <link rel="stylesheet" type="text/css" href="./payment page_demo_files/dabi.css"> -->
+    <script type="text/javascript">
+      const overrideScript = document.createElement("script");
+      overrideScript.defer = true;
+      overrideScript.src = "./paymentDetail.min.js";
+      document.head.appendChild(overrideScript);
+    </script>
+
+<!--
+<script src="https://beta.nj.gov/files/tdi-fli-claim-status/paymentDetailOverride.min.js" defer></script>
+
+-->
+<script type="text/javascript">
+
+//alert("starting at the top of dabiPayment.jsp");
+
+
+
+function claimdetail(){
+        document.forms[0].seqNum.value = "002";
+	document.forms[0].action = "/DOL_DABI/jsp/dabiDetail.jsp";
+        document.forms[0].target= "_parent";
+        document.forms[0].submit(); 
+	
+        //document.forms[0].action="/DOL_DABI/DOL_DABI_CLAIMDETAIL";
+        //document.forms[0].submit();      
+       
+}
+function userLogout() {
+        
+	document.forms[0].action = "/DOL_DABI/jsp/logout.jsp";
+        document.forms[0].submit(); 
+}
+</script></head>
+
+
+<body bgcolor="#003366" onload="document.forms[0].reset();">
+<form name="claimlist" method="post">
+    <input type="hidden" name="seqNum" value=" ">
+<div align="center" bgcolor="#FFFFFF" width="100%">
+  
+<table border="1" bgcolor="#FFFFFF" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" height="94" id="AutoNumber1">
+      <tbody><tr width="100%" height="94">
+        <!-- <td width="80%" align="left" class="backgroundColor"><img src="./payment page_demo_files/lwd_banner.jpg" height="60"></td>
+        <td width="20%" align="center" class="backgroundColor"><img src="./payment page_demo_files/lwd_logo.jpg" height="60"></td> -->
+      </tr><tr>
+</tr></tbody></table>
+</div>
+<div bgcolor="#FFFFFF" width="100%" align="center">
+  <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse" bordercolor="#111111" width="100%" id="AutoNumber2" bgcolor="#FFFFFF">
+<!-- A1 row   -->
+		    <tbody><tr>
+		    <td width="30%"> &nbsp;&nbsp;</td>
+		    <td width="30%" align="center"> <font size="4"><b>PAYMENT DETAIL</b></font></td>
+		    <td width="40%"> &nbsp;&nbsp;</td>
+		    </tr>
+		    
+		    <tr>
+		    <td colspan="3" align="left" class="indent"><font size="4"><b>Firstname M Lastname          </b></font><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;XXX-XX-XXXX</td>
+    		    </tr>		  
+
+		    <!-- space row   -->
+		    <tr>
+		    <td width="30%"> &nbsp;&nbsp;</td>
+		    <td width="30%"> &nbsp;&nbsp;</td>
+		    <td width="40%"> &nbsp;&nbsp;</td>
+		    </tr>
+		    <!-- A1 row   -->
+		    <tr>
+		    <td width="25%" class="indent"> Sequence Number:&nbsp;002<br>&nbsp;&nbsp;&nbsp;&nbsp; Claim Type:&nbsp;&nbsp;&nbsp;&nbsp;FLI</td>
+		    <td width="30%"> &nbsp;&nbsp;</td>
+		    <td width="45%"> &nbsp;&nbsp;</td>
+		    </tr>
+
+		    <!-- space row   -->
+		    <tr>
+		    <td width="30%"> &nbsp;&nbsp;</td>
+		    <td width="30%"> &nbsp;&nbsp;</td>
+		    <td width="40%"> &nbsp;&nbsp;</td>
+		    </tr>
+
+
+		    <!-- space row   -->
+		    <tr>
+		    <td width="25%" class="indent"> Request for continued</td>
+		    <td width="30%"> &nbsp;&nbsp;</td>
+		    <td width="45%"> &nbsp;&nbsp;</td>
+		    </tr>
+
+		  <!-- space row   -->
+		    <tr><td colspan="3"><table border="0" bgcolor="#FFFFFF"><tbody><tr>
+		    <td width="25%" class="indent"> claim information mailed:</td>
+		    <td width="30%">&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;  
+		    
+	                         &nbsp;&nbsp;
+                       	
+		    </td>
+		    <td width="45%"> &nbsp;&nbsp;</td>
+		    </tr></tbody></table></td>
+		    </tr>
+
+		  <!-- space row   -->
+		    <tr>
+		    <td width="30%"> &nbsp;&nbsp;</td>
+		    <td width="30%"> &nbsp;&nbsp;</td>
+		    <td width="40%"> &nbsp;&nbsp;</td>
+		    </tr>
+			
+                  <!-- payment type row   -->  
+                  <tr><td colspan="3"><table border="0" bgcolor="#FFFFFF"><tbody><tr>
+		    <td width="20%" class="indent" valign="top"> Payment Type:&nbsp;</td>
+		    <td width="80%" colspan="2">
+                   
+                 <!-- Replaced text2. Your payment is being applied to a debit card issued by the Bank of America.  For additional information regarding <a href="http://lwd.dol.state.nj.us/labor/tdi/content/debit_cards.html">Debit Cards</a>, please see our website.-->
+		Your payment method is a prepaid debit card. For additional information regarding <a href="http://lwd.dol.state.nj.us/labor/tdi/content/debit_cards.html">Debit Cards</a>, please see our website.
+                   
+                    </td> 
+                  </tr></tbody></table></td></tr>
+
+		  <!-- space row   -->
+		    <tr>
+		    <td width="30%"> &nbsp;&nbsp;</td>
+		    <td width="30%"> &nbsp;&nbsp;</td>
+		    <td width="40%"> &nbsp;&nbsp;</td>
+		    </tr>
+
+		  <!-- B11 row   -->
+		    <tr><td colspan="3"><table border="0" bgcolor="#FFFFFF"><tbody><tr>
+		    <td width="20%" class="indent" valign="top"> Payment Information:&nbsp;</td>
+		    <td width="80%" colspan="2">
+		
+                            You have reached your maximum entitlement. No further benefits are payable.
+                		
+		    </td>
+		    </tr></tbody></table></td>
+		    </tr>
+			
+			<!-- space row   -->
+		    <tr>
+		    <td width="30%"> &nbsp;&nbsp;</td>
+		    <td width="30%"> &nbsp;&nbsp;</td>
+		    <td width="40%"> &nbsp;&nbsp;</td>
+		    </tr>
+			
+  </tbody></table>
+</div>
+<div bgcolor="#FFFFFF">
+	<table width="100%" border="1" align="center" cellpadding="0" cellspacing="0">
+             <!-- occuring up to 50 times and depend on sequence # -->
+              <tbody><tr>
+                <th width="8%">Date</th>
+                <th width="8%">Gross</th>
+                <th width="8%">FICA</th>
+                <th width="8%">Medicare</th>
+                <th width="8%">DI Offset</th>
+                <th width="8%">Garnishment</th>
+                <th width="7%">FIT</th>
+                <th width="7%">Net</th>
+                <th width="8%">Payment ID #</th>
+                <th width="9%">From</th>
+                <th width="9%">To</th>
+              </tr>
+
+
+	<tr>
+	<td width="8%" class="tableBA">07/07/2025</td>
+	<td width="8%" align="right" bgcolor="#ffffff">$772.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="7%" class="tableBA">$0.00</td>
+	<td width="7%" align="right" bgcolor="#ffffff">$772.00</td>
+	<td width="8%" class="tableBA">
+	
+		3L127258 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		05/30/2025 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		06/11/2025 
+	
+	</td>
+	 </tr>
+	 
+	<tr>
+	<td width="8%" class="tableBA">07/07/2025</td>
+	<td width="8%" align="right" bgcolor="#ffffff">$926.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="7%" class="tableBA">$0.00</td>
+	<td width="7%" align="right" bgcolor="#ffffff">$926.00</td>
+	<td width="8%" class="tableBA">
+	
+		3L127257 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		05/08/2025 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		05/18/2025 
+	
+	</td>
+	 </tr>
+	 
+	<tr>
+	<td width="8%" class="tableBA">07/07/2025</td>
+	<td width="8%" align="right" bgcolor="#ffffff">$308.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="7%" class="tableBA">$0.00</td>
+	<td width="7%" align="right" bgcolor="#ffffff">$308.00</td>
+	<td width="8%" class="tableBA">
+	
+		3L127256 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		04/27/2025 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		05/07/2025 
+	
+	</td>
+	 </tr>
+	 
+	<tr>
+	<td width="8%" class="tableBA">07/07/2025</td>
+	<td width="8%" align="right" bgcolor="#ffffff">$1,389.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="7%" class="tableBA">$0.00</td>
+	<td width="7%" align="right" bgcolor="#ffffff">$1,389.00</td>
+	<td width="8%" class="tableBA">
+	
+		3L127255 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		04/05/2025 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		04/15/2025 
+	
+	</td>
+	 </tr>
+	 
+	<tr>
+	<td width="8%" class="tableBA">07/07/2025</td>
+	<td width="8%" align="right" bgcolor="#ffffff">$617.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="7%" class="tableBA">$0.00</td>
+	<td width="7%" align="right" bgcolor="#ffffff">$617.00</td>
+	<td width="8%" class="tableBA">
+	
+		3L127254 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		03/25/2025 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		04/04/2025 
+	
+	</td>
+	 </tr>
+	 
+	<tr>
+	<td width="8%" class="tableBA">04/28/2025</td>
+	<td width="8%" align="right" bgcolor="#ffffff">$1,235.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="7%" class="tableBA">$0.00</td>
+	<td width="7%" align="right" bgcolor="#ffffff">$1,235.00</td>
+	<td width="8%" class="tableBA">
+	
+		3L036783 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		03/05/2025 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		03/15/2025 
+	
+	</td>
+	 </tr>
+	 
+	<tr>
+	<td width="8%" class="tableBA">04/28/2025</td>
+	<td width="8%" align="right" bgcolor="#ffffff">$308.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="7%" class="tableBA">$0.00</td>
+	<td width="7%" align="right" bgcolor="#ffffff">$308.00</td>
+	<td width="8%" class="tableBA">
+	
+		3L036782 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		02/22/2025 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		03/04/2025 
+	
+	</td>
+	 </tr>
+	 
+	<tr>
+	<td width="8%" class="tableBA">04/28/2025</td>
+	<td width="8%" align="right" bgcolor="#ffffff">$463.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="7%" class="tableBA">$0.00</td>
+	<td width="7%" align="right" bgcolor="#ffffff">$463.00</td>
+	<td width="8%" class="tableBA">
+	
+		3L036781 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		02/11/2025 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		02/21/2025 
+	
+	</td>
+	 </tr>
+	 
+	<tr>
+	<td width="8%" class="tableBA">03/06/2025</td>
+	<td width="8%" align="right" bgcolor="#ffffff">$463.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="7%" class="tableBA">$0.00</td>
+	<td width="7%" align="right" bgcolor="#ffffff">$463.00</td>
+	<td width="8%" class="tableBA">
+	
+		2L964287 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		02/02/2025 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		02/10/2025 
+	
+	</td>
+	 </tr>
+	 
+	<tr>
+	<td width="8%" class="tableBA">03/06/2025</td>
+	<td width="8%" align="right" bgcolor="#ffffff">$463.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="7%" class="tableBA">$0.00</td>
+	<td width="7%" align="right" bgcolor="#ffffff">$463.00</td>
+	<td width="8%" class="tableBA">
+	
+		2L964286 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		01/13/2025 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		01/22/2025 
+	
+	</td>
+	 </tr>
+	 
+	<tr>
+	<td width="8%" class="tableBA">03/06/2025</td>
+	<td width="8%" align="right" bgcolor="#ffffff">$1,081.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="7%" class="tableBA">$0.00</td>
+	<td width="7%" align="right" bgcolor="#ffffff">$1,081.00</td>
+	<td width="8%" class="tableBA">
+	
+		2L964285 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		01/06/2025 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		01/12/2025 
+	
+	</td>
+	 </tr>
+	 
+	<tr>
+	<td width="8%" class="tableBA">04/28/2025</td>
+	<td width="8%" align="right" bgcolor="#ffffff">$618.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="8%" class="tableBA">$0.00</td>
+	<td width="7%" class="tableBA">$0.00</td>
+	<td width="7%" align="right" bgcolor="#ffffff">$618.00</td>
+	<td width="8%" class="tableBA">
+	
+		3L036780 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	
+		ADJUSTMENT 
+	
+	</td>
+	<td width="9%" class="tableBA">
+	 
+		&nbsp;&nbsp;
+	
+	</td>
+	 </tr>
+	 
+	</tbody></table>
+  <!--<hr>-->
+  <table width="100%" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+	<tbody><tr>
+	<td align="center"><br>
+	<input type="button" name="btnclaimDetail" value="Claimant Detail" onclick="claimdetail();" width="100" style="width:140px"> 
+	<br><br></td>
+	
+	<td align="center"><br>
+        <input type="button" name="print" value="Print this Page" onclick="window.print();" width="100" style="width:140px"> 
+        <br><br></td>
+	
+	<td align="center"><br>
+        <input type="button" name="logout" value="Logout" onclick="userLogout();" width="100" style="width:140px">
+        <br><br></td></tr>
+
+      </tbody></table>
+	  
+</div>
+</form>
+
+
+
+</body></html>
