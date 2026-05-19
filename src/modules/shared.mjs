@@ -392,7 +392,7 @@ export function getUnstyledButtonHtml(label, onClick) {
 }
 
 // from https://stackoverflow.com/questions/5525071/how-to-wait-until-an-element-exists
-function waitForElement(selector) {
+export function waitForElement(selector) {
     return new Promise(resolve => {
         if (document.querySelector(selector)) {
             return resolve(document.querySelector(selector));

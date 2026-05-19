@@ -46,7 +46,7 @@ export function globalTestsOld(url) {
 
 export function globalTestsNew(pageId, url) {
   it("feedback widget is visible", () => {
-    cy.checkFeedbackWidgetIsRendered();
+    cy.checkWrappedFeedbackWidgetIsRendered();
     // TODO: determine why cy.checkFeedbackWidgetIsInteractable() 
     // and cy.checkFeedbackWidgetEmailDisclaimerTextIsOverridden()
     // fail and test those as well

@@ -59,6 +59,9 @@ function adjustWidths() {
   const parentDiv = document.getElementById("ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_btnCitBtn");
   if (parentDiv) {
     adjustTableWidths(parentDiv);
+
+    const name = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtFName');
+    name.style.width = '80%';
   }
 }
 
@@ -88,6 +91,12 @@ function adjustAddressTable() {
       element.style.maxWidth = '100%';
       element.style.boxSizing = 'border-box';
     });
+
+    const zip1 = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtZipCode1');
+    zip1.style.width = '100px';
+
+    const zip2 = document.getElementById('ContentPlaceHolder1_ClaimantProfileTab_PERSONNEL_txtZipCode2');
+    zip2.style.width = '100px';
 
     const fieldsets = addressTable.querySelectorAll('fieldset');
     fieldsets.forEach(fieldset => {

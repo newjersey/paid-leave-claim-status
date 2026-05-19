@@ -1,9 +1,11 @@
+import i18next from 'i18next';
 import { applyFooter } from "./footer.js";
 import { replaceHeader } from "./header.js";
 import {
   addFeedbackWidgetScriptToHead,
   ICON_BASE_URL,
-  overrideFeedbackWidgetEmailDisclaimerText
+  overrideFeedbackWidgetEmailDisclaimerText,
+  waitForElement,
 } from "../modules/shared.mjs";
 
 export function globalDesignChanges(pageId) {
@@ -25,6 +27,10 @@ function addViewportMetaTag() {
 function injectGlobalStyles() {
   const style = document.createElement('style');
   style.innerHTML = `
+    a:not([href]):hover {
+      color: inherit;
+    }
+
     body {
       background-color: #FBFCFD;
     }
@@ -192,6 +198,19 @@ function injectGlobalStyles() {
       margin-left: 5px;
     }
 
+    #btnGiveFeedback {
+      background-color: white;
+      display: block;
+      max-width: 250px;
+      margin-left: auto;
+      min-width: 200px;
+      padding: 15px;
+    }
+
+    #btnGiveFeedback svg {
+      margin-bottom: -2px;
+    }
+
     #ContentPlaceHolder1_ClaimantDisabilityTab_body,
     #ContentPlaceHolder1_ClaimantDisabilityTab {
       background-color: transparent !important;
@@ -206,7 +225,7 @@ function injectGlobalStyles() {
       font-size: 16px;
     }
 
-     #CalendarControl td.empty,
+    #CalendarControl td.empty,
     #FDDCalendarControl td.empty {
       visibility: hidden !important;
     }
@@ -319,6 +338,10 @@ function injectGlobalStyles() {
         max-width: 100%;
         box-sizing: border-box;
       }
+
+      #btnGiveFeedback {
+        margin-right: auto;
+      }
     }
   `;
   document.head.appendChild(style);
@@ -332,7 +355,7 @@ function styleButtons() {
   });
 }
 
-function addFeedbackWidget() {
+async function addFeedbackWidget() {
   const existingWidget = document.querySelector('feedback-widget');
   if (!existingWidget) {
     addFeedbackWidgetScriptToHead();
@@ -344,6 +367,49 @@ function addFeedbackWidget() {
     if (footer) {
       footer.parentNode.insertBefore(feedbackWidget, footer);
       overrideFeedbackWidgetEmailDisclaimerText();
+
+      await waitForElement(".feedback-container");
+      await waitForElement("#ratingPrompt");
+
+      const feedbackContainer = document.querySelector('.feedback-container');
+      const ratingPrompt = document.getElementById('ratingPrompt');
+      ratingPrompt.style.display = 'none';
+
+      const btnGiveFeedback = document.createElement('button');
+      btnGiveFeedback.id = 'btnGiveFeedback';
+      btnGiveFeedback.classList.add('usa-button', 'usa-button--outline');
+      btnGiveFeedback.innerHTML = `
+        ${campaignIcon()}
+        ${i18next.t('shared.giveFeedback')}
+      `;
+      feedbackContainer.prepend(btnGiveFeedback);
+
+      btnGiveFeedback.addEventListener('click', function () {
+        ratingPrompt.style.display = 'flex';
+        btnGiveFeedback.style.display = 'none';
+      });
     }
   }
+}
+
+function campaignIcon() {
+  const svgNS = 'http://www.w3.org/2000/svg';
+  const svgElement = document.createElementNS(svgNS, 'svg');
+  svgElement.setAttribute('class', 'usa-icon');
+  svgElement.setAttribute('aria-hidden', 'true');
+  svgElement.setAttribute('width', '24');
+  svgElement.setAttribute('height', '24');
+  svgElement.setAttribute('viewBox', '0 0 24 24');
+
+  const path1 = document.createElementNS(svgNS, 'path');
+  path1.setAttribute('d', 'M0 0h24v24H0z');
+  path1.setAttribute('fill', 'none');
+
+  const path2 = document.createElementNS(svgNS, 'path');
+  path2.setAttribute('d', 'M18 11v2h4v-2h-4zm-2 6.61c.96.71 2.21 1.65 3.2 2.39.4-.53.8-1.07 1.2-1.6-.99-.74-2.24-1.68-3.2-2.4-.4.54-.8 1.08-1.2 1.61zM20.4 5.6c-.4-.53-.8-1.07-1.2-1.6-.99.74-2.24 1.68-3.2 2.4.4.53.8 1.07 1.2 1.6.96-.72 2.21-1.65 3.2-2.4zM4 9c-1.1 0-2 .9-2 2v2c0 1.1.9 2 2 2h1v4h2v-4h1l5 3V6L8 9H4zm11.5 3c0-1.33-.58-2.53-1.5-3.35v6.69c.92-.81 1.5-2.01 1.5-3.34z');
+
+  svgElement.appendChild(path1);
+  svgElement.appendChild(path2);
+
+  return svgElement.outerHTML;
 }

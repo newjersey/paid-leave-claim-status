@@ -1,8 +1,6 @@
 import { confirmationAltTexts } from './claimantInfo/confirmation.js'
-import { certificationLabels } from './claimantInfo/certification.js';
 import { citizenshipLabels } from './claimantProfile/citizenship.js';
 import { claimantProfileVerificationLabels } from './claimantProfile/verification.js';
-import { disabilityInformationLabels } from './disability/information.js';
 import { employerDetailsLabels } from './claimantInfo/employerDetails.js';
 import { employmentDetailsLabels } from './employmentDetails/employmentDetails.js';
 import { loginProfileLabels } from './claimantProfile/loginProfile.js';
@@ -42,10 +40,8 @@ function accessibilityContrast() {
 
 function accessibilityLabels() {
   const labels = [
-    ...certificationLabels,
     ...citizenshipLabels,
     ...claimantProfileVerificationLabels,
-    ...disabilityInformationLabels,
     ...employerDetailsLabels,
     ...employmentDetailsLabels,
     ...loginProfileLabels,
