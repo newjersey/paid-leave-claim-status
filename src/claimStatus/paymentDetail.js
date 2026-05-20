@@ -321,23 +321,35 @@ function getPaymentInfoHtml(parsedStatus, status, claimType) {
   let body = "";
   switch (parsedStatus) {
     case "Max entitlement":
-      body = html`<div>
-        You've reached the maximum benefits allowed
-        <a
-          href="https://www.nj.gov/labor/myleavebenefits/labor/myleavebenefits/worker/tdi/index.shtml#maximum"
-          target="_blank"
-        >
-          under state law</a
-        >. <br /><br />
-        You can't extend your state benefits for this condition/disability,
-        regardless of whether your doctor approves it. If your medical condition
-        continues to prevent you from working, apply for
-        <a
-          href="https://www.nj.gov/labor/claims/dds/claimants.shtml"
-          target="_blank"
-          >Social Security Disability Insurance</a
-        >.
-      </div>`;
+      if (claimType === "FLI") {
+        body = html`<div>
+          You've reached the maximum benefits allowed
+          <a
+            href="https://www.nj.gov/labor/myleavebenefits/labor/myleavebenefits/worker/fli/index.shtml?#maximum"
+            target="_blank"
+          >
+            under state law</a
+          >.
+        </div>`;
+      } else if (claimType === "TDI") {
+        body = html`<div>
+          You've reached the maximum benefits allowed
+          <a
+            href="https://www.nj.gov/labor/myleavebenefits/labor/myleavebenefits/worker/tdi/index.shtml#maximum"
+            target="_blank"
+          >
+            under state law</a
+          >. <br /><br />
+          You can't extend your state benefits for this condition/disability,
+          regardless of whether your doctor approves it. If your medical condition
+          continues to prevent you from working, apply for
+          <a
+            href="https://www.nj.gov/labor/claims/dds/claimants.shtml"
+            target="_blank"
+            >Social Security Disability Insurance</a
+          >.
+        </div>`;
+      }
       break;
     case "P30 received":
       const receivedDate = extractDateFromString(status);
