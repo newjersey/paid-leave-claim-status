@@ -129,13 +129,43 @@ describe("Payment Detail page - Leave Ended TDI", () => {
   });
 });
 
-describe("Payment Detail page - Max Entitlement", () => {
+describe("Payment Detail page - Max Entitlement FLI", () => {
+  it("renders with updated content", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlementFLI.html"
+    );
+    cy.contains("Claim for Family Leave Insurance (FLI)").should(
+      "be.visible"
+    );
+    cy.contains("You've reached the maximum benefits allowed").should(
+      "be.visible"
+    );
+    cy.contains(
+      "You can't extend your state benefits for this condition/disability, regardless of whether your doctor approves it."
+    ).should("not.exist");
+  });
+  it("ensures viewport meta tag exists", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlementFLI.html"
+    );
+    cy.checksViewportMetaTag();
+  });
+
+  it("passes accessibility checks", () => {
+    cy.visit(
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlementFLI.html"
+    );
+    cy.checkBodyA11y();
+  });
+});
+
+describe("Payment Detail page - Max Entitlement TDI", () => {
   it("renders with updated content", () => {
     const fixedDate = new Date(2024, 9, 1); // October 1, 2024
     cy.clock(fixedDate.getTime());
 
     cy.visit(
-      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlement.html"
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlementTDI.html"
     );
 
     cy.contains("PAYMENT DETAIL").should("not.exist"); // Rendered on original HTML, without script change
@@ -162,14 +192,14 @@ describe("Payment Detail page - Max Entitlement", () => {
   });
   it("ensures viewport meta tag exists", () => {
     cy.visit(
-      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlement.html"
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlementTDI.html"
     );
     cy.checksViewportMetaTag();
   });
 
   it("passes accessibility checks", () => {
     cy.visit(
-      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlement.html"
+      "./cypress/fixtures/claimStatus/paymentDetail/paymentDetailMaxEntitlementTDI.html"
     );
     cy.checkBodyA11y();
   });

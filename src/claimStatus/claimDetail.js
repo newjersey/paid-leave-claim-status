@@ -808,12 +808,12 @@ function addNewHtml(metadata) {
       ${isDesktop()
         ? html`
             ${claimDate || name
-              ? html`<div style="font-size: 13px; line-height: 16px; text-transform: uppercase; margin-bottom: 8px; display: flex;">
+              ? html`<div style="font-size: 13px; line-height: 16px; text-transform: uppercase; margin-bottom: 8px; display: block;">
                   ${claimDate
-                    ? html`<div>leave starting ${getFormattedDate(claimDate)}</div><div style="margin-left:6px; margin-right:6px;">\u00B7 </div>`
+                    ? html`<div>leave starting ${getFormattedDate(claimDate)}</div>`
                     : ""}
                   ${name
-                    ? html`<div style="font-weight: 700;">${name}</div>`
+                    ? html`<br /><div style="font-weight: 700;">${name}</div>`
                     : ""}
                 </div>`
               : ""}
