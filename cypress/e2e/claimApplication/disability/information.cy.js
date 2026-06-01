@@ -202,6 +202,7 @@ describe("Disability Information page", () => {
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
       checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_PREGNANCY_DETAILS);
+      cy.checkLogEvent("Reason for leave submit clicked", { reason: 'pregnancy' });
     });
 
     it("user can input info about illness after first choosing injury and proceed to next page", () => {
@@ -226,6 +227,7 @@ describe("Disability Information page", () => {
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
       checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_ILLNESS_DETAILS);
+      cy.checkLogEvent("Reason for leave submit clicked", { reason: 'illness' });
     });
 
     it("user can input info about injury and proceed to next page", () => {
@@ -235,6 +237,7 @@ describe("Disability Information page", () => {
       cy.get('#submitReasonForLeave').click();
       checkLeaveSchedule();
       checkSessionData(EXAMPLE_REASON_FOR_LEAVE_DATA_INJURY_DETAILS);
+      cy.checkLogEvent("Reason for leave submit clicked", { reason: 'injury' });
     });
 
     it("blocks user that enters First Date of Disability in the future", () => {
@@ -266,6 +269,7 @@ describe("Disability Information page", () => {
       cy.get('#reason-pregnancy').should('have.attr', 'required');
       cy.get('#reason-illness').should('have.attr', 'required');
       cy.get('#reason-injury').should('have.attr', 'required');
+      cy.confirmEventIsNotTracked("Reason for leave submit clicked");
     });
 
     it("reason radio fields become required again when navigating back", () => {

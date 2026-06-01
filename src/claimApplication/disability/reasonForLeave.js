@@ -271,7 +271,7 @@ function setupSubmitReasonForLeave(showLeaveSchedulePage) {
       }
     });
 
-    logEvent('Reason for leave submit clicked', {});
+    logEvent('Reason for leave submit clicked', { reason: formValues.reasons });
 
     addToSessionData({
       [STORAGE_KEY_REASON_FOR_LEAVE]: formValues
