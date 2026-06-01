@@ -1,0 +1,13 @@
+﻿.ajax__calendar
+{
+    position: relative;
+    left: 0px !important;
+    top: 0px !important;
+    visibility: visible;
+    display: block;
+}
+.ajax__calendar iframe
+{
+    left: 0px !important;
+    top: 0px !important;
+}
