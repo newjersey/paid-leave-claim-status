@@ -77,18 +77,25 @@ nameLabel.textContent = i18next.t('contact.name');
 
 You can open the HTML fixture files from `cypress/fixtures` directly in your browser.
 
-New fixture files are needed for specific scenarios. To save new fixture files, navigate to the page in the browser, use the Network debug tab to disable any existing override script from this project, then save the complete page.
+New fixture files are needed for specific scenarios. To save new fixture files:
 
-Once the complete page has been saved and added to the project, comment out this script (which otherwise throws an error) 
+* Navigate to the page in the browser
+* Use the Network debug tab to disable/block any existing override script from this project (since Refreshing can be iffy on the Test environment, best to do this on an earlier page and then navigate forward to the desired page)
+* Save the complete page, with the JS files in the adjacent folder directory
+* You can use `diff -rq FOLDER1 FOLDER2` to compare JS file directories, to see if the project already has a fully-matching directory
+* Copy the HTML file into the project, using an existing directory or a new one
+* You may have to comment out this script if present (the page will load without it, and it throws an error) 
 
 ```
 <!-- <script src="TDI_files/t-Greafer-she-vs-inuish-We-wailes-a-With-his-to-.js" async=""></script> -->
 ```
 
-and change the location of the tdiOverride script to the local one within this repo, like this:
+* Change the location of the tdiOverride script to the local one within this repo, like this:
 ```
 <script src="../tdiOverride.min.js" defer></script>
 ```
+
+* Load the local HTML file into your browser and make sure there are no Errors in the Console (if there are, you may need to double-check the adjacent JS directory or comment out an unneeded script)
 
 ### Testing in the Test environment
 
@@ -98,7 +105,7 @@ You can use [Local Overrides](https://developer.chrome.com/docs/devtools/overrid
 
 ### Cypress End-to-end Tests
 
-Cypress tests for the TDI Claim Application are arranged like this: 
+Cypress tests for the TDI Claim Application are arranged like the below to ensure that existing behavior is treated the same. 
 
 ```
 describe("page without new JS", () => {
@@ -117,6 +124,12 @@ describe("page with new JS", () => {
     // tests that demonstrate new page behavior, checking same parameters of post data to ensure they are equivalent to before
 }
 
+```
+
+Note that USWDS elements are rendered in a unique way that puts the existing element offscreen, so in order to interact with USWDS elements in Cypress we need to "force" the interaction like this:
+
+```
+cy.get('#still-work-here-no').click({ force: true });
 ```
 
 ## Deployment by Innovation
