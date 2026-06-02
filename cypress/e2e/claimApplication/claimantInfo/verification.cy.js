@@ -8,9 +8,9 @@ import { encodeDecode } from '../../../../src/claimApplication/utils';
 const PAGE_ID = 'verification';
 const URL = 'ClaimantDisabililty';
 const FIXTURE = "./cypress/fixtures/claimApplication/leaveInformationVerification/leaveInformationVerification.html";
-const FIXTURE_WITH_WORKERS_COMP_YES = "./cypress/fixtures/claimApplication/claimantInfo/verification_WorkersCompYes.html";
-const FIXTURE_WITH_NOT_APPROVED_BUT_RECEIVED_WC = "./cypress/fixtures/claimApplication/claimantInfo/verification_NotApprovedButReceived.html";
-const FIXTURE_WITH_INTL_DOCTOR = "./cypress/fixtures/claimApplication/disabilityVerificationIntl/disabilityVerificationIntl.html";
+const FIXTURE_WITH_WORKERS_COMP_YES = "./cypress/fixtures/claimApplication/leaveInformationVerification/leaveInformationVerificationWithCompYes.html";
+const FIXTURE_WITH_NOT_APPROVED_BUT_RECEIVED_WC = "./cypress/fixtures/claimApplication/leaveInformationVerification/leaveInformationVerificationDeterminationNo.html";
+const FIXTURE_WITH_INTL_DOCTOR = "cypress/fixtures/claimApplication/leaveInformationVerification/leaveInformationVerificationWithIntlDoc.html";
 
 describe("Disability Verification page", () => {
   function checkPostData(interception) {
@@ -147,7 +147,7 @@ describe("Disability Verification page", () => {
     it('intl doctor names appear', () => {
       cy.visit(FIXTURE_WITH_INTL_DOCTOR);
       cy.get('#ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocName')
-        .should('be.visible').and('have.value', 'My Intl Doctor');
+        .should('be.visible').and('have.value', 'Dr. Spaceman');
     });
 
     it("user can input info and proceed to next page", () => {
