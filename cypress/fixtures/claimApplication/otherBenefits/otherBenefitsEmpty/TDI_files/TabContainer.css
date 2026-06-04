@@ -1,0 +1,56 @@
+﻿
+
+
+/* ajax__tab_msngallery-theme theme */
+.ajax__tab_msngallery-theme .ajax__tab_header 
+{
+    background:url(img/msngallery/tab-line.png) repeat-x bottom;
+    font-size:12px;
+    display:block;
+}
+.ajax__tab_msngallery-theme .ajax__tab_header .ajax__tab_outer 
+{
+    border:solid 1px #C9C9C9;
+    padding:1px 1px 0px 1px;
+    border-bottom:solid 2px #8E8E8E;
+    background-color:#008080;
+}
+.ajax__tab_msngallery-theme .ajax__tab_header .ajax__tab_tab 
+{
+    padding:6px 10px 6px 10px;
+    color:#ffffff;
+    width:117px;
+    display:block;
+    text-align:center;    
+}
+.ajax__tab_msngallery-theme .ajax__tab_header .ajax__tab_tab img
+{
+    height:24px;
+    width:24px;
+}
+.ajax__tab_msngallery-theme .ajax__tab_header .ajax__tab_tab div
+{
+    font-family:Verdana, Arial, Sans-Serif;
+    font-weight:bold;
+    white-space:nowrap;
+    line-height:145%;
+    font-size:92%;
+}
+.ajax__tab_msngallery-theme .ajax__tab_active .ajax__tab_outer 
+{
+    padding:0px 0px 0px 0px;
+    border:solid 3px #282828;
+    border-bottom-color:#282828;
+    background-color:#282828;
+    
+}
+.ajax__tab_msngallery-theme .ajax__tab_body 
+{
+    font-family:verdana,tahoma,helvetica;
+    font-size:10pt;
+    padding:8px;
+    background-color:#FCFCFC;
+    border:solid 1px #282828;
+    border-top-width:1;
+}
+

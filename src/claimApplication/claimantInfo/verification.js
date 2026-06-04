@@ -41,6 +41,13 @@ export const otherBenefitsVerificationLabels = [
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocAddOOC3', label: 'International Healthcare Provider Address 3' },
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerDocAddOOC4', label: 'International Healthcare Provider Address 4' },
   { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtRsnLate', label: 'Reason for late filing' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerTDPayingState', label: 'Paying state' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerTDBenfStartDate', label: 'Other state Benefit start date' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerTDBenfEndDate', label: 'Other state Benefit end date' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerTDSSDADate', label: 'SS Benefit Award Date' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerTDUIBPayingState', label: 'UI benefit paying state' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerUIBenStDt', label: 'UI benefit start date' },
+  { id: 'ContentPlaceHolder1_ClaimantDisabilityTab_tabpnlDisabilityVerification_txtVerUIBenEndDt', label: 'UI benefit end date' },
 ];
 
 export const id = "verification";

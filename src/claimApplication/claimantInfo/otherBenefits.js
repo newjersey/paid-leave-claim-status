@@ -44,11 +44,6 @@ export function trackOtherBenefitsYesSubmission(pageId) {
           otherBenefits.push("another state");
         }
         if (
-        formData.get('ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$rbTDEmp') === 'rbTDEmpYes'
-        ) {
-          otherBenefits.push("employer/union");
-        }
-        if (
         formData.get('ctl00$ContentPlaceHolder1$ClaimantDisabilityTab$TabBenefits$rbSS') === 'rbSSYes'
         ) {
           otherBenefits.push("social security");
@@ -76,9 +71,6 @@ export function changes() {
   addCheckboxListeners();
   // addOptionsToTDIStates(); // needs more testing before can be turned on, if ever
   replaceQuestionNumbersInErrors();
-
-  addEmployerBenefitsIfNeeded(); // remove once underlying question removed
-
   setNewTitle(i18next.t('otherBenefits.title'));
   updateCalendars();
   noneOfTheAboveLogic();
@@ -222,54 +214,6 @@ function replaceRadioButtonsWithCheckboxes() {
   newForm.insertAdjacentElement('beforebegin', contextualIntroduction);
 }
 
-// remove once underlying question removed
-function addEmployerBenefitsIfNeeded() {
-  const tdiFromEmployerNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo");
-  if (tdiFromEmployerNo) {
-    const tdiCheckbox = document.getElementById('checkbox-tdi');
-    const employerCheckbox = document.createElement('div');
-    employerCheckbox.className = "usa-checkbox";
-    employerCheckbox.innerHTML = `
-      <input
-        class="usa-checkbox__input"
-        id="check-employer"
-        type="checkbox"
-        name="other-benefits"
-        value="employer"
-      />
-      <label class="usa-checkbox__label" for="check-employer">${i18next.t('otherBenefits.employer.title')}</label>
-    `;
-
-    tdiCheckbox.insertAdjacentElement('afterend', employerCheckbox);
-
-    rearrangeEmployerFollowup();
-    restyleEmployerFollowup();
-    addEmployerListener();
-  }
-}
-
-function addEmployerListener() {
-  const checkEmployer = document.getElementById("check-employer");
-  const originalEmployerYes = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpYes");
-  const originalEmployerNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo");
-  loadRadioButtonsIntoCheckbox(originalEmployerYes, originalEmployerNo, checkEmployer);
-
-  checkEmployer.addEventListener('click', function () {
-    if (checkEmployer.checked) {
-      originalEmployerYes.click();
-    } else {
-      originalEmployerNo.click();
-    }
-  });
-}
-
-function rearrangeEmployerFollowup() {
-  const newForm = document.getElementById('new-other-benefits-form');
-  const divEmp = document.getElementById('divEmp');
-  if (divEmp) {
-    newForm.insertAdjacentElement('beforeend', divEmp);
-  }
-}
 
 function rearrangeFollowups() {
   const newForm = document.getElementById('new-other-benefits-form');
@@ -292,193 +236,6 @@ function restyleFollowups() {
   restyleSSDIFollowup();
   restyleUIFollowup();
   restyleTDIFollowup();
-}
-
-function restyleEmployerFollowup() {
-  const fieldset = fieldsetWithTitleAndSubtitle(
-    'divEmp',
-    'otherBenefits.employer.followup.title',
-    'otherBenefits.employer.followup.subtitle'
-  );
-
-  const employerLabel = document.createElement('p');
-  employerLabel.textContent = i18next.t('otherBenefits.employer.followup.employerLabel');
-  employerLabel.style.marginTop = '20px';
-  fieldset.append(employerLabel);
-
-  const nameLabel = document.createElement('label');
-  nameLabel.classList.add('usa-label');
-  nameLabel.textContent = i18next.t('contact.name');
-  nameLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpNm';
-  fieldset.append(nameLabel);
-  nameLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
-
-  const nameInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpNm');
-  nameInput.classList.add('usa-input');
-  fieldset.append(nameInput);
-
-  const address1Label = document.createElement('label');
-  address1Label.classList.add('usa-label');
-  address1Label.textContent = i18next.t('contact.street1');
-  address1Label.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpAdd1';
-  fieldset.append(address1Label);
-  address1Label.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
-
-  const address1Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpAdd1');
-  address1Input.classList.add('usa-input');
-  fieldset.append(address1Input);
-
-  const address2Label = document.createElement('label');
-  address2Label.classList.add('usa-label');
-  address2Label.textContent = i18next.t('contact.street2');
-  address2Label.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpAdd2';
-  fieldset.append(address2Label);
-
-  const address2Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpAdd2');
-  address2Input.classList.add('usa-input');
-  fieldset.append(address2Input);
-
-  const cityLabel = document.createElement('label');
-  cityLabel.classList.add('usa-label');
-  cityLabel.textContent = i18next.t('contact.city');
-  cityLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpCity';
-  fieldset.append(cityLabel);
-  cityLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
-
-  const cityInput = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpCity');
-  cityInput.classList.add('usa-input');
-  fieldset.append(cityInput);
-
-  const stateLabel = document.createElement('label');
-  stateLabel.classList.add('usa-label');
-  stateLabel.textContent = i18next.t('contact.state');
-  stateLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenEmpSt';
-  fieldset.append(stateLabel);
-  stateLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
-
-  const stateSelect = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenEmpSt');
-  stateSelect.classList.add('usa-select');
-  stateSelect.style.width = '170px';
-  stateSelect.style.height = 'auto';
-  fieldset.append(stateSelect);
-
-  const zipLabel = document.createElement('label');
-  zipLabel.classList.add('usa-label');
-  zipLabel.textContent = i18next.t('contact.zipcode');
-  zipLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpZip1';
-  fieldset.append(zipLabel);
-  zipLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
-
-  const zipContainer = document.createElement('div');
-  zipContainer.id = 'zipContainer';
-  zipContainer.style.display = 'flex';
-  zipContainer.style.alignItems = 'center';
-  zipContainer.style.fontSize = '16px';
-  fieldset.append(zipContainer);
-
-  const zip1Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpZip1');
-  zip1Input.classList.add('usa-input');
-  zip1Input.style.width = '120px';
-  zip1Input.style.marginRight = '5px';
-  zipContainer.append(zip1Input);
-  zip1Input.insertAdjacentHTML('afterend', '-');
-
-  const zip2Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpZip2');
-  zip2Input.classList.add('usa-input');
-  zip2Input.style.width = '100px';
-  zip2Input.style.marginLeft = '5px';
-  zipContainer.append(zip2Input);
-
-  const intlContainer = document.createElement('div');
-  intlContainer.id = 'intlContainer';
-  intlContainer.style.display = 'none';
-  fieldset.append(intlContainer);
-
-  const intlZip = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpOutCtryZip');
-  intlZip.classList.add('usa-input');
-  intlZip.style.width = '200px';
-  intlContainer.append(intlZip);
-
-  const countryLabel = document.createElement('label');
-  countryLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenEmpCountry';
-  countryLabel.textContent = i18next.t('contact.country');
-  countryLabel.style.marginTop = '20px';
-  countryLabel.style.fontFamily = '"Public Sans", sans-serif';
-  intlContainer.append(countryLabel);
-  countryLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
-
-  const selectCountry = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_ddlBenEmpCountry');
-  selectCountry.classList.add('usa-select');
-  selectCountry.style.height = 'auto';
-  selectCountry.style.width = '400px';
-  intlContainer.append(selectCountry);
-
-  const phoneLabel = document.createElement('label');
-  phoneLabel.classList.add('usa-label');
-  phoneLabel.textContent = i18next.t('contact.phone');
-  phoneLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpZip1';
-  fieldset.append(phoneLabel);
-  phoneLabel.insertAdjacentHTML('afterbegin', `<span class="required-asterisk required-asterisk-inline">*</span>`);
-
-  const phoneContainer = document.createElement('div');
-  phoneContainer.style.display = 'flex';
-  phoneContainer.style.alignItems = 'center';
-  phoneContainer.style.fontSize = '16px';
-  fieldset.append(phoneContainer);
-
-  const phone1Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh');
-  phone1Input.classList.add('usa-input');
-  phone1Input.style.width = '70px';
-  phone1Input.style.margin = '0';
-  phoneContainer.append(phone1Input);
-  phone1Input.insertAdjacentHTML('beforebegin', '(');
-  phone1Input.insertAdjacentHTML('afterend', ')');
-
-  const phone2Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh2');
-  phone2Input.classList.add('usa-input');
-  phone2Input.style.width = '50px';
-  phone2Input.style.margin = '0 5px';
-  phoneContainer.append(phone2Input);
-  phone2Input.insertAdjacentHTML('afterend', '-');
-
-  const phone3Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh3');
-  phone3Input.classList.add('usa-input');
-  phone3Input.style.width = '90px';
-  phone3Input.style.margin = '0 10px 0 5px';
-  phoneContainer.append(phone3Input);
-  phone3Input.insertAdjacentHTML('afterend', 'Ext.');
-  
-  const phone4Input = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpPh4');
-  phone4Input.classList.add('usa-input');
-  phone4Input.style.width = '100px';
-  phone4Input.style.margin = '0 5px';
-  phoneContainer.append(phone4Input);
-
-  appendDateRangeFields(
-    fieldset,
-    'divEmpBenDt',
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtEmpBenStDt',
-    'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtEmpBenEndDt',
-    'Image7',
-    'Image9'
-  );
-
-  appendPendingCheckbox(fieldset, 'divEmp', 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_chkEmpBenDtStat');
-
-  const oldEmployerAddBox = document.getElementById('ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_pnlEmpUnionadd');
-  oldEmployerAddBox.style.display = 'none';
-
-  stateSelect.addEventListener('change', function () {
-    if (stateSelect.value == 0) {
-      zipLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpOutCtryZip';
-      zipContainer.style.display = 'none';
-      intlContainer.style.display = 'block';
-    } else {
-      zipLabel.htmlFor = 'ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_txtBenEmpZip1';
-      zipContainer.style.display = 'flex';
-      intlContainer.style.display = 'none';
-    }
-  });
 }
 
 function restyleSSDIFollowup() {
@@ -803,11 +560,9 @@ function replaceQuestionNumbersInErrors() {
     const questionMap = {
       '1a.': 'otherBenefits.tdi.followup.subtitle',
       '1b.': 'otherBenefits.tdi.followup.subtitle',
-      '2a.': 'otherBenefits.employer.followup.subtitle',
-      '2b.': 'otherBenefits.employer.followup.subtitle',
-      '3a.': 'otherBenefits.ssdi.followup.subtitle',
-      '4a.': 'otherBenefits.ui.followup.subtitle',
-      '4b.': 'otherBenefits.ui.followup.subtitle',
+      '2a.': 'otherBenefits.ssdi.followup.subtitle',
+      '3a.': 'otherBenefits.ui.followup.subtitle',
+      '3b.': 'otherBenefits.ui.followup.subtitle',
     };
 
     const newForm = document.getElementById('new-other-benefits-form');
@@ -916,12 +671,11 @@ function ssdiCalendarOpensToFDDYear() {
 
 function checkNoneWhenAllNo() {
   const originalSsdiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbSSNo");
-  const originalEmployerNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDEmpNo");  
   const originalTdiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbTDINo");
   const originalUiNo = document.getElementById("ContentPlaceHolder1_ClaimantDisabilityTab_TabBenefits_rbUINo");
   const noneOfTheAbove = document.getElementById('check-none');
 
-  if (originalSsdiNo?.checked && originalEmployerNo?.checked && originalTdiNo?.checked && originalUiNo?.checked) {
+  if (originalSsdiNo?.checked && originalTdiNo?.checked && originalUiNo?.checked) {
     noneOfTheAbove.checked = true;
   }
 }
