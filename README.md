@@ -1,3 +1,5 @@
+# This Repo is inactive. Please use [the NJDOL repo](https://github.com/njdol-tdi/paid-leave-claim-status/).
+
 # Paid Leave Benefits - Claim Status and TDI Claim Application
 
 This repository contains the code used to redesign the existing "Claim Status" application used for New Jersey's Temporary Disability Insurance (TDI) and Family Leave Insurance (FLI), managed by the Department of Labor.
